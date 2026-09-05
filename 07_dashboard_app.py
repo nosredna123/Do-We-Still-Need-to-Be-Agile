@@ -16,6 +16,8 @@ def main() -> None:
     except ImportError as exc:  # pragma: no cover - optional dependency
         raise RuntimeError("O dashboard requer `streamlit` instalado.") from exc
 
+    st.set_page_config(page_title="Do We Still Need to Be Agile?", layout="wide")
+
     records = load_records(Path(args.input))
     if not records:
         raise RuntimeError("Nenhum dado encontrado no dataset informado.")
@@ -24,7 +26,6 @@ def main() -> None:
     turma_options = sorted({str(row.get("turma", "não informado")) for row in records})
     experience_options = sorted({str(row.get("experiencia", row.get("experience", "não informado"))) for row in records})
 
-    st.set_page_config(page_title="Do We Still Need to Be Agile?", layout="wide")
     st.title("Do We Still Need to Be Agile? — Dashboard Analítico")
 
     selected_turmas = st.sidebar.multiselect("Turma", turma_options, default=turma_options)

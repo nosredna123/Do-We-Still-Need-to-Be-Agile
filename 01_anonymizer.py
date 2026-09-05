@@ -23,7 +23,7 @@ def main() -> None:
 
     mapping = build_anonymization_mapping(csv_paths, transcript_paths, salt=args.salt)
     for csv_path in csv_paths:
-        anonymize_csv_file(csv_path, output_dir / csv_path.name, mapping)
+        anonymize_csv_file(csv_path, output_dir / csv_path.name, mapping, salt=args.salt)
     for transcript_path in transcript_paths:
         anonymize_transcript_file(transcript_path, output_dir / transcript_path.name, mapping)
 
