@@ -55,6 +55,18 @@ TOPIC_KEYWORDS = {
     "cognitive_load": {"overload", "stress", "exausto", "cansado", "confusing", "cognitive"},
     "spec_driven": {"spec", "specification", "requirements", "sdd", "design upfront"},
 }
+EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
+SPEAKER_PATTERN = re.compile(r"(?m)^\s*([A-ZÀ-ÖØ-Ý][\wÀ-ÿ' -]{1,60}):")
+HYPOTHESIS_FIELDS = [
+    "test",
+    "group_a",
+    "group_b",
+    "metric",
+    "u_statistic",
+    "p_value",
+    "n_group_a",
+    "n_group_b",
+]
 
 
 def ensure_parent(path: Path) -> None:
@@ -203,6 +215,11 @@ def build_anonymization_mapping(csv_paths: Sequence[Path], transcript_paths: Seq
                     mapping[str(value)] = hash_identifier(value, salt=salt)
     for transcript_path in transcript_paths:
         if transcript_path.suffix.lower() == ".txt":
+            text = transcript_path.read_text(encoding="utf-8")
+            for email in EMAIL_PATTERN.findall(text):
+                mapping[email] = hash_identifier(email, salt=salt)
+            for speaker in SPEAKER_PATTERN.findall(text):
+                mapping[speaker] = hash_identifier(speaker, salt=salt)
             continue
         for row in load_records(transcript_path):
             speaker = row.get("speaker") or row.get("author")
@@ -537,8 +554,8 @@ def correlation_rows(records: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
             numeric_columns[key] = usable
     rows: list[dict[str, Any]] = []
     keys = sorted(numeric_columns)
-    for left in keys:
-        for right in keys:
+    for index, left in enumerate(keys):
+        for right in keys[index + 1 :]:
             pairs = [
                 (to_float(record.get(left)), to_float(record.get(right)))
                 for record in records
@@ -695,8 +712,11 @@ def write_work_style_svg(records: Sequence[dict[str, Any]], output_path: Path) -
 
 
 def write_hypothesis_csv(rows: Sequence[dict[str, Any]], output_path: Path) -> None:
-    if rows:
-        write_records(output_path, rows)
+    ensure_parent(output_path)
+    with output_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=HYPOTHESIS_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def run_txt_sidecar_transcription(audio_path: Path) -> tuple[str, dict[str, Any]]:

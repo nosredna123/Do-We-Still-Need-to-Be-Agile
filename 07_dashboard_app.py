@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from pipeline_core import load_records
+from pipeline_core import load_records, require_pyarrow
 
 
 def main() -> None:
@@ -16,6 +16,7 @@ def main() -> None:
     except ImportError as exc:  # pragma: no cover - optional dependency
         raise RuntimeError("O dashboard requer `streamlit` instalado.") from exc
 
+    pa, _ = require_pyarrow()
     st.set_page_config(page_title="Do We Still Need to Be Agile?", layout="wide")
 
     records = load_records(Path(args.input))
@@ -37,9 +38,10 @@ def main() -> None:
         if str(row.get("turma", "não informado")) in selected_turmas
         and str(row.get("experiencia", row.get("experience", "não informado"))) in selected_experience
     ]
+    filtered_table = pa.Table.from_pylist(filtered) if filtered else pa.table({column: [] for column in columns})
 
     st.metric("Registros filtrados", len(filtered))
-    st.dataframe(filtered, use_container_width=True)
+    st.dataframe(filtered_table, use_container_width=True)
 
     st.subheader("Relação entre planejamento e code churn")
     scatter_rows = [
@@ -50,7 +52,8 @@ def main() -> None:
         }
         for row in filtered
     ]
-    st.dataframe(scatter_rows, use_container_width=True)
+    scatter_table = pa.Table.from_pylist(scatter_rows) if scatter_rows else pa.table({"planning_index": [], "code_churn": [], "work_style": []})
+    st.dataframe(scatter_table, use_container_width=True)
 
     st.subheader("Colunas disponíveis")
     st.write(columns)

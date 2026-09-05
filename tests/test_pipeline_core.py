@@ -19,6 +19,7 @@ from pipeline_core import (
     hypothesis_rows,
     load_records,
     write_records,
+    write_hypothesis_csv,
 )
 
 
@@ -99,6 +100,17 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertEqual("sample-repo", rows[0]["repository"])
             self.assertEqual(1, rows[0]["files_changed"])
 
+    def test_mapping_extracts_text_transcript_speakers_and_emails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            transcript_path = tmp_path / "feedback.txt"
+            transcript_path.write_text("Carol: iniciou a sessão\nContato: carol@example.com\n", encoding="utf-8")
+
+            mapping = build_anonymization_mapping([], [transcript_path], salt="pepper")
+
+            self.assertEqual("anon_8c20d385a603", mapping["Carol"])
+            self.assertTrue(mapping["carol@example.com"].startswith("anon_"))
+
     def test_nlp_and_metrics_pipeline(self) -> None:
         records = [
             {
@@ -135,7 +147,13 @@ class PipelineCoreTests(unittest.TestCase):
             {"planning_index": 0.1, "code_churn": 10.0, "nlp_work_style": "vibe_coding", "exhaustion_index": 0.9},
         ]
         correlations = correlation_rows(records)
-        self.assertTrue(any(row["feature_x"] == "planning_index" and row["feature_y"] == "code_churn" for row in correlations))
+        correlation_pairs = {frozenset((row["feature_x"], row["feature_y"])) for row in correlations}
+        self.assertIn(frozenset(("planning_index", "code_churn")), correlation_pairs)
+        self.assertFalse(any(row["feature_x"] == row["feature_y"] for row in correlations))
+        self.assertEqual(
+            3,
+            len({tuple(sorted((row["feature_x"], row["feature_y"]))) for row in correlations}),
+        )
         hypotheses = hypothesis_rows(records)
         self.assertEqual("mann_whitney_u", hypotheses[0]["test"])
 
@@ -146,6 +164,15 @@ class PipelineCoreTests(unittest.TestCase):
             write_records(path, rows)
             loaded = load_records(path)
             self.assertEqual(rows, loaded)
+
+    def test_hypothesis_output_is_created_even_when_empty(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            output_path = Path(tmp_dir) / "hypothesis.csv"
+            write_hypothesis_csv([], output_path)
+            self.assertEqual(
+                "test,group_a,group_b,metric,u_statistic,p_value,n_group_a,n_group_b",
+                output_path.read_text(encoding="utf-8").strip(),
+            )
 
 
 if __name__ == "__main__":
