@@ -10,6 +10,7 @@ import re
 import shutil
 import statistics
 import subprocess
+from html import escape
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Sequence
@@ -210,7 +211,7 @@ def build_anonymization_mapping(csv_paths: Sequence[Path], transcript_paths: Seq
     return mapping
 
 
-def anonymize_csv_file(csv_path: Path, output_path: Path, mapping: dict[str, str]) -> None:
+def anonymize_csv_file(csv_path: Path, output_path: Path, mapping: dict[str, str], salt: str = "") -> None:
     rows = load_records(csv_path)
     anonymized: list[dict[str, Any]] = []
     for row in rows:
@@ -218,7 +219,7 @@ def anonymize_csv_file(csv_path: Path, output_path: Path, mapping: dict[str, str
         for key, value in row.items():
             if isinstance(value, str):
                 if is_identifier_column(key):
-                    new_row[key] = mapping.get(value, hash_identifier(value)) if value else value
+                    new_row[key] = mapping.get(value, hash_identifier(value, salt=salt)) if value else value
                 else:
                     new_row[key] = replace_text(value, mapping)
             else:
@@ -549,7 +550,7 @@ def correlation_rows(records: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
             ys = [pair[1] for pair in pairs if pair[1] is not None]
             coefficient = spearman(xs, ys)
             statistic = coefficient * math.sqrt((len(xs) - 2) / max(1e-9, 1 - coefficient**2)) if abs(coefficient) < 1 else math.inf
-            p_value = 0.0 if statistic is math.inf else 2 * (1 - normal_cdf(abs(statistic)))
+            p_value = 0.0 if math.isinf(statistic) else 2 * (1 - normal_cdf(abs(statistic)))
             rows.append(
                 {
                     "feature_x": left,
@@ -609,12 +610,12 @@ def hypothesis_rows(records: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def svg_rect(x: float, y: float, width: float, height: float, fill: str, label: str = "") -> str:
-    title = f"<title>{label}</title>" if label else ""
+    title = f"<title>{escape(label)}</title>" if label else ""
     return f'<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{fill}">{title}</rect>'
 
 
 def svg_text(x: float, y: float, text: str, size: int = 12, anchor: str = "start") -> str:
-    return f'<text x="{x}" y="{y}" font-size="{size}" text-anchor="{anchor}" font-family="Arial">{text}</text>'
+    return f'<text x="{x}" y="{y}" font-size="{size}" text-anchor="{anchor}" font-family="Arial">{escape(text)}</text>'
 
 
 def write_heatmap_svg(correlation_data: Sequence[dict[str, Any]], output_path: Path) -> None:
@@ -662,7 +663,8 @@ def write_scatter_svg(records: Sequence[dict[str, Any]], output_path: Path) -> N
         cx = 60 + (x / max_x) * 620 if max_x else 60
         cy = 420 - (y / max_y) * 340 if max_y else 420
         color = colors.get(style, colors["unknown"])
-        elements.append(f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="6" fill="{color}"><title>{style}: PI={x:.2f}, CC={y:.2f}</title></circle>')
+        tooltip = escape(f"{style}: PI={x:.2f}, CC={y:.2f}")
+        elements.append(f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="6" fill="{color}"><title>{tooltip}</title></circle>')
     elements.append(svg_text(370, 455, "planning_index", size=12, anchor="middle"))
     elements.append(svg_text(20, 240, "code_churn", size=12, anchor="middle"))
     elements.append("</svg>")

@@ -10,6 +10,7 @@ import unittest
 from pathlib import Path
 
 from pipeline_core import (
+    anonymize_csv_file,
     build_anonymization_mapping,
     compute_metrics,
     correlation_rows,
@@ -62,6 +63,18 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertNotIn("Alice", (output_dir / "feedback.txt").read_text(encoding="utf-8"))
             mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
             self.assertIn("Alice", mapping["mapping"])
+
+    def test_anonymize_csv_uses_salted_fallback_for_late_identifiers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "reviewers.csv"
+            csv_path.write_text("avaliador,comentario\nCarol,Carol aprovou o escopo\n", encoding="utf-8")
+            output_path = tmp_path / "anon.csv"
+
+            anonymize_csv_file(csv_path, output_path, mapping={}, salt="pepper")
+
+            rows = load_records(output_path)
+            self.assertEqual("anon_8c20d385a603", rows[0]["avaliador"])
 
     def test_git_history_is_anonymized_and_mirrored(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
