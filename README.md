@@ -7,6 +7,7 @@ Pipeline inicial para gerar, anonimizar, enriquecer e analisar os dados do artig
 - `run_pipeline.py`: orquestra as etapas da Fase 1 na ordem definida.
 - `00_audio_preparer.py`: comprime e segmenta áudios para o limite da API.
 - `00_audio_transcriber.py`: transcreve áudios preparados em português para `.txt` e `.json`.
+- `01_ner_extractor.py`: usa OpenAI para identificar candidatos a nomes de pessoas em transcrições brutas.
 - `01_anonymizer.py`: anonimiza CSVs e transcrições, gerando `chave_relacional.json`.
 - `02_git_parser.py`: extrai histórico Git anonimizado e espelha repositórios sem `.git`.
 - `03_data_lake_builder.py`: consolida entradas anonimizadas em `master_dataset.parquet`.
@@ -46,20 +47,29 @@ os scripts numerados continuam disponíveis como pontos de entrada independentes
 
 Todos os prompts enviados a serviços externos de IA ficam centralizados em
 `pipeline_prompts.py`. Esse catálogo é a referência auditável para pesquisadores
-e não pode conter PII, segredos, nomes reais ou outros dados de origem. O prompt
-operacional pode usar o idioma dos dados; a referência equivalente em inglês é
-mantida para auditoria e publicação internacional e não é enviada ao Whisper.
+e não pode conter PII, segredos, nomes reais ou outros dados de origem.
+
+Sob supervisão do pesquisador, os áudios brutos são enviados à OpenAI para
+transcrição e as transcrições brutas são enviadas uma vez à OpenAI para NER. A
+prioridade de proteção deste projeto é impedir que PII seja exposta nos artefatos
+processados, no Data Lake, no pacote de replicação ou em material publicado. A
+etapa NER armazena somente candidatos a pessoas, nunca o texto transcrito, e seus
+artefatos são privados e ignorados pelo Git. Todo `data/processed/` e `data/lake/`
+é privado por padrão; um pacote de replicação deve exportar somente artefatos
+auditados após a verificação de PII. O `ANONYMIZATION_SALT` nunca é enviado à OpenAI.
 
 ## Execução da Fase 1
 
-O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `anonymize`,
-`git` e `lake`, usando o mesmo interpretador Python que o iniciou. A preparação
+O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `ner`,
+`anonymize`, `git` e `lake`, usando o mesmo interpretador Python que o iniciou. A preparação
 converte os áudios originais para MP3 mono a 16 kHz e 48 kbps em
 `data/processed/audio_chunks`; arquivos que ainda ultrapassem 25 MiB são
 divididos em segmentos de 10 minutos. A transcrição consome somente esses
 arquivos preparados e envia `language="pt"` e um prompt genérico para preservar
 nomes próprios, siglas, termos técnicos e pontuação. O prompt não contém PII e
-não substitui a anonimização local posterior. A anonimização busca
+não substitui a anonimização local posterior. O NER usa `gpt-4o-mini` e resposta
+JSON estrita para identificar candidatos a pessoas, processando apenas
+transcrições pendentes por checksum. A anonimização busca
 recursivamente CSVs em `data/raw/forms` e transcrições `.txt` e `.json` em
 `data/processed/transcripts`; os resultados são escritos em
 `data/processed/forms` e `data/processed/transcripts_anon`, preservando os
@@ -104,8 +114,9 @@ streamlit run 07_dashboard_app.py -- --input outputs/metrics_dataset.parquet
 - Os áudios preparados em `data/processed/audio_chunks` são dados derivados e
 	permanecem fora do Git, assim como os áudios brutos.
 - A anonimização usa hashes SHA-256 truncados com prefixo `anon_`.
-- A anonimização de transcrições substitui e-mails, rótulos de falantes e nomes
-	próprios identificáveis mencionados no texto corrido.
+- A anonimização de transcrições substitui e-mails, rótulos de falantes e os
+	nomes de pessoas identificados pelo NER. Candidatos NER e mapeamentos são
+	artefatos privados e não devem ser publicados.
 - Os datasets tabulares centrais são persistidos em Parquet.
 - As visualizações são exportadas em SVG para facilitar versionamento e publicação.
 - Os produtores da Fase 1 registram um checksum SHA-256 em sidecars `.metadata.json` e ignoram somente artefatos com status `success` e entradas inalteradas. Use `--force` para regenerar um artefato intencionalmente.

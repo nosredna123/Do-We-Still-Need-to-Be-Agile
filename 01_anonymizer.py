@@ -79,6 +79,20 @@ def collect_csv_identifiers(csv_path: Path) -> list[str]:
     return sorted(identifiers)
 
 
+def load_person_names(candidates_dir: Path) -> list[str]:
+    """Load validated person candidates emitted by the OpenAI NER stage."""
+    person_names: set[str] = set()
+    for candidate_path in discover_files(candidates_dir, {".json"}):
+        data = json.loads(candidate_path.read_text(encoding="utf-8"))
+        entities = data.get("person_entities")
+        if not isinstance(entities, list) or not all(
+            isinstance(entity, str) and entity.strip() for entity in entities
+        ):
+            raise ValueError(f"Invalid NER candidate artifact: {candidate_path}")
+        person_names.update(entity.strip() for entity in entities)
+    return sorted(person_names)
+
+
 def main() -> None:
     """Main entry point for anonymizer."""
     load_project_environment()
@@ -104,6 +118,9 @@ def main() -> None:
     parser.add_argument("--forms-dir", type=Path, default=Path("data/raw/forms"))
     parser.add_argument(
         "--transcripts-dir", type=Path, default=Path("data/processed/transcripts")
+    )
+    parser.add_argument(
+        "--ner-candidates-dir", type=Path, default=Path("data/processed/ner_candidates")
     )
     parser.add_argument(
         "--output-dir",
@@ -146,6 +163,7 @@ def main() -> None:
     )
     if not csv_paths and not transcript_paths:
         raise FileNotFoundError("No CSV or transcript artifacts found to anonymize")
+    person_names = load_person_names(args.ner_candidates_dir)
     csv_outputs = [(path, output_path(path, args.forms_dir, args.output_dir)) for path in csv_paths]
     transcript_outputs = [
         (path, output_path(path, args.transcripts_dir, args.transcripts_output_dir))
@@ -161,7 +179,7 @@ def main() -> None:
         for identifier in collect_csv_identifiers(csv_path)
     ]
     mapping = build_anonymization_mapping(
-        [csv_identifiers], transcript_paths, salt=salt
+        [csv_identifiers], transcript_paths, salt=salt, person_names=person_names
     )
 
     logger.info(f"Found {len(mapping)} identifiers to anonymize")

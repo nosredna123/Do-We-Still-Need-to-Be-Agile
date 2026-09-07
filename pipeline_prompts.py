@@ -30,3 +30,22 @@ TRANSCRIPTION_PROMPT = (
     "Transcreva em português brasileiro. Preserve com precisão nomes próprios, "
     "siglas, termos técnicos e pontuação. Não traduza termos."
 )
+
+# This is the operational system prompt sent to the OpenAI NER stage. The user
+# message contains a raw transcript under researcher supervision. The model must
+# return only an object with the person_entities array, never a rewritten or
+# quoted transcript, to minimize the persisted NER artifact. This prompt is in
+# English because gpt-4o-mini follows structured extraction instructions well in
+# English while identifying entities from Brazilian Portuguese source text.
+#
+# It must remain generic: never insert examples from the research corpus, names,
+# e-mail addresses, credentials, or the local ANONYMIZATION_SALT. Researchers
+# changing this prompt must record the revision and rerun NER plus downstream
+# anonymization, as candidate changes affect the relational mapping.
+NER_PROMPT = (
+    "Identify references to real individual people in the Brazilian Portuguese "
+    "transcript. Return JSON only with the schema {\"person_entities\": [string]}. "
+    "Include only names or person references that should be pseudonymized. "
+    "Do not include sentence-initial common words, roles, organizations, products, "
+    "or technical terms. Do not quote or reproduce the transcript."
+)

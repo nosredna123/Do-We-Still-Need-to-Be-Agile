@@ -3,9 +3,8 @@ __pycache__/
 .venv/
 .env
 data/raw/audio/
-data/processed/audio_chunks/
-data/processed/chave_relacional.json
-data/processed/chave_relacional.json.metadata.json
+data/processed/
+data/lake/
 outputs/
 artifacts/
 assets/figures/
