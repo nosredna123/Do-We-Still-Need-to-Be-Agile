@@ -515,6 +515,23 @@ class PipelineCoreTests(unittest.TestCase):
         )
         self.assertEqual(3, run_mock.call_count)
 
+    def test_mirror_clean_repo_removes_git_metadata(self) -> None:
+        git_parser = load_script_module("git_parser_mirror", "02_git_parser.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            repo_path = tmp_path / "repo-cache"
+            repo_path.mkdir()
+            (repo_path / ".git").mkdir()
+            (repo_path / ".git" / "config").write_text("[core]\n", encoding="utf-8")
+            (repo_path / "README.md").write_text("content", encoding="utf-8")
+
+            clean_dir = tmp_path / "clean"
+            mirrored = git_parser.mirror_clean_repo(repo_path, clean_dir)
+
+            self.assertEqual(clean_dir / repo_path.name, mirrored)
+            self.assertTrue((mirrored / "README.md").exists())
+            self.assertFalse((mirrored / ".git").exists())
+
     def test_parquet_roundtrip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             path = Path(tmp_dir) / "data.parquet"
