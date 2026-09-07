@@ -14,6 +14,7 @@ from unittest import mock
 from openai import OpenAI
 
 import pipeline_core
+import pipeline_prompts
 
 from pipeline_core import (
     anonymize_csv_file,
@@ -835,9 +836,10 @@ class PipelineCoreTests(unittest.TestCase):
 
         request_kwargs = client.audio.transcriptions.create.call_args.kwargs
         self.assertEqual("pt", request_kwargs["language"])
-        self.assertEqual(audio_transcriber.TRANSCRIPTION_PROMPT, request_kwargs["prompt"])
+        self.assertEqual(pipeline_prompts.TRANSCRIPTION_PROMPT, request_kwargs["prompt"])
         self.assertIn("nomes próprios", request_kwargs["prompt"])
         self.assertNotRegex(request_kwargs["prompt"], r"@[\w.-]+")
+        self.assertFalse(hasattr(pipeline_prompts, "TRANSCRIPTION_PROMPT_EN_REFERENCE"))
 
     def test_audio_transcriber_recursively_processes_session_folders(self) -> None:
         audio_transcriber = load_script_module(

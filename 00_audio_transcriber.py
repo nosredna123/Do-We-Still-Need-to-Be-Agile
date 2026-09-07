@@ -24,12 +24,9 @@ from pipeline_core import (
     load_project_environment,
     write_artifact_metadata,
 )
+from pipeline_prompts import TRANSCRIPTION_PROMPT
 
 logger = logging.getLogger(__name__)
-TRANSCRIPTION_PROMPT = (
-    "Transcreva em português brasileiro. Preserve com precisão nomes próprios, "
-    "siglas, termos técnicos e pontuação. Não traduza termos."
-)
 
 
 def transcribe_audio_file(
