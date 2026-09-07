@@ -140,6 +140,8 @@ def main() -> None:
     transcript_paths = list(
         dict.fromkeys([*discover_files(args.transcripts_dir, {".txt", ".json"}), *args.transcript])
     )
+    if not csv_paths and not transcript_paths:
+        raise FileNotFoundError("No CSV or transcript artifacts found to anonymize")
     csv_outputs = [(path, output_path(path, args.forms_dir, args.output_dir)) for path in csv_paths]
     transcript_outputs = [
         (path, output_path(path, args.transcripts_dir, args.transcripts_output_dir))

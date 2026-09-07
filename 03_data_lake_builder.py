@@ -65,16 +65,11 @@ def load_form_files(forms_dir: Path) -> pd.DataFrame:
 
     for csv_file in forms_dir.glob("*.csv"):
         logger.info(f"Loading form: {csv_file.name}")
-        try:
-            df = pd.read_csv(csv_file)
-            # Infer temporal marker from filename
-            temporal = normalize_temporal_marker(csv_file.stem)
-            if temporal:
-                df["temporal_marker"] = temporal
-
-            dfs.append(df)
-        except Exception as e:
-            logger.warning(f"Failed to load {csv_file}: {e}")
+        df = pd.read_csv(csv_file)
+        temporal = normalize_temporal_marker(csv_file.stem)
+        if temporal:
+            df["temporal_marker"] = temporal
+        dfs.append(df)
 
     if dfs:
         return pd.concat(dfs, ignore_index=True)
@@ -95,9 +90,7 @@ def load_git_logs(git_csv_path: Path) -> pd.DataFrame:
         logger.info(f"Loading Git logs from {git_csv_path}")
         df = pd.read_csv(git_csv_path)
         return df
-    else:
-        logger.warning(f"Git logs file not found: {git_csv_path}")
-        return pd.DataFrame()
+    raise FileNotFoundError(f"Git logs file not found: {git_csv_path}")
 
 
 def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
@@ -112,30 +105,16 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
     rows = []
 
     for json_file in transcripts_dir.glob("*.json"):
-        try:
-            data = json.loads(json_file.read_text(encoding="utf-8"))
-            team_id = data.get("ID_Equipe")
-            semester = data.get("Semestre")
-            if not team_id or not semester:
-                logger.warning(
-                    "Skipping transcript %s without required ID_Equipe/Semestre metadata",
-                    json_file,
-                )
-                continue
-            row = {
-                "ID_Equipe": team_id,
-                "Semestre": semester,
-                "transcript_file": json_file.name,
-                "transcript_text": data.get("text", ""),
-                "status": data.get("status", "unknown"),
-            }
-            temporal = normalize_temporal_marker(json_file.stem)
-            if temporal:
-                row["temporal_marker"] = temporal
-
-            rows.append(row)
-        except Exception as e:
-            logger.warning(f"Failed to load transcript {json_file}: {e}")
+        data = json.loads(json_file.read_text(encoding="utf-8"))
+        team_id = data.get("ID_Equipe")
+        semester = data.get("Semestre")
+        if not team_id or not semester:
+            raise ValueError(f"Transcript {json_file} lacks ID_Equipe or Semestre")
+        row = {"ID_Equipe": team_id, "Semestre": semester, "transcript_file": json_file.name, "transcript_text": data.get("text", ""), "status": data.get("status", "unknown")}
+        temporal = normalize_temporal_marker(json_file.stem)
+        if temporal:
+            row["temporal_marker"] = temporal
+        rows.append(row)
 
     if rows:
         return pd.DataFrame(rows)
@@ -324,7 +303,7 @@ def main() -> None:
     parser.add_argument(
         "--transcripts-dir",
         type=Path,
-        default=Path("data/processed/transcripts"),
+        default=Path("data/processed/transcripts_anon"),
         help="Directory with transcript JSON files",
     )
     parser.add_argument(
