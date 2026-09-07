@@ -116,9 +116,6 @@ def main() -> None:
         stages = resolve_stages(args.stages, args.from_stage, args.to_stage)
     except ValueError as error:
         parser.error(str(error))
-    if "anonymize" in stages and not (args.csv or args.transcript):
-        parser.error("anonymize requires at least one --csv or --transcript")
-
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",

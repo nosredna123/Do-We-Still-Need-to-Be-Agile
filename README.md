@@ -34,6 +34,7 @@ sem sobrescrever variáveis já definidas no ambiente.
 
 ```dotenv
 OPENAI_API_KEY=sua_chave
+ANONYMIZATION_SALT=segredo_aleatorio
 ```
 
 O módulo `pipeline_core.py` centraliza funções reutilizáveis do pipeline,
@@ -44,25 +45,28 @@ os scripts numerados continuam disponíveis como pontos de entrada independentes
 ## Execução da Fase 1
 
 O orquestrador executa as etapas na ordem `transcribe`, `anonymize`, `git` e
-`lake`, usando o mesmo interpretador Python que o iniciou. Os CSVs e as
-transcrições destinados à anonimização são obrigatórios quando essa etapa é
-selecionada, pois os nomes dos formulários brutos não são padronizados pelo
-projeto.
+`lake`, usando o mesmo interpretador Python que o iniciou. A anonimização busca
+recursivamente CSVs em `data/raw/forms` e transcrições `.txt` e `.json` em
+`data/processed/transcripts`; os resultados são escritos em
+`data/processed/forms` e `data/processed/transcripts_anon`, preservando os
+caminhos relativos. `ANONYMIZATION_SALT` é obrigatório, salvo quando `--salt` é
+fornecido explicitamente.
 
 ```bash
 .venv/bin/python run_pipeline.py \
-	--csv data/raw/forms/alunos_t1.csv \
-	--csv data/raw/forms/avaliadores_t1.csv
+	--dry-run
 ```
 
-Use `--stages` para executar etapas específicas, `--from-stage` e `--to-stage`
-para uma faixa contínua, `--dry-run` para apenas listar os comandos, e `--force`
-para propagar a regeneração intencional a todas as etapas selecionadas.
+Use `--csv` e `--transcript` para acrescentar arquivos fora dos diretórios
+padrão. Artefatos com metadados válidos e checksum inalterado são ignorados;
+novos ou alterados são processados individualmente. Use `--stages` para executar
+etapas específicas, `--from-stage` e `--to-stage` para uma faixa contínua,
+`--dry-run` para apenas listar os comandos, e `--force` para propagar a
+regeneração intencional a todas as etapas selecionadas.
 
 ```bash
 .venv/bin/python run_pipeline.py --stages git lake --dry-run
-.venv/bin/python run_pipeline.py --from-stage anonymize --to-stage lake --force \
-	--csv data/raw/forms/alunos_t1.csv
+.venv/bin/python run_pipeline.py --from-stage anonymize --to-stage lake --force
 ```
 
 ## Exemplo de uso
