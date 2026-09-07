@@ -8,6 +8,7 @@ import tempfile
 import unittest
 import importlib.util
 from pathlib import Path
+from unittest import mock
 
 from pipeline_core import (
     anonymize_csv_file,
@@ -285,6 +286,62 @@ class PipelineCoreTests(unittest.TestCase):
             [3, 7],
             merged.sort_values("Semestre")["lines_added"].tolist(),
         )
+
+    def test_aggregate_by_team_avoids_cross_semester_join_when_only_git_has_semestre(self) -> None:
+        data_lake_builder = load_script_module("data_lake_builder_single_sem", "03_data_lake_builder.py")
+        forms_df = data_lake_builder.pd.DataFrame(
+            [{"ID_Equipe": "A", "temporal_marker": "T1", "feedback": "one"}]
+        )
+        git_df = data_lake_builder.pd.DataFrame(
+            [
+                {
+                    "ID_Equipe": "A",
+                    "Semestre": "2024.1",
+                    "temporal_marker": "T1",
+                    "lines_added": 3,
+                    "lines_deleted": 1,
+                    "files_changed": 1,
+                    "ID_Autor_Local": "Dev_A",
+                    "commit_hash": "abc",
+                }
+            ]
+        )
+
+        merged = data_lake_builder.aggregate_by_team(forms_df, git_df)
+        self.assertTrue(data_lake_builder.pd.isna(merged.loc[0, "lines_added"]))
+
+    def test_audio_transcriber_writes_json_and_txt_outputs(self) -> None:
+        audio_transcriber = load_script_module("audio_transcriber", "00_audio_transcriber.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            audio_dir.mkdir()
+            (audio_dir / "sample.ogg").write_bytes(b"fake audio")
+
+            with mock.patch.object(
+                audio_transcriber,
+                "transcribe_audio_file",
+                return_value={"status": "success", "text": "hello world"},
+            ):
+                with mock.patch.object(
+                    sys,
+                    "argv",
+                    [
+                        "00_audio_transcriber.py",
+                        "--audio-dir",
+                        str(audio_dir),
+                        "--output-dir",
+                        str(output_dir),
+                    ],
+                ):
+                    audio_transcriber.main()
+
+            self.assertTrue((output_dir / "sample.json").exists())
+            self.assertEqual(
+                "hello world",
+                (output_dir / "sample.txt").read_text(encoding="utf-8"),
+            )
 
     def test_map_authors_by_volume_uses_aliases(self) -> None:
         git_parser = load_script_module("git_parser", "02_git_parser.py")
