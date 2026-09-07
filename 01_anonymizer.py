@@ -16,6 +16,7 @@ import argparse
 import csv
 import json
 import logging
+import re
 from pathlib import Path
 
 from pipeline_core import (
@@ -39,11 +40,14 @@ def collect_csv_identifiers(csv_path: Path) -> list[str]:
         reader = csv.DictReader(f)
         for row in reader:
             for key, value in row.items():
-                if isinstance(value, str) and value and (
-                    key in ("email", "nome", "name", "avaliador", "comentario")
-                    or "@" in value
-                ):
+                if not isinstance(value, str) or not value:
+                    continue
+                if key in ("email", "nome", "name", "avaliador"):
                     identifiers.add(value)
+                elif "@" in value:
+                    identifiers.update(
+                        re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", value)
+                    )
 
     return sorted(identifiers)
 
