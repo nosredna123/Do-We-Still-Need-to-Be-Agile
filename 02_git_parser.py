@@ -13,7 +13,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import csv
 import logging
 import subprocess
 from collections import defaultdict
@@ -85,14 +84,14 @@ def map_authors_by_volume(
         Mapping of email -> Dev_X designation
     """
     email_counts: dict[str, int] = defaultdict(int)
-    
+
     for row in commit_rows:
         email = row.get("author_email", "unknown")
         email_counts[email] += 1
 
     # Sort by commit count (descending)
     sorted_emails = sorted(email_counts.items(), key=lambda x: x[1], reverse=True)
-    
+
     author_mapping = {}
     for idx, (email, count) in enumerate(sorted_emails):
         # Map to Dev_A, Dev_B, Dev_C, etc.
@@ -170,7 +169,7 @@ def main() -> None:
             commit_row["ID_Equipe"] = team_id
             commit_row["Semestre"] = semestre
             commit_row["ID_Autor_Local"] = author_mapping.get(author_email, "unknown")
-            
+
             all_commit_rows.append(commit_row)
 
     logger.info(f"Extracted {len(all_commit_rows)} total commits")
@@ -178,10 +177,10 @@ def main() -> None:
     # Write to CSV
     if all_commit_rows:
         output_df = pd.DataFrame(all_commit_rows)
-        
+
         # Ensure output directory exists
         args.output_csv.parent.mkdir(parents=True, exist_ok=True)
-        
+
         output_df.to_csv(args.output_csv, index=False)
         logger.info(f"Wrote Git logs to {args.output_csv}")
     else:

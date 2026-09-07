@@ -43,7 +43,7 @@ def transcribe_audio_file(
 
     try:
         logger.info(f"Transcribing: {audio_path.name}")
-        
+
         with audio_path.open("rb") as f:
             transcript = client.audio.transcriptions.create(
                 model="whisper-1",
@@ -113,7 +113,7 @@ def main() -> None:
 
         output_file = args.output_dir / f"{audio_file.stem}.json"
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
-        
+
         if result.get("status") == "success":
             logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")
         else:

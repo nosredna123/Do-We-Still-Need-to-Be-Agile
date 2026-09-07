@@ -18,7 +18,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 import pandas as pd
 
@@ -64,7 +64,7 @@ def load_form_files(forms_dir: Path) -> pd.DataFrame:
             temporal = normalize_temporal_marker(csv_file.stem)
             if temporal:
                 df["temporal_marker"] = temporal
-            
+
             dfs.append(df)
         except Exception as e:
             logger.warning(f"Failed to load {csv_file}: {e}")
@@ -115,7 +115,7 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
             temporal = normalize_temporal_marker(json_file.stem)
             if temporal:
                 row["temporal_marker"] = temporal
-            
+
             rows.append(row)
         except Exception as e:
             logger.warning(f"Failed to load transcript {json_file}: {e}")
@@ -161,7 +161,13 @@ def aggregate_by_team(
             "ID_Autor_Local": "nunique",
             "commit_hash": "count",
         }).reset_index()
-        git_agg.rename(columns={"ID_Autor_Local": "num_authors", "commit_hash": "num_commits"}, inplace=True)
+        git_agg.rename(
+            columns={
+                "ID_Autor_Local": "num_authors",
+                "commit_hash": "num_commits",
+            },
+            inplace=True,
+        )
     else:
         git_agg = pd.DataFrame()
 
@@ -216,9 +222,17 @@ def main() -> None:
     logger.info("Building data lake...")
 
     # Load all data sources
-    forms_df = load_form_files(args.forms_dir) if args.forms_dir.exists() else pd.DataFrame()
+    forms_df = (
+        load_form_files(args.forms_dir)
+        if args.forms_dir.exists()
+        else pd.DataFrame()
+    )
     git_df = load_git_logs(args.git_logs)
-    transcripts_df = load_transcripts(args.transcripts_dir) if args.transcripts_dir.exists() else pd.DataFrame()
+    transcripts_df = (
+        load_transcripts(args.transcripts_dir)
+        if args.transcripts_dir.exists()
+        else pd.DataFrame()
+    )
 
     logger.info(f"Loaded {len(forms_df)} form records")
     logger.info(f"Loaded {len(git_df)} git records")
@@ -229,7 +243,9 @@ def main() -> None:
 
     # Normalize temporal markers
     if "temporal_marker" in master_df.columns:
-        master_df["temporal_marker"] = master_df["temporal_marker"].apply(normalize_temporal_marker)
+        master_df["temporal_marker"] = master_df[
+            "temporal_marker"
+        ].apply(normalize_temporal_marker)
 
     # Ensure output directory exists
     args.output_parquet.parent.mkdir(parents=True, exist_ok=True)
