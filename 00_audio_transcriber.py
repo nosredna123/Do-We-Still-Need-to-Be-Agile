@@ -119,20 +119,25 @@ def main() -> None:
     for audio_file in audio_files:
         relative_audio_path = audio_file.relative_to(args.audio_dir)
         output_file = args.output_dir / relative_audio_path.with_suffix(".json")
+        text_output_file = output_file.with_suffix(".txt")
         output_file.parent.mkdir(parents=True, exist_ok=True)
         input_checksum = file_checksum(audio_file)
-        if not args.force and is_current_artifact(output_file, input_checksum):
+        if (
+            not args.force
+            and is_current_artifact(output_file, input_checksum)
+            and is_current_artifact(text_output_file, input_checksum)
+        ):
             logger.info("Skipping current transcript: %s", audio_file.name)
             continue
 
         result = transcribe_audio_file(audio_file, api_key=args.api_key)
 
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
-        text_output_file = output_file.with_suffix(".txt")
         text_output_file.write_text(str(result.get("text", "")), encoding="utf-8")
 
         if result.get("status") == "success":
             write_artifact_metadata(output_file, input_checksum)
+            write_artifact_metadata(text_output_file, input_checksum)
             logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")
         else:
             logger.warning(f"Failed to transcribe: {audio_file.name}")
