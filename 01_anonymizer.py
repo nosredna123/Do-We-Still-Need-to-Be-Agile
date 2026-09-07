@@ -43,7 +43,11 @@ def discover_files(directory: Path, suffixes: set[str]) -> list[Path]:
     if not directory.exists():
         return []
     return sorted(
-        path for path in directory.rglob("*") if path.is_file() and path.suffix.lower() in suffixes
+        path
+        for path in directory.rglob("*")
+        if path.is_file()
+        and path.suffix.lower() in suffixes
+        and not path.name.endswith(".metadata.json")
     )
 
 
@@ -185,10 +189,7 @@ def main() -> None:
     # Write mapping (restricted file)
     logger.info(f"Writing mapping to {args.mapping_path}")
     args.mapping_path.parent.mkdir(parents=True, exist_ok=True)
-    mapping_data = {
-        "salt": salt,
-        "mapping": mapping,
-    }
+    mapping_data = {"mapping": mapping}
     args.mapping_path.write_text(json.dumps(mapping_data, indent=2), encoding="utf-8")
     write_artifact_metadata(
         args.mapping_path,

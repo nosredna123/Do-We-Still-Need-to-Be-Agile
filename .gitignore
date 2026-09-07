@@ -4,6 +4,8 @@ __pycache__/
 .env
 data/raw/audio/
 data/processed/audio_chunks/
+data/processed/chave_relacional.json
+data/processed/chave_relacional.json.metadata.json
 outputs/
 artifacts/
 assets/figures/
