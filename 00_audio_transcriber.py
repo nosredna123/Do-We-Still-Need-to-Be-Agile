@@ -110,14 +110,16 @@ def main() -> None:
 
     audio_extensions = {".mp3", ".wav", ".m4a", ".flac", ".ogg"}
     audio_files = [
-        f for f in args.audio_dir.iterdir()
+        f for f in args.audio_dir.rglob("*")
         if f.is_file() and f.suffix.lower() in audio_extensions
     ]
 
     logger.info(f"Found {len(audio_files)} audio files in {args.audio_dir}")
 
     for audio_file in audio_files:
-        output_file = args.output_dir / f"{audio_file.stem}.json"
+        relative_audio_path = audio_file.relative_to(args.audio_dir)
+        output_file = args.output_dir / relative_audio_path.with_suffix(".json")
+        output_file.parent.mkdir(parents=True, exist_ok=True)
         input_checksum = file_checksum(audio_file)
         if not args.force and is_current_artifact(output_file, input_checksum):
             logger.info("Skipping current transcript: %s", audio_file.name)
@@ -126,7 +128,7 @@ def main() -> None:
         result = transcribe_audio_file(audio_file, api_key=args.api_key)
 
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
-        text_output_file = args.output_dir / f"{audio_file.stem}.txt"
+        text_output_file = output_file.with_suffix(".txt")
         text_output_file.write_text(str(result.get("text", "")), encoding="utf-8")
 
         if result.get("status") == "success":
