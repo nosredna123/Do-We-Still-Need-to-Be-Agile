@@ -148,7 +148,11 @@ def source_paths(
     if forms_dir.exists():
         paths.extend(forms_dir.glob("*.csv"))
     if transcripts_dir.exists():
-        paths.extend(transcripts_dir.glob("*.json"))
+        paths.extend(
+            path
+            for path in transcripts_dir.glob("*.json")
+            if not path.name.endswith(".metadata.json")
+        )
     return paths
 
 
