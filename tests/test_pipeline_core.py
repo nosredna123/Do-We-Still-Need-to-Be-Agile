@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 import importlib.util
+import warnings
 from pathlib import Path
 from unittest import mock
 
@@ -866,7 +867,9 @@ class PipelineCoreTests(unittest.TestCase):
             path = Path(tmp_dir) / "data.parquet"
             rows = [{"participant": "anon_1", "code_churn": 5.0}]
             write_records(path, rows)
-            loaded = load_records(path)
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", DeprecationWarning)
+                loaded = load_records(path)
             self.assertEqual(rows, loaded)
 
     def test_load_records_preserves_csv_strings(self) -> None:
