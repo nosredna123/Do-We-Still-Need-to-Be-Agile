@@ -25,6 +25,20 @@ Dependências opcionais por script:
 - `openai-whisper` para `00_audio_transcriber.py --backend whisper`
 - `streamlit` para `07_dashboard_app.py`
 
+## Configuração
+
+Defina segredos e configurações compartilhadas no arquivo `.env` na raiz do
+projeto. Todos os scripts da Fase 1 carregam esse arquivo no início da execução,
+sem sobrescrever variáveis já definidas no ambiente.
+
+```dotenv
+OPENAI_API_KEY=sua_chave
+```
+
+O módulo `pipeline_core.py` centraliza funções reutilizáveis do pipeline,
+incluindo a carga da configuração compartilhada. Ele não inicia nem orquestra
+as etapas: cada script numerado é um ponto de entrada independente.
+
 ## Exemplo de uso
 
 ```bash

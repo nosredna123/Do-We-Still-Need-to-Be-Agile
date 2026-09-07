@@ -21,10 +21,17 @@ from typing import Any, Mapping
 import subprocess
 
 import pandas as pd
+from dotenv import load_dotenv
 from scipy import stats
 
 logger = logging.getLogger(__name__)
+DOTENV_PATH = Path(__file__).resolve().with_name(".env")
 IDENTIFIER_FIELD_TOKENS = {"email", "mail", "nome", "name", "aluno", "avaliador"}
+
+
+def load_project_environment() -> bool:
+    """Load the project dotenv file without overriding process variables."""
+    return load_dotenv(dotenv_path=DOTENV_PATH, override=False)
 
 
 def file_checksum(path: Path) -> str:
