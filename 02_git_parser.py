@@ -182,6 +182,7 @@ def main() -> None:
             commit_row["ID_Equipe"] = team_id
             commit_row["Semestre"] = semestre
             commit_row["ID_Autor_Local"] = author_mapping.get(author_alias, "unknown")
+            commit_row.pop("author_alias", None)
             commit_row.pop("author_email", None)
 
             all_commit_rows.append(commit_row)
