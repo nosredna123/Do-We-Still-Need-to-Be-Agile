@@ -72,18 +72,19 @@ def transcribe_audio_file(
 def main() -> None:
     """Main entry point for audio transcriber."""
     parser = argparse.ArgumentParser(
-        description="Transcribe audio files using Whisper API"
+        description="Transcribe audio files using Whisper API",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         "--audio-dir",
         type=Path,
-        required=True,
+        default=Path("data/raw/audio"),
         help="Directory containing audio files (.mp3, .wav)",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        required=True,
+        default=Path("data/processed/transcripts"),
         help="Directory to write transcription JSON files",
     )
     parser.add_argument(

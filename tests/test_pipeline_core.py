@@ -36,6 +36,41 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_phase_one_cli_paths_have_pipeline_defaults(self) -> None:
+        expected_defaults = {
+            "00_audio_transcriber.py": {
+                "audio-dir": "data/raw/audio",
+                "output-dir": "data/processed/transcripts",
+            },
+            "01_anonymizer.py": {
+                "output-dir": "data/processed/forms",
+                "mapping-path": "data/processed/chave_relacional.json",
+            },
+            "02_git_parser.py": {
+                "repos-list": "data/raw/repos_list.csv",
+                "output-csv": "data/processed/git_logs_anon.csv",
+            },
+            "03_data_lake_builder.py": {
+                "output-parquet": "data/lake/master_dataset.parquet",
+            },
+        }
+
+        for script_name, defaults in expected_defaults.items():
+            completed_process = subprocess.run(
+                [sys.executable, str(REPO_ROOT / script_name), "--help"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            help_output = " ".join(completed_process.stdout.split())
+
+            for option, value in defaults.items():
+                self.assertIn(
+                    f"(default: {value})",
+                    help_output,
+                    msg=f"{script_name} must default --{option} to {value}",
+                )
+
     def test_anonymization_mapping_and_transcript_redaction(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp_path = Path(tmp_dir)
@@ -711,12 +746,14 @@ class PipelineCoreTests(unittest.TestCase):
                 json.dumps({"input_checksum": checksum, "status": "success"}),
                 encoding="utf-8",
             )
+            clean_repos_dir = tmp_path / "clean"
+            (clean_repos_dir / "a").mkdir(parents=True)
 
             with mock.patch.object(git_parser, "clone_or_update_repo") as clone:
                 with mock.patch.object(sys, "argv", [
                     "02_git_parser.py", "--repos-list", str(repos_list), "--output-csv",
                     str(output_csv), "--cache-dir", str(tmp_path / "cache"),
-                    "--clean-repos-dir", str(tmp_path / "clean"),
+                    "--clean-repos-dir", str(clean_repos_dir),
                 ]):
                     git_parser.main()
 
