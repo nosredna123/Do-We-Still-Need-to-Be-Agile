@@ -43,35 +43,25 @@ def transcribe_audio_file(
     """
     try:
         from openai import OpenAI
-    except ImportError:
-        logger.error("openai package not installed. Install with: pip install openai")
-        return {"error": "openai not installed"}
+    except ImportError as error:
+        raise RuntimeError("openai package is not installed") from error
 
     client = OpenAI(api_key=api_key)
+    logger.info(f"Transcribing: {audio_path.name}")
 
-    try:
-        logger.info(f"Transcribing: {audio_path.name}")
+    with audio_path.open("rb") as f:
+        transcript = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=f,
+        )
 
-        with audio_path.open("rb") as f:
-            transcript = client.audio.transcriptions.create(
-                model="whisper-1",
-                file=f,
-            )
-
-        return {
-            "filename": audio_path.name,
-            "duration": None,
-            "text": transcript.text,
-            "timestamp": None,
-            "status": "success",
-        }
-    except Exception as e:
-        logger.error(f"Failed to transcribe {audio_path}: {e}")
-        return {
-            "filename": audio_path.name,
-            "error": str(e),
-            "status": "error",
-        }
+    return {
+        "filename": audio_path.name,
+        "duration": None,
+        "text": transcript.text,
+        "timestamp": None,
+        "status": "success",
+    }
 
 
 def main() -> None:
@@ -143,12 +133,9 @@ def main() -> None:
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
         text_output_file.write_text(str(result.get("text", "")), encoding="utf-8")
 
-        if result.get("status") == "success":
-            write_artifact_metadata(output_file, input_checksum)
-            write_artifact_metadata(text_output_file, input_checksum)
-            logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")
-        else:
-            logger.warning(f"Failed to transcribe: {audio_file.name}")
+        write_artifact_metadata(output_file, input_checksum)
+        write_artifact_metadata(text_output_file, input_checksum)
+        logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")
 
     logger.info("Transcription complete")
 

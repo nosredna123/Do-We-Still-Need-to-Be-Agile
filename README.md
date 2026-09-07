@@ -83,6 +83,10 @@ streamlit run 07_dashboard_app.py -- --input outputs/metrics_dataset.parquet
 
 ## Convenções adotadas
 
+- As etapas da Fase 1 são fail-fast: falhas de API, fontes ausentes ou
+	inválidas, repositórios inacessíveis e dados malformados encerram a etapa e
+	impedem a geração de resultados parciais. A transcrição OpenAI aceita no
+	máximo 25 MiB por arquivo; divida ou comprima gravações maiores antes de rodar.
 - A anonimização usa hashes SHA-256 truncados com prefixo `anon_`.
 - Os datasets tabulares centrais são persistidos em Parquet.
 - As visualizações são exportadas em SVG para facilitar versionamento e publicação.
