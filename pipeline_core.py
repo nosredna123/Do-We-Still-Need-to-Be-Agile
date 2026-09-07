@@ -74,7 +74,7 @@ def is_current_artifact(artifact_path: Path, source_checksum: str) -> bool:
 
     try:
         metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
+    except (json.JSONDecodeError, UnicodeError, OSError):
         return False
 
     return (
