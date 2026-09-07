@@ -41,6 +41,83 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_audio_preparer_builds_compression_command(self) -> None:
+        audio_preparer = load_script_module("audio_preparer", "00_audio_preparer.py")
+
+        command = audio_preparer.compression_command(
+            Path("raw/session/recording.m4a"), Path("prepared/session/recording.mp3")
+        )
+
+        self.assertEqual(
+            [
+                "ffmpeg",
+                "-y",
+                "-i",
+                "raw/session/recording.m4a",
+                "-ac",
+                "1",
+                "-ar",
+                "16000",
+                "-b:a",
+                "48k",
+                "prepared/session/recording.mp3",
+            ],
+            command,
+        )
+
+    def test_audio_preparer_skips_current_prepared_audio(self) -> None:
+        audio_preparer = load_script_module(
+            "audio_preparer_skip_current", "00_audio_preparer.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            source_dir = tmp_path / "raw"
+            output_dir = tmp_path / "prepared"
+            source_dir.mkdir()
+            source_path = source_dir / "recording.m4a"
+            source_path.write_bytes(b"source")
+            output_path = output_dir / "recording.mp3"
+            output_path.parent.mkdir()
+            output_path.write_bytes(b"prepared")
+            checksum = audio_preparer.file_checksum(source_path)
+            audio_preparer.write_artifact_metadata(output_path, checksum)
+
+            with mock.patch.object(audio_preparer.shutil, "which", return_value="ffmpeg"):
+                with mock.patch.object(audio_preparer.subprocess, "run") as run:
+                    with mock.patch.object(sys, "argv", [
+                        "00_audio_preparer.py", "--audio-dir", str(source_dir),
+                        "--output-dir", str(output_dir),
+                    ]):
+                        audio_preparer.main()
+
+            run.assert_not_called()
+
+    def test_audio_preparer_requires_ffmpeg(self) -> None:
+        audio_preparer = load_script_module(
+            "audio_preparer_requires_ffmpeg", "00_audio_preparer.py"
+        )
+        with mock.patch.object(audio_preparer.shutil, "which", return_value=None):
+            with mock.patch.object(sys, "argv", ["00_audio_preparer.py"]):
+                with self.assertRaisesRegex(RuntimeError, "ffmpeg"):
+                    audio_preparer.main()
+
+    def test_pipeline_orchestrator_includes_audio_preparation(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_audio_preparation", "run_pipeline.py"
+        )
+
+        self.assertEqual(
+            ["prepare", "transcribe", "anonymize", "git", "lake"],
+            orchestrator.resolve_stages(None, None, None),
+        )
+
+        command = orchestrator.build_stage_command(
+            "prepare", [], [], "", False
+        )
+        self.assertEqual(
+            [sys.executable, str(REPO_ROOT / "00_audio_preparer.py")], command
+        )
+
     def test_openai_client_can_be_constructed(self) -> None:
         client = OpenAI(api_key="test-key")
         self.addCleanup(client.close)
@@ -120,6 +197,7 @@ class PipelineCoreTests(unittest.TestCase):
 
     def test_phase_one_scripts_load_shared_project_environment(self) -> None:
         script_names = (
+            "00_audio_preparer.py",
             "00_audio_transcriber.py",
             "01_anonymizer.py",
             "02_git_parser.py",
@@ -142,8 +220,12 @@ class PipelineCoreTests(unittest.TestCase):
 
     def test_phase_one_cli_paths_have_pipeline_defaults(self) -> None:
         expected_defaults = {
-            "00_audio_transcriber.py": {
+            "00_audio_preparer.py": {
                 "audio-dir": "data/raw/audio",
+                "output-dir": "data/processed/audio_chunks",
+            },
+            "00_audio_transcriber.py": {
+                "audio-dir": "data/processed/audio_chunks",
                 "output-dir": "data/processed/transcripts",
             },
             "01_anonymizer.py": {
@@ -718,6 +800,20 @@ class PipelineCoreTests(unittest.TestCase):
                 "hello world",
                 (output_dir / "sample.txt").read_text(encoding="utf-8"),
             )
+
+    def test_transcriber_uses_brazilian_portuguese(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_portuguese", "00_audio_transcriber.py"
+        )
+        client = mock.Mock()
+        client.audio.transcriptions.create.return_value = mock.Mock(text="olá")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            audio_path = Path(tmp_dir) / "audio.mp3"
+            audio_path.write_bytes(b"audio")
+            with mock.patch("openai.OpenAI", return_value=client):
+                audio_transcriber.transcribe_audio_file(audio_path, api_key="test")
+
+        self.assertEqual("pt", client.audio.transcriptions.create.call_args.kwargs["language"])
 
     def test_audio_transcriber_recursively_processes_session_folders(self) -> None:
         audio_transcriber = load_script_module(

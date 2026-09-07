@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 .env
 data/raw/audio/
+data/processed/audio_chunks/
 outputs/
 artifacts/
 assets/figures/
