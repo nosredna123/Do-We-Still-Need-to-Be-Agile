@@ -427,14 +427,33 @@ class PipelineCoreTests(unittest.TestCase):
                     "https://github.com/org-two/shared-repo.git", cache_dir
                 )
 
+                update_url = "https://github.com/org-one/shared-repo.git"
+                update_key = git_parser.hashlib.sha256(
+                    update_url.encode("utf-8")
+                ).hexdigest()[:12]
+                expected_update_path = cache_dir / f"shared-repo-{update_key}"
+                expected_update_path.mkdir()
+
+                updated_path = git_parser.clone_or_update_repo(update_url, cache_dir)
+
         self.assertIsNotNone(first_path)
         self.assertIsNotNone(second_path)
+        self.assertIsNotNone(updated_path)
         assert first_path is not None
         assert second_path is not None
+        assert updated_path is not None
         self.assertNotEqual(first_path, second_path)
         self.assertEqual("shared-repo", first_path.name.rsplit("-", 1)[0])
         self.assertEqual("shared-repo", second_path.name.rsplit("-", 1)[0])
-        self.assertEqual(2, run_mock.call_count)
+        self.assertEqual(expected_update_path, updated_path)
+        run_mock.assert_any_call(
+            ["git", "pull"],
+            cwd=expected_update_path,
+            capture_output=True,
+            check=True,
+            timeout=30,
+        )
+        self.assertEqual(3, run_mock.call_count)
 
     def test_parquet_roundtrip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
