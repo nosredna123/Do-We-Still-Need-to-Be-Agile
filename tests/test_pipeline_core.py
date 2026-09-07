@@ -11,6 +11,8 @@ import warnings
 from pathlib import Path
 from unittest import mock
 
+import pipeline_core
+
 from pipeline_core import (
     anonymize_csv_file,
     build_anonymization_mapping,
@@ -37,6 +39,37 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_load_project_environment_uses_project_dotenv(self) -> None:
+        with mock.patch.object(pipeline_core, "load_dotenv") as load_dotenv:
+            pipeline_core.load_project_environment()
+
+        load_dotenv.assert_called_once_with(
+            dotenv_path=pipeline_core.DOTENV_PATH,
+            override=False,
+        )
+
+    def test_phase_one_scripts_load_shared_project_environment(self) -> None:
+        script_names = (
+            "00_audio_transcriber.py",
+            "01_anonymizer.py",
+            "02_git_parser.py",
+            "03_data_lake_builder.py",
+        )
+
+        for script_name in script_names:
+            module = load_script_module(
+                f"dotenv_{script_name.removesuffix('.py')}", script_name
+            )
+            with mock.patch.object(
+                module, "load_project_environment"
+            ) as load_environment:
+                with mock.patch.object(sys, "argv", [script_name, "--help"]):
+                    with self.assertRaises(SystemExit) as exit_error:
+                        module.main()
+
+            self.assertEqual(0, exit_error.exception.code)
+            load_environment.assert_called_once_with()
+
     def test_phase_one_cli_paths_have_pipeline_defaults(self) -> None:
         expected_defaults = {
             "00_audio_transcriber.py": {
@@ -543,27 +576,6 @@ class PipelineCoreTests(unittest.TestCase):
                 (output_dir / "session_1" / "recording.txt").read_text(
                     encoding="utf-8"
                 ),
-            )
-
-    def test_audio_transcriber_loads_project_dotenv(self) -> None:
-        audio_transcriber = load_script_module(
-            "audio_transcriber_loads_dotenv", "00_audio_transcriber.py"
-        )
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = Path(tmp_dir)
-            audio_dir = tmp_path / "audio"
-            audio_dir.mkdir()
-
-            with mock.patch.object(audio_transcriber, "load_dotenv") as load_dotenv:
-                with mock.patch.object(sys, "argv", [
-                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
-                    "--output-dir", str(tmp_path / "out"),
-                ]):
-                    audio_transcriber.main()
-
-            load_dotenv.assert_called_once_with(
-                dotenv_path=audio_transcriber.DOTENV_PATH,
-                override=False,
             )
 
     def test_audio_transcriber_skips_current_successful_transcript(self) -> None:

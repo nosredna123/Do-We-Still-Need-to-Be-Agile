@@ -26,6 +26,7 @@ from pipeline_core import (
     input_checksum,
     is_identifier_field,
     is_current_artifact,
+    load_project_environment,
     write_artifact_metadata,
 )
 
@@ -58,6 +59,8 @@ def collect_csv_identifiers(csv_path: Path) -> list[str]:
 
 def main() -> None:
     """Main entry point for anonymizer."""
+    load_project_environment()
+
     parser = argparse.ArgumentParser(
         description="Anonymize CSVs and transcripts by replacing PII with hashes",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
