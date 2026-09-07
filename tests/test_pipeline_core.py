@@ -650,12 +650,8 @@ class PipelineCoreTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            transcripts_df = data_lake_builder.load_transcripts(transcripts_dir)
-
-        self.assertEqual(1, len(transcripts_df))
-        self.assertEqual("A", transcripts_df.loc[0, "ID_Equipe"])
-        self.assertEqual("2024.1", transcripts_df.loc[0, "Semestre"])
-        self.assertEqual("T1", transcripts_df.loc[0, "temporal_marker"])
+            with self.assertRaisesRegex(ValueError, "lacks ID_Equipe or Semestre"):
+                data_lake_builder.load_transcripts(transcripts_dir)
 
     def test_merge_transcripts_attaches_rows_to_team_keys(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder_merge_transcripts", "03_data_lake_builder.py")
@@ -753,6 +749,32 @@ class PipelineCoreTests(unittest.TestCase):
                     encoding="utf-8"
                 ),
             )
+
+    def test_audio_transcriber_aborts_on_transcription_failure(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_failure", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            audio_dir.mkdir()
+            audio_path = audio_dir / "failed.ogg"
+            audio_path.write_bytes(b"audio")
+            client = mock.Mock()
+            client.audio.transcriptions.create.side_effect = RuntimeError(
+                "request rejected"
+            )
+
+            with mock.patch("openai.OpenAI", return_value=client):
+                with mock.patch.object(sys, "argv", [
+                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
+                    "--output-dir", str(output_dir),
+                ]):
+                    with self.assertRaisesRegex(RuntimeError, "request rejected"):
+                        audio_transcriber.main()
+
+            self.assertFalse((output_dir / "failed.json").exists())
 
     def test_audio_transcriber_skips_current_successful_transcript(self) -> None:
         audio_transcriber = load_script_module(

@@ -19,7 +19,7 @@ import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import pandas as pd
 
@@ -45,7 +45,7 @@ def normalize_text(value: Any) -> str:
     return str(value).strip()
 
 
-def clone_or_update_repo(repo_url: str, cache_path: Path) -> Optional[Path]:
+def clone_or_update_repo(repo_url: str, cache_path: Path) -> Path:
     """Clone a repository or update if it already exists.
 
     Args:
@@ -53,7 +53,7 @@ def clone_or_update_repo(repo_url: str, cache_path: Path) -> Optional[Path]:
         cache_path: Path to cache directory
 
     Returns:
-        Path to local repository, or None if failed
+        Path to local repository.
     """
     repo_name = repo_url.split("/")[-1].replace(".git", "")
     repo_key = hashlib.sha256(repo_url.encode("utf-8")).hexdigest()[:12]
@@ -61,31 +61,23 @@ def clone_or_update_repo(repo_url: str, cache_path: Path) -> Optional[Path]:
 
     if local_path.exists():
         logger.info(f"Updating cached repository: {repo_name}")
-        try:
-            subprocess.run(
-                ["git", "pull"],
-                cwd=local_path,
-                capture_output=True,
-                check=True,
-                timeout=30,
-            )
-            return local_path
-        except Exception as e:
-            logger.warning(f"Failed to update {repo_name}: {e}")
-            return local_path
+        subprocess.run(
+            ["git", "pull"],
+            cwd=local_path,
+            capture_output=True,
+            check=True,
+            timeout=30,
+        )
+        return local_path
     else:
         logger.info(f"Cloning repository: {repo_url}")
-        try:
-            subprocess.run(
-                ["git", "clone", repo_url, str(local_path)],
-                capture_output=True,
-                check=True,
-                timeout=60,
-            )
-            return local_path
-        except Exception as e:
-            logger.error(f"Failed to clone {repo_url}: {e}")
-            return None
+        subprocess.run(
+            ["git", "clone", repo_url, str(local_path)],
+            capture_output=True,
+            check=True,
+            timeout=60,
+        )
+        return local_path
 
 
 def author_label(index: int) -> str:
@@ -204,17 +196,12 @@ def main() -> None:
         semestre = normalize_text(row.get("Semestre"))
 
         if not repo_url:
-            logger.warning(f"Skipping {team_id}: missing repository URL")
-            continue
+            raise ValueError(f"{team_id} has no repository URL")
 
         logger.info(f"Processing: {team_id} - {repo_url}")
 
         # Clone or update repository
         repo_path = clone_or_update_repo(repo_url, args.cache_dir)
-        if not repo_path:
-            logger.warning(f"Skipping {team_id}: failed to clone/access repository")
-            continue
-
         mirror_path = mirror_clean_repo(repo_path, args.clean_repos_dir)
         logger.info(f"Mirrored clean repository to {mirror_path}")
 
@@ -248,7 +235,7 @@ def main() -> None:
         write_artifact_metadata(args.output_csv, checksum)
         logger.info(f"Wrote Git logs to {args.output_csv}")
     else:
-        logger.warning("No commits extracted from repositories")
+        raise RuntimeError("No commits extracted from repositories")
 
     logger.info("Git parsing complete")
 
