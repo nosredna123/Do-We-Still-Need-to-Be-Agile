@@ -184,6 +184,43 @@ class PipelineCoreTests(unittest.TestCase):
             mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
             self.assertIn("Carol", mapping["mapping"])
 
+    def test_anonymizer_handles_normalized_identifier_headers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "students.csv"
+            csv_path.write_text(
+                "Full Name,Email Address,aluno,comentario\n"
+                "Alice,alice@example.com,Bob,Alice escreveu para alice@example.com\n",
+                encoding="utf-8",
+            )
+            output_dir = tmp_path / "anon"
+            mapping_path = tmp_path / "chave_relacional.json"
+
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(REPO_ROOT / "01_anonymizer.py"),
+                    "--csv",
+                    str(csv_path),
+                    "--output-dir",
+                    str(output_dir),
+                    "--mapping-path",
+                    str(mapping_path),
+                    "--salt",
+                    "pepper",
+                ],
+                check=True,
+            )
+
+            rows = load_records(output_dir / "students.csv")
+            self.assertTrue(rows[0]["Full Name"].startswith("anon_"))
+            self.assertTrue(rows[0]["Email Address"].startswith("anon_"))
+            self.assertTrue(rows[0]["aluno"].startswith("anon_"))
+            mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+            self.assertIn("Alice", mapping["mapping"])
+            self.assertIn("alice@example.com", mapping["mapping"])
+            self.assertIn("Bob", mapping["mapping"])
+
     def test_nlp_and_metrics_pipeline(self) -> None:
         records = [
             {
