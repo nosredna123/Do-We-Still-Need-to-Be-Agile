@@ -43,6 +43,83 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_ner_extractor_writes_person_candidates_from_openai_json(self) -> None:
+        ner_extractor = load_script_module("ner_extractor", "01_ner_extractor.py")
+        client = mock.Mock()
+        client.chat.completions.create.return_value = mock.Mock(
+            choices=[mock.Mock(message=mock.Mock(content='{"person_entities": ["Anderson"]}'))]
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            transcripts_dir = tmp_path / "transcripts"
+            transcript_path = transcripts_dir / "session" / "feedback.json"
+            transcript_path.parent.mkdir(parents=True)
+            transcript_path.write_text(
+                json.dumps({"text": "Anderson apresentou o projeto."}),
+                encoding="utf-8",
+            )
+            output_dir = tmp_path / "ner_candidates"
+
+            with mock.patch("openai.OpenAI", return_value=client):
+                with mock.patch.object(sys, "argv", [
+                    "01_ner_extractor.py", "--transcripts-dir", str(transcripts_dir),
+                    "--output-dir", str(output_dir),
+                ]):
+                    ner_extractor.main()
+
+            output_path = output_dir / "session" / "feedback.ner.json"
+            self.assertEqual(
+                {"person_entities": ["Anderson"]},
+                json.loads(output_path.read_text(encoding="utf-8")),
+            )
+            request_kwargs = client.chat.completions.create.call_args.kwargs
+            self.assertEqual("gpt-4o-mini", request_kwargs["model"])
+            self.assertEqual({"type": "json_object"}, request_kwargs["response_format"])
+
+    def test_ner_extractor_skips_current_transcript(self) -> None:
+        ner_extractor = load_script_module("ner_extractor_skip", "01_ner_extractor.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            transcripts_dir = tmp_path / "transcripts"
+            transcript_path = transcripts_dir / "feedback.json"
+            transcripts_dir.mkdir()
+            transcript_path.write_text(json.dumps({"text": "Anderson"}), encoding="utf-8")
+            output_dir = tmp_path / "ner_candidates"
+            output_path = output_dir / "feedback.ner.json"
+            output_path.parent.mkdir()
+            output_path.write_text('{"person_entities": ["Anderson"]}', encoding="utf-8")
+            ner_extractor.write_artifact_metadata(
+                output_path, ner_extractor.file_checksum(transcript_path)
+            )
+
+            with mock.patch("openai.OpenAI") as openai:
+                with mock.patch.object(sys, "argv", [
+                    "01_ner_extractor.py", "--transcripts-dir", str(transcripts_dir),
+                    "--output-dir", str(output_dir),
+                ]):
+                    ner_extractor.main()
+
+            openai.assert_not_called()
+
+    def test_anonymizer_uses_ner_candidates_without_capitalized_word_heuristic(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            transcript_path = tmp_path / "feedback.txt"
+            transcript_path.write_text(
+                "Porque Anderson apresentou o projeto.", encoding="utf-8"
+            )
+            candidates_path = tmp_path / "feedback.ner.json"
+            candidates_path.write_text(
+                '{"person_entities": ["Anderson"]}', encoding="utf-8"
+            )
+
+            mapping = build_anonymization_mapping(
+                [], [transcript_path], salt="pepper", person_names=["Anderson"]
+            )
+
+            self.assertIn("Anderson", mapping)
+            self.assertNotIn("Porque", mapping)
+
     def test_audio_preparer_builds_compression_command(self) -> None:
         audio_preparer = load_script_module("audio_preparer", "00_audio_preparer.py")
 
@@ -109,7 +186,7 @@ class PipelineCoreTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            ["prepare", "transcribe", "anonymize", "git", "lake"],
+            ["prepare", "transcribe", "ner", "anonymize", "git", "lake"],
             orchestrator.resolve_stages(None, None, None),
         )
 
@@ -201,6 +278,7 @@ class PipelineCoreTests(unittest.TestCase):
         script_names = (
             "00_audio_preparer.py",
             "00_audio_transcriber.py",
+            "01_ner_extractor.py",
             "01_anonymizer.py",
             "02_git_parser.py",
             "03_data_lake_builder.py",
@@ -229,6 +307,10 @@ class PipelineCoreTests(unittest.TestCase):
             "00_audio_transcriber.py": {
                 "audio-dir": "data/processed/audio_chunks",
                 "output-dir": "data/processed/transcripts",
+            },
+            "01_ner_extractor.py": {
+                "transcripts-dir": "data/processed/transcripts",
+                "output-dir": "data/processed/ner_candidates",
             },
             "01_anonymizer.py": {
                 "output-dir": "data/processed/forms",
@@ -495,7 +577,9 @@ class PipelineCoreTests(unittest.TestCase):
             transcript_path = tmp_path / "feedback.txt"
             transcript_path.write_text("Carol: iniciou a sessão\nContato: carol@example.com\n", encoding="utf-8")
 
-            mapping = build_anonymization_mapping([], [transcript_path], salt="pepper")
+            mapping = build_anonymization_mapping(
+                [], [transcript_path], salt="pepper", person_names=["Anderson"]
+            )
 
             self.assertEqual("anon_de43123aeacc", mapping["Carol"])
             self.assertTrue(mapping["carol@example.com"].startswith("anon_"))
@@ -511,7 +595,9 @@ class PipelineCoreTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            mapping = build_anonymization_mapping([], [transcript_path], salt="pepper")
+            mapping = build_anonymization_mapping(
+                [], [transcript_path], salt="pepper", person_names=["Anderson"]
+            )
             anonymize_transcript(transcript_path, output_path, mapping)
 
             self.assertIn("Anderson", mapping)
