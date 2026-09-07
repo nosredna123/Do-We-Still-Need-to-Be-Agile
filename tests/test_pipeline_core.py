@@ -15,6 +15,7 @@ from openai import OpenAI
 
 import pipeline_core
 import pipeline_prompts
+from pipeline_config import temporal_marker_for
 
 from pipeline_core import (
     anonymize_csv_file,
@@ -43,6 +44,20 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_temporal_marker_for_uses_configured_evaluator_cut_ranges(self) -> None:
+        self.assertEqual("T1", temporal_marker_for("2025.2", "2025-10-17"))
+        self.assertEqual("T1", temporal_marker_for("2025.2", "2025-10-24"))
+        self.assertEqual("T2", temporal_marker_for("2025.2", "2025-11-21"))
+        self.assertEqual("T3", temporal_marker_for("2025.2", "2025-12-12"))
+        self.assertEqual("T1", temporal_marker_for("2026.1", "2026-04-24"))
+        self.assertEqual("T3", temporal_marker_for("2026.1", "2026-06-19"))
+
+    def test_temporal_marker_for_rejects_unconfigured_dates_and_semesters(self) -> None:
+        with self.assertRaisesRegex(ValueError, "not in a configured evaluator cut"):
+            temporal_marker_for("2025.2", "2025-10-31")
+        with self.assertRaisesRegex(ValueError, "has no configured evaluator cuts"):
+            temporal_marker_for("2024.1", "2024-03-01")
+
     def test_ner_extractor_writes_person_candidates_from_openai_json(self) -> None:
         ner_extractor = load_script_module("ner_extractor", "01_ner_extractor.py")
         client = mock.Mock()
@@ -1165,6 +1180,8 @@ class PipelineCoreTests(unittest.TestCase):
                 with mock.patch.object(sys, "argv", [
                     "01_anonymizer.py", "--csv", str(csv_path), "--output-dir",
                     str(output_dir), "--mapping-path", str(mapping_path), "--salt", "pepper",
+                    "--forms-dir", str(tmp_path / "no_forms"), "--transcripts-dir",
+                    str(tmp_path / "no_transcripts"),
                 ]):
                     anonymizer.main()
 
