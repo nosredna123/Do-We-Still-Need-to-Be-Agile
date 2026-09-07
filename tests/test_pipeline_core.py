@@ -521,19 +521,20 @@ class PipelineCoreTests(unittest.TestCase):
             output_dir.mkdir()
             audio_path = audio_dir / "sample.ogg"
             audio_path.write_bytes(b"fake audio")
+            checksum = audio_transcriber.file_checksum(audio_path)
             (output_dir / "sample.json").write_text(
                 json.dumps({"status": "success", "text": "previous transcript"}),
                 encoding="utf-8",
             )
-            (output_dir / "sample.json.metadata.json").write_text(
-                json.dumps(
-                    {
-                        "input_checksum": audio_transcriber.file_checksum(audio_path),
-                        "status": "success",
-                    }
-                ),
+            (output_dir / "sample.txt").write_text(
+                "previous transcript",
                 encoding="utf-8",
             )
+            for artifact in [output_dir / "sample.json", output_dir / "sample.txt"]:
+                artifact.with_name(f"{artifact.name}.metadata.json").write_text(
+                    json.dumps({"input_checksum": checksum, "status": "success"}),
+                    encoding="utf-8",
+                )
 
             with mock.patch.object(audio_transcriber, "transcribe_audio_file") as transcribe:
                 with mock.patch.object(
