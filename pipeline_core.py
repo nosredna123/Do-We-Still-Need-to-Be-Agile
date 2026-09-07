@@ -121,11 +121,11 @@ def anonymize_csv_file(
             rows.append(anon_row)
 
     # Write anonymized CSV
-    if rows:
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        with output_path.open("w", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
-            writer.writeheader()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        if rows:
             writer.writerows(rows)
 
 
@@ -280,7 +280,7 @@ def load_records(path: Path) -> list[dict[str, Any]]:
         df = pd.read_parquet(path)
         return df.to_dict(orient="records")
     elif path.suffix == ".csv":
-        df = pd.read_csv(path)
+        df = pd.read_csv(path, keep_default_na=False)
         return df.to_dict(orient="records")
     else:
         raise ValueError(f"Unsupported file format: {path.suffix}")
@@ -360,6 +360,8 @@ def compute_metrics(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if value is None or pd.isna(value):
             return 0.0
         try:
+            if isinstance(value, str):
+                value = value.strip().replace(",", ".")
             return float(value)
         except (TypeError, ValueError):
             return 0.0
