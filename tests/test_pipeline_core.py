@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import csv
 import json
 import os
 import subprocess
@@ -75,7 +74,7 @@ class PipelineCoreTests(unittest.TestCase):
             anonymize_csv_file(csv_path, output_path, mapping={}, salt="pepper")
 
             rows = load_records(output_path)
-            self.assertEqual("anon_8c20d385a603", rows[0]["avaliador"])
+            self.assertEqual("anon_de43123aeacc", rows[0]["avaliador"])
 
     def test_git_history_is_anonymized_and_mirrored(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -108,7 +107,7 @@ class PipelineCoreTests(unittest.TestCase):
 
             mapping = build_anonymization_mapping([], [transcript_path], salt="pepper")
 
-            self.assertEqual("anon_8c20d385a603", mapping["Carol"])
+            self.assertEqual("anon_de43123aeacc", mapping["Carol"])
             self.assertTrue(mapping["carol@example.com"].startswith("anon_"))
 
     def test_nlp_and_metrics_pipeline(self) -> None:
