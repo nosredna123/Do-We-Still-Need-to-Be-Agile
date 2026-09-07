@@ -28,9 +28,9 @@ Dependências opcionais por script:
 ## Exemplo de uso
 
 ```bash
-python 01_anonymizer.py --csv dados/alunos.csv --transcript dados/feedback.json --output-dir outputs/anon
-python 02_git_parser.py --repo /caminho/repo-a --output-dir outputs/repos --csv-output outputs/git_logs_anon.csv
-python 03_data_lake_builder.py --csv outputs/anon/alunos.csv --git-log outputs/git_logs_anon.csv --output outputs/master_dataset.parquet
+python 01_anonymizer.py --csv dados/alunos.csv --transcript dados/feedback.txt --output-dir outputs/anon --mapping-path outputs/chave_relacional.json
+python 02_git_parser.py --repos-list dados/repos_list.csv --output-csv outputs/git_logs_anon.csv --cache-dir outputs/repos
+python 03_data_lake_builder.py --forms-dir outputs/anon --git-logs outputs/git_logs_anon.csv --output-parquet outputs/master_dataset.parquet
 python 04_nlp_qualitative_miner.py --input outputs/master_dataset.parquet --output outputs/nlp_enriched_dataset.parquet
 python 05_metric_engine.py --input outputs/nlp_enriched_dataset.parquet --output outputs/metrics_dataset.parquet
 python 06_statistical_analyzer.py --input outputs/metrics_dataset.parquet --correlation-output outputs/correlation_results.csv --figures-dir assets/figures
