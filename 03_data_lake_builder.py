@@ -107,7 +107,17 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
     for json_file in transcripts_dir.glob("*.json"):
         try:
             data = json.loads(json_file.read_text(encoding="utf-8"))
+            team_id = data.get("ID_Equipe")
+            semester = data.get("Semestre")
+            if not team_id or not semester:
+                logger.warning(
+                    "Skipping transcript %s without required ID_Equipe/Semestre metadata",
+                    json_file,
+                )
+                continue
             row = {
+                "ID_Equipe": team_id,
+                "Semestre": semester,
                 "transcript_file": json_file.name,
                 "transcript_text": data.get("text", ""),
                 "status": data.get("status", "unknown"),
@@ -124,6 +134,67 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
         return pd.DataFrame(rows)
     else:
         return pd.DataFrame()
+
+
+def merge_transcripts(
+    master_df: pd.DataFrame,
+    transcripts_df: pd.DataFrame,
+) -> pd.DataFrame:
+    """Attach transcript data to keyed team rows."""
+    if transcripts_df.empty:
+        return master_df.copy()
+
+    group_keys = ["ID_Equipe", "Semestre"]
+    if "temporal_marker" in transcripts_df.columns:
+        group_keys.append("temporal_marker")
+
+    transcript_agg = (
+        transcripts_df.groupby(group_keys, dropna=False)
+        .agg(
+            {
+                "transcript_file": lambda values: " | ".join(
+                    str(value)
+                    for value in values
+                    if pd.notna(value) and str(value)
+                ),
+                "transcript_text": lambda values: "\n\n".join(
+                    str(value)
+                    for value in values
+                    if pd.notna(value) and str(value)
+                ),
+                "status": lambda values: ",".join(
+                    sorted(
+                        {
+                            str(value)
+                            for value in values
+                            if pd.notna(value) and str(value)
+                        }
+                    )
+                ),
+            }
+        )
+        .reset_index()
+    )
+
+    if master_df.empty:
+        return transcript_agg
+
+    merge_keys = ["ID_Equipe", "Semestre"]
+    if "temporal_marker" in master_df.columns or "temporal_marker" in transcript_agg.columns:
+        if "temporal_marker" not in master_df.columns:
+            master_df = master_df.copy()
+            master_df["temporal_marker"] = None
+        if "temporal_marker" not in transcript_agg.columns:
+            transcript_agg = transcript_agg.copy()
+            transcript_agg["temporal_marker"] = None
+        merge_keys.append("temporal_marker")
+
+    return pd.merge(
+        master_df,
+        transcript_agg,
+        on=merge_keys,
+        how="outer",
+    )
 
 
 def aggregate_by_team(
@@ -260,7 +331,7 @@ def main() -> None:
     master_df = aggregate_by_team(forms_df, git_df)
 
     if not transcripts_df.empty:
-        master_df = pd.concat([master_df, transcripts_df], ignore_index=True, sort=False)
+        master_df = merge_transcripts(master_df, transcripts_df)
 
     # Normalize temporal markers
     if "temporal_marker" in master_df.columns:
