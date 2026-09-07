@@ -13,6 +13,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import logging
 import subprocess
 from collections import defaultdict
@@ -48,7 +49,8 @@ def clone_or_update_repo(repo_url: str, cache_path: Path) -> Optional[Path]:
         Path to local repository, or None if failed
     """
     repo_name = repo_url.split("/")[-1].replace(".git", "")
-    local_path = cache_path / repo_name
+    repo_key = hashlib.sha256(repo_url.encode("utf-8")).hexdigest()[:12]
+    local_path = cache_path / f"{repo_name}-{repo_key}"
 
     if local_path.exists():
         logger.info(f"Updating cached repository: {repo_name}")

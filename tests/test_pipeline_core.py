@@ -415,6 +415,27 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertEqual("Dev_Z", git_parser.author_label(25))
         self.assertEqual("Dev_AA", git_parser.author_label(26))
 
+    def test_clone_or_update_repo_uses_unique_cache_path_per_url(self) -> None:
+        git_parser = load_script_module("git_parser_clone", "02_git_parser.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            cache_dir = Path(tmp_dir)
+            with mock.patch.object(git_parser.subprocess, "run") as run_mock:
+                first_path = git_parser.clone_or_update_repo(
+                    "https://github.com/org-one/shared-repo.git", cache_dir
+                )
+                second_path = git_parser.clone_or_update_repo(
+                    "https://github.com/org-two/shared-repo.git", cache_dir
+                )
+
+        self.assertIsNotNone(first_path)
+        self.assertIsNotNone(second_path)
+        assert first_path is not None
+        assert second_path is not None
+        self.assertNotEqual(first_path, second_path)
+        self.assertEqual("shared-repo", first_path.name.rsplit("-", 1)[0])
+        self.assertEqual("shared-repo", second_path.name.rsplit("-", 1)[0])
+        self.assertEqual(2, run_mock.call_count)
+
     def test_parquet_roundtrip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             path = Path(tmp_dir) / "data.parquet"
