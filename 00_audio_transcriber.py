@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Audio transcriber for converting session recordings to text.
 
-This script processes audio files (.mp3, .wav) from feedback sessions using
-OpenAI's Whisper API, generating searchable transcripts for NLP analysis.
+This script processes audio files (.mp3, .wav, .m4a, .flac, .ogg) from
+feedback sessions using OpenAI's Whisper API, generating searchable
+transcripts for NLP analysis.
 
 Usage:
     python 00_audio_transcriber.py --audio-dir data/raw/audio/ \
