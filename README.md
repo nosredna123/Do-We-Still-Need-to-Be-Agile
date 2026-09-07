@@ -42,6 +42,4 @@ streamlit run 07_dashboard_app.py -- --input outputs/metrics_dataset.parquet
 - A anonimização usa hashes SHA-256 truncados com prefixo `anon_`.
 - Os datasets tabulares centrais são persistidos em Parquet.
 - As visualizações são exportadas em SVG para facilitar versionamento e publicação.
-- Os produtores da Fase 1 registram um checksum SHA-256 em sidecars
-	`.metadata.json` e ignoram somente artefatos com status `success` e entradas
-	inalteradas. Use `--force` para regenerar um artefato intencionalmente.
+- Os produtores da Fase 1 registram um checksum SHA-256 em sidecars `.metadata.json` e ignoram somente artefatos com status `success` e entradas inalteradas. Use `--force` para regenerar um artefato intencionalmente.
