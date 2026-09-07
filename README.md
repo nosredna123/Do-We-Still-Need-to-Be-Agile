@@ -44,6 +44,12 @@ incluindo a carga da configuração compartilhada. Ele não inicia nem orquestra
 as etapas. `run_pipeline.py` é o ponto de entrada para a execução coordenada;
 os scripts numerados continuam disponíveis como pontos de entrada independentes.
 
+Todos os prompts enviados a serviços externos de IA ficam centralizados em
+`pipeline_prompts.py`. Esse catálogo é a referência auditável para pesquisadores
+e não pode conter PII, segredos, nomes reais ou outros dados de origem. O prompt
+operacional pode usar o idioma dos dados; a referência equivalente em inglês é
+mantida para auditoria e publicação internacional e não é enviada ao Whisper.
+
 ## Execução da Fase 1
 
 O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `anonymize`,
