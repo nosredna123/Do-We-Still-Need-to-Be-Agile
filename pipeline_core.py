@@ -161,6 +161,7 @@ def _replace_identifiers_in_text(
             rf"\b{re.escape(original)}\b",
             mapping[original],
             replaced_text,
+            flags=re.IGNORECASE,
         )
 
     for email in re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", replaced_text):
