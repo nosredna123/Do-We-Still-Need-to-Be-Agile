@@ -145,18 +145,19 @@ def mirror_clean_repo(repo_path: Path, clean_repos_dir: Path) -> Path:
 def main() -> None:
     """Main entry point for Git parser."""
     parser = argparse.ArgumentParser(
-        description="Extract anonymized Git history from repositories"
+        description="Extract anonymized Git history from repositories",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         "--repos-list",
         type=Path,
-        required=True,
+        default=Path("data/raw/repos_list.csv"),
         help="CSV file with columns: ID_Equipe, URL_Repositorio_Fork, Semestre",
     )
     parser.add_argument(
         "--output-csv",
         type=Path,
-        required=True,
+        default=Path("data/processed/git_logs_anon.csv"),
         help="Output CSV file for anonymized Git logs",
     )
     parser.add_argument(

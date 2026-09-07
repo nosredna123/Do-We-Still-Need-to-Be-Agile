@@ -299,7 +299,8 @@ def aggregate_by_team(
 def main() -> None:
     """Main entry point for data lake builder."""
     parser = argparse.ArgumentParser(
-        description="Build unified data lake from anonymized sources"
+        description="Build unified data lake from anonymized sources",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         "--forms-dir",
@@ -322,7 +323,7 @@ def main() -> None:
     parser.add_argument(
         "--output-parquet",
         type=Path,
-        required=True,
+        default=Path("data/lake/master_dataset.parquet"),
         help="Output Parquet file path",
     )
     parser.add_argument(
