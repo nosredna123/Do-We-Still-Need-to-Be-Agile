@@ -833,7 +833,11 @@ class PipelineCoreTests(unittest.TestCase):
             with mock.patch("openai.OpenAI", return_value=client):
                 audio_transcriber.transcribe_audio_file(audio_path, api_key="test")
 
-        self.assertEqual("pt", client.audio.transcriptions.create.call_args.kwargs["language"])
+        request_kwargs = client.audio.transcriptions.create.call_args.kwargs
+        self.assertEqual("pt", request_kwargs["language"])
+        self.assertEqual(audio_transcriber.TRANSCRIPTION_PROMPT, request_kwargs["prompt"])
+        self.assertIn("nomes próprios", request_kwargs["prompt"])
+        self.assertNotRegex(request_kwargs["prompt"], r"@[\w.-]+")
 
     def test_audio_transcriber_recursively_processes_session_folders(self) -> None:
         audio_transcriber = load_script_module(

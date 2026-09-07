@@ -26,6 +26,10 @@ from pipeline_core import (
 )
 
 logger = logging.getLogger(__name__)
+TRANSCRIPTION_PROMPT = (
+    "Transcreva em português brasileiro. Preserve com precisão nomes próprios, "
+    "siglas, termos técnicos e pontuação. Não traduza termos."
+)
 
 
 def transcribe_audio_file(
@@ -54,6 +58,7 @@ def transcribe_audio_file(
             model="whisper-1",
             file=f,
             language="pt",
+            prompt=TRANSCRIPTION_PROMPT,
         )
 
     return {
