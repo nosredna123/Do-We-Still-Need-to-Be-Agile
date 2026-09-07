@@ -49,6 +49,10 @@ Todos os prompts enviados a serviços externos de IA ficam centralizados em
 `pipeline_prompts.py`. Esse catálogo é a referência auditável para pesquisadores
 e não pode conter PII, segredos, nomes reais ou outros dados de origem.
 
+Decisões metodológicas não sigilosas, como os cortes temporais de formulários,
+ficam centralizadas e versionadas em `pipeline_config.py`. Esse módulo não pode
+conter PII, credenciais nem valores de dados brutos.
+
 Sob supervisão do pesquisador, os áudios brutos são enviados à OpenAI para
 transcrição e as transcrições brutas são enviadas uma vez à OpenAI para NER. A
 prioridade de proteção deste projeto é impedir que PII seja exposta nos artefatos
@@ -90,9 +94,11 @@ regeneração intencional a todas as etapas selecionadas.
 
 Os formulários de avaliadores devem ser salvos como um CSV por semestre em
 `data/raw/forms/<semestre>/avaliadores.csv`. O marcador temporal é derivado do
-`Timestamp`: em `2025.2`, 17/10-24/10 é T1, 14/11-21/11 é T2 e 05/12-12/12 é T3.
-Os pares representam um único corte distribuído em dois dias por capacidade de
-apresentação. Em `2026.1`, 24/04, 22/05 e 19/06 correspondem a T1, T2 e T3.
+`Timestamp` por `temporal_marker_for()` em `pipeline_config.py`. As datas são
+definidas em ISO-8601 e, em `2025.2`, os pares 17/10-24/10, 14/11-21/11 e
+05/12-12/12 representam respectivamente T1, T2 e T3. Cada par é um único corte
+distribuído em dois dias por capacidade de apresentação. Em `2026.1`, 24/04,
+22/05 e 19/06 correspondem a T1, T2 e T3.
 
 ```bash
 .venv/bin/python run_pipeline.py --stages git lake --dry-run
