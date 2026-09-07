@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import logging
+import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
@@ -121,6 +122,21 @@ def map_authors_by_volume(
     return author_mapping
 
 
+def mirror_clean_repo(repo_path: Path, clean_repos_dir: Path) -> Path:
+    """Mirror a repository working tree without git metadata."""
+    target_path = clean_repos_dir / repo_path.name
+    if target_path.exists():
+        shutil.rmtree(target_path)
+
+    shutil.copytree(
+        repo_path,
+        target_path,
+        ignore=shutil.ignore_patterns(".git"),
+        dirs_exist_ok=True,
+    )
+    return target_path
+
+
 def main() -> None:
     """Main entry point for Git parser."""
     parser = argparse.ArgumentParser(
@@ -144,6 +160,12 @@ def main() -> None:
         default=Path("data/raw/repos_cache"),
         help="Directory to cache cloned repositories",
     )
+    parser.add_argument(
+        "--clean-repos-dir",
+        type=Path,
+        default=Path("data/processed/clean_repos"),
+        help="Directory for mirrored repositories without git metadata",
+    )
     args = parser.parse_args()
 
     # Read repositories list
@@ -151,6 +173,7 @@ def main() -> None:
     repos_df = pd.read_csv(args.repos_list)
 
     args.cache_dir.mkdir(parents=True, exist_ok=True)
+    args.clean_repos_dir.mkdir(parents=True, exist_ok=True)
 
     all_commit_rows = []
 
@@ -171,6 +194,9 @@ def main() -> None:
         if not repo_path:
             logger.warning(f"Skipping {team_id}: failed to clone/access repository")
             continue
+
+        mirror_path = mirror_clean_repo(repo_path, args.clean_repos_dir)
+        logger.info(f"Mirrored clean repository to {mirror_path}")
 
         # Extract git history with team context
         commit_rows = extract_git_history(repo_path, {}, salt="")
