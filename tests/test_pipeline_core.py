@@ -296,6 +296,8 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertNotIn("Alice", (output_dir / "feedback.txt").read_text(encoding="utf-8"))
             mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
             self.assertIn("Alice", mapping["mapping"])
+            self.assertNotIn("salt", mapping)
+            self.assertNotIn("pepper", mapping_path.read_text(encoding="utf-8"))
 
     def test_anonymizer_processes_all_csv_arguments(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
