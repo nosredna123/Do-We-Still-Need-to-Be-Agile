@@ -13,10 +13,11 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import json
 import logging
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 import subprocess
 
 import pandas as pd
@@ -24,6 +25,75 @@ from scipy import stats
 
 logger = logging.getLogger(__name__)
 IDENTIFIER_FIELD_TOKENS = {"email", "mail", "nome", "name", "aluno", "avaliador"}
+
+
+def file_checksum(path: Path) -> str:
+    """Calculate the SHA-256 checksum of a file.
+
+    Args:
+        path: Path to the file to fingerprint.
+
+    Returns:
+        Hexadecimal SHA-256 checksum.
+    """
+    digest = hashlib.sha256()
+    with path.open("rb") as file_handle:
+        for chunk in iter(lambda: file_handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def input_checksum(paths: list[Path], options: Mapping[str, str]) -> str:
+    """Calculate a deterministic checksum for files and processing options.
+
+    Args:
+        paths: Input files that affect the generated artifact.
+        options: Processing options that affect the generated artifact.
+
+    Returns:
+        Hexadecimal SHA-256 checksum of the effective inputs.
+    """
+    digest = hashlib.sha256()
+    for path in sorted(paths, key=lambda item: str(item)):
+        digest.update(path.name.encode("utf-8"))
+        digest.update(file_checksum(path).encode("ascii"))
+    digest.update(json.dumps(dict(options), sort_keys=True).encode("utf-8"))
+    return digest.hexdigest()
+
+
+def artifact_metadata_path(artifact_path: Path) -> Path:
+    """Return the sidecar metadata path for a generated artifact."""
+    return artifact_path.with_name(f"{artifact_path.name}.metadata.json")
+
+
+def is_current_artifact(artifact_path: Path, source_checksum: str) -> bool:
+    """Return whether an artifact completed successfully for an input checksum."""
+    metadata_path = artifact_metadata_path(artifact_path)
+    if not artifact_path.exists() or not metadata_path.exists():
+        return False
+
+    try:
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return False
+
+    return (
+        metadata.get("status") == "success"
+        and metadata.get("input_checksum") == source_checksum
+    )
+
+def write_artifact_metadata(artifact_path: Path, source_checksum: str) -> None:
+    """Record successful processing metadata for an artifact.
+
+    Args:
+        artifact_path: Generated artifact associated with the metadata.
+        source_checksum: SHA-256 checksum of the artifact's effective input.
+    """
+    metadata_path = artifact_metadata_path(artifact_path)
+    metadata_path.write_text(
+        json.dumps({"input_checksum": source_checksum, "status": "success"}, indent=2),
+        encoding="utf-8",
+    )
 
 
 def _hash_identifier(identifier: str, salt: str = "") -> str:

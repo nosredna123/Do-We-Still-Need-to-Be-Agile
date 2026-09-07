@@ -22,6 +22,8 @@ from typing import Optional
 
 import pandas as pd
 
+from pipeline_core import input_checksum, is_current_artifact, write_artifact_metadata
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -134,6 +136,20 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
         return pd.DataFrame(rows)
     else:
         return pd.DataFrame()
+
+
+def source_paths(
+    forms_dir: Path,
+    git_logs_path: Path,
+    transcripts_dir: Path,
+) -> list[Path]:
+    """Collect existing files that contribute to the master dataset."""
+    paths = [git_logs_path] if git_logs_path.exists() else []
+    if forms_dir.exists():
+        paths.extend(forms_dir.glob("*.csv"))
+    if transcripts_dir.exists():
+        paths.extend(transcripts_dir.glob("*.json"))
+    return paths
 
 
 def merge_transcripts(
@@ -305,8 +321,20 @@ def main() -> None:
         required=True,
         help="Output Parquet file path",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Rebuild the data lake even when all source inputs are unchanged",
+    )
 
     args = parser.parse_args()
+
+    checksum = input_checksum(
+        source_paths(args.forms_dir, args.git_logs, args.transcripts_dir), {}
+    )
+    if not args.force and is_current_artifact(args.output_parquet, checksum):
+        logger.info("Skipping current data lake output: %s", args.output_parquet)
+        return
 
     logger.info("Building data lake...")
 
@@ -345,6 +373,7 @@ def main() -> None:
     # Write master dataset
     logger.info(f"Writing master dataset to {args.output_parquet}")
     master_df.to_parquet(args.output_parquet, index=False)
+    write_artifact_metadata(args.output_parquet, checksum)
     logger.info(f"Data lake complete: {len(master_df)} records")
 
     # Print summary

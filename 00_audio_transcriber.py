@@ -18,6 +18,8 @@ import logging
 from pathlib import Path
 from typing import Any, Optional
 
+from pipeline_core import file_checksum, is_current_artifact, write_artifact_metadata
+
 logger = logging.getLogger(__name__)
 
 
@@ -90,6 +92,11 @@ def main() -> None:
         default=None,
         help="OpenAI API key (uses OPENAI_API_KEY env var if not provided)",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Retranscribe files even when a current successful output exists",
+    )
 
     args = parser.parse_args()
 
@@ -110,14 +117,20 @@ def main() -> None:
     logger.info(f"Found {len(audio_files)} audio files in {args.audio_dir}")
 
     for audio_file in audio_files:
+        output_file = args.output_dir / f"{audio_file.stem}.json"
+        input_checksum = file_checksum(audio_file)
+        if not args.force and is_current_artifact(output_file, input_checksum):
+            logger.info("Skipping current transcript: %s", audio_file.name)
+            continue
+
         result = transcribe_audio_file(audio_file, api_key=args.api_key)
 
-        output_file = args.output_dir / f"{audio_file.stem}.json"
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
         text_output_file = args.output_dir / f"{audio_file.stem}.txt"
         text_output_file.write_text(str(result.get("text", "")), encoding="utf-8")
 
         if result.get("status") == "success":
+            write_artifact_metadata(output_file, input_checksum)
             logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")
         else:
             logger.warning(f"Failed to transcribe: {audio_file.name}")
