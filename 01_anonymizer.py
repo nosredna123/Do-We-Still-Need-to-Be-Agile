@@ -65,9 +65,19 @@ def main() -> None:
         description="Anonymize CSVs and transcripts by replacing PII with hashes",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("--csv", type=Path, help="Path to input CSV file")
     parser.add_argument(
-        "--transcript", type=Path, help="Path to input transcript file"
+        "--csv",
+        type=Path,
+        action="append",
+        default=[],
+        help="Path to input CSV file; may be repeated",
+    )
+    parser.add_argument(
+        "--transcript",
+        type=Path,
+        action="append",
+        default=[],
+        help="Path to input transcript file; may be repeated",
     )
     parser.add_argument(
         "--output-dir",
@@ -95,13 +105,14 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    input_paths = [path for path in [args.csv, args.transcript] if path]
+    input_paths = [*args.csv, *args.transcript]
     checksum = input_checksum(input_paths, {"salt": args.salt})
     output_paths = [args.mapping_path]
-    if args.csv:
-        output_paths.append(args.output_dir / args.csv.name)
-    if args.transcript:
-        output_paths.append(args.output_dir / args.transcript.name)
+    output_paths.extend(args.output_dir / csv_path.name for csv_path in args.csv)
+    output_paths.extend(
+        args.output_dir / transcript_path.name
+        for transcript_path in args.transcript
+    )
 
     if not args.force and all(
         is_current_artifact(output_path, checksum) for output_path in output_paths
@@ -112,8 +123,12 @@ def main() -> None:
     logger.info("Building anonymization mapping...")
 
     # Build mapping from transcript and CSV
-    transcript_paths = [args.transcript] if args.transcript else []
-    csv_identifiers = collect_csv_identifiers(args.csv) if args.csv else []
+    transcript_paths = args.transcript
+    csv_identifiers = [
+        identifier
+        for csv_path in args.csv
+        for identifier in collect_csv_identifiers(csv_path)
+    ]
     mapping = build_anonymization_mapping(
         [csv_identifiers], transcript_paths, salt=args.salt
     )
@@ -121,17 +136,17 @@ def main() -> None:
     logger.info(f"Found {len(mapping)} identifiers to anonymize")
 
     # Anonymize CSV if provided
-    if args.csv:
-        logger.info(f"Anonymizing CSV: {args.csv}")
-        output_csv = args.output_dir / args.csv.name
-        anonymize_csv_file(args.csv, output_csv, mapping, salt=args.salt)
+    for csv_path in args.csv:
+        logger.info(f"Anonymizing CSV: {csv_path}")
+        output_csv = args.output_dir / csv_path.name
+        anonymize_csv_file(csv_path, output_csv, mapping, salt=args.salt)
         logger.info(f"Wrote anonymized CSV to {output_csv}")
 
     # Anonymize transcript if provided
-    if args.transcript:
-        logger.info(f"Anonymizing transcript: {args.transcript}")
-        output_transcript = args.output_dir / args.transcript.name
-        anonymize_transcript(args.transcript, output_transcript, mapping)
+    for transcript_path in args.transcript:
+        logger.info(f"Anonymizing transcript: {transcript_path}")
+        output_transcript = args.output_dir / transcript_path.name
+        anonymize_transcript(transcript_path, output_transcript, mapping)
         logger.info(f"Wrote anonymized transcript to {output_transcript}")
 
     # Write mapping (restricted file)

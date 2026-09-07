@@ -39,6 +39,70 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_pipeline_orchestrator_runs_selected_stage_with_force(self) -> None:
+        orchestrator = load_script_module("pipeline_orchestrator", "run_pipeline.py")
+
+        with mock.patch.object(orchestrator.subprocess, "run") as run:
+            with mock.patch.object(sys, "argv", [
+                "run_pipeline.py", "--stages", "git", "--force",
+            ]):
+                orchestrator.main()
+
+        run.assert_called_once_with(
+            [
+                sys.executable,
+                str(REPO_ROOT / "02_git_parser.py"),
+                "--force",
+            ],
+            check=True,
+            cwd=REPO_ROOT,
+        )
+
+    def test_pipeline_orchestrator_dry_run_does_not_execute_stages(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_dry_run", "run_pipeline.py"
+        )
+
+        with mock.patch.object(orchestrator.subprocess, "run") as run:
+            with mock.patch.object(sys, "argv", [
+                "run_pipeline.py", "--from-stage", "anonymize", "--to-stage", "lake",
+                "--dry-run",
+            ]):
+                orchestrator.main()
+
+        run.assert_not_called()
+        self.assertEqual(
+            ["anonymize", "git", "lake"],
+            orchestrator.resolve_stages(None, "anonymize", "lake"),
+        )
+
+    def test_pipeline_orchestrator_passes_anonymizer_inputs(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_anonymizer", "run_pipeline.py"
+        )
+
+        command = orchestrator.build_stage_command(
+            "anonymize",
+            [Path("raw/students.csv")],
+            [Path("processed/feedback.txt")],
+            "pepper",
+            False,
+        )
+
+        self.assertEqual(
+            [
+                sys.executable,
+                str(REPO_ROOT / "01_anonymizer.py"),
+                "--csv",
+                "raw/students.csv",
+                "--transcript",
+                "processed/feedback.txt",
+                "--salt",
+                "pepper",
+            ],
+            command,
+        )
+
     def test_load_project_environment_uses_project_dotenv(self) -> None:
         with mock.patch.object(pipeline_core, "load_dotenv") as load_dotenv:
             pipeline_core.load_project_environment()
@@ -142,6 +206,38 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertNotIn("Alice", (output_dir / "feedback.txt").read_text(encoding="utf-8"))
             mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
             self.assertIn("Alice", mapping["mapping"])
+
+    def test_anonymizer_processes_all_csv_arguments(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            student_csv = tmp_path / "students.csv"
+            reviewer_csv = tmp_path / "reviewers.csv"
+            student_csv.write_text("nome\nAlice\n", encoding="utf-8")
+            reviewer_csv.write_text("avaliador\nCarol\n", encoding="utf-8")
+            output_dir = tmp_path / "forms"
+            mapping_path = tmp_path / "mapping.json"
+
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(REPO_ROOT / "01_anonymizer.py"),
+                    "--csv",
+                    str(student_csv),
+                    "--csv",
+                    str(reviewer_csv),
+                    "--output-dir",
+                    str(output_dir),
+                    "--mapping-path",
+                    str(mapping_path),
+                ],
+                check=True,
+            )
+
+            self.assertTrue((output_dir / student_csv.name).exists())
+            self.assertTrue((output_dir / reviewer_csv.name).exists())
+            mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+            self.assertIn("Alice", mapping["mapping"])
+            self.assertIn("Carol", mapping["mapping"])
 
     def test_anonymize_csv_uses_salted_fallback_for_late_identifiers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
