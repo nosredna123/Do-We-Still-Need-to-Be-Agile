@@ -26,6 +26,7 @@ import pandas as pd
 from pipeline_core import (
     file_checksum,
     is_current_artifact,
+    load_project_environment,
     write_artifact_metadata,
 )
 from pipeline_core import extract_git_history
@@ -144,6 +145,8 @@ def mirror_clean_repo(repo_path: Path, clean_repos_dir: Path) -> Path:
 
 def main() -> None:
     """Main entry point for Git parser."""
+    load_project_environment()
+
     parser = argparse.ArgumentParser(
         description="Extract anonymized Git history from repositories",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,

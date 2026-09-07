@@ -22,7 +22,12 @@ from typing import Optional
 
 import pandas as pd
 
-from pipeline_core import input_checksum, is_current_artifact, write_artifact_metadata
+from pipeline_core import (
+    input_checksum,
+    is_current_artifact,
+    load_project_environment,
+    write_artifact_metadata,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -298,6 +303,8 @@ def aggregate_by_team(
 
 def main() -> None:
     """Main entry point for data lake builder."""
+    load_project_environment()
+
     parser = argparse.ArgumentParser(
         description="Build unified data lake from anonymized sources",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,

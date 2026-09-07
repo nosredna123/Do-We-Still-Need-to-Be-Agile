@@ -18,12 +18,14 @@ import logging
 from pathlib import Path
 from typing import Any, Optional
 
-from dotenv import load_dotenv
-
-from pipeline_core import file_checksum, is_current_artifact, write_artifact_metadata
+from pipeline_core import (
+    file_checksum,
+    is_current_artifact,
+    load_project_environment,
+    write_artifact_metadata,
+)
 
 logger = logging.getLogger(__name__)
-DOTENV_PATH = Path(__file__).resolve().with_name(".env")
 
 
 def transcribe_audio_file(
@@ -74,7 +76,7 @@ def transcribe_audio_file(
 
 def main() -> None:
     """Main entry point for audio transcriber."""
-    load_dotenv(dotenv_path=DOTENV_PATH, override=False)
+    load_project_environment()
 
     parser = argparse.ArgumentParser(
         description="Transcribe audio files using Whisper API",
