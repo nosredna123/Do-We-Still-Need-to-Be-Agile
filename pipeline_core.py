@@ -116,18 +116,14 @@ def anonymize_csv_file(
         for row in reader:
             anon_row = {}
             for key, value in row.items():
-                if key == "comentario" and isinstance(value, str):
-                    anon_row[key] = _replace_identifiers_in_text(value, mapping, salt)
-                # Anonymize email and name fields
-                elif isinstance(value, str) and (
-                    is_identifier_field(key) or "@" in value
-                ):
-                    if value in mapping:
-                        anon_row[key] = mapping[value]
-                    else:
-                        anon_row[key] = _hash_identifier(value, salt)
-                else:
+                if not isinstance(value, str):
                     anon_row[key] = value
+                    continue
+
+                if is_identifier_field(key):
+                    anon_row[key] = mapping.get(value, _hash_identifier(value, salt))
+                else:
+                    anon_row[key] = _replace_identifiers_in_text(value, mapping, salt)
             rows.append(anon_row)
 
     # Write anonymized CSV

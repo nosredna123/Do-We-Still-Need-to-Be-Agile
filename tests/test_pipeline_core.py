@@ -116,6 +116,26 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertIn("pediu retorno para", rows[0]["comentario"])
             self.assertNotEqual(mapping["Alice"], rows[0]["comentario"])
 
+    def test_anonymize_csv_preserves_non_identifier_text_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "feedback.csv"
+            csv_path.write_text(
+                "feedback\nContact Alice at alice@example.com\n",
+                encoding="utf-8",
+            )
+            output_path = tmp_path / "anon.csv"
+            mapping = build_anonymization_mapping([["Alice", "alice@example.com"]], [], salt="pepper")
+
+            anonymize_csv_file(csv_path, output_path, mapping, salt="pepper")
+
+            rows = load_records(output_path)
+            self.assertIn("Contact", rows[0]["feedback"])
+            self.assertNotIn("Alice", rows[0]["feedback"])
+            self.assertNotIn("alice@example.com", rows[0]["feedback"])
+            self.assertIn(mapping["Alice"], rows[0]["feedback"])
+            self.assertIn(mapping["alice@example.com"], rows[0]["feedback"])
+
     def test_git_history_is_anonymized_and_mirrored(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp_path = Path(tmp_dir)
