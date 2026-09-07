@@ -113,6 +113,8 @@ def main() -> None:
 
         output_file = args.output_dir / f"{audio_file.stem}.json"
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        text_output_file = args.output_dir / f"{audio_file.stem}.txt"
+        text_output_file.write_text(str(result.get("text", "")), encoding="utf-8")
 
         if result.get("status") == "success":
             logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")

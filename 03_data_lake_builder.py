@@ -183,7 +183,13 @@ def aggregate_by_team(
     # Merge forms with Git data
     if not forms_df.empty and not git_agg.empty:
         merge_keys = ["ID_Equipe", "temporal_marker"]
-        if "Semestre" in forms_df.columns and "Semestre" in git_agg.columns:
+        if "Semestre" in forms_df.columns or "Semestre" in git_agg.columns:
+            if "Semestre" not in forms_df.columns:
+                forms_df = forms_df.copy()
+                forms_df["Semestre"] = ""
+            if "Semestre" not in git_agg.columns:
+                git_agg = git_agg.copy()
+                git_agg["Semestre"] = ""
             merge_keys.append("Semestre")
         merged = pd.merge(
             forms_df,
@@ -252,6 +258,9 @@ def main() -> None:
 
     # Aggregate by team
     master_df = aggregate_by_team(forms_df, git_df)
+
+    if not transcripts_df.empty:
+        master_df = pd.concat([master_df, transcripts_df], ignore_index=True, sort=False)
 
     # Normalize temporal markers
     if "temporal_marker" in master_df.columns:
