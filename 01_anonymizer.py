@@ -59,7 +59,8 @@ def collect_csv_identifiers(csv_path: Path) -> list[str]:
 def main() -> None:
     """Main entry point for anonymizer."""
     parser = argparse.ArgumentParser(
-        description="Anonymize CSVs and transcripts by replacing PII with hashes"
+        description="Anonymize CSVs and transcripts by replacing PII with hashes",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--csv", type=Path, help="Path to input CSV file")
     parser.add_argument(
@@ -68,13 +69,13 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        required=True,
+        default=Path("data/processed/forms"),
         help="Directory to write anonymized files",
     )
     parser.add_argument(
         "--mapping-path",
         type=Path,
-        required=True,
+        default=Path("data/processed/chave_relacional.json"),
         help="Path to write the anonymization mapping JSON",
     )
     parser.add_argument(
