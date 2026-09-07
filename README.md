@@ -51,7 +51,9 @@ O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `anonymize`,
 converte os áudios originais para MP3 mono a 16 kHz e 48 kbps em
 `data/processed/audio_chunks`; arquivos que ainda ultrapassem 25 MiB são
 divididos em segmentos de 10 minutos. A transcrição consome somente esses
-arquivos preparados e envia `language="pt"` para a API. A anonimização busca
+arquivos preparados e envia `language="pt"` e um prompt genérico para preservar
+nomes próprios, siglas, termos técnicos e pontuação. O prompt não contém PII e
+não substitui a anonimização local posterior. A anonimização busca
 recursivamente CSVs em `data/raw/forms` e transcrições `.txt` e `.json` em
 `data/processed/transcripts`; os resultados são escritos em
 `data/processed/forms` e `data/processed/transcripts_anon`, preservando os
