@@ -225,10 +225,25 @@ def anonymize_transcript(
         mapping: Dictionary of identifier -> anonymized mappings
     """
     text = transcript_path.read_text(encoding="utf-8")
-    text = _replace_identifiers_in_text(text, mapping)
+    if transcript_path.suffix.lower() == ".json":
+        data = json.loads(text)
+        text = json.dumps(_anonymize_json_value(data, mapping), indent=2)
+    else:
+        text = _replace_identifiers_in_text(text, mapping)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(text, encoding="utf-8")
+
+
+def _anonymize_json_value(value: Any, mapping: dict[str, str]) -> Any:
+    """Recursively redact strings contained in a JSON-compatible value."""
+    if isinstance(value, dict):
+        return {key: _anonymize_json_value(item, mapping) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_anonymize_json_value(item, mapping) for item in value]
+    if isinstance(value, str):
+        return _replace_identifiers_in_text(value, mapping)
+    return value
 
 def _replace_identifiers_in_text(
     text: str,

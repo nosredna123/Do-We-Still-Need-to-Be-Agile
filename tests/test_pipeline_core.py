@@ -76,19 +76,6 @@ class PipelineCoreTests(unittest.TestCase):
             orchestrator.resolve_stages(None, "anonymize", "lake"),
         )
 
-    def test_pipeline_orchestrator_requires_anonymizer_sources(self) -> None:
-        orchestrator = load_script_module(
-            "pipeline_orchestrator_requires_sources", "run_pipeline.py"
-        )
-
-        with mock.patch.object(sys, "argv", [
-            "run_pipeline.py", "--stages", "anonymize", "--dry-run",
-        ]):
-            with self.assertRaises(SystemExit) as exit_error:
-                orchestrator.main()
-
-        self.assertEqual(2, exit_error.exception.code)
-
     def test_pipeline_orchestrator_passes_anonymizer_inputs(self) -> None:
         orchestrator = load_script_module(
             "pipeline_orchestrator_anonymizer", "run_pipeline.py"
@@ -205,6 +192,8 @@ class PipelineCoreTests(unittest.TestCase):
                     str(transcript_path),
                     "--output-dir",
                     str(output_dir),
+                    "--transcripts-output-dir",
+                    str(output_dir),
                     "--mapping-path",
                     str(mapping_path),
                     "--salt",
@@ -242,6 +231,8 @@ class PipelineCoreTests(unittest.TestCase):
                     str(output_dir),
                     "--mapping-path",
                     str(mapping_path),
+                    "--salt",
+                    "pepper",
                 ],
                 check=True,
             )
@@ -251,6 +242,74 @@ class PipelineCoreTests(unittest.TestCase):
             mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
             self.assertIn("Alice", mapping["mapping"])
             self.assertIn("Carol", mapping["mapping"])
+
+    def test_anonymizer_discovers_and_skips_current_default_artifacts(self) -> None:
+        anonymizer = load_script_module(
+            "anonymizer_default_artifacts", "01_anonymizer.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            forms_dir = tmp_path / "raw_forms"
+            transcripts_dir = tmp_path / "transcripts"
+            student_csv = forms_dir / "t1" / "students.csv"
+            transcript_txt = transcripts_dir / "session_1" / "feedback.txt"
+            transcript_json = transcripts_dir / "session_1" / "feedback.json"
+            student_csv.parent.mkdir(parents=True)
+            transcript_txt.parent.mkdir(parents=True)
+            student_csv.write_text("nome,email\nAlice,alice@example.com\n", encoding="utf-8")
+            transcript_txt.write_text("Alice: email alice@example.com", encoding="utf-8")
+            transcript_json.write_text(
+                json.dumps({"text": "Alice: email alice@example.com"}),
+                encoding="utf-8",
+            )
+            forms_output_dir = tmp_path / "forms_output"
+            transcripts_output_dir = tmp_path / "transcripts_output"
+            mapping_path = tmp_path / "mapping.json"
+
+            with mock.patch.object(sys, "argv", [
+                "01_anonymizer.py", "--forms-dir", str(forms_dir),
+                "--transcripts-dir", str(transcripts_dir), "--output-dir",
+                str(forms_output_dir), "--transcripts-output-dir",
+                str(transcripts_output_dir), "--mapping-path", str(mapping_path),
+                "--salt", "pepper",
+            ]):
+                anonymizer.main()
+
+            self.assertTrue((forms_output_dir / "t1" / "students.csv").exists())
+            self.assertTrue(
+                (transcripts_output_dir / "session_1" / "feedback.txt").exists()
+            )
+            anonymized_json = json.loads(
+                (transcripts_output_dir / "session_1" / "feedback.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertNotIn("Alice", anonymized_json["text"])
+            self.assertNotIn("alice@example.com", anonymized_json["text"])
+
+            with mock.patch.object(anonymizer, "anonymize_csv_file") as anonymize_csv:
+                with mock.patch.object(anonymizer, "anonymize_transcript") as anonymize_transcript:
+                    with mock.patch.object(sys, "argv", [
+                        "01_anonymizer.py", "--forms-dir", str(forms_dir),
+                        "--transcripts-dir", str(transcripts_dir), "--output-dir",
+                        str(forms_output_dir), "--transcripts-output-dir",
+                        str(transcripts_output_dir), "--mapping-path", str(mapping_path),
+                        "--salt", "pepper",
+                    ]):
+                        anonymizer.main()
+
+            anonymize_csv.assert_not_called()
+            anonymize_transcript.assert_not_called()
+
+    def test_anonymizer_requires_environment_salt_when_not_provided(self) -> None:
+        anonymizer = load_script_module("anonymizer_requires_salt", "01_anonymizer.py")
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with mock.patch.object(anonymizer, "load_project_environment"):
+                with mock.patch.object(sys, "argv", ["01_anonymizer.py"]):
+                    with self.assertRaises(SystemExit) as exit_error:
+                        anonymizer.main()
+
+        self.assertEqual(2, exit_error.exception.code)
 
     def test_anonymize_csv_uses_salted_fallback_for_late_identifiers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -375,6 +434,8 @@ class PipelineCoreTests(unittest.TestCase):
                     str(output_dir),
                     "--mapping-path",
                     str(mapping_path),
+                    "--salt",
+                    "pepper",
                 ],
                 check=True,
             )
