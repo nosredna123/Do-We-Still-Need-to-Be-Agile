@@ -179,7 +179,8 @@ def main() -> None:
     args = parser.parse_args()
 
     checksum = file_checksum(args.repos_list)
-    if not args.force and is_current_artifact(args.output_csv, checksum):
+    clean_repos_ready = args.clean_repos_dir.is_dir() and any(args.clean_repos_dir.iterdir())
+    if not args.force and clean_repos_ready and is_current_artifact(args.output_csv, checksum):
         logger.info("Skipping current Git log output: %s", args.output_csv)
         return
 
