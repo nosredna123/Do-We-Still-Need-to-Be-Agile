@@ -23,6 +23,7 @@ from pipeline_core import (
     anonymize_csv_file,
     anonymize_transcript,
     build_anonymization_mapping,
+    is_identifier_field,
 )
 
 logging.basicConfig(
@@ -42,7 +43,7 @@ def collect_csv_identifiers(csv_path: Path) -> list[str]:
             for key, value in row.items():
                 if not isinstance(value, str) or not value:
                     continue
-                if key in ("email", "nome", "name", "avaliador"):
+                if is_identifier_field(key):
                     identifiers.add(value)
                 elif "@" in value:
                     identifiers.update(

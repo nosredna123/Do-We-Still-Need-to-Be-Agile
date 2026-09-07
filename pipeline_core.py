@@ -23,7 +23,7 @@ import pandas as pd
 from scipy import stats
 
 logger = logging.getLogger(__name__)
-IDENTIFIER_FIELDS = {"email", "nome", "name", "avaliador"}
+IDENTIFIER_FIELD_TOKENS = {"email", "mail", "nome", "name", "aluno", "avaliador"}
 
 
 def _hash_identifier(identifier: str, salt: str = "") -> str:
@@ -39,6 +39,14 @@ def _hash_identifier(identifier: str, salt: str = "") -> str:
     combined = f"{identifier}_{salt}".encode("utf-8")
     digest = hashlib.sha256(combined).hexdigest()[:12]
     return f"anon_{digest}"
+
+
+def is_identifier_field(field_name: str) -> bool:
+    """Return whether a CSV column name should be treated as an identifier field."""
+    normalized = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", field_name)
+    normalized = re.sub(r"[^0-9A-Za-zÀ-ÿ]+", " ", normalized).lower()
+    tokens = {token for token in normalized.split() if token}
+    return bool(tokens & IDENTIFIER_FIELD_TOKENS)
 
 
 def build_anonymization_mapping(
@@ -112,7 +120,7 @@ def anonymize_csv_file(
                     anon_row[key] = _replace_identifiers_in_text(value, mapping, salt)
                 # Anonymize email and name fields
                 elif isinstance(value, str) and (
-                    key in IDENTIFIER_FIELDS or "@" in value
+                    is_identifier_field(key) or "@" in value
                 ):
                     if value in mapping:
                         anon_row[key] = mapping[value]
