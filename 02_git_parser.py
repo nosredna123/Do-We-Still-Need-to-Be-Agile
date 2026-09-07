@@ -21,7 +21,7 @@ from typing import Any, Optional
 
 import pandas as pd
 
-from pipeline_core import extract_git_history, build_anonymization_mapping
+from pipeline_core import extract_git_history
 
 logging.basicConfig(
     level=logging.INFO,
@@ -79,6 +79,16 @@ def clone_or_update_repo(repo_url: str, cache_path: Path) -> Optional[Path]:
             return None
 
 
+def author_label(index: int) -> str:
+    """Build spreadsheet-style author labels: A..Z, AA..AZ, etc."""
+    label = ""
+    index += 1
+    while index > 0:
+        index, remainder = divmod(index - 1, 26)
+        label = chr(65 + remainder) + label
+    return f"Dev_{label}"
+
+
 def map_authors_by_volume(
     commit_rows: list[dict[str, Any]],
 ) -> dict[str, str]:
@@ -102,7 +112,7 @@ def map_authors_by_volume(
     author_mapping = {}
     for idx, (author_alias, count) in enumerate(sorted_aliases):
         # Map to Dev_A, Dev_B, Dev_C, etc.
-        dev_name = f"Dev_{chr(65 + idx)}"  # A, B, C, ...
+        dev_name = author_label(idx)
         author_mapping[author_alias] = dev_name
         logger.info(f"  {author_alias} ({count} commits) -> {dev_name}")
 
@@ -161,8 +171,7 @@ def main() -> None:
             continue
 
         # Extract git history with team context
-        mapping = build_anonymization_mapping([], [], salt="")
-        commit_rows = extract_git_history(repo_path, mapping, salt="")
+        commit_rows = extract_git_history(repo_path, {}, salt="")
 
         # Map authors within this team
         author_mapping = map_authors_by_volume(commit_rows)

@@ -98,6 +98,24 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertTrue(output_path.exists())
             self.assertEqual("nome,email", output_path.read_text(encoding="utf-8").strip())
 
+    def test_anonymize_csv_preserves_comment_text_while_redacting_identifiers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "comments.csv"
+            csv_path.write_text(
+                "nome,comentario\nAlice,Alice pediu retorno para alice@example.com\n",
+                encoding="utf-8",
+            )
+            output_path = tmp_path / "anon.csv"
+            mapping = build_anonymization_mapping([["Alice", "alice@example.com"]], [], salt="pepper")
+
+            anonymize_csv_file(csv_path, output_path, mapping, salt="pepper")
+
+            rows = load_records(output_path)
+            self.assertIn("anon_", rows[0]["comentario"])
+            self.assertIn("pediu retorno para", rows[0]["comentario"])
+            self.assertNotEqual(mapping["Alice"], rows[0]["comentario"])
+
     def test_git_history_is_anonymized_and_mirrored(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp_path = Path(tmp_dir)
@@ -354,6 +372,11 @@ class PipelineCoreTests(unittest.TestCase):
         )
         self.assertEqual("Dev_A", mapping["anon_a"])
         self.assertEqual("Dev_B", mapping["anon_b"])
+
+    def test_author_label_continues_past_z(self) -> None:
+        git_parser = load_script_module("git_parser_labels", "02_git_parser.py")
+        self.assertEqual("Dev_Z", git_parser.author_label(25))
+        self.assertEqual("Dev_AA", git_parser.author_label(26))
 
     def test_parquet_roundtrip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

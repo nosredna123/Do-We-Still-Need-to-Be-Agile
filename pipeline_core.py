@@ -23,6 +23,7 @@ import pandas as pd
 from scipy import stats
 
 logger = logging.getLogger(__name__)
+IDENTIFIER_FIELDS = {"email", "nome", "name", "avaliador"}
 
 
 def _hash_identifier(identifier: str, salt: str = "") -> str:
@@ -107,10 +108,11 @@ def anonymize_csv_file(
         for row in reader:
             anon_row = {}
             for key, value in row.items():
+                if key == "comentario" and isinstance(value, str):
+                    anon_row[key] = _replace_identifiers_in_text(value, mapping, salt)
                 # Anonymize email and name fields
-                if isinstance(value, str) and (
-                    key in ("email", "nome", "name", "avaliador", "comentario")
-                    or "@" in value
+                elif isinstance(value, str) and (
+                    key in IDENTIFIER_FIELDS or "@" in value
                 ):
                     if value in mapping:
                         anon_row[key] = mapping[value]
@@ -142,18 +144,29 @@ def anonymize_transcript(
         mapping: Dictionary of identifier -> anonymized mappings
     """
     text = transcript_path.read_text(encoding="utf-8")
-
-    for original, anonymized in mapping.items():
-        # Replace exact matches with word boundaries
-        text = re.sub(
-            rf"\b{re.escape(original)}\b",
-            anonymized,
-            text,
-            flags=re.IGNORECASE,
-        )
+    text = _replace_identifiers_in_text(text, mapping)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(text, encoding="utf-8")
+
+def _replace_identifiers_in_text(
+    text: str,
+    mapping: dict[str, str],
+    salt: str = "",
+) -> str:
+    """Replace mapped identifiers within free text while preserving other content."""
+    replaced_text = text
+    for original in sorted(mapping, key=len, reverse=True):
+        replaced_text = re.sub(
+            rf"\b{re.escape(original)}\b",
+            mapping[original],
+            replaced_text,
+        )
+
+    for email in re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", replaced_text):
+        replaced_text = replaced_text.replace(email, mapping.get(email, _hash_identifier(email, salt)))
+
+    return replaced_text
 
 
 def extract_git_history(
