@@ -66,7 +66,7 @@ class PipelineCoreTests(unittest.TestCase):
         with mock.patch.object(orchestrator.subprocess, "run") as run:
             with mock.patch.object(sys, "argv", [
                 "run_pipeline.py", "--from-stage", "anonymize", "--to-stage", "lake",
-                "--dry-run",
+                "--csv", "raw/students.csv", "--dry-run",
             ]):
                 orchestrator.main()
 
@@ -75,6 +75,19 @@ class PipelineCoreTests(unittest.TestCase):
             ["anonymize", "git", "lake"],
             orchestrator.resolve_stages(None, "anonymize", "lake"),
         )
+
+    def test_pipeline_orchestrator_requires_anonymizer_sources(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_requires_sources", "run_pipeline.py"
+        )
+
+        with mock.patch.object(sys, "argv", [
+            "run_pipeline.py", "--stages", "anonymize", "--dry-run",
+        ]):
+            with self.assertRaises(SystemExit) as exit_error:
+                orchestrator.main()
+
+        self.assertEqual(2, exit_error.exception.code)
 
     def test_pipeline_orchestrator_passes_anonymizer_inputs(self) -> None:
         orchestrator = load_script_module(

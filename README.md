@@ -45,8 +45,9 @@ os scripts numerados continuam disponíveis como pontos de entrada independentes
 
 O orquestrador executa as etapas na ordem `transcribe`, `anonymize`, `git` e
 `lake`, usando o mesmo interpretador Python que o iniciou. Os CSVs e as
-transcrições destinados à anonimização devem ser indicados explicitamente, pois
-os nomes dos formulários brutos não são padronizados pelo projeto.
+transcrições destinados à anonimização são obrigatórios quando essa etapa é
+selecionada, pois os nomes dos formulários brutos não são padronizados pelo
+projeto.
 
 ```bash
 .venv/bin/python run_pipeline.py \
