@@ -5,7 +5,8 @@ Pipeline inicial para gerar, anonimizar, enriquecer e analisar os dados do artig
 ## Scripts implementados
 
 - `run_pipeline.py`: orquestra as etapas da Fase 1 na ordem definida.
-- `00_audio_transcriber.py`: transcreve áudios para `.txt` e `.json` usando `whisper`, `openai` ou `txt-sidecar`.
+- `00_audio_preparer.py`: comprime e segmenta áudios para o limite da API.
+- `00_audio_transcriber.py`: transcreve áudios preparados em português para `.txt` e `.json`.
 - `01_anonymizer.py`: anonimiza CSVs e transcrições, gerando `chave_relacional.json`.
 - `02_git_parser.py`: extrai histórico Git anonimizado e espelha repositórios sem `.git`.
 - `03_data_lake_builder.py`: consolida entradas anonimizadas em `master_dataset.parquet`.
@@ -25,6 +26,7 @@ Dependências opcionais por script:
 - `openai` para `00_audio_transcriber.py --backend openai` e `04_nlp_qualitative_miner.py --backend openai`
 - `openai-whisper` para `00_audio_transcriber.py --backend whisper`
 - `streamlit` para `07_dashboard_app.py`
+- `ffmpeg` para `00_audio_preparer.py`; no Ubuntu/Debian, instale com `sudo apt install ffmpeg`.
 
 ## Configuração
 
@@ -44,8 +46,12 @@ os scripts numerados continuam disponíveis como pontos de entrada independentes
 
 ## Execução da Fase 1
 
-O orquestrador executa as etapas na ordem `transcribe`, `anonymize`, `git` e
-`lake`, usando o mesmo interpretador Python que o iniciou. A anonimização busca
+O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `anonymize`,
+`git` e `lake`, usando o mesmo interpretador Python que o iniciou. A preparação
+converte os áudios originais para MP3 mono a 16 kHz e 48 kbps em
+`data/processed/audio_chunks`; arquivos que ainda ultrapassem 25 MiB são
+divididos em segmentos de 10 minutos. A transcrição consome somente esses
+arquivos preparados e envia `language="pt"` para a API. A anonimização busca
 recursivamente CSVs em `data/raw/forms` e transcrições `.txt` e `.json` em
 `data/processed/transcripts`; os resultados são escritos em
 `data/processed/forms` e `data/processed/transcripts_anon`, preservando os
@@ -87,6 +93,8 @@ streamlit run 07_dashboard_app.py -- --input outputs/metrics_dataset.parquet
 	inválidas, repositórios inacessíveis e dados malformados encerram a etapa e
 	impedem a geração de resultados parciais. A transcrição OpenAI aceita no
 	máximo 25 MiB por arquivo; divida ou comprima gravações maiores antes de rodar.
+- Os áudios preparados em `data/processed/audio_chunks` são dados derivados e
+	permanecem fora do Git, assim como os áudios brutos.
 - A anonimização usa hashes SHA-256 truncados com prefixo `anon_`.
 - Os datasets tabulares centrais são persistidos em Parquet.
 - As visualizações são exportadas em SVG para facilitar versionamento e publicação.

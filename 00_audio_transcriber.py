@@ -53,6 +53,7 @@ def transcribe_audio_file(
         transcript = client.audio.transcriptions.create(
             model="whisper-1",
             file=f,
+            language="pt",
         )
 
     return {
@@ -75,7 +76,7 @@ def main() -> None:
     parser.add_argument(
         "--audio-dir",
         type=Path,
-        default=Path("data/raw/audio"),
+        default=Path("data/processed/audio_chunks"),
         help="Directory containing audio files (.mp3, .wav)",
     )
     parser.add_argument(
