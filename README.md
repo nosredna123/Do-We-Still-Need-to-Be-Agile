@@ -4,6 +4,7 @@ Pipeline inicial para gerar, anonimizar, enriquecer e analisar os dados do artig
 
 ## Scripts implementados
 
+- `run_pipeline.py`: orquestra as etapas da Fase 1 na ordem definida.
 - `00_audio_transcriber.py`: transcreve áudios para `.txt` e `.json` usando `whisper`, `openai` ou `txt-sidecar`.
 - `01_anonymizer.py`: anonimiza CSVs e transcrições, gerando `chave_relacional.json`.
 - `02_git_parser.py`: extrai histórico Git anonimizado e espelha repositórios sem `.git`.
@@ -37,7 +38,31 @@ OPENAI_API_KEY=sua_chave
 
 O módulo `pipeline_core.py` centraliza funções reutilizáveis do pipeline,
 incluindo a carga da configuração compartilhada. Ele não inicia nem orquestra
-as etapas: cada script numerado é um ponto de entrada independente.
+as etapas. `run_pipeline.py` é o ponto de entrada para a execução coordenada;
+os scripts numerados continuam disponíveis como pontos de entrada independentes.
+
+## Execução da Fase 1
+
+O orquestrador executa as etapas na ordem `transcribe`, `anonymize`, `git` e
+`lake`, usando o mesmo interpretador Python que o iniciou. Os CSVs e as
+transcrições destinados à anonimização devem ser indicados explicitamente, pois
+os nomes dos formulários brutos não são padronizados pelo projeto.
+
+```bash
+.venv/bin/python run_pipeline.py \
+	--csv data/raw/forms/alunos_t1.csv \
+	--csv data/raw/forms/avaliadores_t1.csv
+```
+
+Use `--stages` para executar etapas específicas, `--from-stage` e `--to-stage`
+para uma faixa contínua, `--dry-run` para apenas listar os comandos, e `--force`
+para propagar a regeneração intencional a todas as etapas selecionadas.
+
+```bash
+.venv/bin/python run_pipeline.py --stages git lake --dry-run
+.venv/bin/python run_pipeline.py --from-stage anonymize --to-stage lake --force \
+	--csv data/raw/forms/alunos_t1.csv
+```
 
 ## Exemplo de uso
 
