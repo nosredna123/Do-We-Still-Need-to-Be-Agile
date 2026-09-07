@@ -27,6 +27,38 @@ from scipy import stats
 logger = logging.getLogger(__name__)
 DOTENV_PATH = Path(__file__).resolve().with_name(".env")
 IDENTIFIER_FIELD_TOKENS = {"email", "mail", "nome", "name", "aluno", "avaliador"}
+NON_IDENTIFIER_CAPITALIZED_WORDS = {
+    "a",
+    "ao",
+    "as",
+    "com",
+    "contato",
+    "da",
+    "das",
+    "de",
+    "do",
+    "dos",
+    "e",
+    "ela",
+    "ele",
+    "essa",
+    "esse",
+    "eu",
+    "minha",
+    "minhas",
+    "nossa",
+    "nossas",
+    "o",
+    "os",
+    "para",
+    "por",
+    "se",
+    "sua",
+    "suas",
+    "um",
+    "uma",
+    "você",
+}
 
 
 def load_project_environment() -> bool:
@@ -156,6 +188,13 @@ def build_anonymization_mapping(
             # Extract emails
             for email in re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", text):
                 identifiers.add(email)
+
+            for candidate in re.findall(
+                r"\b[A-ZÀ-Ý][a-zà-ÿ]+(?:\s+[A-ZÀ-Ý][a-zà-ÿ]+){0,3}\b",
+                text,
+            ):
+                if candidate.casefold() not in NON_IDENTIFIER_CAPITALIZED_WORDS:
+                    identifiers.add(candidate)
 
             # Extract explicit speaker labels (e.g., "Carol:")
             for line in text.splitlines():
