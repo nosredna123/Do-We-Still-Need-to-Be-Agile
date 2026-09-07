@@ -154,13 +154,22 @@ def aggregate_by_team(
 
     # Aggregate Git data by team
     if not git_df.empty:
-        git_agg = git_df.groupby(["ID_Equipe", "temporal_marker"]).agg({
-            "lines_added": "sum",
-            "lines_deleted": "sum",
-            "files_changed": "sum",
-            "ID_Autor_Local": "nunique",
-            "commit_hash": "count",
-        }).reset_index()
+        group_keys = ["ID_Equipe", "temporal_marker"]
+        if "Semestre" in git_df.columns:
+            group_keys.append("Semestre")
+        git_agg = (
+            git_df.groupby(group_keys)
+            .agg(
+                {
+                    "lines_added": "sum",
+                    "lines_deleted": "sum",
+                    "files_changed": "sum",
+                    "ID_Autor_Local": "nunique",
+                    "commit_hash": "count",
+                }
+            )
+            .reset_index()
+        )
         git_agg.rename(
             columns={
                 "ID_Autor_Local": "num_authors",
@@ -173,10 +182,13 @@ def aggregate_by_team(
 
     # Merge forms with Git data
     if not forms_df.empty and not git_agg.empty:
+        merge_keys = ["ID_Equipe", "temporal_marker"]
+        if "Semestre" in forms_df.columns and "Semestre" in git_agg.columns:
+            merge_keys.append("Semestre")
         merged = pd.merge(
             forms_df,
             git_agg,
-            on=["ID_Equipe", "temporal_marker"],
+            on=merge_keys,
             how="left",
         )
     elif not forms_df.empty:
