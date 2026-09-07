@@ -96,6 +96,8 @@ streamlit run 07_dashboard_app.py -- --input outputs/metrics_dataset.parquet
 - Os áudios preparados em `data/processed/audio_chunks` são dados derivados e
 	permanecem fora do Git, assim como os áudios brutos.
 - A anonimização usa hashes SHA-256 truncados com prefixo `anon_`.
+- A anonimização de transcrições substitui e-mails, rótulos de falantes e nomes
+	próprios identificáveis mencionados no texto corrido.
 - Os datasets tabulares centrais são persistidos em Parquet.
 - As visualizações são exportadas em SVG para facilitar versionamento e publicação.
 - Os produtores da Fase 1 registram um checksum SHA-256 em sidecars `.metadata.json` e ignoram somente artefatos com status `success` e entradas inalteradas. Use `--force` para regenerar um artefato intencionalmente.
