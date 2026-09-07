@@ -132,13 +132,6 @@ def main() -> None:
         default=Path("data/raw/repos_cache"),
         help="Directory to cache cloned repositories",
     )
-    parser.add_argument(
-        "--clean-output-dir",
-        type=Path,
-        default=None,
-        help="Optional: directory to write cleaned repos without PII",
-    )
-
     args = parser.parse_args()
 
     # Read repositories list

@@ -280,7 +280,7 @@ def load_records(path: Path) -> list[dict[str, Any]]:
         df = pd.read_parquet(path)
         return df.to_dict(orient="records")
     elif path.suffix == ".csv":
-        df = pd.read_csv(path, keep_default_na=False)
+        df = pd.read_csv(path, keep_default_na=False, dtype=str)
         return df.to_dict(orient="records")
     else:
         raise ValueError(f"Unsupported file format: {path.suffix}")
