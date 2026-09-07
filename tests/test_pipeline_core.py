@@ -17,6 +17,7 @@ import pipeline_core
 
 from pipeline_core import (
     anonymize_csv_file,
+    anonymize_transcript,
     build_anonymization_mapping,
     compute_metrics,
     correlation_rows,
@@ -498,6 +499,23 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertEqual("anon_de43123aeacc", mapping["Carol"])
             self.assertTrue(mapping["carol@example.com"].startswith("anon_"))
             self.assertNotIn("Contato", mapping)
+
+    def test_mapping_redacts_personal_names_in_transcript_prose(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            transcript_path = tmp_path / "feedback.txt"
+            output_path = tmp_path / "anonymized.txt"
+            transcript_path.write_text(
+                "Minhas observações são parecidas com as do Anderson.",
+                encoding="utf-8",
+            )
+
+            mapping = build_anonymization_mapping([], [transcript_path], salt="pepper")
+            anonymize_transcript(transcript_path, output_path, mapping)
+
+            self.assertIn("Anderson", mapping)
+            self.assertNotIn("Anderson", output_path.read_text(encoding="utf-8"))
+            self.assertIn(mapping["Anderson"], output_path.read_text(encoding="utf-8"))
 
     def test_anonymizer_mapping_includes_csv_only_identifiers(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
