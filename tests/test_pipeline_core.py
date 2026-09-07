@@ -11,6 +11,8 @@ import warnings
 from pathlib import Path
 from unittest import mock
 
+from openai import OpenAI
+
 import pipeline_core
 
 from pipeline_core import (
@@ -39,6 +41,10 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_openai_client_can_be_constructed(self) -> None:
+        client = OpenAI(api_key="test-key")
+        self.addCleanup(client.close)
+
     def test_pipeline_orchestrator_runs_selected_stage_with_force(self) -> None:
         orchestrator = load_script_module("pipeline_orchestrator", "run_pipeline.py")
 
