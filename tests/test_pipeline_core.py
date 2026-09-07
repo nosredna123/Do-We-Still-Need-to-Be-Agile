@@ -478,6 +478,37 @@ class PipelineCoreTests(unittest.TestCase):
                 (output_dir / "sample.txt").read_text(encoding="utf-8"),
             )
 
+    def test_audio_transcriber_recursively_processes_session_folders(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_nested_sessions", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            nested_audio = audio_dir / "session_1" / "recording.ogg"
+            nested_audio.parent.mkdir(parents=True)
+            nested_audio.write_bytes(b"nested audio")
+
+            with mock.patch.object(
+                audio_transcriber,
+                "transcribe_audio_file",
+                return_value={"status": "success", "text": "nested transcript"},
+            ) as transcribe:
+                with mock.patch.object(sys, "argv", [
+                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
+                    "--output-dir", str(output_dir),
+                ]):
+                    audio_transcriber.main()
+
+            transcribe.assert_called_once_with(nested_audio, api_key=None)
+            self.assertEqual(
+                "nested transcript",
+                (output_dir / "session_1" / "recording.txt").read_text(
+                    encoding="utf-8"
+                ),
+            )
+
     def test_audio_transcriber_skips_current_successful_transcript(self) -> None:
         audio_transcriber = load_script_module(
             "audio_transcriber_skip_existing", "00_audio_transcriber.py"
