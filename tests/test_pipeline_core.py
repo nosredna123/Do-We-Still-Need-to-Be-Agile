@@ -545,6 +545,27 @@ class PipelineCoreTests(unittest.TestCase):
                 ),
             )
 
+    def test_audio_transcriber_loads_project_dotenv(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_loads_dotenv", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            audio_dir.mkdir()
+
+            with mock.patch.object(audio_transcriber, "load_dotenv") as load_dotenv:
+                with mock.patch.object(sys, "argv", [
+                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
+                    "--output-dir", str(tmp_path / "out"),
+                ]):
+                    audio_transcriber.main()
+
+            load_dotenv.assert_called_once_with(
+                dotenv_path=audio_transcriber.DOTENV_PATH,
+                override=False,
+            )
+
     def test_audio_transcriber_skips_current_successful_transcript(self) -> None:
         audio_transcriber = load_script_module(
             "audio_transcriber_skip_existing", "00_audio_transcriber.py"
