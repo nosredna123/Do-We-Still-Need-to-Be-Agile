@@ -85,6 +85,18 @@ class PipelineCoreTests(unittest.TestCase):
             rows = load_records(output_path)
             self.assertEqual("anon_de43123aeacc", rows[0]["avaliador"])
 
+    def test_anonymize_csv_writes_header_only_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "empty.csv"
+            csv_path.write_text("nome,email\n", encoding="utf-8")
+            output_path = tmp_path / "anon.csv"
+
+            anonymize_csv_file(csv_path, output_path, mapping={}, salt="pepper")
+
+            self.assertTrue(output_path.exists())
+            self.assertEqual("nome,email", output_path.read_text(encoding="utf-8").strip())
+
     def test_git_history_is_anonymized_and_mirrored(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp_path = Path(tmp_dir)
@@ -197,6 +209,22 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertEqual(3.0, metric_rows[0]["delta_technical_degradation"])
         self.assertEqual(0.3, metric_rows[0]["exhaustion_index"])
 
+    def test_metrics_coerce_comma_decimal_strings(self) -> None:
+        metric_rows = compute_metrics(
+            [
+                {
+                    "nlp_work_style": "structured",
+                    "lines_added": "2,5",
+                    "lines_deleted": "1,5",
+                    "technical_complexity_t1": "1,0",
+                    "technical_complexity_t3": "3,5",
+                }
+            ]
+        )
+        self.assertEqual(4.0, metric_rows[0]["code_churn"])
+        self.assertEqual(2.5, metric_rows[0]["delta_technical_degradation"])
+        self.assertEqual(0.25, metric_rows[0]["exhaustion_index"])
+
     def test_statistical_outputs(self) -> None:
         records = [
             {"planning_index": 1.0, "code_churn": 2.0, "nlp_work_style": "structured", "exhaustion_index": 0.1},
@@ -277,6 +305,14 @@ class PipelineCoreTests(unittest.TestCase):
             write_records(path, rows)
             loaded = load_records(path)
             self.assertEqual(rows, loaded)
+
+    def test_load_records_preserves_csv_strings(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "data.csv"
+            path.write_text("participant,comment\nN/A,NA\n", encoding="utf-8")
+
+            loaded = load_records(path)
+            self.assertEqual([{"participant": "N/A", "comment": "NA"}], loaded)
 
     def test_hypothesis_output_is_created_even_when_empty(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

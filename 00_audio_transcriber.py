@@ -100,7 +100,7 @@ def main() -> None:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    audio_extensions = {".mp3", ".wav", ".m4a", ".flac"}
+    audio_extensions = {".mp3", ".wav", ".m4a", ".flac", ".ogg"}
     audio_files = [
         f for f in args.audio_dir.iterdir()
         if f.is_file() and f.suffix.lower() in audio_extensions
