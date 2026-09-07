@@ -2,7 +2,7 @@ __pycache__/
 *.pyc
 .venv/
 .env
-data/raw/audio/
+data/raw/
 data/processed/
 data/lake/
 outputs/
