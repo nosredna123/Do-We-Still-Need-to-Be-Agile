@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import importlib.util
 from pathlib import Path
 
 from pipeline_core import (
@@ -23,6 +24,14 @@ from pipeline_core import (
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def load_script_module(module_name: str, filename: str):
+    spec = importlib.util.spec_from_file_location(module_name, REPO_ROOT / filename)
+    module = importlib.util.module_from_spec(spec)
+    assert spec and spec.loader
+    spec.loader.exec_module(module)
+    return module
 
 
 class PipelineCoreTests(unittest.TestCase):
@@ -98,6 +107,7 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertTrue(rows[0]["author_alias"].startswith("anon_"))
             self.assertEqual("sample-repo", rows[0]["repository"])
             self.assertEqual(1, rows[0]["files_changed"])
+            self.assertNotIn("author_email", rows[0])
 
     def test_mapping_extracts_text_transcript_speakers_and_emails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -109,6 +119,39 @@ class PipelineCoreTests(unittest.TestCase):
 
             self.assertEqual("anon_de43123aeacc", mapping["Carol"])
             self.assertTrue(mapping["carol@example.com"].startswith("anon_"))
+            self.assertNotIn("Contato", mapping)
+
+    def test_anonymizer_mapping_includes_csv_only_identifiers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "students.csv"
+            csv_path.write_text(
+                "nome,email,avaliador\nAlice,alice@example.com,Carol\n",
+                encoding="utf-8",
+            )
+            transcript_path = tmp_path / "feedback.txt"
+            transcript_path.write_text("Alice: relatou cansaço\n", encoding="utf-8")
+            output_dir = tmp_path / "anon"
+            mapping_path = tmp_path / "chave_relacional.json"
+
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(REPO_ROOT / "01_anonymizer.py"),
+                    "--csv",
+                    str(csv_path),
+                    "--transcript",
+                    str(transcript_path),
+                    "--output-dir",
+                    str(output_dir),
+                    "--mapping-path",
+                    str(mapping_path),
+                ],
+                check=True,
+            )
+
+            mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+            self.assertIn("Carol", mapping["mapping"])
 
     def test_nlp_and_metrics_pipeline(self) -> None:
         records = [
@@ -138,6 +181,22 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertGreater(metric_rows[1]["exhaustion_index"], 0)
         self.assertGreater(metric_rows[1]["delta_technical_degradation"], metric_rows[0]["delta_technical_degradation"])
 
+    def test_metrics_coerce_string_numbers(self) -> None:
+        metric_rows = compute_metrics(
+            [
+                {
+                    "nlp_work_style": "structured",
+                    "lines_added": "10",
+                    "lines_deleted": "2",
+                    "technical_complexity_t1": "2",
+                    "technical_complexity_t3": "5",
+                }
+            ]
+        )
+        self.assertEqual(12.0, metric_rows[0]["code_churn"])
+        self.assertEqual(3.0, metric_rows[0]["delta_technical_degradation"])
+        self.assertEqual(0.3, metric_rows[0]["exhaustion_index"])
+
     def test_statistical_outputs(self) -> None:
         records = [
             {"planning_index": 1.0, "code_churn": 2.0, "nlp_work_style": "structured", "exhaustion_index": 0.1},
@@ -155,6 +214,61 @@ class PipelineCoreTests(unittest.TestCase):
         )
         hypotheses = hypothesis_rows(records)
         self.assertEqual("mann_whitney_u", hypotheses[0]["test"])
+
+    def test_hypothesis_rows_handles_missing_work_style_column(self) -> None:
+        self.assertEqual([], hypothesis_rows([{"planning_index": 1.0, "code_churn": 2.0}]))
+
+    def test_aggregate_by_team_keeps_semesters_separate(self) -> None:
+        data_lake_builder = load_script_module("data_lake_builder", "03_data_lake_builder.py")
+        forms_df = data_lake_builder.pd.DataFrame(
+            [
+                {"ID_Equipe": "A", "Semestre": "2024.1", "temporal_marker": "T1", "feedback": "one"},
+                {"ID_Equipe": "A", "Semestre": "2024.2", "temporal_marker": "T1", "feedback": "two"},
+            ]
+        )
+        git_df = data_lake_builder.pd.DataFrame(
+            [
+                {
+                    "ID_Equipe": "A",
+                    "Semestre": "2024.1",
+                    "temporal_marker": "T1",
+                    "lines_added": 3,
+                    "lines_deleted": 1,
+                    "files_changed": 1,
+                    "ID_Autor_Local": "Dev_A",
+                    "commit_hash": "abc",
+                },
+                {
+                    "ID_Equipe": "A",
+                    "Semestre": "2024.2",
+                    "temporal_marker": "T1",
+                    "lines_added": 7,
+                    "lines_deleted": 2,
+                    "files_changed": 2,
+                    "ID_Autor_Local": "Dev_B",
+                    "commit_hash": "def",
+                },
+            ]
+        )
+
+        merged = data_lake_builder.aggregate_by_team(forms_df, git_df)
+        self.assertEqual(2, len(merged))
+        self.assertEqual(
+            [3, 7],
+            merged.sort_values("Semestre")["lines_added"].tolist(),
+        )
+
+    def test_map_authors_by_volume_uses_aliases(self) -> None:
+        git_parser = load_script_module("git_parser", "02_git_parser.py")
+        mapping = git_parser.map_authors_by_volume(
+            [
+                {"author_alias": "anon_a"},
+                {"author_alias": "anon_a"},
+                {"author_alias": "anon_b"},
+            ]
+        )
+        self.assertEqual("Dev_A", mapping["anon_a"])
+        self.assertEqual("Dev_B", mapping["anon_b"])
 
     def test_parquet_roundtrip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

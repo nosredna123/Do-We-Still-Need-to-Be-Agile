@@ -59,21 +59,26 @@ def build_anonymization_mapping(
 
     # Collect from name lists
     for name_list in name_lists:
-        identifiers.update(name_list)
+        identifiers.update(
+            name.strip() for name in name_list if isinstance(name, str) and name.strip()
+        )
 
     # Extract from transcripts
     for transcript_path in transcript_paths:
         try:
             text = transcript_path.read_text(encoding="utf-8")
-            # Extract names (capitalized words) and emails
-            for word in text.split():
-                # Email pattern
-                if "@" in word:
-                    email = word.rstrip(",:;.")
-                    identifiers.add(email)
-                # Names (capitalized words at line start or after colon)
-                elif word[0].isupper() and len(word) > 1:
-                    identifiers.add(word.rstrip(",:;."))
+            # Extract emails
+            for email in re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", text):
+                identifiers.add(email)
+
+            # Extract explicit speaker labels (e.g., "Carol:")
+            for line in text.splitlines():
+                match = re.match(
+                    r"^\s*([A-ZÀ-Ý][\wÀ-ÿ'’-]*(?:\s+[A-ZÀ-Ý][\wÀ-ÿ'’-]*){0,3})\s*:\s*(.+)$",
+                    line,
+                )
+                if match and "@" not in match.group(2):
+                    identifiers.add(match.group(1).strip())
         except Exception as e:
             logger.warning(f"Failed to read transcript {transcript_path}: {e}")
 
@@ -204,7 +209,6 @@ def extract_git_history(
                     rows.append(
                         {
                             "repository": repo_name,
-                            "author_email": author_email,
                             "author_alias": author_alias,
                             "commit_hash": current_commit["commit_hash"],
                             "timestamp": current_commit["timestamp"],
@@ -248,7 +252,6 @@ def extract_git_history(
             rows.append(
                 {
                     "repository": repo_name,
-                    "author_email": author_email,
                     "author_alias": author_alias,
                     "commit_hash": current_commit["commit_hash"],
                     "timestamp": current_commit["timestamp"],
@@ -353,13 +356,21 @@ def compute_metrics(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
     metrics_records = []
 
+    def _coerce_float(value: Any) -> float:
+        if value is None or pd.isna(value):
+            return 0.0
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return 0.0
+
     for record in records:
         metric_record = record.copy()
 
         # Code Churn: Total lines changed (added + deleted)
-        lines_added = record.get("lines_added", 0) or 0
-        lines_deleted = record.get("lines_deleted", 0) or 0
-        metric_record["code_churn"] = float(lines_added + lines_deleted)
+        lines_added = _coerce_float(record.get("lines_added", 0))
+        lines_deleted = _coerce_float(record.get("lines_deleted", 0))
+        metric_record["code_churn"] = lines_added + lines_deleted
 
         # Planning Index
         work_style = record.get("nlp_work_style", "mixed")
@@ -371,8 +382,8 @@ def compute_metrics(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         metric_record["planning_index"] = planning_map.get(work_style, 0.5)
 
         # Exhaustion Index
-        t1 = record.get("technical_complexity_t1", 0) or 0
-        t3 = record.get("technical_complexity_t3", 0) or 0
+        t1 = _coerce_float(record.get("technical_complexity_t1", 0))
+        t3 = _coerce_float(record.get("technical_complexity_t3", 0))
         delta = t3 - t1
         metric_record["exhaustion_index"] = max(0.0, delta / 10.0)
         metric_record["delta_technical_degradation"] = delta
@@ -430,7 +441,10 @@ def hypothesis_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     df = pd.DataFrame(records)
     results = []
 
-    work_styles = df.get("nlp_work_style", []).unique()
+    if "nlp_work_style" not in df.columns:
+        return results
+
+    work_styles = df["nlp_work_style"].dropna().unique()
     if len(work_styles) < 2:
         return results
 
@@ -438,8 +452,8 @@ def hypothesis_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     for metric in numeric_cols:
         # Compare structured vs vibe_coding
-        structured = df[df.get("nlp_work_style") == "structured"][metric].dropna()
-        vibe = df[df.get("nlp_work_style") == "vibe_coding"][metric].dropna()
+        structured = df[df["nlp_work_style"] == "structured"][metric].dropna()
+        vibe = df[df["nlp_work_style"] == "vibe_coding"][metric].dropna()
 
         if len(structured) > 0 and len(vibe) > 0:
             try:
