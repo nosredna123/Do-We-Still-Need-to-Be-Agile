@@ -478,6 +478,246 @@ class PipelineCoreTests(unittest.TestCase):
                 (output_dir / "sample.txt").read_text(encoding="utf-8"),
             )
 
+    def test_audio_transcriber_skips_current_successful_transcript(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_skip_existing", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            audio_dir.mkdir()
+            output_dir.mkdir()
+            audio_path = audio_dir / "sample.ogg"
+            audio_path.write_bytes(b"fake audio")
+            (output_dir / "sample.json").write_text(
+                json.dumps({"status": "success", "text": "previous transcript"}),
+                encoding="utf-8",
+            )
+            (output_dir / "sample.json.metadata.json").write_text(
+                json.dumps(
+                    {
+                        "input_checksum": audio_transcriber.file_checksum(audio_path),
+                        "status": "success",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(audio_transcriber, "transcribe_audio_file") as transcribe:
+                with mock.patch.object(
+                    sys,
+                    "argv",
+                    [
+                        "00_audio_transcriber.py",
+                        "--audio-dir",
+                        str(audio_dir),
+                        "--output-dir",
+                        str(output_dir),
+                    ],
+                ):
+                    audio_transcriber.main()
+
+            transcribe.assert_not_called()
+
+    def test_audio_transcriber_reprocesses_when_input_checksum_changes(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_changed_input", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            audio_dir.mkdir()
+            output_dir.mkdir()
+            audio_path = audio_dir / "sample.ogg"
+            audio_path.write_bytes(b"current audio")
+            (output_dir / "sample.json").write_text(
+                json.dumps({"status": "success", "text": "previous transcript"}),
+                encoding="utf-8",
+            )
+            (output_dir / "sample.json.metadata.json").write_text(
+                json.dumps({"input_checksum": "outdated", "status": "success"}),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(
+                audio_transcriber,
+                "transcribe_audio_file",
+                return_value={"status": "success", "text": "updated transcript"},
+            ) as transcribe:
+                with mock.patch.object(
+                    sys,
+                    "argv",
+                    [
+                        "00_audio_transcriber.py",
+                        "--audio-dir",
+                        str(audio_dir),
+                        "--output-dir",
+                        str(output_dir),
+                    ],
+                ):
+                    audio_transcriber.main()
+
+            transcribe.assert_called_once_with(audio_path, api_key=None)
+
+    def test_audio_transcriber_retries_failed_transcript(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_retry_failed", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            audio_dir.mkdir()
+            output_dir.mkdir()
+            audio_path = audio_dir / "sample.ogg"
+            audio_path.write_bytes(b"audio")
+            output_file = output_dir / "sample.json"
+            output_file.write_text('{"status": "error"}', encoding="utf-8")
+            output_file.with_name("sample.json.metadata.json").write_text(
+                json.dumps(
+                    {
+                        "input_checksum": audio_transcriber.file_checksum(audio_path),
+                        "status": "error",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(
+                audio_transcriber,
+                "transcribe_audio_file",
+                return_value={"status": "success", "text": "retry succeeded"},
+            ) as transcribe:
+                with mock.patch.object(sys, "argv", [
+                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
+                    "--output-dir", str(output_dir),
+                ]):
+                    audio_transcriber.main()
+
+            transcribe.assert_called_once_with(audio_path, api_key=None)
+
+    def test_audio_transcriber_force_reprocesses_current_transcript(self) -> None:
+        audio_transcriber = load_script_module(
+            "audio_transcriber_force", "00_audio_transcriber.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            audio_dir = tmp_path / "audio"
+            output_dir = tmp_path / "out"
+            audio_dir.mkdir()
+            output_dir.mkdir()
+            audio_path = audio_dir / "sample.ogg"
+            audio_path.write_bytes(b"audio")
+            output_file = output_dir / "sample.json"
+            output_file.write_text('{"status": "success"}', encoding="utf-8")
+            output_file.with_name("sample.json.metadata.json").write_text(
+                json.dumps(
+                    {
+                        "input_checksum": audio_transcriber.file_checksum(audio_path),
+                        "status": "success",
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(
+                audio_transcriber,
+                "transcribe_audio_file",
+                return_value={"status": "success", "text": "forced"},
+            ) as transcribe:
+                with mock.patch.object(sys, "argv", [
+                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
+                    "--output-dir", str(output_dir), "--force",
+                ]):
+                    audio_transcriber.main()
+
+            transcribe.assert_called_once_with(audio_path, api_key=None)
+
+    def test_anonymizer_skips_current_outputs(self) -> None:
+        anonymizer = load_script_module("anonymizer_skip_current", "01_anonymizer.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            csv_path = tmp_path / "students.csv"
+            csv_path.write_text("nome\nAlice\n", encoding="utf-8")
+            output_dir = tmp_path / "outputs"
+            output_dir.mkdir()
+            output_csv = output_dir / csv_path.name
+            output_csv.write_text("nome\nanon_1\n", encoding="utf-8")
+            mapping_path = tmp_path / "mapping.json"
+            mapping_path.write_text("{}", encoding="utf-8")
+            checksum = anonymizer.input_checksum([csv_path], {"salt": "pepper"})
+            for artifact_path in [output_csv, mapping_path]:
+                artifact_path.with_name(f"{artifact_path.name}.metadata.json").write_text(
+                    json.dumps({"input_checksum": checksum, "status": "success"}),
+                    encoding="utf-8",
+                )
+
+            with mock.patch.object(anonymizer, "anonymize_csv_file") as anonymize:
+                with mock.patch.object(sys, "argv", [
+                    "01_anonymizer.py", "--csv", str(csv_path), "--output-dir",
+                    str(output_dir), "--mapping-path", str(mapping_path), "--salt", "pepper",
+                ]):
+                    anonymizer.main()
+
+            anonymize.assert_not_called()
+
+    def test_git_parser_skips_current_output(self) -> None:
+        git_parser = load_script_module("git_parser_skip_current", "02_git_parser.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            repos_list = tmp_path / "repos.csv"
+            repos_list.write_text(
+                "ID_Equipe,URL_Repositorio_Fork,Semestre\nA,https://example.test/a.git,2026.1\n",
+                encoding="utf-8",
+            )
+            output_csv = tmp_path / "git_logs.csv"
+            output_csv.write_text("commit_hash\nabc\n", encoding="utf-8")
+            checksum = git_parser.file_checksum(repos_list)
+            (tmp_path / "git_logs.csv.metadata.json").write_text(
+                json.dumps({"input_checksum": checksum, "status": "success"}),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(git_parser, "clone_or_update_repo") as clone:
+                with mock.patch.object(sys, "argv", [
+                    "02_git_parser.py", "--repos-list", str(repos_list), "--output-csv",
+                    str(output_csv), "--cache-dir", str(tmp_path / "cache"),
+                    "--clean-repos-dir", str(tmp_path / "clean"),
+                ]):
+                    git_parser.main()
+
+            clone.assert_not_called()
+
+    def test_data_lake_builder_skips_current_output(self) -> None:
+        builder = load_script_module("data_lake_builder_skip_current", "03_data_lake_builder.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            forms_dir = tmp_path / "forms"
+            forms_dir.mkdir()
+            form_path = forms_dir / "form_t1.csv"
+            form_path.write_text("ID_Equipe\nA\n", encoding="utf-8")
+            git_logs = tmp_path / "git.csv"
+            git_logs.write_text("ID_Equipe\nA\n", encoding="utf-8")
+            output_path = tmp_path / "master.parquet"
+            output_path.write_bytes(b"previous parquet")
+            checksum = builder.input_checksum([form_path, git_logs], {})
+            (tmp_path / "master.parquet.metadata.json").write_text(
+                json.dumps({"input_checksum": checksum, "status": "success"}),
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(builder, "load_form_files") as load_forms:
+                with mock.patch.object(sys, "argv", [
+                    "03_data_lake_builder.py", "--forms-dir", str(forms_dir), "--git-logs",
+                    str(git_logs), "--transcripts-dir", str(tmp_path / "transcripts"),
+                    "--output-parquet", str(output_path),
+                ]):
+                    builder.main()
+
+            load_forms.assert_not_called()
+
     def test_map_authors_by_volume_uses_aliases(self) -> None:
         git_parser = load_script_module("git_parser", "02_git_parser.py")
         mapping = git_parser.map_authors_by_volume(

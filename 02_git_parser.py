@@ -23,6 +23,11 @@ from typing import Any, Optional
 
 import pandas as pd
 
+from pipeline_core import (
+    file_checksum,
+    is_current_artifact,
+    write_artifact_metadata,
+)
 from pipeline_core import extract_git_history
 
 logging.basicConfig(
@@ -166,7 +171,17 @@ def main() -> None:
         default=Path("data/processed/clean_repos"),
         help="Directory for mirrored repositories without git metadata",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Regenerate Git artifacts even when the repository list is unchanged",
+    )
     args = parser.parse_args()
+
+    checksum = file_checksum(args.repos_list)
+    if not args.force and is_current_artifact(args.output_csv, checksum):
+        logger.info("Skipping current Git log output: %s", args.output_csv)
+        return
 
     # Read repositories list
     logger.info(f"Reading repositories list from {args.repos_list}")
@@ -225,6 +240,7 @@ def main() -> None:
         args.output_csv.parent.mkdir(parents=True, exist_ok=True)
 
         output_df.to_csv(args.output_csv, index=False)
+        write_artifact_metadata(args.output_csv, checksum)
         logger.info(f"Wrote Git logs to {args.output_csv}")
     else:
         logger.warning("No commits extracted from repositories")

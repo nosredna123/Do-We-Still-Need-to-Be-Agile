@@ -23,7 +23,10 @@ from pipeline_core import (
     anonymize_csv_file,
     anonymize_transcript,
     build_anonymization_mapping,
+    input_checksum,
     is_identifier_field,
+    is_current_artifact,
+    write_artifact_metadata,
 )
 
 logging.basicConfig(
@@ -80,8 +83,27 @@ def main() -> None:
         default="",
         help="Salt to mix into hashes for additional security",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Regenerate outputs even when their current successful versions exist",
+    )
 
     args = parser.parse_args()
+
+    input_paths = [path for path in [args.csv, args.transcript] if path]
+    checksum = input_checksum(input_paths, {"salt": args.salt})
+    output_paths = [args.mapping_path]
+    if args.csv:
+        output_paths.append(args.output_dir / args.csv.name)
+    if args.transcript:
+        output_paths.append(args.output_dir / args.transcript.name)
+
+    if not args.force and all(
+        is_current_artifact(output_path, checksum) for output_path in output_paths
+    ):
+        logger.info("Skipping current anonymization outputs")
+        return
 
     logger.info("Building anonymization mapping...")
 
@@ -116,6 +138,8 @@ def main() -> None:
         "mapping": mapping,
     }
     args.mapping_path.write_text(json.dumps(mapping_data, indent=2), encoding="utf-8")
+    for output_path in output_paths:
+        write_artifact_metadata(output_path, checksum)
     logger.info("Anonymization complete")
 
 
