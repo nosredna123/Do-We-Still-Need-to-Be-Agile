@@ -13,6 +13,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import logging
 from pathlib import Path
@@ -28,6 +29,23 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
+
+
+def collect_csv_identifiers(csv_path: Path) -> list[str]:
+    """Collect identifiers from CSV fields that will be anonymized."""
+    identifiers: set[str] = set()
+
+    with csv_path.open("r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            for key, value in row.items():
+                if isinstance(value, str) and value and (
+                    key in ("email", "nome", "name", "avaliador", "comentario")
+                    or "@" in value
+                ):
+                    identifiers.add(value)
+
+    return sorted(identifiers)
 
 
 def main() -> None:
@@ -64,7 +82,10 @@ def main() -> None:
 
     # Build mapping from transcript and CSV
     transcript_paths = [args.transcript] if args.transcript else []
-    mapping = build_anonymization_mapping([], transcript_paths, salt=args.salt)
+    csv_identifiers = collect_csv_identifiers(args.csv) if args.csv else []
+    mapping = build_anonymization_mapping(
+        [csv_identifiers], transcript_paths, salt=args.salt
+    )
 
     logger.info(f"Found {len(mapping)} identifiers to anonymize")
 

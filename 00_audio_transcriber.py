@@ -15,7 +15,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 def transcribe_audio_file(
     audio_path: Path,
     api_key: Optional[str] = None,
-) -> dict[str, str]:
+) -> dict[str, Any]:
     """Transcribe a single audio file using Whisper API.
 
     Args:

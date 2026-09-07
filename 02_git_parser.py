@@ -30,6 +30,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def normalize_text(value: Any) -> str:
+    """Normalize optional scalar values from CSV rows."""
+    if value is None or pd.isna(value):
+        return ""
+    return str(value).strip()
+
+
 def clone_or_update_repo(repo_url: str, cache_path: Path) -> Optional[Path]:
     """Clone a repository or update if it already exists.
 
@@ -78,26 +85,26 @@ def map_authors_by_volume(
     """Map authors to Dev_A, Dev_B, etc. based on commit volume.
 
     Args:
-        commit_rows: List of commit records with author_email
+        commit_rows: List of commit records with author_alias
 
     Returns:
-        Mapping of email -> Dev_X designation
+        Mapping of author alias -> Dev_X designation
     """
-    email_counts: dict[str, int] = defaultdict(int)
+    alias_counts: dict[str, int] = defaultdict(int)
 
     for row in commit_rows:
-        email = row.get("author_email", "unknown")
-        email_counts[email] += 1
+        author_alias = row.get("author_alias", "unknown")
+        alias_counts[author_alias] += 1
 
     # Sort by commit count (descending)
-    sorted_emails = sorted(email_counts.items(), key=lambda x: x[1], reverse=True)
+    sorted_aliases = sorted(alias_counts.items(), key=lambda x: x[1], reverse=True)
 
     author_mapping = {}
-    for idx, (email, count) in enumerate(sorted_emails):
+    for idx, (author_alias, count) in enumerate(sorted_aliases):
         # Map to Dev_A, Dev_B, Dev_C, etc.
         dev_name = f"Dev_{chr(65 + idx)}"  # A, B, C, ...
-        author_mapping[email] = dev_name
-        logger.info(f"  {email} ({count} commits) -> {dev_name}")
+        author_mapping[author_alias] = dev_name
+        logger.info(f"  {author_alias} ({count} commits) -> {dev_name}")
 
     return author_mapping
 
@@ -144,9 +151,13 @@ def main() -> None:
 
     # Process each repository
     for idx, row in repos_df.iterrows():
-        team_id = row.get("ID_Equipe", f"TEAM_{idx}")
-        repo_url = row.get("URL_Repositorio_Fork", "")
-        semestre = row.get("Semestre", "")
+        team_id = normalize_text(row.get("ID_Equipe")) or f"TEAM_{idx}"
+        repo_url = normalize_text(row.get("URL_Repositorio_Fork"))
+        semestre = normalize_text(row.get("Semestre"))
+
+        if not repo_url:
+            logger.warning(f"Skipping {team_id}: missing repository URL")
+            continue
 
         logger.info(f"Processing: {team_id} - {repo_url}")
 
@@ -165,10 +176,11 @@ def main() -> None:
 
         # Update rows with team-local author mapping
         for commit_row in commit_rows:
-            author_email = commit_row.get("author_email", "unknown")
+            author_alias = commit_row.get("author_alias", "unknown")
             commit_row["ID_Equipe"] = team_id
             commit_row["Semestre"] = semestre
-            commit_row["ID_Autor_Local"] = author_mapping.get(author_email, "unknown")
+            commit_row["ID_Autor_Local"] = author_mapping.get(author_alias, "unknown")
+            commit_row.pop("author_email", None)
 
             all_commit_rows.append(commit_row)
 
