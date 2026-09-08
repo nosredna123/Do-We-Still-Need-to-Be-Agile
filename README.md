@@ -137,6 +137,43 @@ As perguntas de score são convertidas para nomes analíticos estáveis, como
 possui `_std` (desvio padrão amostral), `_median`, `_iqr` e `_n` (quantidade de
 respostas válidas) para cada equipe, semestre e corte.
 
+### Métricas estatísticas do Data Lake
+
+As estatísticas dos avaliadores são calculadas dentro de cada chave
+`ID_Equipe + Semestre + temporal_marker`. Elas descrevem a distribuição das
+respostas dos avaliadores para aquele corte, e não uma média global entre
+equipes ou semestres.
+
+Para cada score, são produzidas as seguintes métricas:
+
+- **`_mean` (média):** soma das respostas válidas dividida pela quantidade de
+	respostas válidas. É o valor central atualmente preservado na coluna
+	analítica principal.
+- **`_std` (desvio padrão amostral):** mede quanto as respostas variam em torno
+	da média. É calculado com `ddof=1`, apropriado quando as respostas observadas
+	são tratadas como uma amostra de avaliadores. Com apenas uma resposta, o
+	valor é `NaN`, pois não há informação suficiente para estimar a variabilidade.
+- **`_median` (mediana):** valor que divide as respostas ordenadas ao meio.
+	É menos sensível que a média a uma resposta muito alta ou muito baixa.
+- **`_iqr` (intervalo interquartil):** mede a dispersão dos 50% centrais das
+	respostas. É calculado como `Q3 - Q1`, em que `Q1` é o percentil 25 e `Q3` é
+	o percentil 75. Por exemplo, se `Q1 = 1` e `Q3 = 2`, então `IQR = 1`.
+	Quanto maior o IQR, maior a dispersão central entre os avaliadores.
+- **`_n` (quantidade válida):** número de respostas não nulas usadas para
+	calcular aquele score. O valor pode variar entre scores se houver respostas
+	ausentes em perguntas específicas.
+
+As métricas de score mantêm os valores originais das perguntas em uma escala
+analítica estável, mas não preservam a identidade dos avaliadores. Portanto,
+`_n` representa respostas válidas observadas, não necessariamente avaliadores
+distintos, caso a fonte contenha submissões duplicadas.
+
+No dataset `git_team_cuts`, os principais agregados são `lines_added`,
+`lines_deleted` e `files_changed` somados por equipe, semestre e corte;
+`num_authors` conta autores locais distintos e `num_commits` conta commits.
+O campo `git_match_status` em `evaluator_team_cuts` informa se existe uma chave
+Git correspondente, sem copiar essas métricas para as linhas de avaliação.
+
 Para validar a implementação, execute `.venv/bin/pytest -x`. Os dados em
 `data/processed/` e `data/lake/` permanecem privados e ignorados pelo Git.
 
