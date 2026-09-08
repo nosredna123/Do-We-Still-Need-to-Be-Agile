@@ -12,6 +12,7 @@ from pathlib import Path
 from unittest import mock
 
 from openai import OpenAI
+import pytest
 
 import pipeline_core
 import pipeline_prompts
@@ -21,7 +22,6 @@ from pipeline_core import (
     anonymize_csv_file,
     anonymize_transcript,
     build_anonymization_mapping,
-    compute_metrics,
     correlation_rows,
     enrich_records,
     extract_git_events,
@@ -166,6 +166,14 @@ class PipelineCoreTests(unittest.TestCase):
 
             self.assertIn("Anderson", mapping)
             self.assertNotIn("Porque", mapping)
+
+    def test_anonymization_mapping_fails_when_transcript_cannot_be_read(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            transcript_path = Path(tmp_dir) / "feedback.txt"
+            transcript_path.mkdir()
+
+            with pytest.raises(IsADirectoryError):
+                build_anonymization_mapping([], [transcript_path], salt="pepper")
 
     def test_audio_preparer_builds_compression_command(self) -> None:
         audio_preparer = load_script_module("audio_preparer", "00_audio_preparer.py")
@@ -526,7 +534,7 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertNotIn("alice@example.com", anonymized_json["text"])
 
             with mock.patch.object(anonymizer, "anonymize_csv_file") as anonymize_csv:
-                with mock.patch.object(anonymizer, "anonymize_transcript") as anonymize_transcript:
+                with mock.patch.object(anonymizer, "anonymize_transcript") as transcript_redactor:
                     with mock.patch.object(sys, "argv", [
                         "01_anonymizer.py", "--forms-dir", str(forms_dir),
                         "--transcripts-dir", str(transcripts_dir), "--output-dir",
@@ -537,7 +545,7 @@ class PipelineCoreTests(unittest.TestCase):
                         anonymizer.main()
 
             anonymize_csv.assert_not_called()
-            anonymize_transcript.assert_not_called()
+            transcript_redactor.assert_not_called()
 
     def test_anonymizer_requires_environment_salt_when_not_provided(self) -> None:
         anonymizer = load_script_module("anonymizer_requires_salt", "01_anonymizer.py")
@@ -734,65 +742,21 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertIn("alice@example.com", mapping["mapping"])
             self.assertIn("Bob", mapping["mapping"])
 
-    def test_nlp_and_metrics_pipeline(self) -> None:
+    def test_legacy_compute_metrics_helper_is_removed(self) -> None:
+        self.assertFalse(hasattr(pipeline_core, "compute_metrics"))
+
+    def test_nlp_enrichment_classifies_work_style(self) -> None:
         records = [
             {
                 "feedback": "We had a clear specification and structured planning with architecture review.",
-                "lines_added": 10,
-                "lines_deleted": 2,
-                "files_changed": 2,
-                "technical_complexity_t1": 2,
-                "technical_complexity_t3": 3,
             },
             {
                 "feedback": "Pure vibe coding caused rework, stress and merge chaos.",
-                "lines_added": 8,
-                "lines_deleted": 12,
-                "files_changed": 4,
-                "technical_complexity_t1": 1,
-                "technical_complexity_t3": 5,
             },
         ]
         enriched = enrich_records(records)
         self.assertEqual("structured", enriched[0]["nlp_work_style"])
         self.assertEqual("vibe_coding", enriched[1]["nlp_work_style"])
-
-        metric_rows = compute_metrics(enriched)
-        self.assertAlmostEqual(12.0, metric_rows[0]["code_churn"])
-        self.assertGreater(metric_rows[1]["exhaustion_index"], 0)
-        self.assertGreater(metric_rows[1]["delta_technical_degradation"], metric_rows[0]["delta_technical_degradation"])
-
-    def test_metrics_coerce_string_numbers(self) -> None:
-        metric_rows = compute_metrics(
-            [
-                {
-                    "nlp_work_style": "structured",
-                    "lines_added": "10",
-                    "lines_deleted": "2",
-                    "technical_complexity_t1": "2",
-                    "technical_complexity_t3": "5",
-                }
-            ]
-        )
-        self.assertEqual(12.0, metric_rows[0]["code_churn"])
-        self.assertEqual(3.0, metric_rows[0]["delta_technical_degradation"])
-        self.assertEqual(0.3, metric_rows[0]["exhaustion_index"])
-
-    def test_metrics_coerce_comma_decimal_strings(self) -> None:
-        metric_rows = compute_metrics(
-            [
-                {
-                    "nlp_work_style": "structured",
-                    "lines_added": "2,5",
-                    "lines_deleted": "1,5",
-                    "technical_complexity_t1": "1,0",
-                    "technical_complexity_t3": "3,5",
-                }
-            ]
-        )
-        self.assertEqual(4.0, metric_rows[0]["code_churn"])
-        self.assertEqual(2.5, metric_rows[0]["delta_technical_degradation"])
-        self.assertEqual(0.25, metric_rows[0]["exhaustion_index"])
 
     def test_statistical_outputs(self) -> None:
         records = [
@@ -813,7 +777,22 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertEqual("mann_whitney_u", hypotheses[0]["test"])
 
     def test_hypothesis_rows_handles_missing_work_style_column(self) -> None:
-        self.assertEqual([], hypothesis_rows([{"planning_index": 1.0, "code_churn": 2.0}]))
+        with pytest.raises(ValueError, match="nlp_work_style"):
+            hypothesis_rows([{"planning_index": 1.0, "code_churn": 2.0}])
+
+    def test_correlation_rows_propagates_statistical_failures(self) -> None:
+        with mock.patch.object(pipeline_core.scipy_stats, "spearmanr", side_effect=ValueError("bad data")):
+            with pytest.raises(ValueError, match="bad data"):
+                correlation_rows([{"a": 1.0, "b": 2.0}, {"a": 2.0, "b": 3.0}])
+
+    def test_hypothesis_rows_propagates_statistical_failures(self) -> None:
+        records = [
+            {"nlp_work_style": "structured", "code_churn": 2.0},
+            {"nlp_work_style": "vibe_coding", "code_churn": 5.0},
+        ]
+        with mock.patch.object(pipeline_core.scipy_stats, "mannwhitneyu", side_effect=ValueError("bad data")):
+            with pytest.raises(ValueError, match="bad data"):
+                hypothesis_rows(records)
 
     def test_load_form_files_normalizes_student_and_evaluator_records_by_phase_one_rules(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder_normalize_forms", "03_data_lake_builder.py")

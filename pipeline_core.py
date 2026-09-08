@@ -5,7 +5,6 @@ This module provides reusable functions for the UECE research pipeline:
 - Git history extraction with dynamic author mapping
 - Record loading/writing in multiple formats
 - NLP enrichment for work style classification
-- Metric computation (code churn, planning index, etc.)
 - Statistical analysis (correlations, hypothesis tests)
 """
 
@@ -22,7 +21,7 @@ import subprocess
 
 import pandas as pd
 from dotenv import load_dotenv
-from scipy import stats
+from scipy import stats as scipy_stats
 
 logger = logging.getLogger(__name__)
 DOTENV_PATH = Path(__file__).resolve().with_name(".env")
@@ -61,7 +60,7 @@ def input_checksum(paths: list[Path], options: Mapping[str, str]) -> str:
         Hexadecimal SHA-256 checksum of the effective inputs.
     """
     digest = hashlib.sha256()
-    for path in sorted(paths, key=lambda item: str(item)):
+    for path in sorted(paths):
         digest.update(path.name.encode("utf-8"))
         digest.update(file_checksum(path).encode("ascii"))
     digest.update(json.dumps(dict(options), sort_keys=True).encode("utf-8"))
@@ -227,22 +226,19 @@ def build_anonymization_mapping(
 
     # Extract from transcripts
     for transcript_path in transcript_paths:
-        try:
-            text = transcript_path.read_text(encoding="utf-8")
-            # Extract emails
-            for email in re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", text):
-                identifiers.add(email)
+        text = transcript_path.read_text(encoding="utf-8")
+        # Extract emails
+        for email in re.findall(r"\b[\w.\-+%]+@[\w.\-]+\.\w+\b", text):
+            identifiers.add(email)
 
-            # Extract explicit speaker labels (e.g., "Carol:")
-            for line in text.splitlines():
-                match = re.match(
-                    r"^\s*([A-ZÀ-Ý][\wÀ-ÿ'’-]*(?:\s+[A-ZÀ-Ý][\wÀ-ÿ'’-]*){0,3})\s*:\s*(.+)$",
-                    line,
-                )
-                if match and "@" not in match.group(2):
-                    identifiers.add(match.group(1).strip())
-        except Exception as e:
-            logger.warning(f"Failed to read transcript {transcript_path}: {e}")
+        # Extract explicit speaker labels (e.g., "Carol:")
+        for line in text.splitlines():
+            match = re.match(
+                r"^\s*([A-ZÀ-Ý][\wÀ-ÿ'’-]*(?:\s+[A-ZÀ-Ý][\wÀ-ÿ'’-]*){0,3})\s*:\s*(.+)$",
+                line,
+            )
+            if match and "@" not in match.group(2):
+                identifiers.add(match.group(1).strip())
 
     return {ident: _hash_identifier(ident, salt) for ident in identifiers}
 
@@ -363,10 +359,10 @@ def infer_temporal_marker_from_timestamp(value: Any, semester: str | None = None
     if semester:
         return git_temporal_marker_for(str(semester), date_value)
 
-    for candidate_semester, cuts in EVALUATOR_TEMPORAL_CUTS.items():
+    for cuts in EVALUATOR_TEMPORAL_CUTS.values():
         semester_dates = [
             d
-            for marker, (start_date, end_date) in cuts.items()
+            for _marker, (start_date, end_date) in cuts.items()
             for d in (date.fromisoformat(start_date), date.fromisoformat(end_date))
         ]
         if min(semester_dates) <= current_date <= max(semester_dates):
@@ -422,7 +418,7 @@ def _git_diff_paths(repo_path: Path, commit_hash: str) -> list[dict[str, Any]]:
             index += 1
         statuses.append((status[0].lower() if status[0] not in "RC" else status[0].lower(), old_path, new_path))
 
-    stats: list[tuple[int | None, int | None, str]] = []
+    file_stats: list[tuple[int | None, int | None, str]] = []
     index = 0
     while index < len(numstat):
         token = numstat[index].decode("utf-8", errors="strict")
@@ -435,18 +431,18 @@ def _git_diff_paths(repo_path: Path, commit_hash: str) -> list[dict[str, Any]]:
         added = None if parts[0] == "-" else int(parts[0])
         deleted = None if parts[1] == "-" else int(parts[1])
         path = parts[2]
-        if not path and statuses[len(stats)][0] in {"r", "c"}:
+        if not path and statuses[len(file_stats)][0] in {"r", "c"}:
             if index + 1 >= len(numstat):
                 raise ValueError(f"Incomplete Git rename statistics for {commit_hash}")
             index += 1
             path = numstat[index].decode("utf-8", errors="strict")
             index += 1
-        stats.append((added, deleted, path))
+        file_stats.append((added, deleted, path))
 
-    if len(stats) != len(statuses):
+    if len(file_stats) != len(statuses):
         raise ValueError(f"Git file statistics do not align for {commit_hash}")
     rows: list[dict[str, Any]] = []
-    for (added, deleted, path), (status, old_path, new_path) in zip(stats, statuses):
+    for (added, deleted, path), (status, old_path, new_path) in zip(file_stats, statuses):
         rows.append({
             "file_path": path, "file_path_old": old_path if status == "r" else None,
             "change_status": {"a": "added", "m": "modified", "d": "deleted", "r": "renamed", "c": "copied"}[status],
@@ -562,62 +558,6 @@ def enrich_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return enriched
 
 
-def compute_metrics(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Compute research metrics from enriched records.
-
-    Metrics:
-    - code_churn: lines_added + lines_deleted (total code changes)
-    - planning_index: 1.0 if structured, 0.5 if mixed, 0.1 if vibe_coding
-    - exhaustion_index: (technical_complexity_t3 - technical_complexity_t1) / 10
-    - delta_technical_degradation: technical_complexity_t3 - technical_complexity_t1
-
-    Args:
-        records: List of enriched records
-
-    Returns:
-        Records with computed metrics
-    """
-    metrics_records = []
-
-    def _coerce_float(value: Any) -> float:
-        if value is None or pd.isna(value):
-            return 0.0
-        try:
-            if isinstance(value, str):
-                value = value.strip().replace(",", ".")
-            return float(value)
-        except (TypeError, ValueError):
-            return 0.0
-
-    for record in records:
-        metric_record = record.copy()
-
-        # Code Churn: Total lines changed (added + deleted)
-        lines_added = _coerce_float(record.get("lines_added", 0))
-        lines_deleted = _coerce_float(record.get("lines_deleted", 0))
-        metric_record["code_churn"] = lines_added + lines_deleted
-
-        # Planning Index
-        work_style = record.get("nlp_work_style", "mixed")
-        planning_map = {
-            "structured": 1.0,
-            "mixed": 0.5,
-            "vibe_coding": 0.1,
-        }
-        metric_record["planning_index"] = planning_map.get(work_style, 0.5)
-
-        # Exhaustion Index
-        t1 = _coerce_float(record.get("technical_complexity_t1", 0))
-        t3 = _coerce_float(record.get("technical_complexity_t3", 0))
-        delta = t3 - t1
-        metric_record["exhaustion_index"] = max(0.0, delta / 10.0)
-        metric_record["delta_technical_degradation"] = delta
-
-        metrics_records.append(metric_record)
-
-    return metrics_records
-
-
 def correlation_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Compute pairwise Spearman correlations between numeric features.
 
@@ -636,20 +576,15 @@ def correlation_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         for col_y in numeric_cols[i + 1 :]:
             # Avoid self-correlations
             if col_x != col_y:
-                try:
-                    corr, p_value = stats.spearmanr(df[col_x], df[col_y])
-                    results.append(
-                        {
-                            "feature_x": col_x,
-                            "feature_y": col_y,
-                            "correlation": corr,
-                            "p_value": p_value,
-                        }
-                    )
-                except Exception as e:
-                    logger.warning(
-                        f"Failed to compute correlation for {col_x}, {col_y}: {e}"
-                    )
+                corr, p_value = scipy_stats.spearmanr(df[col_x], df[col_y])
+                results.append(
+                    {
+                        "feature_x": col_x,
+                        "feature_y": col_y,
+                        "correlation": corr,
+                        "p_value": p_value,
+                    }
+                )
 
     return results
 
@@ -667,7 +602,7 @@ def hypothesis_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     results = []
 
     if "nlp_work_style" not in df.columns:
-        return results
+        raise ValueError("records are missing required nlp_work_style column")
 
     work_styles = df["nlp_work_style"].dropna().unique()
     if len(work_styles) < 2:
@@ -681,24 +616,21 @@ def hypothesis_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         vibe = df[df["nlp_work_style"] == "vibe_coding"][metric].dropna()
 
         if len(structured) > 0 and len(vibe) > 0:
-            try:
-                statistic, p_value = stats.mannwhitneyu(
-                    structured, vibe, alternative="two-sided"
-                )
-                results.append(
-                    {
-                        "test": "mann_whitney_u",
-                        "group_a": "structured",
-                        "group_b": "vibe_coding",
-                        "metric": metric,
-                        "u_statistic": float(statistic),
-                        "p_value": float(p_value),
-                        "n_group_a": len(structured),
-                        "n_group_b": len(vibe),
-                    }
-                )
-            except Exception as e:
-                logger.warning(f"Failed to run Mann-Whitney U test for {metric}: {e}")
+            statistic, p_value = scipy_stats.mannwhitneyu(
+                structured, vibe, alternative="two-sided"
+            )
+            results.append(
+                {
+                    "test": "mann_whitney_u",
+                    "group_a": "structured",
+                    "group_b": "vibe_coding",
+                    "metric": metric,
+                    "u_statistic": float(statistic),
+                    "p_value": float(p_value),
+                    "n_group_a": len(structured),
+                    "n_group_b": len(vibe),
+                }
+            )
 
     return results
 
