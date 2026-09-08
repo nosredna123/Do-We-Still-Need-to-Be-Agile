@@ -20,6 +20,8 @@ from pathlib import Path
 from typing import Any, Mapping
 import subprocess
 
+PROJECT_ROOT = Path(__file__).resolve().parent
+
 import pandas as pd
 from dotenv import load_dotenv
 from scipy import stats
@@ -101,6 +103,58 @@ def write_artifact_metadata(artifact_path: Path, source_checksum: str) -> None:
         json.dumps({"input_checksum": source_checksum, "status": "success"}, indent=2),
         encoding="utf-8",
     )
+
+
+def cleanup_phase_one_artifacts(project_root: Path) -> None:
+    """Remove the Phase 1 derived artifacts while preserving raw inputs.
+
+    Args:
+        project_root: Root directory of the project being cleaned.
+
+    Raises:
+        ValueError: If the requested path is not a valid project root.
+    """
+    resolved_root = project_root.resolve()
+    if not resolved_root.exists() or not resolved_root.is_dir():
+        raise ValueError(f"Cleanup path {project_root} is outside the project root")
+
+    data_dir = resolved_root / "data"
+    if not data_dir.exists() or not (data_dir / "processed").exists():
+        raise ValueError(f"Cleanup path {project_root} is outside the project root")
+
+    targets = [
+        resolved_root / "data" / "processed" / "forms",
+        resolved_root / "data" / "processed" / "transcripts_anon",
+        resolved_root / "data" / "processed" / "chave_relacional.json",
+        resolved_root / "data" / "lake" / "master_dataset.parquet",
+        resolved_root / "data" / "processed" / "git_logs_anon.csv",
+        resolved_root / "data" / "processed" / "clean_repos",
+    ]
+
+    for target in targets:
+        if target.is_dir():
+            for child in sorted(target.iterdir(), reverse=True):
+                if child.is_dir():
+                    cleanup_phase_one_artifacts(child)
+                else:
+                    child.unlink()
+            target.rmdir()
+        elif target.exists():
+            target.unlink()
+        sidecar = artifact_metadata_path(target)
+        if sidecar.exists():
+            sidecar.unlink()
+
+    # Remove nested metadata files when a directory is present, but keep raw inputs.
+    protected_paths = [
+        resolved_root / "data" / "raw",
+        resolved_root / "data" / "processed" / "audio_chunks",
+        resolved_root / "data" / "processed" / "transcripts",
+        resolved_root / "data" / "processed" / "ner_candidates",
+    ]
+    for protected in protected_paths:
+        if protected.exists():
+            logger.info("Preserving Phase 1 raw artifact directory: %s", protected)
 
 
 def _hash_identifier(identifier: str, salt: str = "") -> str:

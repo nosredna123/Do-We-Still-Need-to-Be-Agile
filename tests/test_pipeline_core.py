@@ -834,6 +834,57 @@ class PipelineCoreTests(unittest.TestCase):
         merged = data_lake_builder.aggregate_by_team(forms_df, git_df)
         self.assertTrue(data_lake_builder.pd.isna(merged.loc[0, "lines_added"]))
 
+    def test_aggregate_by_team_requires_explicit_temporal_markers(self) -> None:
+        data_lake_builder = load_script_module("data_lake_builder_requires_marker", "03_data_lake_builder.py")
+        forms_df = data_lake_builder.pd.DataFrame(
+            [{"ID_Equipe": "A", "Semestre": "2024.1", "feedback": "one"}]
+        )
+        git_df = data_lake_builder.pd.DataFrame(
+            [
+                {
+                    "ID_Equipe": "A",
+                    "Semestre": "2024.1",
+                    "temporal_marker": "T1",
+                    "lines_added": 3,
+                    "lines_deleted": 1,
+                    "files_changed": 1,
+                    "ID_Autor_Local": "Dev_A",
+                    "commit_hash": "abc",
+                }
+            ]
+        )
+
+        with self.assertRaisesRegex(ValueError, "temporal_marker"):
+            data_lake_builder.aggregate_by_team(forms_df, git_df)
+
+    def test_cleanup_phase_one_artifacts_preserves_raw_inputs_and_rejects_outside_paths(self) -> None:
+        project_root = Path(tempfile.mkdtemp())
+        (project_root / "data/processed/forms").mkdir(parents=True)
+        (project_root / "data/processed/transcripts_anon").mkdir(parents=True)
+        (project_root / "data/lake").mkdir(parents=True)
+        (project_root / "data/raw").mkdir(parents=True)
+        (project_root / "data/processed/audio_chunks").mkdir(parents=True)
+        (project_root / "data/processed/transcripts").mkdir(parents=True)
+        (project_root / "data/processed/ner_candidates").mkdir(parents=True)
+        (project_root / "data/processed/chave_relacional.json").write_text("{}", encoding="utf-8")
+        (project_root / "data/lake/master_dataset.parquet").write_bytes(b"parquet")
+        (project_root / "data/processed/forms/a.csv").write_text("a,b\n1,2\n", encoding="utf-8")
+        (project_root / "data/processed/transcripts_anon/session.json").write_text("{}", encoding="utf-8")
+
+        pipeline_core.cleanup_phase_one_artifacts(project_root)
+
+        self.assertFalse((project_root / "data/processed/forms").exists())
+        self.assertFalse((project_root / "data/processed/transcripts_anon").exists())
+        self.assertFalse((project_root / "data/processed/chave_relacional.json").exists())
+        self.assertFalse((project_root / "data/lake/master_dataset.parquet").exists())
+        self.assertTrue((project_root / "data/raw").exists())
+        self.assertTrue((project_root / "data/processed/audio_chunks").exists())
+        self.assertTrue((project_root / "data/processed/transcripts").exists())
+        self.assertTrue((project_root / "data/processed/ner_candidates").exists())
+
+        with self.assertRaisesRegex(ValueError, "outside the project root"):
+            pipeline_core.cleanup_phase_one_artifacts(project_root / "data/raw" / ".." / "other")
+
     def test_load_transcripts_requires_team_and_semester_metadata(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder_transcripts", "03_data_lake_builder.py")
         with tempfile.TemporaryDirectory() as tmp_dir:

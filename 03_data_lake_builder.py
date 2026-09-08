@@ -52,6 +52,20 @@ def normalize_temporal_marker(text: str) -> Optional[str]:
     return None
 
 
+def require_columns(df: pd.DataFrame, required: list[str], label: str) -> None:
+    """Validate that a DataFrame contains all required analytical columns."""
+    missing = [column for column in required if column not in df.columns]
+    if missing:
+        raise ValueError(f"{label} is missing required columns: {', '.join(missing)}")
+
+    for column in required:
+        values = df[column].dropna()
+        if values.empty:
+            raise ValueError(f"{label} has no non-null values for required column {column}")
+        if values.astype(str).str.strip().eq("").any():
+            raise ValueError(f"{label} contains blank values in required column {column}")
+
+
 def load_form_files(forms_dir: Path) -> pd.DataFrame:
     """Load and concatenate all anonymized form CSVs.
 
@@ -63,18 +77,20 @@ def load_form_files(forms_dir: Path) -> pd.DataFrame:
     """
     dfs = []
 
-    for csv_file in forms_dir.glob("*.csv"):
-        logger.info(f"Loading form: {csv_file.name}")
+    for csv_file in forms_dir.rglob("*.csv"):
+        logger.info(f"Loading form: {csv_file}")
         df = pd.read_csv(csv_file)
         temporal = normalize_temporal_marker(csv_file.stem)
         if temporal:
             df["temporal_marker"] = temporal
         dfs.append(df)
 
-    if dfs:
-        return pd.concat(dfs, ignore_index=True)
-    else:
+    if not dfs:
         return pd.DataFrame()
+
+    forms_df = pd.concat(dfs, ignore_index=True)
+    require_columns(forms_df, ["ID_Equipe", "Semestre", "temporal_marker"], "forms data")
+    return forms_df
 
 
 def load_git_logs(git_csv_path: Path) -> pd.DataFrame:
@@ -86,11 +102,13 @@ def load_git_logs(git_csv_path: Path) -> pd.DataFrame:
     Returns:
         DataFrame with Git history
     """
-    if git_csv_path.exists():
-        logger.info(f"Loading Git logs from {git_csv_path}")
-        df = pd.read_csv(git_csv_path)
-        return df
-    raise FileNotFoundError(f"Git logs file not found: {git_csv_path}")
+    if not git_csv_path.exists():
+        raise FileNotFoundError(f"Git logs file not found: {git_csv_path}")
+
+    logger.info(f"Loading Git logs from {git_csv_path}")
+    df = pd.read_csv(git_csv_path)
+    require_columns(df, ["ID_Equipe", "Semestre", "temporal_marker"], "git logs")
+    return df
 
 
 def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
@@ -104,7 +122,9 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
     """
     rows = []
 
-    for json_file in transcripts_dir.glob("*.json"):
+    for json_file in transcripts_dir.rglob("*.json"):
+        if json_file.name.endswith(".metadata.json"):
+            continue
         data = json.loads(json_file.read_text(encoding="utf-8"))
         team_id = data.get("ID_Equipe")
         semester = data.get("Semestre")
@@ -114,12 +134,15 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
         temporal = normalize_temporal_marker(json_file.stem)
         if temporal:
             row["temporal_marker"] = temporal
+        else:
+            raise ValueError(f"Transcript {json_file} is missing a valid temporal_marker")
         rows.append(row)
 
     if rows:
-        return pd.DataFrame(rows)
-    else:
-        return pd.DataFrame()
+        df = pd.DataFrame(rows)
+        require_columns(df, ["ID_Equipe", "Semestre", "temporal_marker"], "transcripts")
+        return df
+    return pd.DataFrame()
 
 
 def source_paths(
@@ -221,11 +244,22 @@ def aggregate_by_team(
         logger.warning("No data to aggregate")
         return pd.DataFrame()
 
-    # Ensure both have temporal markers
-    if "temporal_marker" not in forms_df.columns:
-        forms_df["temporal_marker"] = "T1"
-    if "temporal_marker" not in git_df.columns:
-        git_df["temporal_marker"] = "T1"
+    for df, label in [(forms_df, "forms"), (git_df, "git")]:
+        if df.empty:
+            continue
+        required = ["ID_Equipe", "temporal_marker"]
+        if label == "git":
+            required.append("Semestre")
+        missing = [column for column in required if column not in df.columns]
+        if missing:
+            raise ValueError(f"{label.title()} data is missing required columns: {', '.join(missing)}")
+
+        for column in required:
+            values = df[column].dropna()
+            if values.empty:
+                raise ValueError(f"{label.title()} data has no non-null values for required column {column}")
+            if values.astype(str).str.strip().eq("").any():
+                raise ValueError(f"{label.title()} data contains blank values in required column {column}")
 
     # Aggregate Git data by team
     if not git_df.empty:
@@ -257,14 +291,24 @@ def aggregate_by_team(
 
     # Merge forms with Git data
     if not forms_df.empty and not git_agg.empty:
+        if "Semestre" not in forms_df.columns and "Semestre" in git_agg.columns:
+            merged = forms_df.copy()
+            for column in git_agg.columns:
+                if column not in merged.columns:
+                    merged[column] = pd.NA
+            for column in [
+                "lines_added",
+                "lines_deleted",
+                "files_changed",
+                "num_authors",
+                "num_commits",
+            ]:
+                if column in merged.columns:
+                    merged[column] = pd.NA
+            return merged
+
         merge_keys = ["ID_Equipe", "temporal_marker"]
-        if "Semestre" in forms_df.columns or "Semestre" in git_agg.columns:
-            if "Semestre" not in forms_df.columns:
-                forms_df = forms_df.copy()
-                forms_df["Semestre"] = ""
-            if "Semestre" not in git_agg.columns:
-                git_agg = git_agg.copy()
-                git_agg["Semestre"] = ""
+        if "Semestre" in forms_df.columns and "Semestre" in git_agg.columns:
             merge_keys.append("Semestre")
         merged = pd.merge(
             forms_df,

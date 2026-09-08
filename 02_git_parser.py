@@ -191,10 +191,14 @@ def main() -> None:
 
     # Process each repository
     for idx, row in repos_df.iterrows():
-        team_id = normalize_text(row.get("ID_Equipe")) or f"TEAM_{idx}"
+        team_id = normalize_text(row.get("ID_Equipe"))
         repo_url = normalize_text(row.get("URL_Repositorio_Fork"))
         semestre = normalize_text(row.get("Semestre"))
 
+        if not team_id:
+            raise ValueError(f"Repository row {idx} is missing ID_Equipe")
+        if not semestre:
+            raise ValueError(f"Team {team_id} is missing Semestre")
         if not repo_url:
             raise ValueError(f"{team_id} has no repository URL")
 
@@ -213,10 +217,16 @@ def main() -> None:
 
         # Update rows with team-local author mapping
         for commit_row in commit_rows:
-            author_alias = commit_row.get("author_alias", "unknown")
+            author_alias = commit_row.get("author_alias")
+            if not author_alias:
+                raise ValueError(f"Commit metadata for team {team_id} is missing author_alias")
             commit_row["ID_Equipe"] = team_id
             commit_row["Semestre"] = semestre
-            commit_row["ID_Autor_Local"] = author_mapping.get(author_alias, "unknown")
+            if author_alias not in author_mapping:
+                raise ValueError(
+                    f"Team {team_id} author alias {author_alias} was not assigned a local author label"
+                )
+            commit_row["ID_Autor_Local"] = author_mapping[author_alias]
             commit_row.pop("author_alias", None)
             commit_row.pop("author_email", None)
 
