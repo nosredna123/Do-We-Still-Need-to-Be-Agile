@@ -335,10 +335,72 @@ def _replace_identifiers_in_text(
     return replaced_text
 
 
+def infer_temporal_marker_from_timestamp(value: Any, semester: str | None = None) -> str:
+    """Infer the Phase 1 temporal marker from a commit timestamp.
+
+    Git commit dates may land just before or after an evaluator cut while still
+    belonging to the same semester window. We therefore anchor them to the nearest
+    configured assessment checkpoint within the semester, and fail for dates that
+    lie outside the semester's supported observation window.
+    """
+    from datetime import date
+
+    from pipeline_config import EVALUATOR_TEMPORAL_CUTS, temporal_marker_for
+
+    if value is None or pd.isna(value):
+        raise ValueError("Git commit timestamp is missing")
+
+    parsed = pd.to_datetime(value, errors="raise")
+    date_value = parsed.strftime("%Y-%m-%d")
+    current_date = date.fromisoformat(date_value)
+
+    if semester:
+        cuts = EVALUATOR_TEMPORAL_CUTS.get(str(semester))
+        if cuts is None:
+            raise ValueError(f"Semester {semester} has no configured evaluator cuts")
+
+        for marker, (start_date, end_date) in cuts.items():
+            if date.fromisoformat(start_date) <= current_date <= date.fromisoformat(end_date):
+                return marker
+
+        nearest_marker, _ = min(
+            cuts.items(),
+            key=lambda item: min(
+                abs((current_date - date.fromisoformat(item[1][0])).days),
+                abs((current_date - date.fromisoformat(item[1][1])).days),
+            ),
+        )
+        return nearest_marker
+
+    for candidate_semester, cuts in EVALUATOR_TEMPORAL_CUTS.items():
+        semester_dates = [
+            d
+            for marker, (start_date, end_date) in cuts.items()
+            for d in (date.fromisoformat(start_date), date.fromisoformat(end_date))
+        ]
+        if min(semester_dates) <= current_date <= max(semester_dates):
+            for marker, (start_date, end_date) in cuts.items():
+                if date.fromisoformat(start_date) <= current_date <= date.fromisoformat(end_date):
+                    return marker
+            nearest_marker, _ = min(
+                cuts.items(),
+                key=lambda item: min(
+                    abs((current_date - date.fromisoformat(item[1][0])).days),
+                    abs((current_date - date.fromisoformat(item[1][1])).days),
+                ),
+            )
+            return nearest_marker
+
+    raise ValueError(
+        f"Commit timestamp {value!r} does not fall inside any configured T1/T2/T3 cut"
+    )
+
+
 def extract_git_history(
     repo_path: Path,
     mapping: dict[str, str],
     salt: str = "",
+    semester: str | None = None,
 ) -> list[dict[str, Any]]:
     """Extract anonymized Git history from a repository.
 
@@ -346,6 +408,7 @@ def extract_git_history(
         repo_path: Path to Git repository
         mapping: Dictionary of identifier -> anonymized mappings
         salt: Salt for hashing new author emails
+        semester: Optional semester used to align the commit window
 
     Returns:
         List of commit records with anonymized authors
@@ -385,17 +448,20 @@ def extract_git_history(
                     else:
                         author_alias = _hash_identifier(author_email, salt)
 
-                    rows.append(
-                        {
-                            "repository": repo_name,
-                            "author_alias": author_alias,
-                            "commit_hash": current_commit["commit_hash"],
-                            "timestamp": current_commit["timestamp"],
-                            "files_changed": files_changed,
-                            "lines_added": lines_added,
-                            "lines_deleted": lines_deleted,
-                        }
-                    )
+                    row = {
+                        "repository": repo_name,
+                        "author_alias": author_alias,
+                        "commit_hash": current_commit["commit_hash"],
+                        "timestamp": current_commit["timestamp"],
+                        "files_changed": files_changed,
+                        "lines_added": lines_added,
+                        "lines_deleted": lines_deleted,
+                    }
+                    if semester is not None:
+                        row["temporal_marker"] = infer_temporal_marker_from_timestamp(
+                            current_commit["timestamp"], semester
+                        )
+                    rows.append(row)
 
                 parts = line.split("|")
                 current_commit = {
@@ -428,17 +494,20 @@ def extract_git_history(
             else:
                 author_alias = _hash_identifier(author_email, salt)
 
-            rows.append(
-                {
-                    "repository": repo_name,
-                    "author_alias": author_alias,
-                    "commit_hash": current_commit["commit_hash"],
-                    "timestamp": current_commit["timestamp"],
-                    "files_changed": files_changed,
-                    "lines_added": lines_added,
-                    "lines_deleted": lines_deleted,
-                }
-            )
+            row = {
+                "repository": repo_name,
+                "author_alias": author_alias,
+                "commit_hash": current_commit["commit_hash"],
+                "timestamp": current_commit["timestamp"],
+                "files_changed": files_changed,
+                "lines_added": lines_added,
+                "lines_deleted": lines_deleted,
+            }
+            if semester is not None:
+                row["temporal_marker"] = infer_temporal_marker_from_timestamp(
+                    current_commit["timestamp"], semester
+                )
+            rows.append(row)
 
     except subprocess.CalledProcessError as e:
         logger.warning(f"Failed to extract Git history from {repo_path}: {e}")
