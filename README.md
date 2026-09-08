@@ -10,7 +10,7 @@ Pipeline inicial para gerar, anonimizar, enriquecer e analisar os dados do artig
 - `01_ner_extractor.py`: usa OpenAI para identificar candidatos a nomes de pessoas em transcrições brutas.
 - `01_anonymizer.py`: anonimiza CSVs e transcrições, gerando `chave_relacional.json`.
 - `02_git_parser.py`: extrai histórico Git anonimizado e espelha repositórios sem `.git`.
-- `03_data_lake_builder.py`: consolida entradas anonimizadas em `master_dataset.parquet`.
+- `03_data_lake_builder.py`: gera quatro Parquets independentes por granularidade e um relatório de validação.
 - `04_nlp_qualitative_miner.py`: enriquece o dataset com sinais de sentimento, tópicos, estilo de trabalho e exaustão.
 - `05_metric_engine.py`: calcula Planejamento Inicial, Code Churn, Degradação Técnica, Atrito de Integração e Índice de Esgotamento.
 - `06_statistical_analyzer.py`: gera correlações, teste de hipótese e gráficos SVG em `assets/figures/`.
@@ -124,12 +124,23 @@ distribuído em dois dias por capacidade de apresentação. Em `2026.1`, 24/04,
 .venv/bin/python run_pipeline.py --from-stage anonymize --to-stage lake --force
 ```
 
+O estágio `lake` gera `data/lake/student_responses.parquet`,
+`data/lake/evaluator_team_cuts.parquet`, `data/lake/git_team_cuts.parquet` e
+`data/lake/transcript_sessions.parquet`, cada um com seu sidecar de checksum.
+Também gera `data/lake/lake_validation_report.json`. Não existe exportação
+`master_dataset.parquet`. `git_match_status` em `evaluator_team_cuts` vale
+`matched` quando há atividade Git para a mesma equipe, semestre e corte, e
+`no_observed_activity` quando essa atividade não foi observada.
+
+Para validar a implementação, execute `.venv/bin/pytest -x`. Os dados em
+`data/processed/` e `data/lake/` permanecem privados e ignorados pelo Git.
+
 ## Exemplo de uso
 
 ```bash
 python 01_anonymizer.py --csv dados/alunos.csv --transcript dados/feedback.txt --output-dir outputs/anon --mapping-path outputs/chave_relacional.json
 python 02_git_parser.py --repos-list dados/repos_list.csv --output-csv outputs/git_logs_anon.csv --cache-dir outputs/repos
-python 03_data_lake_builder.py --forms-dir outputs/anon --git-logs outputs/git_logs_anon.csv --output-parquet outputs/master_dataset.parquet
+python 03_data_lake_builder.py --forms-dir outputs/anon --git-logs outputs/git_logs_anon.csv --transcripts-dir outputs/transcripts_anon --output-dir outputs/lake
 python 04_nlp_qualitative_miner.py --input outputs/master_dataset.parquet --output outputs/nlp_enriched_dataset.parquet
 python 05_metric_engine.py --input outputs/nlp_enriched_dataset.parquet --output outputs/metrics_dataset.parquet
 python 06_statistical_analyzer.py --input outputs/metrics_dataset.parquet --correlation-output outputs/correlation_results.csv --figures-dir assets/figures
