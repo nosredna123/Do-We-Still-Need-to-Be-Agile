@@ -158,19 +158,6 @@ def load_git_files(git_csv_path: Path) -> pd.DataFrame:
     return frame
 
 
-def load_git_logs(git_csv_path: Path) -> pd.DataFrame:
-    """Load the legacy aggregate CSV for backward-compatible fixtures."""
-    if not git_csv_path.is_file():
-        raise FileNotFoundError(f"Git logs file not found: {git_csv_path}")
-    frame = pd.read_csv(git_csv_path)
-    require_columns(frame, KEY_COLUMNS + ["lines_added", "lines_deleted", "files_changed", "ID_Autor_Local", "commit_hash"], "git logs")
-    frame["Semestre"] = frame["Semestre"].astype("string")
-    frame["temporal_marker"] = frame["temporal_marker"].map(normalize_temporal_marker)
-    for column in ["lines_added", "lines_deleted", "files_changed"]:
-        frame[column] = pd.to_numeric(frame[column], errors="raise")
-    return frame
-
-
 def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
     """Load transcript sessions without inferring team membership."""
     if not transcripts_dir.is_dir():
@@ -291,20 +278,19 @@ def validation_report(outputs: dict[str, pd.DataFrame], artifacts: dict[str, Pat
         }
 
 
-def build_lake(forms_dir: Path, git_logs_path: Path, transcripts_dir: Path, output_dir: Path, git_files_path: Path | None = None) -> dict[str, Path]:
+def build_lake(forms_dir: Path, git_commits_path: Path, transcripts_dir: Path, output_dir: Path, git_files_path: Path) -> dict[str, Path]:
     """Load, validate and atomically write the six Phase 1 lake contracts."""
     forms = load_form_files(forms_dir)
-    event_level = git_files_path is not None
-    git = load_git_commits(git_logs_path) if event_level else load_git_logs(git_logs_path)
-    files = load_git_files(git_files_path) if git_files_path else pd.DataFrame(columns=FILE_REQUIRED)
+    git = load_git_commits(git_commits_path)
+    files = load_git_files(git_files_path)
     transcripts = load_transcripts(transcripts_dir)
     outputs = {"student_responses": forms[forms["source_type"] == "student_response"].drop(columns=["ID_Equipe"], errors="ignore"), "evaluator_team_cuts": aggregate_evaluator_cuts(forms, git), "git_team_cuts": aggregate_git_cuts(git), "git_commits": git, "git_files": files, "transcript_sessions": transcripts}
     checksum = input_checksum(
-        source_paths(forms_dir, [git_logs_path, *([git_files_path] if git_files_path else [])], transcripts_dir),
+        source_paths(forms_dir, [git_commits_path, git_files_path], transcripts_dir),
         {
             "contracts": ",".join(DATASET_NAMES),
             "contract_version": "lake-six-contracts-v1",
-            "event_level": str(event_level),
+            "event_level": "true",
             "temporal_config": json.dumps(EVALUATOR_TEMPORAL_CUTS, sort_keys=True),
         },
     )
@@ -331,7 +317,6 @@ def main() -> None:
     load_project_environment()
     parser = argparse.ArgumentParser(description="Build the Phase 1 data lake contracts", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--forms-dir", type=Path, default=Path("data/processed/forms"))
-    parser.add_argument("--git-logs", type=Path, default=Path("data/processed/git_logs_anon.csv"))
     parser.add_argument("--git-commits", type=Path, default=Path("data/processed/git_commits_anon.csv"))
     parser.add_argument("--git-files", type=Path, default=Path("data/processed/git_files_anon.csv"))
     parser.add_argument("--transcripts-dir", type=Path, default=Path("data/processed/transcripts_anon"))

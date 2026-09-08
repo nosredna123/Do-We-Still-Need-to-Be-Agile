@@ -24,7 +24,6 @@ from pipeline_core import (
     compute_metrics,
     correlation_rows,
     enrich_records,
-    extract_git_history,
     extract_git_events,
     hypothesis_rows,
     load_records,
@@ -382,7 +381,8 @@ class PipelineCoreTests(unittest.TestCase):
             },
             "02_git_parser.py": {
                 "repos-list": "data/raw/repos_list.csv",
-                "output-csv": "data/processed/git_logs_anon.csv",
+                "output-commits": "data/processed/git_commits_anon.csv",
+                "output-files": "data/processed/git_files_anon.csv",
             },
             "03_data_lake_builder.py": {
                 "output-dir": "data/lake",
@@ -610,55 +610,6 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertNotIn("alice@example.com", rows[0]["feedback"])
             self.assertIn(mapping["Alice"], rows[0]["feedback"])
             self.assertIn(mapping["alice@example.com"], rows[0]["feedback"])
-
-    def test_git_history_is_anonymized_and_mirrored(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = Path(tmp_dir)
-            repo_path = tmp_path / "sample-repo"
-            repo_path.mkdir()
-            subprocess.run(["git", "init"], cwd=repo_path, check=True, stdout=subprocess.DEVNULL)
-            (repo_path / "README.md").write_text("hello\n", encoding="utf-8")
-            env = os.environ | {
-                "GIT_AUTHOR_NAME": "Alice",
-                "GIT_AUTHOR_EMAIL": "alice@example.com",
-                "GIT_COMMITTER_NAME": "Alice",
-                "GIT_COMMITTER_EMAIL": "alice@example.com",
-            }
-            subprocess.run(["git", "add", "README.md"], cwd=repo_path, check=True, env=env)
-            subprocess.run(["git", "commit", "-m", "initial commit"], cwd=repo_path, check=True, env=env, stdout=subprocess.DEVNULL)
-
-            mapping = build_anonymization_mapping([], [], salt="pepper")
-            rows = extract_git_history(repo_path, mapping, salt="pepper")
-            self.assertEqual(1, len(rows))
-            self.assertTrue(rows[0]["author_alias"].startswith("anon_"))
-            self.assertEqual("sample-repo", rows[0]["repository"])
-            self.assertEqual(1, rows[0]["files_changed"])
-            self.assertNotIn("author_email", rows[0])
-
-    def test_git_parser_assigns_temporal_marker_from_commit_timestamp(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = Path(tmp_dir)
-            repo_path = tmp_path / "sample-repo"
-            repo_path.mkdir()
-            subprocess.run(["git", "init"], cwd=repo_path, check=True, stdout=subprocess.DEVNULL)
-            env = os.environ | {
-                "GIT_AUTHOR_NAME": "Alice",
-                "GIT_AUTHOR_EMAIL": "alice@example.com",
-                "GIT_COMMITTER_NAME": "Alice",
-                "GIT_COMMITTER_EMAIL": "alice@example.com",
-            }
-            (repo_path / "README.md").write_text("hello\n", encoding="utf-8")
-            subprocess.run(["git", "add", "README.md"], cwd=repo_path, check=True, env=env)
-            subprocess.run(
-                ["git", "-c", "user.name=Alice", "-c", "user.email=alice@example.com", "commit", "-m", "initial commit", "--date=2026-06-19 15:00:00 -0300"],
-                cwd=repo_path,
-                check=True,
-                env=env,
-                stdout=subprocess.DEVNULL,
-            )
-
-            rows = extract_git_history(repo_path, {}, salt="pepper", semester="2026.1")
-            self.assertEqual(["T3"], [row["temporal_marker"] for row in rows])
 
     def test_git_temporal_marker_uses_phase_buckets(self) -> None:
         cases = {
@@ -1386,8 +1337,6 @@ class PipelineCoreTests(unittest.TestCase):
                 "ID_Equipe,URL_Repositorio_Fork,Semestre\nA,https://example.test/a.git,2026.1\n",
                 encoding="utf-8",
             )
-            output_csv = tmp_path / "git_logs.csv"
-            output_csv.write_text("commit_hash\nabc\n", encoding="utf-8")
             output_commits = tmp_path / "git_commits.csv"
             output_files = tmp_path / "git_files.csv"
             output_commits.write_text("commit_hash\nabc\n", encoding="utf-8")
@@ -1400,7 +1349,7 @@ class PipelineCoreTests(unittest.TestCase):
             checksum = git_parser.build_git_input_checksum(
                 repos_list, ["https://example.test/a.git:head"]
             )
-            for output in (output_csv, output_commits, output_files):
+            for output in (output_commits, output_files):
                 output.with_name(f"{output.name}.metadata.json").write_text(
                     json.dumps({"input_checksum": checksum, "status": "success"}),
                     encoding="utf-8",
@@ -1411,8 +1360,8 @@ class PipelineCoreTests(unittest.TestCase):
             with mock.patch.object(git_parser, "repository_snapshot_id", return_value="head"):
                 with mock.patch.object(git_parser, "clone_or_update_repo") as clone:
                     with mock.patch.object(sys, "argv", [
-                        "02_git_parser.py", "--repos-list", str(repos_list), "--output-csv",
-                        str(output_csv), "--output-commits", str(output_commits),
+                        "02_git_parser.py", "--repos-list", str(repos_list), "--output-commits",
+                        str(output_commits),
                         "--output-files", str(output_files), "--cache-dir", str(cache_dir),
                         "--clean-repos-dir", str(clean_repos_dir),
                     ]):
@@ -1472,8 +1421,9 @@ class PipelineCoreTests(unittest.TestCase):
 
             with mock.patch.object(builder, "load_form_files") as load_forms:
                 with mock.patch.object(sys, "argv", [
-                    "03_data_lake_builder.py", "--forms-dir", str(forms_dir), "--git-logs",
-                    str(git_logs), "--transcripts-dir", str(tmp_path / "transcripts"),
+                    "03_data_lake_builder.py", "--forms-dir", str(forms_dir), "--git-commits",
+                    str(git_logs), "--git-files", str(tmp_path / "git_files.csv"),
+                    "--transcripts-dir", str(tmp_path / "transcripts"),
                     "--output-parquet", str(output_path),
                 ]):
                     builder.main()

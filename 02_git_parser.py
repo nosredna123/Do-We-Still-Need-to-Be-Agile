@@ -7,7 +7,7 @@ each team (mapping to Dev_A, Dev_B, etc. based on commit count).
 
 Usage:
     python 02_git_parser.py --repos-list repos_list.csv \
-        --output-csv git_logs_anon.csv --cache-dir data/raw/repos_cache/
+        --output-commits git_commits_anon.csv --output-files git_files_anon.csv
 """
 
 from __future__ import annotations
@@ -209,12 +209,6 @@ def main() -> None:
         help="CSV file with columns: ID_Equipe, URL_Repositorio_Fork, Semestre",
     )
     parser.add_argument(
-        "--output-csv",
-        type=Path,
-        default=Path("data/processed/git_logs_anon.csv"),
-        help="Output CSV file for anonymized Git logs",
-    )
-    parser.add_argument(
         "--output-commits",
         type=Path,
         default=Path("data/processed/git_commits_anon.csv"),
@@ -262,7 +256,7 @@ def main() -> None:
         )
     checksum = build_git_input_checksum(args.repos_list, snapshots)
     clean_repos_ready = args.clean_repos_dir.is_dir() and any(args.clean_repos_dir.iterdir())
-    outputs = [args.output_csv, args.output_commits, args.output_files]
+    outputs = [args.output_commits, args.output_files]
     if not args.force and clean_repos_ready and all(
         is_current_artifact(output, checksum) for output in outputs
     ):
@@ -342,17 +336,13 @@ def main() -> None:
         ])
 
         # Ensure output directory exists
-        args.output_csv.parent.mkdir(parents=True, exist_ok=True)
-
-        output_df.to_csv(args.output_csv, index=False)
         args.output_commits.parent.mkdir(parents=True, exist_ok=True)
         args.output_files.parent.mkdir(parents=True, exist_ok=True)
         output_df.to_csv(args.output_commits, index=False)
         files_df.to_csv(args.output_files, index=False)
-        write_artifact_metadata(args.output_csv, checksum)
         write_artifact_metadata(args.output_commits, checksum)
         write_artifact_metadata(args.output_files, checksum)
-        logger.info(f"Wrote Git logs to {args.output_csv}")
+        logger.info("Wrote event-level Git outputs")
     else:
         raise RuntimeError("No commits extracted from repositories")
 

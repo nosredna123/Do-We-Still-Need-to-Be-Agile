@@ -35,7 +35,7 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
         "10/18/2025 09:00:00,Group 4 (Team),3,2,1,2\n",
         encoding="utf-8",
     )
-    git_path = tmp_path / "git_logs_anon.csv"
+    git_path = tmp_path / "git_commits_anon.csv"
     pd.DataFrame(
         [
             {
@@ -47,9 +47,23 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
                 "files_changed": 2,
                 "ID_Autor_Local": "Dev_A",
                 "commit_hash": "abc",
+                "repository": "repo",
+                "timestamp": "2025-10-18T09:00:00+00:00",
+                "branch_or_ref": "main",
+                "branch_or_ref_source": "git_branch_contains",
+                "source_type": "git_commit",
             }
         ]
     ).to_csv(git_path, index=False)
+    git_files_path = tmp_path / "git_files_anon.csv"
+    pd.DataFrame([{
+        "ID_Equipe": "TEAM_04", "Semestre": "2025.2", "temporal_marker": "T1",
+        "repository": "repo", "commit_hash": "abc", "timestamp": "2025-10-18T09:00:00+00:00",
+        "ID_Autor_Local": "Dev_A", "file_path": "README.md", "file_extension": ".md",
+        "change_status": "added", "lines_added": 3, "lines_deleted": 1,
+        "is_binary": False, "branch_or_ref": "main", "branch_or_ref_source": "git_branch_contains",
+        "source_type": "git_file",
+    }]).to_csv(git_files_path, index=False)
     transcripts_dir = tmp_path / "transcripts"
     session_dir = transcripts_dir / "2025.2" / "session_1"
     session_dir.mkdir(parents=True)
@@ -59,7 +73,7 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
     )
 
     output_dir = tmp_path / "lake"
-    builder.build_lake(forms_dir, git_path, transcripts_dir, output_dir)
+    builder.build_lake(forms_dir, git_path, transcripts_dir, output_dir, git_files_path)
 
     expected_names = (
         "student_responses",

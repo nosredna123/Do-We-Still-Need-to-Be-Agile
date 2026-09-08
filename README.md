@@ -184,7 +184,7 @@ Para validar a implementação, execute `.venv/bin/pytest -x`. Os dados em
 
 ```bash
 python 01_anonymizer.py --csv dados/alunos.csv --transcript dados/feedback.txt --output-dir outputs/anon --mapping-path outputs/chave_relacional.json
-python 02_git_parser.py --repos-list dados/repos_list.csv --output-csv outputs/git_logs_anon.csv --output-commits outputs/git_commits_anon.csv --output-files outputs/git_files_anon.csv --cache-dir outputs/repos
+python 02_git_parser.py --repos-list dados/repos_list.csv --output-commits outputs/git_commits_anon.csv --output-files outputs/git_files_anon.csv --cache-dir outputs/repos
 python 03_data_lake_builder.py --forms-dir outputs/anon --git-commits outputs/git_commits_anon.csv --git-files outputs/git_files_anon.csv --transcripts-dir outputs/transcripts_anon --output-dir outputs/lake
 # A Fase 2 ainda será implementada sobre os seis contratos do lake.
 ```
