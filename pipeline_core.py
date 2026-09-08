@@ -20,8 +20,6 @@ from pathlib import Path
 from typing import Any, Mapping
 import subprocess
 
-PROJECT_ROOT = Path(__file__).resolve().parent
-
 import pandas as pd
 from dotenv import load_dotenv
 from scipy import stats
