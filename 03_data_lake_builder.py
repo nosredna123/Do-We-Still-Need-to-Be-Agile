@@ -20,6 +20,12 @@ logger = logging.getLogger(__name__)
 VALID_MARKERS = {"T1", "T2", "T3"}
 DATASET_NAMES = ("student_responses", "evaluator_team_cuts", "git_team_cuts", "transcript_sessions")
 KEY_COLUMNS = ["ID_Equipe", "Semestre", "temporal_marker"]
+EVALUATOR_SCORE_NAMES = {
+    'What is the score for "Engagement/Participation"?': "engagement_participation",
+    'What is the score for "Project Progress"?': "project_progress",
+    'What is the score for "Scope/Applicability"?': "scope_applicability",
+    'What is the score for "Technical Complexity"?': "technical_complexity",
+}
 
 
 def normalize_temporal_marker(value: object) -> str:
@@ -154,6 +160,11 @@ def _ensure_unique_keys(frame: pd.DataFrame, keys: list[str], label: str) -> Non
         raise ValueError(f"{label} contains duplicate analytical keys")
 
 
+def _interquartile_range(values: pd.Series) -> float:
+    """Return the interquartile range of one evaluator score group."""
+    return float(values.quantile(0.75) - values.quantile(0.25))
+
+
 def aggregate_git_cuts(git_df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git activity by team, semester and temporal cut."""
     require_columns(git_df, KEY_COLUMNS, "git logs")
@@ -180,12 +191,27 @@ def aggregate_evaluator_cuts(forms_df: pd.DataFrame, git_df: pd.DataFrame) -> pd
     ]
     if not score_columns:
         raise ValueError("Evaluator forms contain no score columns")
+    unknown_score_columns = [
+        column for column in score_columns if column not in EVALUATOR_SCORE_NAMES
+    ]
+    if unknown_score_columns:
+        raise ValueError(
+            "Evaluator forms contain unmapped score columns: "
+            + ", ".join(unknown_score_columns)
+        )
     for column in score_columns:
         evaluator[column] = pd.to_numeric(evaluator[column], errors="raise")
-    aggregations: dict[str, str] = {column: "mean" for column in score_columns}
+    aggregations: dict[str, tuple[str, str | object]] = {}
+    for column in score_columns:
+        name = EVALUATOR_SCORE_NAMES[column]
+        aggregations[f"{name}_mean"] = (column, "mean")
+        aggregations[f"{name}_std"] = (column, "std")
+        aggregations[f"{name}_median"] = (column, "median")
+        aggregations[f"{name}_iqr"] = (column, _interquartile_range)
+        aggregations[f"{name}_n"] = (column, "count")
     if "source_file" in evaluator.columns:
-        aggregations["source_file"] = "first"
-    result = evaluator.groupby(KEY_COLUMNS, as_index=False).agg(aggregations)
+        aggregations["source_file"] = ("source_file", "first")
+    result = evaluator.groupby(KEY_COLUMNS, as_index=False).agg(**aggregations)
     git_keys = aggregate_git_cuts(git_df)[KEY_COLUMNS] if not git_df.empty else pd.DataFrame(columns=KEY_COLUMNS)
     observed = set(map(tuple, git_keys[KEY_COLUMNS].itertuples(index=False, name=None)))
     result["git_match_status"] = ["matched" if tuple(row) in observed else "no_observed_activity" for row in result[KEY_COLUMNS].itertuples(index=False, name=None)]
@@ -222,7 +248,8 @@ def validation_report(outputs: dict[str, pd.DataFrame], artifacts: dict[str, Pat
                           "temporal_markers": sorted(frame["temporal_marker"].astype(str).unique().tolist()),
                           "duplicate_key_count": int(frame.duplicated(KEY_COLUMNS).sum()) if set(KEY_COLUMNS).issubset(frame.columns) else 0,
                           "artifact": str(artifacts[name])}
-    return {"status": "success", "datasets": datasets,
+        return {"status": "success", "datasets": datasets,
+            "evaluator_score_names": list(EVALUATOR_SCORE_NAMES.values()),
             "git_match_status": evaluator["git_match_status"].value_counts().to_dict(),
             "evaluator_keys_without_git": evaluator.loc[evaluator["git_match_status"] == "no_observed_activity", KEY_COLUMNS].astype(str).to_dict("records"),
             "pii_status": pii_status, "sidecars_status": "success"}

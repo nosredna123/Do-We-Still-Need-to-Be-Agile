@@ -131,6 +131,11 @@ Também gera `data/lake/lake_validation_report.json`. Não existe exportação
 `master_dataset.parquet`. `git_match_status` em `evaluator_team_cuts` vale
 `matched` quando há atividade Git para a mesma equipe, semestre e corte, e
 `no_observed_activity` quando essa atividade não foi observada.
+As perguntas de score são convertidas para nomes analíticos estáveis, como
+`engagement_participation_mean`, `project_progress_mean`,
+`scope_applicability_mean` e `technical_complexity_mean`. Cada score também
+possui `_std` (desvio padrão amostral), `_median`, `_iqr` e `_n` (quantidade de
+respostas válidas) para cada equipe, semestre e corte.
 
 Para validar a implementação, execute `.venv/bin/pytest -x`. Os dados em
 `data/processed/` e `data/lake/` permanecem privados e ignorados pelo Git.
