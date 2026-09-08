@@ -26,8 +26,12 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
     forms_dir.mkdir(parents=True)
     (forms_dir / "alunos_t1.csv").write_text("resposta\nboa\n", encoding="utf-8")
     (forms_dir / "avaliadores.csv").write_text(
-        "Timestamp,To which group do these scores refer?,score\n"
-        "10/17/2025 09:00:00,Group 4 (Team),5\n",
+        "Timestamp,To which group do these scores refer?,"
+        "What is the score for \"Engagement/Participation\"?,"
+        "What is the score for \"Project Progress\"?,"
+        "What is the score for \"Scope/Applicability\"?,"
+        "What is the score for \"Technical Complexity\"?\n"
+        "10/17/2025 09:00:00,Group 4 (Team),5,4,3,2\n",
         encoding="utf-8",
     )
     git_path = tmp_path / "git_logs_anon.csv"
@@ -73,6 +77,10 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
     assert not (output_dir / "master_dataset.parquet").exists()
     evaluator = pd.read_parquet(output_dir / "evaluator_team_cuts.parquet")
     assert evaluator.loc[0, "git_match_status"] == "matched"
+    assert evaluator.loc[0, 'What is the score for "Engagement/Participation"?'] == 5
+    assert evaluator.loc[0, 'What is the score for "Project Progress"?'] == 4
+    assert evaluator.loc[0, 'What is the score for "Scope/Applicability"?'] == 3
+    assert evaluator.loc[0, 'What is the score for "Technical Complexity"?'] == 2
     report = json.loads((output_dir / "lake_validation_report.json").read_text())
     assert report["status"] == "success"
     assert report["pii_status"] == "passed"

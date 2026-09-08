@@ -173,8 +173,16 @@ def aggregate_evaluator_cuts(forms_df: pd.DataFrame, git_df: pd.DataFrame) -> pd
     if evaluator.empty:
         raise ValueError("No evaluator responses were found")
     require_columns(evaluator, KEY_COLUMNS, "evaluator forms")
-    numeric = [column for column in evaluator.columns if column.lower().startswith("score")]
-    aggregations: dict[str, str] = {column: "mean" for column in numeric}
+    score_columns = [
+        column
+        for column in evaluator.columns
+        if "score" in column.lower() and "group" not in column.lower()
+    ]
+    if not score_columns:
+        raise ValueError("Evaluator forms contain no score columns")
+    for column in score_columns:
+        evaluator[column] = pd.to_numeric(evaluator[column], errors="raise")
+    aggregations: dict[str, str] = {column: "mean" for column in score_columns}
     if "source_file" in evaluator.columns:
         aggregations["source_file"] = "first"
     result = evaluator.groupby(KEY_COLUMNS, as_index=False).agg(aggregations)
