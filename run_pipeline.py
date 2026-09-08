@@ -17,8 +17,9 @@ from pipeline_core import load_project_environment
 
 logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent
-STAGES = ("prepare", "transcribe", "ner", "anonymize", "git", "lake")
+STAGES = ("cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake")
 STAGE_SCRIPTS = {
+    "cleanup": "04_cleanup.py",
     "prepare": "00_audio_preparer.py",
     "transcribe": "00_audio_transcriber.py",
     "ner": "01_ner_extractor.py",

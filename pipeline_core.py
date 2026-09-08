@@ -105,6 +105,20 @@ def write_artifact_metadata(artifact_path: Path, source_checksum: str) -> None:
     )
 
 
+def _resolve_project_root(path: Path) -> Path:
+    """Resolve a nested cleanup path to the repository root for this project."""
+    resolved = path.resolve()
+    if not resolved.exists():
+        raise ValueError(f"Cleanup path {path} is outside the project root")
+
+    for candidate in (resolved, *resolved.parents):
+        data_dir = candidate / "data"
+        if data_dir.exists() and (data_dir / "processed").exists():
+            return candidate
+
+    raise ValueError(f"Cleanup path {path} is outside the project root")
+
+
 def cleanup_phase_one_artifacts(project_root: Path) -> None:
     """Remove the Phase 1 derived artifacts while preserving raw inputs.
 
@@ -114,13 +128,7 @@ def cleanup_phase_one_artifacts(project_root: Path) -> None:
     Raises:
         ValueError: If the requested path is not a valid project root.
     """
-    resolved_root = project_root.resolve()
-    if not resolved_root.exists() or not resolved_root.is_dir():
-        raise ValueError(f"Cleanup path {project_root} is outside the project root")
-
-    data_dir = resolved_root / "data"
-    if not data_dir.exists() or not (data_dir / "processed").exists():
-        raise ValueError(f"Cleanup path {project_root} is outside the project root")
+    resolved_root = _resolve_project_root(project_root)
 
     targets = [
         resolved_root / "data" / "processed" / "forms",
@@ -135,7 +143,12 @@ def cleanup_phase_one_artifacts(project_root: Path) -> None:
         if target.is_dir():
             for child in sorted(target.iterdir(), reverse=True):
                 if child.is_dir():
-                    cleanup_phase_one_artifacts(child)
+                    for nested_child in sorted(child.rglob("*"), reverse=True):
+                        if nested_child.is_file() or nested_child.is_symlink():
+                            nested_child.unlink()
+                        elif nested_child.is_dir():
+                            nested_child.rmdir()
+                    child.rmdir()
                 else:
                     child.unlink()
             target.rmdir()
@@ -145,7 +158,6 @@ def cleanup_phase_one_artifacts(project_root: Path) -> None:
         if sidecar.exists():
             sidecar.unlink()
 
-    # Remove nested metadata files when a directory is present, but keep raw inputs.
     protected_paths = [
         resolved_root / "data" / "raw",
         resolved_root / "data" / "processed" / "audio_chunks",
