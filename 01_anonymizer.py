@@ -150,8 +150,16 @@ def main() -> None:
         action="store_true",
         help="Regenerate outputs even when their current successful versions exist",
     )
+    parser.add_argument(
+        "--limite",
+        type=int,
+        default=None,
+        help="Maximum number of pending form/transcript files to anonymize",
+    )
 
     args = parser.parse_args()
+    if args.limite is not None and args.limite < 1:
+        parser.error("--limite must be greater than zero")
 
     salt = args.salt or os.environ.get("ANONYMIZATION_SALT")
     if not salt:
@@ -169,6 +177,17 @@ def main() -> None:
         (path, output_path(path, args.transcripts_dir, args.transcripts_output_dir))
         for path in transcript_paths
     ]
+
+    pending_outputs = []
+    for source_path, target_path in [*csv_outputs, *transcript_outputs]:
+        checksum = input_checksum([source_path], {"salt": salt})
+        if args.force or not is_current_artifact(target_path, checksum):
+            pending_outputs.append((source_path, target_path))
+    if args.limite is not None:
+        pending_outputs = pending_outputs[:args.limite]
+    csv_outputs = [item for item in pending_outputs if item in csv_outputs]
+    transcript_outputs = [item for item in pending_outputs if item in transcript_outputs]
+    logger.info("Selected %d pending files for anonymization", len(pending_outputs))
 
     logger.info("Building anonymization mapping...")
 

@@ -97,7 +97,15 @@ def main() -> None:
         action="store_true",
         help="Regenerate prepared audio even when source content is unchanged",
     )
+    parser.add_argument(
+        "--limite",
+        type=int,
+        default=None,
+        help="Maximum number of pending source audio files to prepare",
+    )
     args = parser.parse_args()
+    if args.limite is not None and args.limite < 1:
+        parser.error("--limite must be greater than zero")
     if shutil.which("ffmpeg") is None:
         raise RuntimeError("ffmpeg is required to prepare audio files")
     if not args.audio_dir.is_dir():
@@ -115,14 +123,23 @@ def main() -> None:
     if not audio_paths:
         raise FileNotFoundError(f"No supported audio files found in {args.audio_dir}")
 
+    pending_audio_paths = []
     for source_path in audio_paths:
         relative_path = source_path.relative_to(args.audio_dir)
         output_path = args.output_dir / relative_path.with_suffix(".mp3")
         checksum = file_checksum(source_path)
         if not args.force and current_prepared_outputs(output_path, checksum):
-            logger.info("Skipping current prepared audio: %s", source_path.name)
             continue
+        pending_audio_paths.append(source_path)
 
+    if args.limite is not None:
+        pending_audio_paths = pending_audio_paths[:args.limite]
+    logger.info("Selected %d pending source audio files", len(pending_audio_paths))
+
+    for source_path in pending_audio_paths:
+        relative_path = source_path.relative_to(args.audio_dir)
+        output_path = args.output_dir / relative_path.with_suffix(".mp3")
+        checksum = file_checksum(source_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.with_name(f"{output_path.name}.metadata.json").unlink(
             missing_ok=True

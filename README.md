@@ -45,6 +45,12 @@ incluindo a carga da configuração compartilhada. Ele não inicia nem orquestra
 as etapas. `run_pipeline.py` é o ponto de entrada para a execução coordenada;
 os scripts numerados continuam disponíveis como pontos de entrada independentes.
 
+Os modelos e parâmetros de requisição ficam centralizados em
+`pipeline_config.py`, em `MODEL_CONFIG`. A configuração atual mantém
+`whisper-1` para transcrição e `gpt-4o-mini` para NER. O catálogo também reserva
+a configuração da futura mineração qualitativa, sem armazenar credenciais ou
+dados de origem.
+
 Todos os prompts enviados a serviços externos de IA ficam centralizados em
 `pipeline_prompts.py`. Esse catálogo é a referência auditável para pesquisadores
 e não pode conter PII, segredos, nomes reais ou outros dados de origem.
@@ -84,6 +90,19 @@ fornecido explicitamente.
 .venv/bin/python run_pipeline.py \
 	--dry-run
 ```
+
+Para executar a pipeline em lotes, use `--limite` com a quantidade máxima de
+itens pendentes por estágio incremental:
+
+```bash
+.venv/bin/python run_pipeline.py --stages prepare transcribe --limite 10
+.venv/bin/python run_pipeline.py --stages ner anonymize --limite 10
+```
+
+O limite considera somente entradas sem artefato atual; ao repetir o comando,
+o próximo lote é selecionado automaticamente. A opção se aplica a
+`prepare`, `transcribe`, `ner` e `anonymize`. As etapas `git` e `lake` não
+aceitam lotes parciais porque produzem artefatos agregados.
 
 Use `--csv` e `--transcript` para acrescentar arquivos fora dos diretórios
 padrão. Artefatos com metadados válidos e checksum inalterado são ignorados;

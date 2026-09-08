@@ -9,6 +9,30 @@ from __future__ import annotations
 
 from datetime import date
 
+
+# Models and request parameters are version-controlled protocol decisions.
+# Secrets and local overrides belong in the environment, not here.
+MODEL_CONFIG: dict[str, dict[str, object]] = {
+    "transcription": {
+        "provider": "openai",
+        "model": "whisper-1",
+        "language": "pt",
+    },
+    "ner": {
+        "provider": "openai",
+        "model": "gpt-4o-mini",
+        "temperature": 0,
+        "response_format": "json_object",
+    },
+    "qualitative_mining": {
+        "provider": "openai",
+        "model": "gpt-4o-mini",
+        "temperature": 0,
+        "response_format": "json_object",
+        "service_tier": "standard",
+    },
+}
+
 # Each range identifies one evaluation moment. The two-day ranges in 2025.2 are
 # deliberate: teams were distributed between presentation days because all teams
 # could not be evaluated in one session. Each range is therefore one observation
