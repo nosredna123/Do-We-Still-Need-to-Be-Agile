@@ -206,7 +206,12 @@ def test_build_lake_writes_event_level_git_contracts_and_derives_summary(
     assert summary.loc[0, "files_changed"] == 2
     files = pd.read_parquet(output_dir / "git_files.parquet")
     assert files.loc[0, "file_path"] == "docs/planejamento inicial.md"
-    assert set(pd.read_parquet(output_dir / "git_commits.parquet")["source_type"]) == {"git_commit"}
+    commits = pd.read_parquet(output_dir / "git_commits.parquet")
+    assert pd.api.types.is_datetime64_any_dtype(commits["timestamp"])
+    assert pd.api.types.is_datetime64_any_dtype(files["timestamp"])
+    assert str(commits["timestamp"].dt.tz) == "UTC"
+    assert str(files["timestamp"].dt.tz) == "UTC"
+    assert set(commits["source_type"]) == {"git_commit"}
     assert set(files["source_type"]) == {"git_file"}
     report = json.loads((output_dir / "lake_validation_report.json").read_text())
     assert report["datasets"]["git_commits"]["source_types"] == ["git_commit"]

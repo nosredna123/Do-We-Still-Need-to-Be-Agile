@@ -121,7 +121,7 @@ def _validate_git_values(frame: pd.DataFrame, required: list[str], label: str, k
     frame = frame.copy()
     frame["Semestre"] = frame["Semestre"].astype("string")
     frame["temporal_marker"] = frame["temporal_marker"].map(normalize_temporal_marker)
-    frame["timestamp"] = pd.to_datetime(frame["timestamp"], errors="raise", utc=True).astype("string")
+    frame["timestamp"] = pd.to_datetime(frame["timestamp"], errors="raise", utc=True)
     for column in ["lines_added", "lines_deleted"] + (["files_changed"] if "files_changed" in frame else []):
         frame[column] = pd.to_numeric(frame[column], errors="raise")
         invalid_nulls = frame[column].isna() & ~frame.get("is_binary", pd.Series(False, index=frame.index)).astype(bool) if nullable_line_counts else frame[column].isna()
@@ -289,7 +289,7 @@ def build_lake(forms_dir: Path, git_commits_path: Path, transcripts_dir: Path, o
         source_paths(forms_dir, [git_commits_path, git_files_path], transcripts_dir),
         {
             "contracts": ",".join(DATASET_NAMES),
-            "contract_version": "lake-six-contracts-v1",
+            "contract_version": "lake-six-contracts-v2-datetime-git-timestamps",
             "event_level": "true",
             "temporal_config": json.dumps(EVALUATOR_TEMPORAL_CUTS, sort_keys=True),
         },
