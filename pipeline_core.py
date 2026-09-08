@@ -25,6 +25,17 @@ from scipy import stats as scipy_stats
 
 logger = logging.getLogger(__name__)
 DOTENV_PATH = Path(__file__).resolve().with_name(".env")
+PROJECT_ROOT = Path(__file__).resolve().parent
+ANALYSIS_DIR = PROJECT_ROOT / "data" / "analysis"
+PHASE2_CONTRACT_NAMES = (
+    "student_responses",
+    "evaluator_team_cuts",
+    "git_team_cuts",
+    "git_commits",
+    "git_files",
+    "git_repository_snapshots",
+    "transcript_sessions",
+)
 IDENTIFIER_FIELD_TOKENS = {"email", "mail", "nome", "name", "aluno", "avaliador"}
 
 
@@ -49,7 +60,7 @@ def file_checksum(path: Path) -> str:
     return digest.hexdigest()
 
 
-def input_checksum(paths: list[Path], options: Mapping[str, str]) -> str:
+def input_checksum(paths: list[Path], options: Mapping[str, Any]) -> str:
     """Calculate a deterministic checksum for files and processing options.
 
     Args:
@@ -60,16 +71,53 @@ def input_checksum(paths: list[Path], options: Mapping[str, str]) -> str:
         Hexadecimal SHA-256 checksum of the effective inputs.
     """
     digest = hashlib.sha256()
-    for path in sorted(paths):
-        digest.update(path.name.encode("utf-8"))
+    for path in sorted(paths, key=lambda item: item.as_posix()):
+        if not path.is_file():
+            raise FileNotFoundError(f"Checksum input not found: {path}")
+        digest.update(path.as_posix().encode("utf-8"))
         digest.update(file_checksum(path).encode("ascii"))
-    digest.update(json.dumps(dict(options), sort_keys=True).encode("utf-8"))
+    digest.update(
+        json.dumps(dict(options), sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+    )
     return digest.hexdigest()
+
+
+def phase2_input_checksum(
+    lake_dir: Path,
+    prompt_paths: list[Path],
+    options: Mapping[str, Any],
+) -> str:
+    """Calculate the complete resume checksum for a Phase 2 artifact.
+
+    Args:
+        lake_dir: Directory containing the seven canonical lake contracts.
+        prompt_paths: Versioned prompt or prompt-catalog files used by the stage.
+        options: Effective execution options, including model parameters.
+
+    Returns:
+        SHA-256 checksum covering contracts, sidecars, prompts, and options.
+
+    Raises:
+        FileNotFoundError: If a required contract, sidecar, or prompt is absent.
+    """
+    inputs: list[Path] = []
+    for name in PHASE2_CONTRACT_NAMES:
+        parquet_path = lake_dir / f"{name}.parquet"
+        sidecar_path = lake_dir / f"{name}.parquet.metadata.json"
+        inputs.extend((parquet_path, sidecar_path))
+    inputs.extend(prompt_paths)
+    return input_checksum(inputs, options)
 
 
 def artifact_metadata_path(artifact_path: Path) -> Path:
     """Return the sidecar metadata path for a generated artifact."""
     return artifact_path.with_name(f"{artifact_path.name}.metadata.json")
+
+
+def ensure_analysis_dir(analysis_dir: Path = ANALYSIS_DIR) -> Path:
+    """Create and return the configured directory for Phase 2 artifacts."""
+    analysis_dir.mkdir(parents=True, exist_ok=True)
+    return analysis_dir
 
 
 def is_current_artifact(artifact_path: Path, source_checksum: str) -> bool:
@@ -88,18 +136,62 @@ def is_current_artifact(artifact_path: Path, source_checksum: str) -> bool:
         and metadata.get("input_checksum") == source_checksum
     )
 
-def write_artifact_metadata(artifact_path: Path, source_checksum: str) -> None:
+def write_artifact_metadata(
+    artifact_path: Path,
+    source_checksum: str,
+    *,
+    contract_version: str | None = None,
+    options: Mapping[str, Any] | None = None,
+) -> None:
     """Record successful processing metadata for an artifact.
 
     Args:
         artifact_path: Generated artifact associated with the metadata.
         source_checksum: SHA-256 checksum of the artifact's effective input.
+        contract_version: Optional version of the output contract.
+        options: Optional effective processing options.
     """
     metadata_path = artifact_metadata_path(artifact_path)
+    metadata: dict[str, Any] = {
+        "input_checksum": source_checksum,
+        "status": "success",
+    }
+    if contract_version is not None:
+        metadata["contract_version"] = contract_version
+    if options is not None:
+        metadata["options"] = dict(options)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
     metadata_path.write_text(
-        json.dumps({"input_checksum": source_checksum, "status": "success"}, indent=2),
+        json.dumps(metadata, indent=2, sort_keys=True, default=str),
         encoding="utf-8",
     )
+
+
+def invalidate_artifacts(artifact_paths: list[Path]) -> None:
+    """Invalidate artifacts and sidecars so stale outputs cannot be resumed."""
+    for artifact_path in artifact_paths:
+        metadata_path = artifact_metadata_path(artifact_path)
+        for path in (artifact_path, metadata_path):
+            if path.exists():
+                path.unlink()
+
+
+def invalidate_stale_artifact(artifact_path: Path, source_checksum: str) -> bool:
+    """Remove an artifact when its successful checksum is no longer current.
+
+    Args:
+        artifact_path: Candidate resumable artifact.
+        source_checksum: Current checksum of all effective inputs and options.
+
+    Returns:
+        ``True`` when an existing artifact or sidecar was invalidated.
+    """
+    if not artifact_path.exists() and not artifact_metadata_path(artifact_path).exists():
+        return False
+    if is_current_artifact(artifact_path, source_checksum):
+        return False
+    invalidate_artifacts([artifact_path])
+    return True
 
 
 def _resolve_project_root(path: Path) -> Path:
