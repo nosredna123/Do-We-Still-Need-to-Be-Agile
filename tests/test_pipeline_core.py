@@ -956,8 +956,9 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertTrue((project_root / "data/processed/transcripts").exists())
         self.assertTrue((project_root / "data/processed/ner_candidates").exists())
 
+        outside_root = Path(tempfile.mkdtemp())
         with self.assertRaisesRegex(ValueError, "outside the project root"):
-            pipeline_core.cleanup_phase_one_artifacts(project_root / "data/raw" / ".." / "other")
+            pipeline_core.cleanup_phase_one_artifacts(outside_root)
 
     def test_load_transcripts_preserves_unpaired_session_metadata(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder_transcripts", "03_data_lake_builder.py")
