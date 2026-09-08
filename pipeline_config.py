@@ -75,6 +75,100 @@ SOURCE_CODE_EXCLUDED_PATH_PATTERNS = {
     "vendor/",
 }
 
+NLP_SCORE_SCALES = {
+    "sentiment_score": {"version": "v1", "minimum": -2, "maximum": 2, "integer": True},
+    "cognitive_load_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
+    "ai_dependency_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
+}
+NLP_ENUMS = {
+    "methodological_orientation": {"structured", "mixed", "vibe_coding", "insufficient_evidence"},
+    "planning_debt_signal": {"present", "absent", "insufficient_evidence"},
+}
+_ALL_STUDENT_CUT_SCOPES = [
+    {"Semestre": semester, "temporal_marker": marker, "requirement": "required"}
+    for semester in ("2025.2", "2026.1")
+    for marker in ("T1", "T2", "T3")
+]
+STUDENT_TEXT_QUESTION_REGISTRY = {
+    "ai_benefit": {
+        "question_id": "ai_benefit",
+        "construct": "ai_dependency",
+        "aliases": [
+            "Qual foi o maior benefício que você obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?",
+            "Qual foi o maior benefício que você obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?.1",
+        ],
+        "required_scopes": _ALL_STUDENT_CUT_SCOPES,
+        "duplicate_strategy": "coalesce_without_conflict",
+        "conflict_strategy": "reject_on_conflict",
+        "registry_version": "student-text-v1",
+    },
+    "ai_career_impact_5y": {
+        "question_id": "ai_career_impact_5y",
+        "construct": "career_expectation",
+        "aliases": [
+            "Em 5 anos, como você enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?",
+            "Em 5 anos, como você enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?.1",
+        ],
+        "required_scopes": _ALL_STUDENT_CUT_SCOPES,
+        "duplicate_strategy": "coalesce_without_conflict",
+        "conflict_strategy": "reject_on_conflict",
+        "registry_version": "student-text-v1",
+    },
+    "project_feeling": {
+        "question_id": "project_feeling",
+        "construct": "cognitive_load",
+        "aliases": [
+            "Descreva brevemente como você se sente em relação ao projeto que irá desenvolver nesta disciplina.",
+            "Descreva brevemente como você se sente em relação ao projeto que você está desenvolvendo nesta disciplina.",
+        ],
+        "required_scopes": _ALL_STUDENT_CUT_SCOPES,
+        "duplicate_strategy": "coalesce_without_conflict",
+        "conflict_strategy": "reject_on_conflict",
+        "registry_version": "student-text-v1",
+    },
+    "project_challenges": {
+        "question_id": "project_challenges",
+        "construct": "planning_debt",
+        "aliases": [
+            "Quais aspectos do projeto você acredita que serão mais desafiadores? (marque todos que se aplicam)",
+            "Quais aspectos do projeto você acredita que foram/são mais desafiadores? (marque todos que se aplicam)",
+        ],
+        "required_scopes": _ALL_STUDENT_CUT_SCOPES,
+        "duplicate_strategy": "coalesce_without_conflict",
+        "conflict_strategy": "reject_on_conflict",
+        "registry_version": "student-text-v1",
+    },
+    "autonomy_tool_dependency": {
+        "question_id": "autonomy_tool_dependency",
+        "construct": "ai_dependency",
+        "aliases": [
+            "Para você, qual deve ser o equilíbrio ideal entre a autonomia de cada integrante e a dependência de ferramentas de suporte no desenvolvimento do projeto?",
+        ],
+        "required_scopes": _ALL_STUDENT_CUT_SCOPES,
+        "duplicate_strategy": "coalesce_without_conflict",
+        "conflict_strategy": "reject_on_conflict",
+        "registry_version": "student-text-v1",
+    },
+    "career_expectation": {
+        "question_id": "career_expectation",
+        "construct": "career_expectation",
+        "aliases": [
+            "Quais expectativas você tem sobre sua própria evolução profissional ao participar deste projeto?",
+        ],
+        "required_scopes": _ALL_STUDENT_CUT_SCOPES,
+        "duplicate_strategy": "coalesce_without_conflict",
+        "conflict_strategy": "reject_on_conflict",
+        "registry_version": "student-text-v1",
+    },
+}
+PLANNING_FILE_EXTENSIONS = {".md", ".txt", ".rst", ".adoc", ".pdf", ".doc", ".docx", ".odt", ".yaml", ".yml", ".json", ".toml", ".drawio", ".puml", ".mmd", ".mermaid", ".uml", ".bpmn"}
+PLANNING_PATH_PATTERNS = {"docs/", "doc/", "documentation/", "requirements/", "spec/", "specs/", "architecture/", "design/", "planning/", "planejamento/", "requisitos/", "arquitetura/", "prototipo/", "prototype/"}
+STATISTICAL_ANALYSIS_REGISTRY = {
+    "pi_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "pi_file_count_t1", "y": "cc_per_source_loc_t3", "test": "spearman", "priority": "primary", "figure": "pi_vs_cc.png"},
+    "pi_vs_delta_dt_primary": {"unit_of_analysis": "team_semester", "x": "pi_file_count_t1", "y": "delta_dt_t1_t3", "test": "spearman", "priority": "primary", "figure": None},
+    "ai_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "ai_max_author_share_48h_before_t3", "y": "cc_total_t3", "test": "spearman", "priority": "primary", "figure": "ai_before_t3.png"},
+}
+
 # Each range identifies one evaluation moment. The two-day ranges in 2025.2 are
 # deliberate: teams were distributed between presentation days because all teams
 # could not be evaluated in one session. Each range is therefore one observation

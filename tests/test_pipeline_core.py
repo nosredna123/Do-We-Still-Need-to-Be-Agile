@@ -243,7 +243,7 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertEqual(
             [
                 "cleanup", "prepare", "transcribe", "ner", "anonymize",
-                "git", "lake", "repo-snapshots",
+                "git", "lake", "repo-snapshots", "nlp", "metrics", "stats",
             ],
             orchestrator.resolve_stages(None, None, None),
         )
@@ -272,6 +272,27 @@ class PipelineCoreTests(unittest.TestCase):
                 sys.executable,
                 str(REPO_ROOT / "02b_git_repository_snapshots.py"),
                 "--force",
+            ],
+            command,
+        )
+
+    def test_pipeline_orchestrator_passes_phase2_nlp_contract_paths(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_phase2_nlp", "run_pipeline.py"
+        )
+
+        command = orchestrator.build_stage_command("nlp", [], [], "", False)
+
+        self.assertEqual(
+            [
+                sys.executable,
+                str(REPO_ROOT / "04_nlp_qualitative_miner.py"),
+                "--lake-dir",
+                str(REPO_ROOT / "data" / "lake"),
+                "--contract-report",
+                str(REPO_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
+                "--output",
+                str(REPO_ROOT / "data" / "analysis" / ".private" / "student_prompt_catalog.parquet"),
             ],
             command,
         )

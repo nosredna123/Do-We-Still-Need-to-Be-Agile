@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent
 STAGES = (
     "cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake",
-    "repo-snapshots",
+    "repo-snapshots", "nlp", "metrics", "stats",
 )
 STAGE_SCRIPTS = {
     "cleanup": "04_cleanup.py",
@@ -30,6 +30,9 @@ STAGE_SCRIPTS = {
     "git": "02_git_parser.py",
     "lake": "03_data_lake_builder.py",
     "repo-snapshots": "02b_git_repository_snapshots.py",
+    "nlp": "04_nlp_qualitative_miner.py",
+    "metrics": "05_metric_engine.py",
+    "stats": "06_statistical_analyzer.py",
 }
 
 
@@ -66,6 +69,17 @@ def build_stage_command(
             command.extend(["--transcript", str(transcript_path)])
         if salt:
             command.extend(["--salt", salt])
+    if stage == "nlp":
+        command.extend(
+            [
+                "--lake-dir",
+                str(PROJECT_ROOT / "data" / "lake"),
+                "--contract-report",
+                str(PROJECT_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
+                "--output",
+                str(PROJECT_ROOT / "data" / "analysis" / ".private" / "student_prompt_catalog.parquet"),
+            ]
+        )
     if force:
         command.append("--force")
     if limite is not None and stage in {"prepare", "transcribe", "ner", "anonymize"}:

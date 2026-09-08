@@ -5,6 +5,7 @@ __pycache__/
 data/raw/
 data/processed/
 data/lake/
+data/analysis/.private/
 outputs/
 artifacts/
 assets/figures/
