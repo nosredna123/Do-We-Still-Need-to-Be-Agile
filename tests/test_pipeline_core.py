@@ -201,7 +201,7 @@ class PipelineCoreTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            ["prepare", "transcribe", "ner", "anonymize", "git", "lake"],
+            ["cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake"],
             orchestrator.resolve_stages(None, None, None),
         )
 
@@ -234,6 +234,21 @@ class PipelineCoreTests(unittest.TestCase):
             check=True,
             cwd=REPO_ROOT,
         )
+
+    def test_cleanup_phase_one_artifacts_accepts_nested_project_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            project_root = Path(tmp_dir)
+            forms_dir = project_root / "data" / "processed" / "forms" / "2026.1"
+            forms_dir.mkdir(parents=True)
+            stale_file = forms_dir / "alunos_t1.csv"
+            stale_file.write_text("id,nome\n1,teste\n", encoding="utf-8")
+            (project_root / "data" / "raw").mkdir(parents=True)
+            (project_root / "data" / "raw" / "keep.txt").write_text("raw data", encoding="utf-8")
+
+            pipeline_core.cleanup_phase_one_artifacts(forms_dir)
+
+            self.assertFalse(forms_dir.exists())
+            self.assertTrue((project_root / "data" / "raw" / "keep.txt").exists())
 
     def test_pipeline_orchestrator_dry_run_does_not_execute_stages(self) -> None:
         orchestrator = load_script_module(
@@ -297,6 +312,7 @@ class PipelineCoreTests(unittest.TestCase):
             "01_anonymizer.py",
             "02_git_parser.py",
             "03_data_lake_builder.py",
+            "04_cleanup.py",
         )
 
         for script_name in script_names:
