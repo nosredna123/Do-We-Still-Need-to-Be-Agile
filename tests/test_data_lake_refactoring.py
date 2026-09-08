@@ -89,7 +89,7 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
     assert not any(column.startswith("What is the score") for column in evaluator.columns)
     report = json.loads((output_dir / "lake_validation_report.json").read_text())
     assert report["status"] == "success"
-    assert report["pii_status"] == "passed"
+    assert report["pii_status"] == "passed_structural_scan"
     assert report["evaluator_score_names"] == [
         "engagement_participation",
         "project_progress",
@@ -128,3 +128,64 @@ def test_transcript_loader_derives_short_filename_date_from_semester(tmp_path: P
 
     assert transcripts.loc[0, "temporal_marker"] == "T1"
     assert transcripts.loc[0, "temporal_marker_source"] == "filename"
+
+
+def test_build_lake_writes_event_level_git_contracts_and_derives_summary(
+    tmp_path: Path,
+) -> None:
+    builder = load_builder()
+    forms_dir = tmp_path / "forms" / "2025.2"
+    forms_dir.mkdir(parents=True)
+    (forms_dir / "alunos_t1.csv").write_text("resposta\nboa\n", encoding="utf-8")
+    (forms_dir / "avaliadores.csv").write_text(
+        "Timestamp,To which group do these scores refer?,"
+        "What is the score for \"Engagement/Participation\"?,"
+        "What is the score for \"Project Progress\"?,"
+        "What is the score for \"Scope/Applicability\"?,"
+        "What is the score for \"Technical Complexity\"?\n"
+        "10/17/2025 09:00:00,Group 4 (Team),5,4,3,2\n",
+        encoding="utf-8",
+    )
+    git_commits = tmp_path / "git_commits.csv"
+    pd.DataFrame(
+        [{
+            "ID_Equipe": "TEAM_04", "Semestre": "2025.2", "repository": "repo",
+            "commit_hash": "abc", "timestamp": "2025-10-18T09:00:00+00:00",
+            "temporal_marker": "T1", "ID_Autor_Local": "Dev_A",
+            "lines_added": 3, "lines_deleted": 1, "files_changed": 2,
+            "branch_or_ref": None, "branch_or_ref_source": "unavailable",
+        }]
+    ).to_csv(git_commits, index=False)
+    git_files = tmp_path / "git_files.csv"
+    pd.DataFrame(
+        [{
+            "ID_Equipe": "TEAM_04", "Semestre": "2025.2", "repository": "repo",
+            "commit_hash": "abc", "timestamp": "2025-10-18T09:00:00+00:00",
+            "temporal_marker": "T1", "ID_Autor_Local": "Dev_A",
+            "file_path": "docs/planejamento inicial.md", "file_extension": ".md",
+            "change_status": "added", "lines_added": 3, "lines_deleted": 1,
+            "is_binary": False, "branch_or_ref": None,
+            "branch_or_ref_source": "unavailable",
+        }]
+    ).to_csv(git_files, index=False)
+    transcripts_dir = tmp_path / "transcripts" / "2025.2" / "session_1"
+    transcripts_dir.mkdir(parents=True)
+    (transcripts_dir / "feedback_2025-10-18.json").write_text(
+        json.dumps({"status": "success", "text": "redacted"}), encoding="utf-8"
+    )
+
+    output_dir = tmp_path / "lake"
+    builder.build_lake(
+        forms_dir, git_commits, transcripts_dir.parent.parent, output_dir,
+        git_files_path=git_files,
+    )
+
+    assert {path.stem for path in output_dir.glob("*.parquet")} == {
+        "student_responses", "evaluator_team_cuts", "git_team_cuts",
+        "git_commits", "git_files", "transcript_sessions",
+    }
+    summary = pd.read_parquet(output_dir / "git_team_cuts.parquet")
+    assert summary.loc[0, "num_commits"] == 1
+    assert summary.loc[0, "files_changed"] == 2
+    files = pd.read_parquet(output_dir / "git_files.parquet")
+    assert files.loc[0, "file_path"] == "docs/planejamento inicial.md"

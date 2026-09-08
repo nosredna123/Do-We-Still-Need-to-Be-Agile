@@ -25,6 +25,7 @@ from pipeline_core import (
     correlation_rows,
     enrich_records,
     extract_git_history,
+    extract_git_events,
     hypothesis_rows,
     load_records,
     write_records,
@@ -44,6 +45,38 @@ def load_script_module(module_name: str, filename: str):
 
 
 class PipelineCoreTests(unittest.TestCase):
+    def test_extract_git_events_preserves_commit_and_special_file_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir) / "repo"
+            repo.mkdir()
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.email", "dev@example.test"], cwd=repo, check=True)
+            subprocess.run(["git", "config", "user.name", "Dev"], cwd=repo, check=True)
+            special_path = repo / "planejamento inicial ç.txt"
+            special_path.write_text("plano\n", encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run([
+                "git", "commit", "-q", "-m", "initial",
+                "--date", "2025-10-18T09:00:00+00:00",
+            ], cwd=repo, check=True, env={**os.environ, "GIT_AUTHOR_DATE": "2025-10-18T09:00:00+00:00", "GIT_COMMITTER_DATE": "2025-10-18T09:00:00+00:00"})
+            renamed_path = repo / "planejamento final ç.txt"
+            special_path.rename(renamed_path)
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run([
+                "git", "commit", "-q", "-m", "rename",
+                "--date", "2025-10-19T09:00:00+00:00",
+            ], cwd=repo, check=True, env={**os.environ, "GIT_AUTHOR_DATE": "2025-10-19T09:00:00+00:00", "GIT_COMMITTER_DATE": "2025-10-19T09:00:00+00:00"})
+
+            commits, files = extract_git_events(repo, "2025.2")
+
+            self.assertEqual(2, len(commits))
+            self.assertEqual(2, len(files))
+            self.assertEqual("T1", commits[0]["temporal_marker"])
+            self.assertEqual("planejamento inicial ç.txt", files[0]["file_path"])
+            self.assertEqual("renamed", files[1]["change_status"])
+            self.assertEqual("planejamento inicial ç.txt", files[1]["file_path_old"])
+            self.assertEqual("planejamento final ç.txt", files[1]["file_path"])
+
     def test_temporal_marker_for_uses_configured_evaluator_cut_ranges(self) -> None:
         self.assertEqual("T1", temporal_marker_for("2025.2", "2025-10-17"))
         self.assertEqual("T1", temporal_marker_for("2025.2", "2025-10-24"))
@@ -1329,23 +1362,62 @@ class PipelineCoreTests(unittest.TestCase):
             )
             output_csv = tmp_path / "git_logs.csv"
             output_csv.write_text("commit_hash\nabc\n", encoding="utf-8")
-            checksum = git_parser.file_checksum(repos_list)
-            (tmp_path / "git_logs.csv.metadata.json").write_text(
-                json.dumps({"input_checksum": checksum, "status": "success"}),
-                encoding="utf-8",
+            output_commits = tmp_path / "git_commits.csv"
+            output_files = tmp_path / "git_files.csv"
+            output_commits.write_text("commit_hash\nabc\n", encoding="utf-8")
+            output_files.write_text("file_path\nREADME.md\n", encoding="utf-8")
+            cache_dir = tmp_path / "cache"
+            cached_repo = git_parser.repository_cache_path(
+                "https://example.test/a.git", cache_dir
             )
+            cached_repo.mkdir(parents=True)
+            checksum = git_parser.build_git_input_checksum(
+                repos_list, ["https://example.test/a.git:head"]
+            )
+            for output in (output_csv, output_commits, output_files):
+                output.with_name(f"{output.name}.metadata.json").write_text(
+                    json.dumps({"input_checksum": checksum, "status": "success"}),
+                    encoding="utf-8",
+                )
             clean_repos_dir = tmp_path / "clean"
             (clean_repos_dir / "a").mkdir(parents=True)
 
-            with mock.patch.object(git_parser, "clone_or_update_repo") as clone:
-                with mock.patch.object(sys, "argv", [
-                    "02_git_parser.py", "--repos-list", str(repos_list), "--output-csv",
-                    str(output_csv), "--cache-dir", str(tmp_path / "cache"),
-                    "--clean-repos-dir", str(clean_repos_dir),
-                ]):
-                    git_parser.main()
+            with mock.patch.object(git_parser, "repository_snapshot_id", return_value="head"):
+                with mock.patch.object(git_parser, "clone_or_update_repo") as clone:
+                    with mock.patch.object(sys, "argv", [
+                        "02_git_parser.py", "--repos-list", str(repos_list), "--output-csv",
+                        str(output_csv), "--output-commits", str(output_commits),
+                        "--output-files", str(output_files), "--cache-dir", str(cache_dir),
+                        "--clean-repos-dir", str(clean_repos_dir),
+                    ]):
+                        git_parser.main()
 
             clone.assert_not_called()
+
+    def test_git_checksum_includes_snapshot_and_contract_options(self) -> None:
+        git_parser = load_script_module("git_parser_checksum", "02_git_parser.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repos_list = Path(tmp_dir) / "repos.csv"
+            repos_list.write_text("source\nrepo\n", encoding="utf-8")
+
+            first = git_parser.build_git_input_checksum(
+                repos_list,
+                ["repo-a:111"],
+                {"find_renames": True},
+            )
+            second = git_parser.build_git_input_checksum(
+                repos_list,
+                ["repo-a:222"],
+                {"find_renames": True},
+            )
+            third = git_parser.build_git_input_checksum(
+                repos_list,
+                ["repo-a:111"],
+                {"find_renames": False},
+            )
+
+            self.assertNotEqual(first, second)
+            self.assertNotEqual(first, third)
 
     @unittest.skip("The builder now writes four contracts and a report")
     def test_data_lake_builder_skips_current_output(self) -> None:
@@ -1424,14 +1496,8 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertEqual("shared-repo", first_path.name.rsplit("-", 1)[0])
         self.assertEqual("shared-repo", second_path.name.rsplit("-", 1)[0])
         self.assertEqual(expected_update_path, updated_path)
-        run_mock.assert_any_call(
-            ["git", "pull"],
-            cwd=expected_update_path,
-            capture_output=True,
-            check=True,
-            timeout=30,
-        )
-        self.assertEqual(3, run_mock.call_count)
+        self.assertFalse(any(call.args and call.args[0] == ["git", "pull"] for call in run_mock.call_args_list))
+        self.assertEqual(2, run_mock.call_count)
 
     def test_mirror_clean_repo_removes_git_metadata(self) -> None:
         git_parser = load_script_module("git_parser_mirror", "02_git_parser.py")

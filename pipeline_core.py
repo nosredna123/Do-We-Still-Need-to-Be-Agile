@@ -139,6 +139,8 @@ def cleanup_phase_one_artifacts(project_root: Path) -> None:
         resolved_root / "data" / "lake" / "transcript_sessions.parquet",
         resolved_root / "data" / "lake" / "lake_validation_report.json",
         resolved_root / "data" / "processed" / "git_logs_anon.csv",
+        resolved_root / "data" / "processed" / "git_commits_anon.csv",
+        resolved_root / "data" / "processed" / "git_files_anon.csv",
         resolved_root / "data" / "processed" / "clean_repos",
     ]
 
@@ -348,7 +350,7 @@ def infer_temporal_marker_from_timestamp(value: Any, semester: str | None = None
     """
     from datetime import date
 
-    from pipeline_config import EVALUATOR_TEMPORAL_CUTS, temporal_marker_for
+    from pipeline_config import EVALUATOR_TEMPORAL_CUTS
 
     if value is None or pd.isna(value):
         raise ValueError("Git commit timestamp is missing")
@@ -516,6 +518,114 @@ def extract_git_history(
         logger.warning(f"Failed to extract Git history from {repo_path}: {e}")
 
     return rows
+
+
+def _git_branch_for_commit(repo_path: Path, commit_hash: str) -> tuple[str | None, str]:
+    """Return an observed branch/ref for a commit, without fabricating one."""
+    result = subprocess.run(
+        ["git", "branch", "--contains", commit_hash, "--format=%(refname:short)"],
+        cwd=repo_path, capture_output=True, text=True, check=True,
+    )
+    refs = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    return (refs[0], "git_branch_contains") if refs else (None, "unavailable")
+
+
+def _git_diff_paths(repo_path: Path, commit_hash: str) -> list[dict[str, Any]]:
+    """Read NUL-delimited numstat and name-status records for one commit."""
+    numstat = subprocess.run(
+        ["git", "diff-tree", "--root", "--no-commit-id", "--numstat", "-z", "-r", "--find-renames", commit_hash],
+        cwd=repo_path, capture_output=True, check=True,
+    ).stdout.split(b"\0")
+    status_tokens = subprocess.run(
+        ["git", "diff-tree", "--root", "--no-commit-id", "--name-status", "-z", "-r", "--find-renames", commit_hash],
+        cwd=repo_path, capture_output=True, check=True,
+    ).stdout.split(b"\0")
+    statuses: list[tuple[str, str, str | None]] = []
+    index = 0
+    while index < len(status_tokens):
+        token = status_tokens[index].decode("utf-8", errors="strict")
+        index += 1
+        if not token:
+            continue
+        status = token
+        if index >= len(status_tokens) or not status:
+            raise ValueError(f"Malformed Git name-status record for {commit_hash}")
+        old_path = status_tokens[index].decode("utf-8", errors="strict")
+        index += 1
+        new_path: str | None = None
+        if status.startswith(("R", "C")):
+            if index >= len(status_tokens):
+                raise ValueError(f"Incomplete Git rename record for {commit_hash}")
+            new_path = status_tokens[index].decode("utf-8", errors="strict")
+            index += 1
+        statuses.append((status[0].lower() if status[0] not in "RC" else status[0].lower(), old_path, new_path))
+
+    stats: list[tuple[int | None, int | None, str]] = []
+    index = 0
+    while index < len(numstat):
+        token = numstat[index].decode("utf-8", errors="strict")
+        index += 1
+        if not token:
+            continue
+        parts = token.split("\t", 2)
+        if len(parts) != 3:
+            raise ValueError(f"Malformed Git numstat record for {commit_hash}")
+        added = None if parts[0] == "-" else int(parts[0])
+        deleted = None if parts[1] == "-" else int(parts[1])
+        path = parts[2]
+        if not path and statuses[len(stats)][0] in {"r", "c"}:
+            if index + 1 >= len(numstat):
+                raise ValueError(f"Incomplete Git rename statistics for {commit_hash}")
+            index += 1
+            path = numstat[index].decode("utf-8", errors="strict")
+            index += 1
+        stats.append((added, deleted, path))
+
+    if len(stats) != len(statuses):
+        raise ValueError(f"Git file statistics do not align for {commit_hash}")
+    rows: list[dict[str, Any]] = []
+    for (added, deleted, path), (status, old_path, new_path) in zip(stats, statuses):
+        rows.append({
+            "file_path": path, "file_path_old": old_path if status == "r" else None,
+            "change_status": {"a": "added", "m": "modified", "d": "deleted", "r": "renamed", "c": "copied"}[status],
+            "lines_added": added, "lines_deleted": deleted,
+            "is_binary": added is None or deleted is None,
+        })
+        if new_path is not None:
+            rows[-1]["file_path"] = new_path
+    return rows
+
+
+def extract_git_events(repo_path: Path, semester: str) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Extract commit and file events using unambiguous NUL-delimited Git output."""
+    result = subprocess.run(
+        ["git", "log", "--reverse", "--format=%H%x00%ae%x00%aI%x00"],
+        cwd=repo_path, capture_output=True, text=True, check=True,
+    )
+    fields = [field.strip() for field in result.stdout.split("\0") if field.strip()]
+    if len(fields) % 3:
+        raise ValueError(f"Malformed Git commit output for {repo_path}")
+    commits: list[dict[str, Any]] = []
+    files: list[dict[str, Any]] = []
+    for offset in range(0, len(fields), 3):
+        commit_hash, author_email, timestamp = fields[offset:offset + 3]
+        marker = infer_temporal_marker_from_timestamp(timestamp, semester)
+        branch, branch_source = _git_branch_for_commit(repo_path, commit_hash)
+        file_rows = _git_diff_paths(repo_path, commit_hash)
+        commits.append({
+            "repository": repo_path.name, "author_alias": author_email,
+            "commit_hash": commit_hash, "timestamp": timestamp,
+            "temporal_marker": marker, "files_changed": len(file_rows),
+            "lines_added": sum(row["lines_added"] or 0 for row in file_rows),
+            "lines_deleted": sum(row["lines_deleted"] or 0 for row in file_rows),
+            "branch_or_ref": branch, "branch_or_ref_source": branch_source,
+        })
+        for row in file_rows:
+            files.append({**row, "repository": repo_path.name, "author_alias": author_email,
+                          "commit_hash": commit_hash, "timestamp": timestamp,
+                          "temporal_marker": marker, "branch_or_ref": branch,
+                          "branch_or_ref_source": branch_source})
+    return commits, files
 
 
 def load_records(path: Path) -> list[dict[str, Any]]:
