@@ -24,6 +24,7 @@ from pipeline_core import (
     load_project_environment,
     write_artifact_metadata,
 )
+from pipeline_config import MODEL_CONFIG
 from pipeline_prompts import TRANSCRIPTION_PROMPT
 
 logger = logging.getLogger(__name__)
@@ -52,9 +53,9 @@ def transcribe_audio_file(
 
     with audio_path.open("rb") as f:
         transcript = client.audio.transcriptions.create(
-            model="whisper-1",
+            model=str(MODEL_CONFIG["transcription"]["model"]),
             file=f,
-            language="pt",
+            language=str(MODEL_CONFIG["transcription"]["language"]),
             prompt=TRANSCRIPTION_PROMPT,
         )
 
@@ -98,8 +99,16 @@ def main() -> None:
         action="store_true",
         help="Retranscribe files even when a current successful output exists",
     )
+    parser.add_argument(
+        "--limite",
+        type=int,
+        default=None,
+        help="Maximum number of pending audio files to process",
+    )
 
     args = parser.parse_args()
+    if args.limite is not None and args.limite < 1:
+        parser.error("--limite must be greater than zero")
 
     # Setup logging
     logging.basicConfig(
@@ -117,20 +126,30 @@ def main() -> None:
 
     logger.info(f"Found {len(audio_files)} audio files in {args.audio_dir}")
 
+    pending_audio_files = []
     for audio_file in audio_files:
         relative_audio_path = audio_file.relative_to(args.audio_dir)
         output_file = args.output_dir / relative_audio_path.with_suffix(".json")
         text_output_file = output_file.with_suffix(".txt")
-        output_file.parent.mkdir(parents=True, exist_ok=True)
         input_checksum = file_checksum(audio_file)
         if (
             not args.force
             and is_current_artifact(output_file, input_checksum)
             and is_current_artifact(text_output_file, input_checksum)
         ):
-            logger.info("Skipping current transcript: %s", audio_file.name)
             continue
+        pending_audio_files.append(audio_file)
 
+    if args.limite is not None:
+        pending_audio_files = pending_audio_files[:args.limite]
+    logger.info("Selected %d pending audio files", len(pending_audio_files))
+
+    for audio_file in pending_audio_files:
+        relative_audio_path = audio_file.relative_to(args.audio_dir)
+        output_file = args.output_dir / relative_audio_path.with_suffix(".json")
+        text_output_file = output_file.with_suffix(".txt")
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        input_checksum = file_checksum(audio_file)
         result = transcribe_audio_file(audio_file, api_key=args.api_key)
 
         output_file.write_text(json.dumps(result, indent=2), encoding="utf-8")

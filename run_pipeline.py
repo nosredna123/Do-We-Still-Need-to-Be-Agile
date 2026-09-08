@@ -50,6 +50,7 @@ def build_stage_command(
     transcript_paths: list[Path],
     salt: str,
     force: bool,
+    limite: int | None = None,
 ) -> list[str]:
     """Build the subprocess command for a pipeline stage."""
     command = [sys.executable, str(PROJECT_ROOT / STAGE_SCRIPTS[stage])]
@@ -62,6 +63,8 @@ def build_stage_command(
             command.extend(["--salt", salt])
     if force:
         command.append("--force")
+    if limite is not None and stage in {"prepare", "transcribe", "ner", "anonymize"}:
+        command.extend(["--limite", str(limite)])
     return command
 
 
@@ -106,11 +109,19 @@ def main() -> None:
         help="Force every selected stage to regenerate its outputs",
     )
     parser.add_argument(
+        "--limite",
+        type=int,
+        default=None,
+        help="Maximum number of pending items per item-processing stage",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Log selected commands without executing them",
     )
     args = parser.parse_args()
+    if args.limite is not None and args.limite < 1:
+        parser.error("--limite must be greater than zero")
     if args.stages and (args.from_stage or args.to_stage):
         parser.error("--stages cannot be combined with --from-stage or --to-stage")
 
@@ -129,6 +140,7 @@ def main() -> None:
             args.transcript,
             args.salt,
             args.force,
+            args.limite,
         )
         logger.info("Running stage %s: %s", stage, " ".join(command))
         if args.dry_run:

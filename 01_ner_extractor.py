@@ -19,6 +19,7 @@ from pipeline_core import (
     load_project_environment,
     write_artifact_metadata,
 )
+from pipeline_config import MODEL_CONFIG
 from pipeline_prompts import NER_PROMPT
 
 logger = logging.getLogger(__name__)
@@ -42,13 +43,13 @@ def extract_person_entities(text: str, api_key: str | None = None) -> list[str]:
 
     client = OpenAI(api_key=api_key)
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=str(MODEL_CONFIG["ner"]["model"]),
         messages=[
             {"role": "system", "content": NER_PROMPT},
             {"role": "user", "content": text},
         ],
-        response_format={"type": "json_object"},
-        temperature=0,
+        response_format={"type": str(MODEL_CONFIG["ner"]["response_format"])},
+        temperature=float(MODEL_CONFIG["ner"]["temperature"]),
     )
     content = response.choices[0].message.content
     if not content:
@@ -83,7 +84,15 @@ def main() -> None:
     )
     parser.add_argument("--api-key", default=None, help="OpenAI API key")
     parser.add_argument("--force", action="store_true", help="Regenerate current NER artifacts")
+    parser.add_argument(
+        "--limite",
+        type=int,
+        default=None,
+        help="Maximum number of pending transcripts to process",
+    )
     args = parser.parse_args()
+    if args.limite is not None and args.limite < 1:
+        parser.error("--limite must be greater than zero")
     if not args.transcripts_dir.is_dir():
         raise FileNotFoundError(f"Transcript directory not found: {args.transcripts_dir}")
 
@@ -96,13 +105,23 @@ def main() -> None:
     if not transcript_paths:
         raise FileNotFoundError(f"No transcription JSON files found in {args.transcripts_dir}")
 
+    pending_paths = []
     for source_path in transcript_paths:
         output_path = args.output_dir / source_path.relative_to(args.transcripts_dir)
         output_path = output_path.with_name(f"{output_path.stem}.ner.json")
         checksum = file_checksum(source_path)
         if not args.force and is_current_artifact(output_path, checksum):
-            logger.info("Skipping current NER artifact: %s", source_path.name)
             continue
+        pending_paths.append(source_path)
+
+    if args.limite is not None:
+        pending_paths = pending_paths[:args.limite]
+    logger.info("Selected %d pending transcripts", len(pending_paths))
+
+    for source_path in pending_paths:
+        output_path = args.output_dir / source_path.relative_to(args.transcripts_dir)
+        output_path = output_path.with_name(f"{output_path.stem}.ner.json")
+        checksum = file_checksum(source_path)
         entities = extract_person_entities(transcript_text(source_path), args.api_key)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(
