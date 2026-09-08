@@ -137,6 +137,7 @@ def cleanup_phase_one_artifacts(project_root: Path) -> None:
         resolved_root / "data" / "lake" / "git_team_cuts.parquet",
         resolved_root / "data" / "lake" / "git_commits.parquet",
         resolved_root / "data" / "lake" / "git_files.parquet",
+        resolved_root / "data" / "lake" / "git_repository_snapshots.parquet",
         resolved_root / "data" / "lake" / "transcript_sessions.parquet",
         resolved_root / "data" / "lake" / "lake_validation_report.json",
         resolved_root / "data" / "processed" / "git_logs_anon.csv",

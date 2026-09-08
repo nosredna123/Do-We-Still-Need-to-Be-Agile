@@ -33,6 +33,48 @@ MODEL_CONFIG: dict[str, dict[str, object]] = {
     },
 }
 
+REPOSITORY_SNAPSHOT_CONTRACT_VERSION = "git-repository-snapshots-v1"
+SOURCE_LOC_DEFINITION_VERSION = "source-loc-v1"
+EXCLUDED_PATH_PATTERNS_VERSION = "source-exclusions-v1"
+SOURCE_CODE_EXTENSION_ALLOWLIST = {
+    ".c",
+    ".cc",
+    ".cpp",
+    ".cs",
+    ".css",
+    ".dart",
+    ".go",
+    ".h",
+    ".hpp",
+    ".html",
+    ".java",
+    ".js",
+    ".jsx",
+    ".kt",
+    ".php",
+    ".py",
+    ".rb",
+    ".rs",
+    ".scss",
+    ".sh",
+    ".sql",
+    ".swift",
+    ".ts",
+    ".tsx",
+    ".vue",
+}
+SOURCE_CODE_EXCLUDED_PATH_PATTERNS = {
+    ".git/",
+    ".next/",
+    ".venv/",
+    "build/",
+    "coverage/",
+    "dist/",
+    "node_modules/",
+    "target/",
+    "vendor/",
+}
+
 # Each range identifies one evaluation moment. The two-day ranges in 2025.2 are
 # deliberate: teams were distributed between presentation days because all teams
 # could not be evaluated in one session. Each range is therefore one observation

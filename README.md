@@ -4,12 +4,13 @@ Pipeline inicial para gerar, anonimizar, enriquecer e analisar os dados do artig
 
 ## Scripts implementados
 
-- `run_pipeline.py`: orquestra as etapas da Fase 1 na ordem definida.
+- `run_pipeline.py`: orquestra as etapas da Fase 1 e da Fase 1.5 na ordem definida.
 - `00_audio_preparer.py`: comprime e segmenta áudios para o limite da API.
 - `00_audio_transcriber.py`: transcreve áudios preparados em português para `.txt` e `.json`.
 - `01_ner_extractor.py`: usa OpenAI para identificar candidatos a nomes de pessoas em transcrições brutas.
 - `01_anonymizer.py`: anonimiza CSVs e transcrições, gerando `chave_relacional.json`.
 - `02_git_parser.py`: extrai histórico Git anonimizado e espelha repositórios sem `.git`.
+- `02b_git_repository_snapshots.py`: mede snapshots estruturais dos repositórios por equipe, semestre e corte.
 - `03_data_lake_builder.py`: gera seis Parquets independentes por granularidade e um relatório de validação.
 - `04_nlp_qualitative_miner.py`, `05_metric_engine.py`, `06_statistical_analyzer.py` e `07_dashboard_app.py`: scripts futuros da Fase 2, ainda não implementados.
 
@@ -65,10 +66,10 @@ artefatos são privados e ignorados pelo Git. Todo `data/processed/` e `data/lak
 é privado por padrão; um pacote de replicação deve exportar somente artefatos
 auditados após a verificação de PII. O `ANONYMIZATION_SALT` nunca é enviado à OpenAI.
 
-## Execução da Fase 1
+## Execução da Fase 1 e Fase 1.5
 
 O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `ner`,
-`anonymize`, `git` e `lake`, usando o mesmo interpretador Python que o iniciou. A preparação
+`anonymize`, `git`, `lake` e `repo-snapshots`, usando o mesmo interpretador Python que o iniciou. A preparação
 converte os áudios originais para MP3 mono a 16 kHz e 48 kbps em
 `data/processed/audio_chunks`; arquivos que ainda ultrapassem 25 MiB são
 divididos em segmentos de 10 minutos. A transcrição consome somente esses
@@ -122,8 +123,8 @@ a partir de T1 e anteriores a T2 recebem `T2`, e datas a partir de T2 recebem
 `T3`. Essa regra é separada da regra estrita usada nos formulários de avaliadores.
 
 ```bash
-.venv/bin/python run_pipeline.py --stages git lake --dry-run
-.venv/bin/python run_pipeline.py --from-stage anonymize --to-stage lake --force
+.venv/bin/python run_pipeline.py --stages git lake repo-snapshots --dry-run
+.venv/bin/python run_pipeline.py --from-stage anonymize --to-stage repo-snapshots --force
 ```
 
 O estágio `lake` gera `data/lake/student_responses.parquet`,
@@ -139,6 +140,14 @@ As perguntas de score são convertidas para nomes analíticos estáveis, como
 `scope_applicability_mean` e `technical_complexity_mean`. Cada score também
 possui `_std` (desvio padrão amostral), `_median`, `_iqr` e `_n` (quantidade de
 respostas válidas) para cada equipe, semestre e corte.
+
+O estágio `repo-snapshots` da Fase 1.5 gera
+`data/lake/git_repository_snapshots.parquet` e seu sidecar. O contrato contém
+uma linha por `ID_Equipe + Semestre + temporal_marker + repository` observável,
+com `snapshot_commit_hash`, `snapshot_timestamp`, `repo_total_files`,
+`repo_total_bytes`, `repo_source_files`, `repo_source_loc` e versões das regras
+de medição. Cortes sem commit observado são marcados como indisponíveis, sem
+fallback para HEAD.
 
 ### Métricas estatísticas do Data Lake
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the Phase 1 pipeline stages in a controlled order.
+"""Run the Phase 1 and Phase 1.5 pipeline stages in a controlled order.
 
 Usage:
     python run_pipeline.py --csv data/raw/forms/students.csv
@@ -17,7 +17,10 @@ from pipeline_core import load_project_environment
 
 logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent
-STAGES = ("cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake")
+STAGES = (
+    "cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake",
+    "repo-snapshots",
+)
 STAGE_SCRIPTS = {
     "cleanup": "04_cleanup.py",
     "prepare": "00_audio_preparer.py",
@@ -26,6 +29,7 @@ STAGE_SCRIPTS = {
     "anonymize": "01_anonymizer.py",
     "git": "02_git_parser.py",
     "lake": "03_data_lake_builder.py",
+    "repo-snapshots": "02b_git_repository_snapshots.py",
 }
 
 

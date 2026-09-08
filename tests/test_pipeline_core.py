@@ -241,7 +241,10 @@ class PipelineCoreTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            ["cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake"],
+            [
+                "cleanup", "prepare", "transcribe", "ner", "anonymize",
+                "git", "lake", "repo-snapshots",
+            ],
             orchestrator.resolve_stages(None, None, None),
         )
 
@@ -250,6 +253,27 @@ class PipelineCoreTests(unittest.TestCase):
         )
         self.assertEqual(
             [sys.executable, str(REPO_ROOT / "00_audio_preparer.py")], command
+        )
+
+    def test_pipeline_orchestrator_includes_repository_snapshots_after_lake(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_repository_snapshots", "run_pipeline.py"
+        )
+
+        self.assertEqual(
+            ["lake", "repo-snapshots"],
+            orchestrator.resolve_stages(None, "lake", "repo-snapshots"),
+        )
+        command = orchestrator.build_stage_command(
+            "repo-snapshots", [], [], "", True
+        )
+        self.assertEqual(
+            [
+                sys.executable,
+                str(REPO_ROOT / "02b_git_repository_snapshots.py"),
+                "--force",
+            ],
+            command,
         )
 
     def test_openai_client_can_be_constructed(self) -> None:
@@ -928,7 +952,7 @@ class PipelineCoreTests(unittest.TestCase):
         (project_root / "data/processed/ner_candidates").mkdir(parents=True)
         (project_root / "data/processed/chave_relacional.json").write_text("{}", encoding="utf-8")
         (project_root / "data/lake/master_dataset.parquet").write_bytes(b"parquet")
-        for name in ("git_commits", "git_files"):
+        for name in ("git_commits", "git_files", "git_repository_snapshots"):
             (project_root / f"data/lake/{name}.parquet").write_bytes(b"parquet")
             (project_root / f"data/lake/{name}.parquet.metadata.json").write_text("{}", encoding="utf-8")
         (project_root / "data/processed/forms/a.csv").write_text("a,b\n1,2\n", encoding="utf-8")
@@ -944,6 +968,8 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertFalse((project_root / "data/lake/git_files.parquet").exists())
         self.assertFalse((project_root / "data/lake/git_commits.parquet.metadata.json").exists())
         self.assertFalse((project_root / "data/lake/git_files.parquet.metadata.json").exists())
+        self.assertFalse((project_root / "data/lake/git_repository_snapshots.parquet").exists())
+        self.assertFalse((project_root / "data/lake/git_repository_snapshots.parquet.metadata.json").exists())
         self.assertTrue((project_root / "data/raw").exists())
         self.assertTrue((project_root / "data/processed/audio_chunks").exists())
         self.assertTrue((project_root / "data/processed/transcripts").exists())
