@@ -602,6 +602,31 @@ class PipelineCoreTests(unittest.TestCase):
             self.assertEqual(1, rows[0]["files_changed"])
             self.assertNotIn("author_email", rows[0])
 
+    def test_git_parser_assigns_temporal_marker_from_commit_timestamp(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            repo_path = tmp_path / "sample-repo"
+            repo_path.mkdir()
+            subprocess.run(["git", "init"], cwd=repo_path, check=True, stdout=subprocess.DEVNULL)
+            env = os.environ | {
+                "GIT_AUTHOR_NAME": "Alice",
+                "GIT_AUTHOR_EMAIL": "alice@example.com",
+                "GIT_COMMITTER_NAME": "Alice",
+                "GIT_COMMITTER_EMAIL": "alice@example.com",
+            }
+            (repo_path / "README.md").write_text("hello\n", encoding="utf-8")
+            subprocess.run(["git", "add", "README.md"], cwd=repo_path, check=True, env=env)
+            subprocess.run(
+                ["git", "-c", "user.name=Alice", "-c", "user.email=alice@example.com", "commit", "-m", "initial commit", "--date=2026-06-18 15:00:00 -0300"],
+                cwd=repo_path,
+                check=True,
+                env=env,
+                stdout=subprocess.DEVNULL,
+            )
+
+            rows = extract_git_history(repo_path, {}, salt="pepper", semester="2026.1")
+            self.assertEqual(["T3"], [row["temporal_marker"] for row in rows])
+
     def test_mapping_extracts_text_transcript_speakers_and_emails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             tmp_path = Path(tmp_dir)
@@ -787,6 +812,39 @@ class PipelineCoreTests(unittest.TestCase):
     def test_hypothesis_rows_handles_missing_work_style_column(self) -> None:
         self.assertEqual([], hypothesis_rows([{"planning_index": 1.0, "code_churn": 2.0}]))
 
+    def test_load_form_files_normalizes_student_and_evaluator_records_by_phase_one_rules(self) -> None:
+        data_lake_builder = load_script_module("data_lake_builder_normalize_forms", "03_data_lake_builder.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            forms_dir = Path(tmp_dir)
+            semester_dir = forms_dir / "2025.2"
+            semester_dir.mkdir()
+            (semester_dir / "alunos_t1.csv").write_text(
+                "nome,comentario\nAlice,Boa experiência\n",
+                encoding="utf-8",
+            )
+            (semester_dir / "avaliadores.csv").write_text(
+                "Timestamp,To which group do these scores refer?,score\n10/17/2025 9:02:30,Group 4 (Buliçoso),4\n",
+                encoding="utf-8",
+            )
+
+            forms_df = data_lake_builder.load_form_files(forms_dir)
+
+            self.assertEqual(["2025.2", "2025.2"], forms_df["Semestre"].tolist())
+            self.assertIn("T1", forms_df["temporal_marker"].tolist())
+            self.assertEqual("TEAM_04", forms_df.loc[forms_df["ID_Equipe"].notna(), "ID_Equipe"].iloc[0])
+
+    def test_aggregate_by_team_allows_student_rows_without_team_id(self) -> None:
+        data_lake_builder = load_script_module("data_lake_builder", "03_data_lake_builder.py")
+        forms_df = data_lake_builder.pd.DataFrame(
+            [{"Semestre": "2025.2", "temporal_marker": "T1", "feedback": "student response"}]
+        )
+
+        merged = data_lake_builder.aggregate_by_team(forms_df, data_lake_builder.pd.DataFrame())
+
+        self.assertEqual("2025.2", merged.iloc[0]["Semestre"])
+        self.assertEqual("T1", merged.iloc[0]["temporal_marker"])
+        self.assertEqual("student response", merged.iloc[0]["feedback"])
+
     def test_aggregate_by_team_keeps_semesters_separate(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder", "03_data_lake_builder.py")
         forms_df = data_lake_builder.pd.DataFrame(
@@ -901,28 +959,28 @@ class PipelineCoreTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "outside the project root"):
             pipeline_core.cleanup_phase_one_artifacts(project_root / "data/raw" / ".." / "other")
 
-    def test_load_transcripts_requires_team_and_semester_metadata(self) -> None:
+    def test_load_transcripts_preserves_unpaired_session_metadata(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder_transcripts", "03_data_lake_builder.py")
         with tempfile.TemporaryDirectory() as tmp_dir:
             transcripts_dir = Path(tmp_dir)
-            (transcripts_dir / "team_a_t1.json").write_text(
+            semester_dir = transcripts_dir / "2025.2" / "session_1"
+            semester_dir.mkdir(parents=True)
+            (semester_dir / "feedback_2025-10-18.json").write_text(
                 json.dumps(
                     {
-                        "ID_Equipe": "A",
-                        "Semestre": "2024.1",
                         "status": "success",
                         "text": "hello world",
                     }
                 ),
                 encoding="utf-8",
             )
-            (transcripts_dir / "missing_meta_t1.json").write_text(
-                json.dumps({"status": "success", "text": "ignored"}),
-                encoding="utf-8",
-            )
+            transcripts = data_lake_builder.load_transcripts(transcripts_dir)
 
-            with self.assertRaisesRegex(ValueError, "lacks ID_Equipe or Semestre"):
-                data_lake_builder.load_transcripts(transcripts_dir)
+            self.assertEqual(1, len(transcripts))
+            self.assertTrue(data_lake_builder.pd.isna(transcripts.loc[0, "ID_Equipe"]))
+            self.assertEqual("2025.2", transcripts.loc[0, "Semestre"])
+            self.assertEqual("T1", transcripts.loc[0, "temporal_marker"])
+            self.assertEqual("2025.2/session_1", transcripts.loc[0, "session_id"])
 
     def test_merge_transcripts_attaches_rows_to_team_keys(self) -> None:
         data_lake_builder = load_script_module("data_lake_builder_merge_transcripts", "03_data_lake_builder.py")

@@ -210,7 +210,7 @@ def main() -> None:
         logger.info(f"Mirrored clean repository to {mirror_path}")
 
         # Extract git history with team context
-        commit_rows = extract_git_history(repo_path, {}, salt="")
+        commit_rows = extract_git_history(repo_path, {}, salt="", semester=semestre)
 
         # Map authors within this team
         author_mapping = map_authors_by_volume(commit_rows)
@@ -221,7 +221,7 @@ def main() -> None:
             if not author_alias:
                 raise ValueError(f"Commit metadata for team {team_id} is missing author_alias")
             commit_row["ID_Equipe"] = team_id
-            commit_row["Semestre"] = semestre
+            commit_row["Semestre"] = str(semestre)
             if author_alias not in author_mapping:
                 raise ValueError(
                     f"Team {team_id} author alias {author_alias} was not assigned a local author label"

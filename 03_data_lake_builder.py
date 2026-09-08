@@ -17,11 +17,13 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Optional
 
 import pandas as pd
 
+from pipeline_config import EVALUATOR_TEMPORAL_CUTS, temporal_marker_for
 from pipeline_core import (
     input_checksum,
     is_current_artifact,
@@ -66,30 +68,86 @@ def require_columns(df: pd.DataFrame, required: list[str], label: str) -> None:
             raise ValueError(f"{label} contains blank values in required column {column}")
 
 
+def parse_evaluator_team_id(raw_value: object) -> str:
+    """Convert evaluator group labels like 'Group 4 (Team Name)' to TEAM_04."""
+    text = str(raw_value or "").strip()
+    match = re.search(r"Group\s+(\d+)", text, flags=re.IGNORECASE)
+    if not match:
+        raise ValueError(f"Evaluator group label is not in the expected format: {raw_value!r}")
+    return f"TEAM_{int(match.group(1)):02d}"
+
+
+def student_temporal_marker_for_filename(csv_file: Path) -> str:
+    """Derive the temporal marker from a student CSV filename such as alunos_t1.csv."""
+    lower_name = csv_file.stem.lower()
+    match = re.search(r"t([123])", lower_name)
+    if not match:
+        raise ValueError(f"Student form file {csv_file} must include a temporal marker like alunos_t1.csv")
+    return f"T{match.group(1)}"
+
+
+def transcript_temporal_marker_for_filename(transcript_file: Path, semester: str) -> str:
+    """Derive a transcript cut from an observable date in its filename."""
+    full_date = re.search(r"(20\d{2}-\d{2}-\d{2})", transcript_file.stem)
+    if full_date:
+        evaluation_date = full_date.group(1)
+    else:
+        short_date = re.search(r"(?:MyRec_)?(\d{2})(\d{2})", transcript_file.stem)
+        if not short_date:
+            raise ValueError(
+                f"Transcript {transcript_file} has no observable ISO or MMDD date"
+            )
+        year = semester.split(".")[0]
+        evaluation_date = f"{year}-{short_date.group(1)}-{short_date.group(2)}"
+
+    for marker, (start_date, end_date) in EVALUATOR_TEMPORAL_CUTS[semester].items():
+        if start_date <= evaluation_date <= end_date:
+            return marker
+    raise ValueError(
+        f"Transcript date {evaluation_date} is not in a configured cut for {semester}"
+    )
+
+
 def load_form_files(forms_dir: Path) -> pd.DataFrame:
-    """Load and concatenate all anonymized form CSVs.
-
-    Args:
-        forms_dir: Directory containing form CSV files
-
-    Returns:
-        Combined DataFrame from all forms
-    """
+    """Load and normalize student/evaluator form CSVs under the Phase 1 schema."""
     dfs = []
 
-    for csv_file in forms_dir.rglob("*.csv"):
+    for csv_file in sorted(forms_dir.rglob("*.csv")):
         logger.info(f"Loading form: {csv_file}")
         df = pd.read_csv(csv_file)
-        temporal = normalize_temporal_marker(csv_file.stem)
-        if temporal:
-            df["temporal_marker"] = temporal
-        dfs.append(df)
+        semester = csv_file.parent.name
+        if "alunos" in csv_file.stem.lower():
+            df = df.copy()
+            df["Semestre"] = str(semester)
+            df["temporal_marker"] = student_temporal_marker_for_filename(csv_file)
+            df["source_type"] = "student_response"
+            require_columns(df, ["Semestre", "temporal_marker"], f"student form {csv_file}")
+            dfs.append(df)
+            continue
+
+        if {"Timestamp", "To which group do these scores refer?"}.issubset(df.columns):
+            df = df.copy()
+            df["Semestre"] = str(semester)
+            df["ID_Equipe"] = df["To which group do these scores refer?"].map(parse_evaluator_team_id)
+            df["temporal_marker"] = df["Timestamp"].map(
+                lambda value: temporal_marker_for(
+                    semester,
+                    pd.to_datetime(value, dayfirst=False).strftime("%Y-%m-%d"),
+                )
+            )
+            df["source_type"] = "evaluator_team_cut"
+            require_columns(df, ["ID_Equipe", "Semestre", "temporal_marker"], f"evaluator form {csv_file}")
+            dfs.append(df)
+            continue
+
+        raise ValueError(
+            f"Form file {csv_file} does not match the Phase 1 schema for students or evaluators"
+        )
 
     if not dfs:
         return pd.DataFrame()
 
     forms_df = pd.concat(dfs, ignore_index=True)
-    require_columns(forms_df, ["ID_Equipe", "Semestre", "temporal_marker"], "forms data")
     return forms_df
 
 
@@ -108,6 +166,9 @@ def load_git_logs(git_csv_path: Path) -> pd.DataFrame:
     logger.info(f"Loading Git logs from {git_csv_path}")
     df = pd.read_csv(git_csv_path)
     require_columns(df, ["ID_Equipe", "Semestre", "temporal_marker"], "git logs")
+    df["Semestre"] = df["Semestre"].astype("string").str.strip()
+    if df["Semestre"].isna().any() or df["Semestre"].eq("").any():
+        raise ValueError("git logs contains blank values in required column Semestre")
     return df
 
 
@@ -126,21 +187,30 @@ def load_transcripts(transcripts_dir: Path) -> pd.DataFrame:
         if json_file.name.endswith(".metadata.json"):
             continue
         data = json.loads(json_file.read_text(encoding="utf-8"))
-        team_id = data.get("ID_Equipe")
-        semester = data.get("Semestre")
-        if not team_id or not semester:
-            raise ValueError(f"Transcript {json_file} lacks ID_Equipe or Semestre")
-        row = {"ID_Equipe": team_id, "Semestre": semester, "transcript_file": json_file.name, "transcript_text": data.get("text", ""), "status": data.get("status", "unknown")}
-        temporal = normalize_temporal_marker(json_file.stem)
-        if temporal:
-            row["temporal_marker"] = temporal
-        else:
-            raise ValueError(f"Transcript {json_file} is missing a valid temporal_marker")
+        semester = data.get("Semestre") or json_file.parent.parent.name
+        if not semester or semester not in EVALUATOR_TEMPORAL_CUTS:
+            raise ValueError(f"Transcript {json_file} lacks a valid Semestre")
+        text = data.get("text")
+        if not isinstance(text, str) or not text.strip():
+            raise ValueError(f"Transcript {json_file} lacks non-empty text")
+        row = {
+            "ID_Equipe": data.get("ID_Equipe"),
+            "Semestre": semester,
+            "source_type": "transcript_session",
+            "session_id": str(json_file.parent.relative_to(transcripts_dir)),
+            "transcript_file": str(json_file.relative_to(transcripts_dir)),
+            "transcript_text": text,
+            "status": data.get("status"),
+            "temporal_marker": normalize_temporal_marker(json_file.stem)
+            or transcript_temporal_marker_for_filename(json_file, semester),
+        }
+        if not row["status"]:
+            raise ValueError(f"Transcript {json_file} lacks status")
         rows.append(row)
 
     if rows:
         df = pd.DataFrame(rows)
-        require_columns(df, ["ID_Equipe", "Semestre", "temporal_marker"], "transcripts")
+        require_columns(df, ["Semestre", "temporal_marker", "session_id"], "transcripts")
         return df
     return pd.DataFrame()
 
@@ -153,11 +223,11 @@ def source_paths(
     """Collect existing files that contribute to the master dataset."""
     paths = [git_logs_path] if git_logs_path.exists() else []
     if forms_dir.exists():
-        paths.extend(forms_dir.glob("*.csv"))
+        paths.extend(forms_dir.rglob("*.csv"))
     if transcripts_dir.exists():
         paths.extend(
             path
-            for path in transcripts_dir.glob("*.json")
+            for path in transcripts_dir.rglob("*.json")
             if not path.name.endswith(".metadata.json")
         )
     return paths
@@ -247,9 +317,16 @@ def aggregate_by_team(
     for df, label in [(forms_df, "forms"), (git_df, "git")]:
         if df.empty:
             continue
-        required = ["ID_Equipe", "temporal_marker"]
+
         if label == "git":
-            required.append("Semestre")
+            required = ["ID_Equipe", "Semestre", "temporal_marker"]
+        else:
+            required = ["temporal_marker"]
+            if "Semestre" in df.columns:
+                required.append("Semestre")
+            if "ID_Equipe" in df.columns:
+                required.append("ID_Equipe")
+
         missing = [column for column in required if column not in df.columns]
         if missing:
             raise ValueError(f"{label.title()} data is missing required columns: {', '.join(missing)}")
@@ -261,7 +338,6 @@ def aggregate_by_team(
             if values.astype(str).str.strip().eq("").any():
                 raise ValueError(f"{label.title()} data contains blank values in required column {column}")
 
-    # Aggregate Git data by team
     if not git_df.empty:
         group_keys = ["ID_Equipe", "temporal_marker"]
         if "Semestre" in git_df.columns:
@@ -289,39 +365,54 @@ def aggregate_by_team(
     else:
         git_agg = pd.DataFrame()
 
-    # Merge forms with Git data
-    if not forms_df.empty and not git_agg.empty:
-        if "Semestre" not in forms_df.columns and "Semestre" in git_agg.columns:
-            merged = forms_df.copy()
-            for column in git_agg.columns:
-                if column not in merged.columns:
-                    merged[column] = pd.NA
-            for column in [
-                "lines_added",
-                "lines_deleted",
-                "files_changed",
-                "num_authors",
-                "num_commits",
-            ]:
-                if column in merged.columns:
-                    merged[column] = pd.NA
-            return merged
+    if forms_df.empty:
+        git_agg["source_type"] = "git_team_cut"
+        return git_agg
 
+    if "Semestre" not in forms_df.columns and "Semestre" in git_agg.columns:
+        merged = forms_df.copy()
+        for column in git_agg.columns:
+            if column not in merged.columns:
+                merged[column] = pd.NA
+        for column in [
+            "lines_added",
+            "lines_deleted",
+            "files_changed",
+            "num_authors",
+            "num_commits",
+        ]:
+            if column in merged.columns:
+                merged[column] = pd.NA
+        return merged
+
+    if "ID_Equipe" in forms_df.columns:
+        student_rows = forms_df[forms_df["ID_Equipe"].isna()].copy()
+        evaluator_rows = forms_df[forms_df["ID_Equipe"].notna()].copy()
+    else:
+        student_rows = forms_df.copy()
+        evaluator_rows = pd.DataFrame()
+
+    if not evaluator_rows.empty and not git_agg.empty:
         merge_keys = ["ID_Equipe", "temporal_marker"]
-        if "Semestre" in forms_df.columns and "Semestre" in git_agg.columns:
+        if "Semestre" in evaluator_rows.columns and "Semestre" in git_agg.columns:
             merge_keys.append("Semestre")
-        merged = pd.merge(
-            forms_df,
+        merged_evaluator = pd.merge(
+            evaluator_rows,
             git_agg,
             on=merge_keys,
             how="left",
         )
-    elif not forms_df.empty:
-        merged = forms_df.copy()
+    elif not evaluator_rows.empty:
+        merged_evaluator = evaluator_rows.copy()
     else:
-        merged = git_agg
+        merged_evaluator = pd.DataFrame()
 
-    return merged
+    if not student_rows.empty:
+        if merged_evaluator.empty:
+            return student_rows
+        return pd.concat([student_rows, merged_evaluator], ignore_index=True)
+
+    return merged_evaluator
 
 
 def main() -> None:
@@ -394,7 +485,12 @@ def main() -> None:
     master_df = aggregate_by_team(forms_df, git_df)
 
     if not transcripts_df.empty:
-        master_df = merge_transcripts(master_df, transcripts_df)
+        keyed_transcripts = transcripts_df[transcripts_df["ID_Equipe"].notna()].copy()
+        session_transcripts = transcripts_df[transcripts_df["ID_Equipe"].isna()].copy()
+        if not keyed_transcripts.empty:
+            master_df = merge_transcripts(master_df, keyed_transcripts)
+        if not session_transcripts.empty:
+            master_df = pd.concat([master_df, session_transcripts], ignore_index=True, sort=False)
 
     # Normalize temporal markers
     if "temporal_marker" in master_df.columns:
