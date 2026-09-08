@@ -116,6 +116,11 @@ definidas em ISO-8601 e, em `2025.2`, os pares 17/10-24/10, 14/11-21/11 e
 distribuído em dois dias por capacidade de apresentação. Em `2026.1`, 24/04,
 22/05 e 19/06 correspondem a T1, T2 e T3.
 
+Para commits Git, a classificação temporal usa fases contínuas e não as janelas
+estreitas de apresentação: datas anteriores ao início de T1 recebem `T1`, datas
+a partir de T1 e anteriores a T2 recebem `T2`, e datas a partir de T2 recebem
+`T3`. Essa regra é separada da regra estrita usada nos formulários de avaliadores.
+
 ```bash
 .venv/bin/python run_pipeline.py --stages git lake --dry-run
 .venv/bin/python run_pipeline.py --from-stage anonymize --to-stage lake --force

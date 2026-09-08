@@ -71,7 +71,7 @@ class PipelineCoreTests(unittest.TestCase):
 
             self.assertEqual(2, len(commits))
             self.assertEqual(2, len(files))
-            self.assertEqual("T1", commits[0]["temporal_marker"])
+            self.assertEqual("T2", commits[0]["temporal_marker"])
             self.assertEqual("planejamento inicial ç.txt", files[0]["file_path"])
             self.assertEqual("renamed", files[1]["change_status"])
             self.assertEqual("planejamento inicial ç.txt", files[1]["file_path_old"])
@@ -650,7 +650,7 @@ class PipelineCoreTests(unittest.TestCase):
             (repo_path / "README.md").write_text("hello\n", encoding="utf-8")
             subprocess.run(["git", "add", "README.md"], cwd=repo_path, check=True, env=env)
             subprocess.run(
-                ["git", "-c", "user.name=Alice", "-c", "user.email=alice@example.com", "commit", "-m", "initial commit", "--date=2026-06-18 15:00:00 -0300"],
+                ["git", "-c", "user.name=Alice", "-c", "user.email=alice@example.com", "commit", "-m", "initial commit", "--date=2026-06-19 15:00:00 -0300"],
                 cwd=repo_path,
                 check=True,
                 env=env,
@@ -659,6 +659,25 @@ class PipelineCoreTests(unittest.TestCase):
 
             rows = extract_git_history(repo_path, {}, salt="pepper", semester="2026.1")
             self.assertEqual(["T3"], [row["temporal_marker"] for row in rows])
+
+    def test_git_temporal_marker_uses_phase_buckets(self) -> None:
+        cases = {
+            "2026-02-28": "T1",
+            "2026-04-23": "T1",
+            "2026-04-24": "T2",
+            "2026-05-21": "T2",
+            "2026-05-22": "T3",
+            "2026-06-20": "T3",
+        }
+
+        for timestamp, expected in cases.items():
+            with self.subTest(timestamp=timestamp):
+                self.assertEqual(
+                    expected,
+                    pipeline_core.infer_temporal_marker_from_timestamp(
+                        timestamp, "2026.1"
+                    ),
+                )
 
     def test_mapping_extracts_text_transcript_speakers_and_emails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -979,6 +998,9 @@ class PipelineCoreTests(unittest.TestCase):
         (project_root / "data/processed/ner_candidates").mkdir(parents=True)
         (project_root / "data/processed/chave_relacional.json").write_text("{}", encoding="utf-8")
         (project_root / "data/lake/master_dataset.parquet").write_bytes(b"parquet")
+        for name in ("git_commits", "git_files"):
+            (project_root / f"data/lake/{name}.parquet").write_bytes(b"parquet")
+            (project_root / f"data/lake/{name}.parquet.metadata.json").write_text("{}", encoding="utf-8")
         (project_root / "data/processed/forms/a.csv").write_text("a,b\n1,2\n", encoding="utf-8")
         (project_root / "data/processed/transcripts_anon/session.json").write_text("{}", encoding="utf-8")
 
@@ -988,6 +1010,10 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertFalse((project_root / "data/processed/transcripts_anon").exists())
         self.assertFalse((project_root / "data/processed/chave_relacional.json").exists())
         self.assertFalse((project_root / "data/lake/master_dataset.parquet").exists())
+        self.assertFalse((project_root / "data/lake/git_commits.parquet").exists())
+        self.assertFalse((project_root / "data/lake/git_files.parquet").exists())
+        self.assertFalse((project_root / "data/lake/git_commits.parquet.metadata.json").exists())
+        self.assertFalse((project_root / "data/lake/git_files.parquet.metadata.json").exists())
         self.assertTrue((project_root / "data/raw").exists())
         self.assertTrue((project_root / "data/processed/audio_chunks").exists())
         self.assertTrue((project_root / "data/processed/transcripts").exists())
@@ -1418,6 +1444,12 @@ class PipelineCoreTests(unittest.TestCase):
 
             self.assertNotEqual(first, second)
             self.assertNotEqual(first, third)
+
+    def test_git_timestamp_with_unknown_semester_fails(self) -> None:
+        with self.assertRaisesRegex(ValueError, "has no configured evaluator cuts"):
+            pipeline_core.infer_temporal_marker_from_timestamp(
+                "2025-01-01T00:00:00+00:00", "2024.1"
+            )
 
     @unittest.skip("The builder now writes four contracts and a report")
     def test_data_lake_builder_skips_current_output(self) -> None:

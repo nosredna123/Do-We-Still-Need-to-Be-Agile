@@ -24,6 +24,7 @@ from typing import Any
 import re
 
 import pandas as pd
+from pipeline_config import EVALUATOR_TEMPORAL_CUTS
 
 from pipeline_core import (
     input_checksum,
@@ -127,6 +128,7 @@ def build_git_input_checksum(
     """Build a checksum covering sources, snapshots, options and contract version."""
     options = {
         "contract_version": GIT_CONTRACT_VERSION,
+        "temporal_config": json.dumps(EVALUATOR_TEMPORAL_CUTS, sort_keys=True),
         "snapshots": json.dumps(sorted(snapshots), sort_keys=True),
         "extraction_options": json.dumps(
             extraction_options or GIT_EXTRACTION_OPTIONS,
@@ -311,6 +313,7 @@ def main() -> None:
                     f"Team {team_id} author alias {author_alias} was not assigned a local author label"
                 )
             commit_row["ID_Autor_Local"] = author_mapping[author_alias]
+            commit_row["source_type"] = "git_commit"
             commit_row.pop("author_alias", None)
             all_commit_rows.append(commit_row)
 
@@ -321,6 +324,7 @@ def main() -> None:
             file_row["ID_Equipe"] = team_id
             file_row["Semestre"] = str(semestre)
             file_row["ID_Autor_Local"] = author_mapping[author_alias]
+            file_row["source_type"] = "git_file"
             file_row["file_path"] = anonymize_path_pii(file_row["file_path"])
             file_row["file_path_old"] = anonymize_path_pii(file_row.get("file_path_old"))
             file_row["file_extension"] = Path(file_row["file_path"]).suffix.lower()
@@ -332,7 +336,7 @@ def main() -> None:
         output_df = pd.DataFrame(all_commit_rows)
         files_df = pd.DataFrame(all_file_rows, columns=[
             "repository", "commit_hash", "timestamp", "temporal_marker",
-            "ID_Equipe", "Semestre", "ID_Autor_Local", "file_path",
+            "ID_Equipe", "Semestre", "ID_Autor_Local", "source_type", "file_path",
             "file_path_old", "file_extension", "change_status", "lines_added",
             "lines_deleted", "is_binary", "branch_or_ref", "branch_or_ref_source",
         ])

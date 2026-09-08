@@ -27,8 +27,8 @@ EVALUATOR_SCORE_NAMES = {
     'What is the score for "Scope/Applicability"?': "scope_applicability",
     'What is the score for "Technical Complexity"?': "technical_complexity",
 }
-COMMIT_REQUIRED = COMMIT_KEY_COLUMNS + ["timestamp", "ID_Autor_Local", "lines_added", "lines_deleted", "files_changed", "branch_or_ref_source"]
-FILE_REQUIRED = FILE_KEY_COLUMNS + ["timestamp", "ID_Autor_Local", "change_status", "lines_added", "lines_deleted", "is_binary", "branch_or_ref_source"]
+COMMIT_REQUIRED = COMMIT_KEY_COLUMNS + ["source_type", "timestamp", "ID_Autor_Local", "lines_added", "lines_deleted", "files_changed", "branch_or_ref_source"]
+FILE_REQUIRED = FILE_KEY_COLUMNS + ["source_type", "timestamp", "ID_Autor_Local", "change_status", "lines_added", "lines_deleted", "is_binary", "branch_or_ref_source"]
 
 
 def normalize_temporal_marker(value: object) -> str:
@@ -135,7 +135,10 @@ def load_git_commits(git_csv_path: Path) -> pd.DataFrame:
     """Load and validate one row per observed Git commit."""
     if not git_csv_path.is_file():
         raise FileNotFoundError(f"Git commits file not found: {git_csv_path}")
-    return _validate_git_values(pd.read_csv(git_csv_path), COMMIT_REQUIRED, "git commits", COMMIT_KEY_COLUMNS)
+    frame = _validate_git_values(pd.read_csv(git_csv_path), COMMIT_REQUIRED, "git commits", COMMIT_KEY_COLUMNS)
+    if set(frame["source_type"]) != {"git_commit"}:
+        raise ValueError("git commits source_type must be git_commit")
+    return frame
 
 
 def load_git_files(git_csv_path: Path) -> pd.DataFrame:
@@ -143,6 +146,8 @@ def load_git_files(git_csv_path: Path) -> pd.DataFrame:
     if not git_csv_path.is_file():
         raise FileNotFoundError(f"Git files file not found: {git_csv_path}")
     frame = _validate_git_values(pd.read_csv(git_csv_path), FILE_REQUIRED, "git files", FILE_KEY_COLUMNS, nullable_line_counts=True)
+    if set(frame["source_type"]) != {"git_file"}:
+        raise ValueError("git files source_type must be git_file")
     if "file_extension" not in frame.columns:
         raise ValueError("git files is missing required column file_extension")
     frame["file_extension"] = frame["file_extension"].fillna("").astype("string").str.lower()
@@ -255,9 +260,35 @@ def validation_report(outputs: dict[str, pd.DataFrame], artifacts: dict[str, Pat
             if any(token in column.lower() for token in ("email", "nome", "name")) and values[~values.str.startswith("anon_")].size:
                 pii_status = "failed"
         key = FILE_KEY_COLUMNS if name == "git_files" else COMMIT_KEY_COLUMNS if name == "git_commits" else KEY_COLUMNS
-        datasets[name] = {"rows": len(frame), "schema": {column: str(dtype) for column, dtype in frame.dtypes.items()}, "duplicate_key_count": int(frame.duplicated(key).sum()) if set(key).issubset(frame.columns) else 0, "artifact": str(artifacts[name])}
+        datasets[name] = {
+            "rows": len(frame),
+            "schema": {column: str(dtype) for column, dtype in frame.dtypes.items()},
+            "source_types": sorted(frame["source_type"].dropna().unique().tolist()) if "source_type" in frame else [],
+            "semesters": sorted(frame["Semestre"].dropna().astype(str).unique().tolist()) if "Semestre" in frame else [],
+            "temporal_markers": sorted(frame["temporal_marker"].dropna().astype(str).unique().tolist()) if "temporal_marker" in frame else [],
+            "null_counts": {column: int(value) for column, value in frame.isna().sum().items()},
+            "duplicate_key_count": int(frame.duplicated(key).sum()) if set(key).issubset(frame.columns) else 0,
+            "artifact": artifacts[name].name,
+        }
     evaluator = outputs["evaluator_team_cuts"]
-    return {"status": "success", "datasets": datasets, "evaluator_score_names": list(EVALUATOR_SCORE_NAMES.values()), "git_match_status": evaluator["git_match_status"].value_counts().to_dict(), "evaluator_keys_without_git": evaluator.loc[evaluator["git_match_status"] == "no_observed_activity", KEY_COLUMNS].astype(str).to_dict("records"), "pii_status": pii_status, "sidecars_status": "success", "event_level": {"commits": len(outputs["git_commits"]), "files": len(outputs["git_files"])}}
+    return {
+            "status": "success",
+            "datasets": datasets,
+            "evaluator_score_names": list(EVALUATOR_SCORE_NAMES.values()),
+            "git_match_status": evaluator["git_match_status"].value_counts().to_dict(),
+            "evaluator_keys_without_git": evaluator.loc[evaluator["git_match_status"] == "no_observed_activity", KEY_COLUMNS].astype(str).to_dict("records"),
+            "pii_status": pii_status,
+            "sidecars_status": "success",
+            "branch_or_ref_coverage": {
+                name: {
+                    "observed": int(frame["branch_or_ref"].notna().sum()),
+                    "unavailable": int(frame["branch_or_ref"].isna().sum()),
+                }
+                for name, frame in outputs.items()
+                if "branch_or_ref" in frame
+            },
+            "event_level": {"commits": len(outputs["git_commits"]), "files": len(outputs["git_files"])},
+        }
 
 
 def build_lake(forms_dir: Path, git_logs_path: Path, transcripts_dir: Path, output_dir: Path, git_files_path: Path | None = None) -> dict[str, Path]:
@@ -268,7 +299,15 @@ def build_lake(forms_dir: Path, git_logs_path: Path, transcripts_dir: Path, outp
     files = load_git_files(git_files_path) if git_files_path else pd.DataFrame(columns=FILE_REQUIRED)
     transcripts = load_transcripts(transcripts_dir)
     outputs = {"student_responses": forms[forms["source_type"] == "student_response"].drop(columns=["ID_Equipe"], errors="ignore"), "evaluator_team_cuts": aggregate_evaluator_cuts(forms, git), "git_team_cuts": aggregate_git_cuts(git), "git_commits": git, "git_files": files, "transcript_sessions": transcripts}
-    checksum = input_checksum(source_paths(forms_dir, [git_logs_path, *([git_files_path] if git_files_path else [])], transcripts_dir), {"contracts": ",".join(DATASET_NAMES), "event_level": str(event_level)})
+    checksum = input_checksum(
+        source_paths(forms_dir, [git_logs_path, *([git_files_path] if git_files_path else [])], transcripts_dir),
+        {
+            "contracts": ",".join(DATASET_NAMES),
+            "contract_version": "lake-six-contracts-v1",
+            "event_level": str(event_level),
+            "temporal_config": json.dumps(EVALUATOR_TEMPORAL_CUTS, sort_keys=True),
+        },
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     artifacts = {name: output_dir / f"{name}.parquet" for name in outputs}
     temporary = {name: output_dir / f".{name}.parquet.tmp" for name in outputs}

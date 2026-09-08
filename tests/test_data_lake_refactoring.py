@@ -75,6 +75,7 @@ def test_build_lake_writes_separate_contracts_and_validation_report(tmp_path: Pa
         )
         assert metadata["status"] == "success"
 
+
     assert not (output_dir / "master_dataset.parquet").exists()
     evaluator = pd.read_parquet(output_dir / "evaluator_team_cuts.parquet")
     assert evaluator.loc[0, "git_match_status"] == "matched"
@@ -149,6 +150,7 @@ def test_build_lake_writes_event_level_git_contracts_and_derives_summary(
     git_commits = tmp_path / "git_commits.csv"
     pd.DataFrame(
         [{
+            "source_type": "git_commit",
             "ID_Equipe": "TEAM_04", "Semestre": "2025.2", "repository": "repo",
             "commit_hash": "abc", "timestamp": "2025-10-18T09:00:00+00:00",
             "temporal_marker": "T1", "ID_Autor_Local": "Dev_A",
@@ -159,6 +161,7 @@ def test_build_lake_writes_event_level_git_contracts_and_derives_summary(
     git_files = tmp_path / "git_files.csv"
     pd.DataFrame(
         [{
+            "source_type": "git_file",
             "ID_Equipe": "TEAM_04", "Semestre": "2025.2", "repository": "repo",
             "commit_hash": "abc", "timestamp": "2025-10-18T09:00:00+00:00",
             "temporal_marker": "T1", "ID_Autor_Local": "Dev_A",
@@ -189,3 +192,9 @@ def test_build_lake_writes_event_level_git_contracts_and_derives_summary(
     assert summary.loc[0, "files_changed"] == 2
     files = pd.read_parquet(output_dir / "git_files.parquet")
     assert files.loc[0, "file_path"] == "docs/planejamento inicial.md"
+    assert set(pd.read_parquet(output_dir / "git_commits.parquet")["source_type"]) == {"git_commit"}
+    assert set(files["source_type"]) == {"git_file"}
+    report = json.loads((output_dir / "lake_validation_report.json").read_text())
+    assert report["datasets"]["git_commits"]["source_types"] == ["git_commit"]
+    assert "temporal_markers" in report["datasets"]["git_commits"]
+    assert "null_counts" in report["datasets"]["git_files"]

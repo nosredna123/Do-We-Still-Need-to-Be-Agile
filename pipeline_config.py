@@ -76,3 +76,24 @@ def temporal_marker_for(semester: str, evaluation_date: str) -> str:
     raise ValueError(
         f"Date {evaluation_date} is not in a configured evaluator cut for {semester}"
     )
+
+
+def git_temporal_marker_for(semester: str, event_date: str) -> str:
+    """Assign a Git event to a semester phase using ordered cut boundaries.
+
+    Git history is continuous, unlike evaluator submissions. Events before the
+    T1 boundary belong to T1, events before T2 belong to T2, and events from
+    T2 onward belong to T3.
+    """
+    cuts = EVALUATOR_TEMPORAL_CUTS.get(semester)
+    if cuts is None:
+        raise ValueError(f"Semester {semester} has no configured evaluator cuts")
+
+    parsed_date = date.fromisoformat(event_date)
+    t1_start = date.fromisoformat(cuts["T1"][0])
+    t2_start = date.fromisoformat(cuts["T2"][0])
+    if parsed_date < t1_start:
+        return "T1"
+    if parsed_date < t2_start:
+        return "T2"
+    return "T3"

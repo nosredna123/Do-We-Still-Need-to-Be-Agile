@@ -136,6 +136,8 @@ def cleanup_phase_one_artifacts(project_root: Path) -> None:
         resolved_root / "data" / "lake" / "student_responses.parquet",
         resolved_root / "data" / "lake" / "evaluator_team_cuts.parquet",
         resolved_root / "data" / "lake" / "git_team_cuts.parquet",
+        resolved_root / "data" / "lake" / "git_commits.parquet",
+        resolved_root / "data" / "lake" / "git_files.parquet",
         resolved_root / "data" / "lake" / "transcript_sessions.parquet",
         resolved_root / "data" / "lake" / "lake_validation_report.json",
         resolved_root / "data" / "processed" / "git_logs_anon.csv",
@@ -343,14 +345,13 @@ def _replace_identifiers_in_text(
 def infer_temporal_marker_from_timestamp(value: Any, semester: str | None = None) -> str:
     """Infer the Phase 1 temporal marker from a commit timestamp.
 
-    Git commit dates may land just before or after an evaluator cut while still
-    belonging to the same semester window. We therefore anchor them to the nearest
-    configured assessment checkpoint within the semester, and fail for dates that
-    lie outside the semester's supported observation window.
+    Git events use phase boundaries rather than evaluator submission windows:
+    dates before T1 are T1, dates from T1 until T2 are T2, and dates from T2
+    onward are T3.
     """
     from datetime import date
 
-    from pipeline_config import EVALUATOR_TEMPORAL_CUTS
+    from pipeline_config import EVALUATOR_TEMPORAL_CUTS, git_temporal_marker_for
 
     if value is None or pd.isna(value):
         raise ValueError("Git commit timestamp is missing")
@@ -360,22 +361,7 @@ def infer_temporal_marker_from_timestamp(value: Any, semester: str | None = None
     current_date = date.fromisoformat(date_value)
 
     if semester:
-        cuts = EVALUATOR_TEMPORAL_CUTS.get(str(semester))
-        if cuts is None:
-            raise ValueError(f"Semester {semester} has no configured evaluator cuts")
-
-        for marker, (start_date, end_date) in cuts.items():
-            if date.fromisoformat(start_date) <= current_date <= date.fromisoformat(end_date):
-                return marker
-
-        nearest_marker, _ = min(
-            cuts.items(),
-            key=lambda item: min(
-                abs((current_date - date.fromisoformat(item[1][0])).days),
-                abs((current_date - date.fromisoformat(item[1][1])).days),
-            ),
-        )
-        return nearest_marker
+        return git_temporal_marker_for(str(semester), date_value)
 
     for candidate_semester, cuts in EVALUATOR_TEMPORAL_CUTS.items():
         semester_dates = [
@@ -387,14 +373,9 @@ def infer_temporal_marker_from_timestamp(value: Any, semester: str | None = None
             for marker, (start_date, end_date) in cuts.items():
                 if date.fromisoformat(start_date) <= current_date <= date.fromisoformat(end_date):
                     return marker
-            nearest_marker, _ = min(
-                cuts.items(),
-                key=lambda item: min(
-                    abs((current_date - date.fromisoformat(item[1][0])).days),
-                    abs((current_date - date.fromisoformat(item[1][1])).days),
-                ),
+            raise ValueError(
+                f"Commit timestamp {value!r} does not fall inside any configured T1/T2/T3 cut"
             )
-            return nearest_marker
 
     raise ValueError(
         f"Commit timestamp {value!r} does not fall inside any configured T1/T2/T3 cut"
