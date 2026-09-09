@@ -33,6 +33,21 @@ MODEL_CONFIG: dict[str, dict[str, object]] = {
     },
 }
 
+LLM_PRICING_VERSION = "openai-pricing-2026-09-attached-v1"
+LLM_PRICING_REGISTRY: dict[str, dict[str, object]] = {
+    "gpt-4o-mini": {
+        "pricing_mode": "token",
+        "input_usd_per_1m_tokens": 0.15,
+        "cached_input_usd_per_1m_tokens": 0.075,
+        "output_usd_per_1m_tokens": 0.60,
+    },
+    "whisper-1": {
+        "pricing_mode": "minute",
+        "usd_per_minute": 0.006,
+    },
+}
+LLM_MAX_RETRIES = 0
+
 REPOSITORY_SNAPSHOT_CONTRACT_VERSION = "git-repository-snapshots-v1"
 SOURCE_LOC_DEFINITION_VERSION = "source-loc-v1"
 EXCLUDED_PATH_PATTERNS_VERSION = "source-exclusions-v1"

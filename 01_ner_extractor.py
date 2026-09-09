@@ -8,6 +8,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 from pathlib import Path
@@ -21,6 +22,7 @@ from pipeline_core import (
 )
 from pipeline_config import MODEL_CONFIG
 from pipeline_prompts import NER_PROMPT
+from llm_gateway import LLMCallGateway
 
 logger = logging.getLogger(__name__)
 
@@ -42,18 +44,17 @@ def extract_person_entities(text: str, api_key: str | None = None) -> list[str]:
         raise RuntimeError("openai package is not installed") from error
 
     client = OpenAI(api_key=api_key)
-    response = client.chat.completions.create(
+    gateway = LLMCallGateway(client)
+    content = gateway.chat_json(
+        observation_id=f"ner:{hashlib.sha256(text.encode('utf-8')).hexdigest()}",
         model=str(MODEL_CONFIG["ner"]["model"]),
-        messages=[
-            {"role": "system", "content": NER_PROMPT},
-            {"role": "user", "content": text},
-        ],
-        response_format={"type": str(MODEL_CONFIG["ner"]["response_format"])},
-        temperature=float(MODEL_CONFIG["ner"]["temperature"]),
+        system_prompt=NER_PROMPT,
+        user_prompt=text,
+        request_options={
+            "response_format": {"type": str(MODEL_CONFIG["ner"]["response_format"])},
+            "temperature": float(MODEL_CONFIG["ner"]["temperature"]),
+        },
     )
-    content = response.choices[0].message.content
-    if not content:
-        raise ValueError("OpenAI NER response has no content")
     payload: dict[str, Any] = json.loads(content)
     entities = payload.get("person_entities")
     if not isinstance(entities, list) or not all(

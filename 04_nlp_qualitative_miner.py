@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import argparse
 import logging
@@ -31,6 +32,7 @@ from pipeline_prompts import (
     STUDENT_NLP_PROMPT_VERSION,
     STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
 )
+from llm_gateway import LLMCallGateway
 
 logger = logging.getLogger(__name__)
 
@@ -506,19 +508,17 @@ def write_student_nlp(
 def openai_student_backend(prompt: str, *, client: Any, model: str) -> str:
     """Request one strict JSON student analysis from an OpenAI client."""
     config = MODEL_CONFIG["qualitative_mining"]
-    response = client.chat.completions.create(
+    gateway = LLMCallGateway(client)
+    return gateway.chat_json(
+        observation_id=f"student_nlp:{hashlib.sha256(prompt.encode('utf-8')).hexdigest()}",
         model=model,
-        messages=[
-            {"role": "system", "content": STUDENT_NLP_PROMPT},
-            {"role": "user", "content": prompt},
-        ],
-        response_format={"type": str(config["response_format"])},
-        temperature=float(config["temperature"]),
+        system_prompt=STUDENT_NLP_PROMPT,
+        user_prompt=prompt,
+        request_options={
+            "response_format": {"type": str(config["response_format"])},
+            "temperature": float(config["temperature"]),
+        },
     )
-    content = response.choices[0].message.content
-    if not isinstance(content, str) or not content.strip():
-        raise ValueError("OpenAI student NLP response has no content")
-    return content
 
 
 def aggregate_textual_cut_signals(students: pd.DataFrame, transcripts: pd.DataFrame) -> pd.DataFrame:

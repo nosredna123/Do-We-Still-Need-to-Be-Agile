@@ -26,6 +26,7 @@ from pipeline_core import (
 )
 from pipeline_config import MODEL_CONFIG
 from pipeline_prompts import TRANSCRIPTION_PROMPT
+from llm_gateway import LLMCallGateway
 
 logger = logging.getLogger(__name__)
 
@@ -49,14 +50,18 @@ def transcribe_audio_file(
         raise RuntimeError("openai package is not installed") from error
 
     client = OpenAI(api_key=api_key)
+    gateway = LLMCallGateway(client)
     logger.info(f"Transcribing: {audio_path.name}")
 
     with audio_path.open("rb") as f:
-        transcript = client.audio.transcriptions.create(
+        transcript = gateway.transcribe(
+            observation_id=file_checksum(audio_path),
             model=str(MODEL_CONFIG["transcription"]["model"]),
             file=f,
-            language=str(MODEL_CONFIG["transcription"]["language"]),
             prompt=TRANSCRIPTION_PROMPT,
+            request_options={
+                "language": str(MODEL_CONFIG["transcription"]["language"]),
+            },
         )
 
     return {
