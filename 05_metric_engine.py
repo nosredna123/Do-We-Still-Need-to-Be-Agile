@@ -12,6 +12,13 @@ import numpy as np
 import pandas as pd
 
 from pipeline_config import (
+    AI_AUTHOR_SHARE_DISTRIBUTION,
+    AI_DEFINITION_VERSION,
+    AI_GINI_METHOD,
+    AI_REF_REQUIRED_FIELDS,
+    AI_T3_WINDOW_BOUNDS,
+    AI_T3_WINDOW_HOURS,
+    EVALUATOR_TEMPORAL_CUTS,
     PLANNING_DEFINITION_VERSION,
     PLANNING_FILE_EXTENSIONS,
     PLANNING_PATH_PATTERNS,
@@ -226,6 +233,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/technical_degradation_metrics.parquet"),
     )
+    parser.add_argument(
+        "--integration-friction-output",
+        type=Path,
+        default=Path("data/analysis/integration_friction_metrics.parquet"),
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     if not args.contract_report.exists():
@@ -254,6 +266,7 @@ def main() -> None:
         invalidate_stale_artifact(args.output, "force-regeneration")
         invalidate_stale_artifact(args.code_churn_output, "force-regeneration")
         invalidate_stale_artifact(args.technical_degradation_output, "force-regeneration")
+        invalidate_stale_artifact(args.integration_friction_output, "force-regeneration")
     if is_current_artifact(args.output, checksum):
         logger.info("Planning metrics artifact is current: %s", args.output)
     else:
@@ -319,16 +332,50 @@ def main() -> None:
     )
     if not args.force and is_current_artifact(args.technical_degradation_output, dt_checksum):
         logger.info("Technical degradation artifact is current: %s", args.technical_degradation_output)
-        return
-    dt_results = compute_delta_dt(inputs["evaluator_team_cuts"])
-    invalidate_stale_artifact(args.technical_degradation_output, dt_checksum)
-    write_technical_degradation_metrics(
-        dt_results,
-        args.technical_degradation_output,
-        source_checksum=dt_checksum,
-        options=dt_options,
+    else:
+        dt_results = compute_delta_dt(inputs["evaluator_team_cuts"])
+        invalidate_stale_artifact(args.technical_degradation_output, dt_checksum)
+        write_technical_degradation_metrics(
+            dt_results,
+            args.technical_degradation_output,
+            source_checksum=dt_checksum,
+            options=dt_options,
+        )
+        logger.info("Wrote %s technical degradation team-semester observations", len(dt_results))
+
+    ai_options = {
+        "stage": "integration_friction_metrics",
+        "contract_version": "integration-friction-metrics-v1",
+        "ai_definition_version": AI_DEFINITION_VERSION,
+        "ai_t3_window_hours": AI_T3_WINDOW_HOURS,
+        "ai_t3_window_bounds": AI_T3_WINDOW_BOUNDS,
+        "ai_gini_method": AI_GINI_METHOD,
+        "ai_author_share_distribution": AI_AUTHOR_SHARE_DISTRIBUTION,
+        "ai_ref_required_fields": AI_REF_REQUIRED_FIELDS,
+    }
+    ai_checksum = input_checksum(
+        [
+            args.lake_dir / "git_commits.parquet",
+            args.lake_dir / "git_commits.parquet.metadata.json",
+        ],
+        ai_options,
     )
-    logger.info("Wrote %s technical degradation team-semester observations", len(dt_results))
+    if not args.force and is_current_artifact(args.integration_friction_output, ai_checksum):
+        logger.info("Integration friction artifact is current: %s", args.integration_friction_output)
+        return
+    cut_starts = {
+        semester: pd.Timestamp(cuts["T3"][0], tz="UTC")
+        for semester, cuts in EVALUATOR_TEMPORAL_CUTS.items()
+    }
+    ai_results = compute_integration_friction(inputs["git_commits"], cut_starts)
+    invalidate_stale_artifact(args.integration_friction_output, ai_checksum)
+    write_integration_friction_metrics(
+        ai_results,
+        args.integration_friction_output,
+        source_checksum=ai_checksum,
+        options=ai_options,
+    )
+    logger.info("Wrote %s integration friction team-semester observations", len(ai_results))
 
 
 def write_code_churn_metrics(
@@ -577,28 +624,128 @@ def write_technical_degradation_metrics(
     )
 
 
-def compute_integration_friction(commits: pd.DataFrame, cut_starts: dict[str, pd.Timestamp]) -> pd.DataFrame:
-    """Compute author concentration and churn for cuts and the T3 final window."""
-    required = {"timestamp", "ID_Autor_Local", "branch_or_ref", "branch_or_ref_source"}
-    if not required.issubset(commits.columns):
-        raise ValueError(f"git_commits missing AI fields: {sorted(required - set(commits.columns))}")
-    rows = []
-    for key, subset in commits.groupby(KEYS):
-        row = dict(zip(KEYS, key))
+def write_integration_friction_metrics(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write the immutable integration-friction intermediate artifact."""
+    required = set(KEYS) | {
+        "ai_available", "ai_unavailable_reason", "ai_observation_unit",
+        "ai_definition_version", "ai_t3_window_hours",
+    }
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"integration_friction_metrics output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("integration_friction_metrics output is empty")
+    if results.duplicated(KEYS).any():
+        raise ValueError("integration_friction_metrics has duplicate team-semester keys")
+    if not results["ai_observation_unit"].eq("team_semester").all():
+        raise ValueError("integration_friction_metrics has an invalid observation unit")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    if output_path.exists() or output_path.with_name(f"{output_path.name}.metadata.json").exists():
+        raise ValueError("integration_friction_metrics artifact is immutable and stale")
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="integration-friction-metrics-v1",
+        options=options,
+    )
+
+
+def compute_integration_friction(
+    commits: pd.DataFrame,
+    cut_starts: dict[str, pd.Timestamp],
+    *,
+    window_hours: int | None = None,
+) -> pd.DataFrame:
+    """Compute author concentration and integration pressure by team-semester."""
+    required = set(KEYS) | {
+        "timestamp", "ID_Autor_Local", "lines_added", "lines_deleted",
+        *AI_REF_REQUIRED_FIELDS,
+    }
+    missing = required - set(commits.columns)
+    if missing:
+        raise ValueError(f"git_commits missing AI fields: {sorted(missing)}")
+    if not pd.api.types.is_datetime64tz_dtype(commits["timestamp"]):
+        raise ValueError("git_commits timestamp must be timezone-aware UTC")
+    if not isinstance(cut_starts, dict):
+        raise ValueError("cut_starts must map Semestre to T3 timestamps")
+    effective_window_hours = window_hours if window_hours is not None else AI_T3_WINDOW_HOURS
+    rows: list[dict[str, Any]] = []
+
+    def gini(values: pd.Series) -> float | None:
+        ordered = np.sort(values.astype(float).to_numpy())
+        if len(ordered) == 0:
+            return None
+        if len(ordered) == 1 or ordered.sum() == 0:
+            return 0.0
+        index = np.arange(1, len(ordered) + 1)
+        return float((2 * np.sum(index * ordered) / (len(ordered) * ordered.sum())) - (len(ordered) + 1) / len(ordered))
+
+    for key, subset in commits.groupby(KEYS, dropna=False):
+        row: dict[str, Any] = dict(zip(KEYS, key))
+        semester = key[1]
+        t3_start = cut_starts.get(semester)
         for cut in CUTS:
             current = subset[subset["temporal_marker"] == cut]
-            counts = current["ID_Autor_Local"].value_counts()
-            row[f"ai_commit_n_{cut.lower()}"] = int(len(current))
-            row[f"ai_churn_{cut.lower()}"] = int((current["lines_added"] + current["lines_deleted"]).sum())
-            row[f"ai_author_n_{cut.lower()}"] = int(current["ID_Autor_Local"].nunique())
-            row[f"ai_max_author_share_{cut.lower()}"] = float(counts.iloc[0] / len(current)) if len(current) else np.nan
-        start = cut_starts["T3"]
-        window = subset[(subset["timestamp"] >= start - pd.Timedelta(hours=48)) & (subset["timestamp"] < start)]
-        counts = window["ID_Autor_Local"].value_counts()
-        row["ai_commit_n_48h_before_t3"] = int(len(window))
-        row["ai_churn_48h_before_t3"] = int((window["lines_added"] + window["lines_deleted"]).sum())
-        row["ai_author_n_48h_before_t3"] = int(window["ID_Autor_Local"].nunique())
-        row["ai_max_author_share_48h_before_t3"] = float(counts.iloc[0] / len(window)) if len(window) else np.nan
+            prefix = cut.lower()
+            row[f"ai_commit_n_{prefix}"] = int(len(current))
+            row[f"ai_churn_{prefix}"] = float((current["lines_added"] + current["lines_deleted"]).sum()) if not current.empty else 0
+            row[f"ai_activity_available_{prefix}"] = True
+            row[f"ai_activity_status_{prefix}"] = "observed_activity" if not current.empty else "no_observed_activity"
+            ref_valid = current[AI_REF_REQUIRED_FIELDS].notna().all(axis=1) & current[AI_REF_REQUIRED_FIELDS].astype(str).apply(lambda column: column.str.strip().ne("")).all(axis=1)
+            row[f"ai_ref_available_{prefix}"] = bool(ref_valid.all()) if not current.empty else True
+            row[f"ai_ref_unavailable_reason_{prefix}"] = None if row[f"ai_ref_available_{prefix}"] else "missing_observed_branch_or_ref"
+            authors = current["ID_Autor_Local"].dropna()
+            counts = authors.value_counts()
+            shares = counts / len(current) if len(current) else pd.Series(dtype=float)
+            concentration_available = bool(row[f"ai_ref_available_{prefix}"] and not current.empty and not authors.empty)
+            row[f"ai_concentration_available_{prefix}"] = concentration_available
+            row[f"ai_author_n_{prefix}"] = int(counts.size)
+            row[f"ai_max_author_share_{prefix}"] = float(shares.max()) if concentration_available else np.nan
+            share_summary = summarize_numeric_distribution(shares, scale_type="continuous", scale_version="ai-author-share-v1")
+            row[f"ai_author_share_median_{prefix}"] = share_summary["median"] if concentration_available else np.nan
+            row[f"ai_author_share_iqr_{prefix}"] = share_summary["iqr"] if concentration_available else np.nan
+            row[f"ai_author_share_n_valid_{prefix}"] = share_summary["n_valid"] if concentration_available else 0
+            row[f"ai_author_share_n_missing_{prefix}"] = share_summary["n_missing"] if concentration_available else int(len(current))
+            row[f"ai_gini_{prefix}"] = gini(counts) if concentration_available else np.nan
+        if t3_start is None:
+            window = subset.iloc[0:0]
+            row["ai_window_available"] = False
+            row["ai_window_unavailable_reason"] = "missing_t3_start_for_semester"
+        else:
+            start = pd.Timestamp(t3_start)
+            if start.tzinfo is None:
+                start = start.tz_localize("UTC")
+            window = subset[(subset["timestamp"] >= start - pd.Timedelta(hours=effective_window_hours)) & (subset["timestamp"] < start)]
+            row["ai_window_available"] = True
+            row["ai_window_unavailable_reason"] = None
+        authors = window["ID_Autor_Local"].dropna()
+        counts = authors.value_counts()
+        shares = counts / len(window) if len(window) else pd.Series(dtype=float)
+        window_ref_valid = window[AI_REF_REQUIRED_FIELDS].notna().all(axis=1) & window[AI_REF_REQUIRED_FIELDS].astype(str).apply(lambda column: column.str.strip().ne("")).all(axis=1)
+        row["ai_commit_n_before_t3_window"] = int(len(window))
+        row["ai_churn_before_t3_window"] = float((window["lines_added"] + window["lines_deleted"]).sum()) if not window.empty else 0
+        row["ai_author_n_before_t3_window"] = int(counts.size)
+        row["ai_ref_available_before_t3_window"] = bool(window_ref_valid.all()) if not window.empty else True
+        row["ai_max_author_share_before_t3_window"] = float(shares.max()) if row["ai_window_available"] and not shares.empty and row["ai_ref_available_before_t3_window"] else np.nan
+        row["ai_author_share_median_before_t3_window"] = float(shares.median()) if not shares.empty and row["ai_ref_available_before_t3_window"] else np.nan
+        row["ai_author_share_iqr_before_t3_window"] = float(shares.quantile(0.75) - shares.quantile(0.25)) if not shares.empty and row["ai_ref_available_before_t3_window"] else np.nan
+        row["ai_author_share_n_valid_before_t3_window"] = int(len(shares)) if row["ai_ref_available_before_t3_window"] else 0
+        row["ai_gini_before_t3_window"] = gini(counts) if not shares.empty and row["ai_ref_available_before_t3_window"] else np.nan
+        row["ai_t3_window_hours"] = effective_window_hours
+        row["ai_window_bounds"] = AI_T3_WINDOW_BOUNDS
+        row["ai_available"] = bool(row["ai_window_available"] and all(row[f"ai_concentration_available_{cut.lower()}"] for cut in CUTS))
+        row["ai_unavailable_reason"] = None if row["ai_available"] else "one_or_more_cut_concentration_unavailable"
+        row["ai_observation_unit"] = "team_semester"
+        row["ai_definition_version"] = AI_DEFINITION_VERSION
         rows.append(row)
     return pd.DataFrame(rows)
 
