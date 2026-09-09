@@ -61,6 +61,18 @@ DELTA_DT_REQUIRED_COLUMNS = set(KEYS) | {
 DELTA_DT_DISTRIBUTION_FIELDS = (
     "mean", "median", "iqr", "std", "n",
 )
+IE_SCORE_PREFIXES = (
+    "ie_student_cognitive_load_score",
+    "ie_student_sentiment_score",
+    "ie_student_ai_dependency_score",
+    "ie_transcript_coordination_friction_score",
+    "ie_transcript_rework_signal_score",
+    "ie_transcript_planning_clarity_score",
+)
+IE_SUMMARY_FIELDS = (
+    "mean", "std", "median", "q1", "q3", "iqr", "mode", "mode_n",
+    "mode_share", "n_total", "n_valid", "n_missing",
+)
 
 
 def is_planning_artifact(
@@ -238,6 +250,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/integration_friction_metrics.parquet"),
     )
+    parser.add_argument(
+        "--cut-context-output",
+        type=Path,
+        default=Path("data/analysis/cut_context_metrics.parquet"),
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     if not args.contract_report.exists():
@@ -267,6 +284,7 @@ def main() -> None:
         invalidate_stale_artifact(args.code_churn_output, "force-regeneration")
         invalidate_stale_artifact(args.technical_degradation_output, "force-regeneration")
         invalidate_stale_artifact(args.integration_friction_output, "force-regeneration")
+        invalidate_stale_artifact(args.cut_context_output, "force-regeneration")
     if is_current_artifact(args.output, checksum):
         logger.info("Planning metrics artifact is current: %s", args.output)
     else:
@@ -362,20 +380,57 @@ def main() -> None:
     )
     if not args.force and is_current_artifact(args.integration_friction_output, ai_checksum):
         logger.info("Integration friction artifact is current: %s", args.integration_friction_output)
-        return
-    cut_starts = {
-        semester: pd.Timestamp(cuts["T3"][0], tz="UTC")
-        for semester, cuts in EVALUATOR_TEMPORAL_CUTS.items()
+    else:
+        cut_starts = {
+            semester: pd.Timestamp(cuts["T3"][0], tz="UTC")
+            for semester, cuts in EVALUATOR_TEMPORAL_CUTS.items()
+        }
+        ai_results = compute_integration_friction(inputs["git_commits"], cut_starts)
+        invalidate_stale_artifact(args.integration_friction_output, ai_checksum)
+        write_integration_friction_metrics(
+            ai_results,
+            args.integration_friction_output,
+            source_checksum=ai_checksum,
+            options=ai_options,
+        )
+        logger.info("Wrote %s integration friction team-semester observations", len(ai_results))
+
+    ie_options = {
+        "stage": "cut_context_metrics",
+        "contract_version": "cut-context-metrics-v1",
+        "ie_definition_version": "ie-v1",
+        "statistical_summary_version": "distribution-summary-v1",
+        "source_contract": "textual-cut-signals-v2",
+        "statistical_decisions": {
+            "std_ddof": 1,
+            "quantile_method": "linear",
+            "scale_treatment": "ordinal_with_interval_summary",
+        },
     }
-    ai_results = compute_integration_friction(inputs["git_commits"], cut_starts)
-    invalidate_stale_artifact(args.integration_friction_output, ai_checksum)
-    write_integration_friction_metrics(
-        ai_results,
-        args.integration_friction_output,
-        source_checksum=ai_checksum,
-        options=ai_options,
+    ie_checksum = input_checksum(
+        [
+            args.lake_dir.parent / "analysis" / "textual_cut_signals.parquet",
+            args.lake_dir.parent / "analysis" / "textual_cut_signals.parquet.metadata.json",
+        ],
+        ie_options,
     )
-    logger.info("Wrote %s integration friction team-semester observations", len(ai_results))
+    if not args.force and is_current_artifact(args.cut_context_output, ie_checksum):
+        logger.info("Cut context artifact is current: %s", args.cut_context_output)
+        return
+    textual_path = args.lake_dir.parent / "analysis" / "textual_cut_signals.parquet"
+    textual_metadata_path = textual_path.with_name(f"{textual_path.name}.metadata.json")
+    textual_metadata = json.loads(textual_metadata_path.read_text(encoding="utf-8"))
+    if textual_metadata.get("status") != "success" or textual_metadata.get("contract_version") != "textual-cut-signals-v2":
+        raise ValueError("textual_cut_signals source contract is missing or incompatible")
+    ie_results = build_cut_context_metrics(pd.read_parquet(textual_path))
+    invalidate_stale_artifact(args.cut_context_output, ie_checksum)
+    write_cut_context_metrics(
+        ie_results,
+        args.cut_context_output,
+        source_checksum=ie_checksum,
+        options=ie_options,
+    )
+    logger.info("Wrote %s cut context observations", len(ie_results))
 
 
 def write_code_churn_metrics(
@@ -415,15 +470,98 @@ def _pivot_cut(frame: pd.DataFrame, value: str, prefix: str) -> pd.DataFrame:
     return pivot.reset_index()
 
 
-def build_cut_context_metrics(students: pd.DataFrame, transcripts: pd.DataFrame) -> pd.DataFrame:
-    """Build IE context metrics without assigning observations to teams."""
-    keys = ["Semestre", "temporal_marker"]
-    student = students.groupby(keys).agg(ie_student_cognitive_load_mean=("cognitive_load_score", "mean"), ie_student_sentiment_mean=("sentiment_score", "mean"), ie_student_ai_dependency_mean=("ai_dependency_score", "mean"), ie_student_n=("cognitive_load_score", "count")).reset_index()
-    transcript = transcripts.groupby(keys).agg(ie_transcript_coordination_friction_mean=("coordination_friction_score", "mean"), ie_transcript_rework_signal_mean=("rework_signal_score", "mean"), ie_transcript_session_n=("coordination_friction_score", "count")).reset_index()
-    result = student.merge(transcript, on=keys, how="outer", validate="one_to_one")
-    result["unit_of_analysis"] = "cut_context"
+def build_cut_context_metrics(
+    students: pd.DataFrame,
+    transcripts: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    """Transform the canonical textual-cut-signal contract into IE context."""
+    if transcripts is not None and "unit_of_analysis" not in students.columns:
+        keys = ["Semestre", "temporal_marker"]
+        student = students.groupby(keys).agg(
+            ie_student_cognitive_load_mean=("cognitive_load_score", "mean"),
+            ie_student_sentiment_mean=("sentiment_score", "mean"),
+            ie_student_ai_dependency_mean=("ai_dependency_score", "mean"),
+            ie_student_n=("cognitive_load_score", "count"),
+        ).reset_index()
+        transcript = transcripts.groupby(keys).agg(
+            ie_transcript_coordination_friction_mean=("coordination_friction_score", "mean"),
+            ie_transcript_rework_signal_mean=("rework_signal_score", "mean"),
+            ie_transcript_session_n=("coordination_friction_score", "count"),
+        ).reset_index()
+        result = student.merge(transcript, on=keys, how="outer", validate="one_to_one")
+        result["unit_of_analysis"] = "cut_context"
+        result["ie_definition_version"] = "ie-v1"
+        return result
+    required = {"Semestre", "temporal_marker", "unit_of_analysis", "student_n", "transcript_session_n"}
+    missing = required - set(students.columns)
+    if missing:
+        raise ValueError(f"textual_cut_signals input missing columns: {sorted(missing)}")
+    if not students["unit_of_analysis"].eq("cut_context").all():
+        raise ValueError("textual_cut_signals input has an invalid unit_of_analysis")
+    required_transcript_columns = {
+        f"{prefix}_{field}"
+        for prefix in IE_SCORE_PREFIXES[3:]
+        for field in IE_SUMMARY_FIELDS
+    }
+    missing = required_transcript_columns - set(students.columns)
+    if missing:
+        raise ValueError(f"textual_cut_signals input missing columns: {sorted(missing)}")
+    student_summary_columns = {
+        column for column in students.columns
+        if column.startswith("student_")
+        and any(column.endswith(f"_{field}") for field in IE_SUMMARY_FIELDS)
+    }
+    has_canonical_student_summaries = all(
+        f"{prefix}_{field}" in students.columns
+        for prefix in IE_SCORE_PREFIXES[:3]
+        for field in IE_SUMMARY_FIELDS
+    )
+    if not student_summary_columns and not has_canonical_student_summaries:
+        raise ValueError("textual_cut_signals input missing student distribution summaries")
+    if students.duplicated(["Semestre", "temporal_marker"]).any():
+        raise ValueError("textual_cut_signals input has duplicate cut keys")
+    result = students.copy()
+    result["ie_transcript_available"] = result["transcript_session_n"].fillna(0).gt(0)
+    result["ie_transcript_unavailable_reason"] = result["ie_transcript_available"].map(
+        lambda available: None if available else "no_observed_transcript_sessions"
+    )
     result["ie_definition_version"] = "ie-v1"
+    result["statistical_summary_version"] = "distribution-summary-v1"
+    result["std_ddof"] = 1
+    result["quantile_method"] = "linear"
     return result
+
+
+def write_cut_context_metrics(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write the immutable IE cut-context artifact and metadata sidecar."""
+    required = {"Semestre", "temporal_marker", "unit_of_analysis", "ie_definition_version", "statistical_summary_version"}
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"cut_context_metrics output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("cut_context_metrics output is empty")
+    if not results["unit_of_analysis"].eq("cut_context").all():
+        raise ValueError("cut_context_metrics has an invalid unit_of_analysis")
+    if results.duplicated(["Semestre", "temporal_marker"]).any():
+        raise ValueError("cut_context_metrics has duplicate cut keys")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    if output_path.exists() or output_path.with_name(f"{output_path.name}.metadata.json").exists():
+        raise ValueError("cut_context_metrics artifact is immutable and stale")
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="cut-context-metrics-v1",
+        options=options,
+    )
 
 
 def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd.DataFrame) -> pd.DataFrame:
