@@ -200,7 +200,7 @@ AI_AUTHOR_SHARE_DISTRIBUTION = "per_author_commit_share"
 STATISTICAL_ANALYSIS_REGISTRY = {
     "pi_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "pi_file_count_t1", "y": "cc_per_source_loc_t3", "test": "spearman", "priority": "primary", "figure": "pi_vs_cc.png"},
     "pi_vs_delta_dt_primary": {"unit_of_analysis": "team_semester", "x": "pi_file_count_t1", "y": "delta_dt_t1_t3", "test": "spearman", "priority": "primary", "figure": None},
-    "ai_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "ai_max_author_share_48h_before_t3", "y": "cc_total_t3", "test": "spearman", "priority": "primary", "figure": "ai_before_t3.png"},
+    "ai_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "ai_max_author_share_before_t3_window", "y": "cc_total_t3", "test": "spearman", "priority": "primary", "figure": "ai_before_t3.png"},
 }
 
 # Each range identifies one evaluation moment. The two-day ranges in 2025.2 are
