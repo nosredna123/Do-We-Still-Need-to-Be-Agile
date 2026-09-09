@@ -242,7 +242,7 @@ class PipelineCoreTests(unittest.TestCase):
 
         self.assertEqual(
             [
-                "cleanup", "prepare", "transcribe", "ner", "anonymize",
+                "prepare", "transcribe", "ner", "anonymize",
                 "git", "lake", "repo-snapshots", "nlp", "metrics", "stats",
             ],
             orchestrator.resolve_stages(None, None, None),

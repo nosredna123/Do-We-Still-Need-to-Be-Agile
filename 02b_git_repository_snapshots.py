@@ -393,6 +393,7 @@ def build_repository_snapshots(
 def main() -> None:
     """Run the repository snapshot command-line entry point."""
     load_project_environment()
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     parser = argparse.ArgumentParser(
         description="Build Phase 1.5 repository structural snapshots",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,

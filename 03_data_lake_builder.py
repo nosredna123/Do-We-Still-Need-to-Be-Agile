@@ -13,7 +13,12 @@ from typing import Any
 import pandas as pd
 
 from pipeline_config import EVALUATOR_TEMPORAL_CUTS, temporal_marker_for
-from pipeline_core import input_checksum, load_project_environment, write_artifact_metadata
+from pipeline_core import (
+    input_checksum,
+    is_current_artifact,
+    load_project_environment,
+    write_artifact_metadata,
+)
 
 logger = logging.getLogger(__name__)
 VALID_MARKERS = {"T1", "T2", "T3"}
@@ -280,11 +285,6 @@ def validation_report(outputs: dict[str, pd.DataFrame], artifacts: dict[str, Pat
 
 def build_lake(forms_dir: Path, git_commits_path: Path, transcripts_dir: Path, output_dir: Path, git_files_path: Path) -> dict[str, Path]:
     """Load, validate and atomically write the six Phase 1 lake contracts."""
-    forms = load_form_files(forms_dir)
-    git = load_git_commits(git_commits_path)
-    files = load_git_files(git_files_path)
-    transcripts = load_transcripts(transcripts_dir)
-    outputs = {"student_responses": forms[forms["source_type"] == "student_response"].drop(columns=["ID_Equipe"], errors="ignore"), "evaluator_team_cuts": aggregate_evaluator_cuts(forms, git), "git_team_cuts": aggregate_git_cuts(git), "git_commits": git, "git_files": files, "transcript_sessions": transcripts}
     checksum = input_checksum(
         source_paths(forms_dir, [git_commits_path, git_files_path], transcripts_dir),
         {
@@ -295,7 +295,15 @@ def build_lake(forms_dir: Path, git_commits_path: Path, transcripts_dir: Path, o
         },
     )
     output_dir.mkdir(parents=True, exist_ok=True)
-    artifacts = {name: output_dir / f"{name}.parquet" for name in outputs}
+    artifacts = {name: output_dir / f"{name}.parquet" for name in DATASET_NAMES}
+    if all(is_current_artifact(path, checksum) for path in artifacts.values()):
+        logger.info("Skipping current data lake contracts")
+        return artifacts
+    forms = load_form_files(forms_dir)
+    git = load_git_commits(git_commits_path)
+    files = load_git_files(git_files_path)
+    transcripts = load_transcripts(transcripts_dir)
+    outputs = {"student_responses": forms[forms["source_type"] == "student_response"].drop(columns=["ID_Equipe"], errors="ignore"), "evaluator_team_cuts": aggregate_evaluator_cuts(forms, git), "git_team_cuts": aggregate_git_cuts(git), "git_commits": git, "git_files": files, "transcript_sessions": transcripts}
     temporary = {name: output_dir / f".{name}.parquet.tmp" for name in outputs}
     try:
         for name, frame in outputs.items():
@@ -315,6 +323,7 @@ def build_lake(forms_dir: Path, git_commits_path: Path, transcripts_dir: Path, o
 def main() -> None:
     """Run the lake builder command-line entry point."""
     load_project_environment()
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     parser = argparse.ArgumentParser(description="Build the Phase 1 data lake contracts", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--forms-dir", type=Path, default=Path("data/processed/forms"))
     parser.add_argument("--git-commits", type=Path, default=Path("data/processed/git_commits_anon.csv"))

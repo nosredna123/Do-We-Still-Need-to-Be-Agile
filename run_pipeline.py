@@ -9,14 +9,22 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import subprocess
 import sys
 from pathlib import Path
 
-from pipeline_core import load_project_environment
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+VENV_PYTHON = PROJECT_ROOT / ".venv" / "bin" / "python"
+VENV_ROOT = VENV_PYTHON.parent.parent
+if __name__ == "__main__" and VENV_PYTHON.is_file() and Path(sys.prefix).resolve() != VENV_ROOT.resolve():
+    os.execv(str(VENV_PYTHON), [str(VENV_PYTHON), str(Path(__file__).resolve()), *sys.argv[1:]])
+
+from pipeline_core import load_project_environment  # noqa: E402
 
 logger = logging.getLogger(__name__)
-PROJECT_ROOT = Path(__file__).resolve().parent
+PYTHON_EXECUTABLE = str(VENV_PYTHON) if VENV_PYTHON.is_file() else sys.executable
 STAGES = (
     "cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake",
     "repo-snapshots", "nlp", "metrics", "stats",
@@ -45,7 +53,7 @@ def resolve_stages(
     if selected_stages:
         return [stage for stage in STAGES if stage in selected_stages]
 
-    start_index = STAGES.index(from_stage) if from_stage else 0
+    start_index = STAGES.index(from_stage) if from_stage else STAGES.index("prepare")
     end_index = STAGES.index(to_stage) if to_stage else len(STAGES) - 1
     if start_index > end_index:
         raise ValueError("--from-stage must not follow --to-stage")
@@ -61,7 +69,7 @@ def build_stage_command(
     limite: int | None = None,
 ) -> list[str]:
     """Build the subprocess command for a pipeline stage."""
-    command = [sys.executable, str(PROJECT_ROOT / STAGE_SCRIPTS[stage])]
+    command = [PYTHON_EXECUTABLE, str(PROJECT_ROOT / STAGE_SCRIPTS[stage])]
     if stage == "anonymize":
         for csv_path in csv_paths:
             command.extend(["--csv", str(csv_path)])
