@@ -107,6 +107,8 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "analysis" / "planning_metrics.parquet"),
                 "--code-churn-output",
                 str(PROJECT_ROOT / "data" / "analysis" / "code_churn_metrics.parquet"),
+                "--technical-degradation-output",
+                str(PROJECT_ROOT / "data" / "analysis" / "technical_degradation_metrics.parquet"),
             ]
         )
     if force:

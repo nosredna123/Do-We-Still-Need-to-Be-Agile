@@ -43,6 +43,17 @@ CODE_CHURN_OUTPUT_REQUIRED_COLUMNS = {
     "ID_Equipe", "Semestre", "cc_observation_unit", "cc_definition_version",
     "cc_binary_policy", "cc_denominator_kind",
 }
+DELTA_DT_REQUIRED_COLUMNS = set(KEYS) | {
+    "temporal_marker",
+    "technical_complexity_mean",
+    "technical_complexity_median",
+    "technical_complexity_iqr",
+    "technical_complexity_std",
+    "technical_complexity_n",
+}
+DELTA_DT_DISTRIBUTION_FIELDS = (
+    "mean", "median", "iqr", "std", "n",
+)
 
 
 def is_planning_artifact(
@@ -210,6 +221,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/code_churn_metrics.parquet"),
     )
+    parser.add_argument(
+        "--technical-degradation-output",
+        type=Path,
+        default=Path("data/analysis/technical_degradation_metrics.parquet"),
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     if not args.contract_report.exists():
@@ -237,6 +253,7 @@ def main() -> None:
     if args.force:
         invalidate_stale_artifact(args.output, "force-regeneration")
         invalidate_stale_artifact(args.code_churn_output, "force-regeneration")
+        invalidate_stale_artifact(args.technical_degradation_output, "force-regeneration")
     if is_current_artifact(args.output, checksum):
         logger.info("Planning metrics artifact is current: %s", args.output)
     else:
@@ -270,20 +287,48 @@ def main() -> None:
     )
     if not args.force and is_current_artifact(args.code_churn_output, churn_checksum):
         logger.info("Code Churn artifact is current: %s", args.code_churn_output)
+    else:
+        churn_results = compute_code_churn(
+            inputs["git_commits"],
+            inputs["git_files"],
+            inputs["git_repository_snapshots"],
+        )
+        invalidate_stale_artifact(args.code_churn_output, churn_checksum)
+        write_code_churn_metrics(
+            churn_results,
+            args.code_churn_output,
+            source_checksum=churn_checksum,
+            options=churn_options,
+        )
+        logger.info("Wrote %s Code Churn team-semester observations", len(churn_results))
+
+    dt_options = {
+        "stage": "technical_degradation_metrics",
+        "contract_version": "technical-degradation-metrics-v1",
+        "dt_definition_version": "dt-v1",
+        "delta_metric": "technical_complexity_mean",
+        "distribution_fields": list(DELTA_DT_DISTRIBUTION_FIELDS),
+        "availability_policy": "fail_if_any_cut_missing",
+    }
+    dt_checksum = input_checksum(
+        [
+            args.lake_dir / "evaluator_team_cuts.parquet",
+            args.lake_dir / "evaluator_team_cuts.parquet.metadata.json",
+        ],
+        dt_options,
+    )
+    if not args.force and is_current_artifact(args.technical_degradation_output, dt_checksum):
+        logger.info("Technical degradation artifact is current: %s", args.technical_degradation_output)
         return
-    churn_results = compute_code_churn(
-        inputs["git_commits"],
-        inputs["git_files"],
-        inputs["git_repository_snapshots"],
+    dt_results = compute_delta_dt(inputs["evaluator_team_cuts"])
+    invalidate_stale_artifact(args.technical_degradation_output, dt_checksum)
+    write_technical_degradation_metrics(
+        dt_results,
+        args.technical_degradation_output,
+        source_checksum=dt_checksum,
+        options=dt_options,
     )
-    invalidate_stale_artifact(args.code_churn_output, churn_checksum)
-    write_code_churn_metrics(
-        churn_results,
-        args.code_churn_output,
-        source_checksum=churn_checksum,
-        options=churn_options,
-    )
-    logger.info("Wrote %s Code Churn team-semester observations", len(churn_results))
+    logger.info("Wrote %s technical degradation team-semester observations", len(dt_results))
 
 
 def write_code_churn_metrics(
@@ -453,11 +498,83 @@ def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd
 
 
 def compute_delta_dt(evaluator: pd.DataFrame) -> pd.DataFrame:
-    """Compute technical complexity trajectory and T1-to-T3 deltas."""
-    result = _pivot_cut(evaluator, "technical_complexity_mean", "technical_complexity")
-    for left, right, name in (("t1", "t2", "delta_dt_t1_t2"), ("t2", "t3", "delta_dt_t2_t3"), ("t1", "t3", "delta_dt_t1_t3")):
-        result[name] = result[f"technical_complexity_{right}"] - result[f"technical_complexity_{left}"]
-    return result
+    """Compute longitudinal technical degradation metrics by team-semester."""
+    missing = DELTA_DT_REQUIRED_COLUMNS - set(evaluator.columns)
+    if missing:
+        raise ValueError(f"evaluator_team_cuts missing columns: {sorted(missing)}")
+    if evaluator.duplicated(KEYS + ["temporal_marker"]).any():
+        raise ValueError("evaluator_team_cuts has duplicate team-cut observations")
+    invalid_cuts = set(evaluator["temporal_marker"].dropna()) - set(CUTS)
+    if invalid_cuts:
+        raise ValueError(f"evaluator_team_cuts has invalid temporal markers: {sorted(invalid_cuts)}")
+
+    rows: list[dict[str, Any]] = []
+    for key, group in evaluator.groupby(KEYS, dropna=False):
+        row: dict[str, Any] = dict(zip(KEYS, key))
+        cuts_present = set(group["temporal_marker"])
+        missing_cuts = [cut for cut in CUTS if cut not in cuts_present]
+        for field in DELTA_DT_DISTRIBUTION_FIELDS:
+            source = f"technical_complexity_{field}"
+            for cut in CUTS:
+                current = group.loc[group["temporal_marker"] == cut, source]
+                row[f"technical_complexity_{field}_{cut.lower()}"] = (
+                    current.iloc[0] if not current.empty else np.nan
+                )
+        row["dt_available"] = not missing_cuts
+        row["dt_unavailable_reason"] = (
+            f"missing_required_temporal_cut:{missing_cuts[0]}" if missing_cuts else None
+        )
+        for left, right, name in (
+            ("t1", "t2", "delta_dt_t1_t2"),
+            ("t2", "t3", "delta_dt_t2_t3"),
+            ("t1", "t3", "delta_dt_t1_t3"),
+        ):
+            row[name] = (
+                row[f"technical_complexity_mean_{right}"]
+                - row[f"technical_complexity_mean_{left}"]
+                if row["dt_available"]
+                else np.nan
+            )
+        row["dt_observation_unit"] = "team_semester"
+        row["dt_definition_version"] = "dt-v1"
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def write_technical_degradation_metrics(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write the immutable technical degradation intermediate artifact."""
+    required = set(KEYS) | {
+        "delta_dt_t1_t2", "delta_dt_t2_t3", "delta_dt_t1_t3",
+        "dt_available", "dt_unavailable_reason", "dt_observation_unit",
+        "dt_definition_version",
+    }
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"technical_degradation_metrics output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("technical_degradation_metrics output is empty")
+    if results.duplicated(KEYS).any():
+        raise ValueError("technical_degradation_metrics has duplicate team-semester keys")
+    if not results["dt_observation_unit"].eq("team_semester").all():
+        raise ValueError("technical_degradation_metrics has an invalid observation unit")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    if output_path.exists() or output_path.with_name(f"{output_path.name}.metadata.json").exists():
+        raise ValueError("technical_degradation_metrics artifact is immutable and stale")
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="technical-degradation-metrics-v1",
+        options=options,
+    )
 
 
 def compute_integration_friction(commits: pd.DataFrame, cut_starts: dict[str, pd.Timestamp]) -> pd.DataFrame:
