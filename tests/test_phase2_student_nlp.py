@@ -193,3 +193,35 @@ def test_mine_student_prompts_logs_processing_progress(caplog, tmp_path: Path) -
     assert not result.duplicated(["student_response_id", "question_id"]).any()
     assert "Resuming 2 completed student NLP observations" in caplog.text
     assert "completed=3/3 pending=0" in caplog.text
+
+
+def test_mine_student_prompts_reuses_prior_final_artifact(tmp_path: Path) -> None:
+    miner = load_miner()
+    prior_output = tmp_path / "student_nlp.parquet"
+    prior_result = miner.mine_student_prompts(
+        prompt_frame(), lambda _prompt: valid_response(), model="mock-model"
+    )
+    prior_result.to_parquet(prior_output, index=False)
+    prior_output.with_name(f"{prior_output.name}.metadata.json").write_text(
+        json.dumps(
+            {
+                "status": "success",
+                "input_checksum": "legacy-checksum",
+                "contract_version": "student-nlp-v1",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def unexpected_call(_prompt: str) -> str:
+        raise AssertionError("completed observation should have been reused")
+
+    result = miner.mine_student_prompts(
+        prompt_frame(),
+        unexpected_call,
+        model="mock-model",
+        prior_output_path=prior_output,
+    )
+
+    assert len(result) == 1
+    assert result.loc[0, "student_response_id"] == "students.csv:0"

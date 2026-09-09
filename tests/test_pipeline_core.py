@@ -256,6 +256,17 @@ class PipelineCoreTests(unittest.TestCase):
             [sys.executable, str(REPO_ROOT / "00_audio_preparer.py")], command
         )
 
+    def test_pipeline_target_nlp_excludes_downstream_analysis_stages(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_until_nlp", "run_pipeline.py"
+        )
+
+        stages = orchestrator.resolve_stages(None, None, "nlp")
+
+        self.assertEqual(stages[-1], "nlp")
+        self.assertNotIn("metrics", stages)
+        self.assertNotIn("stats", stages)
+
     def test_pipeline_orchestrator_includes_repository_snapshots_after_lake(self) -> None:
         orchestrator = load_script_module(
             "pipeline_orchestrator_repository_snapshots", "run_pipeline.py"
@@ -296,6 +307,8 @@ class PipelineCoreTests(unittest.TestCase):
                 str(REPO_ROOT / "data" / "analysis" / ".private" / "student_prompt_catalog.parquet"),
                 "--output",
                 str(REPO_ROOT / "data" / "analysis" / "student_nlp.parquet"),
+                "--transcript-output",
+                str(REPO_ROOT / "data" / "analysis" / "transcript_nlp.parquet"),
             ],
             command,
         )

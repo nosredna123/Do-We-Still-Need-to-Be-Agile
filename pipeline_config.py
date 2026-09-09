@@ -94,11 +94,23 @@ NLP_SCORE_SCALES = {
     "sentiment_score": {"version": "v1", "minimum": -2, "maximum": 2, "integer": True},
     "cognitive_load_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
     "ai_dependency_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
+    "coordination_friction_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
+    "rework_signal_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
+    "planning_clarity_score": {"version": "v1", "minimum": 0, "maximum": 4, "integer": True},
 }
 NLP_ENUMS = {
     "methodological_orientation": {"structured", "mixed", "vibe_coding", "insufficient_evidence"},
     "planning_debt_signal": {"present", "absent", "insufficient_evidence"},
+    "integration_risk_signal": {"absent", "low", "moderate", "high", "critical"},
+    "dominant_topic": {
+        "planning_debt", "coordination", "rework", "integration", "technical_quality",
+        "ai_dependency", "cognitive_load", "deadline_pressure", "communication",
+        "testing", "architecture", "other",
+    },
 }
+TRANSCRIPT_CHUNK_TOKENS = 8_000
+TRANSCRIPT_CHUNK_OVERLAP_TOKENS = 500
+TRANSCRIPT_EVIDENCE_MAX_CHARS = 1_000
 _ALL_STUDENT_CUT_SCOPES = [
     {"Semestre": semester, "temporal_marker": marker, "requirement": "required"}
     for semester in ("2025.2", "2026.1")

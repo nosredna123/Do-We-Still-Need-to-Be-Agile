@@ -17,6 +17,9 @@ from pipeline_config import (
     NLP_ENUMS,
     NLP_SCORE_SCALES,
     STUDENT_TEXT_QUESTION_REGISTRY,
+    TRANSCRIPT_CHUNK_OVERLAP_TOKENS,
+    TRANSCRIPT_CHUNK_TOKENS,
+    TRANSCRIPT_EVIDENCE_MAX_CHARS,
 )
 from phase2_contracts import load_phase2_inputs, validate_phase1_contracts
 from pipeline_core import (
@@ -31,6 +34,10 @@ from pipeline_prompts import (
     STUDENT_NLP_PROMPT,
     STUDENT_NLP_PROMPT_VERSION,
     STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
+    TRANSCRIPT_NLP_PROMPT,
+    TRANSCRIPT_NLP_PROMPT_VERSION,
+    TRANSCRIPT_NLP_RESPONSE_SCHEMA_VERSION,
+    TRANSCRIPT_NLP_SYSTEM_PROMPT,
 )
 from llm_gateway import LLMCallGateway
 
@@ -84,21 +91,33 @@ def parse_student_llm_response(response: str) -> dict[str, Any]:
 
 
 def parse_transcript_llm_response(response: str) -> dict[str, Any]:
-    """Parse the strict, non-textual fields returned for a transcript session."""
+    """Parse and validate one strict transcript-session JSON response."""
     try:
         value = json.loads(response)
     except json.JSONDecodeError as error:
         raise ValueError("LLM response must be JSON") from error
-    required = ("coordination_friction_score", "rework_signal_score", "planning_clarity_score", "integration_risk_signal", "dominant_topics")
-    if not isinstance(value, dict) or any(field not in value for field in required):
+    required = (
+        "coordination_friction_score",
+        "rework_signal_score",
+        "planning_clarity_score",
+        "integration_risk_signal",
+        "dominant_topics",
+        "evidence_summary_private",
+    )
+    if not isinstance(value, dict) or set(value) != set(required):
         raise ValueError("Transcript response is missing a required field")
     for field in required[:3]:
-        if isinstance(value[field], bool) or not isinstance(value[field], int) or not 0 <= value[field] <= 4:
-            raise ValueError(f"{field} must be an integer from 0 to 4")
-    if not isinstance(value["integration_risk_signal"], str) or not value["integration_risk_signal"].strip():
-        raise ValueError("integration_risk_signal must be non-empty")
-    if not isinstance(value["dominant_topics"], list) or not all(isinstance(item, str) for item in value["dominant_topics"]):
-        raise ValueError("dominant_topics must be a list of strings")
+        _strict_int(value[field], field)
+    if value["integration_risk_signal"] not in NLP_ENUMS["integration_risk_signal"]:
+        raise ValueError("integration_risk_signal has an invalid enum value")
+    topics = value["dominant_topics"]
+    if not isinstance(topics, list) or len(topics) > 5 or not all(
+        isinstance(item, str) and item in NLP_ENUMS["dominant_topic"] for item in topics
+    ):
+        raise ValueError("dominant_topics contains invalid values")
+    evidence = value["evidence_summary_private"]
+    if not isinstance(evidence, str) or len(evidence) > TRANSCRIPT_EVIDENCE_MAX_CHARS:
+        raise ValueError("evidence_summary_private must be a bounded string")
     return value
 
 
@@ -267,6 +286,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/student_nlp.parquet"),
     )
+    parser.add_argument(
+        "--transcript-output",
+        type=Path,
+        default=Path("data/analysis/transcript_nlp.parquet"),
+    )
     parser.add_argument("--backend", choices=("openai",), default="openai")
     parser.add_argument(
         "--model",
@@ -293,6 +317,7 @@ def main() -> None:
     if args.force:
         invalidate_stale_artifact(args.catalog_output, "force-regeneration")
         invalidate_stale_artifact(args.output, "force-regeneration")
+        invalidate_stale_artifact(args.transcript_output, "force-regeneration")
     if is_current_artifact(args.catalog_output, source_checksum):
         prompts = pd.read_parquet(args.catalog_output)
     else:
@@ -320,28 +345,75 @@ def main() -> None:
     checkpoint_path = args.output.with_name(f"{args.output.name}.partial")
     if not args.force and is_current_artifact(args.output, nlp_checksum):
         logger.info("Student NLP artifact is current: %s", args.output)
+    else:
+        load_project_environment()
+        try:
+            from openai import OpenAI
+        except ImportError as error:
+            raise RuntimeError("openai package is not installed") from error
+        client = OpenAI()
+        results = mine_student_prompts(
+            prompts,
+            lambda prompt: openai_student_backend(prompt, client=client, model=args.model),
+            model=args.model,
+            checkpoint_path=checkpoint_path,
+            checkpoint_checksum=nlp_checksum,
+            prior_output_path=args.output,
+        )
+        write_student_nlp(
+            results,
+            args.output,
+            source_checksum=nlp_checksum,
+            options=nlp_options,
+        )
+        invalidate_stale_artifact(checkpoint_path, "completed-final-artifact")
+        logger.info("Mined %s student NLP observations", len(results))
+
+    transcript_options = {
+        "stage": "transcript_nlp",
+        "backend": args.backend,
+        "model": args.model,
+        "prompt_version": TRANSCRIPT_NLP_PROMPT_VERSION,
+        "response_schema_version": TRANSCRIPT_NLP_RESPONSE_SCHEMA_VERSION,
+        "chunk_tokens": TRANSCRIPT_CHUNK_TOKENS,
+        "chunk_overlap_tokens": TRANSCRIPT_CHUNK_OVERLAP_TOKENS,
+    }
+    transcript_checksum = input_checksum(
+        [
+            args.lake_dir / "transcript_sessions.parquet",
+            args.lake_dir / "transcript_sessions.parquet.metadata.json",
+            Path(__file__).with_name("pipeline_prompts.py"),
+            Path(__file__).with_name("pipeline_config.py"),
+        ],
+        transcript_options,
+    )
+    transcript_checkpoint = args.transcript_output.with_name(f"{args.transcript_output.name}.partial")
+    if not args.force and is_current_artifact(args.transcript_output, transcript_checksum):
+        logger.info("Transcript NLP artifact is current: %s", args.transcript_output)
         return
-    load_project_environment()
-    try:
-        from openai import OpenAI
-    except ImportError as error:
-        raise RuntimeError("openai package is not installed") from error
-    client = OpenAI()
-    results = mine_student_prompts(
-        prompts,
-        lambda prompt: openai_student_backend(prompt, client=client, model=args.model),
+    client = locals().get("client")
+    if client is None:
+        load_project_environment()
+        try:
+            from openai import OpenAI
+        except ImportError as error:
+            raise RuntimeError("openai package is not installed") from error
+        client = OpenAI()
+    transcript_results = mine_transcript_sessions(
+        inputs["transcript_sessions"],
+        lambda prompt: openai_transcript_backend(prompt, client=client, model=args.model),
         model=args.model,
-        checkpoint_path=checkpoint_path,
-        checkpoint_checksum=nlp_checksum,
+        checkpoint_path=transcript_checkpoint,
+        checkpoint_checksum=transcript_checksum,
     )
-    write_student_nlp(
-        results,
-        args.output,
-        source_checksum=nlp_checksum,
-        options=nlp_options,
+    write_transcript_nlp(
+        transcript_results,
+        args.transcript_output,
+        source_checksum=transcript_checksum,
+        options=transcript_options,
     )
-    invalidate_stale_artifact(checkpoint_path, "completed-final-artifact")
-    logger.info("Mined %s student NLP observations", len(results))
+    invalidate_stale_artifact(transcript_checkpoint, "completed-final-artifact")
+    logger.info("Mined %s transcript NLP observations", len(transcript_results))
 
 
 def build_student_nlp_prompt(record: dict[str, Any]) -> str:
@@ -360,6 +432,7 @@ def mine_student_prompts(
     model: str,
     checkpoint_path: Path | None = None,
     checkpoint_checksum: str | None = None,
+    prior_output_path: Path | None = None,
 ) -> pd.DataFrame:
     """Mine cataloged student prompts using an injected backend.
 
@@ -370,6 +443,8 @@ def mine_student_prompts(
         checkpoint_path: Optional private Parquet checkpoint written after each
             successful observation.
         checkpoint_checksum: Checksum associated with the checkpoint inputs.
+        prior_output_path: Previous final artifact whose compatible observations
+            can be reused when the current checksum changed.
 
     Returns:
         Individual-level NLP scores without the original response text.
@@ -384,17 +459,48 @@ def mine_student_prompts(
         raise ValueError(f"student prompt catalog missing required columns: {sorted(missing)}")
     if checkpoint_path is not None and checkpoint_checksum is None:
         raise ValueError("checkpoint_checksum is required with checkpoint_path")
-    completed = pd.DataFrame()
+    completed_frames: list[pd.DataFrame] = []
+    if prior_output_path is not None and prior_output_path.exists():
+        metadata_path = prior_output_path.with_name(f"{prior_output_path.name}.metadata.json")
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            prior = pd.read_parquet(prior_output_path)
+            required_prior = {
+                "student_response_id", "question_id", "Semestre", "temporal_marker",
+                "unit_of_analysis", "model", "prompt_version",
+                "response_schema_version", "status",
+            }
+            if (
+                metadata.get("status") == "success"
+                and metadata.get("contract_version") == "student-nlp-v1"
+                and required_prior.issubset(prior.columns)
+                and prior["model"].eq(model).all()
+                and prior["prompt_version"].eq(STUDENT_NLP_PROMPT_VERSION).all()
+                and prior["response_schema_version"].eq(STUDENT_NLP_RESPONSE_SCHEMA_VERSION).all()
+                and prior["status"].eq("success").all()
+            ):
+                completed_frames.append(prior)
+                logger.info(
+                    "Reusing %s completed student NLP observations from final artifact",
+                    len(prior),
+                )
+        except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+            logger.warning("Ignoring invalid prior student NLP artifact: %s", prior_output_path)
     if checkpoint_path is not None and checkpoint_path.exists():
         metadata_path = checkpoint_path.with_name(f"{checkpoint_path.name}.metadata.json")
         try:
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
             if metadata.get("status") == "partial" and metadata.get("input_checksum") == checkpoint_checksum:
-                completed = pd.read_parquet(checkpoint_path)
+                completed_frames.append(pd.read_parquet(checkpoint_path))
             else:
                 invalidate_stale_artifact(checkpoint_path, "checkpoint-is-stale")
         except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
             invalidate_stale_artifact(checkpoint_path, "checkpoint-is-invalid")
+    completed = pd.DataFrame()
+    if completed_frames:
+        completed = pd.concat(completed_frames, ignore_index=True).drop_duplicates(
+            subset=["student_response_id", "question_id"], keep="last"
+        )
     completed_keys = set()
     if not completed.empty:
         completed_keys = set(zip(completed["student_response_id"], completed["question_id"]))
@@ -513,6 +619,214 @@ def openai_student_backend(prompt: str, *, client: Any, model: str) -> str:
         observation_id=f"student_nlp:{hashlib.sha256(prompt.encode('utf-8')).hexdigest()}",
         model=model,
         system_prompt=STUDENT_NLP_PROMPT,
+        user_prompt=prompt,
+        request_options={
+            "response_format": {"type": str(config["response_format"])},
+            "temperature": float(config["temperature"]),
+        },
+    )
+
+
+def build_transcript_nlp_prompt(transcript_text: str, *, chunk_number: int | None = None, chunk_total: int | None = None) -> str:
+    """Build the versioned prompt for one transcript or transcript chunk."""
+    prompt = TRANSCRIPT_NLP_PROMPT.format(transcript_text=transcript_text)
+    if chunk_number is not None and chunk_total is not None:
+        prompt = f"This is chunk {chunk_number} of {chunk_total}.\n\n{prompt}"
+    return prompt
+
+
+def _transcript_chunks(text: str) -> list[str]:
+    """Split text into deterministic word chunks with configured overlap."""
+    if TRANSCRIPT_CHUNK_TOKENS <= 0 or not 0 <= TRANSCRIPT_CHUNK_OVERLAP_TOKENS < TRANSCRIPT_CHUNK_TOKENS:
+        raise ValueError("transcript chunk configuration is invalid")
+    words = text.split()
+    if len(words) <= TRANSCRIPT_CHUNK_TOKENS:
+        return [text]
+    step = TRANSCRIPT_CHUNK_TOKENS - TRANSCRIPT_CHUNK_OVERLAP_TOKENS
+    chunks: list[str] = []
+    start = 0
+    while start < len(words):
+        end = min(start + TRANSCRIPT_CHUNK_TOKENS, len(words))
+        chunks.append(" ".join(words[start:end]))
+        if end == len(words):
+            break
+        start += step
+    return chunks
+
+
+def _load_transcript_checkpoint(
+    checkpoint_path: Path | None,
+    checkpoint_checksum: str | None,
+) -> pd.DataFrame:
+    """Load a current partial transcript checkpoint or return an empty frame."""
+    if checkpoint_path is None:
+        return pd.DataFrame()
+    if checkpoint_checksum is None:
+        raise ValueError("checkpoint_checksum is required with checkpoint_path")
+    if not checkpoint_path.exists():
+        return pd.DataFrame()
+    metadata_path = checkpoint_path.with_name(f"{checkpoint_path.name}.metadata.json")
+    try:
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        if metadata.get("status") == "partial" and metadata.get("input_checksum") == checkpoint_checksum:
+            return pd.read_parquet(checkpoint_path)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+        pass
+    invalidate_stale_artifact(checkpoint_path, "checkpoint-is-invalid")
+    return pd.DataFrame()
+
+
+def _write_partial_transcript_checkpoint(
+    results: pd.DataFrame,
+    checkpoint_path: Path,
+    source_checksum: str,
+) -> None:
+    """Atomically persist completed transcript-session observations."""
+    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = checkpoint_path.with_name(f".{checkpoint_path.name}.tmp")
+    results.to_parquet(temporary_path, index=False)
+    temporary_path.replace(checkpoint_path)
+    metadata_path = checkpoint_path.with_name(f"{checkpoint_path.name}.metadata.json")
+    metadata_path.write_text(
+        json.dumps(
+            {
+                "input_checksum": source_checksum,
+                "status": "partial",
+                "contract_version": "transcript-nlp-v1",
+                "completed_observations": len(results),
+            },
+            indent=2,
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+
+
+def mine_transcript_sessions(
+    sessions: pd.DataFrame,
+    backend: Callable[[str], str],
+    *,
+    model: str,
+    checkpoint_path: Path | None = None,
+    checkpoint_checksum: str | None = None,
+) -> pd.DataFrame:
+    """Mine anonymized transcript sessions with resumable chunk processing.
+
+    Args:
+        sessions: Validated transcript-session contract DataFrame.
+        backend: Callable receiving a prompt and returning strict JSON.
+        model: Effective model identifier recorded per observation.
+        checkpoint_path: Optional private partial checkpoint path.
+        checkpoint_checksum: Checksum associated with the checkpoint inputs.
+
+    Returns:
+        One validated NLP observation per transcript session.
+
+    Raises:
+        ValueError: If input metadata, text, duplicate keys, or LLM output is invalid.
+    """
+    required_columns = {
+        "session_id", "transcript_file", "Semestre", "temporal_marker",
+        "temporal_marker_source", "transcript_text",
+    }
+    missing = required_columns - set(sessions.columns)
+    if missing:
+        raise ValueError(f"transcript sessions missing required columns: {sorted(missing)}")
+    if sessions["session_id"].isna().any() or sessions["session_id"].astype(str).str.strip().eq("").any():
+        raise ValueError("session_id must be non-empty")
+    if sessions["transcript_text"].isna().any() or sessions["transcript_text"].astype(str).str.strip().eq("").any():
+        raise ValueError("transcript_text must be non-empty")
+    observation_columns = ["transcript_file"]
+    if sessions.duplicated(observation_columns).any():
+        raise ValueError("transcript session observations must be unique")
+
+    completed = _load_transcript_checkpoint(checkpoint_path, checkpoint_checksum)
+    completed_keys = set()
+    if not completed.empty:
+        completed_keys = set(completed["transcript_file"])
+        logger.info("Resuming %s completed transcript NLP observations", len(completed_keys))
+    rows = completed.to_dict("records") if not completed.empty else []
+    total = len(sessions)
+    logger.info("Transcript NLP queue: total=%s completed=%s pending=%s", total, len(completed_keys), total - len(completed_keys))
+    for record in sessions.to_dict("records"):
+        key = record["transcript_file"]
+        if key in completed_keys:
+            logger.info("Skipping completed transcript NLP observation %s", key)
+            continue
+        chunks = _transcript_chunks(str(record["transcript_text"]))
+        chunk_results = []
+        for index, chunk in enumerate(chunks, start=1):
+            response = backend(build_transcript_nlp_prompt(chunk, chunk_number=index, chunk_total=len(chunks)))
+            chunk_results.append(parse_transcript_llm_response(response))
+        if len(chunk_results) == 1:
+            result = chunk_results[0]
+        else:
+            consolidation_prompt = (
+                "Consolidate these validated transcript chunk analyses into one session analysis. "
+                "Return the exact transcript NLP JSON schema, resolving scores conservatively. "
+                f"chunk_results={json.dumps(chunk_results, ensure_ascii=False, sort_keys=True)}"
+            )
+            result = parse_transcript_llm_response(backend(consolidation_prompt))
+        observation = {
+            **{key: record[key] for key in ("session_id", "transcript_file", "Semestre", "temporal_marker", "temporal_marker_source")},
+            "unit_of_analysis": "transcript_session",
+            **result,
+            "model": model,
+            "prompt_version": TRANSCRIPT_NLP_PROMPT_VERSION,
+            "response_schema_version": TRANSCRIPT_NLP_RESPONSE_SCHEMA_VERSION,
+            "status": "success",
+        }
+        rows.append(observation)
+        completed_keys.add(key)
+        if checkpoint_path is not None:
+            _write_partial_transcript_checkpoint(pd.DataFrame(rows), checkpoint_path, str(checkpoint_checksum))
+        logger.info("Transcript NLP progress: completed=%s/%s pending=%s session=%s", len(completed_keys), total, total - len(completed_keys), record["session_id"])
+    return pd.DataFrame(rows)
+
+
+def write_transcript_nlp(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write validated transcript-session NLP results and metadata."""
+    required_columns = {
+        "session_id", "transcript_file", "Semestre", "temporal_marker",
+        "temporal_marker_source", "unit_of_analysis", "coordination_friction_score",
+        "rework_signal_score", "planning_clarity_score", "integration_risk_signal",
+        "dominant_topics", "evidence_summary_private", "model", "prompt_version",
+        "response_schema_version", "status",
+    }
+    missing = required_columns - set(results.columns)
+    if missing:
+        raise ValueError(f"transcript_nlp output missing required columns: {sorted(missing)}")
+    if "transcript_text" in results.columns:
+        raise ValueError("transcript_nlp output must not contain transcript_text")
+    if results.empty:
+        raise ValueError("transcript_nlp output is empty")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    invalidate_stale_artifact(output_path, source_checksum)
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="transcript-nlp-v1",
+        options=options,
+    )
+
+
+def openai_transcript_backend(prompt: str, *, client: Any, model: str) -> str:
+    """Request one strict JSON transcript analysis through the central gateway."""
+    config = MODEL_CONFIG["qualitative_mining"]
+    gateway = LLMCallGateway(client)
+    return gateway.chat_json(
+        observation_id=f"transcript_nlp:{hashlib.sha256(prompt.encode('utf-8')).hexdigest()}",
+        model=model,
+        system_prompt=TRANSCRIPT_NLP_SYSTEM_PROMPT,
         user_prompt=prompt,
         request_options={
             "response_format": {"type": str(config["response_format"])},

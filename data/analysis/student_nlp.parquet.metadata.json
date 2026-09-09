@@ -1,6 +1,6 @@
 {
   "contract_version": "student-nlp-v1",
-  "input_checksum": "509188547d5e70b61ed90e2c04043dec42e81b5ea7377e9c48345c72b52d8569",
+  "input_checksum": "e84b029f2b420695bfa73dbca2393917c6b414a008ebeb4470cf10fa851b0d5c",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",

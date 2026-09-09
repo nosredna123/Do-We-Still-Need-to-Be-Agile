@@ -63,3 +63,26 @@ STUDENT_NLP_PROMPT = (
     "Do not reproduce the response in any field.\n\n"
     "question_id={question_id}\nconstruct={construct}\nresponse={answer_text}"
 )
+
+TRANSCRIPT_NLP_PROMPT_VERSION = "transcript-nlp-v1"
+TRANSCRIPT_NLP_RESPONSE_SCHEMA_VERSION = "transcript-nlp-response-v1"
+TRANSCRIPT_NLP_SYSTEM_PROMPT = (
+    "Analyze anonymized Brazilian Portuguese software-project feedback. Return "
+    "only the requested JSON object. Do not reproduce the transcript or invent "
+    "evidence that is not supported by it."
+)
+TRANSCRIPT_NLP_PROMPT = (
+    "Analyze this anonymized transcript session. Return JSON only with exactly "
+    "these fields: coordination_friction_score (integer 0..4, where 0 means "
+    "none and 4 critical), rework_signal_score (integer 0..4, where 0 means "
+    "none and 4 critical), planning_clarity_score (integer 0..4, where 0 means "
+    "no clarity and 4 very high clarity), integration_risk_signal "
+    "(absent|low|moderate|high|critical), dominant_topics (array of at most 5 "
+    "values from planning_debt|coordination|rework|integration|technical_quality|"
+    "ai_dependency|cognitive_load|deadline_pressure|communication|testing|"
+    "architecture|other), and evidence_summary_private (string of at most 1000 "
+    "characters). Use absent/other and low scores when there is insufficient "
+    "evidence. The evidence summary is private and must be concise; never include "
+    "names, contact details, credentials, or a verbatim quotation.\n\n"
+    "transcript={transcript_text}"
+)

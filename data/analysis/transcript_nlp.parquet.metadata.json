@@ -1,0 +1,14 @@
+{
+  "contract_version": "transcript-nlp-v1",
+  "input_checksum": "02bc64366893f768ae43a41995877e42c2ee7758c2620e23b56f961a4181489f",
+  "options": {
+    "backend": "openai",
+    "chunk_overlap_tokens": 500,
+    "chunk_tokens": 8000,
+    "model": "gpt-4o-mini",
+    "prompt_version": "transcript-nlp-v1",
+    "response_schema_version": "transcript-nlp-response-v1",
+    "stage": "transcript_nlp"
+  },
+  "status": "success"
+}

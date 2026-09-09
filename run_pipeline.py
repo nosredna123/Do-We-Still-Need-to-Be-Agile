@@ -90,6 +90,8 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "analysis" / ".private" / "student_prompt_catalog.parquet"),
                 "--output",
                 str(PROJECT_ROOT / "data" / "analysis" / "student_nlp.parquet"),
+                "--transcript-output",
+                str(PROJECT_ROOT / "data" / "analysis" / "transcript_nlp.parquet"),
             ]
         )
     if force:
