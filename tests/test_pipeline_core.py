@@ -309,6 +309,8 @@ class PipelineCoreTests(unittest.TestCase):
                 str(REPO_ROOT / "data" / "analysis" / "student_nlp.parquet"),
                 "--transcript-output",
                 str(REPO_ROOT / "data" / "analysis" / "transcript_nlp.parquet"),
+                "--textual-cut-signals-output",
+                str(REPO_ROOT / "data" / "analysis" / "textual_cut_signals.parquet"),
             ],
             command,
         )

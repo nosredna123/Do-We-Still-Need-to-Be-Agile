@@ -1,0 +1,16 @@
+{
+  "contract_version": "textual-cut-signals-v2",
+  "input_checksum": "43893c3dbb38b019d292a2812d11bfbe0c73c33141ce0269457f1d261168826c",
+  "options": {
+    "contract_version": "textual-cut-signals-v2",
+    "merge_strategy": "outer",
+    "stage": "textual_cut_signals",
+    "statistical_decisions": {
+      "quantile_method": "linear",
+      "scale_treatment": "ordinal_with_interval_summary",
+      "std_ddof": 1
+    },
+    "summary_version": "distribution-summary-v1"
+  },
+  "status": "success"
+}

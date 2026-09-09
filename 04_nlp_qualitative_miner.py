@@ -40,6 +40,7 @@ from pipeline_prompts import (
     TRANSCRIPT_NLP_SYSTEM_PROMPT,
 )
 from llm_gateway import LLMCallGateway
+from pipeline_statistics import flatten_distribution_summary, summarize_numeric_distribution
 
 logger = logging.getLogger(__name__)
 
@@ -291,6 +292,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/transcript_nlp.parquet"),
     )
+    parser.add_argument(
+        "--textual-cut-signals-output",
+        type=Path,
+        default=Path("data/analysis/textual_cut_signals.parquet"),
+    )
     parser.add_argument("--backend", choices=("openai",), default="openai")
     parser.add_argument(
         "--model",
@@ -318,6 +324,7 @@ def main() -> None:
         invalidate_stale_artifact(args.catalog_output, "force-regeneration")
         invalidate_stale_artifact(args.output, "force-regeneration")
         invalidate_stale_artifact(args.transcript_output, "force-regeneration")
+        invalidate_stale_artifact(args.textual_cut_signals_output, "force-regeneration")
     if is_current_artifact(args.catalog_output, source_checksum):
         prompts = pd.read_parquet(args.catalog_output)
     else:
@@ -390,30 +397,66 @@ def main() -> None:
     transcript_checkpoint = args.transcript_output.with_name(f"{args.transcript_output.name}.partial")
     if not args.force and is_current_artifact(args.transcript_output, transcript_checksum):
         logger.info("Transcript NLP artifact is current: %s", args.transcript_output)
+    else:
+        client = locals().get("client")
+        if client is None:
+            load_project_environment()
+            try:
+                from openai import OpenAI
+            except ImportError as error:
+                raise RuntimeError("openai package is not installed") from error
+            client = OpenAI()
+        transcript_results = mine_transcript_sessions(
+            inputs["transcript_sessions"],
+            lambda prompt: openai_transcript_backend(prompt, client=client, model=args.model),
+            model=args.model,
+            checkpoint_path=transcript_checkpoint,
+            checkpoint_checksum=transcript_checksum,
+        )
+        write_transcript_nlp(
+            transcript_results,
+            args.transcript_output,
+            source_checksum=transcript_checksum,
+            options=transcript_options,
+        )
+        invalidate_stale_artifact(transcript_checkpoint, "completed-final-artifact")
+        logger.info("Mined %s transcript NLP observations", len(transcript_results))
+
+    textual_options = {
+        "stage": "textual_cut_signals",
+        "merge_strategy": "outer",
+        "contract_version": "textual-cut-signals-v2",
+        "summary_version": "distribution-summary-v1",
+        "statistical_decisions": {
+            "std_ddof": 1,
+            "quantile_method": "linear",
+            "scale_treatment": "ordinal_with_interval_summary",
+        },
+    }
+    textual_checksum = input_checksum(
+        [
+            args.output,
+            args.output.with_name(f"{args.output.name}.metadata.json"),
+            args.transcript_output,
+            args.transcript_output.with_name(f"{args.transcript_output.name}.metadata.json"),
+            Path(__file__).with_name("pipeline_config.py"),
+        ],
+        textual_options,
+    )
+    if not args.force and is_current_artifact(args.textual_cut_signals_output, textual_checksum):
+        logger.info("Textual cut signals artifact is current: %s", args.textual_cut_signals_output)
         return
-    client = locals().get("client")
-    if client is None:
-        load_project_environment()
-        try:
-            from openai import OpenAI
-        except ImportError as error:
-            raise RuntimeError("openai package is not installed") from error
-        client = OpenAI()
-    transcript_results = mine_transcript_sessions(
-        inputs["transcript_sessions"],
-        lambda prompt: openai_transcript_backend(prompt, client=client, model=args.model),
-        model=args.model,
-        checkpoint_path=transcript_checkpoint,
-        checkpoint_checksum=transcript_checksum,
+    textual_results = aggregate_textual_cut_signals(
+        pd.read_parquet(args.output),
+        pd.read_parquet(args.transcript_output),
     )
-    write_transcript_nlp(
-        transcript_results,
-        args.transcript_output,
-        source_checksum=transcript_checksum,
-        options=transcript_options,
+    write_textual_cut_signals(
+        textual_results,
+        args.textual_cut_signals_output,
+        source_checksum=textual_checksum,
+        options=textual_options,
     )
-    invalidate_stale_artifact(transcript_checkpoint, "completed-final-artifact")
-    logger.info("Mined %s transcript NLP observations", len(transcript_results))
+    logger.info("Aggregated %s textual cut signal observations", len(textual_results))
 
 
 def build_student_nlp_prompt(record: dict[str, Any]) -> str:
@@ -836,13 +879,152 @@ def openai_transcript_backend(prompt: str, *, client: Any, model: str) -> str:
 
 
 def aggregate_textual_cut_signals(students: pd.DataFrame, transcripts: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate student and transcript scores by semester and temporal cut."""
+    """Aggregate NLP signals by semester and temporal cut without team keys.
+
+    Args:
+        students: Validated student NLP observations.
+        transcripts: Validated transcript NLP observations.
+
+    Returns:
+        A ``cut_context`` DataFrame with an outer union of observed cuts.
+
+    Raises:
+        ValueError: If required columns, units, or keys are invalid.
+    """
     keys = ["Semestre", "temporal_marker"]
-    student = students.groupby(keys).agg(ie_student_cognitive_load_mean=("cognitive_load_score", "mean"), ie_student_sentiment_mean=("sentiment_score", "mean"), ie_student_ai_dependency_mean=("ai_dependency_score", "mean"), student_n=("student_response_id", "nunique")).reset_index()
-    transcript = transcripts.groupby(keys).agg(ie_transcript_coordination_friction_mean=("coordination_friction_score", "mean"), ie_transcript_rework_signal_mean=("rework_signal_score", "mean"), transcript_session_n=("session_id", "nunique")).reset_index()
-    result = student.merge(transcript, on=keys, how="outer", validate="one_to_one")
-    result["unit_of_analysis"] = "cut_context"
-    return result
+    student_required = {
+        *keys, "student_response_id", "question_id", "unit_of_analysis", "cognitive_load_score",
+        "sentiment_score", "ai_dependency_score",
+    }
+    transcript_required = {
+        *keys, "transcript_file", "unit_of_analysis", "coordination_friction_score",
+        "rework_signal_score", "planning_clarity_score", "integration_risk_signal",
+        "dominant_topics",
+    }
+    missing_students = student_required - set(students.columns)
+    missing_transcripts = transcript_required - set(transcripts.columns)
+    if missing_students:
+        raise ValueError(f"student NLP input missing columns: {sorted(missing_students)}")
+    if missing_transcripts:
+        raise ValueError(f"transcript NLP input missing columns: {sorted(missing_transcripts)}")
+    if not students["unit_of_analysis"].eq("student_response").all():
+        raise ValueError("student NLP input has an invalid unit_of_analysis")
+    if not transcripts["unit_of_analysis"].eq("transcript_session").all():
+        raise ValueError("transcript NLP input has an invalid unit_of_analysis")
+    if students.duplicated(["student_response_id", "question_id"]).any():
+        raise ValueError("student NLP input has duplicate observations")
+    if transcripts["transcript_file"].duplicated().any():
+        raise ValueError("transcript NLP input has duplicate transcript_file observations")
+
+    scale_versions = {name: definition["version"] for name, definition in NLP_SCORE_SCALES.items()}
+    student_scores = ("sentiment_score", "cognitive_load_score", "ai_dependency_score")
+    cut_keys = pd.concat(
+        [students[keys], transcripts[keys]], ignore_index=True
+    ).drop_duplicates().sort_values(keys).reset_index(drop=True)
+    student_by_cut = students.groupby(keys, dropna=False)
+    transcript_by_cut = transcripts.groupby(keys, dropna=False)
+    risk_order = {"absent": 0, "low": 1, "moderate": 2, "high": 3, "critical": 4}
+
+    def summarize_transcript_group(group: pd.DataFrame) -> pd.Series:
+        risks = group["integration_risk_signal"].value_counts()
+        risk_mode = max(risks.index, key=lambda value: (int(risks[value]), risk_order[value]))
+        risk_mode_n = int(risks[risk_mode])
+        topic_counts: dict[str, int] = {}
+        for topic_values in group["dominant_topics"]:
+            for topic in topic_values:
+                topic_counts[topic] = topic_counts.get(topic, 0) + 1
+        topics = sorted(topic_counts)
+        values: dict[str, Any] = {}
+        for score in (
+            "coordination_friction_score",
+            "rework_signal_score",
+            "planning_clarity_score",
+        ):
+            summary = summarize_numeric_distribution(
+                group[score],
+                scale_type="ordinal",
+                scale_version=scale_versions[score],
+            )
+            values.update(flatten_distribution_summary(summary, f"ie_transcript_{score}"))
+        values.update(
+            {
+                "ie_transcript_integration_risk_mode": risk_mode,
+                "ie_transcript_integration_risk_mode_n": risk_mode_n,
+                "ie_transcript_integration_risk_mode_share": float(risk_mode_n / len(group)),
+                "ie_transcript_dominant_topics": topics,
+                "ie_transcript_dominant_topic_counts": topic_counts,
+                "ie_transcript_dominant_topic_shares": {
+                    topic: count / len(group) for topic, count in topic_counts.items()
+                },
+                "transcript_session_n": group["transcript_file"].nunique(),
+            }
+        )
+        return pd.Series(values)
+
+    rows: list[dict[str, Any]] = []
+    for cut in cut_keys.to_dict("records"):
+        key = (cut["Semestre"], cut["temporal_marker"])
+        row: dict[str, Any] = dict(cut)
+        student_group = student_by_cut.get_group(key) if key in student_by_cut.groups else students.iloc[0:0]
+        transcript_group = transcript_by_cut.get_group(key) if key in transcript_by_cut.groups else transcripts.iloc[0:0]
+        row["student_n"] = int(student_group["student_response_id"].nunique())
+        row["student_response_n"] = int(len(student_group))
+        for question_id, question_group in student_group.groupby("question_id", dropna=False):
+            for score in student_scores:
+                summary = summarize_numeric_distribution(
+                    question_group[score],
+                    scale_type="ordinal",
+                    scale_version=scale_versions[score],
+                )
+                row.update(
+                    flatten_distribution_summary(
+                        summary, f"student_{question_id}_{score}"
+                    )
+                )
+        if transcript_group.empty:
+            row["transcript_session_n"] = None
+            row["transcript_observation_n"] = 0
+        else:
+            row.update(summarize_transcript_group(transcript_group).to_dict())
+            row["transcript_observation_n"] = int(len(transcript_group))
+        row["unit_of_analysis"] = "cut_context"
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def write_textual_cut_signals(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write the immutable textual cut signal artifact and metadata."""
+    required_columns = {
+        "Semestre", "temporal_marker", "student_n", "student_response_n",
+        "transcript_session_n", "transcript_observation_n", "unit_of_analysis",
+    }
+    missing = required_columns - set(results.columns)
+    if missing:
+        raise ValueError(f"textual_cut_signals output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("textual_cut_signals output is empty")
+    if not results["unit_of_analysis"].eq("cut_context").all():
+        raise ValueError("textual_cut_signals has an invalid unit_of_analysis")
+    if results.duplicated(["Semestre", "temporal_marker"]).any():
+        raise ValueError("textual_cut_signals has duplicate cut keys")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    if output_path.exists() or output_path.with_name(f"{output_path.name}.metadata.json").exists():
+        raise ValueError("textual_cut_signals artifact is immutable and stale")
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="textual-cut-signals-v2",
+        options=options,
+    )
 
 
 if __name__ == "__main__":

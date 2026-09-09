@@ -147,3 +147,78 @@ def test_write_transcript_nlp_writes_sidecar(tmp_path: Path) -> None:
     )
     assert metadata["contract_version"] == "transcript-nlp-v1"
     assert metadata["status"] == "success"
+
+
+def test_aggregate_textual_cut_signals_preserves_outer_cuts_and_uses_observed_keys() -> None:
+    miner = load_miner()
+    students = pd.DataFrame(
+        [
+            {"student_response_id": "student-1", "question_id": "project_feeling", "unit_of_analysis": "student_response", "Semestre": "2025.2", "temporal_marker": "T1", "cognitive_load_score": 2, "sentiment_score": 1, "ai_dependency_score": 3},
+            {"student_response_id": "student-2", "question_id": "project_feeling", "unit_of_analysis": "student_response", "Semestre": "2025.2", "temporal_marker": "T1", "cognitive_load_score": 4, "sentiment_score": -1, "ai_dependency_score": 1},
+        ]
+    )
+    transcripts = pd.DataFrame(
+        [
+            {"session_id": "group-1", "transcript_file": "t1-a.txt", "unit_of_analysis": "transcript_session", "Semestre": "2025.2", "temporal_marker": "T1", "coordination_friction_score": 2, "rework_signal_score": 1, "planning_clarity_score": 3, "integration_risk_signal": "high", "dominant_topics": ["coordination"]},
+            {"session_id": "group-1", "transcript_file": "t1-b.txt", "unit_of_analysis": "transcript_session", "Semestre": "2025.2", "temporal_marker": "T1", "coordination_friction_score": 4, "rework_signal_score": 3, "planning_clarity_score": 1, "integration_risk_signal": "critical", "dominant_topics": ["rework", "coordination"]},
+        ]
+    )
+
+    result = miner.aggregate_textual_cut_signals(students, transcripts)
+
+    assert len(result) == 1
+    row = result.iloc[0]
+    assert row["student_n"] == 2
+    assert row["transcript_session_n"] == 2
+    assert row["student_project_feeling_cognitive_load_score_mean"] == 3
+    assert row["student_project_feeling_cognitive_load_score_n_valid"] == 2
+    assert row["ie_transcript_planning_clarity_score_mean"] == 2
+    assert row["ie_transcript_planning_clarity_score_iqr"] == 1.0
+    assert row["ie_transcript_integration_risk_mode"] == "critical"
+    assert row["ie_transcript_integration_risk_mode_n"] == 1
+    assert row["ie_transcript_dominant_topics"] == ["coordination", "rework"]
+    assert row["unit_of_analysis"] == "cut_context"
+
+
+def test_aggregate_textual_cut_signals_outer_join_retains_source_only_cut() -> None:
+    miner = load_miner()
+    students = pd.DataFrame(
+        [{"student_response_id": "student-1", "question_id": "project_feeling", "unit_of_analysis": "student_response", "Semestre": "2025.2", "temporal_marker": "T2", "cognitive_load_score": 2, "sentiment_score": 0, "ai_dependency_score": 1}]
+    )
+    transcripts = pd.DataFrame(
+        [{"session_id": "group-1", "transcript_file": "t1.txt", "unit_of_analysis": "transcript_session", "Semestre": "2025.2", "temporal_marker": "T1", "coordination_friction_score": 1, "rework_signal_score": 2, "planning_clarity_score": 3, "integration_risk_signal": "low", "dominant_topics": ["planning_debt"]}]
+    )
+
+    result = miner.aggregate_textual_cut_signals(students, transcripts)
+
+    assert set(result["temporal_marker"]) == {"T1", "T2"}
+    t2 = result.loc[result["temporal_marker"] == "T2"].iloc[0]
+    assert pd.isna(t2["transcript_session_n"])
+    assert t2["student_n"] == 1
+
+
+def test_write_textual_cut_signals_writes_sidecar_and_refuses_stale_overwrite(tmp_path: Path) -> None:
+    miner = load_miner()
+    result = miner.aggregate_textual_cut_signals(
+        pd.DataFrame([{
+            "student_response_id": "student-1", "question_id": "project_feeling",
+            "unit_of_analysis": "student_response", "Semestre": "2025.2",
+            "temporal_marker": "T1", "cognitive_load_score": 2,
+            "sentiment_score": 0, "ai_dependency_score": 1,
+        }]),
+        pd.DataFrame([{
+            "session_id": "group-1", "transcript_file": "t1.txt",
+            "unit_of_analysis": "transcript_session", "Semestre": "2025.2",
+            "temporal_marker": "T1", "coordination_friction_score": 1,
+            "rework_signal_score": 2, "planning_clarity_score": 3,
+            "integration_risk_signal": "low", "dominant_topics": ["planning_debt"],
+        }]),
+    )
+    output = tmp_path / "textual_cut_signals.parquet"
+    miner.write_textual_cut_signals(result, output, source_checksum="checksum-v1", options={"stage": "textual_cut_signals"})
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert metadata["contract_version"] == "textual-cut-signals-v2"
+    assert metadata["status"] == "success"
+    with pytest.raises(ValueError, match="immutable"):
+        miner.write_textual_cut_signals(result, output, source_checksum="checksum-v2", options={"stage": "textual_cut_signals"})
