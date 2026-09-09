@@ -312,15 +312,32 @@ class PipelineCoreTests(unittest.TestCase):
             ]):
                 orchestrator.main()
 
-        run.assert_called_once_with(
-            [
-                sys.executable,
-                str(REPO_ROOT / "02_git_parser.py"),
-                "--force",
-            ],
-            check=True,
-            cwd=REPO_ROOT,
+        call = run.call_args
+        self.assertEqual(
+            [sys.executable, str(REPO_ROOT / "02_git_parser.py"), "--force"],
+            call.args[0],
         )
+        self.assertEqual(call.kwargs["check"], True)
+        self.assertEqual(call.kwargs["cwd"], REPO_ROOT)
+        self.assertEqual(call.kwargs["stderr"], orchestrator.subprocess.STDOUT)
+        self.assertEqual(call.kwargs["stdout"].mode, "a")
+
+    def test_pipeline_orchestrator_writes_timestamped_execution_log(self) -> None:
+        orchestrator = load_script_module("pipeline_orchestrator_logging", "run_pipeline.py")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            log_dir = Path(tmp_dir) / "logs"
+            with mock.patch.object(orchestrator.subprocess, "run"):
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py", "--stages", "git", "--dry-run",
+                    "--log-dir", str(log_dir),
+                ]):
+                    orchestrator.main()
+
+            log_files = list(log_dir.glob("pipeline_*.txt"))
+            self.assertEqual(len(log_files), 1)
+            content = log_files[0].read_text(encoding="utf-8")
+            self.assertIn("Running stage git", content)
+            self.assertRegex(log_files[0].name, r"^pipeline_\d{8}T\d{6}Z\.txt$")
 
     def test_cleanup_phase_one_artifacts_accepts_nested_project_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

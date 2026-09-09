@@ -8,6 +8,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import logging
 import os
 import subprocess
@@ -97,6 +98,12 @@ def build_stage_command(
     return command
 
 
+def execution_log_path(log_dir: Path, now: datetime | None = None) -> Path:
+    """Return a timestamped text path for one pipeline execution log."""
+    timestamp = (now or datetime.now(timezone.utc)).strftime("%Y%m%dT%H%M%SZ")
+    return log_dir / f"pipeline_{timestamp}.txt"
+
+
 def main() -> None:
     """Parse CLI options and execute the requested pipeline stages."""
     load_project_environment()
@@ -148,6 +155,18 @@ def main() -> None:
         action="store_true",
         help="Log selected commands without executing them",
     )
+    parser.add_argument(
+        "--log-dir",
+        type=Path,
+        default=Path("logs"),
+        help="Directory for timestamped execution logs",
+    )
+    parser.add_argument(
+        "--log-file",
+        type=Path,
+        default=None,
+        help="Explicit execution log path; overrides --log-dir",
+    )
     args = parser.parse_args()
     if args.limite is not None and args.limite < 1:
         parser.error("--limite must be greater than zero")
@@ -158,10 +177,15 @@ def main() -> None:
         stages = resolve_stages(args.stages, args.from_stage, args.to_stage)
     except ValueError as error:
         parser.error(str(error))
+    log_path = args.log_file or execution_log_path(args.log_dir)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        handlers=[logging.StreamHandler(), logging.FileHandler(log_path, encoding="utf-8")],
+        force=True,
     )
+    logger.info("Pipeline execution log: %s", log_path)
     for stage in stages:
         command = build_stage_command(
             stage,
@@ -175,7 +199,14 @@ def main() -> None:
         if args.dry_run:
             continue
         try:
-            subprocess.run(command, check=True, cwd=PROJECT_ROOT)
+            with log_path.open("a", encoding="utf-8") as log_handle:
+                subprocess.run(
+                    command,
+                    check=True,
+                    cwd=PROJECT_ROOT,
+                    stdout=log_handle,
+                    stderr=subprocess.STDOUT,
+                )
         except subprocess.CalledProcessError as error:
             logger.error("Stage %s failed with exit code %s", stage, error.returncode)
             raise SystemExit(error.returncode) from error
