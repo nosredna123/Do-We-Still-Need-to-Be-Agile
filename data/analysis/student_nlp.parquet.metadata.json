@@ -1,0 +1,12 @@
+{
+  "contract_version": "student-nlp-v1",
+  "input_checksum": "509188547d5e70b61ed90e2c04043dec42e81b5ea7377e9c48345c72b52d8569",
+  "options": {
+    "backend": "openai",
+    "model": "gpt-4o-mini",
+    "prompt_version": "student-nlp-v1",
+    "response_schema_version": "student-nlp-response-v1",
+    "stage": "student_nlp"
+  },
+  "status": "success"
+}
