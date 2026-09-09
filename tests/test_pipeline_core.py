@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import io
 import json
 import os
 import subprocess
@@ -306,21 +307,18 @@ class PipelineCoreTests(unittest.TestCase):
     def test_pipeline_orchestrator_runs_selected_stage_with_force(self) -> None:
         orchestrator = load_script_module("pipeline_orchestrator", "run_pipeline.py")
 
-        with mock.patch.object(orchestrator.subprocess, "run") as run:
+        with mock.patch.object(orchestrator, "run_stage_process") as run_stage:
             with mock.patch.object(sys, "argv", [
                 "run_pipeline.py", "--stages", "git", "--force",
             ]):
                 orchestrator.main()
 
-        call = run.call_args
+        call = run_stage.call_args
         self.assertEqual(
             [sys.executable, str(REPO_ROOT / "02_git_parser.py"), "--force"],
             call.args[0],
         )
-        self.assertEqual(call.kwargs["check"], True)
-        self.assertEqual(call.kwargs["cwd"], REPO_ROOT)
-        self.assertEqual(call.kwargs["stderr"], orchestrator.subprocess.STDOUT)
-        self.assertEqual(call.kwargs["stdout"].mode, "a")
+        self.assertTrue(str(call.args[1]).endswith(".txt"))
 
     def test_pipeline_orchestrator_writes_timestamped_execution_log(self) -> None:
         orchestrator = load_script_module("pipeline_orchestrator_logging", "run_pipeline.py")
@@ -338,6 +336,21 @@ class PipelineCoreTests(unittest.TestCase):
             content = log_files[0].read_text(encoding="utf-8")
             self.assertIn("Running stage git", content)
             self.assertRegex(log_files[0].name, r"^pipeline_\d{8}T\d{6}Z\.txt$")
+
+    def test_stage_process_streams_child_output_to_terminal_and_log(self) -> None:
+        orchestrator = load_script_module("pipeline_orchestrator_streaming", "run_pipeline.py")
+        process = mock.Mock()
+        process.stdout = iter(["queue: pending=2\n", "progress: completed=1/2\n"])
+        process.wait.return_value = 0
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            log_path = Path(tmp_dir) / "pipeline.txt"
+            with mock.patch.object(orchestrator.subprocess, "Popen", return_value=process):
+                with mock.patch("sys.stdout", new_callable=io.StringIO) as stdout:
+                    orchestrator.run_stage_process(["stage"], log_path)
+
+            expected = "queue: pending=2\nprogress: completed=1/2\n"
+            self.assertEqual(stdout.getvalue(), expected)
+            self.assertEqual(log_path.read_text(encoding="utf-8"), expected)
 
     def test_cleanup_phase_one_artifacts_accepts_nested_project_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

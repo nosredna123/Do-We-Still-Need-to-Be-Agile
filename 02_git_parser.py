@@ -268,9 +268,10 @@ def main() -> None:
 
     all_commit_rows: list[dict[str, Any]] = []
     all_file_rows: list[dict[str, Any]] = []
+    logger.info("Git repository queue: total=%d pending=%d", len(repos_df), len(repos_df))
 
     # Process each repository
-    for idx, row in repos_df.iterrows():
+    for repo_index, (idx, row) in enumerate(repos_df.iterrows(), start=1):
         team_id = normalize_text(row.get("ID_Equipe"))
         repo_url = normalize_text(row.get("URL_Repositorio_Fork"))
         semestre = normalize_text(row.get("Semestre"))
@@ -323,6 +324,15 @@ def main() -> None:
             file_row["file_path_old"] = anonymize_path_pii(file_row.get("file_path_old"))
             file_row["file_extension"] = Path(file_row["file_path"]).suffix.lower()
             all_file_rows.append(file_row)
+        logger.info(
+            "Git repository progress: completed=%d/%d pending=%d commits=%d files=%d repository=%s",
+            repo_index,
+            len(repos_df),
+            len(repos_df) - repo_index,
+            len(all_commit_rows),
+            len(all_file_rows),
+            repo_path.name,
+        )
 
     logger.info(f"Extracted {len(all_commit_rows)} total commits")
 

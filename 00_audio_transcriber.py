@@ -142,9 +142,14 @@ def main() -> None:
 
     if args.limite is not None:
         pending_audio_files = pending_audio_files[:args.limite]
-    logger.info("Selected %d pending audio files", len(pending_audio_files))
+    logger.info(
+        "Transcription queue: total=%d completed=%d pending=%d",
+        len(audio_files),
+        len(audio_files) - len(pending_audio_files),
+        len(pending_audio_files),
+    )
 
-    for audio_file in pending_audio_files:
+    for index, audio_file in enumerate(pending_audio_files, start=1):
         relative_audio_path = audio_file.relative_to(args.audio_dir)
         output_file = args.output_dir / relative_audio_path.with_suffix(".json")
         text_output_file = output_file.with_suffix(".txt")
@@ -157,7 +162,13 @@ def main() -> None:
 
         write_artifact_metadata(output_file, input_checksum)
         write_artifact_metadata(text_output_file, input_checksum)
-        logger.info(f"Transcribed: {audio_file.name} -> {output_file.name}")
+        logger.info(
+            "Transcription progress: completed=%d/%d pending=%d source=%s",
+            index,
+            len(pending_audio_files),
+            len(pending_audio_files) - index,
+            audio_file.name,
+        )
 
     logger.info("Transcription complete")
 

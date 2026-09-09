@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import logging
 from pathlib import Path
 
 import pandas as pd
@@ -152,8 +153,9 @@ def test_openai_student_backend_uses_versioned_json_request() -> None:
     assert calls[0]["temperature"] == 0
 
 
-def test_mine_student_prompts_resumes_completed_observations(tmp_path: Path) -> None:
+def test_mine_student_prompts_logs_processing_progress(caplog, tmp_path: Path) -> None:
     miner = load_miner()
+    caplog.set_level(logging.INFO)
     prompts = prompt_frame_with_three_observations()
     checkpoint = tmp_path / ".private" / "student_nlp.partial.parquet"
     first_run_calls: list[str] = []
@@ -174,6 +176,8 @@ def test_mine_student_prompts_resumes_completed_observations(tmp_path: Path) -> 
         )
 
     assert checkpoint.exists()
+    assert "total=3 completed=0 pending=3" in caplog.text
+    assert "completed=2/3 pending=1" in caplog.text
     resumed_calls: list[str] = []
     result = miner.mine_student_prompts(
         prompts,
@@ -187,3 +191,5 @@ def test_mine_student_prompts_resumes_completed_observations(tmp_path: Path) -> 
     assert len(resumed_calls) == 1
     assert len(result) == 3
     assert not result.duplicated(["student_response_id", "question_id"]).any()
+    assert "Resuming 2 completed student NLP observations" in caplog.text
+    assert "completed=3/3 pending=0" in caplog.text

@@ -13,6 +13,7 @@ import logging
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 
@@ -102,6 +103,28 @@ def execution_log_path(log_dir: Path, now: datetime | None = None) -> Path:
     """Return a timestamped text path for one pipeline execution log."""
     timestamp = (now or datetime.now(timezone.utc)).strftime("%Y%m%dT%H%M%SZ")
     return log_dir / f"pipeline_{timestamp}.txt"
+
+
+def run_stage_process(command: list[str], log_path: Path) -> None:
+    """Run one stage while streaming output to both terminal and log file."""
+    process = subprocess.Popen(
+        command,
+        cwd=PROJECT_ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    )
+    assert process.stdout is not None
+    with log_path.open("a", encoding="utf-8") as log_handle:
+        for line in process.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            log_handle.write(line)
+            log_handle.flush()
+    return_code = process.wait()
+    if return_code:
+        raise subprocess.CalledProcessError(return_code, command)
 
 
 def main() -> None:
@@ -198,17 +221,21 @@ def main() -> None:
         logger.info("Running stage %s: %s", stage, " ".join(command))
         if args.dry_run:
             continue
+        started_at = time.monotonic()
         try:
-            with log_path.open("a", encoding="utf-8") as log_handle:
-                subprocess.run(
-                    command,
-                    check=True,
-                    cwd=PROJECT_ROOT,
-                    stdout=log_handle,
-                    stderr=subprocess.STDOUT,
-                )
+            run_stage_process(command, log_path)
+            logger.info(
+                "Finished stage %s status=success duration_seconds=%.1f",
+                stage,
+                time.monotonic() - started_at,
+            )
         except subprocess.CalledProcessError as error:
-            logger.error("Stage %s failed with exit code %s", stage, error.returncode)
+            logger.error(
+                "Finished stage %s status=failed exit_code=%s duration_seconds=%.1f",
+                stage,
+                error.returncode,
+                time.monotonic() - started_at,
+            )
             raise SystemExit(error.returncode) from error
 
 

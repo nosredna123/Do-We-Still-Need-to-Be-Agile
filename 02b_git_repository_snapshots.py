@@ -382,6 +382,7 @@ def build_repository_snapshots(
         result.to_parquet(temporary, index=False)
         temporary.replace(output_path)
         _write_metadata(output_path, checksum)
+        logger.info("Repository snapshots written: rows=%d", len(result))
     except Exception:
         temporary.unlink(missing_ok=True)
         output_path.unlink(missing_ok=True)

@@ -134,9 +134,14 @@ def main() -> None:
 
     if args.limite is not None:
         pending_audio_paths = pending_audio_paths[:args.limite]
-    logger.info("Selected %d pending source audio files", len(pending_audio_paths))
+    logger.info(
+        "Audio preparation queue: total=%d completed=%d pending=%d",
+        len(audio_paths),
+        len(audio_paths) - len(pending_audio_paths),
+        len(pending_audio_paths),
+    )
 
-    for source_path in pending_audio_paths:
+    for index, source_path in enumerate(pending_audio_paths, start=1):
         relative_path = source_path.relative_to(args.audio_dir)
         output_path = args.output_dir / relative_path.with_suffix(".mp3")
         checksum = file_checksum(source_path)
@@ -162,6 +167,13 @@ def main() -> None:
             raise RuntimeError(f"Prepared audio exceeds upload limit: {source_path}")
         for segment in segments:
             write_artifact_metadata(segment, checksum)
+        logger.info(
+            "Audio preparation progress: completed=%d/%d pending=%d source=%s",
+            index,
+            len(pending_audio_paths),
+            len(pending_audio_paths) - index,
+            source_path.name,
+        )
 
 
 if __name__ == "__main__":

@@ -311,6 +311,7 @@ def build_lake(forms_dir: Path, git_commits_path: Path, transcripts_dir: Path, o
         for name, path in artifacts.items():
             temporary[name].replace(path)
             write_artifact_metadata(path, checksum)
+            logger.info("Lake contract written: %s rows=%d", name, len(outputs[name]))
         (output_dir / "lake_validation_report.json").write_text(json.dumps(validation_report(outputs, artifacts), indent=2), encoding="utf-8")
         return artifacts
     except Exception:

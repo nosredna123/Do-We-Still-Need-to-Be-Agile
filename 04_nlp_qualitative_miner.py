@@ -389,7 +389,6 @@ def mine_student_prompts(
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
             if metadata.get("status") == "partial" and metadata.get("input_checksum") == checkpoint_checksum:
                 completed = pd.read_parquet(checkpoint_path)
-                logger.info("Resuming %s completed student NLP observations", len(completed))
             else:
                 invalidate_stale_artifact(checkpoint_path, "checkpoint-is-stale")
         except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
@@ -397,11 +396,23 @@ def mine_student_prompts(
     completed_keys = set()
     if not completed.empty:
         completed_keys = set(zip(completed["student_response_id"], completed["question_id"]))
+        logger.info("Resuming %s completed student NLP observations", len(completed))
+    total_observations = len(prompts)
+    pending_observations = total_observations - len(completed_keys)
+    logger.info(
+        "Student NLP queue: total=%s completed=%s pending=%s",
+        total_observations,
+        len(completed_keys),
+        pending_observations,
+    )
     rows = completed.to_dict("records") if not completed.empty else []
     for record in prompts.to_dict("records"):
         observation_key = (record["student_response_id"], record["question_id"])
         if observation_key in completed_keys:
-            logger.info("Skipping completed student NLP observation %s/%s", *observation_key)
+            logger.info(
+                "Skipping completed student NLP observation %s/%s",
+                *observation_key,
+            )
             continue
         result = parse_student_llm_response(backend(build_student_nlp_prompt(record)))
         observation = {
@@ -421,6 +432,14 @@ def mine_student_prompts(
             _write_partial_student_nlp_checkpoint(
                 pd.DataFrame(rows), checkpoint_path, str(checkpoint_checksum)
             )
+        completed_count = len(completed_keys)
+        logger.info(
+            "Student NLP progress: completed=%s/%s pending=%s observation=%s/%s",
+            completed_count,
+            total_observations,
+            total_observations - completed_count,
+            *observation_key,
+        )
     return pd.DataFrame(rows)
 
 

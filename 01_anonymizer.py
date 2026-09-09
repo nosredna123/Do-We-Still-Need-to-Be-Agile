@@ -178,6 +178,7 @@ def main() -> None:
         for path in transcript_paths
     ]
 
+    total_outputs = len(csv_outputs) + len(transcript_outputs)
     pending_outputs = []
     for source_path, target_path in [*csv_outputs, *transcript_outputs]:
         checksum = input_checksum([source_path], {"salt": salt})
@@ -187,7 +188,12 @@ def main() -> None:
         pending_outputs = pending_outputs[:args.limite]
     csv_outputs = [item for item in pending_outputs if item in csv_outputs]
     transcript_outputs = [item for item in pending_outputs if item in transcript_outputs]
-    logger.info("Selected %d pending files for anonymization", len(pending_outputs))
+    logger.info(
+        "Anonymization queue: total=%d completed=%d pending=%d",
+        total_outputs,
+        total_outputs - len(pending_outputs),
+        len(pending_outputs),
+    )
 
     logger.info("Building anonymization mapping...")
 
@@ -202,6 +208,8 @@ def main() -> None:
     )
 
     logger.info(f"Found {len(mapping)} identifiers to anonymize")
+    processed_count = 0
+    total_pending = len(pending_outputs)
 
     # Anonymize CSV if provided
     for csv_path, output_csv in csv_outputs:
@@ -212,6 +220,14 @@ def main() -> None:
         anonymize_csv_file(csv_path, output_csv, mapping, salt=salt)
         write_artifact_metadata(output_csv, checksum)
         logger.info(f"Wrote anonymized CSV to {output_csv}")
+        processed_count += 1
+        logger.info(
+            "Anonymization progress: completed=%d/%d pending=%d source=%s",
+            processed_count,
+            total_pending,
+            total_pending - processed_count,
+            csv_path.name,
+        )
 
     # Anonymize transcript if provided
     for transcript_path, output_transcript in transcript_outputs:
@@ -222,6 +238,14 @@ def main() -> None:
         anonymize_transcript(transcript_path, output_transcript, mapping)
         write_artifact_metadata(output_transcript, checksum)
         logger.info(f"Wrote anonymized transcript to {output_transcript}")
+        processed_count += 1
+        logger.info(
+            "Anonymization progress: completed=%d/%d pending=%d source=%s",
+            processed_count,
+            total_pending,
+            total_pending - processed_count,
+            transcript_path.name,
+        )
 
     # Write mapping (restricted file)
     logger.info(f"Writing mapping to {args.mapping_path}")

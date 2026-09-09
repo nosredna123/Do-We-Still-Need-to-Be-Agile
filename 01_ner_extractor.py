@@ -116,9 +116,14 @@ def main() -> None:
 
     if args.limite is not None:
         pending_paths = pending_paths[:args.limite]
-    logger.info("Selected %d pending transcripts", len(pending_paths))
+    logger.info(
+        "NER queue: total=%d completed=%d pending=%d",
+        len(transcript_paths),
+        len(transcript_paths) - len(pending_paths),
+        len(pending_paths),
+    )
 
-    for source_path in pending_paths:
+    for index, source_path in enumerate(pending_paths, start=1):
         output_path = args.output_dir / source_path.relative_to(args.transcripts_dir)
         output_path = output_path.with_name(f"{output_path.stem}.ner.json")
         checksum = file_checksum(source_path)
@@ -128,6 +133,13 @@ def main() -> None:
             json.dumps({"person_entities": entities}, indent=2), encoding="utf-8"
         )
         write_artifact_metadata(output_path, checksum)
+        logger.info(
+            "NER progress: completed=%d/%d pending=%d source=%s",
+            index,
+            len(pending_paths),
+            len(pending_paths) - index,
+            source_path.name,
+        )
 
 
 if __name__ == "__main__":
