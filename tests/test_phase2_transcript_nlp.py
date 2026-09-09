@@ -149,6 +149,38 @@ def test_write_transcript_nlp_writes_sidecar(tmp_path: Path) -> None:
     assert metadata["status"] == "success"
 
 
+def test_mine_transcript_sessions_reuses_prior_final_artifact(tmp_path: Path) -> None:
+    miner = load_miner()
+    prior_output = tmp_path / "transcript_nlp.parquet"
+    prior_result = miner.mine_transcript_sessions(
+        transcript_frame(), lambda _prompt: valid_response(), model="mock-model"
+    )
+    prior_result.to_parquet(prior_output, index=False)
+    prior_output.with_name(f"{prior_output.name}.metadata.json").write_text(
+        json.dumps(
+            {
+                "status": "success",
+                "input_checksum": "legacy-checksum",
+                "contract_version": "transcript-nlp-v1",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def unexpected_call(_prompt: str) -> str:
+        raise AssertionError("completed transcript should have been reused")
+
+    result = miner.mine_transcript_sessions(
+        transcript_frame(),
+        unexpected_call,
+        model="mock-model",
+        prior_output_path=prior_output,
+    )
+
+    assert len(result) == 1
+    assert result.loc[0, "transcript_file"] == "session-1.txt"
+
+
 def test_aggregate_textual_cut_signals_preserves_outer_cuts_and_uses_observed_keys() -> None:
     miner = load_miner()
     students = pd.DataFrame(
@@ -222,3 +254,30 @@ def test_write_textual_cut_signals_writes_sidecar_and_refuses_stale_overwrite(tm
     assert metadata["status"] == "success"
     with pytest.raises(ValueError, match="immutable"):
         miner.write_textual_cut_signals(result, output, source_checksum="checksum-v2", options={"stage": "textual_cut_signals"})
+
+
+def test_invalidate_stale_textual_cut_signals_removes_only_derived_artifact(tmp_path: Path) -> None:
+    miner = load_miner()
+    result = miner.aggregate_textual_cut_signals(
+        pd.DataFrame([{
+            "student_response_id": "student-1", "question_id": "project_feeling",
+            "unit_of_analysis": "student_response", "Semestre": "2025.2",
+            "temporal_marker": "T1", "cognitive_load_score": 2,
+            "sentiment_score": 0, "ai_dependency_score": 1,
+        }]),
+        pd.DataFrame([{
+            "session_id": "group-1", "transcript_file": "t1.txt",
+            "unit_of_analysis": "transcript_session", "Semestre": "2025.2",
+            "temporal_marker": "T1", "coordination_friction_score": 1,
+            "rework_signal_score": 2, "planning_clarity_score": 3,
+            "integration_risk_signal": "low", "dominant_topics": ["planning_debt"],
+        }]),
+    )
+    output = tmp_path / "textual_cut_signals.parquet"
+    miner.write_textual_cut_signals(
+        result, output, source_checksum="old-checksum", options={"stage": "textual_cut_signals"}
+    )
+
+    assert miner.invalidate_stale_textual_cut_signals(output, "new-checksum")
+    assert not output.exists()
+    assert not output.with_name(f"{output.name}.metadata.json").exists()

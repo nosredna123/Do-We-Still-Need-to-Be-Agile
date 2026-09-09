@@ -27,7 +27,6 @@ from pipeline_core import (
     input_checksum,
     is_current_artifact,
     load_project_environment,
-    phase2_input_checksum,
     write_artifact_metadata,
 )
 from pipeline_prompts import (
@@ -314,10 +313,13 @@ def main() -> None:
     catalog_options = {
         "stage": "student_catalog",
         "registry_version": "student-text-v1",
+        "question_registry": STUDENT_TEXT_QUESTION_REGISTRY,
     }
-    source_checksum = phase2_input_checksum(
-        args.lake_dir,
-        [Path(__file__).with_name("pipeline_config.py")],
+    source_checksum = input_checksum(
+        [
+            args.lake_dir / "student_responses.parquet",
+            args.lake_dir / "student_responses.parquet.metadata.json",
+        ],
         catalog_options,
     )
     if args.force:
@@ -344,6 +346,14 @@ def main() -> None:
         "model": args.model,
         "prompt_version": STUDENT_NLP_PROMPT_VERSION,
         "response_schema_version": STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
+        "score_scales": {
+            name: NLP_SCORE_SCALES[name]
+            for name in ("sentiment_score", "cognitive_load_score", "ai_dependency_score")
+        },
+        "enums": {
+            name: sorted(NLP_ENUMS[name])
+            for name in ("methodological_orientation", "planning_debt_signal")
+        },
     }
     nlp_checksum = input_checksum(
         [args.catalog_output, Path(__file__).with_name("pipeline_prompts.py")],
@@ -384,13 +394,24 @@ def main() -> None:
         "response_schema_version": TRANSCRIPT_NLP_RESPONSE_SCHEMA_VERSION,
         "chunk_tokens": TRANSCRIPT_CHUNK_TOKENS,
         "chunk_overlap_tokens": TRANSCRIPT_CHUNK_OVERLAP_TOKENS,
+        "score_scales": {
+            name: NLP_SCORE_SCALES[name]
+            for name in (
+                "coordination_friction_score",
+                "rework_signal_score",
+                "planning_clarity_score",
+            )
+        },
+        "enums": {
+            "integration_risk_signal": sorted(NLP_ENUMS["integration_risk_signal"]),
+            "dominant_topic": sorted(NLP_ENUMS["dominant_topic"]),
+        },
     }
     transcript_checksum = input_checksum(
         [
             args.lake_dir / "transcript_sessions.parquet",
             args.lake_dir / "transcript_sessions.parquet.metadata.json",
             Path(__file__).with_name("pipeline_prompts.py"),
-            Path(__file__).with_name("pipeline_config.py"),
         ],
         transcript_options,
     )
@@ -412,6 +433,7 @@ def main() -> None:
             model=args.model,
             checkpoint_path=transcript_checkpoint,
             checkpoint_checksum=transcript_checksum,
+            prior_output_path=args.transcript_output,
         )
         write_transcript_nlp(
             transcript_results,
@@ -432,6 +454,21 @@ def main() -> None:
             "quantile_method": "linear",
             "scale_treatment": "ordinal_with_interval_summary",
         },
+        "score_scales": {
+            name: NLP_SCORE_SCALES[name]
+            for name in (
+                "sentiment_score",
+                "cognitive_load_score",
+                "ai_dependency_score",
+                "coordination_friction_score",
+                "rework_signal_score",
+                "planning_clarity_score",
+            )
+        },
+        "enums": {
+            "integration_risk_signal": sorted(NLP_ENUMS["integration_risk_signal"]),
+            "dominant_topic": sorted(NLP_ENUMS["dominant_topic"]),
+        },
     }
     textual_checksum = input_checksum(
         [
@@ -439,7 +476,8 @@ def main() -> None:
             args.output.with_name(f"{args.output.name}.metadata.json"),
             args.transcript_output,
             args.transcript_output.with_name(f"{args.transcript_output.name}.metadata.json"),
-            Path(__file__).with_name("pipeline_config.py"),
+            Path(__file__),
+            Path(__file__).with_name("pipeline_statistics.py"),
         ],
         textual_options,
     )
@@ -449,6 +487,10 @@ def main() -> None:
     textual_results = aggregate_textual_cut_signals(
         pd.read_parquet(args.output),
         pd.read_parquet(args.transcript_output),
+    )
+    invalidate_stale_textual_cut_signals(
+        args.textual_cut_signals_output,
+        textual_checksum,
     )
     write_textual_cut_signals(
         textual_results,
@@ -752,6 +794,7 @@ def mine_transcript_sessions(
     model: str,
     checkpoint_path: Path | None = None,
     checkpoint_checksum: str | None = None,
+    prior_output_path: Path | None = None,
 ) -> pd.DataFrame:
     """Mine anonymized transcript sessions with resumable chunk processing.
 
@@ -761,6 +804,8 @@ def mine_transcript_sessions(
         model: Effective model identifier recorded per observation.
         checkpoint_path: Optional private partial checkpoint path.
         checkpoint_checksum: Checksum associated with the checkpoint inputs.
+        prior_output_path: Previous final artifact whose compatible observations
+            can be reused when the current checksum changed.
 
     Returns:
         One validated NLP observation per transcript session.
@@ -783,7 +828,42 @@ def mine_transcript_sessions(
     if sessions.duplicated(observation_columns).any():
         raise ValueError("transcript session observations must be unique")
 
-    completed = _load_transcript_checkpoint(checkpoint_path, checkpoint_checksum)
+    completed_frames: list[pd.DataFrame] = []
+    if prior_output_path is not None and prior_output_path.exists():
+        metadata_path = prior_output_path.with_name(f"{prior_output_path.name}.metadata.json")
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            prior = pd.read_parquet(prior_output_path)
+            required_prior = {
+                "transcript_file", "session_id", "Semestre", "temporal_marker",
+                "unit_of_analysis", "model", "prompt_version",
+                "response_schema_version", "status",
+            }
+            if (
+                metadata.get("status") == "success"
+                and metadata.get("contract_version") == "transcript-nlp-v1"
+                and required_prior.issubset(prior.columns)
+                and prior["model"].eq(model).all()
+                and prior["prompt_version"].eq(TRANSCRIPT_NLP_PROMPT_VERSION).all()
+                and prior["response_schema_version"].eq(TRANSCRIPT_NLP_RESPONSE_SCHEMA_VERSION).all()
+                and prior["status"].eq("success").all()
+            ):
+                completed_frames.append(prior)
+                logger.info(
+                    "Reusing %s completed transcript NLP observations from final artifact",
+                    len(prior),
+                )
+        except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+            logger.warning("Ignoring invalid prior transcript NLP artifact: %s", prior_output_path)
+
+    checkpoint = _load_transcript_checkpoint(checkpoint_path, checkpoint_checksum)
+    if not checkpoint.empty:
+        completed_frames.append(checkpoint)
+    completed = pd.DataFrame()
+    if completed_frames:
+        completed = pd.concat(completed_frames, ignore_index=True).drop_duplicates(
+            subset=["transcript_file"], keep="last"
+        )
     completed_keys = set()
     if not completed.empty:
         completed_keys = set(completed["transcript_file"])
@@ -1025,6 +1105,19 @@ def write_textual_cut_signals(
         contract_version="textual-cut-signals-v2",
         options=options,
     )
+
+
+def invalidate_stale_textual_cut_signals(
+    output_path: Path,
+    source_checksum: str,
+) -> bool:
+    """Invalidate a stale derived textual aggregate before regeneration.
+
+    Upstream NLP artifacts are never touched by this operation. A current
+    aggregate is preserved; a stale aggregate and its sidecar are removed so
+    the sole producer can write a fresh version.
+    """
+    return invalidate_stale_artifact(output_path, source_checksum)
 
 
 if __name__ == "__main__":

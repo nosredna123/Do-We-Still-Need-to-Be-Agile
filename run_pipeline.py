@@ -96,6 +96,17 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "analysis" / "textual_cut_signals.parquet"),
             ]
         )
+    if stage == "metrics":
+        command.extend(
+            [
+                "--lake-dir",
+                str(PROJECT_ROOT / "data" / "lake"),
+                "--contract-report",
+                str(PROJECT_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
+                "--output",
+                str(PROJECT_ROOT / "data" / "analysis" / "planning_metrics.parquet"),
+            ]
+        )
     if force:
         command.append("--force")
     if limite is not None and stage in {"prepare", "transcribe", "ner", "anonymize"}:
