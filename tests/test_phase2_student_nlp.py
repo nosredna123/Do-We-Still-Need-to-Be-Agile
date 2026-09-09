@@ -37,6 +37,18 @@ def prompt_frame() -> pd.DataFrame:
     )
 
 
+def prompt_frame_with_three_observations() -> pd.DataFrame:
+    frame = prompt_frame()
+    return pd.concat(
+        [
+            frame,
+            frame.assign(student_response_id="students.csv:1"),
+            frame.assign(student_response_id="students.csv:2"),
+        ],
+        ignore_index=True,
+    )
+
+
 def valid_response() -> str:
     return json.dumps(
         {
@@ -138,3 +150,40 @@ def test_openai_student_backend_uses_versioned_json_request() -> None:
     assert calls[0]["model"] == "mock-model"
     assert calls[0]["response_format"] == {"type": "json_object"}
     assert calls[0]["temperature"] == 0
+
+
+def test_mine_student_prompts_resumes_completed_observations(tmp_path: Path) -> None:
+    miner = load_miner()
+    prompts = prompt_frame_with_three_observations()
+    checkpoint = tmp_path / ".private" / "student_nlp.partial.parquet"
+    first_run_calls: list[str] = []
+
+    def interrupted_backend(prompt: str) -> str:
+        first_run_calls.append(prompt)
+        if len(first_run_calls) == 3:
+            raise RuntimeError("simulated interruption")
+        return valid_response()
+
+    with pytest.raises(RuntimeError, match="simulated interruption"):
+        miner.mine_student_prompts(
+            prompts,
+            interrupted_backend,
+            model="mock-model",
+            checkpoint_path=checkpoint,
+            checkpoint_checksum="checkpoint-v1",
+        )
+
+    assert checkpoint.exists()
+    resumed_calls: list[str] = []
+    result = miner.mine_student_prompts(
+        prompts,
+        lambda prompt: (resumed_calls.append(prompt) or valid_response()),
+        model="mock-model",
+        checkpoint_path=checkpoint,
+        checkpoint_checksum="checkpoint-v1",
+    )
+
+    assert len(first_run_calls) == 3
+    assert len(resumed_calls) == 1
+    assert len(result) == 3
+    assert not result.duplicated(["student_response_id", "question_id"]).any()

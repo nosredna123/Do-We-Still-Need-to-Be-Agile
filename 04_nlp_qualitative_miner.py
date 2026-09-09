@@ -315,6 +315,7 @@ def main() -> None:
         [args.catalog_output, Path(__file__).with_name("pipeline_prompts.py")],
         nlp_options,
     )
+    checkpoint_path = args.output.with_name(f"{args.output.name}.partial")
     if not args.force and is_current_artifact(args.output, nlp_checksum):
         logger.info("Student NLP artifact is current: %s", args.output)
         return
@@ -328,6 +329,8 @@ def main() -> None:
         prompts,
         lambda prompt: openai_student_backend(prompt, client=client, model=args.model),
         model=args.model,
+        checkpoint_path=checkpoint_path,
+        checkpoint_checksum=nlp_checksum,
     )
     write_student_nlp(
         results,
@@ -335,6 +338,7 @@ def main() -> None:
         source_checksum=nlp_checksum,
         options=nlp_options,
     )
+    invalidate_stale_artifact(checkpoint_path, "completed-final-artifact")
     logger.info("Mined %s student NLP observations", len(results))
 
 
@@ -352,6 +356,8 @@ def mine_student_prompts(
     backend: Callable[[str], str],
     *,
     model: str,
+    checkpoint_path: Path | None = None,
+    checkpoint_checksum: str | None = None,
 ) -> pd.DataFrame:
     """Mine cataloged student prompts using an injected backend.
 
@@ -359,6 +365,9 @@ def mine_student_prompts(
         prompts: Private catalog produced by ``catalog_student_prompts``.
         backend: Callable receiving one versioned prompt and returning JSON.
         model: Effective model identifier recorded per observation.
+        checkpoint_path: Optional private Parquet checkpoint written after each
+            successful observation.
+        checkpoint_checksum: Checksum associated with the checkpoint inputs.
 
     Returns:
         Individual-level NLP scores without the original response text.
@@ -371,11 +380,33 @@ def mine_student_prompts(
     missing = required_columns - set(prompts.columns)
     if missing:
         raise ValueError(f"student prompt catalog missing required columns: {sorted(missing)}")
-    rows = []
+    if checkpoint_path is not None and checkpoint_checksum is None:
+        raise ValueError("checkpoint_checksum is required with checkpoint_path")
+    completed = pd.DataFrame()
+    if checkpoint_path is not None and checkpoint_path.exists():
+        metadata_path = checkpoint_path.with_name(f"{checkpoint_path.name}.metadata.json")
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            if metadata.get("status") == "partial" and metadata.get("input_checksum") == checkpoint_checksum:
+                completed = pd.read_parquet(checkpoint_path)
+                logger.info("Resuming %s completed student NLP observations", len(completed))
+            else:
+                invalidate_stale_artifact(checkpoint_path, "checkpoint-is-stale")
+        except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+            invalidate_stale_artifact(checkpoint_path, "checkpoint-is-invalid")
+    completed_keys = set()
+    if not completed.empty:
+        completed_keys = set(zip(completed["student_response_id"], completed["question_id"]))
+    rows = completed.to_dict("records") if not completed.empty else []
     for record in prompts.to_dict("records"):
+        observation_key = (record["student_response_id"], record["question_id"])
+        if observation_key in completed_keys:
+            logger.info("Skipping completed student NLP observation %s/%s", *observation_key)
+            continue
         result = parse_student_llm_response(backend(build_student_nlp_prompt(record)))
-        rows.append({
+        observation = {
             **{key: record[key] for key in ("student_response_id", "Semestre", "temporal_marker")},
+            "question_id": record["question_id"],
             "unit_of_analysis": "student_response",
             **result,
             "score_scale_version": "v1",
@@ -383,8 +414,40 @@ def mine_student_prompts(
             "prompt_version": STUDENT_NLP_PROMPT_VERSION,
             "response_schema_version": STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
             "status": "success",
-        })
+        }
+        rows.append(observation)
+        completed_keys.add(observation_key)
+        if checkpoint_path is not None:
+            _write_partial_student_nlp_checkpoint(
+                pd.DataFrame(rows), checkpoint_path, str(checkpoint_checksum)
+            )
     return pd.DataFrame(rows)
+
+
+def _write_partial_student_nlp_checkpoint(
+    results: pd.DataFrame,
+    checkpoint_path: Path,
+    source_checksum: str,
+) -> None:
+    """Atomically persist completed individual NLP observations."""
+    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = checkpoint_path.with_name(f".{checkpoint_path.name}.tmp")
+    results.to_parquet(temporary_path, index=False)
+    temporary_path.replace(checkpoint_path)
+    metadata_path = checkpoint_path.with_name(f"{checkpoint_path.name}.metadata.json")
+    metadata_path.write_text(
+        json.dumps(
+            {
+                "input_checksum": source_checksum,
+                "status": "partial",
+                "contract_version": "student-nlp-v1",
+                "completed_observations": len(results),
+            },
+            indent=2,
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
 
 
 def write_student_nlp(
@@ -396,7 +459,7 @@ def write_student_nlp(
 ) -> None:
     """Write validated individual NLP scores and their resumable sidecar."""
     required_columns = {
-        "student_response_id", "Semestre", "temporal_marker", "unit_of_analysis",
+        "student_response_id", "Semestre", "temporal_marker", "question_id", "unit_of_analysis",
         "sentiment_score", "cognitive_load_score", "ai_dependency_score",
         "methodological_orientation", "planning_debt_signal", "score_scale_version",
         "model", "prompt_version", "response_schema_version", "status",
