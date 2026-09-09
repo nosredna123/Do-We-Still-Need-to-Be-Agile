@@ -23,6 +23,7 @@ from pipeline_core import (
     is_current_artifact,
     write_artifact_metadata,
 )
+from pipeline_statistics import summarize_numeric_distribution
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,10 @@ PLANNING_REQUIRED_COLUMNS = {
 PLANNING_OUTPUT_REQUIRED_COLUMNS = {
     "ID_Equipe", "Semestre", "pi_observation_unit", "pi_definition_version",
     "pi_available", "planning_rework_available",
+}
+CODE_CHURN_OUTPUT_REQUIRED_COLUMNS = {
+    "ID_Equipe", "Semestre", "cc_observation_unit", "cc_definition_version",
+    "cc_binary_policy", "cc_denominator_kind",
 }
 
 
@@ -200,6 +205,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/planning_metrics.parquet"),
     )
+    parser.add_argument(
+        "--code-churn-output",
+        type=Path,
+        default=Path("data/analysis/code_churn_metrics.parquet"),
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     if not args.contract_report.exists():
@@ -226,18 +236,85 @@ def main() -> None:
     )
     if args.force:
         invalidate_stale_artifact(args.output, "force-regeneration")
+        invalidate_stale_artifact(args.code_churn_output, "force-regeneration")
     if is_current_artifact(args.output, checksum):
         logger.info("Planning metrics artifact is current: %s", args.output)
+    else:
+        results = compute_planning_metrics(inputs["git_files"])
+        invalidate_stale_artifact(args.output, checksum)
+        write_planning_metrics(
+            results,
+            args.output,
+            source_checksum=checksum,
+            options=options,
+        )
+        logger.info("Wrote %s planning metrics team-semester observations", len(results))
+    churn_options = {
+        "stage": "code_churn_metrics",
+        "contract_version": "code-churn-metrics-v1",
+        "cc_definition_version": "cc-v1",
+        "cc_binary_policy": "excluded_from_line_churn_counted_as_events",
+        "rolling_window_days": 7,
+        "rolling_window_bounds": "[timestamp, timestamp+7d)",
+    }
+    churn_checksum = input_checksum(
+        [
+            args.lake_dir / "git_commits.parquet",
+            args.lake_dir / "git_commits.parquet.metadata.json",
+            args.lake_dir / "git_files.parquet",
+            args.lake_dir / "git_files.parquet.metadata.json",
+            args.lake_dir / "git_repository_snapshots.parquet",
+            args.lake_dir / "git_repository_snapshots.parquet.metadata.json",
+        ],
+        churn_options,
+    )
+    if not args.force and is_current_artifact(args.code_churn_output, churn_checksum):
+        logger.info("Code Churn artifact is current: %s", args.code_churn_output)
         return
-    results = compute_planning_metrics(inputs["git_files"])
-    invalidate_stale_artifact(args.output, checksum)
-    write_planning_metrics(
-        results,
-        args.output,
-        source_checksum=checksum,
+    churn_results = compute_code_churn(
+        inputs["git_commits"],
+        inputs["git_files"],
+        inputs["git_repository_snapshots"],
+    )
+    invalidate_stale_artifact(args.code_churn_output, churn_checksum)
+    write_code_churn_metrics(
+        churn_results,
+        args.code_churn_output,
+        source_checksum=churn_checksum,
+        options=churn_options,
+    )
+    logger.info("Wrote %s Code Churn team-semester observations", len(churn_results))
+
+
+def write_code_churn_metrics(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write the immutable Code Churn intermediate artifact and sidecar."""
+    missing = CODE_CHURN_OUTPUT_REQUIRED_COLUMNS - set(results.columns)
+    if missing:
+        raise ValueError(f"code_churn_metrics output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("code_churn_metrics output is empty")
+    if results.duplicated(KEYS).any():
+        raise ValueError("code_churn_metrics has duplicate team-semester keys")
+    if not results["cc_observation_unit"].eq("team_semester").all():
+        raise ValueError("code_churn_metrics has an invalid observation unit")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    if output_path.exists() or output_path.with_name(f"{output_path.name}.metadata.json").exists():
+        raise ValueError("code_churn_metrics artifact is immutable and stale")
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="code-churn-metrics-v1",
         options=options,
     )
-    logger.info("Wrote %s planning metrics team-semester observations", len(results))
 
 
 def _pivot_cut(frame: pd.DataFrame, value: str, prefix: str) -> pd.DataFrame:
@@ -258,28 +335,121 @@ def build_cut_context_metrics(students: pd.DataFrame, transcripts: pd.DataFrame)
 
 
 def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd.DataFrame) -> pd.DataFrame:
-    """Compute longitudinal churn normalized by observed source LOC."""
+    """Compute persisted-contract-ready longitudinal Code Churn metrics."""
+    required_commit = set(KEYS) | {
+        "temporal_marker", "commit_hash", "timestamp", "lines_added", "lines_deleted"
+    }
+    required_file = set(KEYS) | {"temporal_marker", "file_path", "is_binary"}
+    required_snapshot = set(KEYS) | {"temporal_marker", "repo_source_loc"}
+    for frame, required, name in (
+        (commits, required_commit, "git_commits"),
+        (files, required_file, "git_files"),
+        (snapshots, required_snapshot, "git_repository_snapshots"),
+    ):
+        missing = required - set(frame.columns)
+        if missing:
+            raise ValueError(f"{name} missing columns: {sorted(missing)}")
+    if not pd.api.types.is_datetime64tz_dtype(commits["timestamp"]):
+        raise ValueError("git_commits timestamp must be timezone-aware UTC")
+    invalid_cuts = set(commits["temporal_marker"].dropna()) | set(files["temporal_marker"].dropna()) | set(snapshots["temporal_marker"].dropna())
+    invalid_cuts -= set(CUTS)
+    if invalid_cuts:
+        raise ValueError(f"Code Churn has invalid temporal markers: {sorted(invalid_cuts)}")
+
     commits = commits.copy()
     commits["commit_churn"] = commits["lines_added"] + commits["lines_deleted"]
-    grouped = commits.groupby(KEYS + ["temporal_marker"]).agg(cc_total=("commit_churn", "sum"), cc_commit_n=("commit_hash", "nunique")).reset_index()
-    file_counts = files.groupby(KEYS + ["temporal_marker"]).agg(cc_unique_changed_files=("file_path", "nunique")).reset_index()
-    snapshot_values = snapshots[KEYS + ["temporal_marker", "repo_source_loc"]]
-    grouped = grouped.merge(file_counts, on=KEYS + ["temporal_marker"], how="left", validate="one_to_one").merge(snapshot_values, on=KEYS + ["temporal_marker"], how="left", validate="one_to_one")
-    grouped["cc_per_source_loc"] = grouped["cc_total"].where(grouped["repo_source_loc"] > 0) / grouped["repo_source_loc"].where(grouped["repo_source_loc"] > 0)
-    grouped["cc_per_changed_file"] = grouped["cc_total"].where(grouped["cc_unique_changed_files"] > 0) / grouped["cc_unique_changed_files"].where(grouped["cc_unique_changed_files"] > 0)
-    grouped["cc_mean_per_commit"] = grouped["cc_total"].where(grouped["cc_commit_n"] > 0) / grouped["cc_commit_n"].where(grouped["cc_commit_n"] > 0)
-    pieces = []
-    for key, subset in grouped.groupby(KEYS):
-        row: dict[str, Any] = dict(zip(KEYS, key))
+    snapshot_rows = snapshots.copy()
+    if "snapshot_available" in snapshot_rows.columns:
+        snapshot_rows["snapshot_available"] = snapshot_rows["snapshot_available"].fillna(False).astype(bool)
+    else:
+        snapshot_rows["snapshot_available"] = snapshot_rows["repo_source_loc"].notna()
+    snapshot_rows["repo_source_loc_valid"] = snapshot_rows["repo_source_loc"].where(
+        snapshot_rows["snapshot_available"] & (snapshot_rows["repo_source_loc"] > 0)
+    )
+    snapshot_groups = snapshot_rows.groupby(KEYS + ["temporal_marker"], dropna=False)
+    snapshot_summary = snapshot_groups.agg(
+        repo_snapshot_n=("repository", "nunique") if "repository" in snapshot_rows.columns else ("repo_source_loc", "size"),
+        repo_snapshot_available_n=("snapshot_available", "sum"),
+        repo_source_loc=("repo_source_loc_valid", "sum"),
+        repo_snapshot_row_n=("repo_source_loc", "size"),
+    ).reset_index()
+    snapshot_summary["repo_source_loc_available"] = (
+        (snapshot_summary["repo_snapshot_available_n"] == snapshot_summary["repo_snapshot_row_n"])
+        & snapshot_summary["repo_source_loc"].notna()
+        & (snapshot_summary["repo_source_loc"] > 0)
+    )
+    snapshot_summary["repo_source_loc_unavailable_reason"] = np.select(
+        [snapshot_summary["repo_snapshot_row_n"].eq(0), snapshot_summary["repo_snapshot_available_n"].lt(snapshot_summary["repo_snapshot_row_n"]), snapshot_summary["repo_source_loc"].isna() | snapshot_summary["repo_source_loc"].le(0)],
+        ["no_snapshot_observed", "snapshot_unavailable", "invalid_source_loc"],
+        default=None,
+    )
+
+    universe = pd.concat(
+        [commits[KEYS], files[KEYS], snapshots[KEYS]], ignore_index=True
+    ).drop_duplicates()
+    rows: list[dict[str, Any]] = []
+    for team, semester in universe.itertuples(index=False, name=None):
+        row: dict[str, Any] = {"ID_Equipe": team, "Semestre": semester}
+        team_commits = commits[(commits["ID_Equipe"] == team) & (commits["Semestre"] == semester)]
+        team_files = files[(files["ID_Equipe"] == team) & (files["Semestre"] == semester)]
+        team_snapshots = snapshot_summary[(snapshot_summary["ID_Equipe"] == team) & (snapshot_summary["Semestre"] == semester)]
+        all_peak_windows: list[tuple[pd.Timestamp, float, str]] = []
         for cut in CUTS:
-            current = subset[subset["temporal_marker"] == cut]
-            values = current.iloc[0] if not current.empty else pd.Series(dtype=object)
-            for metric in ("cc_total", "cc_commit_n", "repo_source_loc", "cc_unique_changed_files", "cc_per_source_loc", "cc_per_changed_file", "cc_mean_per_commit"):
-                row[f"{metric}_{cut.lower()}"] = values.get(metric, np.nan)
+            cut_commits = team_commits[team_commits["temporal_marker"] == cut].sort_values("timestamp")
+            cut_files = team_files[team_files["temporal_marker"] == cut]
+            snapshot = team_snapshots[team_snapshots["temporal_marker"] == cut]
+            has_activity = not cut_commits.empty
+            valid_churn = cut_commits["commit_churn"].dropna()
+            prefix = cut.lower()
+            row[f"cc_activity_status_{prefix}"] = "observed_activity" if has_activity else "no_observed_activity"
+            row[f"cc_total_{prefix}"] = float(valid_churn.sum()) if has_activity and not valid_churn.empty else 0
+            row[f"cc_commit_n_{prefix}"] = int(len(cut_commits))
+            row[f"cc_commit_churn_n_total_{prefix}"] = int(len(cut_commits))
+            row[f"cc_commit_churn_n_valid_{prefix}"] = int(valid_churn.notna().sum())
+            row[f"cc_commit_churn_n_missing_{prefix}"] = int(len(cut_commits) - valid_churn.notna().sum())
+            row[f"cc_unique_changed_files_{prefix}"] = int(cut_files["file_path"].nunique()) if not cut_files.empty else 0
+            row[f"cc_binary_file_events_{prefix}"] = int(cut_files["is_binary"].fillna(False).astype(bool).sum()) if not cut_files.empty else 0
+            summary = summarize_numeric_distribution(valid_churn, scale_type="continuous", scale_version="commit-churn-v1")
+            row[f"cc_mean_per_commit_{prefix}"] = summary["mean"]
+            row[f"cc_median_per_commit_{prefix}"] = summary["median"]
+            row[f"cc_iqr_per_commit_{prefix}"] = summary["iqr"]
+            row[f"cc_commit_churn_mode_{prefix}"] = summary["mode"]
+            row[f"cc_commit_churn_mode_n_{prefix}"] = summary["mode_n"]
+            row[f"cc_commit_churn_mode_share_{prefix}"] = summary["mode_share"]
+            snapshot_exists = not snapshot.empty
+            source_loc = snapshot.iloc[0]["repo_source_loc"] if snapshot_exists else np.nan
+            source_available = bool(snapshot.iloc[0]["repo_source_loc_available"]) if snapshot_exists else False
+            reason = snapshot.iloc[0]["repo_source_loc_unavailable_reason"] if snapshot_exists else "no_snapshot_observed"
+            row[f"repo_source_loc_{prefix}"] = source_loc if source_available else np.nan
+            row[f"repo_snapshot_n_{prefix}"] = int(snapshot.iloc[0]["repo_snapshot_n"]) if snapshot_exists else 0
+            row[f"repo_snapshot_available_{prefix}"] = source_available
+            row[f"cc_source_loc_available_{prefix}"] = source_available
+            row[f"cc_source_loc_unavailable_reason_{prefix}"] = None if source_available else reason
+            row[f"cc_per_source_loc_{prefix}"] = float(row[f"cc_total_{prefix}"] / source_loc) if source_available and source_loc else np.nan
+            changed_files = row[f"cc_unique_changed_files_{prefix}"]
+            row[f"cc_per_changed_file_{prefix}"] = row[f"cc_total_{prefix}"] / changed_files if changed_files else np.nan
+            if not cut_commits.empty:
+                for timestamp in cut_commits["timestamp"]:
+                    end = timestamp + pd.Timedelta(days=7)
+                    window = team_commits[(team_commits["timestamp"] >= timestamp) & (team_commits["timestamp"] < end)]
+                    churn = float(window["commit_churn"].dropna().sum())
+                    all_peak_windows.append((timestamp, churn, cut))
+        if all_peak_windows:
+            _peak_timestamp, peak_value, peak_cut = max(all_peak_windows, key=lambda item: (item[1], -item[0].value))
+            row["cc_peak_7d"] = peak_value
+            row["cc_mean_7d"] = float(np.mean([item[1] for item in all_peak_windows]))
+            row["cc_peak_7d_temporal_marker"] = peak_cut
+        else:
+            row["cc_peak_7d"] = np.nan
+            row["cc_mean_7d"] = np.nan
+            row["cc_peak_7d_temporal_marker"] = None
         row["cc_denominator_kind"] = "observed_source_loc"
+        row["cc_binary_policy"] = "excluded_from_line_churn_counted_as_events"
         row["repo_size_definition_version"] = "source-loc-v1"
-        pieces.append(row)
-    return pd.DataFrame(pieces)
+        row["cc_observation_unit"] = "team_semester"
+        row["cc_definition_version"] = "cc-v1"
+        rows.append(row)
+    return pd.DataFrame(rows)
 
 
 def compute_delta_dt(evaluator: pd.DataFrame) -> pd.DataFrame:
