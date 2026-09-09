@@ -76,8 +76,10 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "lake"),
                 "--contract-report",
                 str(PROJECT_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
-                "--output",
+                "--catalog-output",
                 str(PROJECT_ROOT / "data" / "analysis" / ".private" / "student_prompt_catalog.parquet"),
+                "--output",
+                str(PROJECT_ROOT / "data" / "analysis" / "student_nlp.parquet"),
             ]
         )
     if force:

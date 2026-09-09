@@ -11,13 +11,25 @@ from typing import Any, Callable
 
 import pandas as pd
 
-from pipeline_config import NLP_ENUMS, NLP_SCORE_SCALES, STUDENT_TEXT_QUESTION_REGISTRY
+from pipeline_config import (
+    MODEL_CONFIG,
+    NLP_ENUMS,
+    NLP_SCORE_SCALES,
+    STUDENT_TEXT_QUESTION_REGISTRY,
+)
 from phase2_contracts import load_phase2_inputs, validate_phase1_contracts
 from pipeline_core import (
     invalidate_stale_artifact,
+    input_checksum,
     is_current_artifact,
+    load_project_environment,
     phase2_input_checksum,
     write_artifact_metadata,
+)
+from pipeline_prompts import (
+    STUDENT_NLP_PROMPT,
+    STUDENT_NLP_PROMPT_VERSION,
+    STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
 )
 
 logger = logging.getLogger(__name__)
@@ -57,6 +69,8 @@ def parse_student_llm_response(response: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("LLM response must be an object")
     required = ("sentiment_score", "cognitive_load_score", "ai_dependency_score", "methodological_orientation", "planning_debt_signal")
+    if set(value) != set(required):
+        raise ValueError("LLM response contains unexpected or missing fields")
     if any(field not in value for field in required):
         raise ValueError("LLM response is missing a required field")
     result = {field: _strict_int(value[field], field) for field in required[:3]}
@@ -233,8 +247,8 @@ def write_student_prompt_catalog(
 
 
 def main() -> None:
-    """Catalog anonymized student responses into the private NLP intermediate."""
-    parser = argparse.ArgumentParser(description="Catalog Phase 2 student text prompts")
+    """Catalog and mine anonymized student responses for Phase 2."""
+    parser = argparse.ArgumentParser(description="Mine Phase 2 student responses")
     parser.add_argument("--lake-dir", type=Path, default=Path("data/lake"))
     parser.add_argument(
         "--contract-report",
@@ -242,9 +256,19 @@ def main() -> None:
         default=Path("data/analysis/phase2_contract_report.json"),
     )
     parser.add_argument(
-        "--output",
+        "--catalog-output",
         type=Path,
         default=Path("data/analysis/.private/student_prompt_catalog.parquet"),
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("data/analysis/student_nlp.parquet"),
+    )
+    parser.add_argument("--backend", choices=("openai",), default="openai")
+    parser.add_argument(
+        "--model",
+        default=str(MODEL_CONFIG["qualitative_mining"]["model"]),
     )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
@@ -255,36 +279,164 @@ def main() -> None:
         raise ValueError("Phase 2 contract report is not successful")
     inputs = load_phase2_inputs(args.lake_dir)
     validate_phase1_contracts(inputs)
-    options = {
+    catalog_options = {
         "stage": "student_catalog",
         "registry_version": "student-text-v1",
     }
     source_checksum = phase2_input_checksum(
         args.lake_dir,
         [Path(__file__).with_name("pipeline_config.py")],
-        options,
+        catalog_options,
     )
     if args.force:
+        invalidate_stale_artifact(args.catalog_output, "force-regeneration")
         invalidate_stale_artifact(args.output, "force-regeneration")
-    prompts = catalog_student_prompts(
-        inputs["student_responses"], STUDENT_TEXT_QUESTION_REGISTRY
+    if is_current_artifact(args.catalog_output, source_checksum):
+        prompts = pd.read_parquet(args.catalog_output)
+    else:
+        prompts = catalog_student_prompts(
+            inputs["student_responses"], STUDENT_TEXT_QUESTION_REGISTRY
+        )
+        write_student_prompt_catalog(
+            prompts,
+            args.catalog_output,
+            source_checksum=source_checksum,
+            options=catalog_options,
+        )
+
+    nlp_options = {
+        "stage": "student_nlp",
+        "backend": args.backend,
+        "model": args.model,
+        "prompt_version": STUDENT_NLP_PROMPT_VERSION,
+        "response_schema_version": STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
+    }
+    nlp_checksum = input_checksum(
+        [args.catalog_output, Path(__file__).with_name("pipeline_prompts.py")],
+        nlp_options,
     )
-    write_student_prompt_catalog(
+    if not args.force and is_current_artifact(args.output, nlp_checksum):
+        logger.info("Student NLP artifact is current: %s", args.output)
+        return
+    load_project_environment()
+    try:
+        from openai import OpenAI
+    except ImportError as error:
+        raise RuntimeError("openai package is not installed") from error
+    client = OpenAI()
+    results = mine_student_prompts(
         prompts,
-        args.output,
-        source_checksum=source_checksum,
-        options=options,
+        lambda prompt: openai_student_backend(prompt, client=client, model=args.model),
+        model=args.model,
     )
-    logger.info("Cataloged %s private student prompts", len(prompts))
+    write_student_nlp(
+        results,
+        args.output,
+        source_checksum=nlp_checksum,
+        options=nlp_options,
+    )
+    logger.info("Mined %s student NLP observations", len(results))
 
 
-def mine_student_prompts(prompts: pd.DataFrame, backend: Callable[[str], str]) -> pd.DataFrame:
-    """Mine private student prompts using an injected deterministic backend."""
+def build_student_nlp_prompt(record: dict[str, Any]) -> str:
+    """Build the versioned prompt for one cataloged student response."""
+    return STUDENT_NLP_PROMPT.format(
+        question_id=record["question_id"],
+        construct=record["construct"],
+        answer_text=record["answer_text"],
+    )
+
+
+def mine_student_prompts(
+    prompts: pd.DataFrame,
+    backend: Callable[[str], str],
+    *,
+    model: str,
+) -> pd.DataFrame:
+    """Mine cataloged student prompts using an injected backend.
+
+    Args:
+        prompts: Private catalog produced by ``catalog_student_prompts``.
+        backend: Callable receiving one versioned prompt and returning JSON.
+        model: Effective model identifier recorded per observation.
+
+    Returns:
+        Individual-level NLP scores without the original response text.
+
+    Raises:
+        ValueError: If a response is malformed or required prompt columns are
+            absent.
+    """
+    required_columns = {"student_response_id", "Semestre", "temporal_marker", "question_id", "construct", "answer_text"}
+    missing = required_columns - set(prompts.columns)
+    if missing:
+        raise ValueError(f"student prompt catalog missing required columns: {sorted(missing)}")
     rows = []
     for record in prompts.to_dict("records"):
-        result = parse_student_llm_response(backend(record["answer_text"]))
-        rows.append({**{key: record[key] for key in ("student_response_id", "Semestre", "temporal_marker")}, "unit_of_analysis": "student_response", **result, "score_scale_version": "v1", "status": "success"})
+        result = parse_student_llm_response(backend(build_student_nlp_prompt(record)))
+        rows.append({
+            **{key: record[key] for key in ("student_response_id", "Semestre", "temporal_marker")},
+            "unit_of_analysis": "student_response",
+            **result,
+            "score_scale_version": "v1",
+            "model": model,
+            "prompt_version": STUDENT_NLP_PROMPT_VERSION,
+            "response_schema_version": STUDENT_NLP_RESPONSE_SCHEMA_VERSION,
+            "status": "success",
+        })
     return pd.DataFrame(rows)
+
+
+def write_student_nlp(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Write validated individual NLP scores and their resumable sidecar."""
+    required_columns = {
+        "student_response_id", "Semestre", "temporal_marker", "unit_of_analysis",
+        "sentiment_score", "cognitive_load_score", "ai_dependency_score",
+        "methodological_orientation", "planning_debt_signal", "score_scale_version",
+        "model", "prompt_version", "response_schema_version", "status",
+    }
+    missing = required_columns - set(results.columns)
+    if missing:
+        raise ValueError(f"student_nlp output missing required columns: {sorted(missing)}")
+    if "answer_text" in results.columns:
+        raise ValueError("student_nlp output must not contain answer_text")
+    if results.empty:
+        raise ValueError("student_nlp output is empty")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if is_current_artifact(output_path, source_checksum):
+        return
+    invalidate_stale_artifact(output_path, source_checksum)
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="student-nlp-v1",
+        options=options,
+    )
+
+
+def openai_student_backend(prompt: str, *, client: Any, model: str) -> str:
+    """Request one strict JSON student analysis from an OpenAI client."""
+    config = MODEL_CONFIG["qualitative_mining"]
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": STUDENT_NLP_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+        response_format={"type": str(config["response_format"])},
+        temperature=float(config["temperature"]),
+    )
+    content = response.choices[0].message.content
+    if not isinstance(content, str) or not content.strip():
+        raise ValueError("OpenAI student NLP response has no content")
+    return content
 
 
 def aggregate_textual_cut_signals(students: pd.DataFrame, transcripts: pd.DataFrame) -> pd.DataFrame:

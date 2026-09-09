@@ -291,8 +291,10 @@ class PipelineCoreTests(unittest.TestCase):
                 str(REPO_ROOT / "data" / "lake"),
                 "--contract-report",
                 str(REPO_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
-                "--output",
+                "--catalog-output",
                 str(REPO_ROOT / "data" / "analysis" / ".private" / "student_prompt_catalog.parquet"),
+                "--output",
+                str(REPO_ROOT / "data" / "analysis" / "student_nlp.parquet"),
             ],
             command,
         )

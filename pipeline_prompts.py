@@ -49,3 +49,17 @@ NER_PROMPT = (
     "Do not include sentence-initial common words, roles, organizations, products, "
     "or technical terms. Do not quote or reproduce the transcript."
 )
+
+STUDENT_NLP_PROMPT_VERSION = "student-nlp-v1"
+STUDENT_NLP_RESPONSE_SCHEMA_VERSION = "student-nlp-response-v1"
+STUDENT_NLP_PROMPT = (
+    "Analyze the anonymized student response below for the declared question "
+    "construct. Return JSON only with exactly these fields: "
+    "sentiment_score (integer -2..2), cognitive_load_score (integer 0..4), "
+    "ai_dependency_score (integer 0..4), methodological_orientation "
+    "(structured|mixed|vibe_coding|insufficient_evidence), and "
+    "planning_debt_signal (present|absent|insufficient_evidence). "
+    "Use insufficient_evidence when the response does not support a conclusion. "
+    "Do not reproduce the response in any field.\n\n"
+    "question_id={question_id}\nconstruct={construct}\nresponse={answer_text}"
+)
