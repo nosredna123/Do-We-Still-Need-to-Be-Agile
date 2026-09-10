@@ -25,6 +25,8 @@ from pipeline_config import (
 )
 from phase2_contracts import load_phase2_inputs, validate_phase1_contracts
 from pipeline_core import (
+    artifact_metadata_path,
+    file_checksum,
     input_checksum,
     invalidate_stale_artifact,
     is_current_artifact,
@@ -255,6 +257,11 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/cut_context_metrics.parquet"),
     )
+    parser.add_argument(
+        "--team-metrics-output",
+        type=Path,
+        default=Path("data/analysis/team_metrics.parquet"),
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     if not args.contract_report.exists():
@@ -285,6 +292,10 @@ def main() -> None:
         invalidate_stale_artifact(args.technical_degradation_output, "force-regeneration")
         invalidate_stale_artifact(args.integration_friction_output, "force-regeneration")
         invalidate_stale_artifact(args.cut_context_output, "force-regeneration")
+        invalidate_stale_artifact(args.team_metrics_output, "force-regeneration")
+        exclusions_path = args.team_metrics_output.with_name("team_metrics_exclusions.json")
+        if exclusions_path.exists():
+            exclusions_path.unlink()
     if is_current_artifact(args.output, checksum):
         logger.info("Planning metrics artifact is current: %s", args.output)
     else:
@@ -416,21 +427,60 @@ def main() -> None:
     )
     if not args.force and is_current_artifact(args.cut_context_output, ie_checksum):
         logger.info("Cut context artifact is current: %s", args.cut_context_output)
-        return
-    textual_path = args.lake_dir.parent / "analysis" / "textual_cut_signals.parquet"
-    textual_metadata_path = textual_path.with_name(f"{textual_path.name}.metadata.json")
-    textual_metadata = json.loads(textual_metadata_path.read_text(encoding="utf-8"))
-    if textual_metadata.get("status") != "success" or textual_metadata.get("contract_version") != "textual-cut-signals-v2":
-        raise ValueError("textual_cut_signals source contract is missing or incompatible")
-    ie_results = build_cut_context_metrics(pd.read_parquet(textual_path))
-    invalidate_stale_artifact(args.cut_context_output, ie_checksum)
-    write_cut_context_metrics(
-        ie_results,
-        args.cut_context_output,
-        source_checksum=ie_checksum,
-        options=ie_options,
+    else:
+        textual_path = args.lake_dir.parent / "analysis" / "textual_cut_signals.parquet"
+        textual_metadata_path = textual_path.with_name(f"{textual_path.name}.metadata.json")
+        textual_metadata = json.loads(textual_metadata_path.read_text(encoding="utf-8"))
+        if textual_metadata.get("status") != "success" or textual_metadata.get("contract_version") != "textual-cut-signals-v2":
+            raise ValueError("textual_cut_signals source contract is missing or incompatible")
+        ie_results = build_cut_context_metrics(pd.read_parquet(textual_path))
+        invalidate_stale_artifact(args.cut_context_output, ie_checksum)
+        write_cut_context_metrics(
+            ie_results,
+            args.cut_context_output,
+            source_checksum=ie_checksum,
+            options=ie_options,
+        )
+        logger.info("Wrote %s cut context observations", len(ie_results))
+
+    team_options = {
+        "stage": "team_metrics",
+        "contract_version": "team-metrics-v1",
+        "unit_of_analysis": "team_semester",
+        "ie_policy": "excluded_from_team_metrics; source_is_cut_context",
+    }
+    team_contract_paths = {
+        "planning": args.output,
+        "code_churn": args.code_churn_output,
+        "technical_degradation": args.technical_degradation_output,
+        "integration_friction": args.integration_friction_output,
+    }
+    team_checksum = input_checksum(
+        [
+            *team_contract_paths.values(),
+            *[artifact_metadata_path(path) for path in team_contract_paths.values()],
+            args.contract_report,
+        ],
+        team_options,
     )
-    logger.info("Wrote %s cut context observations", len(ie_results))
+    exclusions_path = args.team_metrics_output.with_name("team_metrics_exclusions.json")
+    if (
+        not args.force
+        and is_current_artifact(args.team_metrics_output, team_checksum)
+        and exclusions_path.exists()
+    ):
+        logger.info("Team metrics artifact is current: %s", args.team_metrics_output)
+    else:
+        invalidate_stale_artifact(args.team_metrics_output, team_checksum)
+        if exclusions_path.exists():
+            exclusions_path.unlink()
+        consolidate_team_metrics(
+            team_contract_paths,
+            output_path=args.team_metrics_output,
+            contract_report_path=args.contract_report,
+            options=team_options,
+        )
+        logger.info("Wrote team metrics artifact: %s", args.team_metrics_output)
 
 
 def write_code_churn_metrics(
@@ -893,11 +943,173 @@ def build_team_metrics(*partials: pd.DataFrame) -> pd.DataFrame:
     if not partials:
         raise ValueError("At least one metric partial is required")
     result = partials[0].copy()
+    if result.duplicated(KEYS).any():
+        raise ValueError("Metric partial has duplicate team_semester keys")
     for partial in partials[1:]:
         if partial.duplicated(KEYS).any():
             raise ValueError("Metric partial has duplicate team_semester keys")
         result = result.merge(partial, on=KEYS, how="outer", validate="one_to_one")
     result["unit_of_analysis"] = "team_semester"
+    return result
+
+
+def _load_team_metric_contract(
+    path: Path,
+    *,
+    contract_version: str,
+    unit_column: str,
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Load and validate one persisted team-semester metric contract."""
+    metadata_path = artifact_metadata_path(path)
+    if not path.exists() or not metadata_path.exists():
+        raise FileNotFoundError(f"Missing metric contract or sidecar: {path}")
+    try:
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise ValueError(f"Invalid metric contract sidecar: {metadata_path.name}") from error
+    if metadata.get("status") != "success":
+        raise ValueError(f"Metric contract sidecar is not successful: {path.name}")
+    if metadata.get("contract_version") != contract_version:
+        raise ValueError(f"Unexpected contract version for {path.name}")
+    if not metadata.get("input_checksum"):
+        raise ValueError(f"Metric contract sidecar lacks checksum: {path.name}")
+    frame = pd.read_parquet(path)
+    missing = (set(KEYS) | {unit_column}) - set(frame.columns)
+    if missing:
+        raise ValueError(f"{path.name} missing contract columns: {sorted(missing)}")
+    if frame.duplicated(KEYS).any():
+        raise ValueError(f"{path.name} has duplicate team-semester keys")
+    if not frame[unit_column].eq("team_semester").all():
+        raise ValueError(f"{path.name} has an invalid observation unit")
+    return frame, metadata
+
+
+def write_team_metrics(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+    exclusions: dict[str, Any],
+) -> None:
+    """Write the immutable consolidated team-semester contract and exclusions."""
+    required = set(KEYS) | {"unit_of_analysis"}
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"team_metrics output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("team_metrics output is empty")
+    if results.duplicated(KEYS).any():
+        raise ValueError("team_metrics has duplicate team-semester keys")
+    if not results["unit_of_analysis"].eq("team_semester").all():
+        raise ValueError("team_metrics has an invalid observation unit")
+    if any(column.startswith("ie_") for column in results.columns):
+        raise ValueError("team_metrics must not contain replicated IE columns")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    exclusions_path = output_path.with_name("team_metrics_exclusions.json")
+    if is_current_artifact(output_path, source_checksum):
+        return
+    if output_path.exists() or artifact_metadata_path(output_path).exists():
+        raise ValueError("team_metrics artifact is immutable and stale")
+    results.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version="team-metrics-v1",
+        options=options,
+    )
+    exclusions_payload = {
+        "status": "success",
+        "contract_version": "team-metrics-exclusions-v1",
+        "input_checksum": source_checksum,
+        "options": options,
+        **exclusions,
+    }
+    if exclusions_path.exists():
+        raise ValueError("team_metrics exclusions artifact is immutable and stale")
+    exclusions_path.write_text(
+        json.dumps(exclusions_payload, indent=2, sort_keys=True, default=str),
+        encoding="utf-8",
+    )
+
+
+def consolidate_team_metrics(
+    contract_paths: dict[str, Path],
+    *,
+    output_path: Path,
+    contract_report_path: Path,
+    options: dict[str, Any],
+) -> pd.DataFrame:
+    """Read, validate, merge, and persist the four team metric contracts."""
+    if not contract_report_path.exists():
+        raise FileNotFoundError(f"Contract report not found: {contract_report_path}")
+    report = json.loads(contract_report_path.read_text(encoding="utf-8"))
+    if report.get("status") != "success":
+        raise ValueError("Phase 2 contract report is not successful")
+    for name, expected in report.get("contracts", {}).items():
+        if name in {"git_commits", "git_team_cuts"}:
+            expected_path = contract_report_path.parent.parent / "lake" / f"{name}.parquet"
+            if expected_path.exists() and expected.get("input_checksum") != file_checksum(expected_path):
+                raise ValueError(f"Phase 2 contract report is stale for {name}")
+    loaded: list[pd.DataFrame] = []
+    metadata_by_source: dict[str, dict[str, Any]] = {}
+    contract_specs = {
+        "planning": ("planning-metrics-v1", "pi_observation_unit"),
+        "code_churn": ("code-churn-metrics-v1", "cc_observation_unit"),
+        "technical_degradation": ("technical-degradation-metrics-v1", "dt_observation_unit"),
+        "integration_friction": ("integration-friction-metrics-v1", "ai_observation_unit"),
+    }
+    for name, path in contract_paths.items():
+        frame, metadata = _load_team_metric_contract(
+            path,
+            contract_version=contract_specs[name][0],
+            unit_column=contract_specs[name][1],
+        )
+        loaded.append(frame)
+        metadata_by_source[name] = metadata
+    result = build_team_metrics(*loaded)
+    result["team_metrics_contract_version"] = "team-metrics-v1"
+    result["team_metrics_input_checksum"] = input_checksum(
+        [
+            *[path for path in contract_paths.values()],
+            *[artifact_metadata_path(path) for path in contract_paths.values()],
+            contract_report_path,
+        ],
+        options,
+    )
+    unavailable: dict[str, Any] = {}
+    for name, frame in zip(contract_paths, loaded):
+        availability_columns = [column for column in frame.columns if column.endswith("_available")]
+        affected_keys: list[dict[str, Any]] = []
+        unavailable_columns: dict[str, int] = {}
+        for column in availability_columns:
+            unavailable_mask = ~frame[column].fillna(False).astype(bool)
+            unavailable_columns[column] = int(unavailable_mask.sum())
+            reason_column = column.removesuffix("_available") + "_unavailable_reason"
+            for row in frame.loc[unavailable_mask, KEYS + [reason_column] if reason_column in frame else KEYS].itertuples(index=False, name=None):
+                key_values = dict(zip(KEYS, row[:len(KEYS)]))
+                reason = row[-1] if reason_column in frame else "unavailable"
+                affected_keys.append({
+                    **key_values,
+                    "metric": column.removesuffix("_available"),
+                    "reason": reason or "unavailable",
+                })
+        unavailable[name] = {
+            "rows": int(len(frame)),
+            "unavailable_columns": unavailable_columns,
+            "affected_keys": affected_keys,
+        }
+    checksum = result["team_metrics_input_checksum"].iloc[0]
+    write_team_metrics(
+        result,
+        output_path,
+        source_checksum=checksum,
+        options={**options, "input_contracts": metadata_by_source},
+        exclusions={
+            "sources": unavailable,
+            "ie_policy": "excluded_from_team_metrics; source_is_cut_context",
+        },
+    )
     return result
 
 

@@ -111,6 +111,10 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "analysis" / "technical_degradation_metrics.parquet"),
                 "--integration-friction-output",
                 str(PROJECT_ROOT / "data" / "analysis" / "integration_friction_metrics.parquet"),
+                "--cut-context-output",
+                str(PROJECT_ROOT / "data" / "analysis" / "cut_context_metrics.parquet"),
+                "--team-metrics-output",
+                str(PROJECT_ROOT / "data" / "analysis" / "team_metrics.parquet"),
             ]
         )
     if force:
