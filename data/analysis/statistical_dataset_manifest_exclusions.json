@@ -1,0 +1,2693 @@
+{
+  "contract_version": "statistical-dataset-manifest-exclusions-v1",
+  "exclusions": [
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_iqr_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_iqr_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_iqr_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_median_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_median_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_median_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_gini_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_gini_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_gini_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_max_author_share_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_max_author_share_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_max_author_share_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_ref_unavailable_reason_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_ref_unavailable_reason_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_ref_unavailable_reason_t3"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_window_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_n_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_n_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_share_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_share_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_iqr_per_commit_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_iqr_per_commit_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_mean_per_commit_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_mean_per_commit_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_median_per_commit_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_median_per_commit_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 5,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_changed_file_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_changed_file_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_source_loc_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_source_loc_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_source_loc_unavailable_reason_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 10,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_source_loc_unavailable_reason_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_source_loc_unavailable_reason_t3"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "dt_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "pi_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 14,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_07",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "planning_rework_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 7,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_02",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_10",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "repo_source_loc_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "n_excluded": 4,
+      "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_03",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_04",
+          "Semestre": "2026.1"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2025.2"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "repo_source_loc_t2"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_iqr"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mean"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_median"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_n_missing"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_n_total"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_n_valid"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_q1"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_q3"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_quantile_method"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_scale_type"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_scale_version"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_std"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_std_ddof"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_dominant_topic_counts"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_dominant_topic_shares"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_dominant_topics"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_integration_risk_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_integration_risk_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_integration_risk_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_iqr"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mean"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_median"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_n_missing"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_n_total"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_n_valid"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_q1"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_q3"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_quantile_method"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_scale_type"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_scale_version"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_std"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_std_ddof"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_iqr"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mean"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_median"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_n_missing"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_n_total"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_n_valid"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_q1"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_q3"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_quantile_method"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_scale_type"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_scale_version"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_std"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_std_ddof"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2025.2",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_unavailable_reason"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "n_excluded": 3,
+      "observation_keys": [
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "temporal_marker": "T3"
+        }
+      ],
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "transcript_session_n"
+    }
+  ],
+  "input_checksum": "9f79ef9ac71e9dba21cd2f5390f49871946ab0c83a1a9bdd561b15741b7a93ff",
+  "status": "success",
+  "unit_policy": "true_observation_keys_are_private"
+}

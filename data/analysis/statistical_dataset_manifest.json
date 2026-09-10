@@ -1,0 +1,5988 @@
+{
+  "contract_version": "statistical-dataset-manifest-v1",
+  "datasets": {
+    "cut_context_metrics": {
+      "coverage": {
+        "Semestre": [
+          "2025.2",
+          "2026.1"
+        ],
+        "temporal_marker": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      },
+      "n_rows": 6,
+      "n_unique_keys": 6,
+      "observation_key": [
+        "Semestre",
+        "temporal_marker"
+      ],
+      "unit_of_analysis": "cut_context",
+      "variables": [
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "Semestre",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "ie_definition_version",
+          "numeric": false
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "ie_transcript_available",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_coordination_friction_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_dominant_topic_counts",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_dominant_topic_shares",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_dominant_topics",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_integration_risk_mode",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_integration_risk_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_integration_risk_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_planning_clarity_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_rework_signal_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "ie_transcript_unavailable_reason",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "statistical_summary_version",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_ai_dependency_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_cognitive_load_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_benefit_sentiment_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_ai_dependency_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_cognitive_load_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_ai_career_impact_5y_sentiment_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_ai_dependency_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_cognitive_load_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_autonomy_tool_dependency_sentiment_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_ai_dependency_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_cognitive_load_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_career_expectation_sentiment_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_ai_dependency_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_cognitive_load_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_challenges_sentiment_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_ai_dependency_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_cognitive_load_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_iqr",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_mean",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_median",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_mode",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_mode_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_mode_share",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_n_missing",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_n_total",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_n_valid",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_q1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_q3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_quantile_method",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_scale_type",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_std",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_project_feeling_sentiment_score_std_ddof",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "student_response_n",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "temporal_marker",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "transcript_observation_n",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "name": "transcript_session_n",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 6,
+          "n_valid": 6,
+          "name": "unit_of_analysis",
+          "numeric": false
+        }
+      ]
+    },
+    "student_nlp": {
+      "coverage": {
+        "Semestre": [
+          "2025.2",
+          "2026.1"
+        ],
+        "temporal_marker": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      },
+      "n_rows": 1122,
+      "n_unique_keys": 1122,
+      "observation_key": [
+        "student_response_id",
+        "question_id"
+      ],
+      "unit_of_analysis": "student_response",
+      "variables": [
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "Semestre",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "ai_dependency_score",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "cognitive_load_score",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "methodological_orientation",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "model",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "planning_debt_signal",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "prompt_version",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "question_id",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "response_schema_version",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "score_scale_version",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "sentiment_score",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "status",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "student_response_id",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "temporal_marker",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 1122,
+          "n_valid": 1122,
+          "name": "unit_of_analysis",
+          "numeric": false
+        }
+      ]
+    },
+    "team_metrics": {
+      "coverage": {
+        "Semestre": [
+          "2025.2",
+          "2026.1"
+        ]
+      },
+      "n_rows": 14,
+      "n_unique_keys": 14,
+      "observation_key": [
+        "ID_Equipe",
+        "Semestre"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ID_Equipe",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "Semestre",
+          "numeric": false
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_activity_available_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_activity_available_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_activity_available_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_activity_status_t1",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_activity_status_t2",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_activity_status_t3",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_n_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_n_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_n_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_n_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "ai_author_share_iqr_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "ai_author_share_iqr_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "ai_author_share_iqr_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_iqr_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "ai_author_share_median_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "ai_author_share_median_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "ai_author_share_median_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_median_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_missing_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_missing_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_missing_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_valid_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_valid_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_valid_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_author_share_n_valid_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_available",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_churn_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_churn_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_churn_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_churn_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_commit_n_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_commit_n_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_commit_n_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_commit_n_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_concentration_available_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_concentration_available_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_concentration_available_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_definition_version",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "ai_gini_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "ai_gini_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "ai_gini_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_gini_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "ai_max_author_share_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "ai_max_author_share_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "ai_max_author_share_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_max_author_share_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_observation_unit",
+          "numeric": false
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_ref_available_before_t3_window",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_ref_available_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_ref_available_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_ref_available_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "ai_ref_unavailable_reason_t1",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "ai_ref_unavailable_reason_t2",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "ai_ref_unavailable_reason_t3",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_t3_window_hours",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "ai_unavailable_reason",
+          "numeric": false
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_window_available",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "ai_window_bounds",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "ai_window_unavailable_reason",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_activity_status_t1",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_activity_status_t2",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_activity_status_t3",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_binary_file_events_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_binary_file_events_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_binary_file_events_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_binary_policy",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_commit_churn_mode_n_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_commit_churn_mode_n_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_mode_n_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_commit_churn_mode_share_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_commit_churn_mode_share_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_mode_share_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_commit_churn_mode_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_commit_churn_mode_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_mode_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_missing_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_missing_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_missing_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_total_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_total_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_total_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_valid_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_valid_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_churn_n_valid_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_n_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_n_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_commit_n_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_definition_version",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_denominator_kind",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_iqr_per_commit_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_iqr_per_commit_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_iqr_per_commit_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_mean_7d",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_mean_per_commit_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_mean_per_commit_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_mean_per_commit_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_median_per_commit_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_median_per_commit_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_median_per_commit_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_observation_unit",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_peak_7d",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_peak_7d_temporal_marker",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 5,
+          "n_total": 14,
+          "n_valid": 9,
+          "name": "cc_per_changed_file_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_per_changed_file_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_per_changed_file_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "cc_per_source_loc_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "cc_per_source_loc_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_per_source_loc_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_source_loc_available_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_source_loc_available_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_source_loc_available_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "cc_source_loc_unavailable_reason_t1",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 10,
+          "n_total": 14,
+          "n_valid": 4,
+          "name": "cc_source_loc_unavailable_reason_t2",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "cc_source_loc_unavailable_reason_t3",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_total_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_total_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_total_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_unique_changed_files_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_unique_changed_files_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "cc_unique_changed_files_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "delta_dt_t1_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "delta_dt_t1_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "delta_dt_t2_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "dt_available",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "dt_definition_version",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "dt_observation_unit",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "dt_unavailable_reason",
+          "numeric": false
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_available",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_binary_event_count_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_binary_event_count_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_binary_event_count_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_definition_version",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_deleted_count_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_deleted_count_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_deleted_count_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_file_count_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_file_count_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_file_count_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_line_delta_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_line_delta_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_line_delta_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_observation_unit",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_renamed_count_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_renamed_count_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "pi_renamed_count_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "pi_unavailable_reason",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "planning_artifact_activity_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "planning_artifact_activity_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "planning_artifact_activity_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "planning_rework_available",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "planning_rework_event_n_t2_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "planning_rework_signal_t2_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 14,
+          "n_total": 14,
+          "n_valid": 0,
+          "name": "planning_rework_unavailable_reason",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_size_definition_version",
+          "numeric": false
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_snapshot_available_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_snapshot_available_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "bool",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_snapshot_available_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_snapshot_n_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_snapshot_n_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_snapshot_n_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "name": "repo_source_loc_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 4,
+          "n_total": 14,
+          "n_valid": 10,
+          "name": "repo_source_loc_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "repo_source_loc_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "team_metrics_contract_version",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "team_metrics_input_checksum",
+          "numeric": false
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_iqr_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_iqr_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_iqr_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_mean_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_mean_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_mean_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_median_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_median_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_median_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_n_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_n_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_n_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_std_t1",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_std_t2",
+          "numeric": true
+        },
+        {
+          "dtype": "float64",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "technical_complexity_std_t3",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "name": "unit_of_analysis",
+          "numeric": false
+        }
+      ]
+    },
+    "transcript_nlp": {
+      "coverage": {
+        "Semestre": [
+          "2025.2"
+        ],
+        "temporal_marker": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      },
+      "n_rows": 100,
+      "n_unique_keys": 100,
+      "observation_key": [
+        "transcript_file"
+      ],
+      "unit_of_analysis": "transcript_session",
+      "variables": [
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "Semestre",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "coordination_friction_score",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "dominant_topics",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "evidence_summary_private",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "integration_risk_signal",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "model",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "planning_clarity_score",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "prompt_version",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "response_schema_version",
+          "numeric": false
+        },
+        {
+          "dtype": "int64",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "rework_signal_score",
+          "numeric": true
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "session_id",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "status",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "temporal_marker",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "temporal_marker_source",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "transcript_file",
+          "numeric": false
+        },
+        {
+          "dtype": "object",
+          "n_missing": 0,
+          "n_total": 100,
+          "n_valid": 100,
+          "name": "unit_of_analysis",
+          "numeric": false
+        }
+      ]
+    }
+  },
+  "declared_analyses": [
+    {
+      "analysis_id": "pi_vs_cc_primary",
+      "missing_columns": [],
+      "n_missing": 0,
+      "n_total": 14,
+      "n_valid": 14,
+      "reason": null,
+      "status": "available",
+      "unit_of_analysis": "team_semester",
+      "x": "pi_file_count_t1",
+      "y": "cc_per_source_loc_t3"
+    },
+    {
+      "analysis_id": "pi_vs_delta_dt_primary",
+      "missing_columns": [],
+      "n_missing": 0,
+      "n_total": 14,
+      "n_valid": 14,
+      "reason": null,
+      "status": "available",
+      "unit_of_analysis": "team_semester",
+      "x": "pi_file_count_t1",
+      "y": "delta_dt_t1_t3"
+    },
+    {
+      "analysis_id": "ai_vs_cc_primary",
+      "missing_columns": [],
+      "n_missing": 7,
+      "n_total": 14,
+      "n_valid": 7,
+      "reason": null,
+      "status": "available",
+      "unit_of_analysis": "team_semester",
+      "x": "ai_max_author_share_before_t3_window",
+      "y": "cc_total_t3"
+    }
+  ],
+  "exclusions": [
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "105ea6529626af77fc89bf2ec076c047ffe0e13bde7f56bc074ee7bb2e612133"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_iqr_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_iqr_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_iqr_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "105ea6529626af77fc89bf2ec076c047ffe0e13bde7f56bc074ee7bb2e612133"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_median_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_median_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_author_share_median_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "105ea6529626af77fc89bf2ec076c047ffe0e13bde7f56bc074ee7bb2e612133"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_gini_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_gini_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_gini_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "105ea6529626af77fc89bf2ec076c047ffe0e13bde7f56bc074ee7bb2e612133"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_max_author_share_before_t3_window"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_max_author_share_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_max_author_share_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_ref_unavailable_reason_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_ref_unavailable_reason_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_ref_unavailable_reason_t3"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "866552a3eda9f074a1afd199a7b80f12f68b2eba0c19b99bf5a93d72bcf7f246",
+        "c0f4409c58d6415ed7761392d680fb57f4c3b31b6f3f81c25d8e5c274eff15de",
+        "e8a794762b6e18adedb2a3e669068d6a93ebff3766fa9474185c1f6d36e89a49"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "ai_window_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_n_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_n_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_share_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_share_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_commit_churn_mode_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_iqr_per_commit_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_iqr_per_commit_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_mean_per_commit_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_mean_per_commit_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_median_per_commit_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_median_per_commit_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
+        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+      ],
+      "n_excluded": 5,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_changed_file_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_changed_file_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_source_loc_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_per_source_loc_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "866552a3eda9f074a1afd199a7b80f12f68b2eba0c19b99bf5a93d72bcf7f246",
+        "c0f4409c58d6415ed7761392d680fb57f4c3b31b6f3f81c25d8e5c274eff15de",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_source_loc_unavailable_reason_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "866552a3eda9f074a1afd199a7b80f12f68b2eba0c19b99bf5a93d72bcf7f246",
+        "c0f4409c58d6415ed7761392d680fb57f4c3b31b6f3f81c25d8e5c274eff15de"
+      ],
+      "n_excluded": 10,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_source_loc_unavailable_reason_t2"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "cc_source_loc_unavailable_reason_t3"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "dt_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "pi_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "53c55e2c542bedc100b7774b26588680f8f034ae56c9addbd1db0b0fc830e990",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b"
+      ],
+      "n_excluded": 14,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "planning_rework_unavailable_reason"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
+        "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37"
+      ],
+      "n_excluded": 7,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "repo_source_loc_t1"
+    },
+    {
+      "dataset": "team_metrics",
+      "example_key_hashes": [
+        "ff45d5e8af1f11e2019cfb5d1c65a44e80df29b28cb5f57c2d7dbebb3e0330c0",
+        "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
+        "71ffb53d58c4b67e5255f9e3bd2fd2287dc43ee003e8d4bb988cee6f55210a35",
+        "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6"
+      ],
+      "n_excluded": 4,
+      "reason": "missing_value",
+      "unit_of_analysis": "team_semester",
+      "variable": "repo_source_loc_t2"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_iqr"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mean"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_median"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_n_missing"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_n_total"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_n_valid"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_q1"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_q3"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_quantile_method"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_scale_type"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_scale_version"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_std"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_coordination_friction_score_std_ddof"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_dominant_topic_counts"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_dominant_topic_shares"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_dominant_topics"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_integration_risk_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_integration_risk_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_integration_risk_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_iqr"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mean"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_median"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_n_missing"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_n_total"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_n_valid"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_q1"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_q3"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_quantile_method"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_scale_type"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_scale_version"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_std"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_planning_clarity_score_std_ddof"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_iqr"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mean"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_median"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mode"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mode_n"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_mode_share"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_n_missing"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_n_total"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_n_valid"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_q1"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_q3"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_quantile_method"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_scale_type"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_scale_version"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_std"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_rework_signal_score_std_ddof"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "ddf5fd3c02912d14b3cb25ae5e69ee8fc4a4047234133026c41bdfef3c4a4bf7",
+        "4caac296709b37c2f4adcffd8e84c0bd5d025d10e7a8459d3d20b458da4cb16c",
+        "91817bfd651729988a78c3e7fe80f4223b8b74c1896eb8f4024270ec43b28bd2"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "ie_transcript_unavailable_reason"
+    },
+    {
+      "dataset": "cut_context_metrics",
+      "example_key_hashes": [
+        "46839de5001b7b52bd27c0f5cfe61a6eef07b9d42d4a6972e35f13210f5e7809",
+        "adb4f256032210b0e622f6791bab732b98714a9c19976e8352e5bee83ae7de38",
+        "61bab1bbe4a6a856b434b60f6220a0f42912162eb8559e84727d543512a4aa00"
+      ],
+      "n_excluded": 3,
+      "reason": "missing_value",
+      "unit_of_analysis": "cut_context",
+      "variable": "transcript_session_n"
+    }
+  ],
+  "input_artifacts": {
+    "cut_context_metrics": {
+      "checksum": "97cb173f2ac476d0f6169d4aa94c7d039b05b21124b11333503519060280bf19",
+      "contract_version": "cut-context-metrics-v1",
+      "n_rows": 6,
+      "path": "data/analysis/cut_context_metrics.parquet",
+      "unit_of_analysis": "cut_context"
+    },
+    "student_nlp": {
+      "checksum": "cebddff5fad9223fa727948455ad296cd227a1ccc8950fa66d5bd95cd4404637",
+      "contract_version": "student-nlp-v1",
+      "n_rows": 1122,
+      "path": "data/analysis/student_nlp.parquet",
+      "unit_of_analysis": "student_response"
+    },
+    "team_metrics": {
+      "checksum": "42e00af69017ae980a4d7b44591f92a7c6dea6c211ae75d39e8255f4e7d46b9f",
+      "contract_version": "team-metrics-v1",
+      "n_rows": 14,
+      "path": "data/analysis/team_metrics.parquet",
+      "unit_of_analysis": "team_semester"
+    },
+    "transcript_nlp": {
+      "checksum": "fc7fe2714836d1d71f428369b2b0c2d2ec8b3feba3aab1b34ce77ebf7f6d7ef9",
+      "contract_version": "transcript-nlp-v1",
+      "n_rows": 100,
+      "path": "data/analysis/transcript_nlp.parquet",
+      "unit_of_analysis": "transcript_session"
+    }
+  },
+  "input_checksum": "9f79ef9ac71e9dba21cd2f5390f49871946ab0c83a1a9bdd561b15741b7a93ff",
+  "manifest_version": "phase2-statistics-v2",
+  "metric_definition_versions": {
+    "ai": "ai-v1",
+    "cc": "cc-v1",
+    "dt": "dt-v1",
+    "ie": "ie-v1",
+    "pi": "pi-v1",
+    "statistical_summary_version": "distribution-summary-v1"
+  },
+  "pii_status": {
+    "raw_text_in_manifest": false,
+    "source_artifacts_private": [
+      "student_nlp",
+      "transcript_nlp"
+    ],
+    "text_fields": "excluded"
+  },
+  "statistical_protocol": {
+    "ordinal_scale_treatment": "ordinal_with_interval_summary",
+    "quantile_method": "linear",
+    "statistical_summary_version": "distribution-summary-v1",
+    "std_ddof": 1
+  },
+  "status": "success",
+  "unit_compatibility": {
+    "cut_context": {
+      "broadcast_allowed": false,
+      "direct_correlation_with": [
+        "cut_context"
+      ]
+    },
+    "student_response": {
+      "aggregation_target": "cut_context",
+      "broadcast_allowed": false
+    },
+    "team_semester": {
+      "broadcast_allowed": false,
+      "direct_correlation_with": [
+        "team_semester"
+      ]
+    },
+    "transcript_session": {
+      "aggregation_target": "cut_context",
+      "broadcast_allowed": false
+    }
+  }
+}
