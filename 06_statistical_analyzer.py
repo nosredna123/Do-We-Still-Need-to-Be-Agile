@@ -9,9 +9,10 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from scipy import stats as scipy_stats
 from scipy.stats import spearmanr
 
-from pipeline_config import STATISTICAL_ANALYSIS_REGISTRY
+from pipeline_config import HYPOTHESIS_TEST_REGISTRY, STATISTICAL_ANALYSIS_REGISTRY
 from pipeline_core import (
     ANALYSIS_DIR,
     artifact_metadata_path,
@@ -54,6 +55,8 @@ DATASET_SPECS: dict[str, dict[str, Any]] = {
 }
 MIN_CORRELATION_N = 3
 CORRELATION_CONTRACT_VERSION = "spearman-correlation-results-v1"
+HYPOTHESIS_CONTRACT_VERSION = "mann-whitney-hypothesis-results-v1"
+MIN_HYPOTHESIS_GROUP_N = 3
 
 
 def run_declared_correlations(frame: pd.DataFrame, registry: list[dict[str, Any]]) -> pd.DataFrame:
@@ -217,6 +220,153 @@ def run_persisted_correlations(
         "results_input_checksum": result_checksum,
         "executed": results.to_dict("records"),
         "rejected": rejected,
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    return results
+
+
+def _run_one_hypothesis(
+    frame: pd.DataFrame,
+    analysis_id: str,
+    analysis: dict[str, Any],
+) -> dict[str, Any]:
+    """Run one median-split Mann-Whitney test with explicit diagnostics."""
+    group_variable = analysis["group_variable"]
+    outcome_variable = analysis["outcome_variable"]
+    pair = frame[[group_variable, outcome_variable]].dropna()
+    n_total = int(len(frame))
+    n_valid = int(len(pair))
+    n_missing = n_total - n_valid
+    median = float(pair[group_variable].median()) if not pair.empty else None
+    group_low = pair.loc[pair[group_variable] <= median, outcome_variable] if median is not None else pd.Series(dtype=float)
+    group_high = pair.loc[pair[group_variable] > median, outcome_variable] if median is not None else pd.Series(dtype=float)
+    result: dict[str, Any] = {
+        "analysis_id": analysis_id,
+        "unit_of_analysis": analysis["unit_of_analysis"],
+        "test": analysis["test"],
+        "priority": analysis.get("priority"),
+        "group_variable": group_variable,
+        "outcome_variable": outcome_variable,
+        "split_rule": analysis["split_rule"],
+        "split_median": median,
+        "n_total": n_total,
+        "n_valid": n_valid,
+        "n_missing": n_missing,
+        "n_group_low": int(len(group_low)),
+        "n_group_high": int(len(group_high)),
+        "u_statistic": None,
+        "p_value": None,
+        "multiple_testing_correction": "none_v1",
+        "status": "unavailable",
+        "reason": None,
+        "interpretation": "exploratory_observational",
+    }
+    if len(group_low) < MIN_HYPOTHESIS_GROUP_N or len(group_high) < MIN_HYPOTHESIS_GROUP_N:
+        result["reason"] = "insufficient_group_n"
+        return result
+    if group_low.nunique() < 2 or group_high.nunique() < 2:
+        result["reason"] = "zero_variance"
+        return result
+    statistic, p_value = scipy_stats.mannwhitneyu(group_low, group_high, alternative="two-sided")
+    result.update({
+        "u_statistic": float(statistic),
+        "p_value": float(p_value),
+        "status": "success",
+    })
+    return result
+
+
+def run_persisted_hypotheses(
+    analysis_dir: Path = ANALYSIS_DIR,
+    *,
+    output_path: Path | None = None,
+    manifest_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Run declared Mann-Whitney tests on persisted, unit-compatible data."""
+    output_path = output_path or analysis_dir / "hypothesis_results.csv"
+    manifest_path = manifest_path or analysis_dir / "statistical_dataset_manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"Statistical manifest not found: {manifest_path}")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise ValueError("Invalid statistical manifest") from error
+    if manifest.get("status") != "success":
+        raise ValueError("Statistical manifest is not successful")
+    if not manifest.get("input_checksum"):
+        raise ValueError("Statistical manifest lacks input checksum")
+
+    frames: dict[str, pd.DataFrame] = {}
+    for name in ("team_metrics", "cut_context_metrics"):
+        path = analysis_dir / DATASET_SPECS[name]["path_name"]
+        frames[name], _ = _read_persisted_dataset(name, path)
+    unit_frames = {
+        "team_semester": frames["team_metrics"],
+        "cut_context": frames["cut_context_metrics"],
+    }
+    result_inputs = [
+        path
+        for name in ("team_metrics", "cut_context_metrics")
+        for path in (
+            analysis_dir / DATASET_SPECS[name]["path_name"],
+            artifact_metadata_path(analysis_dir / DATASET_SPECS[name]["path_name"]),
+        )
+    ]
+    result_checksum = input_checksum(
+        result_inputs,
+        {
+            "contract_version": HYPOTHESIS_CONTRACT_VERSION,
+            "registry": HYPOTHESIS_TEST_REGISTRY,
+            "manifest_input_checksum": manifest["input_checksum"],
+            "minimum_group_n": MIN_HYPOTHESIS_GROUP_N,
+        },
+    )
+    if not force and is_current_artifact(output_path, result_checksum):
+        return pd.read_csv(output_path)
+
+    rows: list[dict[str, Any]] = []
+    for analysis_id, analysis in HYPOTHESIS_TEST_REGISTRY.items():
+        frame = unit_frames.get(analysis.get("unit_of_analysis"))
+        missing = [
+            column
+            for column in (analysis["group_variable"], analysis["outcome_variable"])
+            if frame is None or column not in frame.columns
+        ]
+        if frame is None or missing:
+            if analysis.get("priority") == "primary":
+                raise ValueError(f"Primary hypothesis {analysis_id} has missing unit or columns: {missing}")
+            rows.append({
+                "analysis_id": analysis_id,
+                "unit_of_analysis": analysis.get("unit_of_analysis"),
+                "group_variable": analysis["group_variable"],
+                "outcome_variable": analysis["outcome_variable"],
+                "status": "unavailable",
+                "reason": "missing_unit_or_columns",
+            })
+            continue
+        rows.append(_run_one_hypothesis(frame, analysis_id, analysis))
+
+    results = pd.DataFrame(rows)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    results.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        result_checksum,
+        contract_version=HYPOTHESIS_CONTRACT_VERSION,
+        options={
+            "registry": HYPOTHESIS_TEST_REGISTRY,
+            "minimum_group_n": MIN_HYPOTHESIS_GROUP_N,
+            "multiple_testing_correction": "none_v1",
+        },
+    )
+    manifest["hypotheses"] = {
+        "status": "success",
+        "contract_version": HYPOTHESIS_CONTRACT_VERSION,
+        "results_path": output_path.as_posix(),
+        "results_input_checksum": result_checksum,
+        "executed": results.to_dict("records"),
+        "registry": HYPOTHESIS_TEST_REGISTRY,
     }
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True, default=str), encoding="utf-8")
     return results
@@ -557,9 +707,15 @@ def main() -> None:
         manifest_path=analysis_dir / "statistical_dataset_manifest.json",
         force=args.force,
     )
+    hypotheses = run_persisted_hypotheses(
+        analysis_dir,
+        output_path=analysis_dir / "hypothesis_results.csv",
+        manifest_path=analysis_dir / "statistical_dataset_manifest.json",
+        force=args.force,
+    )
     print(
         f"Statistical manifest: {manifest['status']} ({len(manifest['datasets'])} datasets); "
-        f"correlations: {len(results)}"
+        f"correlations: {len(results)}; hypotheses: {len(hypotheses)}"
     )
 
 

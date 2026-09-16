@@ -1,0 +1,4 @@
+analysis_id,unit_of_analysis,test,priority,group_variable,outcome_variable,split_rule,split_median,n_total,n_valid,n_missing,n_group_low,n_group_high,u_statistic,p_value,multiple_testing_correction,status,reason,interpretation
+pi_high_vs_low_cc_primary,team_semester,mann_whitney_u,primary,pi_file_count_t1,cc_per_source_loc_t3,median_low_le_high_gt,2.0,14,14,0,7,7,21.0,0.7103729603729605,none_v1,success,,exploratory_observational
+ai_high_vs_low_cc_primary,team_semester,mann_whitney_u,primary,ai_max_author_share_before_t3_window,cc_total_t3,median_low_le_high_gt,0.5111111111111111,14,7,7,4,3,6.0,1.0,none_v1,success,,exploratory_observational
+context_ie_high_vs_low_rework_primary,cut_context,mann_whitney_u,primary,ie_transcript_coordination_friction_score_mean,ie_transcript_rework_signal_score_mean,median_low_le_high_gt,1.972972972972973,6,3,3,2,1,,,none_v1,unavailable,insufficient_group_n,exploratory_observational

@@ -203,6 +203,32 @@ STATISTICAL_ANALYSIS_REGISTRY = {
     "ai_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "ai_max_author_share_before_t3_window", "y": "cc_total_t3", "test": "spearman", "priority": "primary", "figure": "ai_before_t3.png"},
     "context_ie_temporal_primary": {"unit_of_analysis": "cut_context", "x": "ie_transcript_coordination_friction_score_mean", "y": "ie_transcript_rework_signal_score_mean", "test": "spearman", "priority": "primary", "figure": None},
 }
+HYPOTHESIS_TEST_REGISTRY = {
+    "pi_high_vs_low_cc_primary": {
+        "unit_of_analysis": "team_semester",
+        "group_variable": "pi_file_count_t1",
+        "outcome_variable": "cc_per_source_loc_t3",
+        "test": "mann_whitney_u",
+        "priority": "primary",
+        "split_rule": "median_low_le_high_gt",
+    },
+    "ai_high_vs_low_cc_primary": {
+        "unit_of_analysis": "team_semester",
+        "group_variable": "ai_max_author_share_before_t3_window",
+        "outcome_variable": "cc_total_t3",
+        "test": "mann_whitney_u",
+        "priority": "primary",
+        "split_rule": "median_low_le_high_gt",
+    },
+    "context_ie_high_vs_low_rework_primary": {
+        "unit_of_analysis": "cut_context",
+        "group_variable": "ie_transcript_coordination_friction_score_mean",
+        "outcome_variable": "ie_transcript_rework_signal_score_mean",
+        "test": "mann_whitney_u",
+        "priority": "primary",
+        "split_rule": "median_low_le_high_gt",
+    },
+}
 
 # Each range identifies one evaluation moment. The two-day ranges in 2025.2 are
 # deliberate: teams were distributed between presentation days because all teams

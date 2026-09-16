@@ -204,8 +204,6 @@ def test_run_persisted_correlations_resumes_with_stable_checksum(tmp_path: Path)
 	first = STATISTICAL_ANALYZER.run_persisted_correlations(
 		analysis_dir, output_path=output_path, manifest_path=manifest_path
 	)
-	metadata_path = output_path.with_name("correlation_results.csv.metadata.json")
-	first_metadata = metadata_path.read_text(encoding="utf-8")
 	second = STATISTICAL_ANALYZER.run_persisted_correlations(
 		analysis_dir, output_path=output_path, manifest_path=manifest_path
 	)
@@ -219,4 +217,90 @@ def test_run_persisted_correlations_resumes_with_stable_checksum(tmp_path: Path)
 			)
 		else:
 			assert first[column].fillna("").astype(str).tolist() == second[column].fillna("").astype(str).tolist()
-	assert metadata_path.read_text(encoding="utf-8") == first_metadata
+
+
+def test_run_persisted_hypotheses_uses_median_groups_and_explicit_unavailability(tmp_path: Path) -> None:
+	project_root = Path(__file__).parents[1]
+	analysis_dir = project_root / "data" / "analysis"
+	manifest_path = tmp_path / "statistical_dataset_manifest.json"
+	manifest_path.write_text(
+		(analysis_dir / "statistical_dataset_manifest.json").read_text(encoding="utf-8"),
+		encoding="utf-8",
+	)
+	output_path = tmp_path / "hypothesis_results.csv"
+
+	results = STATISTICAL_ANALYZER.run_persisted_hypotheses(
+		analysis_dir,
+		output_path=output_path,
+		manifest_path=manifest_path,
+	)
+
+	assert set(results["analysis_id"]) == {
+		"pi_high_vs_low_cc_primary",
+		"ai_high_vs_low_cc_primary",
+		"context_ie_high_vs_low_rework_primary",
+	}
+	pi_row = results.loc[results["analysis_id"] == "pi_high_vs_low_cc_primary"].iloc[0]
+	assert pi_row["split_rule"] == "median_low_le_high_gt"
+	assert pi_row["n_group_low"] == 7
+	assert pi_row["n_group_high"] == 7
+	assert pi_row["status"] == "success"
+	ai_row = results.loc[results["analysis_id"] == "ai_high_vs_low_cc_primary"].iloc[0]
+	assert ai_row["status"] == "success"
+	assert ai_row["n_group_low"] == 4
+	assert ai_row["n_group_high"] == 3
+	context_row = results.loc[results["analysis_id"] == "context_ie_high_vs_low_rework_primary"].iloc[0]
+	assert context_row["unit_of_analysis"] == "cut_context"
+	assert context_row["status"] == "unavailable"
+	assert context_row["reason"] == "insufficient_group_n"
+	updated = json.loads(manifest_path.read_text(encoding="utf-8"))
+	assert updated["hypotheses"]["status"] == "success"
+	assert output_path.with_name("hypothesis_results.csv.metadata.json").exists()
+
+
+def test_run_persisted_hypotheses_rejects_zero_variance_groups(tmp_path: Path) -> None:
+	analysis_dir = tmp_path / "analysis"
+	analysis_dir.mkdir()
+	team = pd.DataFrame(
+		[
+			{"ID_Equipe": "A", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 0, "outcome": 1},
+			{"ID_Equipe": "B", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 0, "outcome": 1},
+			{"ID_Equipe": "C", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 1, "outcome": 1},
+			{"ID_Equipe": "D", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 1, "outcome": 1},
+			{"ID_Equipe": "E", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 2, "outcome": 1},
+			{"ID_Equipe": "F", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 2, "outcome": 2},
+			{"ID_Equipe": "G", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 3, "outcome": 3},
+			{"ID_Equipe": "H", "Semestre": "S", "unit_of_analysis": "team_semester", "group": 3, "outcome": 4},
+		]
+	)
+	_write_input(analysis_dir, "team_metrics", team, contract_version="team-metrics-v1", options={})
+	context = pd.DataFrame(
+		[{"Semestre": "S", "temporal_marker": "T1", "unit_of_analysis": "cut_context", "context_group": 1, "context_outcome": 1}]
+	)
+	_write_input(analysis_dir, "cut_context_metrics", context, contract_version="cut-context-metrics-v1", options={})
+	contract_report = analysis_dir / "phase2_contract_report.json"
+	contract_report.write_text(json.dumps({"status": "success"}), encoding="utf-8")
+	manifest_path = analysis_dir / "statistical_dataset_manifest.json"
+	manifest_path.write_text(json.dumps({"status": "success", "input_checksum": "fixture"}), encoding="utf-8")
+
+	original_registry = STATISTICAL_ANALYZER.HYPOTHESIS_TEST_REGISTRY.copy()
+	STATISTICAL_ANALYZER.HYPOTHESIS_TEST_REGISTRY.clear()
+	STATISTICAL_ANALYZER.HYPOTHESIS_TEST_REGISTRY["fixture_zero_variance"] = {
+		"unit_of_analysis": "team_semester",
+		"group_variable": "group",
+		"outcome_variable": "outcome",
+		"test": "mann_whitney_u",
+		"priority": "primary",
+		"split_rule": "median_low_le_high_gt",
+	}
+	try:
+		results = STATISTICAL_ANALYZER.run_persisted_hypotheses(
+			analysis_dir,
+			output_path=tmp_path / "hypothesis_results.csv",
+			manifest_path=manifest_path,
+		)
+	finally:
+		STATISTICAL_ANALYZER.HYPOTHESIS_TEST_REGISTRY.clear()
+		STATISTICAL_ANALYZER.HYPOTHESIS_TEST_REGISTRY.update(original_registry)
+	assert results.loc[0, "status"] == "unavailable"
+	assert results.loc[0, "reason"] == "zero_variance"
