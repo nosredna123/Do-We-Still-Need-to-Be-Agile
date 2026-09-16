@@ -311,9 +311,89 @@ class PipelineCoreTests(unittest.TestCase):
                 str(REPO_ROOT / "data" / "analysis" / "transcript_nlp.parquet"),
                 "--textual-cut-signals-output",
                 str(REPO_ROOT / "data" / "analysis" / "textual_cut_signals.parquet"),
+                "--backend",
+                "openai",
             ],
             command,
         )
+
+    def test_pipeline_orchestrator_passes_explicit_mock_nlp_backend(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_mock_backend", "run_pipeline.py"
+        )
+
+        command = orchestrator.build_stage_command(
+            "nlp", [], [], "", False, nlp_backend="mock"
+        )
+
+        self.assertEqual("mock", command[-1])
+        self.assertEqual("--backend", command[-2])
+
+    def test_pipeline_orchestrator_dry_run_validates_phase2_structure(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_dry_run_phase2", "run_pipeline.py"
+        )
+
+        orchestrator.validate_dry_run_requirements(["stats"], "openai")
+
+    def test_pipeline_orchestrator_writes_phase2_run_manifest(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_phase2_manifest", "run_pipeline.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            log_dir = Path(tmp_dir) / "logs"
+            calls: list[list[str]] = []
+
+            def fake_run_stage(command: list[str], log_path: Path) -> None:
+                calls.append(command)
+
+            with mock.patch.object(orchestrator, "run_stage_process", side_effect=fake_run_stage):
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py",
+                    "--stages", "nlp", "metrics", "stats",
+                    "--nlp-backend", "mock",
+                    "--log-dir", str(log_dir),
+                ]):
+                    orchestrator.main()
+
+            manifest_path = next(log_dir.glob("pipeline_*.json"))
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            assert manifest["status"] == "success"
+            assert manifest["stages"] == ["nlp", "metrics", "stats"]
+            assert manifest["nlp_backend"] == "mock"
+            assert [Path(command[1]).name for command in calls] == [
+                "04_nlp_qualitative_miner.py",
+                "05_metric_engine.py",
+                "06_statistical_analyzer.py",
+            ]
+
+    def test_pipeline_orchestrator_phase2_chain_fails_fast(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_phase2_fail_fast", "run_pipeline.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            calls: list[list[str]] = []
+
+            def fail_on_metrics(command: list[str], log_path: Path) -> None:
+                calls.append(command)
+                if Path(command[1]).name == "05_metric_engine.py":
+                    raise subprocess.CalledProcessError(7, command)
+
+            with mock.patch.object(orchestrator, "run_stage_process", side_effect=fail_on_metrics):
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py",
+                    "--stages", "nlp", "metrics", "stats",
+                    "--nlp-backend", "mock",
+                    "--log-dir", str(Path(tmp_dir) / "logs"),
+                ]):
+                    with pytest.raises(SystemExit) as error:
+                        orchestrator.main()
+
+            assert error.value.code == 7
+            assert [Path(command[1]).name for command in calls] == [
+                "04_nlp_qualitative_miner.py",
+                "05_metric_engine.py",
+            ]
 
     def test_openai_client_can_be_constructed(self) -> None:
         client = OpenAI(api_key="test-key")

@@ -296,7 +296,7 @@ def main() -> None:
         type=Path,
         default=Path("data/analysis/textual_cut_signals.parquet"),
     )
-    parser.add_argument("--backend", choices=("openai",), default="openai")
+    parser.add_argument("--backend", choices=("openai", "mock"), default="openai")
     parser.add_argument(
         "--model",
         default=str(MODEL_CONFIG["qualitative_mining"]["model"]),
@@ -363,15 +363,22 @@ def main() -> None:
     if not args.force and is_current_artifact(args.output, nlp_checksum):
         logger.info("Student NLP artifact is current: %s", args.output)
     else:
-        load_project_environment()
-        try:
-            from openai import OpenAI
-        except ImportError as error:
-            raise RuntimeError("openai package is not installed") from error
-        client = OpenAI()
+        client = None
+        if args.backend == "openai":
+            load_project_environment()
+            try:
+                from openai import OpenAI
+            except ImportError as error:
+                raise RuntimeError("openai package is not installed") from error
+            client = OpenAI()
+        student_backend = (
+            (lambda prompt: openai_student_backend(prompt, client=client, model=args.model))
+            if client is not None
+            else mock_student_backend
+        )
         results = mine_student_prompts(
             prompts,
-            lambda prompt: openai_student_backend(prompt, client=client, model=args.model),
+            student_backend,
             model=args.model,
             checkpoint_path=checkpoint_path,
             checkpoint_checksum=nlp_checksum,
@@ -419,17 +426,21 @@ def main() -> None:
     if not args.force and is_current_artifact(args.transcript_output, transcript_checksum):
         logger.info("Transcript NLP artifact is current: %s", args.transcript_output)
     else:
-        client = locals().get("client")
-        if client is None:
+        if args.backend == "openai" and client is None:
             load_project_environment()
             try:
                 from openai import OpenAI
             except ImportError as error:
                 raise RuntimeError("openai package is not installed") from error
             client = OpenAI()
+        transcript_backend = (
+            (lambda prompt: openai_transcript_backend(prompt, client=client, model=args.model))
+            if client is not None
+            else mock_transcript_backend
+        )
         transcript_results = mine_transcript_sessions(
             inputs["transcript_sessions"],
-            lambda prompt: openai_transcript_backend(prompt, client=client, model=args.model),
+            transcript_backend,
             model=args.model,
             checkpoint_path=transcript_checkpoint,
             checkpoint_checksum=transcript_checksum,
@@ -696,6 +707,17 @@ def write_student_nlp(
     )
 
 
+def mock_student_backend(prompt: str) -> str:
+    """Return deterministic insufficient-evidence JSON for offline runs."""
+    return json.dumps({
+        "sentiment_score": 0,
+        "cognitive_load_score": 0,
+        "ai_dependency_score": 0,
+        "methodological_orientation": "insufficient_evidence",
+        "planning_debt_signal": "insufficient_evidence",
+    })
+
+
 def openai_student_backend(prompt: str, *, client: Any, model: str) -> str:
     """Request one strict JSON student analysis from an OpenAI client."""
     config = MODEL_CONFIG["qualitative_mining"]
@@ -940,6 +962,18 @@ def write_transcript_nlp(
         contract_version="transcript-nlp-v1",
         options=options,
     )
+
+
+def mock_transcript_backend(prompt: str) -> str:
+    """Return deterministic insufficient-evidence JSON for offline runs."""
+    return json.dumps({
+        "coordination_friction_score": 0,
+        "rework_signal_score": 0,
+        "planning_clarity_score": 0,
+        "integration_risk_signal": "absent",
+        "dominant_topics": [],
+        "evidence_summary_private": None,
+    })
 
 
 def openai_transcript_backend(prompt: str, *, client: Any, model: str) -> str:

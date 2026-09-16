@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
+import json
 import logging
 import os
 import subprocess
@@ -69,6 +70,7 @@ def build_stage_command(
     salt: str,
     force: bool,
     limite: int | None = None,
+    nlp_backend: str = "openai",
 ) -> list[str]:
     """Build the subprocess command for a pipeline stage."""
     command = [PYTHON_EXECUTABLE, str(PROJECT_ROOT / STAGE_SCRIPTS[stage])]
@@ -94,6 +96,8 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "analysis" / "transcript_nlp.parquet"),
                 "--textual-cut-signals-output",
                 str(PROJECT_ROOT / "data" / "analysis" / "textual_cut_signals.parquet"),
+                "--backend",
+                nlp_backend,
             ]
         )
     if stage == "metrics":
@@ -122,6 +126,28 @@ def build_stage_command(
     if limite is not None and stage in {"prepare", "transcribe", "ner", "anonymize"}:
         command.extend(["--limite", str(limite)])
     return command
+
+
+def validate_dry_run_requirements(stages: list[str], nlp_backend: str) -> None:
+    """Validate non-destructive stage prerequisites before a dry run."""
+    for stage in stages:
+        script = PROJECT_ROOT / STAGE_SCRIPTS[stage]
+        if not script.is_file():
+            raise FileNotFoundError(f"Stage script not found: {script}")
+    if any(stage in stages for stage in ("nlp", "metrics", "stats")):
+        lake_dir = PROJECT_ROOT / "data" / "lake"
+        if not lake_dir.is_dir():
+            raise FileNotFoundError(f"Phase 2 lake directory not found: {lake_dir}")
+        contract_report = PROJECT_ROOT / "data" / "analysis" / "phase2_contract_report.json"
+        if not contract_report.is_file():
+            raise FileNotFoundError(f"Phase 2 contract report not found: {contract_report}")
+    if "nlp" in stages and nlp_backend not in {"openai", "mock"}:
+        raise ValueError(f"Unsupported NLP backend: {nlp_backend}")
+
+
+def write_run_manifest(path: Path, payload: dict[str, object]) -> None:
+    """Persist a structured summary alongside the human-readable log."""
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True, default=str), encoding="utf-8")
 
 
 def execution_log_path(log_dir: Path, now: datetime | None = None) -> Path:
@@ -188,6 +214,12 @@ def main() -> None:
     )
     parser.add_argument("--salt", default="", help="Salt passed to the anonymizer")
     parser.add_argument(
+        "--nlp-backend",
+        choices=("openai", "mock"),
+        default="openai",
+        help="Backend used by the NLP stage; remote OpenAI or deterministic offline mock",
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
         help="Force every selected stage to regenerate its outputs",
@@ -225,6 +257,11 @@ def main() -> None:
         stages = resolve_stages(args.stages, args.from_stage, args.to_stage)
     except ValueError as error:
         parser.error(str(error))
+    if args.dry_run:
+        try:
+            validate_dry_run_requirements(stages, args.nlp_backend)
+        except (FileNotFoundError, ValueError) as error:
+            parser.error(str(error))
     log_path = args.log_file or execution_log_path(args.log_dir)
     log_path.parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
@@ -234,6 +271,17 @@ def main() -> None:
         force=True,
     )
     logger.info("Pipeline execution log: %s", log_path)
+    run_manifest_path = log_path.with_suffix(".json")
+    run_manifest: dict[str, object] = {
+        "status": "dry_run" if args.dry_run else "running",
+        "stages": stages,
+        "nlp_backend": args.nlp_backend,
+        "force": args.force,
+        "dry_run": args.dry_run,
+        "log_path": log_path.as_posix(),
+        "stage_results": [],
+    }
+    write_run_manifest(run_manifest_path, run_manifest)
     for stage in stages:
         command = build_stage_command(
             stage,
@@ -242,6 +290,7 @@ def main() -> None:
             args.salt,
             args.force,
             args.limite,
+            args.nlp_backend,
         )
         logger.info("Running stage %s: %s", stage, " ".join(command))
         if args.dry_run:
@@ -249,12 +298,27 @@ def main() -> None:
         started_at = time.monotonic()
         try:
             run_stage_process(command, log_path)
+            run_manifest["stage_results"].append({
+                "stage": stage,
+                "status": "success",
+                "duration_seconds": round(time.monotonic() - started_at, 1),
+                "command": command,
+            })
             logger.info(
                 "Finished stage %s status=success duration_seconds=%.1f",
                 stage,
                 time.monotonic() - started_at,
             )
         except subprocess.CalledProcessError as error:
+            run_manifest["status"] = "failed"
+            run_manifest["stage_results"].append({
+                "stage": stage,
+                "status": "failed",
+                "exit_code": error.returncode,
+                "duration_seconds": round(time.monotonic() - started_at, 1),
+                "command": command,
+            })
+            write_run_manifest(run_manifest_path, run_manifest)
             logger.error(
                 "Finished stage %s status=failed exit_code=%s duration_seconds=%.1f",
                 stage,
@@ -262,6 +326,11 @@ def main() -> None:
                 time.monotonic() - started_at,
             )
             raise SystemExit(error.returncode) from error
+    if args.dry_run:
+        run_manifest["status"] = "dry_run"
+    else:
+        run_manifest["status"] = "success"
+    write_run_manifest(run_manifest_path, run_manifest)
 
 
 if __name__ == "__main__":
