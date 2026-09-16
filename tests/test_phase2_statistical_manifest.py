@@ -4,6 +4,7 @@ import json
 import importlib.util
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -152,3 +153,70 @@ def test_prepare_manifest_integrates_real_persisted_artifacts(tmp_path: Path) ->
 		variable["name"].startswith("ie_")
 		for variable in manifest["datasets"]["team_metrics"]["variables"]
 	)
+
+
+def test_run_persisted_correlations_keeps_units_and_missingness_explicit(tmp_path: Path) -> None:
+	project_root = Path(__file__).parents[1]
+	analysis_dir = project_root / "data" / "analysis"
+	source_manifest = analysis_dir / "statistical_dataset_manifest.json"
+	manifest_path = tmp_path / "statistical_dataset_manifest.json"
+	manifest_path.write_text(source_manifest.read_text(encoding="utf-8"), encoding="utf-8")
+	output_path = tmp_path / "correlation_results.csv"
+
+	results = STATISTICAL_ANALYZER.run_persisted_correlations(
+		analysis_dir,
+		output_path=output_path,
+		manifest_path=manifest_path,
+	)
+
+	assert set(results["analysis_id"]) == {
+		"pi_vs_cc_primary",
+		"pi_vs_delta_dt_primary",
+		"ai_vs_cc_primary",
+		"context_ie_temporal_primary",
+	}
+	ai_row = results.loc[results["analysis_id"] == "ai_vs_cc_primary"].iloc[0]
+	assert ai_row["n_total"] == 14
+	assert ai_row["n_valid"] == 7
+	assert ai_row["n_missing"] == 7
+	assert ai_row["x_missing"] == 7
+	assert ai_row["warning"] == "small_sample_n_lt_10"
+	context_row = results.loc[results["analysis_id"] == "context_ie_temporal_primary"].iloc[0]
+	assert context_row["unit_of_analysis"] == "cut_context"
+	assert context_row["n_total"] == 6
+	assert context_row["n_valid"] == 3
+	assert context_row["n_missing"] == 3
+	assert context_row["confidence_interval_method"] == "not_calculated_v1"
+	updated = json.loads(manifest_path.read_text(encoding="utf-8"))
+	assert updated["correlations"]["status"] == "success"
+	assert output_path.with_name("correlation_results.csv.metadata.json").exists()
+
+
+def test_run_persisted_correlations_resumes_with_stable_checksum(tmp_path: Path) -> None:
+	project_root = Path(__file__).parents[1]
+	analysis_dir = project_root / "data" / "analysis"
+	manifest_path = tmp_path / "statistical_dataset_manifest.json"
+	manifest_path.write_text(
+		(analysis_dir / "statistical_dataset_manifest.json").read_text(encoding="utf-8"),
+		encoding="utf-8",
+	)
+	output_path = tmp_path / "correlation_results.csv"
+	first = STATISTICAL_ANALYZER.run_persisted_correlations(
+		analysis_dir, output_path=output_path, manifest_path=manifest_path
+	)
+	metadata_path = output_path.with_name("correlation_results.csv.metadata.json")
+	first_metadata = metadata_path.read_text(encoding="utf-8")
+	second = STATISTICAL_ANALYZER.run_persisted_correlations(
+		analysis_dir, output_path=output_path, manifest_path=manifest_path
+	)
+
+	assert list(first.columns) == list(second.columns)
+	for column in first.columns:
+		if pd.api.types.is_numeric_dtype(first[column]):
+			assert np.allclose(
+				first[column].fillna(-999).to_numpy(),
+				second[column].fillna(-999).to_numpy(),
+			)
+		else:
+			assert first[column].fillna("").astype(str).tolist() == second[column].fillna("").astype(str).tolist()
+	assert metadata_path.read_text(encoding="utf-8") == first_metadata

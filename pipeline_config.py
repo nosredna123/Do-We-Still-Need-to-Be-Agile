@@ -201,6 +201,7 @@ STATISTICAL_ANALYSIS_REGISTRY = {
     "pi_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "pi_file_count_t1", "y": "cc_per_source_loc_t3", "test": "spearman", "priority": "primary", "figure": "pi_vs_cc.png"},
     "pi_vs_delta_dt_primary": {"unit_of_analysis": "team_semester", "x": "pi_file_count_t1", "y": "delta_dt_t1_t3", "test": "spearman", "priority": "primary", "figure": None},
     "ai_vs_cc_primary": {"unit_of_analysis": "team_semester", "x": "ai_max_author_share_before_t3_window", "y": "cc_total_t3", "test": "spearman", "priority": "primary", "figure": "ai_before_t3.png"},
+    "context_ie_temporal_primary": {"unit_of_analysis": "cut_context", "x": "ie_transcript_coordination_friction_score_mean", "y": "ie_transcript_rework_signal_score_mean", "test": "spearman", "priority": "primary", "figure": None},
 }
 
 # Each range identifies one evaluation moment. The two-day ranges in 2025.2 are

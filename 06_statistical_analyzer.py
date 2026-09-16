@@ -16,6 +16,8 @@ from pipeline_core import (
     ANALYSIS_DIR,
     artifact_metadata_path,
     input_checksum,
+    is_current_artifact,
+    write_artifact_metadata,
 )
 
 
@@ -50,6 +52,8 @@ DATASET_SPECS: dict[str, dict[str, Any]] = {
         "path_name": "transcript_nlp.parquet",
     },
 }
+MIN_CORRELATION_N = 3
+CORRELATION_CONTRACT_VERSION = "spearman-correlation-results-v1"
 
 
 def run_declared_correlations(frame: pd.DataFrame, registry: list[dict[str, Any]]) -> pd.DataFrame:
@@ -72,6 +76,150 @@ def run_declared_correlations(frame: pd.DataFrame, registry: list[dict[str, Any]
             row.update({"status": "success", "reason": None, "coefficient": float(coefficient), "p_value": float(p_value)})
         rows.append(row)
     return pd.DataFrame(rows)
+
+
+def _run_one_correlation(frame: pd.DataFrame, analysis_id: str, analysis: dict[str, Any]) -> dict[str, Any]:
+    """Calculate one declared Spearman pair and preserve availability counts."""
+    x_name = analysis["x"]
+    y_name = analysis["y"]
+    pair = frame[[x_name, y_name]]
+    valid = pair.notna().all(axis=1)
+    values = pair.loc[valid]
+    n_total = int(len(pair))
+    n_valid = int(len(values))
+    n_missing = n_total - n_valid
+    missing_x = int(pair[x_name].isna().sum())
+    missing_y = int(pair[y_name].isna().sum())
+    row: dict[str, Any] = {
+        "analysis_id": analysis_id,
+        "unit_of_analysis": analysis["unit_of_analysis"],
+        "x": x_name,
+        "y": y_name,
+        "test": analysis.get("test"),
+        "priority": analysis.get("priority"),
+        "figure": analysis.get("figure"),
+        "n_total": n_total,
+        "n_valid": n_valid,
+        "n_missing": n_missing,
+        "x_missing": missing_x,
+        "y_missing": missing_y,
+        "coefficient": None,
+        "p_value": None,
+        "confidence_interval": None,
+        "confidence_interval_method": "not_calculated_v1",
+        "status": "unavailable",
+        "reason": None,
+        "warning": None,
+    }
+    if n_valid < MIN_CORRELATION_N:
+        row["reason"] = "insufficient_n"
+        return row
+    if values[x_name].nunique() < 2 or values[y_name].nunique() < 2:
+        row["reason"] = "zero_variance"
+        return row
+    coefficient, p_value = spearmanr(values[x_name], values[y_name])
+    row.update({
+        "coefficient": float(coefficient),
+        "p_value": float(p_value),
+        "status": "success",
+        "warning": "small_sample_n_lt_10" if n_valid < 10 else None,
+    })
+    return row
+
+
+def run_persisted_correlations(
+    analysis_dir: Path = ANALYSIS_DIR,
+    *,
+    output_path: Path | None = None,
+    manifest_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Run declared Spearman analyses against persisted, unit-compatible data.
+
+    Primary analyses fail fast when their exact columns or declared unit are
+    unavailable. Missing values are handled pairwise and reported explicitly.
+    """
+    output_path = output_path or analysis_dir / "correlation_results.csv"
+    manifest_path = manifest_path or analysis_dir / "statistical_dataset_manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"Statistical manifest not found: {manifest_path}")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise ValueError("Invalid statistical manifest") from error
+    if manifest.get("status") != "success":
+        raise ValueError("Statistical manifest is not successful")
+    if not manifest.get("input_checksum"):
+        raise ValueError("Statistical manifest lacks input checksum")
+
+    frames: dict[str, pd.DataFrame] = {}
+    for name in ("team_metrics", "cut_context_metrics"):
+        path = analysis_dir / DATASET_SPECS[name]["path_name"]
+        frames[name], _ = _read_persisted_dataset(name, path)
+    unit_frames = {
+        "team_semester": frames["team_metrics"],
+        "cut_context": frames["cut_context_metrics"],
+    }
+    result_inputs = [
+        frames_path
+        for name in ("team_metrics", "cut_context_metrics")
+        for frames_path in (
+            analysis_dir / DATASET_SPECS[name]["path_name"],
+            artifact_metadata_path(analysis_dir / DATASET_SPECS[name]["path_name"]),
+        )
+    ]
+    result_checksum = input_checksum(
+        result_inputs,
+        {
+            "contract_version": CORRELATION_CONTRACT_VERSION,
+            "registry": STATISTICAL_ANALYSIS_REGISTRY,
+            "manifest_input_checksum": manifest["input_checksum"],
+        },
+    )
+    if not force and is_current_artifact(output_path, result_checksum):
+        return pd.read_csv(output_path)
+
+    rows: list[dict[str, Any]] = []
+    rejected: list[dict[str, Any]] = []
+    for analysis_id, analysis in STATISTICAL_ANALYSIS_REGISTRY.items():
+        unit = analysis.get("unit_of_analysis")
+        frame = unit_frames.get(unit)
+        missing = [column for column in (analysis["x"], analysis["y"]) if frame is None or column not in frame.columns]
+        if frame is None or missing:
+            rejection = {
+                "analysis_id": analysis_id,
+                "unit_of_analysis": unit,
+                "x": analysis["x"],
+                "y": analysis["y"],
+                "status": "rejected",
+                "reason": "missing_unit_or_columns",
+                "missing_columns": missing,
+            }
+            if analysis.get("priority") == "primary":
+                raise ValueError(f"Primary correlation {analysis_id} has missing unit or columns: {missing}")
+            rejected.append(rejection)
+            continue
+        rows.append(_run_one_correlation(frame, analysis_id, analysis))
+
+    results = pd.DataFrame(rows)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    results.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        result_checksum,
+        contract_version=CORRELATION_CONTRACT_VERSION,
+        options={"registry": STATISTICAL_ANALYSIS_REGISTRY, "confidence_interval": "not_calculated_v1"},
+    )
+    manifest["correlations"] = {
+        "status": "success",
+        "contract_version": CORRELATION_CONTRACT_VERSION,
+        "results_path": output_path.as_posix(),
+        "results_input_checksum": result_checksum,
+        "executed": results.to_dict("records"),
+        "rejected": rejected,
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    return results
 
 
 def _key_hash(key: dict[str, Any]) -> str:
@@ -400,9 +548,19 @@ def main() -> None:
         contract_report,
         analysis_dir / "statistical_dataset_manifest.json",
         analysis_dir / "statistical_dataset_manifest_exclusions.json",
+        options={"statistical_analysis_registry": STATISTICAL_ANALYSIS_REGISTRY},
         force=args.force,
     )
-    print(f"Statistical manifest: {manifest['status']} ({len(manifest['datasets'])} datasets)")
+    results = run_persisted_correlations(
+        analysis_dir,
+        output_path=analysis_dir / "correlation_results.csv",
+        manifest_path=analysis_dir / "statistical_dataset_manifest.json",
+        force=args.force,
+    )
+    print(
+        f"Statistical manifest: {manifest['status']} ({len(manifest['datasets'])} datasets); "
+        f"correlations: {len(results)}"
+    )
 
 
 if __name__ == "__main__":

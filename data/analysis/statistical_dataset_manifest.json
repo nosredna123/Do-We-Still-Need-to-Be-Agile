@@ -1,5 +1,98 @@
 {
   "contract_version": "statistical-dataset-manifest-v1",
+  "correlations": {
+    "contract_version": "spearman-correlation-results-v1",
+    "executed": [
+      {
+        "analysis_id": "pi_vs_cc_primary",
+        "coefficient": -0.006766649524509584,
+        "confidence_interval": null,
+        "confidence_interval_method": "not_calculated_v1",
+        "figure": "pi_vs_cc.png",
+        "n_missing": 0,
+        "n_total": 14,
+        "n_valid": 14,
+        "p_value": 0.9816838660605893,
+        "priority": "primary",
+        "reason": null,
+        "status": "success",
+        "test": "spearman",
+        "unit_of_analysis": "team_semester",
+        "warning": null,
+        "x": "pi_file_count_t1",
+        "x_missing": 0,
+        "y": "cc_per_source_loc_t3",
+        "y_missing": 0
+      },
+      {
+        "analysis_id": "pi_vs_delta_dt_primary",
+        "coefficient": -0.014709647511909141,
+        "confidence_interval": null,
+        "confidence_interval_method": "not_calculated_v1",
+        "figure": null,
+        "n_missing": 0,
+        "n_total": 14,
+        "n_valid": 14,
+        "p_value": 0.960194880594909,
+        "priority": "primary",
+        "reason": null,
+        "status": "success",
+        "test": "spearman",
+        "unit_of_analysis": "team_semester",
+        "warning": null,
+        "x": "pi_file_count_t1",
+        "x_missing": 0,
+        "y": "delta_dt_t1_t3",
+        "y_missing": 0
+      },
+      {
+        "analysis_id": "ai_vs_cc_primary",
+        "coefficient": 0.21428571428571433,
+        "confidence_interval": null,
+        "confidence_interval_method": "not_calculated_v1",
+        "figure": "ai_before_t3.png",
+        "n_missing": 7,
+        "n_total": 14,
+        "n_valid": 7,
+        "p_value": 0.6445115810207203,
+        "priority": "primary",
+        "reason": null,
+        "status": "success",
+        "test": "spearman",
+        "unit_of_analysis": "team_semester",
+        "warning": "small_sample_n_lt_10",
+        "x": "ai_max_author_share_before_t3_window",
+        "x_missing": 7,
+        "y": "cc_total_t3",
+        "y_missing": 0
+      },
+      {
+        "analysis_id": "context_ie_temporal_primary",
+        "coefficient": 0.5,
+        "confidence_interval": null,
+        "confidence_interval_method": "not_calculated_v1",
+        "figure": null,
+        "n_missing": 3,
+        "n_total": 6,
+        "n_valid": 3,
+        "p_value": 0.6666666666666667,
+        "priority": "primary",
+        "reason": null,
+        "status": "success",
+        "test": "spearman",
+        "unit_of_analysis": "cut_context",
+        "warning": "small_sample_n_lt_10",
+        "x": "ie_transcript_coordination_friction_score_mean",
+        "x_missing": 3,
+        "y": "ie_transcript_rework_signal_score_mean",
+        "y_missing": 3
+      }
+    ],
+    "rejected": [],
+    "results_input_checksum": "fe0359b8d47a47dbe52bf7edb5d69afb42874b3bc28c5c4fab86a537b74bdeb5",
+    "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/correlation_results.csv",
+    "status": "success"
+  },
   "datasets": {
     "cut_context_metrics": {
       "coverage": {
@@ -4671,6 +4764,18 @@
       "unit_of_analysis": "team_semester",
       "x": "ai_max_author_share_before_t3_window",
       "y": "cc_total_t3"
+    },
+    {
+      "analysis_id": "context_ie_temporal_primary",
+      "missing_columns": [],
+      "n_missing": 3,
+      "n_total": 6,
+      "n_valid": 3,
+      "reason": null,
+      "status": "available",
+      "unit_of_analysis": "cut_context",
+      "x": "ie_transcript_coordination_friction_score_mean",
+      "y": "ie_transcript_rework_signal_score_mean"
     }
   ],
   "exclusions": [
@@ -5913,32 +6018,32 @@
       "checksum": "97cb173f2ac476d0f6169d4aa94c7d039b05b21124b11333503519060280bf19",
       "contract_version": "cut-context-metrics-v1",
       "n_rows": 6,
-      "path": "data/analysis/cut_context_metrics.parquet",
+      "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet",
       "unit_of_analysis": "cut_context"
     },
     "student_nlp": {
       "checksum": "cebddff5fad9223fa727948455ad296cd227a1ccc8950fa66d5bd95cd4404637",
       "contract_version": "student-nlp-v1",
       "n_rows": 1122,
-      "path": "data/analysis/student_nlp.parquet",
+      "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet",
       "unit_of_analysis": "student_response"
     },
     "team_metrics": {
       "checksum": "42e00af69017ae980a4d7b44591f92a7c6dea6c211ae75d39e8255f4e7d46b9f",
       "contract_version": "team-metrics-v1",
       "n_rows": 14,
-      "path": "data/analysis/team_metrics.parquet",
+      "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet",
       "unit_of_analysis": "team_semester"
     },
     "transcript_nlp": {
       "checksum": "fc7fe2714836d1d71f428369b2b0c2d2ec8b3feba3aab1b34ce77ebf7f6d7ef9",
       "contract_version": "transcript-nlp-v1",
       "n_rows": 100,
-      "path": "data/analysis/transcript_nlp.parquet",
+      "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet",
       "unit_of_analysis": "transcript_session"
     }
   },
-  "input_checksum": "9f79ef9ac71e9dba21cd2f5390f49871946ab0c83a1a9bdd561b15741b7a93ff",
+  "input_checksum": "e55c4216c92ef23c0683b6828cf1b8af9918dc18a187cbb85ad393a21b7715fa",
   "manifest_version": "phase2-statistics-v2",
   "metric_definition_versions": {
     "ai": "ai-v1",

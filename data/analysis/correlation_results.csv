@@ -1,0 +1,5 @@
+analysis_id,unit_of_analysis,x,y,test,priority,figure,n_total,n_valid,n_missing,x_missing,y_missing,coefficient,p_value,confidence_interval,confidence_interval_method,status,reason,warning
+pi_vs_cc_primary,team_semester,pi_file_count_t1,cc_per_source_loc_t3,spearman,primary,pi_vs_cc.png,14,14,0,0,0,-0.006766649524509584,0.9816838660605893,,not_calculated_v1,success,,
+pi_vs_delta_dt_primary,team_semester,pi_file_count_t1,delta_dt_t1_t3,spearman,primary,,14,14,0,0,0,-0.014709647511909141,0.960194880594909,,not_calculated_v1,success,,
+ai_vs_cc_primary,team_semester,ai_max_author_share_before_t3_window,cc_total_t3,spearman,primary,ai_before_t3.png,14,7,7,7,0,0.21428571428571433,0.6445115810207203,,not_calculated_v1,success,,small_sample_n_lt_10
+context_ie_temporal_primary,cut_context,ie_transcript_coordination_friction_score_mean,ie_transcript_rework_signal_score_mean,spearman,primary,,6,3,3,3,3,0.5,0.6666666666666667,,not_calculated_v1,success,,small_sample_n_lt_10
