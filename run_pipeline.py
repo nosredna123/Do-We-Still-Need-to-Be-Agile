@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 PYTHON_EXECUTABLE = str(VENV_PYTHON) if VENV_PYTHON.is_file() else sys.executable
 STAGES = (
     "cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake",
-    "repo-snapshots", "nlp", "metrics", "stats",
+    "repo-snapshots", "contracts", "nlp", "metrics", "stats",
 )
 STAGE_SCRIPTS = {
     "cleanup": "04_cleanup.py",
@@ -41,6 +41,7 @@ STAGE_SCRIPTS = {
     "git": "02_git_parser.py",
     "lake": "03_data_lake_builder.py",
     "repo-snapshots": "02b_git_repository_snapshots.py",
+    "contracts": "phase2_contracts.py",
     "nlp": "04_nlp_qualitative_miner.py",
     "metrics": "05_metric_engine.py",
     "stats": "06_statistical_analyzer.py",
@@ -81,6 +82,15 @@ def build_stage_command(
             command.extend(["--transcript", str(transcript_path)])
         if salt:
             command.extend(["--salt", salt])
+    if stage == "contracts":
+        command.extend(
+            [
+                "--lake-dir",
+                str(PROJECT_ROOT / "data" / "lake"),
+                "--output",
+                str(PROJECT_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
+            ]
+        )
     if stage == "nlp":
         command.extend(
             [

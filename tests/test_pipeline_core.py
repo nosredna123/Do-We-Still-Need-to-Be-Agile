@@ -244,7 +244,7 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertEqual(
             [
                 "prepare", "transcribe", "ner", "anonymize",
-                "git", "lake", "repo-snapshots", "nlp", "metrics", "stats",
+                "git", "lake", "repo-snapshots", "contracts", "nlp", "metrics", "stats",
             ],
             orchestrator.resolve_stages(None, None, None),
         )
@@ -284,6 +284,35 @@ class PipelineCoreTests(unittest.TestCase):
                 sys.executable,
                 str(REPO_ROOT / "02b_git_repository_snapshots.py"),
                 "--force",
+            ],
+            command,
+        )
+
+    def test_pipeline_orchestrator_includes_phase2_contracts_before_nlp(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_phase2_contracts", "run_pipeline.py"
+        )
+
+        self.assertEqual(
+            ["lake", "repo-snapshots", "contracts"],
+            orchestrator.resolve_stages(None, "lake", "contracts"),
+        )
+        self.assertIn("contracts", orchestrator.STAGES)
+        self.assertLess(
+            orchestrator.STAGES.index("contracts"),
+            orchestrator.STAGES.index("nlp"),
+        )
+
+        command = orchestrator.build_stage_command("contracts", [], [], "", False)
+
+        self.assertEqual(
+            [
+                sys.executable,
+                str(REPO_ROOT / "phase2_contracts.py"),
+                "--lake-dir",
+                str(REPO_ROOT / "data" / "lake"),
+                "--output",
+                str(REPO_ROOT / "data" / "analysis" / "phase2_contract_report.json"),
             ],
             command,
         )
