@@ -1,0 +1,4 @@
+data/raw/audio/**/*.ogg filter=lfs diff=lfs merge=lfs -text
+data/raw/audio/**/*.m4a filter=lfs diff=lfs merge=lfs -text
+data/raw/audio/**/*.wav filter=lfs diff=lfs merge=lfs -text
+data/raw/audio/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
