@@ -1,215 +1,223 @@
-# Do-We-Still-Need-to-Be-Agile
+# Do We Still Need to Be Agile?
 
-Pipeline inicial para gerar, anonimizar, enriquecer e analisar os dados do artigo **"Do We Still Need to Be Agile?"**.
+Reproducible research pipeline for the article **Do We Still Need to Be Agile? An Empirical Analysis of Planning Debt and Rework in Software Engineering**.
 
-## Scripts implementados
+The project studies planning debt, code churn, technical degradation, integration friction, and contextual exhaustion signals while preserving the observed unit of each source.
 
-- `run_pipeline.py`: orquestra as etapas da Fase 1 e da Fase 1.5 na ordem definida.
-- `00_audio_preparer.py`: comprime e segmenta áudios para o limite da API.
-- `00_audio_transcriber.py`: transcreve áudios preparados em português para `.txt` e `.json`.
-- `01_ner_extractor.py`: usa OpenAI para identificar candidatos a nomes de pessoas em transcrições brutas.
-- `01_anonymizer.py`: anonimiza CSVs e transcrições, gerando `chave_relacional.json`.
-- `02_git_parser.py`: extrai histórico Git anonimizado e espelha repositórios sem `.git`.
-- `02b_git_repository_snapshots.py`: mede snapshots estruturais dos repositórios por equipe, semestre e corte.
-- `03_data_lake_builder.py`: gera seis Parquets independentes por granularidade e um relatório de validação.
-- `04_nlp_qualitative_miner.py`, `05_metric_engine.py`, `06_statistical_analyzer.py` e `07_dashboard_app.py`: scripts futuros da Fase 2, ainda não implementados.
+## Requirements
 
-## Dependências mínimas
+- Python 3.11
+- A project virtual environment at `.venv/`
+- `ffmpeg` for audio preparation
+- OpenAI credentials only for remote transcription, NER, or NLP stages
+
+Install the pinned Python dependencies with:
 
 ```bash
-pip install -r requirements.txt
+.venv/bin/pip install -r requirements.txt
 ```
 
-Dependências opcionais por script:
+The statistical visualization layer uses Plotly and Kaleido to generate interactive HTML and publication-ready PNG, SVG, and PDF files.
 
-- `openai` para `00_audio_transcriber.py --backend openai` e `04_nlp_qualitative_miner.py --backend openai`
-- `openai-whisper` para `00_audio_transcriber.py --backend whisper`
-- `streamlit` para `07_dashboard_app.py`
-- `ffmpeg` para `00_audio_preparer.py`; no Ubuntu/Debian, instale com `sudo apt install ffmpeg`.
+## Configuration
 
-## Configuração
-
-Defina segredos e configurações compartilhadas no arquivo `.env` na raiz do
-projeto. Todos os scripts da Fase 1 carregam esse arquivo no início da execução,
-sem sobrescrever variáveis já definidas no ambiente.
+Create `.env` at the repository root when remote services are required:
 
 ```dotenv
-OPENAI_API_KEY=sua_chave
-ANONYMIZATION_SALT=segredo_aleatorio
+OPENAI_API_KEY=your_key
+ANONYMIZATION_SALT=your_random_secret
 ```
 
-O módulo `pipeline_core.py` centraliza funções reutilizáveis do pipeline,
-incluindo a carga da configuração compartilhada. Ele não inicia nem orquestra
-as etapas. `run_pipeline.py` é o ponto de entrada para a execução coordenada;
-os scripts numerados continuam disponíveis como pontos de entrada independentes.
+Never commit `.env`, the anonymization salt, raw data, processed text, private NLP outputs, or private reports.
 
-Os modelos e parâmetros de requisição ficam centralizados em
-`pipeline_config.py`, em `MODEL_CONFIG`. A configuração atual mantém
-`whisper-1` para transcrição e `gpt-4o-mini` para NER. O catálogo também reserva
-a configuração da futura mineração qualitativa, sem armazenar credenciais ou
-dados de origem.
+Versioned methodological decisions live in `pipeline_config.py`. Versioned prompts live in `pipeline_prompts.py`. Neither file may contain credentials, PII, or raw research text.
 
-Todos os prompts enviados a serviços externos de IA ficam centralizados em
-`pipeline_prompts.py`. Esse catálogo é a referência auditável para pesquisadores
-e não pode conter PII, segredos, nomes reais ou outros dados de origem.
+## Pipeline Entry Point
 
-Decisões metodológicas não sigilosas, como os cortes temporais de formulários,
-ficam centralizadas e versionadas em `pipeline_config.py`. Esse módulo não pode
-conter PII, credenciais nem valores de dados brutos.
+The main entry point is `run_pipeline.py`. The default sequence is:
 
-Sob supervisão do pesquisador, os áudios brutos são enviados à OpenAI para
-transcrição e as transcrições brutas são enviadas uma vez à OpenAI para NER. A
-prioridade de proteção deste projeto é impedir que PII seja exposta nos artefatos
-processados, no Data Lake, no pacote de replicação ou em material publicado. A
-etapa NER armazena somente candidatos a pessoas, nunca o texto transcrito, e seus
-artefatos são privados e ignorados pelo Git. Todo `data/processed/` e `data/lake/`
-é privado por padrão; um pacote de replicação deve exportar somente artefatos
-auditados após a verificação de PII. O `ANONYMIZATION_SALT` nunca é enviado à OpenAI.
+```text
+prepare -> transcribe -> ner -> anonymize -> git -> lake
+-> repo-snapshots -> nlp -> metrics -> stats
+```
 
-## Execução da Fase 1 e Fase 1.5
+`cleanup` is intentionally excluded from the default sequence because it is destructive and must be selected explicitly.
 
-O orquestrador executa as etapas na ordem `prepare`, `transcribe`, `ner`,
-`anonymize`, `git`, `lake` e `repo-snapshots`, usando o mesmo interpretador Python que o iniciou. A preparação
-converte os áudios originais para MP3 mono a 16 kHz e 48 kbps em
-`data/processed/audio_chunks`; arquivos que ainda ultrapassem 25 MiB são
-divididos em segmentos de 10 minutos. A transcrição consome somente esses
-arquivos preparados e envia `language="pt"` e um prompt genérico para preservar
-nomes próprios, siglas, termos técnicos e pontuação. O prompt não contém PII e
-não substitui a anonimização local posterior. O NER usa `gpt-4o-mini` e resposta
-JSON estrita para identificar candidatos a pessoas, processando apenas
-transcrições pendentes por checksum. A anonimização busca
-recursivamente CSVs em `data/raw/forms` e transcrições `.txt` e `.json` em
-`data/processed/transcripts`; os resultados são escritos em
-`data/processed/forms` e `data/processed/transcripts_anon`, preservando os
-caminhos relativos. `ANONYMIZATION_SALT` é obrigatório, salvo quando `--salt` é
-fornecido explicitamente.
+Run a non-destructive structural preview:
 
 ```bash
-.venv/bin/python run_pipeline.py \
-	--dry-run
+.venv/bin/python run_pipeline.py --dry-run
 ```
 
-Para executar a pipeline em lotes, use `--limite` com a quantidade máxima de
-itens pendentes por estágio incremental:
+Run the complete pipeline when all required inputs and credentials are available:
+
+```bash
+.venv/bin/python run_pipeline.py
+```
+
+Use a batch limit only for incremental item-processing stages:
 
 ```bash
 .venv/bin/python run_pipeline.py --stages prepare transcribe --limite 10
 .venv/bin/python run_pipeline.py --stages ner anonymize --limite 10
 ```
 
-O limite considera somente entradas sem artefato atual; ao repetir o comando,
-o próximo lote é selecionado automaticamente. A opção se aplica a
-`prepare`, `transcribe`, `ner` e `anonymize`. As etapas `git` e `lake` não
-aceitam lotes parciais porque produzem artefatos agregados.
+## Stage Selection and Resume
 
-Use `--csv` e `--transcript` para acrescentar arquivos fora dos diretórios
-padrão. Artefatos com metadados válidos e checksum inalterado são ignorados;
-novos ou alterados são processados individualmente. Use `--stages` para executar
-etapas específicas, `--from-stage` e `--to-stage` para uma faixa contínua,
-`--dry-run` para apenas listar os comandos, e `--force` para propagar a
-regeneração intencional a todas as etapas selecionadas.
-
-Os formulários de avaliadores devem ser salvos como um CSV por semestre em
-`data/raw/forms/<semestre>/avaliadores.csv`. O marcador temporal é derivado do
-`Timestamp` por `temporal_marker_for()` em `pipeline_config.py`. As datas são
-definidas em ISO-8601 e, em `2025.2`, os pares 17/10-24/10, 14/11-21/11 e
-05/12-12/12 representam respectivamente T1, T2 e T3. Cada par é um único corte
-distribuído em dois dias por capacidade de apresentação. Em `2026.1`, 24/04,
-22/05 e 19/06 correspondem a T1, T2 e T3.
-
-Para commits Git, a classificação temporal usa fases contínuas e não as janelas
-estreitas de apresentação: datas anteriores ao início de T1 recebem `T1`, datas
-a partir de T1 e anteriores a T2 recebem `T2`, e datas a partir de T2 recebem
-`T3`. Essa regra é separada da regra estrita usada nos formulários de avaliadores.
+Stages can be selected independently. A selected stage does not automatically run upstream dependencies; it consumes the persisted contracts already present on disk.
 
 ```bash
-.venv/bin/python run_pipeline.py --stages git lake repo-snapshots --dry-run
-.venv/bin/python run_pipeline.py --from-stage anonymize --to-stage repo-snapshots --force
+# Phase 2 NLP with the deterministic offline backend
+.venv/bin/python run_pipeline.py --stages nlp --nlp-backend mock
+
+# Phase 2 NLP with the remote OpenAI backend
+.venv/bin/python run_pipeline.py --stages nlp --nlp-backend openai
+
+# Metrics only
+.venv/bin/python run_pipeline.py --stages metrics
+
+# Statistical manifest, correlations, hypotheses, and figures only
+.venv/bin/python run_pipeline.py --stages stats
+
+# Continuous range of stages
+.venv/bin/python run_pipeline.py --from-stage lake --to-stage stats
 ```
 
-O estágio `lake` gera `data/lake/student_responses.parquet`,
-`data/lake/evaluator_team_cuts.parquet`, `data/lake/git_team_cuts.parquet`,
-`data/lake/git_commits.parquet`, `data/lake/git_files.parquet` e
-`data/lake/transcript_sessions.parquet`, cada um com seu sidecar de checksum.
-Também gera `data/lake/lake_validation_report.json`. Não existe exportação
-`master_dataset.parquet`. `git_match_status` em `evaluator_team_cuts` vale
-`matched` quando há atividade Git para a mesma equipe, semestre e corte, e
-`no_observed_activity` quando essa atividade não foi observada.
-As perguntas de score são convertidas para nomes analíticos estáveis, como
-`engagement_participation_mean`, `project_progress_mean`,
-`scope_applicability_mean` e `technical_complexity_mean`. Cada score também
-possui `_std` (desvio padrão amostral), `_median`, `_iqr` e `_n` (quantidade de
-respostas válidas) para cada equipe, semestre e corte.
+The `mock` NLP backend is deterministic and is intended for offline tests and structural validation. It does not produce scientific LLM evidence. The `openai` backend requires `OPENAI_API_KEY` and performs the configured remote analysis.
 
-O estágio `repo-snapshots` da Fase 1.5 gera
-`data/lake/git_repository_snapshots.parquet` e seu sidecar. O contrato contém
-uma linha por `ID_Equipe + Semestre + temporal_marker + repository` observável,
-com `snapshot_commit_hash`, `snapshot_timestamp`, `repo_total_files`,
-`repo_total_bytes`, `repo_source_files`, `repo_source_loc` e versões das regras
-de medição. Cortes sem commit observado são marcados como indisponíveis, sem
-fallback para HEAD.
-
-### Métricas estatísticas do Data Lake
-
-As estatísticas dos avaliadores são calculadas dentro de cada chave
-`ID_Equipe + Semestre + temporal_marker`. Elas descrevem a distribuição das
-respostas dos avaliadores para aquele corte, e não uma média global entre
-equipes ou semestres.
-
-Para cada score, são produzidas as seguintes métricas:
-
-- **`_mean` (média):** soma das respostas válidas dividida pela quantidade de
-	respostas válidas. É o valor central atualmente preservado na coluna
-	analítica principal.
-- **`_std` (desvio padrão amostral):** mede quanto as respostas variam em torno
-	da média. É calculado com `ddof=1`, apropriado quando as respostas observadas
-	são tratadas como uma amostra de avaliadores. Com apenas uma resposta, o
-	valor é `NaN`, pois não há informação suficiente para estimar a variabilidade.
-- **`_median` (mediana):** valor que divide as respostas ordenadas ao meio.
-	É menos sensível que a média a uma resposta muito alta ou muito baixa.
-- **`_iqr` (intervalo interquartil):** mede a dispersão dos 50% centrais das
-	respostas. É calculado como `Q3 - Q1`, em que `Q1` é o percentil 25 e `Q3` é
-	o percentil 75. Por exemplo, se `Q1 = 1` e `Q3 = 2`, então `IQR = 1`.
-	Quanto maior o IQR, maior a dispersão central entre os avaliadores.
-- **`_n` (quantidade válida):** número de respostas não nulas usadas para
-	calcular aquele score. O valor pode variar entre scores se houver respostas
-	ausentes em perguntas específicas.
-
-As métricas de score mantêm os valores originais das perguntas em uma escala
-analítica estável, mas não preservam a identidade dos avaliadores. Portanto,
-`_n` representa respostas válidas observadas, não necessariamente avaliadores
-distintos, caso a fonte contenha submissões duplicadas.
-
-No dataset `git_team_cuts`, os principais agregados são `lines_added`,
-`lines_deleted` e `files_changed` somados por equipe, semestre e corte;
-`num_authors` conta autores locais distintos e `num_commits` conta commits.
-O campo `git_match_status` em `evaluator_team_cuts` informa se existe uma chave
-Git correspondente, sem copiar essas métricas para as linhas de avaliação.
-
-Para validar a implementação, execute `.venv/bin/pytest -x`. Os dados em
-`data/processed/` e `data/lake/` permanecem privados e ignorados pelo Git.
-
-## Exemplo de uso
+`--force` affects only the selected stages:
 
 ```bash
-python 01_anonymizer.py --csv dados/alunos.csv --transcript dados/feedback.txt --output-dir outputs/anon --mapping-path outputs/chave_relacional.json
-python 02_git_parser.py --repos-list dados/repos_list.csv --output-commits outputs/git_commits_anon.csv --output-files outputs/git_files_anon.csv --cache-dir outputs/repos
-python 03_data_lake_builder.py --forms-dir outputs/anon --git-commits outputs/git_commits_anon.csv --git-files outputs/git_files_anon.csv --transcripts-dir outputs/transcripts_anon --output-dir outputs/lake
-# A Fase 2 ainda será implementada sobre os seis contratos do lake.
+.venv/bin/python run_pipeline.py --stages stats --force
 ```
 
-## Convenções adotadas
+Each producer owns its artifacts and validates checksums before resuming. A failed stage stops the pipeline immediately. Every execution writes a human-readable log and a structured JSON execution manifest in the configured log directory.
 
-- As etapas da Fase 1 são fail-fast: falhas de API, fontes ausentes ou
-	inválidas, repositórios inacessíveis e dados malformados encerram a etapa e
-	impedem a geração de resultados parciais. A transcrição OpenAI aceita no
-	máximo 25 MiB por arquivo; divida ou comprima gravações maiores antes de rodar.
-- Os áudios preparados em `data/processed/audio_chunks` são dados derivados e
-	permanecem fora do Git, assim como os áudios brutos.
-- A anonimização usa hashes SHA-256 truncados com prefixo `anon_`.
-- A anonimização de transcrições substitui e-mails, rótulos de falantes e os
-	nomes de pessoas identificados pelo NER. Candidatos NER e mapeamentos são
-	artefatos privados e não devem ser publicados.
-- Os datasets tabulares centrais são persistidos em Parquet.
-- As visualizações são exportadas em SVG para facilitar versionamento e publicação.
-- Os produtores da Fase 1 registram um checksum SHA-256 em sidecars `.metadata.json` e ignoram somente artefatos com status `success` e entradas inalteradas. Use `--force` para regenerar um artefato intencionalmente.
+## Phase 2 Artifacts
+
+Phase 2 artifacts are written to `data/analysis/`:
+
+- `phase2_contract_report.json`: validated input schemas, keys, types, coverage, and Git reconciliation status.
+- `student_nlp.parquet`: private individual-response NLP output.
+- `transcript_nlp.parquet`: private transcript-session NLP output.
+- `textual_cut_signals.parquet`: persisted textual aggregates by semester and temporal cut.
+- `planning_metrics.parquet`: planning metrics at `team_semester` level.
+- `code_churn_metrics.parquet`: normalized and absolute code-churn metrics.
+- `technical_degradation_metrics.parquet`: longitudinal technical-degradation metrics.
+- `integration_friction_metrics.parquet`: author concentration and integration-pressure metrics.
+- `cut_context_metrics.parquet`: IE and textual context at `cut_context` level.
+- `team_metrics.parquet`: PI, CC, Delta DT, and AI at `team_semester` level. IE is never broadcast into this file.
+- `team_metrics_exclusions.json`: private team-metric availability report.
+- `statistical_dataset_manifest.json`: variable catalog, units, availability, definitions, and statistical protocol.
+- `statistical_dataset_manifest_exclusions.json`: private exclusion report with true observation keys.
+- `correlation_results.csv`: declared Spearman analyses and diagnostics.
+- `hypothesis_results.csv`: declared Mann-Whitney U analyses and diagnostics.
+- `figure_manifest.json`: figure sources, transformations, units, limitations, paths, and checksums.
+
+Each Parquet and analytical CSV has a `.metadata.json` sidecar with status, checksum, contract version, and effective options.
+
+## Units of Analysis
+
+The pipeline never fabricates a team key:
+
+- `team_semester`: one row per `ID_Equipe + Semestre`; used by PI, CC, Delta DT, and AI.
+- `cut_context`: one row per `Semestre + temporal_marker`; canonical unit for IE and transcript context.
+- `student_response`: individual NLP response, keyed by persisted response/question fields.
+- `transcript_session`: persisted transcript session, keyed by `transcript_file`.
+
+`team_metrics.parquet` must not contain replicated `ie_*` columns. Analyses combining team metrics and IE must align the units explicitly in the statistical layer.
+
+## Visualizations
+
+The statistical stage generates 12 Plotly visualizations from shared persisted data specifications:
+
+```text
+assets/figures/prioritarias/
+assets/figures/exploratorias/
+assets/figures/dashboard_interativo/
+data/analysis/figure_data/
+```
+
+Each figure has an interactive HTML version and static PNG/SVG exports. The five prioritized figures also have PDF exports:
+
+- `pi_vs_cc`
+- `cc_by_temporal_cut`
+- `delta_dt_by_team_semester`
+- `ai_before_t3`
+- `ie_by_cut_or_corpus`
+
+The static and interactive versions share the same filters, transformations, units, missingness policy, and figure-data CSV. Visible labels are English for international publication. Canonical source column names remain unchanged in the CSV data for lineage.
+
+The figures preserve missingness as gaps or explicit availability information and never interpolate missing observations. Team IDs are not displayed in images. Absolute `cc_total` visualizations use a declared logarithmic scale; normalized `cc_per_source_loc` is the primary churn measure.
+
+## Privacy and Publication Policy
+
+The following artifacts remain private and must not be published without a semantic PII audit:
+
+- `data/raw/`
+- `data/processed/`
+- `data/lake/`
+- `student_responses.parquet`
+- `transcript_sessions.parquet`
+- `student_nlp.parquet`
+- `transcript_nlp.parquet`
+- private exclusion reports containing true observation keys
+- `evidence_summary_private`
+- relational mappings and anonymization secrets
+
+Reports and manifests must not contain raw student answers, transcript text, summaries of identifiable content, credentials, or the anonymization salt. The `ANONYMIZATION_SALT` is never sent to OpenAI.
+
+A replication package may contain only audited, privacy-safe artifacts. Publication/export is not authorized merely because an artifact was generated successfully.
+
+## Statistical Interpretation Limits
+
+- Results are observational associations, not causal claims.
+- `team_semester` and `cut_context` are separate populations.
+- IE is not evidence about an individual team unless a future analysis defines an explicit valid alignment.
+- Small-sample results are exploratory and retain their `n_valid`, missingness, and availability diagnostics.
+- The primary PI/CC association uses `cc_per_source_loc`; absolute churn is size-sensitive.
+- Missing activity is not silently converted to zero unless the metric contract explicitly identifies observed no-activity.
+- Spearman confidence intervals are not calculated in the current protocol.
+- Hypothesis tests use median-defined groups, a minimum of three observations per group, bilateral Mann-Whitney U, and uncorrected exploratory p-values.
+
+## Validation
+
+Run the complete test and lint suite with the project interpreter:
+
+```bash
+.venv/bin/pytest -q
+.venv/bin/ruff check .
+```
+
+The current validated snapshot contains:
+
+```text
+4 persisted statistical datasets
+4 Spearman analyses
+3 hypothesis analyses
+12 Plotly figures
+158 tests passed
+6 tests skipped
+```
+
+Regenerate all statistical outputs and figures with:
+
+```bash
+.venv/bin/python run_pipeline.py --stages stats --force
+```
+
+The numeric snapshot above describes one validated data state and must be regenerated after input contracts or configuration change.
+
+## Phase 1 Data Lake Contracts
+
+The first pipeline stages generate these independent contracts under `data/lake/`:
+
+- `student_responses.parquet`
+- `evaluator_team_cuts.parquet`
+- `git_team_cuts.parquet`
+- `git_commits.parquet`
+- `git_files.parquet`
+- `git_repository_snapshots.parquet`
+- `transcript_sessions.parquet`
+
+The project does not build or require a `master_dataset.parquet`.
