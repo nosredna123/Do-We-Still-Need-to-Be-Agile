@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "9e81375990c22d4772ac6bee3ed9d5ea4c1db541e8326e66255a6983e91585ae",
+  "options": {
+    "category": "exploratorias",
+    "figure_id": "pi_distribution_by_semester",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "07447e88f2716ed6b620484dc48b273152e5e0cf2bdf2ea178790a719cdce9b2",
+  "options": {
+    "category": "prioritarias",
+    "figure_id": "cc_by_temporal_cut",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "bdc10bcfc962ea52a5a7f62fe32453b9c7ed396b727a4d43eb5fbfa9c28b1b34",
+  "options": {
+    "category": "prioritarias",
+    "figure_id": "delta_dt_by_team_semester",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

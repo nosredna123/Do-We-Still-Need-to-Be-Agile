@@ -1,0 +1,18 @@
+{
+  "analysis_dir": "data/analysis",
+  "checked_json_reports": 16,
+  "checked_tables": 23,
+  "contract_version": "phase2-privacy-audit-v1",
+  "private_datasets": [
+    "student_nlp.parquet",
+    "transcript_nlp.parquet"
+  ],
+  "publication_note": "This structural audit does not replace semantic PII review before publication.",
+  "raw_text_fields_checked": [
+    "answer_text",
+    "evidence_summary_private",
+    "transcript_text"
+  ],
+  "status": "success",
+  "violations": []
+}

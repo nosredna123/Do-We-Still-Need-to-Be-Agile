@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "c7b5f92e8306a78f11dcd90adb6e77913c9b6c500d2c552f1d6f3e236340224a",
+  "options": {
+    "category": "exploratorias",
+    "figure_id": "metric_availability_heatmap",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

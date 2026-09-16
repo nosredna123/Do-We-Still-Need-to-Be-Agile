@@ -409,6 +409,20 @@ def _write_plotly_figure(
     """Persist one Plotly figure in interactive and static publication forms."""
     paths = _figure_paths(analysis_dir, category, figure_id)
     data.to_csv(paths["data"], index=False)
+    figure_data_checksum = input_checksum(
+        [paths["data"]],
+        {"figure_id": figure_id, "figure_manifest_version": FIGURE_MANIFEST_VERSION},
+    )
+    write_artifact_metadata(
+        paths["data"],
+        figure_data_checksum,
+        contract_version="figure-data-v1",
+        options={
+            "figure_id": figure_id,
+            "category": category,
+            "unit_of_analysis": unit_of_analysis,
+        },
+    )
     figure.write_html(paths["html"], include_plotlyjs="cdn", full_html=True)
     figure.write_image(paths["png"], width=1400, height=850, scale=2)
     figure.write_image(paths["svg"], width=1400, height=850)
@@ -430,6 +444,7 @@ def _write_plotly_figure(
         "n_valid": int(data.dropna(subset=[column for column in variables if column in data]).shape[0]) if variables and all(column in data for column in variables) else int(len(data)),
         "n_missing": int(len(data) - (data.dropna(subset=[column for column in variables if column in data]).shape[0] if variables and all(column in data for column in variables) else len(data))),
         "data_path": paths["data"].as_posix(),
+        "data_metadata_path": artifact_metadata_path(paths["data"]).as_posix(),
         "interactive_path": paths["html"].as_posix(),
         "static_paths": {key: path.as_posix() for key, path in paths.items() if key in {"png", "svg", "pdf"} and path.exists()},
         "checksums": {key: file_checksum(path) for key, path in paths.items() if path.exists() and key != "html"},
