@@ -1,0 +1,43 @@
+<<<<<<< HEAD
+# 🧠 Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+
+# 📦 Virtual environment
+.venv/
+venv/
+env/
+
+# 🔐 Credenciais e chaves
+.env
+./Backend/app/credentials.json
+./token.pickle
+./credentials.json
+
+# 🧰 IDEs
+.vscode/
+.idea/
+
+# 🗃️ Arquivos temporários
+.DS_Store
+Thumbs.db
+*.tmp
+
+# 🧪 Arquivos de teste
+test_*.py
+
+# 🧾 Arquivos de cache e build
+build/
+dist/
+*.egg-info/
+
+# 🔍 Configurações específicas
+*.bak
+*.old
+=======
+.env
+>>>>>>> 7a3ece481cc6d91d2062a1f4f3def45a682da283

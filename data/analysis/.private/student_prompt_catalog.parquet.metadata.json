@@ -1,0 +1,267 @@
+{
+  "contract_version": "student-prompt-catalog-v1",
+  "input_checksum": "40695ab0f951b639efc672dd17b7805b951c1f883acca65bbd8721d847e983cd",
+  "options": {
+    "question_registry": {
+      "ai_benefit": {
+        "aliases": [
+          "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?",
+          "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?.1"
+        ],
+        "conflict_strategy": "reject_on_conflict",
+        "construct": "ai_dependency",
+        "duplicate_strategy": "coalesce_without_conflict",
+        "question_id": "ai_benefit",
+        "registry_version": "student-text-v1",
+        "required_scopes": [
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          }
+        ]
+      },
+      "ai_career_impact_5y": {
+        "aliases": [
+          "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?",
+          "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?.1"
+        ],
+        "conflict_strategy": "reject_on_conflict",
+        "construct": "career_expectation",
+        "duplicate_strategy": "coalesce_without_conflict",
+        "question_id": "ai_career_impact_5y",
+        "registry_version": "student-text-v1",
+        "required_scopes": [
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          }
+        ]
+      },
+      "autonomy_tool_dependency": {
+        "aliases": [
+          "Para voc\u00ea, qual deve ser o equil\u00edbrio ideal entre a autonomia de cada integrante e a depend\u00eancia de ferramentas de suporte no desenvolvimento do projeto?"
+        ],
+        "conflict_strategy": "reject_on_conflict",
+        "construct": "ai_dependency",
+        "duplicate_strategy": "coalesce_without_conflict",
+        "question_id": "autonomy_tool_dependency",
+        "registry_version": "student-text-v1",
+        "required_scopes": [
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          }
+        ]
+      },
+      "career_expectation": {
+        "aliases": [
+          "Quais expectativas voc\u00ea tem sobre sua pr\u00f3pria evolu\u00e7\u00e3o profissional ao participar deste projeto?"
+        ],
+        "conflict_strategy": "reject_on_conflict",
+        "construct": "career_expectation",
+        "duplicate_strategy": "coalesce_without_conflict",
+        "question_id": "career_expectation",
+        "registry_version": "student-text-v1",
+        "required_scopes": [
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          }
+        ]
+      },
+      "project_challenges": {
+        "aliases": [
+          "Quais aspectos do projeto voc\u00ea acredita que ser\u00e3o mais desafiadores? (marque todos que se aplicam)",
+          "Quais aspectos do projeto voc\u00ea acredita que foram/s\u00e3o mais desafiadores? (marque todos que se aplicam)"
+        ],
+        "conflict_strategy": "reject_on_conflict",
+        "construct": "planning_debt",
+        "duplicate_strategy": "coalesce_without_conflict",
+        "question_id": "project_challenges",
+        "registry_version": "student-text-v1",
+        "required_scopes": [
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          }
+        ]
+      },
+      "project_feeling": {
+        "aliases": [
+          "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que ir\u00e1 desenvolver nesta disciplina.",
+          "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que voc\u00ea est\u00e1 desenvolvendo nesta disciplina."
+        ],
+        "conflict_strategy": "reject_on_conflict",
+        "construct": "cognitive_load",
+        "duplicate_strategy": "coalesce_without_conflict",
+        "question_id": "project_feeling",
+        "registry_version": "student-text-v1",
+        "required_scopes": [
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2025.2",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T1"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T2"
+          },
+          {
+            "Semestre": "2026.1",
+            "requirement": "required",
+            "temporal_marker": "T3"
+          }
+        ]
+      }
+    },
+    "registry_version": "student-text-v1",
+    "stage": "student_catalog"
+  },
+  "status": "success"
+}

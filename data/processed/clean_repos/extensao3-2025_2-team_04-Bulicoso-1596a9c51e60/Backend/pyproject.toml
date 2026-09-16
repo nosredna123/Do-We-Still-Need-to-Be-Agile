@@ -1,0 +1,41 @@
+[project]
+name = "meds-backend"
+version = "1.0.0"
+description = "Sistema de Adesão Medicamentosa - Backend FastAPI"
+authors = [
+    {name = "Sistema de Adesão Medicamentosa"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.104.1",
+    "uvicorn[standard]>=0.24.0",
+    "python-dotenv>=1.0.0",
+    "langchain>=0.1.0",
+    "google-generativeai>=0.3.1",
+    "google-auth>=2.25.2",
+    "google-api-python-client>=2.108.0",
+    "chromadb>=0.4.18",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "httpx>=0.25.2",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+

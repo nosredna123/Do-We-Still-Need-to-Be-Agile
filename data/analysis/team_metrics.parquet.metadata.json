@@ -1,0 +1,115 @@
+{
+  "contract_version": "team-metrics-v1",
+  "input_checksum": "ed54681c638eb721b95e890198dc0ea4c83dbd4dfda89a3b6a70e36d9167c5da",
+  "options": {
+    "contract_version": "team-metrics-v1",
+    "ie_policy": "excluded_from_team_metrics; source_is_cut_context",
+    "input_contracts": {
+      "code_churn": {
+        "contract_version": "code-churn-metrics-v1",
+        "input_checksum": "beec2bb7f43ba270c023a5bfa24b81a53b26170a1acf0c812c6fe618c8289ab8",
+        "options": {
+          "cc_binary_policy": "excluded_from_line_churn_counted_as_events",
+          "cc_definition_version": "cc-v1",
+          "contract_version": "code-churn-metrics-v1",
+          "rolling_window_bounds": "[timestamp, timestamp+7d)",
+          "rolling_window_days": 7,
+          "stage": "code_churn_metrics"
+        },
+        "status": "success"
+      },
+      "integration_friction": {
+        "contract_version": "integration-friction-metrics-v1",
+        "input_checksum": "533ed381de40acb04d6e46c3a7acf7afba9473f9999bef90e2802c31c3113bec",
+        "options": {
+          "ai_author_share_distribution": "per_author_commit_share",
+          "ai_definition_version": "ai-v1",
+          "ai_gini_method": "author_commit_count_standard_gini",
+          "ai_ref_required_fields": [
+            "branch_or_ref",
+            "branch_or_ref_source"
+          ],
+          "ai_t3_window_bounds": "[t3_start - hours, t3_start)",
+          "ai_t3_window_hours": 72,
+          "contract_version": "integration-friction-metrics-v1",
+          "stage": "integration_friction_metrics"
+        },
+        "status": "success"
+      },
+      "planning": {
+        "contract_version": "planning-metrics-v1",
+        "input_checksum": "56cab2e6f55ca6ef5453c06f6df4f13525907a7a92337cf5dbea52c1c92c460b",
+        "options": {
+          "contract_version": "planning-metrics-v1",
+          "pi_definition_version": "pi-v1",
+          "planning_activity_statuses": [
+            "added",
+            "copied",
+            "modified",
+            "renamed"
+          ],
+          "planning_file_extensions": [
+            ".adoc",
+            ".bpmn",
+            ".doc",
+            ".docx",
+            ".drawio",
+            ".json",
+            ".md",
+            ".mermaid",
+            ".mmd",
+            ".odt",
+            ".pdf",
+            ".puml",
+            ".rst",
+            ".toml",
+            ".txt",
+            ".uml",
+            ".yaml",
+            ".yml"
+          ],
+          "planning_path_patterns": [
+            "architecture/",
+            "arquitetura/",
+            "design/",
+            "doc/",
+            "docs/",
+            "documentation/",
+            "planejamento/",
+            "planning/",
+            "prototipo/",
+            "prototype/",
+            "requirements/",
+            "requisitos/",
+            "spec/",
+            "specs/"
+          ],
+          "stage": "planning_metrics"
+        },
+        "status": "success"
+      },
+      "technical_degradation": {
+        "contract_version": "technical-degradation-metrics-v1",
+        "input_checksum": "be40b6424295017a4236176774a70d89331e0c576a0a9a315c9719b638eb169a",
+        "options": {
+          "availability_policy": "fail_if_any_cut_missing",
+          "contract_version": "technical-degradation-metrics-v1",
+          "delta_metric": "technical_complexity_mean",
+          "distribution_fields": [
+            "mean",
+            "median",
+            "iqr",
+            "std",
+            "n"
+          ],
+          "dt_definition_version": "dt-v1",
+          "stage": "technical_degradation_metrics"
+        },
+        "status": "success"
+      }
+    },
+    "stage": "team_metrics",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

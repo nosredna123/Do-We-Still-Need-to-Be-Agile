@@ -1,0 +1,4 @@
+"""
+Routers da API FastAPI.
+"""
+

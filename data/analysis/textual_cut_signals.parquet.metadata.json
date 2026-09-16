@@ -1,0 +1,77 @@
+{
+  "contract_version": "textual-cut-signals-v2",
+  "input_checksum": "e3ca5342b491bfbf9ec3b8bd4b3aab452ecba2c1ed122fedf5d13b6196e5494c",
+  "options": {
+    "contract_version": "textual-cut-signals-v2",
+    "enums": {
+      "dominant_topic": [
+        "ai_dependency",
+        "architecture",
+        "cognitive_load",
+        "communication",
+        "coordination",
+        "deadline_pressure",
+        "integration",
+        "other",
+        "planning_debt",
+        "rework",
+        "technical_quality",
+        "testing"
+      ],
+      "integration_risk_signal": [
+        "absent",
+        "critical",
+        "high",
+        "low",
+        "moderate"
+      ]
+    },
+    "merge_strategy": "outer",
+    "score_scales": {
+      "ai_dependency_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "cognitive_load_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "coordination_friction_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "planning_clarity_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "rework_signal_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "sentiment_score": {
+        "integer": true,
+        "maximum": 2,
+        "minimum": -2,
+        "version": "v1"
+      }
+    },
+    "stage": "textual_cut_signals",
+    "statistical_decisions": {
+      "quantile_method": "linear",
+      "scale_treatment": "ordinal_with_interval_summary",
+      "std_ddof": 1
+    },
+    "summary_version": "distribution-summary-v1"
+  },
+  "status": "success"
+}

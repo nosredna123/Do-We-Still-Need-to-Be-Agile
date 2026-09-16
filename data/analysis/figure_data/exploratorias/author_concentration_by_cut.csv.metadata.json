@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "726325045be5c1f16047fe9cbe4c5ca82920c4a6b2c34ab18878c08c794a556e",
+  "options": {
+    "category": "exploratorias",
+    "figure_id": "author_concentration_by_cut",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

@@ -1,0 +1,10 @@
+.git
+.gitignore
+Dockerfile
+.dockerignore
+node_modules
+apps/backend/.venv
+.idea
+.vscode
+*.DS_Store
+.turbo

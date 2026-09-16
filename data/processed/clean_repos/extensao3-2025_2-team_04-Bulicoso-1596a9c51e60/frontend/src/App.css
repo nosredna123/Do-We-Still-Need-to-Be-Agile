@@ -1,0 +1,25 @@
+/* o container principal organiza os filhos lado a lado */
+.app-container {
+  display: flex;
+  height: 100vh; /* ocupa toda a altura da tela */
+  width: 100%;   /* garante que use a largura total */
+  margin: 0;
+}
+
+/* sidebar tem largura fixa */
+.sidebar {
+  width: 260px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* main content ocupa o espaço restante */
+.main-content {
+  flex: 1; /* <- ESSENCIAL: ocupa todo o espaço livre */
+  background: #f8fafb;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* permite rolagem se conteúdo for grande */
+}

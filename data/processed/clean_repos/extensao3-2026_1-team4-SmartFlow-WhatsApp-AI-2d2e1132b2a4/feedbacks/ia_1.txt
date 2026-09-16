@@ -1,0 +1,2 @@
+Não foi possível encontrar a missão da empresa na base de conhecimento. A resposta retornada foi: 'Ocorreu um erro ao consultar a base de conhecimento.'
+A ferramenta buscar_base_conhecimento retornou um erro ao tentar buscar a missão da empresa. O retorno foi: Ocorreu um erro ao consultar a base de conhecimento.

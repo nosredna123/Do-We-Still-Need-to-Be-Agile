@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas = ["public", "embeddings"]
+}
+
+model User {
+  id                   Int          @id @default(autoincrement())
+  name                 String
+  email                String       @unique
+  password             String
+  logged_in            Boolean      @default(false)
+  user_token           String       @default("")
+  token_expiration     DateTime     @default(now())
+  profile_picture_path String       @default("src/uploads/676-6764065_default-profile-picture-transparent-hd-png-download.png")
+  subjects          Subject[]
+  materials            Material[]
+  messages             Message[]
+  reminders            Reminder[]
+  study_plans StudyPlan[]
+  student              Student?
+  teacher              Teacher?
+
+  @@schema("public")
+}
+
+model Student {
+  userId Int  @id
+  user   User @relation(fields: [userId], references: [id])
+
+  @@schema("public")
+}
+
+model Teacher {
+  userId Int  @id
+  user   User @relation(fields: [userId], references: [id])
+
+  @@schema("public")
+}
+
+model Reminder {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  created_at  DateTime @default(now())
+  title       String
+  description String
+  due_date    DateTime?
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@schema("public")
+}
+
+model Subject {
+  id     Int     @id @default(autoincrement())
+  userId Int
+  name   String
+  user   User    @relation(fields: [userId], references: [id])
+  study_plans StudyPlan[]
+  topics Topic[]
+
+  @@schema("public")
+}
+
+model Topic {
+  id            Int        @id @default(autoincrement())
+  subject_id Int
+  title         String    @default("")
+  material_count Int @default(0)
+  created_at DateTime @default(now())
+  materials     Material[]
+  summaries     Summary[]
+  transcript Transcript[]
+  subject    Subject @relation(fields: [subject_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model Message {
+  id       Int    @id @default(autoincrement())
+  created_at DateTime @default(now())
+  userId   Int?
+  topic_id Int
+  content  String
+  user     User?  @relation(fields: [userId], references: [id])
+
+  @@schema("public")
+}
+
+model Summary {
+  id       Int    @id @default(autoincrement())
+  content  String
+  title    String
+  topic_id Int
+  topic    Topic  @relation(fields: [topic_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model Material {
+  id        Int    @id @default(autoincrement())
+  title     String
+  file_type String
+  public_url String
+  bucket_path String
+  userId    Int
+  topic_id  Int
+
+  transcript Transcript?
+  topic     Topic  @relation(fields: [topic_id], references: [id], onDelete: Cascade)
+  user      User   @relation(fields: [userId], references: [id])
+
+  @@schema("public")
+}
+
+model Transcript {
+  id Int @id @default(autoincrement())
+  topicId Int
+  material_id Int @unique
+  title String
+  content String
+
+  material Material @relation(fields: [material_id], references: [id], onDelete: Cascade)
+  topic Topic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  chunks MaterialChunk[]
+
+  @@schema("public")
+}
+
+model StudyPlan {
+  id Int @id @default(autoincrement())
+  userId Int
+  discipline_id Int
+  title String
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  subject Subject @relation(fields: [discipline_id], references: [id], onDelete: Cascade) 
+  study_plan_topics StudyPlanTopics[]
+  study_plans_expanded StudyPlanExpanded[]
+  study_plans_complementary StudyPlanComplementary[]
+  study_plans_checklist StudyPlanChecklistItem[]
+
+  @@schema("public")
+}
+
+model StudyPlanTopics {
+  id Int @id @default(autoincrement())
+  plan_id Int
+  title String
+  order_index Int
+
+  study_plan StudyPlan @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model StudyPlanExpanded {
+  id Int @id @default(autoincrement())
+  plan_id Int
+  topic_title String 
+  justification String 
+  order_index Int
+
+  study_plan StudyPlan @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model StudyPlanComplementary {
+  id Int @id @default(autoincrement())
+  plan_id Int
+  topic_title String 
+  description String 
+  order_index Int
+
+  study_plan StudyPlan @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model StudyPlanChecklistItem {
+  id Int @id @default(autoincrement())
+  plan_id Int
+  order_index Int
+  title String 
+  description String
+  completed Boolean @default(false)
+
+  study_plan StudyPlan @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model MaterialChunk {
+  id          Int     @id @default(autoincrement())
+  transcript_id Int
+  index       Int
+  text        String
+  embedding   MaterialEmbedding?
+
+  transcript Transcript @relation(fields: [transcript_id], references: [id], onDelete: Cascade)
+
+  @@schema("embeddings")
+}
+
+model MaterialEmbedding {
+  id       Int     @id @default(autoincrement())
+  chunk_id Int     @unique
+  embedding Unsupported("vector(384)")
+
+  chunk MaterialChunk @relation(fields: [chunk_id], references: [id], onDelete: Cascade)
+
+  @@schema("embeddings")
+}

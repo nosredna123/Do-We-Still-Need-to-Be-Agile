@@ -1,0 +1,40 @@
+.chat-message {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.chat-message.bot {
+  justify-content: flex-start;
+}
+
+.chat-message.user {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 10px 15px;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+/* Cores diferentes para cada tipo */
+.chat-message.user .message-bubble {
+  background-color: #a0e7e5;
+  color: #000;
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* No usuário, a imagem fica à direita */
+.chat-message.user .message-avatar {
+  margin-left: 10px;
+  margin-right: 0;
+}

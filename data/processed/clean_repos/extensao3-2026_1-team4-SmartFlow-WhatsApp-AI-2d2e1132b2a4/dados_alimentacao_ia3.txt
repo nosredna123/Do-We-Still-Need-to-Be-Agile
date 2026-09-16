@@ -1,0 +1,44 @@
+# MANUAL DE PROCEDIMENTOS INTERNOS E INFORMAÇÕES GERAIS DA EMPRESA (ID: 3)
+
+## 1. Fundação e Estrutura Organizacional
+A empresa foi criada oficialmente no dia 15 de março de 1990. Ao longo das décadas, expandiu significativamente a sua atuação no mercado tecnológico e operacional. Atualmente, a organização conta com um quadro total de 35.667 funcionários ativos espalhados por filiais em quatro continentes.
+
+## 2. O Restaurante Universitário (RU)
+O Restaurante Universitário (RU) foi fundado e teve a sua data de criação oficial em 22 de setembro de 2005. O objetivo principal do RU sempre foi fornecer alimentação balanceada, de alta qualidade e com custo subsidiado para toda a comunidade interna.
+
+### 2.1 Horários de Funcionamento do RU
+*Os serviços do Restaurante Universitário funcionam de segunda a sexta-feira, nos seguintes horários:
+**Almoço:** Das 10:30 às 13:15.
+**Jantar:** Das 17:00 às 19:00.
+
+### 2.2 Valores e Acesso
+
+O acesso ao RU é permitido mediante a apresentação do cartão de identificação funcional ou estudantil. Os valores atuais das refeições são:
+
+**Almoço:**
+
+* **Aluno de Graduação (CadFECOP):** Gratuito.
+* **Aluno de Graduação:** R$ 0,80 por refeição.
+* **Aluno de Pós-Graduação:** R$ 1,30 por refeição.
+* **Servidor docente em efetivo exercício na UECE:** R$ 5,00 por refeição.
+* **Servidor Técnico-Administrativo em efetivo exercício na UECE:** R$ 1,60 por refeição.
+* **Colaborador terceirizado lotado em unidade da UECE:** R$ 3,00 por refeição.
+* **Visitante:** R$ 5,00 por refeição.
+
+**Jantar (Sopa):**
+
+* **Aluno de Graduação (CadFECOP):** Gratuito.
+* **Aluno de Graduação:** R$ 0,50 por refeição.
+* **Aluno de Pós-Graduação:** R$ 1,30 por refeição.
+* **Servidor docente em efetivo exercício na UECE:** R$ 5,00 por refeição.
+* **Servidor Técnico-Administrativo em efetivo exercício na UECE:** R$ 1,60 por refeição.
+* **Colaborador terceirizado lotado em unidade da UECE:** R$ 3,00 por refeição.
+* **Visitante:** R$ 5,00 por refeição.
+
+## 3. Políticas de Trabalho e Trabalho Remoto (Home Office)
+A empresa adota um modelo de trabalho híbrido flexível. Cada departamento possui autonomia para definir os dias presenciais, desde que respeitado o mínimo de 2 dias por semana nas dependências físicas da empresa. 
+* O horário de expediente padrão é das 09:00 às 18:00, totalizando 40 horas semanais.
+* O banco de horas acumulado deve ser compensado dentro do mesmo semestre letivo/fiscal.
+
+## 4. Suporte de TI e Infraestrutura de Redes
+Para abertura de chamados técnicos relacionados a problemas com computadores, acessos a VPN ou credenciais bloqueadas, o colaborador deve enviar um e-mail para suporte.ti@empresa.com ou abrir uma requisição direta pelo portal interno ServiceFlow. O prazo médio de resposta para chamados de prioridade média é de até 4 horas úteis.

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente de Carreira AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#f8fafc] min-h-screen flex flex-col items-center p-6 font-sans text-gray-800">
+
+    <div class="flex flex-col md:flex-row gap-8 mt-10 mb-8 w-full max-w-4xl justify-center">
+
+        <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 p-8 flex flex-col items-center w-full md:w-1/2 border border-gray-100">
+            <h2 class="text-xl font-medium mb-6">Currículo</h2>
+            <div class="mb-4 text-[#86bba7]">
+                <i class="fa-solid fa-file-arrow-up text-6xl"></i>
+            </div>
+            <h3 class="text-lg font-medium mb-1">Enviar Currículo</h3>
+            <p class="text-xs text-gray-500 mb-8">(Formatos PDF e DOCX)</p>
+            
+            <label id="labelUpload" class="w-full bg-[#a7e5cb] hover:bg-[#92dabf] text-[#2d5c48] font-medium py-3 px-4 rounded-xl text-center cursor-pointer transition-colors duration-200 truncate">
+                Upload File
+                <input type="file" id="arquivoInput" class="hidden" accept=".pdf,.docx" />
+            </label>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 p-8 flex flex-col items-center w-full md:w-1/2 border border-gray-100">
+            <h2 class="text-xl font-medium mb-6">Vaga</h2>
+            <div class="mb-4 text-[#758ca3]">
+                <i class="fa-solid fa-clipboard-list text-6xl"></i>
+            </div>
+            
+            <div class="w-full mb-6 mt-2">
+                <label class="block text-sm font-medium mb-2 text-gray-700 text-left">Descrição da Vaga</label>
+                <textarea id="vagaInput" rows="4" placeholder="Cole os requisitos e detalhes da vaga aqui..." class="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#9cbde8] focus:border-transparent transition-all text-sm resize-none"></textarea>
+            </div>
+            
+            <button id="btnAnalisar" class="w-full bg-[#9cbde8] hover:bg-[#86aee0] text-blue-900 font-medium py-3 px-4 rounded-xl transition-colors duration-200">
+                Analisar Vaga
+            </button>
+        </div>
+
+    </div>
+
+    <div id="resultadoDiv" class="w-full max-w-4xl bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8 hidden">
+        <h2 class="text-xl font-medium mb-4 text-[#2d5c48] flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Currículo Adaptado:
+        </h2>
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 mb-4">
+            <pre id="textoResultado" class="whitespace-pre-wrap text-sm text-gray-700 font-sans leading-relaxed"></pre>
+        </div>
+        
+        <div class="flex flex-wrap gap-4 mt-6">
+            <button id="btnBaixarTxt" class="bg-[#2d5c48] hover:bg-[#1e3f31] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <i class="fa-solid fa-file-lines"></i> Baixar como TXT
+            </button>
+            <button id="btnBaixarPdf" class="bg-[#e74c3c] hover:bg-[#c0392b] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <i class="fa-solid fa-file-pdf"></i> Salvar como PDF
+            </button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-4xl bg-white rounded-full shadow-sm border border-[#e6eee8] p-2 flex items-center mb-10">
+        <div class="flex items-center px-4 shrink-0 border-r border-gray-100">
+            <span class="text-sm font-medium text-gray-700 mr-3 hidden sm:block">Fale com o Agente</span>
+            <div class="w-9 h-9 bg-[#edf5f1] rounded-full flex items-center justify-center text-[#86bba7]">
+                <i class="fa-solid fa-robot text-lg"></i>
+            </div>
+        </div>
+        
+        <input type="text" placeholder="Digite sua mensagem..." class="flex-grow bg-transparent border-none px-4 py-2 focus:outline-none text-gray-700 w-full">
+        
+        <button class="w-11 h-11 bg-[#a7e5cb] hover:bg-[#92dabf] text-white rounded-full flex items-center justify-center shrink-0 transition-colors duration-200 shadow-sm">
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
+    </div>
+
+    <script>
+        // Feedback visual do nome do arquivo
+        document.getElementById('arquivoInput').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            const label = document.getElementById('labelUpload');
+            if(fileName) {
+                // Remove a tag do input da string de exibição para não sumir com o input real
+                label.childNodes[0].nodeValue = fileName + " ";
+            } else {
+                label.childNodes[0].nodeValue = "Upload File ";
+            }
+        });
+
+        // Envio para a IA
+        document.getElementById('btnAnalisar').addEventListener('click', async () => {
+            const arquivo = document.getElementById('arquivoInput').files[0];
+            const textoVaga = document.getElementById('vagaInput').value;
+            const btn = document.getElementById('btnAnalisar');
+            const resultadoDiv = document.getElementById('resultadoDiv');
+            const textoResultado = document.getElementById('textoResultado');
+
+            if (!arquivo || !textoVaga.trim()) {
+                alert("Por favor, envie um currículo e cole a descrição da vaga!");
+                return;
+            }
+
+            // UI Feedback: Mostra que está processando
+            const textoOriginalBotao = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Analisando com IA...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            resultadoDiv.classList.add('hidden');
+
+            const formData = new FormData();
+            formData.append('arquivo_curriculo', arquivo);
+            formData.append('texto_vaga', textoVaga);
+
+            try {
+                // Faz a chamada para o seu backend Python (Flask)
+                const response = await fetch('/analisar-vaga', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === "sucesso") {
+                    textoResultado.innerText = data.curriculo_adaptado;
+                    resultadoDiv.classList.remove('hidden');
+                    // Rola a página suavemente para o resultado
+                    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    alert("Erro: " + (data.mensagem || "Erro desconhecido no servidor."));
+                }
+            } catch (error) {
+                console.error("Erro na requisição:", error);
+                alert("Erro ao conectar com o servidor. Verifique se o Flask e o Ollama estão rodando.");
+            } finally {
+                // Restaura o botão
+                btn.innerHTML = textoOriginalBotao;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        });
+
+        // Lógica para baixar em TXT
+        document.getElementById('btnBaixarTxt').addEventListener('click', () => {
+            const texto = document.getElementById('textoResultado').innerText;
+            const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Curriculo_Adaptado_IA.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Lógica para salvar em PDF (Usando a impressão do navegador)
+        document.getElementById('btnBaixarPdf').addEventListener('click', () => {
+            const conteudo = document.getElementById('textoResultado').innerText;
+            
+            // Cria uma janela invisível só com o texto do currículo
+            const janelaPDF = window.open('', '', 'width=800,height=600');
+            janelaPDF.document.write(`
+                <html>
+                    <head>
+                        <title>Currículo Adaptado</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; padding: 40px; }
+                            pre { white-space: pre-wrap; font-family: inherit; margin: 0; }
+                        </style>
+                    </head>
+                    <body>
+                        <pre>${conteudo}</pre>
+                        <script>
+                            // Dispara a janela de "Salvar como PDF" automaticamente
+                            window.onload = function() { window.print(); window.close(); }
+                        <\/script>
+                    </body>
+                </html>
+            `);
+            janelaPDF.document.close();
+        });
+    </script>
+</body>
+</html>

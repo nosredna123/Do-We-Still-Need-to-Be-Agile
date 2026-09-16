@@ -1,0 +1,77 @@
+.topbar {
+  width: 100%;
+  background: #fafdfb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Área de busca */
+.search-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  min-width: 220px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  flex: 1;
+  margin: 0 6px;
+}
+
+.search-icon {
+  color: #666;
+  font-size: 16px;
+}
+
+.shortcut {
+  background: #f3f3f3;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Botão “Iniciar nova conversa” */
+.new-conversation-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.new-conversation-btn:hover {
+  background-color: #2980b9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

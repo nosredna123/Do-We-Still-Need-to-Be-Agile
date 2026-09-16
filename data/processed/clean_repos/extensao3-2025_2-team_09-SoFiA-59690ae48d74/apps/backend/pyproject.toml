@@ -1,0 +1,39 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "rifa-456",email = "rerserve@hotmail.com"}
+]
+requires-python = ">=3.12,<4.0.0"
+
+dependencies = [
+    "fastapi (>=0.119.1,<0.120.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "uvicorn[standard] (>=0.38.0,<0.39.0)",
+    "sqlalchemy (>=2.0.44,<3.0.0)",
+    "pandas (>=2.3.3,<3.0.0)",
+    "pandas-stubs (>=2.3.2.250926,<3.0.0.0)",
+    "tdqm (>=0.0.1,<0.0.2)",
+    "black (>=25.9.0,<26.0.0)",
+    "plotly (>=6.3.1,<7.0.0)",
+    "pull (>=0.0.1,<0.0.2)",
+    "google-generativeai (>=0.8.5,<0.9.0)",
+    "google (>=3.0.0,<4.0.0)",
+    "colorama (>=0.4.6,<0.5.0)",
+    "fastapi-pagination (>=0.15.0,<0.16.0)",
+    "apscheduler (>=3.11.1,<4.0.0)"
+]
+
+[tool.poetry]
+packages = [{ include = "src" }]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "black (>=25.9.0,<26.0.0)",
+    "ruff (>=0.14.2,<0.15.0)"
+]

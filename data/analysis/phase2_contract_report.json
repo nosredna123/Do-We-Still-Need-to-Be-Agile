@@ -1,0 +1,800 @@
+{
+  "contract_version": "phase2-inputs-v1",
+  "contracts": {
+    "evaluator_team_cuts": {
+      "columns": [
+        "ID_Equipe",
+        "Semestre",
+        "engagement_participation_iqr",
+        "engagement_participation_mean",
+        "engagement_participation_median",
+        "engagement_participation_n",
+        "engagement_participation_std",
+        "git_match_status",
+        "project_progress_iqr",
+        "project_progress_mean",
+        "project_progress_median",
+        "project_progress_n",
+        "project_progress_std",
+        "scope_applicability_iqr",
+        "scope_applicability_mean",
+        "scope_applicability_median",
+        "scope_applicability_n",
+        "scope_applicability_std",
+        "source_type",
+        "technical_complexity_iqr",
+        "technical_complexity_mean",
+        "technical_complexity_median",
+        "technical_complexity_n",
+        "technical_complexity_std",
+        "temporal_marker"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T3"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "ID_Equipe": "object",
+        "Semestre": "string",
+        "engagement_participation_iqr": "float64",
+        "engagement_participation_mean": "float64",
+        "engagement_participation_median": "float64",
+        "engagement_participation_n": "int64",
+        "engagement_participation_std": "float64",
+        "git_match_status": "object",
+        "project_progress_iqr": "float64",
+        "project_progress_mean": "float64",
+        "project_progress_median": "float64",
+        "project_progress_n": "int64",
+        "project_progress_std": "float64",
+        "scope_applicability_iqr": "float64",
+        "scope_applicability_mean": "float64",
+        "scope_applicability_median": "float64",
+        "scope_applicability_n": "int64",
+        "scope_applicability_std": "float64",
+        "source_type": "object",
+        "technical_complexity_iqr": "float64",
+        "technical_complexity_mean": "float64",
+        "technical_complexity_median": "float64",
+        "technical_complexity_n": "int64",
+        "technical_complexity_std": "float64",
+        "temporal_marker": "object"
+      },
+      "input_checksum": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
+      "keys": {
+        "columns": [
+          "ID_Equipe",
+          "Semestre",
+          "temporal_marker"
+        ],
+        "duplicate_rows": 0
+      },
+      "null_counts": {
+        "ID_Equipe": 0,
+        "Semestre": 0,
+        "engagement_participation_iqr": 0,
+        "engagement_participation_mean": 0,
+        "engagement_participation_median": 0,
+        "engagement_participation_n": 0,
+        "engagement_participation_std": 0,
+        "git_match_status": 0,
+        "project_progress_iqr": 0,
+        "project_progress_mean": 0,
+        "project_progress_median": 0,
+        "project_progress_n": 0,
+        "project_progress_std": 0,
+        "scope_applicability_iqr": 0,
+        "scope_applicability_mean": 0,
+        "scope_applicability_median": 0,
+        "scope_applicability_n": 0,
+        "scope_applicability_std": 0,
+        "source_type": 0,
+        "technical_complexity_iqr": 0,
+        "technical_complexity_mean": 0,
+        "technical_complexity_median": 0,
+        "technical_complexity_n": 0,
+        "technical_complexity_std": 0,
+        "temporal_marker": 0
+      },
+      "rows": 42
+    },
+    "git_commits": {
+      "columns": [
+        "ID_Autor_Local",
+        "ID_Equipe",
+        "Semestre",
+        "branch_or_ref",
+        "branch_or_ref_source",
+        "commit_hash",
+        "files_changed",
+        "lines_added",
+        "lines_deleted",
+        "repository",
+        "source_type",
+        "temporal_marker",
+        "timestamp"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 24,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 141,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 352,
+          "temporal_marker": "T3"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 87,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 88,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 120,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "ID_Autor_Local": "object",
+        "ID_Equipe": "object",
+        "Semestre": "string",
+        "branch_or_ref": "object",
+        "branch_or_ref_source": "object",
+        "commit_hash": "object",
+        "files_changed": "int64",
+        "lines_added": "int64",
+        "lines_deleted": "int64",
+        "repository": "object",
+        "source_type": "object",
+        "temporal_marker": "object",
+        "timestamp": "datetime64[ns, UTC]"
+      },
+      "input_checksum": "e5d3d2035ee0879324902a16061608390e8e3132e2d4c0629c4de112a1f8566c",
+      "keys": {
+        "columns": [],
+        "duplicate_rows": null
+      },
+      "null_counts": {
+        "ID_Autor_Local": 0,
+        "ID_Equipe": 0,
+        "Semestre": 0,
+        "branch_or_ref": 0,
+        "branch_or_ref_source": 0,
+        "commit_hash": 0,
+        "files_changed": 0,
+        "lines_added": 0,
+        "lines_deleted": 0,
+        "repository": 0,
+        "source_type": 0,
+        "temporal_marker": 0,
+        "timestamp": 0
+      },
+      "rows": 812
+    },
+    "git_files": {
+      "columns": [
+        "ID_Autor_Local",
+        "ID_Equipe",
+        "Semestre",
+        "branch_or_ref",
+        "branch_or_ref_source",
+        "change_status",
+        "commit_hash",
+        "file_extension",
+        "file_path",
+        "file_path_old",
+        "is_binary",
+        "lines_added",
+        "lines_deleted",
+        "repository",
+        "source_type",
+        "temporal_marker",
+        "timestamp"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 273,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 2406,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 46584,
+          "temporal_marker": "T3"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 438,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 494,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 846,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "ID_Autor_Local": "object",
+        "ID_Equipe": "object",
+        "Semestre": "string",
+        "branch_or_ref": "object",
+        "branch_or_ref_source": "object",
+        "change_status": "object",
+        "commit_hash": "object",
+        "file_extension": "string",
+        "file_path": "object",
+        "file_path_old": "object",
+        "is_binary": "bool",
+        "lines_added": "float64",
+        "lines_deleted": "float64",
+        "repository": "object",
+        "source_type": "object",
+        "temporal_marker": "object",
+        "timestamp": "datetime64[ns, UTC]"
+      },
+      "input_checksum": "c13269b33fcef0db61856678fc4ca8a9c86e2e8155d80f170de93f9274c1d1fa",
+      "keys": {
+        "columns": [],
+        "duplicate_rows": null
+      },
+      "null_counts": {
+        "ID_Autor_Local": 0,
+        "ID_Equipe": 0,
+        "Semestre": 0,
+        "branch_or_ref": 0,
+        "branch_or_ref_source": 0,
+        "change_status": 0,
+        "commit_hash": 0,
+        "file_extension": 0,
+        "file_path": 0,
+        "file_path_old": 50289,
+        "is_binary": 0,
+        "lines_added": 14287,
+        "lines_deleted": 14287,
+        "repository": 0,
+        "source_type": 0,
+        "temporal_marker": 0,
+        "timestamp": 0
+      },
+      "rows": 51041
+    },
+    "git_repository_snapshots": {
+      "columns": [
+        "ID_Equipe",
+        "Semestre",
+        "excluded_path_patterns_version",
+        "repo_binary_files",
+        "repo_source_files",
+        "repo_source_loc",
+        "repo_total_bytes",
+        "repo_total_files",
+        "repository",
+        "snapshot_available",
+        "snapshot_commit_hash",
+        "snapshot_selection_rule",
+        "snapshot_timestamp",
+        "snapshot_unavailable_reason",
+        "source_loc_definition_version",
+        "source_type",
+        "temporal_marker"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T3"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "ID_Equipe": "object",
+        "Semestre": "object",
+        "excluded_path_patterns_version": "object",
+        "repo_binary_files": "float64",
+        "repo_source_files": "float64",
+        "repo_source_loc": "float64",
+        "repo_total_bytes": "float64",
+        "repo_total_files": "float64",
+        "repository": "object",
+        "snapshot_available": "bool",
+        "snapshot_commit_hash": "object",
+        "snapshot_selection_rule": "object",
+        "snapshot_timestamp": "datetime64[ns, UTC]",
+        "snapshot_unavailable_reason": "object",
+        "source_loc_definition_version": "object",
+        "source_type": "object",
+        "temporal_marker": "object"
+      },
+      "input_checksum": "da3a1d7fdbdf2b12abeb34afe287d1b36076bb67bcf62d477144c997fb603058",
+      "keys": {
+        "columns": [
+          "ID_Equipe",
+          "Semestre",
+          "temporal_marker",
+          "repository"
+        ],
+        "duplicate_rows": 0
+      },
+      "null_counts": {
+        "ID_Equipe": 0,
+        "Semestre": 0,
+        "excluded_path_patterns_version": 0,
+        "repo_binary_files": 9,
+        "repo_source_files": 9,
+        "repo_source_loc": 9,
+        "repo_total_bytes": 9,
+        "repo_total_files": 9,
+        "repository": 0,
+        "snapshot_available": 0,
+        "snapshot_commit_hash": 9,
+        "snapshot_selection_rule": 0,
+        "snapshot_timestamp": 9,
+        "snapshot_unavailable_reason": 33,
+        "source_loc_definition_version": 0,
+        "source_type": 0,
+        "temporal_marker": 0
+      },
+      "rows": 42
+    },
+    "git_team_cuts": {
+      "columns": [
+        "ID_Equipe",
+        "Semestre",
+        "files_changed",
+        "lines_added",
+        "lines_deleted",
+        "num_authors",
+        "num_commits",
+        "source_type",
+        "temporal_marker"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 4,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 6,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 9,
+          "temporal_marker": "T3"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 4,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 5,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "ID_Equipe": "object",
+        "Semestre": "string",
+        "files_changed": "int64",
+        "lines_added": "int64",
+        "lines_deleted": "int64",
+        "num_authors": "int64",
+        "num_commits": "int64",
+        "source_type": "object",
+        "temporal_marker": "object"
+      },
+      "input_checksum": "832464590d65c0e386859f781d17cc4aa8bed1faa17a37f6fb2c4a365db69a80",
+      "keys": {
+        "columns": [
+          "ID_Equipe",
+          "Semestre",
+          "temporal_marker"
+        ],
+        "duplicate_rows": 0
+      },
+      "null_counts": {
+        "ID_Equipe": 0,
+        "Semestre": 0,
+        "files_changed": 0,
+        "lines_added": 0,
+        "lines_deleted": 0,
+        "num_authors": 0,
+        "num_commits": 0,
+        "source_type": 0,
+        "temporal_marker": 0
+      },
+      "rows": 33
+    },
+    "student_responses": {
+      "columns": [
+        "A fun\u00e7\u00e3o de Product Manager ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).",
+        "A fun\u00e7\u00e3o de QA (Garantia de Qualidade) ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).",
+        "A fun\u00e7\u00e3o de Scrum Master ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).",
+        "A fun\u00e7\u00e3o de backend ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).",
+        "A fun\u00e7\u00e3o de frontend ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).",
+        "A fun\u00e7\u00e3o de gerente de projeto ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).",
+        "Acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe est\u00e3o/ir\u00e3o agilizando/agilizar significativamente o desenvolvimento?",
+        "Acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe ir\u00e3o agilizar significativamente o desenvolvimento?",
+        "Antes de iniciar o projeto, qu\u00e3o confiante voc\u00ea est\u00e1 de que sua equipe vai entregar um software funcional e de qualidade dentro do prazo?",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Existe metodologia mais adequada \u00e0s ferramentas de IA generativa.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Ferramentas de IA generativa em Engenharia de Software s\u00e3o \u00fateis.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [IA generativa aumenta minha produtividade na engenharia de software.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [IA generativa melhora a qualidade do software produzido.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Novos pap\u00e9is profissionais surgir\u00e3o devido \u00e0 IA generativa (por exemplo, AI Prompt Engineer, AI Auditor).]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [O uso de IA generativa altera o fluxo de desenvolvimento de sistemas.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [O uso de ferramentas de IA generativa exige novas compet\u00eancias que n\u00e3o fazem parte da forma\u00e7\u00e3o tradicional em Engenharia de Software.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Sinto-me confiante em revisar e integrar c\u00f3digo gerado por IA generativa.]",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [\u00c9 poss\u00edvel utilizar qualquer metodologia de desenvolvimento de software com IA generativa.]",
+        "Com que frequ\u00eancia voc\u00ea utiliza ferramentas de IA Generativa especificamente em projetos de engenharia de software?",
+        "Com que frequ\u00eancia voc\u00ea utiliza ferramentas de IA generativa em seu dia a dia de maneira geral?",
+        "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que ir\u00e1 desenvolver nesta disciplina.",
+        "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que voc\u00ea est\u00e1 desenvolvendo nesta disciplina.",
+        "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?",
+        "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?.1",
+        "Em qual semestre do curso de Ci\u00eancias da Computa\u00e7\u00e3o voc\u00ea est\u00e1?",
+        "Em qual semestre do curso de Engenharia de Software voc\u00ea est\u00e1?",
+        "Em rela\u00e7\u00e3o ao status atual de seu projeto, qu\u00e3o confiante voc\u00ea est\u00e1 de que sua equipe vai entregar um software funcional e de qualidade dentro do prazo?",
+        "Email Address",
+        "Na sua opini\u00e3o, o aprendizado obtido durante este projeto esta sendo:",
+        "Na sua opini\u00e3o, o aprendizado obtido durante este projeto ser\u00e1:",
+        "Nome completo",
+        "Para quais atividades voc\u00ea costuma utilizar ferramentas de IA generativa? (marque todas as que se aplicam)",
+        "Para voc\u00ea, qual deve ser o equil\u00edbrio ideal entre a autonomia de cada integrante e a depend\u00eancia de ferramentas de suporte no desenvolvimento do projeto?",
+        "Quais aspectos do projeto voc\u00ea acredita que foram/s\u00e3o mais desafiadores? (marque todos que se aplicam)",
+        "Quais aspectos do projeto voc\u00ea acredita que ser\u00e3o mais desafiadores? (marque todos que se aplicam)",
+        "Quais expectativas voc\u00ea tem sobre sua pr\u00f3pria evolu\u00e7\u00e3o profissional ao participar deste projeto?",
+        "Quais ferramentas de IA generativa voc\u00ea utilizou nos \u00faltimos 12 meses em projetos de engenharia de software? (selecione todas que se aplicam)",
+        "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?",
+        "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?.1",
+        "Qual metodologia de desenvolvimento de software voc\u00ea mais utilizou em seus projetos?",
+        "Qual o n\u00famero de membros da maior equipe de projeto em que voc\u00ea j\u00e1 atuou?",
+        "Qual papel voc\u00ea mais se identifica em projetos de software?",
+        "Qual \u00e9 a sua faixa et\u00e1ria?",
+        "Qual \u00e9 o seu g\u00eanero?",
+        "Quantos anos de experi\u00eancia em desenvolvimento de software voc\u00ea possui?",
+        "Quantos projetos de engenharia de software voc\u00ea participou ao longo de sua carreira?",
+        "Qu\u00e3o motivado voc\u00ea est\u00e1 para aprender novas t\u00e9cnicas e tecnologias durante a implementa\u00e7\u00e3o do projeto?",
+        "Qu\u00e3o motivado voc\u00ea est\u00e1 para/ficou em aprender novas t\u00e9cnicas e tecnologias durante a implementa\u00e7\u00e3o do projeto?",
+        "Semestre",
+        "Timestamp",
+        "To which group do these scores refer?",
+        "Voc\u00ea acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe est\u00e3o facilitando/ir\u00e3o facilitar a colabora\u00e7\u00e3o entre os membros da sua equipe?",
+        "Voc\u00ea acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe ir\u00e3o facilitar a colabora\u00e7\u00e3o entre os membros da sua equipe?",
+        "Voc\u00ea concluiu o Ensino M\u00e9dio em escola p\u00fablica?",
+        "Voc\u00ea est\u00e1 empregado atualmente na \u00e1rea de software?",
+        "Voc\u00ea j\u00e1 desenvolveu ou participou de projetos de desenvolvimento de software que usa IA Generativa para realizar alguma(s) funcionalidade(s) ",
+        "Voc\u00ea j\u00e1 possui outra gradua\u00e7\u00e3o?",
+        "Voc\u00ea leu o Termo de Consentimento Livre e Esclarecido acima e concorda com a coleta e o uso dos artefatos que ser\u00e3o gerados por voc\u00ea durante a disciplina para fins de pesquisa?",
+        "Voc\u00ea precisou/prev\u00ea que ser\u00e1 necess\u00e1rio revisar ou ajustar significativamente as sa\u00eddas geradas por ferramentas automatizadas ao longo do projeto?",
+        "Voc\u00ea prev\u00ea que ser\u00e1 necess\u00e1rio revisar ou ajustar significativamente as sa\u00eddas geradas por ferramentas automatizadas ao longo do projeto?",
+        "What is the score for \"Engagement/Participation\"?",
+        "What is the score for \"Project Progress\"?",
+        "What is the score for \"Scope/Applicability\"?",
+        "What is the score for \"Technical Complexity\"?",
+        "source_file",
+        "source_type",
+        "temporal_marker"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 46,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 41,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 40,
+          "temporal_marker": "T3"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 22,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 20,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2026.1",
+          "rows": 18,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "A fun\u00e7\u00e3o de Product Manager ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": "float64",
+        "A fun\u00e7\u00e3o de QA (Garantia de Qualidade) ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": "float64",
+        "A fun\u00e7\u00e3o de Scrum Master ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": "float64",
+        "A fun\u00e7\u00e3o de backend ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": "float64",
+        "A fun\u00e7\u00e3o de frontend ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": "float64",
+        "A fun\u00e7\u00e3o de gerente de projeto ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": "float64",
+        "Acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe est\u00e3o/ir\u00e3o agilizando/agilizar significativamente o desenvolvimento?": "float64",
+        "Acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe ir\u00e3o agilizar significativamente o desenvolvimento?": "float64",
+        "Antes de iniciar o projeto, qu\u00e3o confiante voc\u00ea est\u00e1 de que sua equipe vai entregar um software funcional e de qualidade dentro do prazo?": "float64",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Existe metodologia mais adequada \u00e0s ferramentas de IA generativa.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Ferramentas de IA generativa em Engenharia de Software s\u00e3o \u00fateis.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [IA generativa aumenta minha produtividade na engenharia de software.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [IA generativa melhora a qualidade do software produzido.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Novos pap\u00e9is profissionais surgir\u00e3o devido \u00e0 IA generativa (por exemplo, AI Prompt Engineer, AI Auditor).]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [O uso de IA generativa altera o fluxo de desenvolvimento de sistemas.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [O uso de ferramentas de IA generativa exige novas compet\u00eancias que n\u00e3o fazem parte da forma\u00e7\u00e3o tradicional em Engenharia de Software.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Sinto-me confiante em revisar e integrar c\u00f3digo gerado por IA generativa.]": "object",
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [\u00c9 poss\u00edvel utilizar qualquer metodologia de desenvolvimento de software com IA generativa.]": "object",
+        "Com que frequ\u00eancia voc\u00ea utiliza ferramentas de IA Generativa especificamente em projetos de engenharia de software?": "object",
+        "Com que frequ\u00eancia voc\u00ea utiliza ferramentas de IA generativa em seu dia a dia de maneira geral?": "object",
+        "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que ir\u00e1 desenvolver nesta disciplina.": "object",
+        "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que voc\u00ea est\u00e1 desenvolvendo nesta disciplina.": "object",
+        "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?": "object",
+        "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?.1": "object",
+        "Em qual semestre do curso de Ci\u00eancias da Computa\u00e7\u00e3o voc\u00ea est\u00e1?": "object",
+        "Em qual semestre do curso de Engenharia de Software voc\u00ea est\u00e1?": "object",
+        "Em rela\u00e7\u00e3o ao status atual de seu projeto, qu\u00e3o confiante voc\u00ea est\u00e1 de que sua equipe vai entregar um software funcional e de qualidade dentro do prazo?": "float64",
+        "Email Address": "object",
+        "Na sua opini\u00e3o, o aprendizado obtido durante este projeto esta sendo:": "object",
+        "Na sua opini\u00e3o, o aprendizado obtido durante este projeto ser\u00e1:": "object",
+        "Nome completo": "object",
+        "Para quais atividades voc\u00ea costuma utilizar ferramentas de IA generativa? (marque todas as que se aplicam)": "object",
+        "Para voc\u00ea, qual deve ser o equil\u00edbrio ideal entre a autonomia de cada integrante e a depend\u00eancia de ferramentas de suporte no desenvolvimento do projeto?": "float64",
+        "Quais aspectos do projeto voc\u00ea acredita que foram/s\u00e3o mais desafiadores? (marque todos que se aplicam)": "object",
+        "Quais aspectos do projeto voc\u00ea acredita que ser\u00e3o mais desafiadores? (marque todos que se aplicam)": "object",
+        "Quais expectativas voc\u00ea tem sobre sua pr\u00f3pria evolu\u00e7\u00e3o profissional ao participar deste projeto?": "object",
+        "Quais ferramentas de IA generativa voc\u00ea utilizou nos \u00faltimos 12 meses em projetos de engenharia de software? (selecione todas que se aplicam)": "object",
+        "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?": "object",
+        "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?.1": "object",
+        "Qual metodologia de desenvolvimento de software voc\u00ea mais utilizou em seus projetos?": "object",
+        "Qual o n\u00famero de membros da maior equipe de projeto em que voc\u00ea j\u00e1 atuou?": "object",
+        "Qual papel voc\u00ea mais se identifica em projetos de software?": "object",
+        "Qual \u00e9 a sua faixa et\u00e1ria?": "object",
+        "Qual \u00e9 o seu g\u00eanero?": "object",
+        "Quantos anos de experi\u00eancia em desenvolvimento de software voc\u00ea possui?": "object",
+        "Quantos projetos de engenharia de software voc\u00ea participou ao longo de sua carreira?": "object",
+        "Qu\u00e3o motivado voc\u00ea est\u00e1 para aprender novas t\u00e9cnicas e tecnologias durante a implementa\u00e7\u00e3o do projeto?": "float64",
+        "Qu\u00e3o motivado voc\u00ea est\u00e1 para/ficou em aprender novas t\u00e9cnicas e tecnologias durante a implementa\u00e7\u00e3o do projeto?": "float64",
+        "Semestre": "string",
+        "Timestamp": "object",
+        "To which group do these scores refer?": "object",
+        "Voc\u00ea acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe est\u00e3o facilitando/ir\u00e3o facilitar a colabora\u00e7\u00e3o entre os membros da sua equipe?": "float64",
+        "Voc\u00ea acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe ir\u00e3o facilitar a colabora\u00e7\u00e3o entre os membros da sua equipe?": "float64",
+        "Voc\u00ea concluiu o Ensino M\u00e9dio em escola p\u00fablica?": "object",
+        "Voc\u00ea est\u00e1 empregado atualmente na \u00e1rea de software?": "object",
+        "Voc\u00ea j\u00e1 desenvolveu ou participou de projetos de desenvolvimento de software que usa IA Generativa para realizar alguma(s) funcionalidade(s) ": "object",
+        "Voc\u00ea j\u00e1 possui outra gradua\u00e7\u00e3o?": "object",
+        "Voc\u00ea leu o Termo de Consentimento Livre e Esclarecido acima e concorda com a coleta e o uso dos artefatos que ser\u00e3o gerados por voc\u00ea durante a disciplina para fins de pesquisa?": "object",
+        "Voc\u00ea precisou/prev\u00ea que ser\u00e1 necess\u00e1rio revisar ou ajustar significativamente as sa\u00eddas geradas por ferramentas automatizadas ao longo do projeto?": "float64",
+        "Voc\u00ea prev\u00ea que ser\u00e1 necess\u00e1rio revisar ou ajustar significativamente as sa\u00eddas geradas por ferramentas automatizadas ao longo do projeto?": "float64",
+        "What is the score for \"Engagement/Participation\"?": "float64",
+        "What is the score for \"Project Progress\"?": "float64",
+        "What is the score for \"Scope/Applicability\"?": "float64",
+        "What is the score for \"Technical Complexity\"?": "float64",
+        "source_file": "object",
+        "source_type": "object",
+        "temporal_marker": "object"
+      },
+      "input_checksum": "0fdca4311fdd05e87b09e96315ba386189d688b4b70741bccc2a03a08ddd58d8",
+      "keys": {
+        "columns": [],
+        "duplicate_rows": null
+      },
+      "null_counts": {
+        "A fun\u00e7\u00e3o de Product Manager ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": 0,
+        "A fun\u00e7\u00e3o de QA (Garantia de Qualidade) ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": 0,
+        "A fun\u00e7\u00e3o de Scrum Master ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": 0,
+        "A fun\u00e7\u00e3o de backend ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": 0,
+        "A fun\u00e7\u00e3o de frontend ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": 0,
+        "A fun\u00e7\u00e3o de gerente de projeto ser\u00e1 extinta ou severamente afetada pelo uso de ferramentas de IA generativa na engenharia de software. Indique seu grau de concord\u00e2ncia de 1 (Discordo totalmente) a 5 (Concordo totalmente).": 0,
+        "Acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe est\u00e3o/ir\u00e3o agilizando/agilizar significativamente o desenvolvimento?": 68,
+        "Acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe ir\u00e3o agilizar significativamente o desenvolvimento?": 119,
+        "Antes de iniciar o projeto, qu\u00e3o confiante voc\u00ea est\u00e1 de que sua equipe vai entregar um software funcional e de qualidade dentro do prazo?": 119,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Existe metodologia mais adequada \u00e0s ferramentas de IA generativa.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Ferramentas de IA generativa em Engenharia de Software s\u00e3o \u00fateis.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [IA generativa aumenta minha produtividade na engenharia de software.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [IA generativa melhora a qualidade do software produzido.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Novos pap\u00e9is profissionais surgir\u00e3o devido \u00e0 IA generativa (por exemplo, AI Prompt Engineer, AI Auditor).]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [O uso de IA generativa altera o fluxo de desenvolvimento de sistemas.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [O uso de ferramentas de IA generativa exige novas compet\u00eancias que n\u00e3o fazem parte da forma\u00e7\u00e3o tradicional em Engenharia de Software.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [Sinto-me confiante em revisar e integrar c\u00f3digo gerado por IA generativa.]": 0,
+        "Avalie seu n\u00edvel de concord\u00e2ncia com as afirma\u00e7\u00f5es abaixo relacionadas ao uso de ferramentas de IA generativa em engenharia de software. [\u00c9 poss\u00edvel utilizar qualquer metodologia de desenvolvimento de software com IA generativa.]": 0,
+        "Com que frequ\u00eancia voc\u00ea utiliza ferramentas de IA Generativa especificamente em projetos de engenharia de software?": 0,
+        "Com que frequ\u00eancia voc\u00ea utiliza ferramentas de IA generativa em seu dia a dia de maneira geral?": 0,
+        "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que ir\u00e1 desenvolver nesta disciplina.": 119,
+        "Descreva brevemente como voc\u00ea se sente em rela\u00e7\u00e3o ao projeto que voc\u00ea est\u00e1 desenvolvendo nesta disciplina.": 68,
+        "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?": 0,
+        "Em 5 anos, como voc\u00ea enxerga o impacto das ferramentas de IA generativa em sua carreira de engenharia de software?.1": 141,
+        "Em qual semestre do curso de Ci\u00eancias da Computa\u00e7\u00e3o voc\u00ea est\u00e1?": 68,
+        "Em qual semestre do curso de Engenharia de Software voc\u00ea est\u00e1?": 119,
+        "Em rela\u00e7\u00e3o ao status atual de seu projeto, qu\u00e3o confiante voc\u00ea est\u00e1 de que sua equipe vai entregar um software funcional e de qualidade dentro do prazo?": 68,
+        "Email Address": 0,
+        "Na sua opini\u00e3o, o aprendizado obtido durante este projeto esta sendo:": 167,
+        "Na sua opini\u00e3o, o aprendizado obtido durante este projeto ser\u00e1:": 20,
+        "Nome completo": 119,
+        "Para quais atividades voc\u00ea costuma utilizar ferramentas de IA generativa? (marque todas as que se aplicam)": 0,
+        "Para voc\u00ea, qual deve ser o equil\u00edbrio ideal entre a autonomia de cada integrante e a depend\u00eancia de ferramentas de suporte no desenvolvimento do projeto?": 0,
+        "Quais aspectos do projeto voc\u00ea acredita que foram/s\u00e3o mais desafiadores? (marque todos que se aplicam)": 68,
+        "Quais aspectos do projeto voc\u00ea acredita que ser\u00e3o mais desafiadores? (marque todos que se aplicam)": 119,
+        "Quais expectativas voc\u00ea tem sobre sua pr\u00f3pria evolu\u00e7\u00e3o profissional ao participar deste projeto?": 0,
+        "Quais ferramentas de IA generativa voc\u00ea utilizou nos \u00faltimos 12 meses em projetos de engenharia de software? (selecione todas que se aplicam)": 0,
+        "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?": 0,
+        "Qual foi o maior benef\u00edcio que voc\u00ea obteve (ou imagina) ao usar ferramentas de IA generativa em projetos de Engenharia de Software?.1": 141,
+        "Qual metodologia de desenvolvimento de software voc\u00ea mais utilizou em seus projetos?": 0,
+        "Qual o n\u00famero de membros da maior equipe de projeto em que voc\u00ea j\u00e1 atuou?": 0,
+        "Qual papel voc\u00ea mais se identifica em projetos de software?": 0,
+        "Qual \u00e9 a sua faixa et\u00e1ria?": 0,
+        "Qual \u00e9 o seu g\u00eanero?": 0,
+        "Quantos anos de experi\u00eancia em desenvolvimento de software voc\u00ea possui?": 0,
+        "Quantos projetos de engenharia de software voc\u00ea participou ao longo de sua carreira?": 0,
+        "Qu\u00e3o motivado voc\u00ea est\u00e1 para aprender novas t\u00e9cnicas e tecnologias durante a implementa\u00e7\u00e3o do projeto?": 119,
+        "Qu\u00e3o motivado voc\u00ea est\u00e1 para/ficou em aprender novas t\u00e9cnicas e tecnologias durante a implementa\u00e7\u00e3o do projeto?": 68,
+        "Semestre": 0,
+        "Timestamp": 0,
+        "To which group do these scores refer?": 187,
+        "Voc\u00ea acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe est\u00e3o facilitando/ir\u00e3o facilitar a colabora\u00e7\u00e3o entre os membros da sua equipe?": 68,
+        "Voc\u00ea acredita que as ferramentas de apoio e automa\u00e7\u00e3o adotadas pela equipe ir\u00e3o facilitar a colabora\u00e7\u00e3o entre os membros da sua equipe?": 119,
+        "Voc\u00ea concluiu o Ensino M\u00e9dio em escola p\u00fablica?": 0,
+        "Voc\u00ea est\u00e1 empregado atualmente na \u00e1rea de software?": 0,
+        "Voc\u00ea j\u00e1 desenvolveu ou participou de projetos de desenvolvimento de software que usa IA Generativa para realizar alguma(s) funcionalidade(s) ": 0,
+        "Voc\u00ea j\u00e1 possui outra gradua\u00e7\u00e3o?": 0,
+        "Voc\u00ea leu o Termo de Consentimento Livre e Esclarecido acima e concorda com a coleta e o uso dos artefatos que ser\u00e3o gerados por voc\u00ea durante a disciplina para fins de pesquisa?": 0,
+        "Voc\u00ea precisou/prev\u00ea que ser\u00e1 necess\u00e1rio revisar ou ajustar significativamente as sa\u00eddas geradas por ferramentas automatizadas ao longo do projeto?": 68,
+        "Voc\u00ea prev\u00ea que ser\u00e1 necess\u00e1rio revisar ou ajustar significativamente as sa\u00eddas geradas por ferramentas automatizadas ao longo do projeto?": 119,
+        "What is the score for \"Engagement/Participation\"?": 187,
+        "What is the score for \"Project Progress\"?": 187,
+        "What is the score for \"Scope/Applicability\"?": 187,
+        "What is the score for \"Technical Complexity\"?": 187,
+        "source_file": 0,
+        "source_type": 0,
+        "temporal_marker": 0
+      },
+      "rows": 187
+    },
+    "transcript_sessions": {
+      "columns": [
+        "Semestre",
+        "session_id",
+        "source_type",
+        "status",
+        "temporal_marker",
+        "temporal_marker_source",
+        "transcript_file",
+        "transcript_text"
+      ],
+      "counts_by_semester_and_cut": [
+        {
+          "Semestre": "2025.2",
+          "rows": 35,
+          "temporal_marker": "T1"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 37,
+          "temporal_marker": "T2"
+        },
+        {
+          "Semestre": "2025.2",
+          "rows": 28,
+          "temporal_marker": "T3"
+        }
+      ],
+      "dtypes": {
+        "Semestre": "object",
+        "session_id": "object",
+        "source_type": "object",
+        "status": "object",
+        "temporal_marker": "object",
+        "temporal_marker_source": "object",
+        "transcript_file": "object",
+        "transcript_text": "object"
+      },
+      "input_checksum": "f5d976a184c385090eb24f084ca46f2d66dbef04a22b3c49aa02715b42b3ee87",
+      "keys": {
+        "columns": [],
+        "duplicate_rows": null
+      },
+      "null_counts": {
+        "Semestre": 0,
+        "session_id": 0,
+        "source_type": 0,
+        "status": 0,
+        "temporal_marker": 0,
+        "temporal_marker_source": 0,
+        "transcript_file": 0,
+        "transcript_text": 0
+      },
+      "rows": 100
+    }
+  },
+  "git_reconciliation": {
+    "declared_rows": 33,
+    "recalculated_rows": 33,
+    "status": "success"
+  },
+  "status": "success",
+  "violations": []
+}

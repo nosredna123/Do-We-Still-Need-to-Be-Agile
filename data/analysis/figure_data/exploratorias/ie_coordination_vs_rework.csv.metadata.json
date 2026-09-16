@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "8f18f4665e796eb1616add5bd2201789049867ec027d460c596302d9892f2f34",
+  "options": {
+    "category": "exploratorias",
+    "figure_id": "ie_coordination_vs_rework",
+    "unit_of_analysis": "cut_context"
+  },
+  "status": "success"
+}

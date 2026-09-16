@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+build/
+
+# Cache
+.turbo/
+
+# Python specific
+.venv/
+__pycache__/
+
+# Lock files
+pnpm-lock.yaml
+poetry.lock
+
+# Docs (optional, but often good to ignore generated docs)
+.docs/

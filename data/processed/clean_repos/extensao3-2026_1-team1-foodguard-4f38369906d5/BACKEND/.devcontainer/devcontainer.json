@@ -1,0 +1,67 @@
+{
+    "name": "FoodGuard",
+    "dockerComposeFile": [
+        "../docker-compose.local.yml"
+    ],
+    "init": true,
+    "mounts": [
+        {
+            "source": "./.devcontainer/bash_history",
+            "target": "/home/dev-user/.bash_history",
+            "type": "bind"
+        },
+        {
+            "source": "~/.ssh",
+            "target": "/home/dev-user/.ssh",
+            "type": "bind"
+        }
+    ],
+    "overrideCommand": false,
+    "service": "django",
+    "remoteUser": "dev-user",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.formatOnSave": true,
+                "[python]": {
+                    "analysis.autoImportCompletions": true,
+                    "analysis.typeCheckingMode": "basic",
+                    "defaultInterpreterPath": "/usr/local/bin/python",
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": "always"
+                    },
+                    "languageServer": "Pylance",
+                    "linting.enabled": true,
+                    "linting.mypyEnabled": true,
+                    "linting.mypyPath": "/usr/local/bin/mypy"
+                },
+                // Tailwind support for Django templates
+                "tailwindCSS.includeLanguages": {
+                    "django-html": "html",
+                    "html": "html"
+                },
+                "editor.quickSuggestions": {
+                    "strings": true
+                }
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.debugpy",
+                "batisteo.vscode-django",
+                "cweijan.vscode-postgresql-client2",
+                "cweijan.dbclient-jdbc",
+                "thebarkman.vscode-djaneiro",
+                "bibhasdn.django-html",
+                "esbenp.prettier-vscode",
+                "bradlc.vscode-tailwindcss"
+            ]
+        }
+    },
+    "postCreateCommand": "bash .devcontainer/setup.sh",
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "21"
+        }
+    }
+}

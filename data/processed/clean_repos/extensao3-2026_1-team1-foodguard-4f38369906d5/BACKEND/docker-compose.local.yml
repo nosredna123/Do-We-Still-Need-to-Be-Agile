@@ -1,0 +1,37 @@
+volumes:
+  foodguard_local_postgres_data: {}
+  foodguard_local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: foodguard_local_django
+    container_name: foodguard_local_django
+    user: "dev-user"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.postgres
+      - ./.envs/.local/.django
+    ports:
+      - "8000:8000"
+    command: /start
+    environment:
+      - TZ=America/Fortaleza
+
+  postgres:
+    image: docker.io/postgres:16
+    container_name: foodguard_local_postgres
+    volumes:
+      - foodguard_local_postgres_data:/var/lib/postgresql/data
+      - foodguard_local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - TZ=America/Fortaleza

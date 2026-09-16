@@ -1,0 +1,3 @@
+Informação sobre o horário de funcionamento do restaurante da empresa não encontrada na base de conhecimento.
+O usuário perguntou sobre a missão da Inovatech, e a informação não foi encontrada na base de conhecimento. Necessário adicionar a missão da empresa na base.
+O assistente não possui informações sobre os horários de funcionamento do restaurante da empresa e precisa que essa informação seja adicionada à base de conhecimento.

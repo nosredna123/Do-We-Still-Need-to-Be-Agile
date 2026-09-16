@@ -1,0 +1,13 @@
+{
+  "contract_version": "code-churn-metrics-v1",
+  "input_checksum": "beec2bb7f43ba270c023a5bfa24b81a53b26170a1acf0c812c6fe618c8289ab8",
+  "options": {
+    "cc_binary_policy": "excluded_from_line_churn_counted_as_events",
+    "cc_definition_version": "cc-v1",
+    "contract_version": "code-churn-metrics-v1",
+    "rolling_window_bounds": "[timestamp, timestamp+7d)",
+    "rolling_window_days": 7,
+    "stage": "code_churn_metrics"
+  },
+  "status": "success"
+}

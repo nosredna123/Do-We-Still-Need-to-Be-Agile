@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "122bd883d11e0612890efd4e216bcc8839543738f5644bbce473c2e9a0ee3391",
+  "options": {
+    "category": "exploratorias",
+    "figure_id": "pi_vs_delta_dt",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

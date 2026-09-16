@@ -1,0 +1,45 @@
+{
+  "contract_version": "student-nlp-v1",
+  "input_checksum": "9d4d571e2f34ec3f092916a26240b5c4dac909ecffa612578d536f898bbf876d",
+  "options": {
+    "backend": "openai",
+    "enums": {
+      "methodological_orientation": [
+        "insufficient_evidence",
+        "mixed",
+        "structured",
+        "vibe_coding"
+      ],
+      "planning_debt_signal": [
+        "absent",
+        "insufficient_evidence",
+        "present"
+      ]
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "student-nlp-v1",
+    "response_schema_version": "student-nlp-response-v1",
+    "score_scales": {
+      "ai_dependency_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "cognitive_load_score": {
+        "integer": true,
+        "maximum": 4,
+        "minimum": 0,
+        "version": "v1"
+      },
+      "sentiment_score": {
+        "integer": true,
+        "maximum": 2,
+        "minimum": -2,
+        "version": "v1"
+      }
+    },
+    "stage": "student_nlp"
+  },
+  "status": "success"
+}

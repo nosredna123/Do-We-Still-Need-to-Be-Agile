@@ -1,0 +1,23 @@
+1.999
+IBUPROFENO
+Nome Comercial: Alivium, Advil, Buscofem;
+Apresentação: Comprimido 400mg e 600mg; Gotas 50mg/ml e 100mg/ml;
+Administração: Oral;
+
+Dose:
+Adultos: 200 a 800 mg por dose, 3 a 4 vezes ao dia (máximo 3200 mg/dia).
+Crianças: 5 a 10 mg/kg por dose, a cada 6 a 8 horas (máximo 40 mg/kg/dia).
+
+Ação: Analgésico, antitérmico e anti-inflamatório não esteroide (AINE).
+
+Reação Adversa:
+Podem ocorrer reações gastrointestinais como náuseas, vômitos, dor epigástrica, azia, diarreia e constipação.
+Efeitos no sistema nervoso central incluem tontura, cefaleia e nervosismo.
+Reações de hipersensibilidade como prurido, urticária e erupções cutâneas.
+Em casos raros, pode causar insuficiência renal, retenção de líquidos e aumento da pressão arterial.
+
+Interação:
+Pode aumentar o risco de sangramento se usado com anticoagulantes (varfarina).
+Pode reduzir o efeito de anti-hipertensivos.
+O uso concomitante com outros AINEs aumenta o risco de efeitos adversos gastrointestinais.
+O uso com álcool pode aumentar o risco de danos ao estômago.

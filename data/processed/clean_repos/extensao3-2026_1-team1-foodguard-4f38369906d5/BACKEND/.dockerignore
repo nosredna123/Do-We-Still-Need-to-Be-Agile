@@ -1,0 +1,7 @@
+.github
+.gitignore
+.pre-commit-config.yaml
+venv
+.git
+.envs/
+node_modules

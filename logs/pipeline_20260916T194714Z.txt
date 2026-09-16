@@ -1,0 +1,27 @@
+2026-09-16 16:47:14,184 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260916T194714Z.txt
+2026-09-16 16:47:14,184 - __main__ - INFO - Running stage lake: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py
+2026-09-16 16:47:14,703 - __main__ - INFO - Skipping current data lake contracts
+2026-09-16 16:47:14,703 - __main__ - INFO - Data lake contracts written to data/lake
+2026-09-16 16:47:14,810 - __main__ - INFO - Finished stage lake status=success duration_seconds=0.6
+2026-09-16 16:47:14,810 - __main__ - INFO - Running stage repo-snapshots: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py
+2026-09-16 16:47:15,339 - __main__ - INFO - Skipping current repository snapshots
+2026-09-16 16:47:15,339 - __main__ - INFO - Repository snapshots written to data/lake/git_repository_snapshots.parquet
+2026-09-16 16:47:15,442 - __main__ - INFO - Finished stage repo-snapshots status=success duration_seconds=0.6
+2026-09-16 16:47:15,443 - __main__ - INFO - Running stage contracts: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json
+2026-09-16 16:47:16,153 - __main__ - INFO - Finished stage contracts status=success duration_seconds=0.7
+2026-09-16 16:47:16,153 - __main__ - INFO - Running stage nlp: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --catalog-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet --transcript-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet --textual-cut-signals-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet --backend mock
+INFO:__main__:Student NLP artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet
+INFO:__main__:Transcript NLP artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet
+INFO:__main__:Aggregated 6 textual cut signal observations
+2026-09-16 16:47:17,084 - __main__ - INFO - Finished stage nlp status=success duration_seconds=0.9
+2026-09-16 16:47:17,084 - __main__ - INFO - Running stage metrics: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/05_metric_engine.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/planning_metrics.parquet --code-churn-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/code_churn_metrics.parquet --technical-degradation-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/technical_degradation_metrics.parquet --integration-friction-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/integration_friction_metrics.parquet --cut-context-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet --team-metrics-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet
+INFO:__main__:Wrote 14 planning metrics team-semester observations
+INFO:__main__:Wrote 14 Code Churn team-semester observations
+INFO:__main__:Wrote 14 technical degradation team-semester observations
+INFO:__main__:Wrote 14 integration friction team-semester observations
+INFO:__main__:Wrote 6 cut context observations
+INFO:__main__:Wrote team metrics artifact: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet
+2026-09-16 16:47:18,910 - __main__ - INFO - Finished stage metrics status=success duration_seconds=1.8
+2026-09-16 16:47:18,911 - __main__ - INFO - Running stage stats: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/06_statistical_analyzer.py
+Statistical manifest: success (4 datasets); correlations: 4; hypotheses: 3; figures: 12
+2026-09-16 16:47:22,630 - __main__ - INFO - Finished stage stats status=success duration_seconds=3.7

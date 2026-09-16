@@ -1,0 +1,30 @@
+FROM python:3.12-slim-bookworm
+
+RUN apt-get update && \
+    apt-get install -y curl vim netcat-openbsd && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=ghcr.io/astral-sh/uv:0.7.9 /uv /uvx /bin/
+
+ENV PATH="/root/.local/bin:$PATH"
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+COPY pyproject.toml uv.lock ./
+COPY ./.env.docker ./.env
+COPY ./app ./app
+COPY alembic.ini ./
+COPY migrations ./migrations
+
+RUN uv sync --locked
+
+COPY docker/wait-for-postgres.sh /wait-for-postgres.sh
+RUN chmod +x /wait-for-postgres.sh
+
+CMD ["sh", "-c", " \
+  /wait-for-postgres.sh postgres 5432 && \
+  /app/.venv/bin/alembic upgrade heads && \
+  /app/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 \
+"]

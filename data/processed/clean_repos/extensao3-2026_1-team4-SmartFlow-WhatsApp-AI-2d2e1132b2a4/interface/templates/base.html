@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+		<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon-smart-flow-IA.png') }}">
+		<title>SmartFlow IA</title>
+		<style>
+			/* Mantido apenas regras cruciais de layout da barra lateral */
+			#sidebar-wrapper { position: fixed; top: 0; left: 0; height: 100vh; width: 250px; overflow-y: auto; transition: all 0.3s ease; }
+			#page-content-wrapper { margin-left: 250px; width: calc(100% - 250px); transition: all 0.3s ease; }
+			#wrapper.toggled #sidebar-wrapper { margin-left: -250px; }
+			#wrapper.toggled #page-content-wrapper { margin-left: 0; width: 100%; }
+			@media (max-width: 768px) {
+				#sidebar-wrapper { width: 100%; height: auto; position: relative; }
+				#page-content-wrapper { margin-left: 0; width: 100%; }
+				#wrapper.toggled #sidebar-wrapper { margin-left: -100%; }
+			}
+		</style>
+	</head>
+	<body>
+		<div class="d-flex" id="wrapper">
+			<div id="sidebar-wrapper">
+				<div class="user text-center py-4">
+					<img src="{{ url_for('static', filename='img/logo-smart-flow-IA.png') }}" width="90" height="90" style="border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
+				</div>
+				<div class="list-group list-group-flush mt-2">
+					<a href="{{ url_for('index') }}" class="list-group-item list-group-item-action d-flex align-items-center {% if request.endpoint == 'index' %}active{% endif %}"> 
+                        <i class="bi bi-grid-1x2 mr-3"></i> IAs 
+                    </a>
+					<a href="{{ url_for('get_prompts_ia') }}" class="list-group-item list-group-item-action d-flex align-items-center {% if request.endpoint == 'get_prompts_ia' %}active{% endif %}"> 
+                        <i class="bi bi-chat-left-text mr-3"></i> Prompts 
+                    </a>
+					<a href="{{ url_for('get_all_leads') }}" class="list-group-item list-group-item-action d-flex align-items-center {% if request.endpoint == 'get_all_leads' or request.endpoint == 'get_leads_ia' %}active{% endif %}"> 
+                        <i class="bi bi-people mr-3"></i> Leads 
+                    </a>
+				</div>
+			</div>
+			<div id="page-content-wrapper">
+				<div class="container-fluid p-4">
+                    {% block content %}{% endblock %}
+                </div>
+			</div>
+			</div>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script>
+			$("#menu-toggle").click(function (e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});
+		</script>
+	</body>
+</html>

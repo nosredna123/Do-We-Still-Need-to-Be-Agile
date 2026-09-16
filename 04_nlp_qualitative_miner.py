@@ -340,6 +340,8 @@ def main() -> None:
             options=catalog_options,
         )
 
+    client = None
+
     nlp_options = {
         "stage": "student_nlp",
         "backend": args.backend,
@@ -965,14 +967,18 @@ def write_transcript_nlp(
 
 
 def mock_transcript_backend(prompt: str) -> str:
-    """Return deterministic insufficient-evidence JSON for offline runs."""
+    """Return deterministic bounded-evidence JSON for offline runs."""
+    evidence = (
+        "Análise offline: sem evidência específica extraída do texto, mas "
+        "o registro foi processado conforme o contrato da sessão de transcrição."
+    )
     return json.dumps({
         "coordination_friction_score": 0,
         "rework_signal_score": 0,
         "planning_clarity_score": 0,
         "integration_risk_signal": "absent",
         "dominant_topics": [],
-        "evidence_summary_private": None,
+        "evidence_summary_private": evidence[:TRANSCRIPT_EVIDENCE_MAX_CHARS],
     })
 
 
@@ -1066,10 +1072,14 @@ def aggregate_textual_cut_signals(students: pd.DataFrame, transcripts: pd.DataFr
                 "ie_transcript_integration_risk_mode_n": risk_mode_n,
                 "ie_transcript_integration_risk_mode_share": float(risk_mode_n / len(group)),
                 "ie_transcript_dominant_topics": topics,
-                "ie_transcript_dominant_topic_counts": topic_counts,
-                "ie_transcript_dominant_topic_shares": {
-                    topic: count / len(group) for topic, count in topic_counts.items()
-                },
+                "ie_transcript_dominant_topic_counts": json.dumps(
+                    topic_counts, ensure_ascii=False, sort_keys=True
+                ),
+                "ie_transcript_dominant_topic_shares": json.dumps(
+                    {topic: count / len(group) for topic, count in topic_counts.items()},
+                    ensure_ascii=False,
+                    sort_keys=True,
+                ),
                 "transcript_session_n": group["transcript_file"].nunique(),
             }
         )

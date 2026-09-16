@@ -1,0 +1,17 @@
+{
+  "contract_version": "cut-context-metrics-v1",
+  "input_checksum": "4b7c11e13078567e9b8eef0151cfded4e745ee503c19ed8b28f4a7d51f91aab5",
+  "options": {
+    "contract_version": "cut-context-metrics-v1",
+    "ie_definition_version": "ie-v1",
+    "source_contract": "textual-cut-signals-v2",
+    "stage": "cut_context_metrics",
+    "statistical_decisions": {
+      "quantile_method": "linear",
+      "scale_treatment": "ordinal_with_interval_summary",
+      "std_ddof": 1
+    },
+    "statistical_summary_version": "distribution-summary-v1"
+  },
+  "status": "success"
+}

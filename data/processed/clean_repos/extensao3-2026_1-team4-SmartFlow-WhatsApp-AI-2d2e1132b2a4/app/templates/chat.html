@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - SmartFlow AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/chat.css') }}">
+</head>
+<body>
+    <main class="chat-workspace">
+        <aside class="left-rail" aria-label="Navegacao do chat">
+            <div class="brand-block">
+                <div class="brand-mark">SF</div>
+                <div>
+                    <strong>SmartFlow</strong>
+                    <span>AI Chat</span>
+                </div>
+            </div>
+
+            <div class="rail-footer">
+                <span class="status-dot"></span>
+                FastAPI online
+            </div>
+        </aside>
+
+        <section class="conversation-list" aria-label="Conversas">
+            <div class="section-title">
+                <span>Conversas</span>
+                <button id="new-chat-button" type="button" aria-label="Nova conversa">+</button>
+            </div>
+
+            <article class="conversation-card active" id="current-chat-card">
+                <div class="avatar small">J</div>
+                <div>
+                    <strong>Julie</strong>
+                    <p>Atendimento ativo</p>
+                </div>
+            </article>
+
+            <article class="conversation-card" id="switch-ia-card">
+                <div class="avatar small muted">IA</div>
+                <div>
+                    <strong>Trocar IA</strong>
+                    <p>Use o ID no painel</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="chat-panel" aria-label="Chat com IA">
+            <header class="chat-header">
+                <div class="identity">
+                    <div class="avatar">J</div>
+                    <div>
+                        <h1>Julie</h1>
+                        <p id="connection-status">IA ID 1 selecionada</p>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <label class="ia-control" for="ia-id-input">
+                        <span>ID da IA</span>
+                        <input id="ia-id-input" type="number" min="1" step="1" value="1" inputmode="numeric">
+                    </label>
+                    <button class="ghost-button" type="button" id="clear-chat-button">Reiniciar</button>
+                </div>
+            </header>
+
+            <div class="messages" id="chat-messages" aria-live="polite"></div>
+
+            <form class="composer" id="chat-form">
+                <label class="sr-only" for="message-input">Mensagem</label>
+                <textarea id="message-input" rows="1" placeholder="Digite sua mensagem..." required></textarea>
+                <button id="send-button" type="submit" aria-label="Enviar mensagem">
+                    <span>Enviar</span>
+                </button>
+            </form>
+        </section>
+
+        <aside class="info-panel" aria-label="Informacoes da IA">
+            <div class="profile-card">
+                <div class="avatar large">J</div>
+                <h2>Julie</h2>
+                <p>Assistente conectada ao SmartFlow</p>
+                <span class="pill">Online</span>
+            </div>
+
+            <div class="info-group">
+                <h3>Sessão</h3>
+                <dl>
+                    <div>
+                        <dt>IA ativa</dt>
+                        <dd id="selected-ia-label">ID 1</dd>
+                    </div>
+                    <div>
+                        <dt>Canal</dt>
+                        <dd>Chat web</dd>
+                    </div>
+                    <div>
+                        <dt>Endpoint</dt>
+                        <dd>/api/chat</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="info-group">
+                <h3>Sugestões</h3>
+                <button class="suggestion" type="button">valores de acesso ao RU</button>
+                <button class="suggestion" type="button">horário de funcionamento</button>
+                <button class="suggestion" type="button">como posso me cadastrar?</button>
+            </div>
+        </aside>
+    </main>
+
+    <script src="{{ url_for('static', path='js/chat.js') }}"></script>
+</body>
+</html>
+
+

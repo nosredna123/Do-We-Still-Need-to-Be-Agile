@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      target: development
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./apps/frontend:/app/apps/frontend
+      - /app/apps/frontend/node_modules
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/backend/src:/app/src
+      - ./apps/backend/data:/app/data

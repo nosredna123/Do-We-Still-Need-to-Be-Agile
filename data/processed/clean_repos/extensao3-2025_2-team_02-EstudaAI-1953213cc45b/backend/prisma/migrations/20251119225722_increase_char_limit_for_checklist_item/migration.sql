@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "StudyPlanChecklistItem" ALTER COLUMN "title" SET DATA TYPE VARCHAR(50),
+ALTER COLUMN "description" SET DATA TYPE VARCHAR(50);

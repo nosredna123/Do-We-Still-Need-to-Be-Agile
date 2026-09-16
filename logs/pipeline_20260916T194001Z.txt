@@ -1,0 +1,7 @@
+2026-09-16 16:40:01,552 - pipeline_orchestrator_dry_run - INFO - Pipeline execution log: logs/pipeline_20260916T194001Z.txt
+2026-09-16 16:40:01,552 - pipeline_orchestrator_dry_run - INFO - Running stage anonymize: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_anonymizer.py --csv raw/students.csv
+2026-09-16 16:40:01,552 - pipeline_orchestrator_dry_run - INFO - Running stage git: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02_git_parser.py
+2026-09-16 16:40:01,552 - pipeline_orchestrator_dry_run - INFO - Running stage lake: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py
+2026-09-16 16:40:01,651 - pipeline_orchestrator - INFO - Pipeline execution log: logs/pipeline_20260916T194001Z.txt
+2026-09-16 16:40:01,651 - pipeline_orchestrator - INFO - Running stage git: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02_git_parser.py --force
+2026-09-16 16:40:01,651 - pipeline_orchestrator - INFO - Finished stage git status=success duration_seconds=0.0

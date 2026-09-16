@@ -1,0 +1,35 @@
+{
+  "contract_version": "mann-whitney-hypothesis-results-v1",
+  "input_checksum": "733be37e138e78451eae68d65bd0fb3bcd3254597bbad881ac09800f54cb7738",
+  "options": {
+    "minimum_group_n": 3,
+    "multiple_testing_correction": "none_v1",
+    "registry": {
+      "ai_high_vs_low_cc_primary": {
+        "group_variable": "ai_max_author_share_before_t3_window",
+        "outcome_variable": "cc_total_t3",
+        "priority": "primary",
+        "split_rule": "median_low_le_high_gt",
+        "test": "mann_whitney_u",
+        "unit_of_analysis": "team_semester"
+      },
+      "context_ie_high_vs_low_rework_primary": {
+        "group_variable": "ie_transcript_coordination_friction_score_mean",
+        "outcome_variable": "ie_transcript_rework_signal_score_mean",
+        "priority": "primary",
+        "split_rule": "median_low_le_high_gt",
+        "test": "mann_whitney_u",
+        "unit_of_analysis": "cut_context"
+      },
+      "pi_high_vs_low_cc_primary": {
+        "group_variable": "pi_file_count_t1",
+        "outcome_variable": "cc_per_source_loc_t3",
+        "priority": "primary",
+        "split_rule": "median_low_le_high_gt",
+        "test": "mann_whitney_u",
+        "unit_of_analysis": "team_semester"
+      }
+    }
+  },
+  "status": "success"
+}

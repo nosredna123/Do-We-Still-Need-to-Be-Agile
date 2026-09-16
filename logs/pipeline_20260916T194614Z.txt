@@ -1,0 +1,143 @@
+2026-09-16 16:46:14,075 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260916T194614Z.txt
+2026-09-16 16:46:14,076 - __main__ - INFO - Running stage lake: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py
+2026-09-16 16:46:14,592 - __main__ - INFO - Skipping current data lake contracts
+2026-09-16 16:46:14,592 - __main__ - INFO - Data lake contracts written to data/lake
+2026-09-16 16:46:14,704 - __main__ - INFO - Finished stage lake status=success duration_seconds=0.6
+2026-09-16 16:46:14,705 - __main__ - INFO - Running stage repo-snapshots: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py
+2026-09-16 16:46:15,227 - __main__ - INFO - Skipping current repository snapshots
+2026-09-16 16:46:15,227 - __main__ - INFO - Repository snapshots written to data/lake/git_repository_snapshots.parquet
+2026-09-16 16:46:15,318 - __main__ - INFO - Finished stage repo-snapshots status=success duration_seconds=0.6
+2026-09-16 16:46:15,318 - __main__ - INFO - Running stage contracts: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json
+2026-09-16 16:46:16,040 - __main__ - INFO - Finished stage contracts status=success duration_seconds=0.7
+2026-09-16 16:46:16,040 - __main__ - INFO - Running stage nlp: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --catalog-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet --transcript-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet --textual-cut-signals-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet --backend mock
+INFO:__main__:Student NLP artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet
+INFO:__main__:Transcript NLP queue: total=100 completed=0 pending=100
+INFO:__main__:Transcript NLP progress: completed=1/100 pending=99 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=2/100 pending=98 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=3/100 pending=97 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=4/100 pending=96 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=5/100 pending=95 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=6/100 pending=94 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=7/100 pending=93 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=8/100 pending=92 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=9/100 pending=91 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=10/100 pending=90 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=11/100 pending=89 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=12/100 pending=88 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=13/100 pending=87 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=14/100 pending=86 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=15/100 pending=85 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=16/100 pending=84 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=17/100 pending=83 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=18/100 pending=82 session=2025.2/sessao_01
+INFO:__main__:Transcript NLP progress: completed=19/100 pending=81 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=20/100 pending=80 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=21/100 pending=79 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=22/100 pending=78 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=23/100 pending=77 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=24/100 pending=76 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=25/100 pending=75 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=26/100 pending=74 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=27/100 pending=73 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=28/100 pending=72 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=29/100 pending=71 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=30/100 pending=70 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=31/100 pending=69 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=32/100 pending=68 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=33/100 pending=67 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=34/100 pending=66 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=35/100 pending=65 session=2025.2/sessao_02
+INFO:__main__:Transcript NLP progress: completed=36/100 pending=64 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=37/100 pending=63 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=38/100 pending=62 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=39/100 pending=61 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=40/100 pending=60 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=41/100 pending=59 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=42/100 pending=58 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=43/100 pending=57 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=44/100 pending=56 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=45/100 pending=55 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=46/100 pending=54 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=47/100 pending=53 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=48/100 pending=52 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=49/100 pending=51 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=50/100 pending=50 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=51/100 pending=49 session=2025.2/sessao_03
+INFO:__main__:Transcript NLP progress: completed=52/100 pending=48 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=53/100 pending=47 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=54/100 pending=46 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=55/100 pending=45 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=56/100 pending=44 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=57/100 pending=43 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=58/100 pending=42 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=59/100 pending=41 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=60/100 pending=40 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=61/100 pending=39 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=62/100 pending=38 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=63/100 pending=37 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=64/100 pending=36 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=65/100 pending=35 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=66/100 pending=34 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=67/100 pending=33 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=68/100 pending=32 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=69/100 pending=31 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=70/100 pending=30 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=71/100 pending=29 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=72/100 pending=28 session=2025.2/sessao_04
+INFO:__main__:Transcript NLP progress: completed=73/100 pending=27 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=74/100 pending=26 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=75/100 pending=25 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=76/100 pending=24 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=77/100 pending=23 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=78/100 pending=22 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=79/100 pending=21 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=80/100 pending=20 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=81/100 pending=19 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=82/100 pending=18 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=83/100 pending=17 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=84/100 pending=16 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=85/100 pending=15 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=86/100 pending=14 session=2025.2/sessao_05
+INFO:__main__:Transcript NLP progress: completed=87/100 pending=13 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=88/100 pending=12 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=89/100 pending=11 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=90/100 pending=10 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=91/100 pending=9 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=92/100 pending=8 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=93/100 pending=7 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=94/100 pending=6 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=95/100 pending=5 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=96/100 pending=4 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=97/100 pending=3 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=98/100 pending=2 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=99/100 pending=1 session=2025.2/sessao_06
+INFO:__main__:Transcript NLP progress: completed=100/100 pending=0 session=2025.2/sessao_06
+INFO:__main__:Mined 100 transcript NLP observations
+Traceback (most recent call last):
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py", line 1165, in <module>
+    main()
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py", line 508, in main
+    write_textual_cut_signals(
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py", line 1141, in write_textual_cut_signals
+    results.to_parquet(output_path, index=False)
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/pandas/core/frame.py", line 3101, in to_parquet
+    return to_parquet(
+           ^^^^^^^^^^^
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 480, in to_parquet
+    impl.write(
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/pandas/io/parquet.py", line 228, in write
+    self.api.parquet.write_table(
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/pyarrow/parquet/core.py", line 1883, in write_table
+    with ParquetWriter(
+         ^^^^^^^^^^^^^^
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/pyarrow/parquet/core.py", line 1010, in __init__
+    self.writer = _parquet.ParquetWriter(
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "pyarrow/_parquet.pyx", line 2157, in pyarrow._parquet.ParquetWriter.__cinit__
+  File "pyarrow/error.pxi", line 154, in pyarrow.lib.pyarrow_internal_check_status
+  File "pyarrow/error.pxi", line 91, in pyarrow.lib.check_status
+pyarrow.lib.ArrowNotImplementedError: Cannot write struct type 'ie_transcript_dominant_topic_counts' with no child field to Parquet. Consider adding a dummy child field.
+2026-09-16 16:46:17,233 - __main__ - ERROR - Finished stage nlp status=failed exit_code=1 duration_seconds=1.2

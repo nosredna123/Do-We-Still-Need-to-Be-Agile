@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+.claude/
+venv/
+__pycache__/
+readme
+.idea

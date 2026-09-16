@@ -1,0 +1,52 @@
+{
+  "contract_version": "planning-metrics-v1",
+  "input_checksum": "56cab2e6f55ca6ef5453c06f6df4f13525907a7a92337cf5dbea52c1c92c460b",
+  "options": {
+    "contract_version": "planning-metrics-v1",
+    "pi_definition_version": "pi-v1",
+    "planning_activity_statuses": [
+      "added",
+      "copied",
+      "modified",
+      "renamed"
+    ],
+    "planning_file_extensions": [
+      ".adoc",
+      ".bpmn",
+      ".doc",
+      ".docx",
+      ".drawio",
+      ".json",
+      ".md",
+      ".mermaid",
+      ".mmd",
+      ".odt",
+      ".pdf",
+      ".puml",
+      ".rst",
+      ".toml",
+      ".txt",
+      ".uml",
+      ".yaml",
+      ".yml"
+    ],
+    "planning_path_patterns": [
+      "architecture/",
+      "arquitetura/",
+      "design/",
+      "doc/",
+      "docs/",
+      "documentation/",
+      "planejamento/",
+      "planning/",
+      "prototipo/",
+      "prototype/",
+      "requirements/",
+      "requisitos/",
+      "spec/",
+      "specs/"
+    ],
+    "stage": "planning_metrics"
+  },
+  "status": "success"
+}

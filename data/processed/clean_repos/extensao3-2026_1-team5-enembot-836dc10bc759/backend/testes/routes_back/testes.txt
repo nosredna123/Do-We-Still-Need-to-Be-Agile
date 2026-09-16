@@ -1,0 +1,11 @@
+uv run -m testes.routes_back.teste_
+
+uv run -m testes.routes_back.teste_habilCompDB_routes
+uv run -m testes.routes_back.teste_interactionDB_routes
+uv run -m testes.routes_back.teste_questionDB_routes
+uv run -m testes.routes_back.teste_userDB_routes
+
+# Chat e chatmessages
+
+uv run -m testes.routes_back.teste_chatDB_routes
+uv run -m testes.routes_back.teste_chatmessageDB_routes

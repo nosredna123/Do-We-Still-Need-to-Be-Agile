@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "775916dfc477be9ab2fac71442b1cba29e4833b06898d816363ebd84ae611084",
+  "options": {
+    "category": "exploratorias",
+    "figure_id": "cc_total_by_cut_log",
+    "unit_of_analysis": "team_semester"
+  },
+  "status": "success"
+}

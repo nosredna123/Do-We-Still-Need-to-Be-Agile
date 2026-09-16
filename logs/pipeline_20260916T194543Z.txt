@@ -1,0 +1,21 @@
+2026-09-16 16:45:43,364 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260916T194543Z.txt
+2026-09-16 16:45:43,365 - __main__ - INFO - Running stage lake: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py
+2026-09-16 16:45:43,871 - __main__ - INFO - Skipping current data lake contracts
+2026-09-16 16:45:43,871 - __main__ - INFO - Data lake contracts written to data/lake
+2026-09-16 16:45:43,973 - __main__ - INFO - Finished stage lake status=success duration_seconds=0.6
+2026-09-16 16:45:43,973 - __main__ - INFO - Running stage repo-snapshots: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py
+2026-09-16 16:45:44,488 - __main__ - INFO - Skipping current repository snapshots
+2026-09-16 16:45:44,488 - __main__ - INFO - Repository snapshots written to data/lake/git_repository_snapshots.parquet
+2026-09-16 16:45:44,574 - __main__ - INFO - Finished stage repo-snapshots status=success duration_seconds=0.6
+2026-09-16 16:45:44,575 - __main__ - INFO - Running stage contracts: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json
+2026-09-16 16:45:45,278 - __main__ - INFO - Finished stage contracts status=success duration_seconds=0.7
+2026-09-16 16:45:45,279 - __main__ - INFO - Running stage nlp: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --catalog-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet --transcript-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet --textual-cut-signals-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet --backend mock
+INFO:__main__:Student NLP artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet
+Traceback (most recent call last):
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py", line 1163, in <module>
+    main()
+  File "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py", line 438, in main
+    if client is not None
+       ^^^^^^
+UnboundLocalError: cannot access local variable 'client' where it is not associated with a value
+2026-09-16 16:45:46,020 - __main__ - ERROR - Finished stage nlp status=failed exit_code=1 duration_seconds=0.7

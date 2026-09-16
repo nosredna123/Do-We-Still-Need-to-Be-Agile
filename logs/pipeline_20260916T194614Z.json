@@ -1,0 +1,72 @@
+{
+  "dry_run": false,
+  "force": false,
+  "log_path": "logs/pipeline_20260916T194614Z.txt",
+  "nlp_backend": "mock",
+  "stage_results": [
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py"
+      ],
+      "duration_seconds": 0.6,
+      "stage": "lake",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py"
+      ],
+      "duration_seconds": 0.6,
+      "stage": "repo-snapshots",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json"
+      ],
+      "duration_seconds": 0.7,
+      "stage": "contracts",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--contract-report",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json",
+        "--catalog-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet",
+        "--transcript-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet",
+        "--textual-cut-signals-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet",
+        "--backend",
+        "mock"
+      ],
+      "duration_seconds": 1.2,
+      "exit_code": 1,
+      "stage": "nlp",
+      "status": "failed"
+    }
+  ],
+  "stages": [
+    "lake",
+    "repo-snapshots",
+    "contracts",
+    "nlp",
+    "metrics",
+    "stats"
+  ],
+  "status": "failed"
+}

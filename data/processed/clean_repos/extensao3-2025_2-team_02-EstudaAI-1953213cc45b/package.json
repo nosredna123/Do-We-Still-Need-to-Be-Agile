@@ -1,0 +1,26 @@
+{
+  "name": "estudaai-test",
+  "version": "1.0.0",
+  "description": "Sistema de gerenciamento de estudos pessoal",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run dev",
+    "ai-service": "cd ai-service && python modelo.py",
+    "start": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run ai-service\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HChuvas/EstudaAI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HChuvas/EstudaAI/issues"
+  },
+  "homepage": "https://github.com/HChuvas/EstudaAI#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

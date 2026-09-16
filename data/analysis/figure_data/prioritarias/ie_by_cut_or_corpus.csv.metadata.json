@@ -1,0 +1,10 @@
+{
+  "contract_version": "figure-data-v1",
+  "input_checksum": "c1bf6571da66862e0bb65e9034675bd62093df49450655945ee43fc240bf92ad",
+  "options": {
+    "category": "prioritarias",
+    "figure_id": "ie_by_cut_or_corpus",
+    "unit_of_analysis": "cut_context"
+  },
+  "status": "success"
+}

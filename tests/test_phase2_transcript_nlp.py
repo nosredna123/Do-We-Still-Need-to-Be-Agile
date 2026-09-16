@@ -68,6 +68,16 @@ def test_mine_transcript_sessions_preserves_session_metadata_and_private_evidenc
     assert result.loc[0, "response_schema_version"] == "transcript-nlp-response-v1"
 
 
+def test_mock_transcript_backend_returns_valid_bounded_evidence_string() -> None:
+    miner = load_miner()
+
+    payload = json.loads(miner.mock_transcript_backend("prompt"))
+
+    assert isinstance(payload["evidence_summary_private"], str)
+    assert len(payload["evidence_summary_private"]) <= miner.TRANSCRIPT_EVIDENCE_MAX_CHARS
+    miner.parse_transcript_llm_response(json.dumps(payload))
+
+
 def test_parse_transcript_response_rejects_unknown_topic_and_long_evidence() -> None:
     miner = load_miner()
     invalid = json.loads(valid_response())
@@ -227,6 +237,24 @@ def test_aggregate_textual_cut_signals_outer_join_retains_source_only_cut() -> N
     t2 = result.loc[result["temporal_marker"] == "T2"].iloc[0]
     assert pd.isna(t2["transcript_session_n"])
     assert t2["student_n"] == 1
+
+
+def test_aggregate_textual_cut_signals_serializes_empty_topic_maps() -> None:
+    miner = load_miner()
+    result = miner.aggregate_textual_cut_signals(
+        pd.DataFrame([
+            {"student_response_id": "student-1", "question_id": "project_feeling", "unit_of_analysis": "student_response", "Semestre": "2025.2", "temporal_marker": "T1", "cognitive_load_score": 2, "sentiment_score": 0, "ai_dependency_score": 1},
+        ]),
+        pd.DataFrame([
+            {"session_id": "group-1", "transcript_file": "t1.txt", "unit_of_analysis": "transcript_session", "Semestre": "2025.2", "temporal_marker": "T1", "coordination_friction_score": 1, "rework_signal_score": 2, "planning_clarity_score": 3, "integration_risk_signal": "low", "dominant_topics": []},
+        ]),
+    )
+
+    row = result.iloc[0]
+    assert row["ie_transcript_dominant_topics"] == []
+    assert json.loads(row["ie_transcript_dominant_topic_counts"]) == {}
+    assert json.loads(row["ie_transcript_dominant_topic_shares"]) == {}
+    miner.write_textual_cut_signals(result, Path("/tmp/test_textual_cut_signals.parquet"), source_checksum="checksum-empty-topics", options={"stage": "textual_cut_signals"})
 
 
 def test_write_textual_cut_signals_writes_sidecar_and_refuses_stale_overwrite(tmp_path: Path) -> None:

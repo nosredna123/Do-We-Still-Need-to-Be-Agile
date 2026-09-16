@@ -1,0 +1,42 @@
+{
+  "contract_version": "spearman-correlation-results-v1",
+  "input_checksum": "98957120a8a37dd897cebde05edb61857b93929da4f4dd618539dd8ea8cd198f",
+  "options": {
+    "confidence_interval": "not_calculated_v1",
+    "registry": {
+      "ai_vs_cc_primary": {
+        "figure": "ai_before_t3.png",
+        "priority": "primary",
+        "test": "spearman",
+        "unit_of_analysis": "team_semester",
+        "x": "ai_max_author_share_before_t3_window",
+        "y": "cc_total_t3"
+      },
+      "context_ie_temporal_primary": {
+        "figure": null,
+        "priority": "primary",
+        "test": "spearman",
+        "unit_of_analysis": "cut_context",
+        "x": "ie_transcript_coordination_friction_score_mean",
+        "y": "ie_transcript_rework_signal_score_mean"
+      },
+      "pi_vs_cc_primary": {
+        "figure": "pi_vs_cc.png",
+        "priority": "primary",
+        "test": "spearman",
+        "unit_of_analysis": "team_semester",
+        "x": "pi_file_count_t1",
+        "y": "cc_per_source_loc_t3"
+      },
+      "pi_vs_delta_dt_primary": {
+        "figure": null,
+        "priority": "primary",
+        "test": "spearman",
+        "unit_of_analysis": "team_semester",
+        "x": "pi_file_count_t1",
+        "y": "delta_dt_t1_t3"
+      }
+    }
+  },
+  "status": "success"
+}

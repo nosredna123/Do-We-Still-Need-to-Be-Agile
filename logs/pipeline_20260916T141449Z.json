@@ -1,0 +1,108 @@
+{
+  "dry_run": false,
+  "force": false,
+  "log_path": "logs/pipeline_20260916T141449Z.txt",
+  "nlp_backend": "openai",
+  "stage_results": [
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/00_audio_preparer.py"
+      ],
+      "duration_seconds": 446.0,
+      "stage": "prepare",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/00_audio_transcriber.py"
+      ],
+      "duration_seconds": 3271.0,
+      "stage": "transcribe",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_ner_extractor.py"
+      ],
+      "duration_seconds": 115.1,
+      "stage": "ner",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_anonymizer.py"
+      ],
+      "duration_seconds": 7.4,
+      "stage": "anonymize",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02_git_parser.py"
+      ],
+      "duration_seconds": 14.9,
+      "stage": "git",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py"
+      ],
+      "duration_seconds": 4.2,
+      "stage": "lake",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py"
+      ],
+      "duration_seconds": 33.8,
+      "stage": "repo-snapshots",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--contract-report",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json",
+        "--catalog-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet",
+        "--transcript-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet",
+        "--textual-cut-signals-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet",
+        "--backend",
+        "openai"
+      ],
+      "duration_seconds": 0.6,
+      "exit_code": 1,
+      "stage": "nlp",
+      "status": "failed"
+    }
+  ],
+  "stages": [
+    "prepare",
+    "transcribe",
+    "ner",
+    "anonymize",
+    "git",
+    "lake",
+    "repo-snapshots",
+    "nlp",
+    "metrics",
+    "stats"
+  ],
+  "status": "failed"
+}

@@ -1,0 +1,12 @@
+* text=auto
+
+Dockerfile* text eol=lf
+.dockerignore text eol=lf
+
+*.sh text eol=lf
+entrypoint text eol=lf
+start text eol=lf
+
+*.py text eol=lf
+
+*.bat text eol=crlf

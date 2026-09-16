@@ -1,0 +1,468 @@
+{
+  "categories": [
+    "prioritarias",
+    "exploratorias",
+    "dashboard_interativo"
+  ],
+  "figures": [
+    {
+      "category": "prioritarias",
+      "checksums": {
+        "data": "fb55dc6f62a5195bbe3222cd927e8bd95aa0fcb5c8c16a8848cbe68f8da6824b",
+        "pdf": "ff17faf955a77825ca71b2f7b84880302be4cbf39e316bf2e070c13fe72fa31a",
+        "png": "a095b6b7438ef4f5509c4c067b689a945da39a3e882486f5d1118c57305d5dcc",
+        "svg": "09654e1ea179665812338c969bcbc543ae0d06a50ba4cc8d7df5743f75d21328"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/pi_vs_cc.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/pi_vs_cc.csv",
+      "figure_id": "pi_vs_cc",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/pi_vs_cc.html",
+      "limitations": [
+        "observational association; n=14"
+      ],
+      "n_missing": 0,
+      "n_total": 14,
+      "n_valid": 14,
+      "priority": "required",
+      "scale_notes": [
+        "logarithmic display due to observed dynamic range"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "pdf": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/pi_vs_cc.pdf",
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/pi_vs_cc.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/pi_vs_cc.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "complete_case_pair",
+        "dynamic_log_y_when_range_exceeds_100"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "pi_file_count_t1",
+        "cc_per_source_loc_t3"
+      ]
+    },
+    {
+      "category": "prioritarias",
+      "checksums": {
+        "data": "847ae3f74300ae39c05be979ed0dc64ce2ac3063baa5c129e3660f561e4efe04",
+        "pdf": "6e373ef8ceeaefd1a784661c816b1d58c7dc2ed884bcd4687106ce9b19f71a4d",
+        "png": "ebcd3d67fd9f0d4f124356d916620b5735a84798de374109e96ec751ab3a8721",
+        "svg": "c0507db2a382cfc8cfdd976c1d0bbeae73336d5f55d89bf832789245e507f54f"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/cc_by_temporal_cut.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/cc_by_temporal_cut.csv",
+      "figure_id": "cc_by_temporal_cut",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/cc_by_temporal_cut.html",
+      "limitations": [
+        "panel values aggregate team-semester observations"
+      ],
+      "n_missing": 11,
+      "n_total": 42,
+      "n_valid": 31,
+      "priority": "required",
+      "scale_notes": [
+        "linear normalized churn"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "pdf": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/cc_by_temporal_cut.pdf",
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/cc_by_temporal_cut.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/cc_by_temporal_cut.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "melt_T1_T2_T3",
+        "no_interpolation"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "cc_per_source_loc"
+      ]
+    },
+    {
+      "category": "prioritarias",
+      "checksums": {
+        "data": "9a8113034d9b24cdf3769641fa152f214c3d8951b517fd29c81bf9abffc5041e",
+        "pdf": "ba716677aff5c28a6be2a036d361f8497ba374b3ac3ed3b7fac93eda4114f314",
+        "png": "a25bc8eadfa974c0e40bb4d75f79500e6632d29ec94db746b015d870417cd85f",
+        "svg": "a0151a0a86b5f2ab06bbd9369a1c9f07fa8328577d229fbec5dab6cc3b463f83"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/delta_dt_by_team_semester.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/delta_dt_by_team_semester.csv",
+      "figure_id": "delta_dt_by_team_semester",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/delta_dt_by_team_semester.html",
+      "limitations": [
+        "team-semester observations; no causal interpretation"
+      ],
+      "n_missing": 0,
+      "n_total": 42,
+      "n_valid": 42,
+      "priority": "required",
+      "scale_notes": [
+        "ordinal score shown descriptively"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "pdf": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/delta_dt_by_team_semester.pdf",
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/delta_dt_by_team_semester.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/delta_dt_by_team_semester.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "melt_T1_T2_T3",
+        "no_interpolation"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "technical_complexity"
+      ]
+    },
+    {
+      "category": "prioritarias",
+      "checksums": {
+        "data": "ca6e03db79035ded19aed6532f6af4c08e491f4525fc8ddf53756c78014ead7c",
+        "pdf": "94ea3b3d430b8581b5cb2fbf554a0104c2333a9712b864b91c2c62a4bd6c2216",
+        "png": "1882c0ac92168628518f9c93df51cf41fce5f82ccfce02e4d76352454e38f0e9",
+        "svg": "e6b82d2f9739c00bf1b7d0c4ec7b3e2e7c80a4970fdd0b856c1af39a1433a116"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/ai_before_t3.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/ai_before_t3.csv",
+      "figure_id": "ai_before_t3",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ai_before_t3.html",
+      "limitations": [
+        "available AI window observations only"
+      ],
+      "n_missing": 0,
+      "n_total": 7,
+      "n_valid": 7,
+      "priority": "required",
+      "scale_notes": [
+        "linear author share",
+        "linear churn"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "pdf": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ai_before_t3.pdf",
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ai_before_t3.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ai_before_t3.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "complete_case_pair",
+        "size_by_commit_count"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "ai_max_author_share_before_t3_window",
+        "ai_churn_before_t3_window"
+      ]
+    },
+    {
+      "category": "prioritarias",
+      "checksums": {
+        "data": "ebebe54689f8c1b2583a9f06a08407da235ec96965391f3d87a9e860d77aa9e1",
+        "pdf": "67fba0f6dc5e1bbe2d58a36ecfab51e39ac83a91cb9dd72d64203b8b21a6b75d",
+        "png": "1eddbcdc7045eab7b0de4242414ccec5d36fd745434757505c4581b2ae9e377e",
+        "svg": "3eb22597e715034bfc78b3afd275d470c10ad13beedcfe8a01771a9806c42728"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/ie_by_cut_or_corpus.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/prioritarias/ie_by_cut_or_corpus.csv",
+      "figure_id": "ie_by_cut_or_corpus",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ie_by_cut_or_corpus.html",
+      "limitations": [
+        "three complete transcript-score observations for the primary pair"
+      ],
+      "n_missing": 9,
+      "n_total": 18,
+      "n_valid": 9,
+      "priority": "required",
+      "scale_notes": [
+        "ordinal scores shown descriptively"
+      ],
+      "source": "cut_context_metrics.parquet",
+      "static_paths": {
+        "pdf": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ie_by_cut_or_corpus.pdf",
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ie_by_cut_or_corpus.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ie_by_cut_or_corpus.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "melt_context_signals",
+        "gaps_preserved",
+        "no_interpolation"
+      ],
+      "unit_of_analysis": "cut_context",
+      "variables": [
+        "score"
+      ]
+    },
+    {
+      "category": "exploratorias",
+      "checksums": {
+        "data": "90c8a7af83177bf90fde1c866760902c7d57423bb74a1f0452222def1f307d53",
+        "png": "b3c594534fbd6685b429c44cd8accba2d9b2e0c994be24fd7cd509b8c0217a35",
+        "svg": "76229b58ea3f2e83a8199db5f2cc8a072533de27775083809abd2cc38c00b7b2"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/pi_distribution_by_semester.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/pi_distribution_by_semester.csv",
+      "figure_id": "pi_distribution_by_semester",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/pi_distribution_by_semester.html",
+      "limitations": [
+        "small team-semester sample"
+      ],
+      "n_missing": 0,
+      "n_total": 14,
+      "n_valid": 14,
+      "priority": "exploratory",
+      "scale_notes": [
+        "linear count"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/pi_distribution_by_semester.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/pi_distribution_by_semester.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "complete_case"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "pi_file_count_t1"
+      ]
+    },
+    {
+      "category": "exploratorias",
+      "checksums": {
+        "data": "4ece373b6e32b313180dd8c5e276ea4839d082c563892a01e72ef5597a6f3f2d",
+        "png": "288b79f2dcc925bd9a382f6329210c8b56f8bab53f3c7ab196bd6c8a48cff446",
+        "svg": "95d7c54f7692f38833ec97887ffb0f3bf4b824b1ec6d51d040f315ee11f72fbc"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/cc_total_by_cut_log.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/cc_total_by_cut_log.csv",
+      "figure_id": "cc_total_by_cut_log",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/cc_total_by_cut_log.html",
+      "limitations": [
+        "absolute churn is size-sensitive"
+      ],
+      "n_missing": 0,
+      "n_total": 42,
+      "n_valid": 42,
+      "priority": "exploratory",
+      "scale_notes": [
+        "logarithmic absolute volume"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/cc_total_by_cut_log.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/cc_total_by_cut_log.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "melt_T1_T2_T3",
+        "log_y",
+        "zeros_not_transformed"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "cc_total"
+      ]
+    },
+    {
+      "category": "exploratorias",
+      "checksums": {
+        "data": "71fabaadfe100b56e02b1022678aa0302c3b56cbcb36c58245eeda6ac781e331",
+        "png": "bf1bfac7c1174553cfa4b66c0e01f66b2501d8bc42d78e8c8586301a1edf4fc0",
+        "svg": "3a20b0991eed5c422b8c6071aaae8a821258c9211939debc7212e31a840d2420"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/pi_vs_delta_dt.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/pi_vs_delta_dt.csv",
+      "figure_id": "pi_vs_delta_dt",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/pi_vs_delta_dt.html",
+      "limitations": [
+        "exploratory association; no trend line"
+      ],
+      "n_missing": 0,
+      "n_total": 14,
+      "n_valid": 14,
+      "priority": "exploratory",
+      "scale_notes": [
+        "linear descriptive association"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/pi_vs_delta_dt.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/pi_vs_delta_dt.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "complete_case_pair"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "pi_file_count_t1",
+        "delta_dt_t1_t3"
+      ]
+    },
+    {
+      "category": "exploratorias",
+      "checksums": {
+        "data": "3488e1df5cde6334cd015af9f721b54affa66e5679a64141868feb0cff1a1e37",
+        "png": "8244d13dbd72544d11d997f90f992c7c5692509078e73fb74a71e15b37ce8a4d",
+        "svg": "a62ab9c80ba574d5d9fcdb1d8c644467211755d7cddc92011c7812e00b4e08ba"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/author_concentration_by_cut.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/author_concentration_by_cut.csv",
+      "figure_id": "author_concentration_by_cut",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/author_concentration_by_cut.html",
+      "limitations": [
+        "missing concentration remains a gap"
+      ],
+      "n_missing": 9,
+      "n_total": 42,
+      "n_valid": 33,
+      "priority": "exploratory",
+      "scale_notes": [
+        "Gini 0 to 1 when available"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/author_concentration_by_cut.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/author_concentration_by_cut.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "melt_T1_T2_T3",
+        "no_interpolation"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "ai_gini"
+      ]
+    },
+    {
+      "category": "exploratorias",
+      "checksums": {
+        "data": "f02eb594753b7c9df931e7ee9a440c3b0a32dbb12da79bd4e0e7d3314983164e",
+        "png": "7b327b77aa40b5ea094fccc750578bfa95cd29ad26be0e25ce7f98312e720cf4",
+        "svg": "f0a63e126ec4f73331b98fd2453de19a050d47b28ef9803249c872b845bf7827"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/ie_coordination_vs_rework.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/ie_coordination_vs_rework.csv",
+      "figure_id": "ie_coordination_vs_rework",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/ie_coordination_vs_rework.html",
+      "limitations": [
+        "n=3 complete observations"
+      ],
+      "n_missing": 0,
+      "n_total": 3,
+      "n_valid": 3,
+      "priority": "exploratory",
+      "scale_notes": [
+        "linear ordinal summaries"
+      ],
+      "source": "cut_context_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/ie_coordination_vs_rework.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/ie_coordination_vs_rework.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "complete_case_pair"
+      ],
+      "unit_of_analysis": "cut_context",
+      "variables": [
+        "ie_transcript_coordination_friction_score_mean",
+        "ie_transcript_rework_signal_score_mean"
+      ]
+    },
+    {
+      "category": "exploratorias",
+      "checksums": {
+        "data": "1705517a115924863a88e0bd08808bfaaf9db08f650e3dd1178eea82f250f8f9",
+        "png": "253717a88d5d75f859c0e01990e23306ec0c25a35649e914090599fddc163bb6",
+        "svg": "e0fa00106bb130343d142484668ca008a18689ea0ca6390321531ba3a8f23d15"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/metric_availability_heatmap.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/exploratorias/metric_availability_heatmap.csv",
+      "figure_id": "metric_availability_heatmap",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/metric_availability_heatmap.html",
+      "limitations": [
+        "availability summary is not a metric value"
+      ],
+      "n_missing": 0,
+      "n_total": 2,
+      "n_valid": 2,
+      "priority": "exploratory",
+      "scale_notes": [
+        "green available, red unavailable"
+      ],
+      "source": "team_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/metric_availability_heatmap.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/exploratorias/metric_availability_heatmap.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "availability_flags",
+        "aggregate_by_semester"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "PI",
+        "CC",
+        "DT",
+        "AI"
+      ]
+    },
+    {
+      "category": "dashboard_interativo",
+      "checksums": {
+        "data": "1a6fd7b2c2b330d86e5291ba293a707be95d5288c5a6363897a8c116d14a3ebd",
+        "png": "f15299f41710f4cefbd6a3934a22e23d0c0d7b77df79679c3c9c02100f6dbd6a",
+        "svg": "5c599c5116720f39eb48c5e571ecdd1d0c3d198e75cb908c7ea255a09f2e8a77"
+      },
+      "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/dashboard_interativo/narrative_metric_synthesis.csv.metadata.json",
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/figure_data/dashboard_interativo/narrative_metric_synthesis.csv",
+      "figure_id": "narrative_metric_synthesis",
+      "interactive_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/dashboard_interativo/narrative_metric_synthesis.html",
+      "limitations": [
+        "panels summarize separate units"
+      ],
+      "n_missing": 0,
+      "n_total": 5,
+      "n_valid": 5,
+      "priority": "exploratory",
+      "scale_notes": [
+        "counts only; no metric normalization"
+      ],
+      "source": "team_metrics.parquet and cut_context_metrics.parquet",
+      "static_paths": {
+        "png": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/dashboard_interativo/narrative_metric_synthesis.png",
+        "svg": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/dashboard_interativo/narrative_metric_synthesis.svg"
+      },
+      "status": "success",
+      "transformations": [
+        "panel_summary_without_broadcast"
+      ],
+      "unit_of_analysis": "multiple_explicit_panels",
+      "variables": [
+        "panel",
+        "n"
+      ]
+    }
+  ],
+  "global_policy": {
+    "ids_in_images": false,
+    "missingness": "gaps_or_explicit_markers_without_interpolation",
+    "trend_lines": "disabled_by_default",
+    "unit_broadcast": false
+  },
+  "input_checksum": "2f3eb51d50b5dc028dc230808f77d95ccf4b095100b3cb3cf9292bd26c56b898",
+  "manifest_version": "phase2-figure-manifest-v1",
+  "plotly_static_engine": "kaleido",
+  "status": "success"
+}
