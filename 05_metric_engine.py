@@ -629,7 +629,7 @@ def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd
         missing = required - set(frame.columns)
         if missing:
             raise ValueError(f"{name} missing columns: {sorted(missing)}")
-    if not pd.api.types.is_datetime64tz_dtype(commits["timestamp"]):
+    if not isinstance(commits["timestamp"].dtype, pd.DatetimeTZDtype):
         raise ValueError("git_commits timestamp must be timezone-aware UTC")
     invalid_cuts = set(commits["temporal_marker"].dropna()) | set(files["temporal_marker"].dropna()) | set(snapshots["temporal_marker"].dropna())
     invalid_cuts -= set(CUTS)
@@ -861,7 +861,7 @@ def compute_integration_friction(
     missing = required - set(commits.columns)
     if missing:
         raise ValueError(f"git_commits missing AI fields: {sorted(missing)}")
-    if not pd.api.types.is_datetime64tz_dtype(commits["timestamp"]):
+    if not isinstance(commits["timestamp"].dtype, pd.DatetimeTZDtype):
         raise ValueError("git_commits timestamp must be timezone-aware UTC")
     if not isinstance(cut_starts, dict):
         raise ValueError("cut_starts must map Semestre to T3 timestamps")

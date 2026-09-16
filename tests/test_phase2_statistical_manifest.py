@@ -304,3 +304,40 @@ def test_run_persisted_hypotheses_rejects_zero_variance_groups(tmp_path: Path) -
 		STATISTICAL_ANALYZER.HYPOTHESIS_TEST_REGISTRY.update(original_registry)
 	assert results.loc[0, "status"] == "unavailable"
 	assert results.loc[0, "reason"] == "zero_variance"
+
+
+def test_generate_persisted_figures_creates_categorized_publication_outputs(tmp_path: Path) -> None:
+	project_root = Path(__file__).parents[1]
+	analysis_dir = project_root / "data" / "analysis"
+	figure_manifest = STATISTICAL_ANALYZER.generate_persisted_figures(analysis_dir, force=True)
+
+	assert figure_manifest["status"] == "success"
+	assert set(figure_manifest["categories"]) == {
+		"prioritarias",
+		"exploratorias",
+		"dashboard_interativo",
+	}
+	assert len(figure_manifest["figures"]) == 12
+	priorities = {
+		entry["figure_id"]
+		for entry in figure_manifest["figures"]
+		if entry["priority"] == "required"
+	}
+	assert priorities == {
+		"pi_vs_cc",
+		"cc_by_temporal_cut",
+		"delta_dt_by_team_semester",
+		"ai_before_t3",
+		"ie_by_cut_or_corpus",
+	}
+	assert figure_manifest["global_policy"]["ids_in_images"] is False
+	for entry in figure_manifest["figures"]:
+		assert Path(entry["data_path"]).is_file()
+		assert Path(entry["interactive_path"]).is_file()
+		assert Path(entry["static_paths"]["png"]).is_file()
+		assert Path(entry["static_paths"]["svg"]).is_file()
+		if entry["priority"] == "required":
+			assert Path(entry["static_paths"]["pdf"]).is_file()
+	manifest_path = analysis_dir / "figure_manifest.json"
+	assert manifest_path.is_file()
+	assert "TEAM_" not in manifest_path.read_text(encoding="utf-8")

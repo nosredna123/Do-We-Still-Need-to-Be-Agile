@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,7 @@ from pipeline_config import HYPOTHESIS_TEST_REGISTRY, STATISTICAL_ANALYSIS_REGIS
 from pipeline_core import (
     ANALYSIS_DIR,
     artifact_metadata_path,
+    file_checksum,
     input_checksum,
     is_current_artifact,
     write_artifact_metadata,
@@ -57,6 +59,8 @@ MIN_CORRELATION_N = 3
 CORRELATION_CONTRACT_VERSION = "spearman-correlation-results-v1"
 HYPOTHESIS_CONTRACT_VERSION = "mann-whitney-hypothesis-results-v1"
 MIN_HYPOTHESIS_GROUP_N = 3
+FIGURE_MANIFEST_VERSION = "phase2-figure-manifest-v1"
+FIGURE_CATEGORIES = ("prioritarias", "exploratorias", "dashboard_interativo")
 
 
 def run_declared_correlations(frame: pd.DataFrame, registry: list[dict[str, Any]]) -> pd.DataFrame:
@@ -370,6 +374,227 @@ def run_persisted_hypotheses(
     }
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True, default=str), encoding="utf-8")
     return results
+
+
+def _figure_paths(analysis_dir: Path, category: str, figure_id: str) -> dict[str, Path]:
+    """Return the synchronized data and publication paths for one figure."""
+    figure_dir = analysis_dir.parent.parent / "assets" / "figures" / category
+    data_dir = analysis_dir / "figure_data" / category
+    figure_dir.mkdir(parents=True, exist_ok=True)
+    data_dir.mkdir(parents=True, exist_ok=True)
+    return {
+        "data": data_dir / f"{figure_id}.csv",
+        "html": figure_dir / f"{figure_id}.html",
+        "png": figure_dir / f"{figure_id}.png",
+        "svg": figure_dir / f"{figure_id}.svg",
+        "pdf": figure_dir / f"{figure_id}.pdf",
+    }
+
+
+def _write_plotly_figure(
+    figure: Any,
+    data: pd.DataFrame,
+    *,
+    analysis_dir: Path,
+    figure_id: str,
+    category: str,
+    source: str,
+    unit_of_analysis: str,
+    variables: list[str],
+    required: bool,
+    transformations: list[str],
+    scale_notes: list[str],
+    limitations: list[str],
+) -> dict[str, Any]:
+    """Persist one Plotly figure in interactive and static publication forms."""
+    paths = _figure_paths(analysis_dir, category, figure_id)
+    data.to_csv(paths["data"], index=False)
+    figure.write_html(paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(paths["png"], width=1400, height=850, scale=2)
+    figure.write_image(paths["svg"], width=1400, height=850)
+    if required:
+        figure.write_image(paths["pdf"], width=1400, height=850)
+    figure.write_json(paths["html"].with_suffix(".plotly.json"))
+    return {
+        "figure_id": figure_id,
+        "category": category,
+        "priority": "required" if required else "exploratory",
+        "status": "success",
+        "source": source,
+        "unit_of_analysis": unit_of_analysis,
+        "variables": variables,
+        "transformations": transformations,
+        "scale_notes": scale_notes,
+        "limitations": limitations,
+        "n_total": int(len(data)),
+        "n_valid": int(data.dropna(subset=[column for column in variables if column in data]).shape[0]) if variables and all(column in data for column in variables) else int(len(data)),
+        "n_missing": int(len(data) - (data.dropna(subset=[column for column in variables if column in data]).shape[0] if variables and all(column in data for column in variables) else len(data))),
+        "data_path": paths["data"].as_posix(),
+        "interactive_path": paths["html"].as_posix(),
+        "static_paths": {key: path.as_posix() for key, path in paths.items() if key in {"png", "svg", "pdf"} and path.exists()},
+        "checksums": {key: file_checksum(path) for key, path in paths.items() if path.exists() and key != "html"},
+    }
+
+
+def _team_long(frame: pd.DataFrame, columns: list[str], value_name: str) -> pd.DataFrame:
+    """Melt T1/T2/T3 team metrics without fabricating missing cuts."""
+    records: list[pd.DataFrame] = []
+    for column in columns:
+        if column in frame:
+            marker = column.rsplit("_", 1)[-1].upper()
+            records.append(frame[["Semestre", column]].assign(**{"Temporal cut": marker}).rename(columns={column: value_name}))
+    if not records:
+        return pd.DataFrame(columns=["Semestre", "Temporal cut", value_name])
+    return pd.concat(records, ignore_index=True)
+
+
+def _availability_frame(team: pd.DataFrame) -> pd.DataFrame:
+    """Summarize persisted availability flags by team-semester."""
+    flags = {
+        "PI": "pi_available",
+        "CC": "cc_source_loc_available_t3",
+        "DT": "technical_complexity_n_t3",
+        "AI": "ai_available",
+    }
+    rows: list[dict[str, Any]] = []
+    for _, row in team.iterrows():
+        item = {"Semestre": row["Semestre"]}
+        for label, column in flags.items():
+            value = row.get(column)
+            item[label] = bool(value) if label != "DT" else bool(pd.notna(value) and value > 0)
+        rows.append(item)
+    return pd.DataFrame(rows).groupby("Semestre", as_index=False)[list(flags)].mean(numeric_only=True)
+
+
+def generate_persisted_figures(
+    analysis_dir: Path = ANALYSIS_DIR,
+    *,
+    force: bool = False,
+) -> dict[str, Any]:
+    """Generate Plotly publication and dashboard figures from persisted inputs."""
+    warnings.filterwarnings(
+        "ignore",
+        message="When grouping with a length-1 list-like.*",
+        category=FutureWarning,
+        module="plotly.express._core",
+    )
+    warnings.filterwarnings(
+        "ignore",
+        message=r"setDaemon\(\) is deprecated.*",
+        category=DeprecationWarning,
+        module="kaleido.scopes.base",
+    )
+    try:
+        import plotly.express as px
+    except ImportError as error:
+        raise RuntimeError("Plotly is required for Task 2.3.4") from error
+
+    team = pd.read_parquet(analysis_dir / "team_metrics.parquet")
+    context = pd.read_parquet(analysis_dir / "cut_context_metrics.parquet")
+    manifest_path = analysis_dir / "statistical_dataset_manifest.json"
+    source_paths = [
+        analysis_dir / "team_metrics.parquet",
+        artifact_metadata_path(analysis_dir / "team_metrics.parquet"),
+        analysis_dir / "cut_context_metrics.parquet",
+        artifact_metadata_path(analysis_dir / "cut_context_metrics.parquet"),
+        analysis_dir / "correlation_results.csv",
+        analysis_dir / "hypothesis_results.csv",
+        manifest_path,
+    ]
+    figure_checksum = input_checksum(source_paths, {"figure_manifest_version": FIGURE_MANIFEST_VERSION})
+    manifest_path_output = analysis_dir / "figure_manifest.json"
+    if not force and manifest_path_output.is_file():
+        current = json.loads(manifest_path_output.read_text(encoding="utf-8"))
+        if current.get("input_checksum") == figure_checksum and current.get("status") == "success":
+            return current
+
+    entries: list[dict[str, Any]] = []
+    pi_cc = team[["Semestre", "pi_file_count_t1", "cc_per_source_loc_t3", "cc_total_t3", "repo_source_loc_t3"]].copy()
+    pi_cc = pi_cc.dropna(subset=["pi_file_count_t1", "cc_per_source_loc_t3"])
+    positive_cc = pi_cc.loc[pi_cc["cc_per_source_loc_t3"] > 0, "cc_per_source_loc_t3"]
+    use_log_cc = bool(not positive_cc.empty and positive_cc.max() / positive_cc.min() > 100)
+    fig = px.scatter(pi_cc, x="pi_file_count_t1", y="cc_per_source_loc_t3", color="Semestre", hover_data=[], log_y=use_log_cc,
+                     labels={"Semestre": "Semester", "pi_file_count_t1": "PI files at T1", "cc_per_source_loc_t3": "CC per observed source LOC at T3"},
+                     title="Initial planning artifacts and normalized code churn")
+    entries.append(_write_plotly_figure(fig, pi_cc, analysis_dir=analysis_dir, figure_id="pi_vs_cc", category="prioritarias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["pi_file_count_t1", "cc_per_source_loc_t3"], required=True, transformations=["complete_case_pair", "dynamic_log_y_when_range_exceeds_100"], scale_notes=["logarithmic display due to observed dynamic range" if use_log_cc else "linear normalized churn"], limitations=["observational association; n=14"]))
+
+    cc_long = _team_long(team, ["cc_per_source_loc_t1", "cc_per_source_loc_t2", "cc_per_source_loc_t3"], "cc_per_source_loc")
+    fig = px.line(cc_long, x="Temporal cut", y="cc_per_source_loc", color="Semestre", markers=True, facet_col="Semestre", facet_col_wrap=2,
+                  labels={"Semestre": "Semester", "cc_per_source_loc": "CC per observed source LOC"}, title="Normalized code churn across temporal cuts")
+    entries.append(_write_plotly_figure(fig, cc_long, analysis_dir=analysis_dir, figure_id="cc_by_temporal_cut", category="prioritarias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["cc_per_source_loc"], required=True, transformations=["melt_T1_T2_T3", "no_interpolation"], scale_notes=["linear normalized churn"], limitations=["panel values aggregate team-semester observations"]))
+
+    dt_long = _team_long(team, ["technical_complexity_mean_t1", "technical_complexity_mean_t2", "technical_complexity_mean_t3"], "technical_complexity")
+    fig = px.line(dt_long, x="Temporal cut", y="technical_complexity", color="Semestre", markers=True, facet_col="Semestre", facet_col_wrap=2,
+                  labels={"Semestre": "Semester", "technical_complexity": "Technical complexity mean"}, title="Technical trajectory by semester")
+    entries.append(_write_plotly_figure(fig, dt_long, analysis_dir=analysis_dir, figure_id="delta_dt_by_team_semester", category="prioritarias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["technical_complexity"], required=True, transformations=["melt_T1_T2_T3", "no_interpolation"], scale_notes=["ordinal score shown descriptively"], limitations=["team-semester observations; no causal interpretation"]))
+
+    ai = team[["Semestre", "ai_max_author_share_before_t3_window", "ai_churn_before_t3_window", "ai_commit_n_before_t3_window"]].dropna()
+    fig = px.scatter(ai, x="ai_max_author_share_before_t3_window", y="ai_churn_before_t3_window", color="Semestre", size="ai_commit_n_before_t3_window", hover_data=[],
+                     labels={"Semestre": "Semester", "ai_max_author_share_before_t3_window": "Max author share before T3", "ai_churn_before_t3_window": "Churn before T3 window"}, title="Integration concentration before T3")
+    entries.append(_write_plotly_figure(fig, ai, analysis_dir=analysis_dir, figure_id="ai_before_t3", category="prioritarias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["ai_max_author_share_before_t3_window", "ai_churn_before_t3_window"], required=True, transformations=["complete_case_pair", "size_by_commit_count"], scale_notes=["linear author share", "linear churn"], limitations=["available AI window observations only"]))
+
+    ie_columns = ["Semestre", "temporal_marker", "ie_transcript_coordination_friction_score_mean", "ie_transcript_rework_signal_score_mean", "ie_transcript_planning_clarity_score_mean"]
+    ie = context[ie_columns].copy()
+    ie_long = ie.melt(id_vars=["Semestre", "temporal_marker"], var_name="signal", value_name="score")
+    ie_long["Temporal cut"] = ie_long["temporal_marker"]
+    ie_long["signal_label"] = ie_long["signal"].map({
+        "ie_transcript_coordination_friction_score_mean": "Coordination friction",
+        "ie_transcript_rework_signal_score_mean": "Rework signal",
+        "ie_transcript_planning_clarity_score_mean": "Planning clarity",
+    })
+    fig = px.line(ie_long, x="Temporal cut", y="score", color="signal_label", symbol="Semestre", markers=True,
+                  labels={"Semestre": "Semester", "score": "Context score", "signal_label": "Context signal"}, title="Human and textual context by cut")
+    entries.append(_write_plotly_figure(fig, ie_long, analysis_dir=analysis_dir, figure_id="ie_by_cut_or_corpus", category="prioritarias", source="cut_context_metrics.parquet", unit_of_analysis="cut_context", variables=["score"], required=True, transformations=["melt_context_signals", "gaps_preserved", "no_interpolation"], scale_notes=["ordinal scores shown descriptively"], limitations=["three complete transcript-score observations for the primary pair"]))
+
+    pi_dist = team[["Semestre", "pi_file_count_t1"]].dropna()
+    fig = px.box(pi_dist, x="Semestre", y="pi_file_count_t1", points="all", labels={"Semestre": "Semester", "pi_file_count_t1": "PI files at T1"}, title="Initial planning artifact distribution")
+    entries.append(_write_plotly_figure(fig, pi_dist, analysis_dir=analysis_dir, figure_id="pi_distribution_by_semester", category="exploratorias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["pi_file_count_t1"], required=False, transformations=["complete_case"], scale_notes=["linear count"], limitations=["small team-semester sample"]))
+
+    cc_total = _team_long(team, ["cc_total_t1", "cc_total_t2", "cc_total_t3"], "cc_total")
+    fig = px.box(cc_total, x="Temporal cut", y="cc_total", color="Temporal cut", points="all", log_y=True,
+                 labels={"cc_total": "Absolute code churn (log scale)"}, title="Absolute code churn by temporal cut")
+    entries.append(_write_plotly_figure(fig, cc_total, analysis_dir=analysis_dir, figure_id="cc_total_by_cut_log", category="exploratorias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["cc_total"], required=False, transformations=["melt_T1_T2_T3", "log_y", "zeros_not_transformed"], scale_notes=["logarithmic absolute volume"], limitations=["absolute churn is size-sensitive"]))
+
+    dt_delta = team[["Semestre", "pi_file_count_t1", "delta_dt_t1_t3"]].dropna()
+    fig = px.scatter(dt_delta, x="pi_file_count_t1", y="delta_dt_t1_t3", color="Semestre", hover_data=[], labels={"Semestre": "Semester", "pi_file_count_t1": "PI files at T1", "delta_dt_t1_t3": "Delta DT T1 to T3"}, title="Planning artifacts and technical change")
+    entries.append(_write_plotly_figure(fig, dt_delta, analysis_dir=analysis_dir, figure_id="pi_vs_delta_dt", category="exploratorias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["pi_file_count_t1", "delta_dt_t1_t3"], required=False, transformations=["complete_case_pair"], scale_notes=["linear descriptive association"], limitations=["exploratory association; no trend line"]))
+
+    gini = _team_long(team, ["ai_gini_t1", "ai_gini_t2", "ai_gini_t3"], "ai_gini")
+    fig = px.line(gini, x="Temporal cut", y="ai_gini", color="Semestre", markers=True, facet_col="Semestre", facet_col_wrap=2,
+                  labels={"Semestre": "Semester", "ai_gini": "Author concentration (Gini)"}, title="Author concentration across cuts")
+    entries.append(_write_plotly_figure(fig, gini, analysis_dir=analysis_dir, figure_id="author_concentration_by_cut", category="exploratorias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["ai_gini"], required=False, transformations=["melt_T1_T2_T3", "no_interpolation"], scale_notes=["Gini 0 to 1 when available"], limitations=["missing concentration remains a gap"]))
+
+    ie_pair = context[["Semestre", "temporal_marker", "ie_transcript_coordination_friction_score_mean", "ie_transcript_rework_signal_score_mean"]].dropna()
+    ie_pair["Temporal cut"] = ie_pair["temporal_marker"]
+    fig = px.scatter(ie_pair, x="ie_transcript_coordination_friction_score_mean", y="ie_transcript_rework_signal_score_mean", color="Semestre", symbol="Temporal cut", hover_data=[],
+                     labels={"Semestre": "Semester", "ie_transcript_coordination_friction_score_mean": "Coordination friction", "ie_transcript_rework_signal_score_mean": "Rework signal"}, title="Coordination friction and rework context")
+    entries.append(_write_plotly_figure(fig, ie_pair, analysis_dir=analysis_dir, figure_id="ie_coordination_vs_rework", category="exploratorias", source="cut_context_metrics.parquet", unit_of_analysis="cut_context", variables=["ie_transcript_coordination_friction_score_mean", "ie_transcript_rework_signal_score_mean"], required=False, transformations=["complete_case_pair"], scale_notes=["linear ordinal summaries"], limitations=["n=3 complete observations"]))
+
+    availability = _availability_frame(team)
+    availability_display = availability.rename(columns={"Semestre": "Semester"})
+    fig = px.imshow(availability_display.set_index("Semester"), zmin=0, zmax=1, color_continuous_scale="RdYlGn", aspect="auto", labels={"color": "Availability"}, title="Metric availability by semester")
+    entries.append(_write_plotly_figure(fig, availability, analysis_dir=analysis_dir, figure_id="metric_availability_heatmap", category="exploratorias", source="team_metrics.parquet", unit_of_analysis="team_semester", variables=["PI", "CC", "DT", "AI"], required=False, transformations=["availability_flags", "aggregate_by_semester"], scale_notes=["green available, red unavailable"], limitations=["availability summary is not a metric value"]))
+
+    synthesis = pd.DataFrame({"panel": ["PI", "CC", "Delta DT", "AI", "IE"], "unit_of_analysis": ["team_semester", "team_semester", "team_semester", "team_semester", "cut_context"], "unit_label": ["Team-semester"] * 4 + ["Cut-context"], "n": [int(team["pi_file_count_t1"].notna().sum()), int(team["cc_per_source_loc_t3"].notna().sum()), int(team["delta_dt_t1_t3"].notna().sum()), int(team["ai_max_author_share_before_t3_window"].notna().sum()), int(context["ie_transcript_rework_signal_score_mean"].notna().sum())]})
+    fig = px.bar(synthesis, x="panel", y="n", color="unit_label", labels={"n": "Available observations", "unit_label": "Observation unit"}, title="Narrative evidence coverage by unit")
+    entries.append(_write_plotly_figure(fig, synthesis, analysis_dir=analysis_dir, figure_id="narrative_metric_synthesis", category="dashboard_interativo", source="team_metrics.parquet and cut_context_metrics.parquet", unit_of_analysis="multiple_explicit_panels", variables=["panel", "n"], required=False, transformations=["panel_summary_without_broadcast"], scale_notes=["counts only; no metric normalization"], limitations=["panels summarize separate units"]))
+
+    figure_manifest = {
+        "status": "success",
+        "manifest_version": FIGURE_MANIFEST_VERSION,
+        "input_checksum": figure_checksum,
+        "plotly_static_engine": "kaleido",
+        "categories": list(FIGURE_CATEGORIES),
+        "figures": entries,
+        "global_policy": {
+            "ids_in_images": False,
+            "missingness": "gaps_or_explicit_markers_without_interpolation",
+            "trend_lines": "disabled_by_default",
+            "unit_broadcast": False,
+        },
+    }
+    manifest_path_output.write_text(json.dumps(figure_manifest, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    return figure_manifest
 
 
 def _key_hash(key: dict[str, Any]) -> str:
@@ -713,9 +938,11 @@ def main() -> None:
         manifest_path=analysis_dir / "statistical_dataset_manifest.json",
         force=args.force,
     )
+    figures = generate_persisted_figures(analysis_dir, force=args.force)
     print(
         f"Statistical manifest: {manifest['status']} ({len(manifest['datasets'])} datasets); "
-        f"correlations: {len(results)}; hypotheses: {len(hypotheses)}"
+        f"correlations: {len(results)}; hypotheses: {len(hypotheses)}; "
+        f"figures: {len(figures['figures'])}"
     )
 
 
