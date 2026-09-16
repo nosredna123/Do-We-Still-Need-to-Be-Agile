@@ -2,13 +2,4 @@ __pycache__/
 *.pyc
 .venv/
 .env
-data/raw/
-data/processed/
-data/lake/
-data/analysis/.private/
-data/analysis/*.partial
-data/analysis/*.partial.metadata.json
-logs/*.txt
-outputs/
-artifacts/
-assets/figures/
+data/repos_cache/
