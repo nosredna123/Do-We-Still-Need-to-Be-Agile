@@ -11,6 +11,7 @@ from typing import Any
 
 import pandas as pd
 from scipy import stats as scipy_stats
+from scipy.stats import spearmanr
 
 from pipeline_config import (
     CROSS_EVIDENCE_ARTIFACT_REGISTRY,
@@ -38,6 +39,7 @@ AUTHOR_PRESSURE_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 TEMPORAL_ESCALATION_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 LATE_INSTABILITY_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CROSS_EVIDENCE_PANEL_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION = "cross-evidence-correlations-v1"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -162,6 +164,57 @@ CROSS_EVIDENCE_PANEL_LATE_COLUMNS = [
     "late_instability_component_available_n",
     "late_instability_component_missing_n",
 ]
+CROSS_EVIDENCE_CORRELATION_REGISTRY = {
+    "scope_vs_source_churn_t3": {
+        "x": "source_churn_t3",
+        "y": "scope_applicability_mean_t3",
+        "priority": "primary_candidate",
+        "expected_direction": "negative",
+        "narrative_acts": [2, 3],
+    },
+    "scope_vs_source_events_t3": {
+        "x": "source_events_t3",
+        "y": "scope_applicability_mean_t3",
+        "priority": "primary_candidate",
+        "expected_direction": "negative",
+        "narrative_acts": [2, 3],
+    },
+    "scope_vs_pi_line_delta_t3": {
+        "x": "pi_line_delta_t3",
+        "y": "scope_applicability_mean_t3",
+        "priority": "primary_candidate",
+        "expected_direction": "negative",
+        "narrative_acts": [2, 3],
+    },
+    "scope_vs_planning_artifact_activity_t3": {
+        "x": "planning_artifact_activity_t3",
+        "y": "scope_applicability_mean_t3",
+        "priority": "primary_candidate",
+        "expected_direction": "negative",
+        "narrative_acts": [2, 3],
+    },
+    "scope_vs_planning_rework_t2_t3": {
+        "x": "planning_rework_signal_t2_t3",
+        "y": "scope_applicability_mean_t3",
+        "priority": "primary_candidate",
+        "expected_direction": "negative",
+        "narrative_acts": [2, 3],
+    },
+    "scope_vs_commits_per_author_t3": {
+        "x": "commits_per_author_t3",
+        "y": "scope_applicability_mean_t3",
+        "priority": "primary_candidate",
+        "expected_direction": "negative",
+        "narrative_acts": [3],
+    },
+    "scope_vs_late_instability_index": {
+        "x": "late_instability_index",
+        "y": "scope_applicability_mean_t3",
+        "priority": "secondary_support",
+        "expected_direction": "negative",
+        "narrative_acts": [2, 3],
+    },
+}
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -1099,6 +1152,143 @@ def build_cross_evidence_panel(
     return panel
 
 
+def _correlation_verdict(coefficient: float | None, p_value: float | None, expected_direction: str) -> str:
+    """Classify whether one exploratory correlation supports its expected direction."""
+    if coefficient is None or p_value is None:
+        return "unavailable"
+    if p_value >= 0.05:
+        return "inconclusive"
+    if expected_direction == "negative" and coefficient < 0:
+        return "supports"
+    if expected_direction == "positive" and coefficient > 0:
+        return "supports"
+    return "contradicts"
+
+
+def compute_cross_evidence_correlations(panel: pd.DataFrame) -> pd.DataFrame:
+    """Run declared Spearman correlations for the cross-evidence panel."""
+    if panel[TEAM_SEMESTER_KEYS].isna().any().any():
+        raise ValueError("cross_evidence_panel team-semester keys must be non-null")
+    rows: list[dict[str, object]] = []
+    for analysis_id, spec in CROSS_EVIDENCE_CORRELATION_REGISTRY.items():
+        x_name = str(spec["x"])
+        y_name = str(spec["y"])
+        missing = [column for column in (x_name, y_name) if column not in panel.columns]
+        if missing:
+            raise ValueError(f"Cross-evidence correlation {analysis_id} has missing columns: {missing}")
+        pair = panel[[x_name, y_name]].apply(pd.to_numeric, errors="coerce")
+        valid = pair.notna().all(axis=1)
+        values = pair.loc[valid]
+        n_total = int(len(pair))
+        n_valid = int(len(values))
+        row: dict[str, object] = {
+            "analysis_id": analysis_id,
+            "unit_of_analysis": "team_semester",
+            "test": "spearman",
+            "priority": spec["priority"],
+            "x": x_name,
+            "y": y_name,
+            "expected_direction": spec["expected_direction"],
+            "narrative_acts": json.dumps(spec["narrative_acts"]),
+            "n_total": n_total,
+            "n_valid": n_valid,
+            "n_missing": n_total - n_valid,
+            "x_missing": int(pair[x_name].isna().sum()),
+            "y_missing": int(pair[y_name].isna().sum()),
+            "coefficient": pd.NA,
+            "p_value": pd.NA,
+            "status": "unavailable",
+            "reason": None,
+            "warning": None,
+            "verdict": "unavailable",
+            "contract_version": CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION,
+        }
+        if n_valid < 3:
+            row["reason"] = "insufficient_n"
+        elif values[x_name].nunique() < 2 or values[y_name].nunique() < 2:
+            row["reason"] = "zero_variance"
+        else:
+            coefficient, p_value = spearmanr(values[x_name], values[y_name])
+            row["coefficient"] = float(coefficient)
+            row["p_value"] = float(p_value)
+            row["status"] = "success"
+            row["warning"] = "small_sample_n_lt_10" if n_valid < 10 else None
+            row["verdict"] = _correlation_verdict(float(coefficient), float(p_value), str(spec["expected_direction"]))
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def write_cross_evidence_correlations(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist cross-evidence correlations and their sidecar."""
+    required = {
+        "analysis_id",
+        "unit_of_analysis",
+        "x",
+        "y",
+        "test",
+        "priority",
+        "n_total",
+        "n_valid",
+        "coefficient",
+        "p_value",
+        "status",
+        "verdict",
+        "narrative_acts",
+        "contract_version",
+    }
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_correlations output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("cross_evidence_correlations output is empty")
+    if results["analysis_id"].duplicated().any():
+        raise ValueError("cross_evidence_correlations has duplicate analysis_id rows")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    results.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_cross_evidence_correlations(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the persisted cross-evidence correlations result."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_correlations"]["path"]))
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    _require_success_sidecar(panel_path)
+    panel_sidecar = panel_path.with_name(f"{panel_path.name}.metadata.json")
+    options = {
+        "stage": "cross_evidence_correlations",
+        "contract_version": CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION,
+        "registry": CROSS_EVIDENCE_CORRELATION_REGISTRY,
+        "support_rule": "p_lt_0_05_and_expected_direction",
+    }
+    checksum = input_checksum([panel_path, panel_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Cross-evidence correlations artifact is current: %s", output_path)
+        return pd.read_csv(output_path)
+
+    results = compute_cross_evidence_correlations(pd.read_parquet(panel_path))
+    invalidate_stale_artifact(output_path, checksum)
+    write_cross_evidence_correlations(results, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s cross-evidence correlation rows", len(results))
+    return results
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -1374,6 +1564,7 @@ def main() -> None:
     parser.add_argument("--temporal-escalation-output", type=Path, default=None)
     parser.add_argument("--late-instability-output", type=Path, default=None)
     parser.add_argument("--cross-evidence-panel-output", type=Path, default=None)
+    parser.add_argument("--cross-evidence-correlations-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -1384,6 +1575,7 @@ def main() -> None:
             "temporal_escalation_metrics",
             "late_instability_metrics",
             "cross_evidence_panel",
+            "cross_evidence_correlations",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -1397,6 +1589,7 @@ def main() -> None:
         "temporal_escalation_metrics",
         "late_instability_metrics",
         "cross_evidence_panel",
+        "cross_evidence_correlations",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -1428,6 +1621,11 @@ def main() -> None:
     if "cross_evidence_panel" in selected:
         build_cross_evidence_panel(
             output_path=args.cross_evidence_panel_output,
+            force=args.force,
+        )
+    if "cross_evidence_correlations" in selected:
+        build_cross_evidence_correlations(
+            output_path=args.cross_evidence_correlations_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

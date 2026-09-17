@@ -775,3 +775,88 @@ def test_build_cross_evidence_panel_persists_and_skips_current_artifact(tmp_path
     assert metadata["contract_version"] == "cross-evidence-v1"
     assert first.equals(second)
     assert second.loc[0, "cross_evidence_panel_available"]
+
+
+def correlation_panel() -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {
+                "ID_Equipe": f"TEAM_{index}",
+                "Semestre": "2025.2",
+                "scope_applicability_mean_t3": 10 - index,
+                "source_churn_t3": index,
+                "source_events_t3": index * 2,
+                "pi_line_delta_t3": index * 3,
+                "planning_artifact_activity_t3": index * 4,
+                "planning_rework_signal_t2_t3": index * 5,
+                "commits_per_author_t3": index * 6,
+                "late_instability_index": index / 10,
+            }
+            for index in range(1, 6)
+        ]
+    )
+
+
+def test_compute_cross_evidence_correlations_runs_declared_spearman_pairs() -> None:
+    engine = load_engine()
+
+    result = engine.compute_cross_evidence_correlations(correlation_panel())
+    row = result.loc[result["analysis_id"] == "scope_vs_source_churn_t3"].iloc[0]
+
+    assert len(result) == 7
+    assert row["x"] == "source_churn_t3"
+    assert row["y"] == "scope_applicability_mean_t3"
+    assert row["n_valid"] == 5
+    assert row["coefficient"] == pytest.approx(-1.0)
+    assert row["p_value"] < 0.05
+    assert row["status"] == "success"
+    assert row["verdict"] == "supports"
+    assert row["contract_version"] == "cross-evidence-correlations-v1"
+
+
+def test_compute_cross_evidence_correlations_preserves_unavailable_zero_variance() -> None:
+    engine = load_engine()
+    panel = correlation_panel()
+    panel["source_churn_t3"] = 1
+
+    row = engine.compute_cross_evidence_correlations(panel).loc[lambda frame: frame["analysis_id"] == "scope_vs_source_churn_t3"].iloc[0]
+
+    assert row["status"] == "unavailable"
+    assert row["reason"] == "zero_variance"
+    assert row["verdict"] == "unavailable"
+
+
+def test_compute_cross_evidence_correlations_rejects_missing_columns() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_cross_evidence_correlations(correlation_panel().drop(columns=["source_churn_t3"]))
+
+
+def test_build_cross_evidence_correlations_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    results = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    datasets.mkdir(parents=True)
+    panel_path = datasets / "cross_evidence_panel.parquet"
+    output = results / "cross_evidence_correlations.csv"
+    correlation_panel().to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_cross_evidence_correlations(output_path=output)
+        second = engine.build_cross_evidence_correlations(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-correlations-v1"
+    assert first["analysis_id"].tolist() == second["analysis_id"].tolist()
+    assert first["verdict"].tolist() == second["verdict"].tolist()
+    assert first["coefficient"].astype(float).tolist() == pytest.approx(second["coefficient"].astype(float).tolist())
+    assert second.loc[0, "test"] == "spearman"

@@ -667,7 +667,7 @@ CROSS_EVIDENCE_ARTIFACT_REGISTRY: dict[str, dict[str, object]] = {
         "path": f"{CROSS_EVIDENCE_RESULTS_DIR}/cross_evidence_correlations.csv",
         "producer_script": "08_cross_evidence_engine.py",
         "unit_of_analysis": "analysis_result",
-        "contract_version": CROSS_EVIDENCE_CONTRACT_VERSION,
+        "contract_version": "cross-evidence-correlations-v1",
         "evidence_scope": CROSS_EVIDENCE_SCOPE,
         "evidence_type": "primary_candidate",
         "acts": [2, 3, 4],
