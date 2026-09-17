@@ -83,6 +83,34 @@ def evaluator_row(
     return row
 
 
+def commit_row(
+    index: int,
+    *,
+    team: str = "TEAM_1",
+    semester: str = "2025.2",
+    cut: str = "T1",
+    author: str = "Dev_A",
+    added: int = 10,
+    deleted: int = 2,
+    files_changed: int = 1,
+) -> dict[str, object]:
+    return {
+        "repository": f"repo-{team}",
+        "commit_hash": f"commit-{team}-{cut}-{index}",
+        "timestamp": pd.Timestamp("2025-10-18T12:00:00Z"),
+        "temporal_marker": cut,
+        "files_changed": files_changed,
+        "lines_added": added,
+        "lines_deleted": deleted,
+        "branch_or_ref": "main",
+        "branch_or_ref_source": "observed",
+        "ID_Equipe": team,
+        "Semestre": semester,
+        "ID_Autor_Local": author,
+        "source_type": "git_commit",
+    }
+
+
 def test_classify_file_category_uses_source_extensions() -> None:
     result = classify("src/app.py", ".py")
 
@@ -354,3 +382,84 @@ def test_build_evaluator_outcome_metrics_persists_and_skips_current_artifact(tmp
     assert metadata["contract_version"] == "cross-evidence-v1"
     assert first.equals(second)
     assert second.loc[0, "scope_applicability_mean_t3"] == 2.0
+
+
+def test_compute_author_pressure_metrics_calculates_author_distribution_and_churn() -> None:
+    engine = load_engine()
+    frame = pd.DataFrame(
+        [
+            commit_row(1, author="Dev_A", added=10, deleted=0, files_changed=2),
+            commit_row(2, author="Dev_A", added=5, deleted=1, files_changed=1),
+            commit_row(3, author="Dev_B", added=4, deleted=0, files_changed=3),
+        ]
+    )
+
+    row = engine.compute_author_pressure_metrics(frame).iloc[0]
+
+    assert row["commit_n"] == 3
+    assert row["author_n"] == 2
+    assert row["commits_per_author"] == 1.5
+    assert row["max_author_share"] == pytest.approx(2 / 3)
+    assert row["commit_gini"] == pytest.approx(1 / 6)
+    assert row["churn_lines"] == 20
+    assert row["lines_added"] == 19
+    assert row["lines_deleted"] == 1
+    assert row["files_changed"] == 6
+    assert row["churn_per_author"] == 10
+    assert row["author_pressure_available"]
+    assert row["author_pressure_observation_unit"] == "team_semester_cut"
+    assert row["author_pressure_contract_version"] == "cross-evidence-v1"
+
+
+def test_compute_author_pressure_metrics_assigns_global_quartile_statuses() -> None:
+    engine = load_engine()
+    rows = [commit_row(1, team="TEAM_1", cut="T1", author="Dev_A")]
+    rows.extend(commit_row(index, team="TEAM_2", cut="T1", author="Dev_A") for index in range(1, 3))
+    rows.extend(commit_row(index, team="TEAM_3", cut="T1", author="Dev_A") for index in range(1, 4))
+    rows.extend(commit_row(index, team="TEAM_4", cut="T1", author="Dev_A") for index in range(1, 5))
+
+    result = engine.compute_author_pressure_metrics(pd.DataFrame(rows)).sort_values("commits_per_author")
+
+    assert result["active_author_pressure_status"].tolist() == ["low", "moderate", "high", "critical"]
+    assert result["commit_gini"].iloc[-1] == 0
+
+
+def test_compute_author_pressure_metrics_rejects_invalid_input() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_author_pressure_metrics(pd.DataFrame([{"ID_Equipe": "TEAM_1"}]))
+    frame = pd.DataFrame([commit_row(1, cut="T4")])
+    with pytest.raises(ValueError, match="invalid temporal markers"):
+        engine.compute_author_pressure_metrics(frame)
+    frame = pd.DataFrame([commit_row(1, added=-1)])
+    with pytest.raises(ValueError, match="must not be negative"):
+        engine.compute_author_pressure_metrics(frame)
+
+
+def test_build_author_pressure_metrics_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    lake_dir = tmp_path / "lake"
+    lake_dir.mkdir()
+    commits = lake_dir / "git_commits.parquet"
+    output = tmp_path / "analysis" / "cross_evidence" / "datasets" / "author_pressure_metrics.parquet"
+    pd.DataFrame(
+        [
+            commit_row(1, author="Dev_A"),
+            commit_row(2, author="Dev_A"),
+            commit_row(3, author="Dev_B"),
+        ]
+    ).to_parquet(commits, index=False)
+    commits.with_name(f"{commits.name}.metadata.json").write_text(
+        json.dumps({"status": "success", "input_checksum": "fixture"}),
+        encoding="utf-8",
+    )
+
+    first = engine.build_author_pressure_metrics(lake_dir=lake_dir, output_path=output)
+    second = engine.build_author_pressure_metrics(lake_dir=lake_dir, output_path=output)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-v1"
+    assert first.equals(second)
+    assert second.loc[0, "commits_per_author"] == 1.5

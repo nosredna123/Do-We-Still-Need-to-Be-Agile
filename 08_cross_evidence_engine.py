@@ -33,8 +33,10 @@ FILE_CATEGORY_CHURN_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 FILE_CATEGORY_EXCLUSIONS_CONTRACT_VERSION = CROSS_EVIDENCE_MANIFEST_VERSION
 FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION = "file-category-exclusions-v1"
 EVALUATOR_OUTCOME_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+AUTHOR_PRESSURE_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
+TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
 EVALUATOR_OUTCOME_METRICS = (
     "engagement_participation",
     "project_progress",
@@ -47,6 +49,14 @@ EVALUATOR_OUTCOME_REQUIRED_COLUMNS = set(TEAM_SEMESTER_KEYS) | {"temporal_marker
     for metric in EVALUATOR_OUTCOME_METRICS
     for field in EVALUATOR_OUTCOME_FIELDS
 }
+AUTHOR_PRESSURE_REQUIRED_COLUMNS = set(TEAM_SEMESTER_CUT_KEYS) | {
+    "commit_hash",
+    "ID_Autor_Local",
+    "lines_added",
+    "lines_deleted",
+    "files_changed",
+}
+AUTHOR_PRESSURE_STATUS_LABELS = ("low", "moderate", "high", "critical")
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -199,6 +209,36 @@ def _require_success_sidecar(path: Path) -> dict[str, Any]:
     return metadata
 
 
+def _gini(values: pd.Series) -> float:
+    """Compute standard Gini for non-negative counts."""
+    ordered = sorted(float(value) for value in values if pd.notna(value))
+    if not ordered or len(ordered) == 1 or sum(ordered) == 0:
+        return 0.0
+    weighted_sum = sum(index * value for index, value in enumerate(ordered, start=1))
+    return float((2 * weighted_sum / (len(ordered) * sum(ordered))) - ((len(ordered) + 1) / len(ordered)))
+
+
+def _pressure_statuses(values: pd.Series) -> pd.Series:
+    """Assign quartile-based pressure labels to commits-per-author values."""
+    numeric = pd.to_numeric(values, errors="coerce")
+    if numeric.empty:
+        return pd.Series(dtype="object")
+    ranks = numeric.rank(method="average", pct=True)
+    labels: list[str] = []
+    for percentile in ranks:
+        if pd.isna(percentile):
+            labels.append("unavailable")
+        elif percentile <= 0.25:
+            labels.append(AUTHOR_PRESSURE_STATUS_LABELS[0])
+        elif percentile <= 0.50:
+            labels.append(AUTHOR_PRESSURE_STATUS_LABELS[1])
+        elif percentile <= 0.75:
+            labels.append(AUTHOR_PRESSURE_STATUS_LABELS[2])
+        else:
+            labels.append(AUTHOR_PRESSURE_STATUS_LABELS[3])
+    return pd.Series(labels, index=values.index, dtype="object")
+
+
 def compute_evaluator_outcome_metrics(evaluator: pd.DataFrame) -> pd.DataFrame:
     """Pivot evaluator outcomes by team-semester and temporal cut."""
     missing = EVALUATOR_OUTCOME_REQUIRED_COLUMNS - set(evaluator.columns)
@@ -324,6 +364,132 @@ def build_evaluator_outcome_metrics(
     invalidate_stale_artifact(output_path, checksum)
     write_evaluator_outcome_metrics(metrics, output_path, source_checksum=checksum, options=options)
     logger.info("Wrote %s evaluator outcome observations", len(metrics))
+    return metrics
+
+
+def compute_author_pressure_metrics(commits: pd.DataFrame) -> pd.DataFrame:
+    """Compute author pressure metrics for observed team-semester-cut groups."""
+    missing = AUTHOR_PRESSURE_REQUIRED_COLUMNS - set(commits.columns)
+    if missing:
+        raise ValueError(f"git_commits missing columns: {sorted(missing)}")
+    if commits[TEAM_SEMESTER_CUT_KEYS].isna().any().any():
+        raise ValueError("git_commits team-semester-cut keys must be non-null")
+    invalid_cuts = set(commits["temporal_marker"].dropna()) - set(CUTS)
+    if invalid_cuts:
+        raise ValueError(f"git_commits has invalid temporal markers: {sorted(invalid_cuts)}")
+    numeric_lines = commits[["lines_added", "lines_deleted", "files_changed"]].apply(pd.to_numeric, errors="coerce")
+    if numeric_lines.isna().any().any():
+        raise ValueError("git_commits line and file counts must be numeric")
+    if (numeric_lines < 0).any().any():
+        raise ValueError("git_commits line and file counts must not be negative")
+
+    working = commits.copy()
+    working["lines_added_observed"] = numeric_lines["lines_added"]
+    working["lines_deleted_observed"] = numeric_lines["lines_deleted"]
+    working["files_changed_observed"] = numeric_lines["files_changed"]
+    working["churn_lines"] = working["lines_added_observed"] + working["lines_deleted_observed"]
+
+    rows: list[dict[str, Any]] = []
+    for key, group in working.groupby(TEAM_SEMESTER_CUT_KEYS, dropna=False):
+        authors = group["ID_Autor_Local"].dropna()
+        counts = authors.value_counts()
+        commit_n = int(len(group))
+        author_n = int(counts.size)
+        shares = counts / commit_n if commit_n else pd.Series(dtype=float)
+        row: dict[str, Any] = dict(zip(TEAM_SEMESTER_CUT_KEYS, key))
+        row["commit_n"] = commit_n
+        row["author_n"] = author_n
+        row["commits_per_author"] = float(commit_n / author_n) if author_n else pd.NA
+        row["max_author_share"] = float(shares.max()) if not shares.empty else pd.NA
+        row["commit_gini"] = _gini(counts)
+        row["churn_lines"] = float(group["churn_lines"].sum())
+        row["lines_added"] = float(group["lines_added_observed"].sum())
+        row["lines_deleted"] = float(group["lines_deleted_observed"].sum())
+        row["files_changed"] = int(group["files_changed_observed"].sum())
+        row["churn_per_author"] = float(row["churn_lines"] / author_n) if author_n else pd.NA
+        row["commits_per_author_rank_pct"] = pd.NA
+        row["active_author_pressure_status"] = "unavailable"
+        row["author_pressure_available"] = bool(commit_n > 0 and author_n > 0)
+        row["author_pressure_unavailable_reason"] = None if row["author_pressure_available"] else "no_observed_author_commits"
+        row["author_pressure_observation_unit"] = "team_semester_cut"
+        row["author_pressure_contract_version"] = AUTHOR_PRESSURE_CONTRACT_VERSION
+        rows.append(row)
+
+    result = pd.DataFrame(rows).sort_values(TEAM_SEMESTER_CUT_KEYS).reset_index(drop=True)
+    if not result.empty:
+        result["commits_per_author_rank_pct"] = pd.to_numeric(result["commits_per_author"], errors="coerce").rank(method="average", pct=True)
+        result["active_author_pressure_status"] = _pressure_statuses(result["commits_per_author"])
+    return result
+
+
+def write_author_pressure_metrics(
+    metrics: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist author pressure metrics and their sidecar."""
+    required = set(TEAM_SEMESTER_CUT_KEYS) | {
+        "commit_n",
+        "author_n",
+        "commits_per_author",
+        "max_author_share",
+        "commit_gini",
+        "active_author_pressure_status",
+        "author_pressure_observation_unit",
+        "author_pressure_contract_version",
+    }
+    missing = required - set(metrics.columns)
+    if missing:
+        raise ValueError(f"author_pressure_metrics output missing columns: {sorted(missing)}")
+    if metrics.empty:
+        raise ValueError("author_pressure_metrics output is empty")
+    if metrics.duplicated(TEAM_SEMESTER_CUT_KEYS).any():
+        raise ValueError("author_pressure_metrics has duplicate team-semester-cut keys")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    metrics.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=AUTHOR_PRESSURE_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_author_pressure_metrics(
+    *,
+    lake_dir: Path = Path("data/lake"),
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the persisted author pressure metrics artifact."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["author_pressure_metrics"]["path"]))
+    commits_input = CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY["lake.git_commits"]
+    commits_path = lake_dir / Path(str(commits_input["path"])).name
+    commits_sidecar = lake_dir / Path(str(commits_input["metadata_path"])).name
+    _require_success_sidecar(commits_path)
+    options = {
+        "stage": "author_pressure_metrics",
+        "contract_version": AUTHOR_PRESSURE_CONTRACT_VERSION,
+        "unit_of_analysis": "observed_team_semester_cut",
+        "gini_method": "author_commit_count_standard_gini",
+        "single_author_gini": 0.0,
+        "pressure_status_policy": "global_commits_per_author_rank_quartiles",
+        "include_churn_lines": True,
+    }
+    checksum = input_checksum([commits_path, commits_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Author pressure metrics artifact is current: %s", output_path)
+        return pd.read_parquet(output_path)
+
+    commits = pd.read_parquet(commits_path)
+    metrics = compute_author_pressure_metrics(commits)
+    invalidate_stale_artifact(output_path, checksum)
+    write_author_pressure_metrics(metrics, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s author pressure observations", len(metrics))
     return metrics
 
 
@@ -597,21 +763,28 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Build cross-evidence extension artifacts")
     parser.add_argument("--lake-dir", type=Path, default=Path("data/lake"))
     parser.add_argument("--evaluator-outcome-output", type=Path, default=None)
+    parser.add_argument("--author-pressure-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
         "--only",
-        choices=["evaluator_outcome_metrics", "file_category_churn_metrics", "file_category_exclusions"],
+        choices=["evaluator_outcome_metrics", "author_pressure_metrics", "file_category_churn_metrics", "file_category_exclusions"],
         nargs="+",
     )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
-    selected = set(args.only or ["evaluator_outcome_metrics", "file_category_churn_metrics", "file_category_exclusions"])
+    selected = set(args.only or ["evaluator_outcome_metrics", "author_pressure_metrics", "file_category_churn_metrics", "file_category_exclusions"])
     metrics_path = args.file_category_churn_output
     if "evaluator_outcome_metrics" in selected:
         build_evaluator_outcome_metrics(
             lake_dir=args.lake_dir,
             output_path=args.evaluator_outcome_output,
+            force=args.force,
+        )
+    if "author_pressure_metrics" in selected:
+        build_author_pressure_metrics(
+            lake_dir=args.lake_dir,
+            output_path=args.author_pressure_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
