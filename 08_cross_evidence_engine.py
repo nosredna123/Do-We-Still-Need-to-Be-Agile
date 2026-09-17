@@ -10,6 +10,7 @@ from pathlib import PurePosixPath
 from typing import Any
 
 import pandas as pd
+import plotly.graph_objects as plotly_go
 from scipy import stats as scipy_stats
 from scipy.stats import spearmanr
 
@@ -22,7 +23,7 @@ from pipeline_config import (
     FILE_CATEGORY_DEFINITION_VERSION,
     FILE_CATEGORY_RULES,
 )
-from pipeline_core import input_checksum, invalidate_stale_artifact, is_current_artifact, write_artifact_metadata
+from pipeline_core import file_checksum, input_checksum, invalidate_stale_artifact, is_current_artifact, write_artifact_metadata
 
 
 logger = logging.getLogger(__name__)
@@ -45,6 +46,22 @@ CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION = "cross-evidence-leave-one-out-v1
 CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION = "cross-evidence-extreme-overlap-v1"
 CROSS_EVIDENCE_SEMESTER_STRATIFIED_CONTRACT_VERSION = "cross-evidence-semester-stratified-v1"
 CROSS_EVIDENCE_PRIORITY_MATRIX_CONTRACT_VERSION = "cross-evidence-priority-matrix-v1"
+CROSS_EVIDENCE_VISUAL_SPEC_VERSION = "cross-evidence-visual-spec-v1"
+CROSS_EVIDENCE_FIGURE_CATEGORIES = ("prioritarias", "exploratorias", "dashboard_interativo")
+CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS = ("html", "png", "svg", "pdf")
+CROSS_EVIDENCE_FIGURE_WIDTH = 1400
+CROSS_EVIDENCE_FIGURE_HEIGHT = 850
+CROSS_EVIDENCE_FIGURE_PNG_SCALE = 2
+CROSS_EVIDENCE_VISUAL_PALETTE = {
+    "scope": "#2563EB",
+    "planning": "#D97706",
+    "instability": "#DC2626",
+    "author": "#15803D",
+    "context": "#64748B",
+    "unavailable": "#94A3B8",
+}
+CROSS_EVIDENCE_VISUAL_FONT = "Arial, sans-serif"
+CROSS_EVIDENCE_VISUAL_ANONYMIZATION_POLICY = "public_visual_ranked_or_aggregate"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -266,6 +283,187 @@ FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
 }
 FILE_CATEGORY_CHURN_GROUP_COLUMNS = ["ID_Equipe", "Semestre", "temporal_marker", "file_category"]
 EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT = 50
+
+
+def cross_evidence_visual_spec(
+    figure_id: str,
+    *,
+    category: str = "exploratorias",
+    variables: list[str] | None = None,
+    required: bool = False,
+) -> dict[str, object]:
+    """Return the shared, versioned visual specification for one figure."""
+    if not figure_id.strip():
+        raise ValueError("figure_id must not be empty")
+    if category not in CROSS_EVIDENCE_FIGURE_CATEGORIES:
+        raise ValueError(f"Unknown cross-evidence figure category: {category}")
+    export_formats = list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS)
+    if not required:
+        export_formats.remove("pdf")
+    return {
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "figure_id": figure_id,
+        "category": category,
+        "required": required,
+        "theme": "plotly_white",
+        "font_family": CROSS_EVIDENCE_VISUAL_FONT,
+        "width": CROSS_EVIDENCE_FIGURE_WIDTH,
+        "height": CROSS_EVIDENCE_FIGURE_HEIGHT,
+        "png_scale": CROSS_EVIDENCE_FIGURE_PNG_SCALE,
+        "palette": dict(CROSS_EVIDENCE_VISUAL_PALETTE),
+        "variables": list(variables or []),
+        "scale_default": "linear",
+        "log_scale_policy": "use_log_only_when_positive_dynamic_range_exceeds_100x",
+        "anonymization_policy": CROSS_EVIDENCE_VISUAL_ANONYMIZATION_POLICY,
+        "export_formats": export_formats,
+    }
+
+
+def apply_cross_evidence_visual_theme(
+    figure: plotly_go.Figure,
+    *,
+    title: str | None = None,
+) -> plotly_go.Figure:
+    """Apply the shared Plotly theme and publication dimensions in place."""
+    figure.update_layout(
+        template="plotly_white",
+        width=CROSS_EVIDENCE_FIGURE_WIDTH,
+        height=CROSS_EVIDENCE_FIGURE_HEIGHT,
+        font={"family": CROSS_EVIDENCE_VISUAL_FONT, "color": "#1E293B"},
+        title={"text": title, "x": 0.02, "xanchor": "left"} if title else None,
+        paper_bgcolor="#FFFFFF",
+        plot_bgcolor="#FFFFFF",
+        margin={"l": 80, "r": 40, "t": 80, "b": 80},
+        hoverlabel={"font": {"family": CROSS_EVIDENCE_VISUAL_FONT}},
+    )
+    figure.update_xaxes(showgrid=False, zeroline=False, linecolor="#CBD5E1")
+    figure.update_yaxes(showgrid=True, gridcolor="#E2E8F0", zeroline=False, linecolor="#CBD5E1")
+    return figure
+
+
+def choose_cross_evidence_scale(values: pd.Series) -> dict[str, object]:
+    """Choose linear or log display without applying a lossy transformation."""
+    numeric = pd.to_numeric(values, errors="coerce").dropna()
+    positive = numeric[numeric > 0]
+    if positive.empty:
+        return {
+            "scale": "linear",
+            "reason": "non_positive_values_present_or_no_positive_values",
+            "dynamic_range": None,
+        }
+    dynamic_range = float(positive.max() / positive.min())
+    if len(positive) == len(numeric) and dynamic_range > 100:
+        return {
+            "scale": "log",
+            "reason": "positive_dynamic_range_exceeds_100x",
+            "dynamic_range": dynamic_range,
+        }
+    return {
+        "scale": "linear",
+        "reason": "default_linear_or_dynamic_range_within_100x",
+        "dynamic_range": dynamic_range,
+    }
+
+
+def anonymize_cross_evidence_visual_data(
+    frame: pd.DataFrame,
+    *,
+    team_column: str = "ID_Equipe",
+    output_column: str = "anonymized_team_id",
+) -> pd.DataFrame:
+    """Return visual data with stable public team IDs and no raw identifiers."""
+    if team_column not in frame.columns:
+        raise ValueError(f"Visual data missing team identifier column: {team_column}")
+    result = frame.copy()
+    identifiers = sorted(result[team_column].dropna().astype(str).unique())
+    mapping = {identifier: f"TEAM_{index:02d}" for index, identifier in enumerate(identifiers, start=1)}
+    result[output_column] = result[team_column].map(mapping)
+    if output_column != team_column:
+        result = result.drop(columns=[team_column])
+    return result
+
+
+def cross_evidence_figure_export_paths(
+    figure_id: str,
+    *,
+    category: str = "exploratorias",
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+) -> dict[str, Path]:
+    """Return stable data and publication paths for a cross-evidence figure."""
+    if category not in CROSS_EVIDENCE_FIGURE_CATEGORIES:
+        raise ValueError(f"Unknown cross-evidence figure category: {category}")
+    directory = figure_root / category
+    data_path = figure_data_root / f"{figure_id}.csv"
+    return {
+        "data": data_path,
+        "html": directory / f"{figure_id}.html",
+        "png": directory / f"{figure_id}.png",
+        "svg": directory / f"{figure_id}.svg",
+        "pdf": directory / f"{figure_id}.pdf",
+        "plotly_json": directory / f"{figure_id}.plotly.json",
+    }
+
+
+def build_cross_evidence_figure_manifest_entry(
+    figure: plotly_go.Figure,
+    data: pd.DataFrame,
+    *,
+    figure_id: str,
+    category: str,
+    source: str,
+    unit_of_analysis: str,
+    variables: list[str],
+    transformations: list[str] | None = None,
+    scale_notes: list[str] | None = None,
+    limitations: list[str] | None = None,
+    paths: dict[str, Path] | None = None,
+    required: bool = False,
+) -> dict[str, object]:
+    """Build a manifest-ready figure entry after the caller writes exports."""
+    spec = cross_evidence_visual_spec(
+        figure_id,
+        category=category,
+        variables=variables,
+        required=required,
+    )
+    paths = paths or cross_evidence_figure_export_paths(figure_id, category=category)
+    existing_checksums = {
+        key: file_checksum(path)
+        for key, path in paths.items()
+        if path.is_file() and key != "html"
+    }
+    available_static_paths = {
+        key: path.as_posix()
+        for key, path in paths.items()
+        if key in {"png", "svg", "pdf"} and path.is_file()
+    }
+    valid = data.dropna(subset=[column for column in variables if column in data]) if variables and all(column in data for column in variables) else data
+    return {
+        "figure_id": figure_id,
+        "category": category,
+        "priority": "required" if required else "exploratory",
+        "status": "success",
+        "source": source,
+        "unit_of_analysis": unit_of_analysis,
+        "variables": variables,
+        "visual_spec_version": spec["visual_spec_version"],
+        "theme": spec["theme"],
+        "dimensions": {"width": spec["width"], "height": spec["height"], "png_scale": spec["png_scale"]},
+        "anonymization_policy": spec["anonymization_policy"],
+        "transformations": transformations or [],
+        "scale_notes": scale_notes or [],
+        "limitations": limitations or [],
+        "n_total": int(len(data)),
+        "n_valid": int(len(valid)),
+        "n_missing": int(len(data) - len(valid)),
+        "data_path": paths["data"].as_posix(),
+        "data_metadata_path": f"{paths['data'].as_posix()}.metadata.json",
+        "interactive_path": paths["html"].as_posix(),
+        "static_paths": available_static_paths,
+        "checksums": existing_checksums,
+        "export_formats": spec["export_formats"],
+    }
 
 
 def _normalize_path(value: str | None) -> str:

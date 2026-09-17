@@ -1268,3 +1268,77 @@ def test_build_evidence_priority_matrix_persists_and_skips_current_artifact(tmp_
     assert metadata["contract_version"] == "cross-evidence-priority-matrix-v1"
     assert len(first) == len(second) == 77
     assert first["evidence_id"].tolist() == second["evidence_id"].tolist()
+
+
+def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
+    engine = load_engine()
+
+    spec = engine.cross_evidence_visual_spec(
+        "scope_vs_late_instability",
+        category="prioritarias",
+        variables=["scope_applicability_mean_t3", "late_instability_index"],
+        required=True,
+    )
+
+    assert spec["visual_spec_version"] == "cross-evidence-visual-spec-v1"
+    assert spec["theme"] == "plotly_white"
+    assert spec["width"] == 1400
+    assert spec["height"] == 850
+    assert spec["png_scale"] == 2
+    assert spec["export_formats"] == ["html", "png", "svg", "pdf"]
+    assert spec["palette"]["scope"] == "#2563EB"
+    assert spec["anonymization_policy"] == "public_visual_ranked_or_aggregate"
+
+
+def test_cross_evidence_visual_helpers_choose_scale_and_anonymize_ids(tmp_path: Path) -> None:
+    engine = load_engine()
+    assert engine.choose_cross_evidence_scale(pd.Series([1, 10, 1000]))["scale"] == "log"
+    assert engine.choose_cross_evidence_scale(pd.Series([0, 10, 1000]))["scale"] == "linear"
+    assert engine.choose_cross_evidence_scale(pd.Series([1, 2, 50]))["scale"] == "linear"
+
+    visual = engine.anonymize_cross_evidence_visual_data(
+        pd.DataFrame({"ID_Equipe": ["raw-b", "raw-a"], "value": [2, 1]})
+    )
+    assert "ID_Equipe" not in visual.columns
+    assert visual["anonymized_team_id"].tolist() == ["TEAM_02", "TEAM_01"]
+    paths = engine.cross_evidence_figure_export_paths(
+        "scope_vs_late_instability",
+        category="prioritarias",
+        figure_root=tmp_path / "figures",
+        figure_data_root=tmp_path / "figure_data",
+    )
+    assert paths["data"] == tmp_path / "figure_data" / "scope_vs_late_instability.csv"
+    assert paths["pdf"] == tmp_path / "figures" / "prioritarias" / "scope_vs_late_instability.pdf"
+
+
+def test_build_cross_evidence_figure_manifest_entry_records_visual_contract(tmp_path: Path) -> None:
+    engine = load_engine()
+    import plotly.graph_objects as plotly_go
+
+    paths = engine.cross_evidence_figure_export_paths(
+        "test_figure",
+        figure_root=tmp_path / "figures",
+        figure_data_root=tmp_path / "figure_data",
+    )
+    paths["data"].parent.mkdir(parents=True)
+    paths["data"].write_text("x,y\n1,2\n", encoding="utf-8")
+    paths["png"].parent.mkdir(parents=True)
+    paths["png"].write_bytes(b"png")
+    entry = engine.build_cross_evidence_figure_manifest_entry(
+        plotly_go.Figure(),
+        pd.DataFrame({"x": [1], "y": [2]}),
+        figure_id="test_figure",
+        category="exploratorias",
+        source="fixture",
+        unit_of_analysis="team_semester",
+        variables=["x", "y"],
+        transformations=["complete_case_pair"],
+        scale_notes=["linear"],
+        paths=paths,
+    )
+
+    assert entry["visual_spec_version"] == "cross-evidence-visual-spec-v1"
+    assert entry["dimensions"] == {"width": 1400, "height": 850, "png_scale": 2}
+    assert entry["static_paths"]["png"].endswith("test_figure.png")
+    assert "png" in entry["checksums"]
+    assert entry["n_valid"] == 1
