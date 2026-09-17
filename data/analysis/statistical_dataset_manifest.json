@@ -89,7 +89,7 @@
       }
     ],
     "rejected": [],
-    "results_input_checksum": "98957120a8a37dd897cebde05edb61857b93929da4f4dd618539dd8ea8cd198f",
+    "results_input_checksum": "bd49fbaf3e1316c4556e9f39b7bf1bb1aa390fcb302f26a02299eff21dce97ac",
     "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/correlation_results.csv",
     "status": "success"
   },
@@ -6106,20 +6106,20 @@
         "unit_of_analysis": "team_semester"
       }
     },
-    "results_input_checksum": "733be37e138e78451eae68d65bd0fb3bcd3254597bbad881ac09800f54cb7738",
+    "results_input_checksum": "aa27939654ce935421b4253ae3d0d0ee58b586ccde85259f16f75d2d6100ddd0",
     "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/hypothesis_results.csv",
     "status": "success"
   },
   "input_artifacts": {
     "cut_context_metrics": {
-      "checksum": "4b7c11e13078567e9b8eef0151cfded4e745ee503c19ed8b28f4a7d51f91aab5",
+      "checksum": "e475af9e7593496caf1ab4ce5045ac17421d8ffa38d1fdbcd272234cca3963c9",
       "contract_version": "cut-context-metrics-v1",
       "n_rows": 6,
       "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet",
       "unit_of_analysis": "cut_context"
     },
     "student_nlp": {
-      "checksum": "9d4d571e2f34ec3f092916a26240b5c4dac909ecffa612578d536f898bbf876d",
+      "checksum": "2d17b9a6d1c675082009bacdd97bcea82fad9fe65470462aea7b71c77ed9cef8",
       "contract_version": "student-nlp-v1",
       "n_rows": 1122,
       "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet",
@@ -6133,14 +6133,14 @@
       "unit_of_analysis": "team_semester"
     },
     "transcript_nlp": {
-      "checksum": "7a9f24602bc379dc879f706ec2c09e12bccda93ad73957f13ca6c820638493b3",
+      "checksum": "1932cb5b9a7c068068fda818f6d9c896086222edf60904f0d348c50e4c8c87c5",
       "contract_version": "transcript-nlp-v1",
       "n_rows": 100,
       "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet",
       "unit_of_analysis": "transcript_session"
     }
   },
-  "input_checksum": "527ad651168cced2115288f8c298a694ddf5339d34f54bc6ba871d3c1e4ec805",
+  "input_checksum": "15f8ffb0b786a99ad8fa22072e5eb8535051bc676eb11c2f5b1d7de9fdeb9d5b",
   "manifest_version": "phase2-statistics-v2",
   "metric_definition_versions": {
     "ai": "ai-v1",

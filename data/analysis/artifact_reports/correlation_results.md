@@ -2,7 +2,7 @@
 The granularity/unit of analysis is "team_semester" with a row count of 4. The producer script is "06_statistical_analyzer.py" and the contract version is "spearman-correlation-results-v1".
 
 ## How it was built
-The analytical artifact was constructed using a statistical analysis script that performed Spearman correlation tests on various pairs of variables related to team performance over semesters. The analysis aimed to identify potential relationships between different metrics, such as file counts and code quality indicators.
+The analytical artifact was constructed using a Spearman correlation analysis to explore relationships between various metrics related to team performance and project outcomes. The analysis was executed through a script that processed the relevant data, generating correlation coefficients and p-values for each pair of variables under consideration.
 
 ## Narrative binding
 The narrative acts are 2 and 3. They are meant to support or falsify the claims in "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)" and "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)".
@@ -14,9 +14,9 @@ The narrative acts are 2 and 3. They are meant to support or falsify the claims 
 - For the analysis "context_ie_temporal_primary": n = 3, p-value = null, coefficient = null, missingness = 3.
 
 ## Contribution assessment
-The deterministic verdict is "inconclusive". This is justified as all correlation tests resulted in inconclusive outcomes, with p-values indicating non-significant relationships (e.g., p = 0.9817 for "pi_vs_cc_primary" and p = 0.9602 for "pi_vs_delta_dt_primary").
+The deterministic verdict is "inconclusive". This is justified as all tests resulted in inconclusive outcomes, with p-values indicating no significant correlations: 0.9816838660605892, 0.960194880594909, and 0.6445115810207203.
 
 ## Known limitations
-- The analysis "ai_vs_cc_primary" had a small sample size (n < 10), which may affect the reliability of the results.
+- The analysis "ai_vs_cc_primary" had a small sample size (n < 10).
 - The analysis "context_ie_temporal_primary" was unavailable due to zero variance.
 - Exclusions summary is not provided.
