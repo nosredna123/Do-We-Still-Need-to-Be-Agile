@@ -540,6 +540,41 @@ def late_instability_source_frames() -> tuple[pd.DataFrame, pd.DataFrame, pd.Dat
     return team, file_category, author
 
 
+def cross_evidence_panel_source_frames() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    engine = load_engine()
+    evaluator = engine.compute_evaluator_outcome_metrics(
+        pd.DataFrame(
+            [
+                evaluator_row("T1", team="TEAM_1", progress=2.0, scope=1.0),
+                evaluator_row("T2", team="TEAM_1", progress=3.0, scope=1.5),
+                evaluator_row("T3", team="TEAM_1", progress=4.0, scope=2.0),
+                evaluator_row("T1", team="TEAM_2", progress=1.0, scope=1.0),
+                evaluator_row("T2", team="TEAM_2", progress=2.0, scope=1.0),
+                evaluator_row("T3", team="TEAM_2", progress=3.0, scope=1.5),
+            ]
+        )
+    )
+    team, _, _ = late_instability_source_frames()
+    file_category = engine.compute_file_category_churn_metrics(
+        pd.DataFrame(
+            [
+                git_file_row("src/app.py", team="TEAM_1", cut="T3", status="added", added=30, deleted=0),
+                git_file_row("src/app.py", team="TEAM_2", cut="T3", status="added", added=60, deleted=0),
+            ]
+        )
+    )
+    author = engine.compute_author_pressure_metrics(
+        pd.DataFrame(
+            [
+                commit_row(1, team="TEAM_1", cut="T3", author="Dev_A", added=30, deleted=0),
+                commit_row(1, team="TEAM_2", cut="T3", author="Dev_A", added=60, deleted=0),
+            ]
+        )
+    )
+    late = engine.compute_late_instability_metrics(team, file_category, author)
+    return evaluator, late, author, file_category
+
+
 def test_compute_temporal_escalation_metrics_summarizes_deltas_ratios_and_wilcoxon() -> None:
     engine = load_engine()
 
@@ -676,3 +711,67 @@ def test_build_late_instability_metrics_persists_and_skips_current_artifact(tmp_
     assert metadata["contract_version"] == "cross-evidence-v1"
     assert first.equals(second)
     assert second.loc[1, "late_instability_index"] == 1.0
+
+
+def test_compute_cross_evidence_panel_builds_curated_complete_panel() -> None:
+    engine = load_engine()
+    evaluator, late, author, file_category = cross_evidence_panel_source_frames()
+
+    panel = engine.compute_cross_evidence_panel(evaluator, late, author, file_category)
+    row = panel.loc[panel["ID_Equipe"] == "TEAM_2"].iloc[0]
+
+    assert len(panel) == 2
+    assert row["scope_applicability_mean_t3"] == 1.5
+    assert row["project_progress_mean_t3"] == 3.0
+    assert row["progress_scope_gap_t3"] == 1.5
+    assert row["late_instability_index"] == pytest.approx(0.9285714285714286)
+    assert row["source_event_share_t3"] == 1.0
+    assert row["source_churn_share_t3"] == 1.0
+    assert row["commit_n_t3"] == 1
+    assert row["author_n_t3"] == 1
+    assert row["cross_evidence_panel_available"]
+    assert row["cross_evidence_panel_observation_unit"] == "team_semester"
+    assert row["cross_evidence_panel_contract_version"] == "cross-evidence-v1"
+
+
+def test_compute_cross_evidence_panel_fails_when_join_loses_coverage() -> None:
+    engine = load_engine()
+    evaluator, late, author, file_category = cross_evidence_panel_source_frames()
+    late = late.loc[late["ID_Equipe"] != "TEAM_2"]
+
+    with pytest.raises(ValueError, match="late_instability join lost"):
+        engine.compute_cross_evidence_panel(evaluator, late, author, file_category)
+
+
+def test_build_cross_evidence_panel_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    evaluator, late, author, file_category = cross_evidence_panel_source_frames()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    datasets.mkdir(parents=True)
+    output = datasets / "cross_evidence_panel.parquet"
+    for name, frame in (
+        ("evaluator_outcome_metrics", evaluator),
+        ("late_instability_metrics", late),
+        ("author_pressure_metrics", author),
+        ("file_category_churn_metrics", file_category),
+    ):
+        path = datasets / f"{name}.parquet"
+        frame.to_parquet(path, index=False)
+        path.with_name(f"{path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_cross_evidence_panel(output_path=output)
+        second = engine.build_cross_evidence_panel(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-v1"
+    assert first.equals(second)
+    assert second.loc[0, "cross_evidence_panel_available"]

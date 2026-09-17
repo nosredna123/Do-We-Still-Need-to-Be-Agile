@@ -1,0 +1,22 @@
+{
+  "contract_version": "cross-evidence-v1",
+  "input_checksum": "838418a3c6d5c1e02fd703b8f30e09114dd10a48a74b15c6e3e065c6992363d4",
+  "options": {
+    "base_artifact": "evaluator_outcome_metrics",
+    "contract_version": "cross-evidence-v1",
+    "join_policy": "fail_fast_one_to_one_complete_coverage",
+    "panel_shape": "wide_curated_team_semester",
+    "stage": "cross_evidence_panel",
+    "t3_author_extras": [
+      "commit_n_t3",
+      "author_n_t3",
+      "max_author_share_t3",
+      "churn_per_author_t3"
+    ],
+    "t3_source_extras": [
+      "source_event_share_t3",
+      "source_churn_share_t3"
+    ]
+  },
+  "status": "success"
+}

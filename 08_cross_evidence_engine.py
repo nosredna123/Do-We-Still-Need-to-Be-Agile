@@ -37,6 +37,7 @@ EVALUATOR_OUTCOME_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 AUTHOR_PRESSURE_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 TEMPORAL_ESCALATION_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 LATE_INSTABILITY_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+CROSS_EVIDENCE_PANEL_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -121,6 +122,46 @@ LATE_INSTABILITY_INDEX_COMPONENTS = (
     "commits_per_author_t3",
     "delta_dt_t2_t3",
 )
+CROSS_EVIDENCE_PANEL_EVALUATOR_COLUMNS = [
+    "project_progress_mean_t1",
+    "project_progress_mean_t2",
+    "project_progress_mean_t3",
+    "project_progress_mean_delta_t1_t3",
+    "scope_applicability_mean_t1",
+    "scope_applicability_mean_t2",
+    "scope_applicability_mean_t3",
+    "scope_applicability_mean_delta_t1_t3",
+    "technical_complexity_mean_t1",
+    "technical_complexity_mean_t2",
+    "technical_complexity_mean_t3",
+    "technical_complexity_mean_delta_t1_t3",
+    "engagement_participation_mean_t1",
+    "engagement_participation_mean_t2",
+    "engagement_participation_mean_t3",
+    "engagement_participation_mean_delta_t1_t3",
+    "progress_scope_gap_t1",
+    "progress_scope_gap_t2",
+    "progress_scope_gap_t3",
+    "progress_scope_gap_delta_t1_t3",
+    "evaluator_outcome_available",
+]
+CROSS_EVIDENCE_PANEL_LATE_COLUMNS = [
+    "planning_rework_signal_t2_t3",
+    "planning_artifact_activity_t3",
+    "pi_line_delta_t3",
+    "cc_total_t3",
+    "cc_per_source_loc_t3",
+    "source_churn_t3",
+    "source_events_t3",
+    "commits_per_author_t3",
+    "commit_gini_t3",
+    "active_author_pressure_status_t3",
+    "author_churn_lines_t3",
+    "delta_dt_t2_t3",
+    "late_instability_index",
+    "late_instability_component_available_n",
+    "late_instability_component_missing_n",
+]
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -876,6 +917,188 @@ def build_late_instability_metrics(
     return metrics
 
 
+def _t3_source_extras(file_category_churn: pd.DataFrame) -> pd.DataFrame:
+    """Return curated T3 source category extras for the cross-evidence panel."""
+    required = set(TEAM_SEMESTER_CUT_KEYS) | {"file_category", "event_n", "churn_lines", "category_event_share", "category_churn_share"}
+    missing = required - set(file_category_churn.columns)
+    if missing:
+        raise ValueError(f"file_category_churn_metrics missing columns: {sorted(missing)}")
+    source = file_category_churn.loc[
+        (file_category_churn["temporal_marker"] == "T3")
+        & (file_category_churn["file_category"] == "source")
+    ]
+    if source.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("source file-category churn has duplicate T3 team-semester rows")
+    return source[TEAM_SEMESTER_KEYS + ["category_event_share", "category_churn_share"]].rename(
+        columns={
+            "category_event_share": "source_event_share_t3",
+            "category_churn_share": "source_churn_share_t3",
+        }
+    )
+
+
+def _t3_author_extras(author_pressure: pd.DataFrame) -> pd.DataFrame:
+    """Return curated T3 author pressure extras for the cross-evidence panel."""
+    required = set(TEAM_SEMESTER_CUT_KEYS) | {"commit_n", "author_n", "max_author_share", "churn_per_author"}
+    missing = required - set(author_pressure.columns)
+    if missing:
+        raise ValueError(f"author_pressure_metrics missing columns: {sorted(missing)}")
+    t3_author = author_pressure.loc[author_pressure["temporal_marker"] == "T3"]
+    if t3_author.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("author_pressure_metrics has duplicate T3 team-semester rows")
+    return t3_author[TEAM_SEMESTER_KEYS + ["commit_n", "author_n", "max_author_share", "churn_per_author"]].rename(
+        columns={
+            "commit_n": "commit_n_t3",
+            "author_n": "author_n_t3",
+            "max_author_share": "max_author_share_t3",
+            "churn_per_author": "churn_per_author_t3",
+        }
+    )
+
+
+def compute_cross_evidence_panel(
+    evaluator_outcomes: pd.DataFrame,
+    late_instability: pd.DataFrame,
+    author_pressure: pd.DataFrame,
+    file_category_churn: pd.DataFrame,
+) -> pd.DataFrame:
+    """Build the curated team-semester panel for cross-evidence analyses."""
+    evaluator_required = set(TEAM_SEMESTER_KEYS) | set(CROSS_EVIDENCE_PANEL_EVALUATOR_COLUMNS)
+    late_required = set(TEAM_SEMESTER_KEYS) | set(CROSS_EVIDENCE_PANEL_LATE_COLUMNS)
+    missing_evaluator = evaluator_required - set(evaluator_outcomes.columns)
+    if missing_evaluator:
+        raise ValueError(f"evaluator_outcome_metrics missing columns: {sorted(missing_evaluator)}")
+    missing_late = late_required - set(late_instability.columns)
+    if missing_late:
+        raise ValueError(f"late_instability_metrics missing columns: {sorted(missing_late)}")
+    for name, frame in (("evaluator_outcome_metrics", evaluator_outcomes), ("late_instability_metrics", late_instability)):
+        if frame[TEAM_SEMESTER_KEYS].isna().any().any():
+            raise ValueError(f"{name} team-semester keys must be non-null")
+        if frame.duplicated(TEAM_SEMESTER_KEYS).any():
+            raise ValueError(f"{name} has duplicate team-semester keys")
+
+    panel = evaluator_outcomes[TEAM_SEMESTER_KEYS + CROSS_EVIDENCE_PANEL_EVALUATOR_COLUMNS].copy()
+    panel = panel.merge(
+        late_instability[TEAM_SEMESTER_KEYS + CROSS_EVIDENCE_PANEL_LATE_COLUMNS],
+        on=TEAM_SEMESTER_KEYS,
+        how="left",
+        validate="one_to_one",
+        indicator="late_join_status",
+    )
+    if not panel["late_join_status"].eq("both").all():
+        raise ValueError("cross_evidence_panel late_instability join lost team-semester coverage")
+    panel = panel.drop(columns=["late_join_status"])
+
+    source_extras = _t3_source_extras(file_category_churn)
+    panel = panel.merge(
+        source_extras,
+        on=TEAM_SEMESTER_KEYS,
+        how="left",
+        validate="one_to_one",
+        indicator="source_join_status",
+    )
+    if not panel["source_join_status"].eq("both").all():
+        raise ValueError("cross_evidence_panel source churn join lost team-semester coverage")
+    panel = panel.drop(columns=["source_join_status"])
+
+    author_extras = _t3_author_extras(author_pressure)
+    panel = panel.merge(
+        author_extras,
+        on=TEAM_SEMESTER_KEYS,
+        how="left",
+        validate="one_to_one",
+        indicator="author_join_status",
+    )
+    if not panel["author_join_status"].eq("both").all():
+        raise ValueError("cross_evidence_panel author pressure join lost team-semester coverage")
+    panel = panel.drop(columns=["author_join_status"])
+    panel["cross_evidence_panel_available"] = True
+    panel["cross_evidence_panel_observation_unit"] = "team_semester"
+    panel["cross_evidence_panel_contract_version"] = CROSS_EVIDENCE_PANEL_CONTRACT_VERSION
+    return panel.sort_values(TEAM_SEMESTER_KEYS).reset_index(drop=True)
+
+
+def write_cross_evidence_panel(
+    panel: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist the curated cross-evidence panel and sidecar."""
+    required = set(TEAM_SEMESTER_KEYS) | {
+        "scope_applicability_mean_t3",
+        "project_progress_mean_t3",
+        "progress_scope_gap_t3",
+        "planning_rework_signal_t2_t3",
+        "source_churn_t3",
+        "commits_per_author_t3",
+        "late_instability_index",
+        "cross_evidence_panel_available",
+        "cross_evidence_panel_observation_unit",
+        "cross_evidence_panel_contract_version",
+    }
+    missing = required - set(panel.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_panel output missing columns: {sorted(missing)}")
+    if panel.empty:
+        raise ValueError("cross_evidence_panel output is empty")
+    if panel.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("cross_evidence_panel has duplicate team-semester keys")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    panel.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_PANEL_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_cross_evidence_panel(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the curated cross-evidence panel artifact."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    evaluator_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["evaluator_outcome_metrics"]["path"]))
+    late_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["late_instability_metrics"]["path"]))
+    author_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["author_pressure_metrics"]["path"]))
+    file_category_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["file_category_churn_metrics"]["path"]))
+    inputs = [evaluator_path, late_path, author_path, file_category_path]
+    input_paths: list[Path] = []
+    for path in inputs:
+        _require_success_sidecar(path)
+        input_paths.extend([path, path.with_name(f"{path.name}.metadata.json")])
+    options = {
+        "stage": "cross_evidence_panel",
+        "contract_version": CROSS_EVIDENCE_PANEL_CONTRACT_VERSION,
+        "panel_shape": "wide_curated_team_semester",
+        "base_artifact": "evaluator_outcome_metrics",
+        "join_policy": "fail_fast_one_to_one_complete_coverage",
+        "t3_source_extras": ["source_event_share_t3", "source_churn_share_t3"],
+        "t3_author_extras": ["commit_n_t3", "author_n_t3", "max_author_share_t3", "churn_per_author_t3"],
+    }
+    checksum = input_checksum(input_paths, options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Cross-evidence panel artifact is current: %s", output_path)
+        return pd.read_parquet(output_path)
+
+    panel = compute_cross_evidence_panel(
+        pd.read_parquet(evaluator_path),
+        pd.read_parquet(late_path),
+        pd.read_parquet(author_path),
+        pd.read_parquet(file_category_path),
+    )
+    invalidate_stale_artifact(output_path, checksum)
+    write_cross_evidence_panel(panel, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s cross-evidence panel observations", len(panel))
+    return panel
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -1150,6 +1373,7 @@ def main() -> None:
     parser.add_argument("--author-pressure-output", type=Path, default=None)
     parser.add_argument("--temporal-escalation-output", type=Path, default=None)
     parser.add_argument("--late-instability-output", type=Path, default=None)
+    parser.add_argument("--cross-evidence-panel-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -1159,6 +1383,7 @@ def main() -> None:
             "author_pressure_metrics",
             "temporal_escalation_metrics",
             "late_instability_metrics",
+            "cross_evidence_panel",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -1171,6 +1396,7 @@ def main() -> None:
         "author_pressure_metrics",
         "temporal_escalation_metrics",
         "late_instability_metrics",
+        "cross_evidence_panel",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -1197,6 +1423,11 @@ def main() -> None:
         build_late_instability_metrics(
             analysis_dir=args.analysis_dir,
             output_path=args.late_instability_output,
+            force=args.force,
+        )
+    if "cross_evidence_panel" in selected:
+        build_cross_evidence_panel(
+            output_path=args.cross_evidence_panel_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
