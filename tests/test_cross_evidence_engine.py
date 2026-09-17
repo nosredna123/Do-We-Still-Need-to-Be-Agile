@@ -860,3 +860,94 @@ def test_build_cross_evidence_correlations_persists_and_skips_current_artifact(t
     assert first["verdict"].tolist() == second["verdict"].tolist()
     assert first["coefficient"].astype(float).tolist() == pytest.approx(second["coefficient"].astype(float).tolist())
     assert second.loc[0, "test"] == "spearman"
+
+
+def contrast_panel() -> pd.DataFrame:
+    rows = []
+    for index in range(1, 9):
+        rows.append(
+            {
+                "ID_Equipe": f"TEAM_{index}",
+                "Semestre": "2025.2",
+                "scope_applicability_mean_t3": index,
+                "project_progress_mean_t3": index,
+                "late_instability_index": index / 10,
+                "planning_rework_signal_t2_t3": index * 10,
+                "planning_artifact_activity_t3": index * 2,
+                "pi_line_delta_t3": index * 3,
+                "source_churn_t3": index * 4,
+                "source_events_t3": index * 5,
+                "commits_per_author_t3": index * 6,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def test_compute_best_worst_project_contrasts_uses_top_bottom_four_and_effect_size() -> None:
+    engine = load_engine()
+
+    result = engine.compute_best_worst_project_contrasts(contrast_panel())
+    row = result.loc[
+        result["contrast_id"] == "scope_applicability_mean_t3__planning_rework_signal_t2_t3__top_bottom_4"
+    ].iloc[0]
+
+    assert len(result) == 24
+    assert row["low_group_n"] == 4
+    assert row["high_group_n"] == 4
+    assert row["low_score_min"] == 1
+    assert row["low_score_max"] == 4
+    assert row["high_score_min"] == 5
+    assert row["high_score_max"] == 8
+    assert row["low_median"] == 25
+    assert row["high_median"] == 65
+    assert row["median_difference_high_minus_low"] == 40
+    assert row["cliffs_delta_high_vs_low"] == 1.0
+    assert row["status"] == "success"
+    assert row["contract_version"] == "cross-evidence-best-worst-contrasts-v1"
+
+
+def test_compute_best_worst_project_contrasts_preserves_zero_variance_unavailable() -> None:
+    engine = load_engine()
+    panel = contrast_panel()
+    panel["source_churn_t3"] = 1
+
+    row = engine.compute_best_worst_project_contrasts(panel).loc[
+        lambda frame: frame["contrast_id"] == "scope_applicability_mean_t3__source_churn_t3__top_bottom_4"
+    ].iloc[0]
+
+    assert row["status"] == "unavailable"
+    assert row["reason"] == "zero_variance"
+
+
+def test_compute_best_worst_project_contrasts_rejects_missing_columns() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_best_worst_project_contrasts(contrast_panel().drop(columns=["source_churn_t3"]))
+
+
+def test_build_best_worst_project_contrasts_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    results = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    datasets.mkdir(parents=True)
+    panel_path = datasets / "cross_evidence_panel.parquet"
+    output = results / "best_worst_project_contrasts.csv"
+    contrast_panel().to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_best_worst_project_contrasts(output_path=output)
+        second = engine.build_best_worst_project_contrasts(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-best-worst-contrasts-v1"
+    assert first["contrast_id"].tolist() == second["contrast_id"].tolist()
+    assert second.loc[0, "test"] == "mann_whitney_u"

@@ -40,6 +40,7 @@ TEMPORAL_ESCALATION_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 LATE_INSTABILITY_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CROSS_EVIDENCE_PANEL_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION = "cross-evidence-correlations-v1"
+CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION = "cross-evidence-best-worst-contrasts-v1"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -215,6 +216,22 @@ CROSS_EVIDENCE_CORRELATION_REGISTRY = {
         "narrative_acts": [2, 3],
     },
 }
+CROSS_EVIDENCE_BEST_WORST_SCORE_VARIABLES = (
+    "scope_applicability_mean_t3",
+    "project_progress_mean_t3",
+    "late_instability_index",
+)
+CROSS_EVIDENCE_BEST_WORST_OUTCOME_VARIABLES = (
+    "planning_rework_signal_t2_t3",
+    "planning_artifact_activity_t3",
+    "pi_line_delta_t3",
+    "source_churn_t3",
+    "source_events_t3",
+    "commits_per_author_t3",
+    "late_instability_index",
+    "scope_applicability_mean_t3",
+)
+CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE = 4
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -1289,6 +1306,160 @@ def build_cross_evidence_correlations(
     return results
 
 
+def _cliffs_delta(low_values: pd.Series, high_values: pd.Series) -> float | None:
+    """Compute Cliff's delta comparing high group values against low group values."""
+    low = pd.to_numeric(low_values, errors="coerce").dropna().tolist()
+    high = pd.to_numeric(high_values, errors="coerce").dropna().tolist()
+    if not low or not high:
+        return None
+    greater = 0
+    less = 0
+    for high_value in high:
+        for low_value in low:
+            if high_value > low_value:
+                greater += 1
+            elif high_value < low_value:
+                less += 1
+    return float((greater - less) / (len(low) * len(high)))
+
+
+def compute_best_worst_project_contrasts(panel: pd.DataFrame) -> pd.DataFrame:
+    """Compare bottom/top project groups for declared score variables."""
+    required = set(TEAM_SEMESTER_KEYS) | set(CROSS_EVIDENCE_BEST_WORST_SCORE_VARIABLES) | set(CROSS_EVIDENCE_BEST_WORST_OUTCOME_VARIABLES)
+    missing = required - set(panel.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_panel missing columns: {sorted(missing)}")
+    rows: list[dict[str, object]] = []
+    for score_variable in CROSS_EVIDENCE_BEST_WORST_SCORE_VARIABLES:
+        scored = panel.dropna(subset=[score_variable]).sort_values([score_variable, *TEAM_SEMESTER_KEYS]).reset_index(drop=True)
+        if len(scored) < CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE * 2:
+            raise ValueError(f"Not enough rows for best/worst contrast: {score_variable}")
+        bottom = scored.head(CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE)
+        top = scored.tail(CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE)
+        for outcome_variable in CROSS_EVIDENCE_BEST_WORST_OUTCOME_VARIABLES:
+            low_values = pd.to_numeric(bottom[outcome_variable], errors="coerce").dropna()
+            high_values = pd.to_numeric(top[outcome_variable], errors="coerce").dropna()
+            status = "success"
+            reason = None
+            u_statistic: float | None = None
+            p_value: float | None = None
+            if len(low_values) < 1 or len(high_values) < 1:
+                status = "unavailable"
+                reason = "insufficient_group_n"
+            elif low_values.nunique() < 2 and high_values.nunique() < 2:
+                status = "unavailable"
+                reason = "zero_variance"
+            else:
+                u_statistic, p_value = scipy_stats.mannwhitneyu(low_values, high_values, alternative="two-sided")
+                u_statistic = float(u_statistic)
+                p_value = float(p_value)
+            low_median = float(low_values.median()) if not low_values.empty else pd.NA
+            high_median = float(high_values.median()) if not high_values.empty else pd.NA
+            rows.append(
+                {
+                    "contrast_id": f"{score_variable}__{outcome_variable}__top_bottom_4",
+                    "unit_of_analysis": "team_semester",
+                    "score_variable": score_variable,
+                    "outcome_variable": outcome_variable,
+                    "group_rule": "top_bottom_fixed_n",
+                    "group_size_requested": CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE,
+                    "low_group_n": int(len(low_values)),
+                    "high_group_n": int(len(high_values)),
+                    "low_score_min": float(bottom[score_variable].min()),
+                    "low_score_max": float(bottom[score_variable].max()),
+                    "high_score_min": float(top[score_variable].min()),
+                    "high_score_max": float(top[score_variable].max()),
+                    "low_mean": float(low_values.mean()) if not low_values.empty else pd.NA,
+                    "low_median": low_median,
+                    "high_mean": float(high_values.mean()) if not high_values.empty else pd.NA,
+                    "high_median": high_median,
+                    "median_difference_high_minus_low": (high_median - low_median) if not pd.isna(low_median) and not pd.isna(high_median) else pd.NA,
+                    "cliffs_delta_high_vs_low": _cliffs_delta(low_values, high_values),
+                    "test": "mann_whitney_u",
+                    "u_statistic": u_statistic,
+                    "p_value": p_value,
+                    "status": status,
+                    "reason": reason,
+                    "interpretation": "exploratory_observational",
+                    "contract_version": CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION,
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def write_best_worst_project_contrasts(
+    contrasts: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist best/worst project contrasts and sidecar."""
+    required = {
+        "contrast_id",
+        "score_variable",
+        "outcome_variable",
+        "group_rule",
+        "low_group_n",
+        "high_group_n",
+        "low_median",
+        "high_median",
+        "cliffs_delta_high_vs_low",
+        "test",
+        "status",
+        "contract_version",
+    }
+    missing = required - set(contrasts.columns)
+    if missing:
+        raise ValueError(f"best_worst_project_contrasts output missing columns: {sorted(missing)}")
+    if contrasts.empty:
+        raise ValueError("best_worst_project_contrasts output is empty")
+    if contrasts["contrast_id"].duplicated().any():
+        raise ValueError("best_worst_project_contrasts has duplicate contrast_id rows")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    contrasts.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_best_worst_project_contrasts(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load persisted best/worst project contrasts."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["best_worst_project_contrasts"]["path"]))
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    _require_success_sidecar(panel_path)
+    panel_sidecar = panel_path.with_name(f"{panel_path.name}.metadata.json")
+    options = {
+        "stage": "best_worst_project_contrasts",
+        "contract_version": CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION,
+        "score_variables": list(CROSS_EVIDENCE_BEST_WORST_SCORE_VARIABLES),
+        "outcome_variables": list(CROSS_EVIDENCE_BEST_WORST_OUTCOME_VARIABLES),
+        "group_rule": "top_bottom_fixed_n",
+        "group_size": CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE,
+        "test": "mann_whitney_u_two_sided",
+        "effect_size": "cliffs_delta_high_vs_low",
+    }
+    checksum = input_checksum([panel_path, panel_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Best/worst project contrasts artifact is current: %s", output_path)
+        return pd.read_csv(output_path)
+
+    contrasts = compute_best_worst_project_contrasts(pd.read_parquet(panel_path))
+    invalidate_stale_artifact(output_path, checksum)
+    write_best_worst_project_contrasts(contrasts, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s best/worst contrast rows", len(contrasts))
+    return contrasts
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -1565,6 +1736,7 @@ def main() -> None:
     parser.add_argument("--late-instability-output", type=Path, default=None)
     parser.add_argument("--cross-evidence-panel-output", type=Path, default=None)
     parser.add_argument("--cross-evidence-correlations-output", type=Path, default=None)
+    parser.add_argument("--best-worst-contrasts-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -1576,6 +1748,7 @@ def main() -> None:
             "late_instability_metrics",
             "cross_evidence_panel",
             "cross_evidence_correlations",
+            "best_worst_project_contrasts",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -1590,6 +1763,7 @@ def main() -> None:
         "late_instability_metrics",
         "cross_evidence_panel",
         "cross_evidence_correlations",
+        "best_worst_project_contrasts",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -1626,6 +1800,11 @@ def main() -> None:
     if "cross_evidence_correlations" in selected:
         build_cross_evidence_correlations(
             output_path=args.cross_evidence_correlations_output,
+            force=args.force,
+        )
+    if "best_worst_project_contrasts" in selected:
+        build_best_worst_project_contrasts(
+            output_path=args.best_worst_contrasts_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
