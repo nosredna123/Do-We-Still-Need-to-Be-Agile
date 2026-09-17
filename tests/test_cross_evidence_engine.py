@@ -185,3 +185,62 @@ def test_build_file_category_churn_metrics_persists_and_skips_current_artifact(t
     assert metadata["contract_version"] == "cross-evidence-v1"
     assert first.equals(second)
     assert second.loc[0, "file_category"] == "source"
+
+
+def test_build_file_category_exclusions_payload_summarizes_unknown_missing_and_warnings() -> None:
+    engine = load_engine()
+    metrics = engine.compute_file_category_churn_metrics(
+        pd.DataFrame(
+            [
+                git_file_row("docs/schema.json", added=3, deleted=1),
+                git_file_row("dist/app.js", added=None, deleted=None, binary=True),
+                git_file_row("src/unknown.flow", added=1, deleted=0),
+            ]
+        )
+    )
+
+    payload = engine.build_file_category_exclusions_payload(metrics, source_checksum="checksum-v1")
+    exclusions = {item["reason"]: item for item in payload["exclusions"]}
+
+    assert payload["status"] == "success"
+    assert payload["contract_version"] == "cross-evidence-manifest-v1"
+    assert payload["schema_version"] == "file-category-exclusions-v1"
+    assert payload["input_checksum"] == "checksum-v1"
+    assert payload["summary"]["rows"] == 3
+    assert payload["sources"]["file_category_churn_metrics"]["unknown_event_n"] == 1
+    assert payload["summary"]["exclusion_reasons"]["unknown_file_category"] == 1
+    assert exclusions["unknown_file_category"]["n_affected_events"] == 1
+    assert exclusions["missing_line_counts"]["n_affected_events"] == 1
+    assert exclusions["category_warnings"]["n_affected_events"] == 2
+    assert exclusions["low_confidence_categories"]["n_affected_rows"] == 3
+    assert exclusions["unknown_file_category"]["affected_keys_sample"][0]["file_category"] == "unknown"
+
+
+def test_build_file_category_exclusions_report_persists_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    metrics_path = tmp_path / "file_category_churn_metrics.parquet"
+    output = tmp_path / "cross_evidence_manifest_exclusions.json"
+    metrics = engine.compute_file_category_churn_metrics(
+        pd.DataFrame(
+            [
+                git_file_row("docs/schema.json", added=3, deleted=1),
+                git_file_row("src/app.py", added=4, deleted=0),
+            ]
+        )
+    )
+    metrics.to_parquet(metrics_path, index=False)
+    metrics_path.with_name(f"{metrics_path.name}.metadata.json").write_text(
+        json.dumps({"status": "success", "input_checksum": "metrics"}),
+        encoding="utf-8",
+    )
+
+    first = engine.build_file_category_exclusions_report(metrics_path=metrics_path, output_path=output)
+    second = engine.build_file_category_exclusions_report(metrics_path=metrics_path, output_path=output)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-manifest-v1"
+    assert first == second
+    assert second["schema_version"] == "file-category-exclusions-v1"
+    assert second["sources"]["file_category_churn_metrics"]["rows"] == 2

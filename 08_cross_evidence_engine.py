@@ -14,7 +14,9 @@ import pandas as pd
 from pipeline_config import (
     CROSS_EVIDENCE_ARTIFACT_REGISTRY,
     CROSS_EVIDENCE_CONTRACT_VERSION,
+    CROSS_EVIDENCE_EXCLUSIONS_PATH,
     CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY,
+    CROSS_EVIDENCE_MANIFEST_VERSION,
     FILE_CATEGORY_DEFINITION_VERSION,
     FILE_CATEGORY_RULES,
 )
@@ -28,6 +30,8 @@ NORMAL_CONFIDENCE = 1.0
 WARNING_CONFIDENCE = 0.8
 UNKNOWN_CONFIDENCE = 0.5
 FILE_CATEGORY_CHURN_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+FILE_CATEGORY_EXCLUSIONS_CONTRACT_VERSION = CROSS_EVIDENCE_MANIFEST_VERSION
+FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION = "file-category-exclusions-v1"
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -41,6 +45,7 @@ FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "is_binary",
 }
 FILE_CATEGORY_CHURN_GROUP_COLUMNS = ["ID_Equipe", "Semestre", "temporal_marker", "file_category"]
+EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT = 50
 
 
 def _normalize_path(value: str | None) -> str:
@@ -291,19 +296,180 @@ def build_file_category_churn_metrics(
     return metrics
 
 
+def _affected_key_sample(frame: pd.DataFrame, *, limit: int = EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT) -> list[dict[str, object]]:
+    """Return a bounded stable sample of affected anonymized observation keys."""
+    key_columns = ["ID_Equipe", "Semestre", "temporal_marker", "file_category"]
+    if frame.empty:
+        return []
+    return [
+        {column: row[column] for column in key_columns}
+        for row in frame[key_columns].drop_duplicates().sort_values(key_columns).head(limit).to_dict("records")
+    ]
+
+
+def build_file_category_exclusions_payload(metrics: pd.DataFrame, *, source_checksum: str) -> dict[str, Any]:
+    """Build the CE-1.4 exclusions/warnings payload from aggregate metrics."""
+    unknown_rows = metrics.loc[metrics["file_category"] == "unknown"]
+    missing_line_rows = metrics.loc[metrics["line_count_missing_event_n"] > 0]
+    warning_rows = metrics.loc[metrics["category_warning_event_n"] > 0]
+    low_confidence_rows = metrics.loc[metrics["category_confidence_mean"] < NORMAL_CONFIDENCE]
+    sections = [
+        (
+            "unknown_file_category",
+            unknown_rows,
+            "event_n",
+            "File events classified as unknown by the versioned taxonomy.",
+        ),
+        (
+            "missing_line_counts",
+            missing_line_rows,
+            "line_count_missing_event_n",
+            "File events whose line counts were missing and treated as zero for churn aggregation.",
+        ),
+        (
+            "category_warnings",
+            warning_rows,
+            "category_warning_event_n",
+            "File events classified with a taxonomy warning.",
+        ),
+        (
+            "low_confidence_categories",
+            low_confidence_rows,
+            "event_n",
+            "Aggregate categories whose mean classification confidence is below 1.0.",
+        ),
+    ]
+    exclusions: list[dict[str, object]] = []
+    for reason, frame, count_column, description in sections:
+        n_affected_rows = int(len(frame))
+        n_affected_events = int(frame[count_column].sum()) if n_affected_rows else 0
+        exclusions.append(
+            {
+                "dataset": "file_category_churn_metrics",
+                "reason": reason,
+                "description": description,
+                "unit_of_analysis": "team_semester_cut_category",
+                "n_affected_rows": n_affected_rows,
+                "n_affected_events": n_affected_events,
+                "affected_keys_sample_limit": EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT,
+                "affected_keys_sample": _affected_key_sample(frame),
+            }
+        )
+
+    categories = metrics.groupby("file_category", dropna=False).agg(
+        rows=("file_category", "size"),
+        events=("event_n", "sum"),
+        churn_lines=("churn_lines", "sum"),
+        line_count_missing_events=("line_count_missing_event_n", "sum"),
+        warning_events=("category_warning_event_n", "sum"),
+    ).reset_index().sort_values("file_category")
+    summary = {
+        "rows": int(len(metrics)),
+        "event_n": int(metrics["event_n"].sum()),
+        "line_count_missing_event_n": int(metrics["line_count_missing_event_n"].sum()),
+        "category_warning_event_n": int(metrics["category_warning_event_n"].sum()),
+        "unknown_event_n": int(unknown_rows["event_n"].sum()) if not unknown_rows.empty else 0,
+        "exclusion_reasons": {
+            item["reason"]: item["n_affected_events"]
+            for item in exclusions
+        },
+    }
+    return {
+        "status": "success",
+        "contract_version": FILE_CATEGORY_EXCLUSIONS_CONTRACT_VERSION,
+        "schema_version": FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION,
+        "input_checksum": source_checksum,
+        "scope": "cross_evidence_file_category_taxonomy",
+        "file_category_definition_version": FILE_CATEGORY_DEFINITION_VERSION,
+        "summary": summary,
+        "options": {
+            "stage": "file_category_exclusions",
+            "source_artifact": "file_category_churn_metrics",
+            "schema_version": FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION,
+            "affected_key_sample_limit": EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT,
+            "raw_text_policy": "no_raw_text_fields_read_or_persisted",
+        },
+        "sources": {
+            "file_category_churn_metrics": {
+                "rows": summary["rows"],
+                "event_n": summary["event_n"],
+                "line_count_missing_event_n": summary["line_count_missing_event_n"],
+                "category_warning_event_n": summary["category_warning_event_n"],
+                "unknown_event_n": summary["unknown_event_n"],
+                "categories": categories.to_dict("records"),
+            }
+        },
+        "exclusions": exclusions,
+    }
+
+
+def write_json_artifact(payload: dict[str, Any], output_path: Path, *, source_checksum: str, options: dict[str, Any]) -> None:
+    """Persist a JSON artifact with a success sidecar."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(payload, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=str(payload.get("contract_version", CROSS_EVIDENCE_CONTRACT_VERSION)),
+        options=options,
+    )
+
+
+def build_file_category_exclusions_report(
+    *,
+    metrics_path: Path | None = None,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> dict[str, Any]:
+    """Build or load the CE-1.4 exclusions/warnings report."""
+    metrics_path = metrics_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["file_category_churn_metrics"]["path"]))
+    output_path = output_path or Path(CROSS_EVIDENCE_EXCLUSIONS_PATH)
+    metrics_sidecar = metrics_path.with_name(f"{metrics_path.name}.metadata.json")
+    _require_success_sidecar(metrics_path)
+    options = {
+        "stage": "file_category_exclusions",
+        "contract_version": FILE_CATEGORY_EXCLUSIONS_CONTRACT_VERSION,
+        "schema_version": FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION,
+        "file_category_definition_version": FILE_CATEGORY_DEFINITION_VERSION,
+        "source_artifact": metrics_path.as_posix(),
+        "affected_key_sample_limit": EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT,
+    }
+    checksum = input_checksum([metrics_path, metrics_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("File-category exclusions report is current: %s", output_path)
+        return json.loads(output_path.read_text(encoding="utf-8"))
+
+    metrics = pd.read_parquet(metrics_path)
+    payload = build_file_category_exclusions_payload(metrics, source_checksum=checksum)
+    invalidate_stale_artifact(output_path, checksum)
+    write_json_artifact(payload, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote file-category exclusions report: %s", output_path)
+    return payload
+
+
 def main() -> None:
     """Run the currently implemented cross-evidence artifact builders."""
     parser = argparse.ArgumentParser(description="Build cross-evidence extension artifacts")
     parser.add_argument("--lake-dir", type=Path, default=Path("data/lake"))
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
-    parser.add_argument("--only", choices=["file_category_churn_metrics"], nargs="+")
+    parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
+    parser.add_argument("--only", choices=["file_category_churn_metrics", "file_category_exclusions"], nargs="+")
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
-    selected = set(args.only or ["file_category_churn_metrics"])
+    selected = set(args.only or ["file_category_churn_metrics", "file_category_exclusions"])
+    metrics_path = args.file_category_churn_output
     if "file_category_churn_metrics" in selected:
         build_file_category_churn_metrics(
             lake_dir=args.lake_dir,
             output_path=args.file_category_churn_output,
+            force=args.force,
+        )
+    if "file_category_exclusions" in selected:
+        build_file_category_exclusions_report(
+            metrics_path=metrics_path,
+            output_path=args.file_category_exclusions_output,
             force=args.force,
         )
 
