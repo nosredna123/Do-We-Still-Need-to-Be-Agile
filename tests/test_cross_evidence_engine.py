@@ -951,3 +951,82 @@ def test_build_best_worst_project_contrasts_persists_and_skips_current_artifact(
     assert metadata["contract_version"] == "cross-evidence-best-worst-contrasts-v1"
     assert first["contrast_id"].tolist() == second["contrast_id"].tolist()
     assert second.loc[0, "test"] == "mann_whitney_u"
+
+
+def test_compute_leave_one_out_sensitivity_summarizes_all_declared_correlations() -> None:
+    engine = load_engine()
+    panel = correlation_panel()
+    correlations = engine.compute_cross_evidence_correlations(panel)
+
+    result = engine.compute_leave_one_out_sensitivity(panel, correlations)
+    row = result.loc[result["analysis_id"] == "scope_vs_source_churn_t3"].iloc[0]
+
+    assert len(result) == 7
+    assert row["test"] == "spearman_leave_one_out"
+    assert row["original_coefficient"] == pytest.approx(-1.0)
+    assert row["original_verdict"] == "supports"
+    assert row["loo_total_n"] == 5
+    assert row["loo_tested_n"] == 5
+    assert row["loo_supports_n"] == 5
+    assert row["loo_support_share"] == 1.0
+    assert row["robustness_class"] == "robust_all"
+    assert row["contract_version"] == "cross-evidence-leave-one-out-v1"
+
+
+def test_compute_leave_one_out_sensitivity_classifies_no_support() -> None:
+    engine = load_engine()
+    panel = correlation_panel()
+    panel["scope_applicability_mean_t3"] = range(1, 6)
+    correlations = engine.compute_cross_evidence_correlations(panel)
+
+    row = engine.compute_leave_one_out_sensitivity(panel, correlations).loc[
+        lambda frame: frame["analysis_id"] == "scope_vs_source_churn_t3"
+    ].iloc[0]
+
+    assert row["original_verdict"] == "contradicts"
+    assert row["loo_supports_n"] == 0
+    assert row["robustness_class"] == "no_support"
+
+
+def test_compute_leave_one_out_sensitivity_rejects_missing_inputs() -> None:
+    engine = load_engine()
+    panel = correlation_panel()
+    correlations = engine.compute_cross_evidence_correlations(panel)
+
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_leave_one_out_sensitivity(panel.drop(columns=["source_churn_t3"]), correlations)
+    with pytest.raises(ValueError, match="missing analysis row"):
+        engine.compute_leave_one_out_sensitivity(panel, correlations.iloc[1:])
+
+
+def test_build_leave_one_out_sensitivity_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    results = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    datasets.mkdir(parents=True)
+    results.mkdir(parents=True)
+    panel_path = datasets / "cross_evidence_panel.parquet"
+    correlations_path = results / "cross_evidence_correlations.csv"
+    output = results / "leave_one_out_sensitivity.csv"
+    panel = correlation_panel()
+    panel.to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    engine.compute_cross_evidence_correlations(panel).to_csv(correlations_path, index=False)
+    correlations_path.with_name(f"{correlations_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_leave_one_out_sensitivity(output_path=output)
+        second = engine.build_leave_one_out_sensitivity(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-leave-one-out-v1"
+    assert first["analysis_id"].tolist() == second["analysis_id"].tolist()
+    assert second.loc[0, "robustness_class"] == "robust_all"

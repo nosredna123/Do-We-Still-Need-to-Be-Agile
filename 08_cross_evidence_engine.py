@@ -41,6 +41,7 @@ LATE_INSTABILITY_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CROSS_EVIDENCE_PANEL_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION = "cross-evidence-correlations-v1"
 CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION = "cross-evidence-best-worst-contrasts-v1"
+CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION = "cross-evidence-leave-one-out-v1"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -1460,6 +1461,160 @@ def build_best_worst_project_contrasts(
     return contrasts
 
 
+def compute_leave_one_out_sensitivity(panel: pd.DataFrame, correlations: pd.DataFrame) -> pd.DataFrame:
+    """Summarize leave-one-out sensitivity for declared cross-evidence correlations."""
+    if "analysis_id" not in correlations.columns:
+        raise ValueError("cross_evidence_correlations missing analysis_id")
+    rows: list[dict[str, object]] = []
+    for analysis_id, spec in CROSS_EVIDENCE_CORRELATION_REGISTRY.items():
+        if analysis_id not in set(correlations["analysis_id"]):
+            raise ValueError(f"cross_evidence_correlations missing analysis row: {analysis_id}")
+        original = correlations.loc[correlations["analysis_id"] == analysis_id].iloc[0]
+        x_name = str(spec["x"])
+        y_name = str(spec["y"])
+        missing = [column for column in (x_name, y_name) if column not in panel.columns]
+        if missing:
+            raise ValueError(f"Leave-one-out {analysis_id} has missing columns: {missing}")
+        pair = panel[[*TEAM_SEMESTER_KEYS, x_name, y_name]].copy()
+        valid_pair = pair[[x_name, y_name]].apply(pd.to_numeric, errors="coerce").notna().all(axis=1)
+        pair = pair.loc[valid_pair].reset_index(drop=True)
+        coefficients: list[float] = []
+        p_values: list[float] = []
+        verdicts: list[str] = []
+        unavailable_n = 0
+        for index in range(len(pair)):
+            subset = pair.drop(index=index)
+            values = subset[[x_name, y_name]].apply(pd.to_numeric, errors="coerce").dropna()
+            if len(values) < 3 or values[x_name].nunique() < 2 or values[y_name].nunique() < 2:
+                unavailable_n += 1
+                continue
+            coefficient, p_value = spearmanr(values[x_name], values[y_name])
+            coefficient = float(coefficient)
+            p_value = float(p_value)
+            coefficients.append(coefficient)
+            p_values.append(p_value)
+            verdicts.append(_correlation_verdict(coefficient, p_value, str(spec["expected_direction"])))
+        tested_n = len(coefficients)
+        supports_n = sum(verdict == "supports" for verdict in verdicts)
+        if tested_n == 0 or supports_n == 0:
+            robustness = "no_support"
+        elif supports_n == tested_n and unavailable_n == 0:
+            robustness = "robust_all"
+        elif supports_n / tested_n >= 0.8:
+            robustness = "robust_most"
+        else:
+            robustness = "fragile"
+        rows.append(
+            {
+                "analysis_id": analysis_id,
+                "unit_of_analysis": "team_semester",
+                "test": "spearman_leave_one_out",
+                "priority": spec["priority"],
+                "x": x_name,
+                "y": y_name,
+                "expected_direction": spec["expected_direction"],
+                "narrative_acts": json.dumps(spec["narrative_acts"]),
+                "original_coefficient": original.get("coefficient", pd.NA),
+                "original_p_value": original.get("p_value", pd.NA),
+                "original_verdict": original.get("verdict", pd.NA),
+                "loo_total_n": int(len(pair)),
+                "loo_tested_n": int(tested_n),
+                "loo_unavailable_n": int(unavailable_n),
+                "loo_supports_n": int(supports_n),
+                "loo_support_share": float(supports_n / tested_n) if tested_n else 0.0,
+                "coefficient_min": min(coefficients) if coefficients else pd.NA,
+                "coefficient_median": float(pd.Series(coefficients).median()) if coefficients else pd.NA,
+                "coefficient_max": max(coefficients) if coefficients else pd.NA,
+                "p_value_min": min(p_values) if p_values else pd.NA,
+                "p_value_median": float(pd.Series(p_values).median()) if p_values else pd.NA,
+                "p_value_max": max(p_values) if p_values else pd.NA,
+                "robustness_class": robustness,
+                "contract_version": CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def write_leave_one_out_sensitivity(
+    sensitivity: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist leave-one-out sensitivity results and sidecar."""
+    required = {
+        "analysis_id",
+        "unit_of_analysis",
+        "test",
+        "loo_total_n",
+        "loo_tested_n",
+        "loo_supports_n",
+        "original_coefficient",
+        "original_p_value",
+        "original_verdict",
+        "coefficient_min",
+        "p_value_max",
+        "robustness_class",
+        "contract_version",
+    }
+    missing = required - set(sensitivity.columns)
+    if missing:
+        raise ValueError(f"leave_one_out_sensitivity output missing columns: {sorted(missing)}")
+    if sensitivity.empty:
+        raise ValueError("leave_one_out_sensitivity output is empty")
+    if sensitivity["analysis_id"].duplicated().any():
+        raise ValueError("leave_one_out_sensitivity has duplicate analysis_id rows")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    sensitivity.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_leave_one_out_sensitivity(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load leave-one-out sensitivity results."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["leave_one_out_sensitivity"]["path"]))
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    correlations_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_correlations"]["path"]))
+    for path in (panel_path, correlations_path):
+        _require_success_sidecar(path)
+    options = {
+        "stage": "leave_one_out_sensitivity",
+        "contract_version": CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION,
+        "registry": CROSS_EVIDENCE_CORRELATION_REGISTRY,
+        "robustness_policy": "robust_all_total_robust_most_ge_0_8_fragile_gt_0_no_support_eq_0",
+        "granularity": "one_row_per_analysis",
+    }
+    checksum = input_checksum(
+        [
+            panel_path,
+            panel_path.with_name(f"{panel_path.name}.metadata.json"),
+            correlations_path,
+            correlations_path.with_name(f"{correlations_path.name}.metadata.json"),
+        ],
+        options,
+    )
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Leave-one-out sensitivity artifact is current: %s", output_path)
+        return pd.read_csv(output_path)
+
+    sensitivity = compute_leave_one_out_sensitivity(pd.read_parquet(panel_path), pd.read_csv(correlations_path))
+    invalidate_stale_artifact(output_path, checksum)
+    write_leave_one_out_sensitivity(sensitivity, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s leave-one-out sensitivity rows", len(sensitivity))
+    return sensitivity
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -1737,6 +1892,7 @@ def main() -> None:
     parser.add_argument("--cross-evidence-panel-output", type=Path, default=None)
     parser.add_argument("--cross-evidence-correlations-output", type=Path, default=None)
     parser.add_argument("--best-worst-contrasts-output", type=Path, default=None)
+    parser.add_argument("--leave-one-out-sensitivity-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -1749,6 +1905,7 @@ def main() -> None:
             "cross_evidence_panel",
             "cross_evidence_correlations",
             "best_worst_project_contrasts",
+            "leave_one_out_sensitivity",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -1764,6 +1921,7 @@ def main() -> None:
         "cross_evidence_panel",
         "cross_evidence_correlations",
         "best_worst_project_contrasts",
+        "leave_one_out_sensitivity",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -1805,6 +1963,11 @@ def main() -> None:
     if "best_worst_project_contrasts" in selected:
         build_best_worst_project_contrasts(
             output_path=args.best_worst_contrasts_output,
+            force=args.force,
+        )
+    if "leave_one_out_sensitivity" in selected:
+        build_leave_one_out_sensitivity(
+            output_path=args.leave_one_out_sensitivity_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
