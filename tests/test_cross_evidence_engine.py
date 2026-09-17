@@ -499,6 +499,47 @@ def temporal_source_frames() -> dict[str, pd.DataFrame]:
     }
 
 
+def late_instability_source_frames() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    team = pd.DataFrame(
+        [
+            {
+                "ID_Equipe": "TEAM_1",
+                "Semestre": "2025.2",
+                "planning_rework_signal_t2_t3": 10,
+                "planning_artifact_activity_t3": 5,
+                "pi_line_delta_t3": 100,
+                "cc_total_t3": 1000,
+                "cc_per_source_loc_t3": 2.0,
+                "delta_dt_t2_t3": 0.1,
+            },
+            {
+                "ID_Equipe": "TEAM_2",
+                "Semestre": "2025.2",
+                "planning_rework_signal_t2_t3": 20,
+                "planning_artifact_activity_t3": 10,
+                "pi_line_delta_t3": 200,
+                "cc_total_t3": 2000,
+                "cc_per_source_loc_t3": 4.0,
+                "delta_dt_t2_t3": 0.2,
+            },
+        ]
+    )
+    file_category = pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T3", "file_category": "source", "event_n": 3, "churn_lines": 30},
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T3", "file_category": "config", "event_n": 2, "churn_lines": 10},
+            {"ID_Equipe": "TEAM_2", "Semestre": "2025.2", "temporal_marker": "T3", "file_category": "source", "event_n": 6, "churn_lines": 60},
+        ]
+    )
+    author = pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T3", "commits_per_author": 2.0, "commit_gini": 0.1, "active_author_pressure_status": "low", "churn_lines": 100},
+            {"ID_Equipe": "TEAM_2", "Semestre": "2025.2", "temporal_marker": "T3", "commits_per_author": 4.0, "commit_gini": 0.2, "active_author_pressure_status": "critical", "churn_lines": 200},
+        ]
+    )
+    return team, file_category, author
+
+
 def test_compute_temporal_escalation_metrics_summarizes_deltas_ratios_and_wilcoxon() -> None:
     engine = load_engine()
 
@@ -555,3 +596,83 @@ def test_build_temporal_escalation_metrics_persists_and_skips_current_artifact(t
     assert metadata["contract_version"] == "cross-evidence-v1"
     assert first.equals(second)
     assert set(second["metric_id"]) == {"planning_artifact_activity", "pi_line_delta", "cc_total", "cc_commit_n", "technical_complexity_mean"}
+
+
+def test_compute_late_instability_metrics_consolidates_components_and_index() -> None:
+    engine = load_engine()
+    team, file_category, author = late_instability_source_frames()
+
+    result = engine.compute_late_instability_metrics(team, file_category, author)
+    row = result.loc[result["ID_Equipe"] == "TEAM_2"].iloc[0]
+
+    assert len(result) == 2
+    assert row["source_churn_t3"] == 60
+    assert row["source_events_t3"] == 6
+    assert row["commits_per_author_t3"] == 4.0
+    assert row["commit_gini_t3"] == 0.2
+    assert row["active_author_pressure_status_t3"] == "critical"
+    assert row["late_instability_component_available_n"] == 7
+    assert row["late_instability_component_missing_n"] == 0
+    assert row["late_instability_index"] == 1.0
+    assert row["late_instability_observation_unit"] == "team_semester"
+    assert row["late_instability_contract_version"] == "cross-evidence-v1"
+
+
+def test_compute_late_instability_metrics_uses_available_rank_mean_when_component_missing() -> None:
+    engine = load_engine()
+    team, file_category, author = late_instability_source_frames()
+    file_category = file_category.loc[file_category["ID_Equipe"] != "TEAM_1"]
+
+    row = engine.compute_late_instability_metrics(team, file_category, author).loc[lambda frame: frame["ID_Equipe"] == "TEAM_1"].iloc[0]
+
+    assert pd.isna(row["source_churn_t3"])
+    assert row["late_instability_component_available_n"] == 5
+    assert row["late_instability_component_missing_n"] == 2
+    assert not pd.isna(row["late_instability_index"])
+
+
+def test_compute_late_instability_metrics_rejects_invalid_input() -> None:
+    engine = load_engine()
+    team, file_category, author = late_instability_source_frames()
+    with pytest.raises(ValueError, match="team_metrics missing columns"):
+        engine.compute_late_instability_metrics(team.drop(columns=["cc_total_t3"]), file_category, author)
+    duplicated_author = pd.concat([author, author.iloc[[0]]], ignore_index=True)
+    with pytest.raises(ValueError, match="duplicate T3 team-semester"):
+        engine.compute_late_instability_metrics(team, file_category, duplicated_author)
+
+
+def test_build_late_instability_metrics_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    analysis_dir = tmp_path / "analysis"
+    cross_dir = tmp_path / "cross" / "datasets"
+    analysis_dir.mkdir()
+    cross_dir.mkdir(parents=True)
+    output = tmp_path / "analysis" / "cross_evidence" / "datasets" / "late_instability_metrics.parquet"
+    team, file_category, author = late_instability_source_frames()
+    team_path = analysis_dir / "team_metrics.parquet"
+    team.to_parquet(team_path, index=False)
+    team_path.with_name(f"{team_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    file_path = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets" / "file_category_churn_metrics.parquet"
+    author_path = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets" / "author_pressure_metrics.parquet"
+    file_path.parent.mkdir(parents=True)
+    file_category.to_parquet(file_path, index=False)
+    author.to_parquet(author_path, index=False)
+    file_path.with_name(f"{file_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    author_path.with_name(f"{author_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_late_instability_metrics(analysis_dir=analysis_dir, output_path=output)
+        second = engine.build_late_instability_metrics(analysis_dir=analysis_dir, output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-v1"
+    assert first.equals(second)
+    assert second.loc[1, "late_instability_index"] == 1.0

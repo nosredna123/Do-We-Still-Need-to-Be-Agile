@@ -1,0 +1,22 @@
+{
+  "contract_version": "cross-evidence-v1",
+  "input_checksum": "5a8293e706838b79a7e20a4ed2935cbfb47548cc7ab141422ec827ef4f494195",
+  "options": {
+    "author_pressure_policy": "t3_observed_team_semester_cut",
+    "component_missing_policy": "mean_available_ranks_and_count_missing",
+    "contract_version": "cross-evidence-v1",
+    "index_components": [
+      "planning_rework_signal_t2_t3",
+      "planning_artifact_activity_t3",
+      "pi_line_delta_t3",
+      "source_churn_t3",
+      "source_events_t3",
+      "commits_per_author_t3",
+      "delta_dt_t2_t3"
+    ],
+    "index_definition": "mean_available_percentile_ranks_v1",
+    "source_churn_policy": "file_category_source_only_t3",
+    "stage": "late_instability_metrics"
+  },
+  "status": "success"
+}

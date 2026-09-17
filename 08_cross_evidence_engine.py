@@ -36,6 +36,7 @@ FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION = "file-category-exclusions-v1"
 EVALUATOR_OUTCOME_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 AUTHOR_PRESSURE_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 TEMPORAL_ESCALATION_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+LATE_INSTABILITY_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -92,6 +93,34 @@ AUTHOR_PRESSURE_REQUIRED_COLUMNS = set(TEAM_SEMESTER_CUT_KEYS) | {
     "files_changed",
 }
 AUTHOR_PRESSURE_STATUS_LABELS = ("low", "moderate", "high", "critical")
+LATE_INSTABILITY_TEAM_REQUIRED_COLUMNS = set(TEAM_SEMESTER_KEYS) | {
+    "planning_rework_signal_t2_t3",
+    "planning_artifact_activity_t3",
+    "pi_line_delta_t3",
+    "cc_total_t3",
+    "cc_per_source_loc_t3",
+    "delta_dt_t2_t3",
+}
+LATE_INSTABILITY_FILE_CATEGORY_REQUIRED_COLUMNS = set(TEAM_SEMESTER_CUT_KEYS) | {
+    "file_category",
+    "event_n",
+    "churn_lines",
+}
+LATE_INSTABILITY_AUTHOR_REQUIRED_COLUMNS = set(TEAM_SEMESTER_CUT_KEYS) | {
+    "commits_per_author",
+    "commit_gini",
+    "active_author_pressure_status",
+    "churn_lines",
+}
+LATE_INSTABILITY_INDEX_COMPONENTS = (
+    "planning_rework_signal_t2_t3",
+    "planning_artifact_activity_t3",
+    "pi_line_delta_t3",
+    "source_churn_t3",
+    "source_events_t3",
+    "commits_per_author_t3",
+    "delta_dt_t2_t3",
+)
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -683,6 +712,170 @@ def build_temporal_escalation_metrics(
     return metrics
 
 
+def compute_late_instability_metrics(
+    team_metrics: pd.DataFrame,
+    file_category_churn: pd.DataFrame,
+    author_pressure: pd.DataFrame,
+) -> pd.DataFrame:
+    """Consolidate late-cycle instability signals at team-semester level."""
+    missing_team = LATE_INSTABILITY_TEAM_REQUIRED_COLUMNS - set(team_metrics.columns)
+    if missing_team:
+        raise ValueError(f"team_metrics missing columns: {sorted(missing_team)}")
+    missing_file_category = LATE_INSTABILITY_FILE_CATEGORY_REQUIRED_COLUMNS - set(file_category_churn.columns)
+    if missing_file_category:
+        raise ValueError(f"file_category_churn_metrics missing columns: {sorted(missing_file_category)}")
+    missing_author = LATE_INSTABILITY_AUTHOR_REQUIRED_COLUMNS - set(author_pressure.columns)
+    if missing_author:
+        raise ValueError(f"author_pressure_metrics missing columns: {sorted(missing_author)}")
+    for name, frame, keys in (
+        ("team_metrics", team_metrics, TEAM_SEMESTER_KEYS),
+        ("file_category_churn_metrics", file_category_churn, TEAM_SEMESTER_CUT_KEYS),
+        ("author_pressure_metrics", author_pressure, TEAM_SEMESTER_CUT_KEYS),
+    ):
+        if frame[keys].isna().any().any():
+            raise ValueError(f"{name} keys must be non-null")
+    if team_metrics.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("team_metrics has duplicate team-semester keys")
+
+    t3_source = file_category_churn.loc[
+        (file_category_churn["temporal_marker"] == "T3")
+        & (file_category_churn["file_category"] == "source")
+    ]
+    if t3_source.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("source file-category churn has duplicate T3 team-semester rows")
+    source_t3 = t3_source.groupby(TEAM_SEMESTER_KEYS, as_index=False).agg(
+        source_churn_t3=("churn_lines", "sum"),
+        source_events_t3=("event_n", "sum"),
+    )
+
+    t3_author = author_pressure.loc[author_pressure["temporal_marker"] == "T3"].copy()
+    if t3_author.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("author_pressure_metrics has duplicate T3 team-semester rows")
+    t3_author = t3_author[
+        TEAM_SEMESTER_KEYS
+        + ["commits_per_author", "commit_gini", "active_author_pressure_status", "churn_lines"]
+    ].rename(
+        columns={
+            "commits_per_author": "commits_per_author_t3",
+            "commit_gini": "commit_gini_t3",
+            "active_author_pressure_status": "active_author_pressure_status_t3",
+            "churn_lines": "author_churn_lines_t3",
+        }
+    )
+
+    result = team_metrics[
+        TEAM_SEMESTER_KEYS
+        + [
+            "planning_rework_signal_t2_t3",
+            "planning_artifact_activity_t3",
+            "pi_line_delta_t3",
+            "cc_total_t3",
+            "cc_per_source_loc_t3",
+            "delta_dt_t2_t3",
+        ]
+    ].copy()
+    result = result.merge(source_t3, on=TEAM_SEMESTER_KEYS, how="left", validate="one_to_one")
+    result = result.merge(t3_author, on=TEAM_SEMESTER_KEYS, how="left", validate="one_to_one")
+
+    for component in LATE_INSTABILITY_INDEX_COMPONENTS:
+        values = pd.to_numeric(result[component], errors="coerce")
+        result[f"{component}_rank_pct"] = values.rank(method="average", pct=True)
+    rank_columns = [f"{component}_rank_pct" for component in LATE_INSTABILITY_INDEX_COMPONENTS]
+    result["late_instability_component_available_n"] = result[rank_columns].notna().sum(axis=1)
+    result["late_instability_component_missing_n"] = len(LATE_INSTABILITY_INDEX_COMPONENTS) - result["late_instability_component_available_n"]
+    result["late_instability_index"] = result[rank_columns].mean(axis=1, skipna=True)
+    result["late_instability_index_definition"] = "mean_available_percentile_ranks_v1"
+    result["late_instability_observation_unit"] = "team_semester"
+    result["late_instability_contract_version"] = LATE_INSTABILITY_CONTRACT_VERSION
+    return result.sort_values(TEAM_SEMESTER_KEYS).reset_index(drop=True)
+
+
+def write_late_instability_metrics(
+    metrics: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist late instability metrics and their sidecar."""
+    required = set(TEAM_SEMESTER_KEYS) | {
+        "planning_rework_signal_t2_t3",
+        "planning_artifact_activity_t3",
+        "pi_line_delta_t3",
+        "cc_total_t3",
+        "cc_per_source_loc_t3",
+        "source_churn_t3",
+        "source_events_t3",
+        "commits_per_author_t3",
+        "delta_dt_t2_t3",
+        "late_instability_index",
+        "late_instability_observation_unit",
+        "late_instability_contract_version",
+    }
+    missing = required - set(metrics.columns)
+    if missing:
+        raise ValueError(f"late_instability_metrics output missing columns: {sorted(missing)}")
+    if metrics.empty:
+        raise ValueError("late_instability_metrics output is empty")
+    if metrics.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("late_instability_metrics has duplicate team-semester keys")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    metrics.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=LATE_INSTABILITY_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_late_instability_metrics(
+    *,
+    analysis_dir: Path = Path("data/analysis"),
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the persisted late instability metrics artifact."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["late_instability_metrics"]["path"]))
+    team_entry = CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY["analysis.team_metrics"]
+    team_path = analysis_dir / Path(str(team_entry["path"])).name
+    team_sidecar = analysis_dir / Path(str(team_entry["metadata_path"])).name
+    file_category_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["file_category_churn_metrics"]["path"]))
+    file_category_sidecar = file_category_path.with_name(f"{file_category_path.name}.metadata.json")
+    author_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["author_pressure_metrics"]["path"]))
+    author_sidecar = author_path.with_name(f"{author_path.name}.metadata.json")
+    for path in (team_path, file_category_path, author_path):
+        _require_success_sidecar(path)
+    options = {
+        "stage": "late_instability_metrics",
+        "contract_version": LATE_INSTABILITY_CONTRACT_VERSION,
+        "index_definition": "mean_available_percentile_ranks_v1",
+        "index_components": list(LATE_INSTABILITY_INDEX_COMPONENTS),
+        "component_missing_policy": "mean_available_ranks_and_count_missing",
+        "source_churn_policy": "file_category_source_only_t3",
+        "author_pressure_policy": "t3_observed_team_semester_cut",
+    }
+    checksum = input_checksum(
+        [team_path, team_sidecar, file_category_path, file_category_sidecar, author_path, author_sidecar],
+        options,
+    )
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Late instability metrics artifact is current: %s", output_path)
+        return pd.read_parquet(output_path)
+
+    metrics = compute_late_instability_metrics(
+        pd.read_parquet(team_path),
+        pd.read_parquet(file_category_path),
+        pd.read_parquet(author_path),
+    )
+    invalidate_stale_artifact(output_path, checksum)
+    write_late_instability_metrics(metrics, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s late instability observations", len(metrics))
+    return metrics
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -956,6 +1149,7 @@ def main() -> None:
     parser.add_argument("--evaluator-outcome-output", type=Path, default=None)
     parser.add_argument("--author-pressure-output", type=Path, default=None)
     parser.add_argument("--temporal-escalation-output", type=Path, default=None)
+    parser.add_argument("--late-instability-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -964,6 +1158,7 @@ def main() -> None:
             "evaluator_outcome_metrics",
             "author_pressure_metrics",
             "temporal_escalation_metrics",
+            "late_instability_metrics",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -975,6 +1170,7 @@ def main() -> None:
         "evaluator_outcome_metrics",
         "author_pressure_metrics",
         "temporal_escalation_metrics",
+        "late_instability_metrics",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -995,6 +1191,12 @@ def main() -> None:
         build_temporal_escalation_metrics(
             analysis_dir=args.analysis_dir,
             output_path=args.temporal_escalation_output,
+            force=args.force,
+        )
+    if "late_instability_metrics" in selected:
+        build_late_instability_metrics(
+            analysis_dir=args.analysis_dir,
+            output_path=args.late_instability_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
