@@ -1,0 +1,145 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "e45d347bedaf36a51c6f9b167fd5dc194b883cadae38c41828de6ae38d675d35",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "transcript_nlp",
+      "column_count": 16,
+      "contract_version": "transcript-nlp-v1",
+      "kind": "parquet",
+      "manifest_summary": {
+        "coverage": {
+          "Semestre": [
+            "2025.2"
+          ],
+          "temporal_marker": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "n_rows": 100,
+        "n_unique_keys": 100,
+        "observation_key": [
+          "transcript_file"
+        ],
+        "unit_of_analysis": "transcript_session",
+        "variables_missingness": [
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "Semestre"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "coordination_friction_score"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "dominant_topics"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "evidence_summary_private"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "integration_risk_signal"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "model"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "planning_clarity_score"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "prompt_version"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "response_schema_version"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "rework_signal_score"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "session_id"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "status"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "temporal_marker"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "temporal_marker_source"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "transcript_file"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 100,
+            "name": "unit_of_analysis"
+          }
+        ]
+      },
+      "narrative_act_titles": [
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        3
+      ],
+      "producer_script": "04_nlp_qualitative_miner.py",
+      "relative_path": "data/analysis/transcript_nlp.parquet",
+      "row_count": 100,
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

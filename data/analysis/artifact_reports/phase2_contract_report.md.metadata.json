@@ -1,0 +1,264 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "eee1260fc61c91858fc1c959a86aba4dd3722af3107124e401197bdbec2a9bdf",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "phase2_contract_report",
+      "contract_version": "phase2-inputs-v1",
+      "contracts_summary": {
+        "evaluator_team_cuts": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 42
+        },
+        "git_commits": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 24,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 141,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 352,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 87,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 88,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 120,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 812
+        },
+        "git_files": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 273,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 2406,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 46584,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 438,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 494,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 846,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 51041
+        },
+        "git_repository_snapshots": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 42
+        },
+        "git_team_cuts": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 4,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 6,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 9,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 4,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 5,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 33
+        },
+        "student_responses": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 46,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 41,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 40,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 22,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 20,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "rows": 18,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 187
+        },
+        "transcript_sessions": {
+          "counts_by_semester_and_cut": [
+            {
+              "Semestre": "2025.2",
+              "rows": 35,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 37,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "rows": 28,
+              "temporal_marker": "T3"
+            }
+          ],
+          "total_rows": 100
+        }
+      },
+      "kind": "json",
+      "narrative_act_titles": [
+        "Ato 1 - O Teto Evolutivo do Agile (Context)",
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        1,
+        2,
+        3
+      ],
+      "producer_script": "phase2_contracts.py",
+      "relative_path": "data/analysis/phase2_contract_report.json",
+      "status": "success",
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

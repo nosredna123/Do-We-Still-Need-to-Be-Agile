@@ -1,0 +1,95 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "1311f92a8d78849ecc62b1ca2a41ff3e127303a77648d15fa09786862a349283",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "textual_cut_signals",
+      "column_count": 349,
+      "contract_version": "textual-cut-signals-v2",
+      "key_numeric_columns": {
+        "student_career_expectation_ai_dependency_score_iqr": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_career_expectation_ai_dependency_score_mode": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_career_expectation_ai_dependency_score_mode_n": {
+          "max": 46.0,
+          "mean": 31.166666666666668,
+          "median": 31.0,
+          "min": 18.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_career_expectation_ai_dependency_score_mode_share": {
+          "max": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_career_expectation_ai_dependency_score_q1": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_career_expectation_ai_dependency_score_q3": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_n": {
+          "max": 46.0,
+          "mean": 31.166666666666668,
+          "median": 31.0,
+          "min": 18.0,
+          "n_total": 6,
+          "n_valid": 6
+        },
+        "student_project_challenges_sentiment_score_median": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 6,
+          "n_valid": 6
+        }
+      },
+      "kind": "parquet",
+      "narrative_act_titles": [
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        3
+      ],
+      "producer_script": "04_nlp_qualitative_miner.py",
+      "relative_path": "data/analysis/textual_cut_signals.parquet",
+      "row_count": 6,
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

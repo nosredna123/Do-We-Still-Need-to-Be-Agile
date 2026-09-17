@@ -1,0 +1,4 @@
+2026-09-17 05:06:03,784 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260917T080603Z.txt
+2026-09-17 05:06:03,784 - __main__ - INFO - Running stage narrative-audit: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/07_artifact_narrative_reporter.py --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis --backend openai
+Narrative audit: written=23 skipped=0 verdict=conditional-go reason=no_significant_result_and_small_sample_reframe_as_exploratory
+2026-09-17 05:07:23,721 - __main__ - INFO - Finished stage narrative-audit status=success duration_seconds=79.9

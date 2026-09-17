@@ -294,3 +294,184 @@ def git_temporal_marker_for(semester: str, event_date: str) -> str:
     if parsed_date < t2_start:
         return "T2"
     return "T3"
+
+
+# --- Intermediary Phase 2.5: Artifact Narrative Audit (docs/02a) ---
+#
+# This registry declares, for every Phase 2 analytical artifact, what kind of
+# file it is, which narrative acts of docs/00b.narrative-arc.md it serves, and
+# (when applicable) which primary correlation/hypothesis analysis_ids from
+# STATISTICAL_ANALYSIS_REGISTRY / HYPOTHESIS_TEST_REGISTRY determine whether it
+# currently supports the thesis. Only artifacts directly examined by a
+# statistical test use "aggregate_from_tests"; every other artifact is
+# "descriptive_infrastructure" (it feeds a tested artifact but is not itself a
+# test outcome).
+NARRATIVE_REPORT_CONTRACT_VERSION = "artifact-narrative-report-v1"
+NARRATIVE_AUDIT_MIN_SUFFICIENT_TEAM_N = 30
+
+ARTIFACT_NARRATIVE_REGISTRY: dict[str, dict[str, object]] = {
+    "phase2_contract_report": {
+        "kind": "json",
+        "path": "phase2_contract_report.json",
+        "producer_script": "phase2_contracts.py",
+        "acts": [1, 2, 3],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "student_nlp": {
+        "kind": "parquet",
+        "path": "student_nlp.parquet",
+        "producer_script": "04_nlp_qualitative_miner.py",
+        "acts": [2, 3],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "transcript_nlp": {
+        "kind": "parquet",
+        "path": "transcript_nlp.parquet",
+        "producer_script": "04_nlp_qualitative_miner.py",
+        "acts": [3],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "textual_cut_signals": {
+        "kind": "parquet",
+        "path": "textual_cut_signals.parquet",
+        "producer_script": "04_nlp_qualitative_miner.py",
+        "acts": [3],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "planning_metrics": {
+        "kind": "parquet",
+        "path": "planning_metrics.parquet",
+        "producer_script": "05_metric_engine.py",
+        "acts": [2],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "code_churn_metrics": {
+        "kind": "parquet",
+        "path": "code_churn_metrics.parquet",
+        "producer_script": "05_metric_engine.py",
+        "acts": [2],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "technical_degradation_metrics": {
+        "kind": "parquet",
+        "path": "technical_degradation_metrics.parquet",
+        "producer_script": "05_metric_engine.py",
+        "acts": [2, 3],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "integration_friction_metrics": {
+        "kind": "parquet",
+        "path": "integration_friction_metrics.parquet",
+        "producer_script": "05_metric_engine.py",
+        "acts": [3],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "cut_context_metrics": {
+        "kind": "parquet",
+        "path": "cut_context_metrics.parquet",
+        "producer_script": "05_metric_engine.py",
+        "acts": [3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": ["context_ie_temporal_primary"],
+        "related_hypotheses": ["context_ie_high_vs_low_rework_primary"],
+    },
+    "team_metrics": {
+        "kind": "parquet",
+        "path": "team_metrics.parquet",
+        "producer_script": "05_metric_engine.py",
+        "acts": [2, 3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": ["pi_vs_cc_primary", "pi_vs_delta_dt_primary", "ai_vs_cc_primary"],
+        "related_hypotheses": ["pi_high_vs_low_cc_primary", "ai_high_vs_low_cc_primary"],
+        "exclusions_path": "team_metrics_exclusions.json",
+    },
+    "statistical_dataset_manifest": {
+        "kind": "json",
+        "path": "statistical_dataset_manifest.json",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [2, 3, 4],
+        "verdict_mode": "descriptive_infrastructure",
+        "exclusions_path": "statistical_dataset_manifest_exclusions.json",
+    },
+    "correlation_results": {
+        "kind": "csv",
+        "path": "correlation_results.csv",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [2, 3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": list(STATISTICAL_ANALYSIS_REGISTRY),
+        "related_hypotheses": [],
+    },
+    "hypothesis_results": {
+        "kind": "csv",
+        "path": "hypothesis_results.csv",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [2, 3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": [],
+        "related_hypotheses": list(HYPOTHESIS_TEST_REGISTRY),
+    },
+    "figure_pi_vs_cc": {
+        "kind": "figure",
+        "figure_id": "pi_vs_cc",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [2],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": ["pi_vs_cc_primary"],
+        "related_hypotheses": ["pi_high_vs_low_cc_primary"],
+    },
+    "figure_cc_by_temporal_cut": {
+        "kind": "figure",
+        "figure_id": "cc_by_temporal_cut",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [2],
+        "verdict_mode": "descriptive_infrastructure",
+    },
+    "figure_delta_dt_by_team_semester": {
+        "kind": "figure",
+        "figure_id": "delta_dt_by_team_semester",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [2, 3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": ["pi_vs_delta_dt_primary"],
+        "related_hypotheses": [],
+    },
+    "figure_ai_before_t3": {
+        "kind": "figure",
+        "figure_id": "ai_before_t3",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": ["ai_vs_cc_primary"],
+        "related_hypotheses": ["ai_high_vs_low_cc_primary"],
+    },
+    "figure_ie_by_cut_or_corpus": {
+        "kind": "figure",
+        "figure_id": "ie_by_cut_or_corpus",
+        "producer_script": "06_statistical_analyzer.py",
+        "acts": [3],
+        "verdict_mode": "aggregate_from_tests",
+        "related_correlations": ["context_ie_temporal_primary"],
+        "related_hypotheses": ["context_ie_high_vs_low_rework_primary"],
+    },
+}
+
+# One synthesis report per act of docs/00b.narrative-arc.md.
+NARRATIVE_ACT_REGISTRY: dict[int, dict[str, str]] = {
+    1: {
+        "slug": "evolutionary_ceiling",
+        "title": "Ato 1 - O Teto Evolutivo do Agile (Context)",
+    },
+    2: {
+        "slug": "planning_debt",
+        "title": "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+    },
+    3: {
+        "slug": "human_factor",
+        "title": "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)",
+    },
+    4: {
+        "slug": "value_inversion",
+        "title": "Ato 4 - A Inversao de Valores na Era da IA (Conclusion)",
+    },
+}

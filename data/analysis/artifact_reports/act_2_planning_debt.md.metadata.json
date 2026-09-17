@@ -1,0 +1,70 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "0f651159421f8fae42fe3c51ff786ddb0f8a1a21b04a86dc041a0436b8b9d9e7",
+  "options": {
+    "backend": "openai",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "act_description": "Argues that skipping BDUF does not remove planning work; it defers and multiplies it as Planning Debt, visible as structural drift and as human/computational waste such as Code Churn.",
+      "act_number": 2,
+      "act_status": "unsupported_by_current_tests",
+      "act_title": "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+      "artifact_verdicts": [
+        {
+          "artifact_id": "phase2_contract_report",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "student_nlp",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "planning_metrics",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "code_churn_metrics",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "technical_degradation_metrics",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "team_metrics",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "statistical_dataset_manifest",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "correlation_results",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "hypothesis_results",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "figure_pi_vs_cc",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "figure_cc_by_temporal_cut",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "figure_delta_dt_by_team_semester",
+          "verdict": "inconclusive"
+        }
+      ],
+      "verdict_counts": {
+        "descriptive_infrastructure": 7,
+        "inconclusive": 5
+      }
+    },
+    "prompt_version": "act-synthesis-v1"
+  },
+  "status": "success"
+}

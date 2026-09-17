@@ -1,0 +1,105 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "63a1c98ad90c348eda26cbda77f42ed355d4f1125c0644f45e69481ee362bcfb",
+  "options": {
+    "backend": "openai",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "count_supports": 0,
+      "count_tested": 5,
+      "evidence_rows": [
+        {
+          "analysis_id": "pi_vs_cc_primary",
+          "coefficient_or_statistic": -0.0067666495245095,
+          "n_valid": 14,
+          "p_value": 0.9816838660605892,
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "pi_vs_delta_dt_primary",
+          "coefficient_or_statistic": -0.0147096475119091,
+          "n_valid": 14,
+          "p_value": 0.960194880594909,
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "ai_vs_cc_primary",
+          "coefficient_or_statistic": 0.2142857142857143,
+          "n_valid": 7,
+          "p_value": 0.6445115810207203,
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "context_ie_temporal_primary",
+          "coefficient_or_statistic": null,
+          "n_valid": 3,
+          "p_value": null,
+          "status": "unavailable",
+          "unit_of_analysis": "cut_context"
+        },
+        {
+          "analysis_id": "pi_high_vs_low_cc_primary",
+          "coefficient_or_statistic": 21.0,
+          "n_valid": 14,
+          "p_value": 0.7103729603729605,
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "ai_high_vs_low_cc_primary",
+          "coefficient_or_statistic": 6.0,
+          "n_valid": 7,
+          "p_value": 1.0,
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "context_ie_high_vs_low_rework_primary",
+          "coefficient_or_statistic": null,
+          "n_valid": 3,
+          "p_value": null,
+          "status": "unavailable",
+          "unit_of_analysis": "cut_context"
+        }
+      ],
+      "remediation_options": [
+        "Collect additional semesters/teams to raise team_semester n toward the configured sufficiency threshold.",
+        "Reframe Phase 3/4 claims as exploratory/descriptive case-study findings rather than confirmatory results.",
+        "Expand qualitative triangulation (transcripts, open-ended responses) to compensate for low quantitative power.",
+        "Add repository-level covariates (team size, prior experience) to explain variance beyond the current primary pairs."
+      ],
+      "report_index": [
+        "data/analysis/artifact_reports/act_1_evolutionary_ceiling.md",
+        "data/analysis/artifact_reports/act_2_planning_debt.md",
+        "data/analysis/artifact_reports/act_3_human_factor.md",
+        "data/analysis/artifact_reports/act_4_value_inversion.md",
+        "data/analysis/artifact_reports/code_churn_metrics.md",
+        "data/analysis/artifact_reports/correlation_results.md",
+        "data/analysis/artifact_reports/cut_context_metrics.md",
+        "data/analysis/artifact_reports/figure_ai_before_t3.md",
+        "data/analysis/artifact_reports/figure_cc_by_temporal_cut.md",
+        "data/analysis/artifact_reports/figure_delta_dt_by_team_semester.md",
+        "data/analysis/artifact_reports/figure_ie_by_cut_or_corpus.md",
+        "data/analysis/artifact_reports/figure_pi_vs_cc.md",
+        "data/analysis/artifact_reports/hypothesis_results.md",
+        "data/analysis/artifact_reports/integration_friction_metrics.md",
+        "data/analysis/artifact_reports/phase2_contract_report.md",
+        "data/analysis/artifact_reports/planning_metrics.md",
+        "data/analysis/artifact_reports/statistical_dataset_manifest.md",
+        "data/analysis/artifact_reports/student_nlp.md",
+        "data/analysis/artifact_reports/team_metrics.md",
+        "data/analysis/artifact_reports/technical_degradation_metrics.md",
+        "data/analysis/artifact_reports/textual_cut_signals.md",
+        "data/analysis/artifact_reports/transcript_nlp.md"
+      ],
+      "team_semester_n": 14,
+      "verdict": "conditional-go",
+      "verdict_reason": "no_significant_result_and_small_sample_reframe_as_exploratory"
+    },
+    "prompt_version": "audit-verdict-v1"
+  },
+  "status": "success"
+}

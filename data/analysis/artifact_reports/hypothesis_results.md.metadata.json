@@ -1,0 +1,111 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "110c4f7a8b6018b8eb9cc6f39befefd88b6b69a717d32e2be91dcbb439a68477",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "hypothesis_results",
+      "contract_version": "mann-whitney-hypothesis-results-v1",
+      "kind": "csv",
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "producer_script": "06_statistical_analyzer.py",
+      "relative_path": "data/analysis/hypothesis_results.csv",
+      "row_count": 3,
+      "rows": [
+        {
+          "analysis_id": "pi_high_vs_low_cc_primary",
+          "group_variable": "pi_file_count_t1",
+          "interpretation": "exploratory_observational",
+          "multiple_testing_correction": "none_v1",
+          "n_group_high": 7,
+          "n_group_low": 7,
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "outcome_variable": "cc_per_source_loc_t3",
+          "p_value": 0.7103729603729605,
+          "priority": "primary",
+          "reason": null,
+          "split_median": 2.0,
+          "split_rule": "median_low_le_high_gt",
+          "status": "success",
+          "test": "mann_whitney_u",
+          "u_statistic": 21.0,
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "ai_high_vs_low_cc_primary",
+          "group_variable": "ai_max_author_share_before_t3_window",
+          "interpretation": "exploratory_observational",
+          "multiple_testing_correction": "none_v1",
+          "n_group_high": 3,
+          "n_group_low": 4,
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "outcome_variable": "cc_total_t3",
+          "p_value": 1.0,
+          "priority": "primary",
+          "reason": null,
+          "split_median": 0.5111111111111111,
+          "split_rule": "median_low_le_high_gt",
+          "status": "success",
+          "test": "mann_whitney_u",
+          "u_statistic": 6.0,
+          "unit_of_analysis": "team_semester"
+        },
+        {
+          "analysis_id": "context_ie_high_vs_low_rework_primary",
+          "group_variable": "ie_transcript_coordination_friction_score_mean",
+          "interpretation": "exploratory_observational",
+          "multiple_testing_correction": "none_v1",
+          "n_group_high": 0,
+          "n_group_low": 3,
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "outcome_variable": "ie_transcript_rework_signal_score_mean",
+          "p_value": null,
+          "priority": "primary",
+          "reason": "insufficient_group_n",
+          "split_median": 0.0,
+          "split_rule": "median_low_le_high_gt",
+          "status": "unavailable",
+          "test": "mann_whitney_u",
+          "u_statistic": null,
+          "unit_of_analysis": "cut_context"
+        }
+      ],
+      "verdict_summary": {
+        "overall": "inconclusive",
+        "tests": [
+          {
+            "analysis_id": "pi_high_vs_low_cc_primary",
+            "kind": "hypothesis",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "ai_high_vs_low_cc_primary",
+            "kind": "hypothesis",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "context_ie_high_vs_low_rework_primary",
+            "kind": "hypothesis",
+            "verdict": "unavailable"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

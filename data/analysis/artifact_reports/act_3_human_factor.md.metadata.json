@@ -1,0 +1,79 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "ba49f333a840b64348d4a06dcc4e6c9c5675c5ef56164fd95bd2c96ba306f3b0",
+  "options": {
+    "backend": "openai",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "act_description": "Argues that skipping upfront design collapses a team's asynchronous coordination capacity, producing cognitive overload and a late-stage integration bottleneck (the 'hero developer' pattern).",
+      "act_number": 3,
+      "act_status": "unsupported_by_current_tests",
+      "act_title": "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)",
+      "artifact_verdicts": [
+        {
+          "artifact_id": "phase2_contract_report",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "student_nlp",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "transcript_nlp",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "textual_cut_signals",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "technical_degradation_metrics",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "integration_friction_metrics",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "cut_context_metrics",
+          "verdict": "unavailable"
+        },
+        {
+          "artifact_id": "team_metrics",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "statistical_dataset_manifest",
+          "verdict": "descriptive_infrastructure"
+        },
+        {
+          "artifact_id": "correlation_results",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "hypothesis_results",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "figure_delta_dt_by_team_semester",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "figure_ai_before_t3",
+          "verdict": "inconclusive"
+        },
+        {
+          "artifact_id": "figure_ie_by_cut_or_corpus",
+          "verdict": "unavailable"
+        }
+      ],
+      "verdict_counts": {
+        "descriptive_infrastructure": 7,
+        "inconclusive": 5,
+        "unavailable": 2
+      }
+    },
+    "prompt_version": "act-synthesis-v1"
+  },
+  "status": "success"
+}

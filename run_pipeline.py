@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 PYTHON_EXECUTABLE = str(VENV_PYTHON) if VENV_PYTHON.is_file() else sys.executable
 STAGES = (
     "cleanup", "prepare", "transcribe", "ner", "anonymize", "git", "lake",
-    "repo-snapshots", "contracts", "nlp", "metrics", "stats",
+    "repo-snapshots", "contracts", "nlp", "metrics", "stats", "narrative-audit",
 )
 STAGE_SCRIPTS = {
     "cleanup": "04_cleanup.py",
@@ -45,6 +45,7 @@ STAGE_SCRIPTS = {
     "nlp": "04_nlp_qualitative_miner.py",
     "metrics": "05_metric_engine.py",
     "stats": "06_statistical_analyzer.py",
+    "narrative-audit": "07_artifact_narrative_reporter.py",
 }
 
 
@@ -131,6 +132,15 @@ def build_stage_command(
                 str(PROJECT_ROOT / "data" / "analysis" / "team_metrics.parquet"),
             ]
         )
+    if stage == "narrative-audit":
+        command.extend(
+            [
+                "--analysis-dir",
+                str(PROJECT_ROOT / "data" / "analysis"),
+                "--backend",
+                nlp_backend,
+            ]
+        )
     if force:
         command.append("--force")
     if limite is not None and stage in {"prepare", "transcribe", "ner", "anonymize"}:
@@ -144,14 +154,14 @@ def validate_dry_run_requirements(stages: list[str], nlp_backend: str) -> None:
         script = PROJECT_ROOT / STAGE_SCRIPTS[stage]
         if not script.is_file():
             raise FileNotFoundError(f"Stage script not found: {script}")
-    if any(stage in stages for stage in ("nlp", "metrics", "stats")):
+    if any(stage in stages for stage in ("nlp", "metrics", "stats", "narrative-audit")):
         lake_dir = PROJECT_ROOT / "data" / "lake"
         if not lake_dir.is_dir():
             raise FileNotFoundError(f"Phase 2 lake directory not found: {lake_dir}")
         contract_report = PROJECT_ROOT / "data" / "analysis" / "phase2_contract_report.json"
         if not contract_report.is_file():
             raise FileNotFoundError(f"Phase 2 contract report not found: {contract_report}")
-    if "nlp" in stages and nlp_backend not in {"openai", "mock"}:
+    if any(stage in stages for stage in ("nlp", "narrative-audit")) and nlp_backend not in {"openai", "mock"}:
         raise ValueError(f"Unsupported NLP backend: {nlp_backend}")
 
 

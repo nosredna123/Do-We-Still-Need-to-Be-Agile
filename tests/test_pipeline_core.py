@@ -245,6 +245,7 @@ class PipelineCoreTests(unittest.TestCase):
             [
                 "prepare", "transcribe", "ner", "anonymize",
                 "git", "lake", "repo-snapshots", "contracts", "nlp", "metrics", "stats",
+                "narrative-audit",
             ],
             orchestrator.resolve_stages(None, None, None),
         )

@@ -1,0 +1,58 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "397e15b4467b16f7e1e27dfb123fa033c8417b81c94d7d1751867702e7dc69e5",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "figure_ai_before_t3",
+      "category": "prioritarias",
+      "kind": "figure",
+      "limitations": [
+        "available AI window observations only"
+      ],
+      "n_missing": 0,
+      "n_total": 7,
+      "n_valid": 7,
+      "narrative_act_titles": [
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        3
+      ],
+      "producer_script": "06_statistical_analyzer.py",
+      "relative_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/ai_before_t3.html",
+      "scale_notes": [
+        "linear author share",
+        "linear churn"
+      ],
+      "source": "team_metrics.parquet",
+      "transformations": [
+        "complete_case_pair",
+        "size_by_commit_count"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "ai_max_author_share_before_t3_window",
+        "ai_churn_before_t3_window"
+      ],
+      "verdict_summary": {
+        "overall": "inconclusive",
+        "tests": [
+          {
+            "analysis_id": "ai_vs_cc_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "ai_high_vs_low_cc_primary",
+            "kind": "hypothesis",
+            "verdict": "inconclusive"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

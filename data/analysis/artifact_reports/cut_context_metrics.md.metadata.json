@@ -1,0 +1,2192 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "8808137390ca25ba37995bde74e3097d3bd7d259e7b3df77b72bf8dd837230d2",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "cut_context_metrics",
+      "column_count": 355,
+      "contract_version": "cut-context-metrics-v1",
+      "kind": "parquet",
+      "manifest_summary": {
+        "coverage": {
+          "Semestre": [
+            "2025.2",
+            "2026.1"
+          ],
+          "temporal_marker": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "n_rows": 6,
+        "n_unique_keys": 6,
+        "observation_key": [
+          "Semestre",
+          "temporal_marker"
+        ],
+        "unit_of_analysis": "cut_context",
+        "variables_missingness": [
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "Semestre"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "ie_definition_version"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "ie_transcript_available"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_median"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_mode"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_mode_share"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_n_missing"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_n_total"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_std"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_coordination_friction_score_std_ddof"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_dominant_topic_counts"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_dominant_topic_shares"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_dominant_topics"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_integration_risk_mode"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_integration_risk_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_integration_risk_mode_share"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_median"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_mode"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_mode_share"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_n_missing"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_n_total"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_std"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_planning_clarity_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_median"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_mode"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_mode_share"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_n_missing"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_n_total"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_std"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_rework_signal_score_std_ddof"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "ie_transcript_unavailable_reason"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "statistical_summary_version"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_ai_dependency_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_cognitive_load_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_benefit_sentiment_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_ai_dependency_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_cognitive_load_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_ai_career_impact_5y_sentiment_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_ai_dependency_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_cognitive_load_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_autonomy_tool_dependency_sentiment_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_ai_dependency_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_cognitive_load_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_career_expectation_sentiment_score_std_ddof"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_ai_dependency_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_cognitive_load_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_challenges_sentiment_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_ai_dependency_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_cognitive_load_score_std_ddof"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_iqr"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_mean"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_median"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_mode"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_mode_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_mode_share"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_n_missing"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_n_total"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_n_valid"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_q1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_q3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_quantile_method"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_scale_type"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_scale_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_std"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_project_feeling_sentiment_score_std_ddof"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "student_response_n"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "temporal_marker"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "transcript_observation_n"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 3,
+            "n_total": 6,
+            "name": "transcript_session_n"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 6,
+            "name": "unit_of_analysis"
+          }
+        ]
+      },
+      "narrative_act_titles": [
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        3
+      ],
+      "producer_script": "05_metric_engine.py",
+      "relative_path": "data/analysis/cut_context_metrics.parquet",
+      "row_count": 6,
+      "verdict_summary": {
+        "overall": "unavailable",
+        "tests": [
+          {
+            "analysis_id": "context_ie_temporal_primary",
+            "kind": "correlation",
+            "verdict": "unavailable"
+          },
+          {
+            "analysis_id": "context_ie_high_vs_low_rework_primary",
+            "kind": "hypothesis",
+            "verdict": "unavailable"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

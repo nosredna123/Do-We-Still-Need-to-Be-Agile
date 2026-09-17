@@ -1,0 +1,22 @@
+## What it is
+The granularity/unit of analysis is "team_semester" with a row count of 4. The producer script is "06_statistical_analyzer.py" and the contract version is "spearman-correlation-results-v1".
+
+## How it was built
+The analytical artifact was constructed using a statistical analysis script that performed Spearman correlation tests on various pairs of variables related to team performance over semesters. The analysis aimed to identify potential relationships between different metrics, such as file counts and code quality indicators.
+
+## Narrative binding
+The narrative acts are 2 and 3. They are meant to support or falsify the claims in "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)" and "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)".
+
+## What the current data actually shows
+- For the analysis "pi_vs_cc_primary": n = 14, p-value = 0.9816838660605892, coefficient = -0.0067666495245095, missingness = 0.
+- For the analysis "pi_vs_delta_dt_primary": n = 14, p-value = 0.960194880594909, coefficient = -0.0147096475119091, missingness = 0.
+- For the analysis "ai_vs_cc_primary": n = 7, p-value = 0.6445115810207203, coefficient = 0.2142857142857143, missingness = 7.
+- For the analysis "context_ie_temporal_primary": n = 3, p-value = null, coefficient = null, missingness = 3.
+
+## Contribution assessment
+The deterministic verdict is "inconclusive". This is justified as all correlation tests resulted in inconclusive outcomes, with p-values indicating non-significant relationships (e.g., p = 0.9817 for "pi_vs_cc_primary" and p = 0.9602 for "pi_vs_delta_dt_primary").
+
+## Known limitations
+- The analysis "ai_vs_cc_primary" had a small sample size (n < 10), which may affect the reliability of the results.
+- The analysis "context_ie_temporal_primary" was unavailable due to zero variance.
+- Exclusions summary is not provided.

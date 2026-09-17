@@ -1,0 +1,95 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "f508cb48467443ee92e1bf191b37887722697994ae33a7f65543d43112fad04f",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "integration_friction_metrics",
+      "column_count": 61,
+      "contract_version": "integration-friction-metrics-v1",
+      "key_numeric_columns": {
+        "ai_author_n_before_t3_window": {
+          "max": 5.0,
+          "mean": 1.8571428571428572,
+          "median": 1.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_author_share_n_missing_t2": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_author_share_n_missing_t3": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_author_share_n_valid_before_t3_window": {
+          "max": 5.0,
+          "mean": 1.8571428571428572,
+          "median": 1.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_churn_before_t3_window": {
+          "max": 31713.0,
+          "mean": 5150.571428571428,
+          "median": 187.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_commit_n_before_t3_window": {
+          "max": 51.0,
+          "mean": 10.214285714285714,
+          "median": 3.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_commit_n_t1": {
+          "max": 40.0,
+          "mean": 7.928571428571429,
+          "median": 4.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "ai_gini_t3": {
+          "max": 0.5302325581395348,
+          "mean": 0.2473397745718178,
+          "median": 0.2055322128851541,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        }
+      },
+      "kind": "parquet",
+      "narrative_act_titles": [
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        3
+      ],
+      "producer_script": "05_metric_engine.py",
+      "relative_path": "data/analysis/integration_friction_metrics.parquet",
+      "row_count": 14,
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

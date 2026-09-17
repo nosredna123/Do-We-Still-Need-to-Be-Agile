@@ -1,0 +1,1199 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "4834c8bfc4d39b5cd78a482af644f25193f24edcf7bab317b5ccbfced0e6321f",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "team_metrics",
+      "column_count": 183,
+      "contract_version": "team-metrics-v1",
+      "exclusions_summary": {
+        "contract_version": "team-metrics-exclusions-v1",
+        "sources": {
+          "code_churn": {
+            "affected_count": 0,
+            "affected_reasons": [],
+            "rows": 14
+          },
+          "integration_friction": {
+            "affected_count": 7,
+            "affected_reasons": [
+              "one_or_more_cut_concentration_unavailable"
+            ],
+            "rows": 14
+          },
+          "planning": {
+            "affected_count": 0,
+            "affected_reasons": [],
+            "rows": 14
+          },
+          "technical_degradation": {
+            "affected_count": 0,
+            "affected_reasons": [],
+            "rows": 14
+          }
+        }
+      },
+      "kind": "parquet",
+      "manifest_summary": {
+        "coverage": {
+          "Semestre": [
+            "2025.2",
+            "2026.1"
+          ]
+        },
+        "n_rows": 14,
+        "n_unique_keys": 14,
+        "observation_key": [
+          "ID_Equipe",
+          "Semestre"
+        ],
+        "unit_of_analysis": "team_semester",
+        "variables_missingness": [
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ID_Equipe"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "Semestre"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_activity_available_t1"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_activity_available_t2"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_activity_available_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_activity_status_t1"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_activity_status_t2"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_activity_status_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_n_before_t3_window"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_n_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_n_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_n_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "ai_author_share_iqr_before_t3_window"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "ai_author_share_iqr_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "ai_author_share_iqr_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_iqr_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "ai_author_share_median_before_t3_window"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "ai_author_share_median_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "ai_author_share_median_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_median_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_missing_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_missing_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_missing_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_valid_before_t3_window"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_valid_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_valid_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_author_share_n_valid_t3"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_available"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_churn_before_t3_window"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_churn_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_churn_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_churn_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_commit_n_before_t3_window"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_commit_n_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_commit_n_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_commit_n_t3"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_concentration_available_t1"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_concentration_available_t2"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_concentration_available_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_definition_version"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "ai_gini_before_t3_window"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "ai_gini_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "ai_gini_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_gini_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "ai_max_author_share_before_t3_window"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "ai_max_author_share_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "ai_max_author_share_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_max_author_share_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_observation_unit"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_ref_available_before_t3_window"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_ref_available_t1"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_ref_available_t2"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_ref_available_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "ai_ref_unavailable_reason_t1"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "ai_ref_unavailable_reason_t2"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "ai_ref_unavailable_reason_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_t3_window_hours"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "ai_unavailable_reason"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_window_available"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "ai_window_bounds"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "ai_window_unavailable_reason"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_activity_status_t1"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_activity_status_t2"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_activity_status_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_binary_file_events_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_binary_file_events_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_binary_file_events_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_binary_policy"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_n_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_n_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_n_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_share_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_share_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_share_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_mode_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_missing_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_missing_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_missing_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_total_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_total_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_total_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_valid_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_valid_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_churn_n_valid_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_n_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_n_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_commit_n_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_definition_version"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_denominator_kind"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_iqr_per_commit_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_iqr_per_commit_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_iqr_per_commit_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_mean_7d"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_mean_per_commit_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_mean_per_commit_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_mean_per_commit_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_median_per_commit_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_median_per_commit_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_median_per_commit_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_observation_unit"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_peak_7d"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_peak_7d_temporal_marker"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 5,
+            "n_total": 14,
+            "name": "cc_per_changed_file_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_per_changed_file_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_per_changed_file_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "cc_per_source_loc_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "cc_per_source_loc_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_per_source_loc_t3"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_source_loc_available_t1"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_source_loc_available_t2"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_source_loc_available_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "cc_source_loc_unavailable_reason_t1"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 10,
+            "n_total": 14,
+            "name": "cc_source_loc_unavailable_reason_t2"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "cc_source_loc_unavailable_reason_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_total_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_total_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_total_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_unique_changed_files_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_unique_changed_files_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "cc_unique_changed_files_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "delta_dt_t1_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "delta_dt_t1_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "delta_dt_t2_t3"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "dt_available"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "dt_definition_version"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "dt_observation_unit"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "dt_unavailable_reason"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_available"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_binary_event_count_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_binary_event_count_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_binary_event_count_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_definition_version"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_deleted_count_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_deleted_count_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_deleted_count_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_file_count_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_file_count_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_file_count_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_line_delta_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_line_delta_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_line_delta_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_observation_unit"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_renamed_count_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_renamed_count_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "pi_renamed_count_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "pi_unavailable_reason"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "planning_artifact_activity_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "planning_artifact_activity_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "planning_artifact_activity_t3"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "planning_rework_available"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "planning_rework_event_n_t2_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "planning_rework_signal_t2_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 14,
+            "n_total": 14,
+            "name": "planning_rework_unavailable_reason"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_size_definition_version"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_snapshot_available_t1"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_snapshot_available_t2"
+          },
+          {
+            "dtype": "bool",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_snapshot_available_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_snapshot_n_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_snapshot_n_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_snapshot_n_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 7,
+            "n_total": 14,
+            "name": "repo_source_loc_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 4,
+            "n_total": 14,
+            "name": "repo_source_loc_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "repo_source_loc_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "team_metrics_contract_version"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "team_metrics_input_checksum"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_iqr_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_iqr_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_iqr_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_mean_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_mean_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_mean_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_median_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_median_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_median_t3"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_n_t1"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_n_t2"
+          },
+          {
+            "dtype": "int64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_n_t3"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_std_t1"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_std_t2"
+          },
+          {
+            "dtype": "float64",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "technical_complexity_std_t3"
+          },
+          {
+            "dtype": "object",
+            "n_missing": 0,
+            "n_total": 14,
+            "name": "unit_of_analysis"
+          }
+        ]
+      },
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "producer_script": "05_metric_engine.py",
+      "relative_path": "data/analysis/team_metrics.parquet",
+      "row_count": 14,
+      "verdict_summary": {
+        "overall": "inconclusive",
+        "tests": [
+          {
+            "analysis_id": "pi_vs_cc_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "pi_vs_delta_dt_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "ai_vs_cc_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "pi_high_vs_low_cc_primary",
+            "kind": "hypothesis",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "ai_high_vs_low_cc_primary",
+            "kind": "hypothesis",
+            "verdict": "inconclusive"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

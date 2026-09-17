@@ -1,0 +1,95 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "5196a8c26ca626124e6590141865e381172ff6599c5d30333569c37925dcaff0",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "code_churn_metrics",
+      "column_count": 73,
+      "contract_version": "code-churn-metrics-v1",
+      "key_numeric_columns": {
+        "cc_binary_file_events_t2": {
+          "max": 21.0,
+          "mean": 5.714285714285714,
+          "median": 4.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_commit_churn_n_missing_t3": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_commit_churn_n_total_t3": {
+          "max": 164.0,
+          "mean": 33.714285714285715,
+          "median": 17.0,
+          "min": 1.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_commit_churn_n_valid_t3": {
+          "max": 164.0,
+          "mean": 33.714285714285715,
+          "median": 17.0,
+          "min": 1.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_commit_n_t3": {
+          "max": 164.0,
+          "mean": 33.714285714285715,
+          "median": 17.0,
+          "min": 1.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_total_t1": {
+          "max": 17111.0,
+          "mean": 3615.285714285714,
+          "median": 305.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_total_t3": {
+          "max": 11762127.0,
+          "mean": 964437.9285714285,
+          "median": 22869.0,
+          "min": 304.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "repo_snapshot_n_t2": {
+          "max": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "n_total": 14,
+          "n_valid": 14
+        }
+      },
+      "kind": "parquet",
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)"
+      ],
+      "narrative_acts": [
+        2
+      ],
+      "producer_script": "05_metric_engine.py",
+      "relative_path": "data/analysis/code_churn_metrics.parquet",
+      "row_count": 14,
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

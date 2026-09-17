@@ -1,0 +1,25 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "562a3f9e54b1f6c41788e9288e2559523e90ed616bde477a419df2b67542858e",
+  "options": {
+    "backend": "openai",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "act_description": "Argues that the Agile Manifesto solved waterfall paralysis in 2001, but that Generative-AI-era complexity and coding speed have pushed pure empiricism past its scalability ceiling.",
+      "act_number": 1,
+      "act_status": "not_yet_tested",
+      "act_title": "Ato 1 - O Teto Evolutivo do Agile (Context)",
+      "artifact_verdicts": [
+        {
+          "artifact_id": "phase2_contract_report",
+          "verdict": "descriptive_infrastructure"
+        }
+      ],
+      "verdict_counts": {
+        "descriptive_infrastructure": 1
+      }
+    },
+    "prompt_version": "act-synthesis-v1"
+  },
+  "status": "success"
+}

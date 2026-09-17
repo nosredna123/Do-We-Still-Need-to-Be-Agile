@@ -1,0 +1,57 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "7293a2df357cbfb53eb0032e9ad39e4a628594f9ef622198126cd1ca41e3ca36",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "figure_pi_vs_cc",
+      "category": "prioritarias",
+      "kind": "figure",
+      "limitations": [
+        "observational association; n=14"
+      ],
+      "n_missing": 0,
+      "n_total": 14,
+      "n_valid": 14,
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)"
+      ],
+      "narrative_acts": [
+        2
+      ],
+      "producer_script": "06_statistical_analyzer.py",
+      "relative_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/pi_vs_cc.html",
+      "scale_notes": [
+        "logarithmic display due to observed dynamic range"
+      ],
+      "source": "team_metrics.parquet",
+      "transformations": [
+        "complete_case_pair",
+        "dynamic_log_y_when_range_exceeds_100"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "pi_file_count_t1",
+        "cc_per_source_loc_t3"
+      ],
+      "verdict_summary": {
+        "overall": "inconclusive",
+        "tests": [
+          {
+            "analysis_id": "pi_vs_cc_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "pi_high_vs_low_cc_primary",
+            "kind": "hypothesis",
+            "verdict": "inconclusive"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

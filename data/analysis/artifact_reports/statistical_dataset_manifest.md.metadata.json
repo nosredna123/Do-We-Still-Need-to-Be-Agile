@@ -1,0 +1,3836 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "d452211824eae2872be0a8780d002a94d50360f53e04a5b3dab37c250fc3d43a",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "statistical_dataset_manifest",
+      "contract_version": "statistical-dataset-manifest-v1",
+      "correlations_status": "success",
+      "datasets_summary": {
+        "cut_context_metrics": {
+          "coverage": {
+            "Semestre": [
+              "2025.2",
+              "2026.1"
+            ],
+            "temporal_marker": [
+              "T1",
+              "T2",
+              "T3"
+            ]
+          },
+          "n_rows": 6,
+          "n_unique_keys": 6,
+          "observation_key": [
+            "Semestre",
+            "temporal_marker"
+          ],
+          "unit_of_analysis": "cut_context",
+          "variables_missingness": [
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "Semestre"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "ie_definition_version"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "ie_transcript_available"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_median"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_mode"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_mode_share"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_n_missing"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_n_total"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_std"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_coordination_friction_score_std_ddof"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_dominant_topic_counts"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_dominant_topic_shares"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_dominant_topics"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_integration_risk_mode"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_integration_risk_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_integration_risk_mode_share"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_median"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_mode"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_mode_share"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_n_missing"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_n_total"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_std"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_planning_clarity_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_median"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_mode"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_mode_share"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_n_missing"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_n_total"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_std"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_rework_signal_score_std_ddof"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "ie_transcript_unavailable_reason"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "statistical_summary_version"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_ai_dependency_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_cognitive_load_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_benefit_sentiment_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_ai_dependency_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_cognitive_load_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_ai_career_impact_5y_sentiment_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_ai_dependency_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_cognitive_load_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_autonomy_tool_dependency_sentiment_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_ai_dependency_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_cognitive_load_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_career_expectation_sentiment_score_std_ddof"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_ai_dependency_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_cognitive_load_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_challenges_sentiment_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_ai_dependency_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_cognitive_load_score_std_ddof"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_iqr"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_mean"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_median"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_mode"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_mode_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_mode_share"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_n_missing"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_n_total"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_n_valid"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_q1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_q3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_quantile_method"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_scale_type"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_scale_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_std"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_project_feeling_sentiment_score_std_ddof"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "student_response_n"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "temporal_marker"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "transcript_observation_n"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 3,
+              "n_total": 6,
+              "name": "transcript_session_n"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 6,
+              "name": "unit_of_analysis"
+            }
+          ]
+        },
+        "student_nlp": {
+          "coverage": {
+            "Semestre": [
+              "2025.2",
+              "2026.1"
+            ],
+            "temporal_marker": [
+              "T1",
+              "T2",
+              "T3"
+            ]
+          },
+          "n_rows": 1122,
+          "n_unique_keys": 1122,
+          "observation_key": [
+            "student_response_id",
+            "question_id"
+          ],
+          "unit_of_analysis": "student_response",
+          "variables_missingness": [
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "Semestre"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "ai_dependency_score"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "cognitive_load_score"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "methodological_orientation"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "model"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "planning_debt_signal"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "prompt_version"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "question_id"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "response_schema_version"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "score_scale_version"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "sentiment_score"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "status"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "student_response_id"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "temporal_marker"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 1122,
+              "name": "unit_of_analysis"
+            }
+          ]
+        },
+        "team_metrics": {
+          "coverage": {
+            "Semestre": [
+              "2025.2",
+              "2026.1"
+            ]
+          },
+          "n_rows": 14,
+          "n_unique_keys": 14,
+          "observation_key": [
+            "ID_Equipe",
+            "Semestre"
+          ],
+          "unit_of_analysis": "team_semester",
+          "variables_missingness": [
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ID_Equipe"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "Semestre"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_activity_available_t1"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_activity_available_t2"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_activity_available_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_activity_status_t1"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_activity_status_t2"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_activity_status_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_n_before_t3_window"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_n_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_n_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_n_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "ai_author_share_iqr_before_t3_window"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "ai_author_share_iqr_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "ai_author_share_iqr_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_iqr_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "ai_author_share_median_before_t3_window"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "ai_author_share_median_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "ai_author_share_median_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_median_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_missing_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_missing_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_missing_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_valid_before_t3_window"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_valid_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_valid_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_author_share_n_valid_t3"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_available"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_churn_before_t3_window"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_churn_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_churn_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_churn_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_commit_n_before_t3_window"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_commit_n_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_commit_n_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_commit_n_t3"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_concentration_available_t1"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_concentration_available_t2"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_concentration_available_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_definition_version"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "ai_gini_before_t3_window"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "ai_gini_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "ai_gini_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_gini_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "ai_max_author_share_before_t3_window"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "ai_max_author_share_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "ai_max_author_share_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_max_author_share_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_observation_unit"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_ref_available_before_t3_window"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_ref_available_t1"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_ref_available_t2"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_ref_available_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "ai_ref_unavailable_reason_t1"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "ai_ref_unavailable_reason_t2"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "ai_ref_unavailable_reason_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_t3_window_hours"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "ai_unavailable_reason"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_window_available"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "ai_window_bounds"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "ai_window_unavailable_reason"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_activity_status_t1"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_activity_status_t2"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_activity_status_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_binary_file_events_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_binary_file_events_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_binary_file_events_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_binary_policy"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_n_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_n_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_n_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_share_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_share_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_share_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_mode_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_missing_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_missing_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_missing_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_total_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_total_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_total_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_valid_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_valid_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_churn_n_valid_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_n_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_n_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_commit_n_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_definition_version"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_denominator_kind"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_iqr_per_commit_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_iqr_per_commit_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_iqr_per_commit_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_mean_7d"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_mean_per_commit_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_mean_per_commit_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_mean_per_commit_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_median_per_commit_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_median_per_commit_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_median_per_commit_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_observation_unit"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_peak_7d"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_peak_7d_temporal_marker"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 5,
+              "n_total": 14,
+              "name": "cc_per_changed_file_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_per_changed_file_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_per_changed_file_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "cc_per_source_loc_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "cc_per_source_loc_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_per_source_loc_t3"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_source_loc_available_t1"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_source_loc_available_t2"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_source_loc_available_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "cc_source_loc_unavailable_reason_t1"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 10,
+              "n_total": 14,
+              "name": "cc_source_loc_unavailable_reason_t2"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "cc_source_loc_unavailable_reason_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_total_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_total_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_total_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_unique_changed_files_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_unique_changed_files_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "cc_unique_changed_files_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "delta_dt_t1_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "delta_dt_t1_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "delta_dt_t2_t3"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "dt_available"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "dt_definition_version"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "dt_observation_unit"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "dt_unavailable_reason"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_available"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_binary_event_count_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_binary_event_count_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_binary_event_count_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_definition_version"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_deleted_count_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_deleted_count_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_deleted_count_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_file_count_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_file_count_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_file_count_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_line_delta_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_line_delta_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_line_delta_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_observation_unit"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_renamed_count_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_renamed_count_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "pi_renamed_count_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "pi_unavailable_reason"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "planning_artifact_activity_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "planning_artifact_activity_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "planning_artifact_activity_t3"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "planning_rework_available"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "planning_rework_event_n_t2_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "planning_rework_signal_t2_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 14,
+              "n_total": 14,
+              "name": "planning_rework_unavailable_reason"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_size_definition_version"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_snapshot_available_t1"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_snapshot_available_t2"
+            },
+            {
+              "dtype": "bool",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_snapshot_available_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_snapshot_n_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_snapshot_n_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_snapshot_n_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 7,
+              "n_total": 14,
+              "name": "repo_source_loc_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 4,
+              "n_total": 14,
+              "name": "repo_source_loc_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "repo_source_loc_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "team_metrics_contract_version"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "team_metrics_input_checksum"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_iqr_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_iqr_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_iqr_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_mean_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_mean_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_mean_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_median_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_median_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_median_t3"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_n_t1"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_n_t2"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_n_t3"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_std_t1"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_std_t2"
+            },
+            {
+              "dtype": "float64",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "technical_complexity_std_t3"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 14,
+              "name": "unit_of_analysis"
+            }
+          ]
+        },
+        "transcript_nlp": {
+          "coverage": {
+            "Semestre": [
+              "2025.2"
+            ],
+            "temporal_marker": [
+              "T1",
+              "T2",
+              "T3"
+            ]
+          },
+          "n_rows": 100,
+          "n_unique_keys": 100,
+          "observation_key": [
+            "transcript_file"
+          ],
+          "unit_of_analysis": "transcript_session",
+          "variables_missingness": [
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "Semestre"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "coordination_friction_score"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "dominant_topics"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "evidence_summary_private"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "integration_risk_signal"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "model"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "planning_clarity_score"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "prompt_version"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "response_schema_version"
+            },
+            {
+              "dtype": "int64",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "rework_signal_score"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "session_id"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "status"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "temporal_marker"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "temporal_marker_source"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "transcript_file"
+            },
+            {
+              "dtype": "object",
+              "n_missing": 0,
+              "n_total": 100,
+              "name": "unit_of_analysis"
+            }
+          ]
+        }
+      },
+      "exclusions_summary": {
+        "contract_version": "statistical-dataset-manifest-exclusions-v1",
+        "exclusions_summary": [
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "ai_author_share_iqr_before_t3_window"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "ai_author_share_iqr_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "ai_author_share_iqr_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "ai_author_share_median_before_t3_window"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "ai_author_share_median_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "ai_author_share_median_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "ai_gini_before_t3_window"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "ai_gini_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "ai_gini_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "ai_max_author_share_before_t3_window"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "ai_max_author_share_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "ai_max_author_share_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "ai_ref_unavailable_reason_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "ai_ref_unavailable_reason_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "ai_ref_unavailable_reason_t3"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "ai_unavailable_reason"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "ai_window_unavailable_reason"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_commit_churn_mode_n_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_commit_churn_mode_n_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_commit_churn_mode_share_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_commit_churn_mode_share_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_commit_churn_mode_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_commit_churn_mode_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_iqr_per_commit_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_iqr_per_commit_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_mean_per_commit_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_mean_per_commit_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_median_per_commit_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_median_per_commit_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 5,
+            "reason": "missing_value",
+            "variable": "cc_per_changed_file_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_per_changed_file_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "cc_per_source_loc_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "cc_per_source_loc_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "cc_source_loc_unavailable_reason_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 10,
+            "reason": "missing_value",
+            "variable": "cc_source_loc_unavailable_reason_t2"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "cc_source_loc_unavailable_reason_t3"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "dt_unavailable_reason"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "pi_unavailable_reason"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 14,
+            "reason": "missing_value",
+            "variable": "planning_rework_unavailable_reason"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 7,
+            "reason": "missing_value",
+            "variable": "repo_source_loc_t1"
+          },
+          {
+            "dataset": "team_metrics",
+            "n_excluded": 4,
+            "reason": "missing_value",
+            "variable": "repo_source_loc_t2"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_iqr"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_mean"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_median"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_mode"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_mode_n"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_mode_share"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_n_missing"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_n_total"
+          },
+          {
+            "dataset": "cut_context_metrics",
+            "n_excluded": 3,
+            "reason": "missing_value",
+            "variable": "ie_transcript_coordination_friction_score_n_valid"
+          }
+        ]
+      },
+      "hypotheses_status": "success",
+      "kind": "json",
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)",
+        "Ato 4 - A Inversao de Valores na Era da IA (Conclusion)"
+      ],
+      "narrative_acts": [
+        2,
+        3,
+        4
+      ],
+      "producer_script": "06_statistical_analyzer.py",
+      "relative_path": "data/analysis/statistical_dataset_manifest.json",
+      "status": "success",
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

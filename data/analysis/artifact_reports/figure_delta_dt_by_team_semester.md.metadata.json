@@ -1,0 +1,53 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "af7e136ae8ab64f422260afcd284fb81c6bc5ea5fdc502376e2281813cf81b3e",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "figure_delta_dt_by_team_semester",
+      "category": "prioritarias",
+      "kind": "figure",
+      "limitations": [
+        "team-semester observations; no causal interpretation"
+      ],
+      "n_missing": 0,
+      "n_total": 42,
+      "n_valid": 42,
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "producer_script": "06_statistical_analyzer.py",
+      "relative_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/delta_dt_by_team_semester.html",
+      "scale_notes": [
+        "ordinal score shown descriptively"
+      ],
+      "source": "team_metrics.parquet",
+      "transformations": [
+        "melt_T1_T2_T3",
+        "no_interpolation"
+      ],
+      "unit_of_analysis": "team_semester",
+      "variables": [
+        "technical_complexity"
+      ],
+      "verdict_summary": {
+        "overall": "inconclusive",
+        "tests": [
+          {
+            "analysis_id": "pi_vs_delta_dt_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

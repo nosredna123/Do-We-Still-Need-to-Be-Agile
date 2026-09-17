@@ -1,0 +1,95 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "8ee8c9fd15b9029f21e4aab05cde7f672819a7630629c9d90004df10a2de1577",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "planning_metrics",
+      "column_count": 28,
+      "contract_version": "planning-metrics-v1",
+      "key_numeric_columns": {
+        "pi_binary_event_count_t3": {
+          "max": 18.0,
+          "mean": 4.0,
+          "median": 2.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "pi_deleted_count_t3": {
+          "max": 124.0,
+          "mean": 12.857142857142858,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "pi_file_count_t1": {
+          "max": 8.0,
+          "mean": 2.5714285714285716,
+          "median": 2.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "pi_line_delta_t1": {
+          "max": 232.0,
+          "mean": 60.142857142857146,
+          "median": 6.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "pi_line_delta_t3": {
+          "max": 60358.0,
+          "mean": 10164.57142857143,
+          "median": 705.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "pi_renamed_count_t3": {
+          "max": 9.0,
+          "mean": 1.5714285714285714,
+          "median": 0.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "planning_artifact_activity_t3": {
+          "max": 675.0,
+          "mean": 89.28571428571429,
+          "median": 10.0,
+          "min": 2.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "planning_rework_signal_t2_t3": {
+          "max": 1130.0,
+          "mean": 163.64285714285714,
+          "median": 25.0,
+          "min": 2.0,
+          "n_total": 14,
+          "n_valid": 14
+        }
+      },
+      "kind": "parquet",
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)"
+      ],
+      "narrative_acts": [
+        2
+      ],
+      "producer_script": "05_metric_engine.py",
+      "relative_path": "data/analysis/planning_metrics.parquet",
+      "row_count": 14,
+      "verdict_summary": {
+        "overall": "descriptive_infrastructure",
+        "tests": []
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}

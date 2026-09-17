@@ -1,0 +1,137 @@
+{
+  "contract_version": "artifact-narrative-report-v1",
+  "input_checksum": "fd59b923b50b10700429de5148da7772cfac9eaf501738fcc9158b1f8e996f71",
+  "options": {
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "correlation_results",
+      "contract_version": "spearman-correlation-results-v1",
+      "kind": "csv",
+      "narrative_act_titles": [
+        "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
+        "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)"
+      ],
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "producer_script": "06_statistical_analyzer.py",
+      "relative_path": "data/analysis/correlation_results.csv",
+      "row_count": 4,
+      "rows": [
+        {
+          "analysis_id": "pi_vs_cc_primary",
+          "coefficient": -0.0067666495245095,
+          "confidence_interval": null,
+          "confidence_interval_method": "not_calculated_v1",
+          "figure": "pi_vs_cc.png",
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "p_value": 0.9816838660605892,
+          "priority": "primary",
+          "reason": null,
+          "status": "success",
+          "test": "spearman",
+          "unit_of_analysis": "team_semester",
+          "warning": null,
+          "x": "pi_file_count_t1",
+          "x_missing": 0,
+          "y": "cc_per_source_loc_t3",
+          "y_missing": 0
+        },
+        {
+          "analysis_id": "pi_vs_delta_dt_primary",
+          "coefficient": -0.0147096475119091,
+          "confidence_interval": null,
+          "confidence_interval_method": "not_calculated_v1",
+          "figure": null,
+          "n_missing": 0,
+          "n_total": 14,
+          "n_valid": 14,
+          "p_value": 0.960194880594909,
+          "priority": "primary",
+          "reason": null,
+          "status": "success",
+          "test": "spearman",
+          "unit_of_analysis": "team_semester",
+          "warning": null,
+          "x": "pi_file_count_t1",
+          "x_missing": 0,
+          "y": "delta_dt_t1_t3",
+          "y_missing": 0
+        },
+        {
+          "analysis_id": "ai_vs_cc_primary",
+          "coefficient": 0.2142857142857143,
+          "confidence_interval": null,
+          "confidence_interval_method": "not_calculated_v1",
+          "figure": "ai_before_t3.png",
+          "n_missing": 7,
+          "n_total": 14,
+          "n_valid": 7,
+          "p_value": 0.6445115810207203,
+          "priority": "primary",
+          "reason": null,
+          "status": "success",
+          "test": "spearman",
+          "unit_of_analysis": "team_semester",
+          "warning": "small_sample_n_lt_10",
+          "x": "ai_max_author_share_before_t3_window",
+          "x_missing": 7,
+          "y": "cc_total_t3",
+          "y_missing": 0
+        },
+        {
+          "analysis_id": "context_ie_temporal_primary",
+          "coefficient": null,
+          "confidence_interval": null,
+          "confidence_interval_method": "not_calculated_v1",
+          "figure": null,
+          "n_missing": 3,
+          "n_total": 6,
+          "n_valid": 3,
+          "p_value": null,
+          "priority": "primary",
+          "reason": "zero_variance",
+          "status": "unavailable",
+          "test": "spearman",
+          "unit_of_analysis": "cut_context",
+          "warning": null,
+          "x": "ie_transcript_coordination_friction_score_mean",
+          "x_missing": 3,
+          "y": "ie_transcript_rework_signal_score_mean",
+          "y_missing": 3
+        }
+      ],
+      "verdict_summary": {
+        "overall": "inconclusive",
+        "tests": [
+          {
+            "analysis_id": "pi_vs_cc_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "pi_vs_delta_dt_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "ai_vs_cc_primary",
+            "kind": "correlation",
+            "verdict": "inconclusive"
+          },
+          {
+            "analysis_id": "context_ie_temporal_primary",
+            "kind": "correlation",
+            "verdict": "unavailable"
+          }
+        ]
+      }
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "artifact-report-v1"
+  },
+  "status": "success"
+}
