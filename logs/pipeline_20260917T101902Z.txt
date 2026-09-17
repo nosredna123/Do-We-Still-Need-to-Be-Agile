@@ -1,0 +1,52 @@
+2026-09-17 07:19:02,140 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260917T101902Z.txt
+2026-09-17 07:19:02,140 - __main__ - INFO - Running stage prepare: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/00_audio_preparer.py
+2026-09-17 07:19:03,232 - __main__ - INFO - Audio preparation queue: total=23 completed=23 pending=0
+2026-09-17 07:19:03,314 - __main__ - INFO - Finished stage prepare status=success duration_seconds=1.2
+2026-09-17 07:19:03,314 - __main__ - INFO - Running stage transcribe: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/00_audio_transcriber.py
+2026-09-17 07:19:03,775 - __main__ - INFO - Found 100 audio files in data/processed/audio_chunks
+2026-09-17 07:19:04,007 - __main__ - INFO - Transcription queue: total=100 completed=100 pending=0
+2026-09-17 07:19:04,007 - __main__ - INFO - Transcription complete
+2026-09-17 07:19:04,115 - __main__ - INFO - Finished stage transcribe status=success duration_seconds=0.8
+2026-09-17 07:19:04,115 - __main__ - INFO - Running stage ner: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_ner_extractor.py
+2026-09-17 07:19:04,604 - __main__ - INFO - NER queue: total=100 completed=100 pending=0
+2026-09-17 07:19:04,693 - __main__ - INFO - Finished stage ner status=success duration_seconds=0.6
+2026-09-17 07:19:04,693 - __main__ - INFO - Running stage anonymize: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_anonymizer.py
+2026-09-17 07:19:05,178 - __main__ - INFO - Anonymization queue: total=208 completed=208 pending=0
+2026-09-17 07:19:05,178 - __main__ - INFO - Building anonymization mapping...
+2026-09-17 07:19:05,299 - __main__ - INFO - Found 289 identifiers to anonymize
+2026-09-17 07:19:05,299 - __main__ - INFO - Writing mapping to data/processed/chave_relacional.json
+2026-09-17 07:19:05,305 - __main__ - INFO - Anonymization complete
+2026-09-17 07:19:05,384 - __main__ - INFO - Finished stage anonymize status=success duration_seconds=0.7
+2026-09-17 07:19:05,385 - __main__ - INFO - Running stage git: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02_git_parser.py
+2026-09-17 07:19:05,846 - __main__ - INFO - Reading repositories list from data/raw/repos_list.csv
+2026-09-17 07:19:05,869 - __main__ - INFO - Skipping current Git outputs
+2026-09-17 07:19:05,957 - __main__ - INFO - Finished stage git status=success duration_seconds=0.6
+2026-09-17 07:19:05,957 - __main__ - INFO - Running stage lake: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py
+2026-09-17 07:19:06,433 - __main__ - INFO - Skipping current data lake contracts
+2026-09-17 07:19:06,433 - __main__ - INFO - Data lake contracts written to data/lake
+2026-09-17 07:19:06,520 - __main__ - INFO - Finished stage lake status=success duration_seconds=0.6
+2026-09-17 07:19:06,520 - __main__ - INFO - Running stage repo-snapshots: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py
+2026-09-17 07:19:07,005 - __main__ - INFO - Skipping current repository snapshots
+2026-09-17 07:19:07,005 - __main__ - INFO - Repository snapshots written to data/lake/git_repository_snapshots.parquet
+2026-09-17 07:19:07,090 - __main__ - INFO - Finished stage repo-snapshots status=success duration_seconds=0.6
+2026-09-17 07:19:07,090 - __main__ - INFO - Running stage contracts: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json
+2026-09-17 07:19:07,753 - __main__ - INFO - Finished stage contracts status=success duration_seconds=0.7
+2026-09-17 07:19:07,753 - __main__ - INFO - Running stage nlp: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --catalog-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet --transcript-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet --textual-cut-signals-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet --backend openai
+INFO:__main__:Student NLP artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet
+INFO:__main__:Transcript NLP artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet
+INFO:__main__:Textual cut signals artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet
+2026-09-17 07:19:08,460 - __main__ - INFO - Finished stage nlp status=success duration_seconds=0.7
+2026-09-17 07:19:08,461 - __main__ - INFO - Running stage metrics: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/05_metric_engine.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/planning_metrics.parquet --code-churn-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/code_churn_metrics.parquet --technical-degradation-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/technical_degradation_metrics.parquet --integration-friction-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/integration_friction_metrics.parquet --cut-context-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet --team-metrics-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet
+INFO:__main__:Planning metrics artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/planning_metrics.parquet
+INFO:__main__:Code Churn artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/code_churn_metrics.parquet
+INFO:__main__:Technical degradation artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/technical_degradation_metrics.parquet
+INFO:__main__:Integration friction artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/integration_friction_metrics.parquet
+INFO:__main__:Cut context artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet
+INFO:__main__:Team metrics artifact is current: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet
+2026-09-17 07:19:09,147 - __main__ - INFO - Finished stage metrics status=success duration_seconds=0.7
+2026-09-17 07:19:09,148 - __main__ - INFO - Running stage stats: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/06_statistical_analyzer.py
+Statistical manifest: success (4 datasets); correlations: 4; hypotheses: 3; figures: 12
+2026-09-17 07:19:09,929 - __main__ - INFO - Finished stage stats status=success duration_seconds=0.8
+2026-09-17 07:19:09,929 - __main__ - INFO - Running stage narrative-audit: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/07_artifact_narrative_reporter.py --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis --backend openai
+Narrative audit: written=0 skipped=23 verdict=conditional-go reason=no_significant_result_and_small_sample_reframe_as_exploratory
+2026-09-17 07:19:10,946 - __main__ - INFO - Finished stage narrative-audit status=success duration_seconds=1.0
