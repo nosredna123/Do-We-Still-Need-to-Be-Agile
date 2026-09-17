@@ -1546,6 +1546,65 @@ def test_build_file_category_churn_figure_exports_and_skips(tmp_path: Path) -> N
     assert "relative_100_percent_panel" in entry["transformations"]
 
 
+def author_pressure_panel_fixture() -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "commits_per_author_t3": 2.0, "source_churn_t3": 100.0, "planning_rework_signal_t2_t3": 10.0, "planning_artifact_activity_t3": 5.0, "commit_gini_t3": 0.1, "active_author_pressure_status_t3": "low"},
+            {"ID_Equipe": "TEAM_2", "Semestre": "2026.1", "commits_per_author_t3": 10.0, "source_churn_t3": 10000.0, "planning_rework_signal_t2_t3": 100.0, "planning_artifact_activity_t3": 50.0, "commit_gini_t3": 0.4, "active_author_pressure_status_t3": "critical"},
+        ]
+    )
+
+
+def test_compute_author_pressure_vs_churn_figure_data_builds_three_panels_with_metadata() -> None:
+    engine = load_engine()
+    result = engine.compute_author_pressure_vs_churn_figure_data(author_pressure_panel_fixture())
+
+    assert len(result) == 6
+    assert set(result["plot_id"]) == {
+        "author_pressure_vs_source_churn_t3",
+        "author_pressure_vs_planning_rework_t2_t3",
+        "author_pressure_vs_planning_activity_t3",
+    }
+    assert result["x_scale"].eq("linear").all()
+    assert result["y_scale"].eq("log").all()
+    assert result["commit_gini_t3"].notna().all()
+    assert set(result["active_author_pressure_status_t3"]) == {"low", "critical"}
+
+
+def test_compute_author_pressure_vs_churn_rejects_nonpositive_outcomes() -> None:
+    engine = load_engine()
+    panel = author_pressure_panel_fixture()
+    panel.loc[0, "source_churn_t3"] = 0
+    with pytest.raises(ValueError, match="must be positive"):
+        engine.compute_author_pressure_vs_churn_figure_data(panel)
+
+
+def test_build_author_pressure_vs_churn_figure_exports_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    panel_path = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets" / "cross_evidence_panel.parquet"
+    panel_path.parent.mkdir(parents=True)
+    author_pressure_panel_fixture().to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    data_path = tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data" / "author_pressure_vs_churn.csv"
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_author_pressure_vs_churn_figure(output_data_path=data_path, figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=data_path.parent)
+        second = engine.build_author_pressure_vs_churn_figure(output_data_path=data_path, figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=data_path.parent)
+    finally:
+        os.chdir(old_cwd)
+    manifest_path = data_path.with_name(f"{data_path.stem}.manifest.json")
+    metadata = json.loads(data_path.with_name(f"{data_path.name}.metadata.json").read_text(encoding="utf-8"))
+    assert data_path.exists() and manifest_path.exists()
+    assert metadata["status"] == "success"
+    assert len(first) == len(second) == 6
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "author_pressure_vs_churn.pdf").exists()
+    entry = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert "log_y_outcomes" in entry["transformations"]
+
+
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
     engine = load_engine()
 

@@ -560,6 +560,26 @@ FILE_CATEGORY_CHURN_FIGURE_COLORS = {
     "test": "#0891B2",
     "unknown": "#64748B",
 }
+AUTHOR_PRESSURE_FIGURE_SPECS = (
+    {
+        "plot_id": "author_pressure_vs_source_churn_t3",
+        "y": "source_churn_t3",
+        "title": "Source churn at T3",
+        "y_title": "Source churn (lines, log scale)",
+    },
+    {
+        "plot_id": "author_pressure_vs_planning_rework_t2_t3",
+        "y": "planning_rework_signal_t2_t3",
+        "title": "Late planning rework",
+        "y_title": "Planning rework signal (log scale)",
+    },
+    {
+        "plot_id": "author_pressure_vs_planning_activity_t3",
+        "y": "planning_artifact_activity_t3",
+        "title": "Planning artifact activity at T3",
+        "y_title": "Planning activity (log scale)",
+    },
+)
 
 
 def compute_scope_vs_late_instability_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
@@ -1293,6 +1313,145 @@ def build_file_category_churn_figure(
     manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
     manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
     logger.info("Wrote file-category churn figure: %s", export_paths["png"])
+    return figure_data
+
+
+def compute_author_pressure_vs_churn_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
+    """Prepare anonymized long-form data for the CE-4.6 subplot figure."""
+    required = {"ID_Equipe", "Semestre", "commits_per_author_t3", "commit_gini_t3", "active_author_pressure_status_t3"} | {
+        str(spec["y"]) for spec in AUTHOR_PRESSURE_FIGURE_SPECS
+    }
+    missing = required - set(panel.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_panel missing columns: {sorted(missing)}")
+    columns = ["ID_Equipe", "Semestre", "commits_per_author_t3", "commit_gini_t3", "active_author_pressure_status_t3", *[str(spec["y"]) for spec in AUTHOR_PRESSURE_FIGURE_SPECS]]
+    working = anonymize_cross_evidence_visual_data(panel[columns])
+    for column in ["commits_per_author_t3", "commit_gini_t3", *[str(spec["y"]) for spec in AUTHOR_PRESSURE_FIGURE_SPECS]]:
+        working[column] = pd.to_numeric(working[column], errors="coerce")
+    rows: list[dict[str, object]] = []
+    for spec in AUTHOR_PRESSURE_FIGURE_SPECS:
+        y_name = str(spec["y"])
+        subset = working.dropna(subset=["commits_per_author_t3", y_name])
+        if (subset[["commits_per_author_t3", y_name]] <= 0).any().any():
+            raise ValueError("author pressure and outcomes must be positive for the configured scales")
+        for row in subset.to_dict("records"):
+            rows.append(
+                {
+                    "figure_id": "author_pressure_vs_churn",
+                    "plot_id": spec["plot_id"],
+                    "anonymized_team_id": row["anonymized_team_id"],
+                    "semester": row["Semestre"],
+                    "x": "commits_per_author_t3",
+                    "x_value": row["commits_per_author_t3"],
+                    "y": y_name,
+                    "y_value": row[y_name],
+                    "x_scale": "linear",
+                    "y_scale": "log",
+                    "commit_gini_t3": row["commit_gini_t3"],
+                    "active_author_pressure_status_t3": row["active_author_pressure_status_t3"],
+                    "transformation": "complete_case_pair|source_category_only_t3_for_churn",
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def _author_pressure_vs_churn_figure(figure_data: pd.DataFrame) -> plotly_go.Figure:
+    """Build the CE-4.6 three-panel author pressure figure."""
+    figure = make_subplots(
+        rows=1,
+        cols=3,
+        subplot_titles=[str(spec["title"]) for spec in AUTHOR_PRESSURE_FIGURE_SPECS],
+        horizontal_spacing=0.09,
+    )
+    for index, spec in enumerate(AUTHOR_PRESSURE_FIGURE_SPECS, start=1):
+        subset = figure_data.loc[figure_data["plot_id"] == spec["plot_id"]]
+        for semester in sorted(subset["semester"].astype(str).unique()):
+            points = subset.loc[subset["semester"].astype(str) == semester]
+            figure.add_trace(
+                plotly_go.Scatter(
+                    x=points["x_value"],
+                    y=points["y_value"],
+                    mode="markers",
+                    name=semester,
+                    legendgroup=semester,
+                    showlegend=index == 1,
+                    marker={"size": 10, "color": SOURCE_CHURN_PLANNING_REWORK_SEMESTER_COLORS.get(semester, CROSS_EVIDENCE_VISUAL_PALETTE["context"]), "line": {"width": 0.8, "color": "#FFFFFF"}},
+                    customdata=points[["anonymized_team_id", "semester", "commit_gini_t3", "active_author_pressure_status_t3"]],
+                    hovertemplate="%{customdata[0]} (%{customdata[1]})<br>Commits per author: %{x}<br>Outcome: %{y}<br>Gini: %{customdata[2]:.3f}<br>Pressure: %{customdata[3]}<extra></extra>",
+                ),
+                row=1,
+                col=index,
+            )
+        figure.update_xaxes(title_text="Commits per author at T3", row=1, col=index)
+        figure.update_yaxes(title_text=str(spec["y_title"]), type="log", row=1, col=index)
+    apply_cross_evidence_visual_theme(figure, title="Author integration pressure and late instability")
+    return figure
+
+
+def build_author_pressure_vs_churn_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load CE-4.6 author-pressure figure data and exports."""
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    _require_success_sidecar(panel_path)
+    panel_sidecar = panel_path.with_name(f"{panel_path.name}.metadata.json")
+    paths = cross_evidence_figure_export_paths("author_pressure_vs_churn", category="prioritarias", figure_root=figure_root, figure_data_root=figure_data_root)
+    output_data_path = output_data_path or paths["data"]
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    options = {
+        "stage": "author_pressure_vs_churn",
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "x": "commits_per_author_t3",
+        "y_variables": [str(spec["y"]) for spec in AUTHOR_PRESSURE_FIGURE_SPECS],
+        "x_scale": "linear",
+        "y_scale": "log",
+        "source_policy": "source_churn_t3_is_source_category_only",
+        "metadata_only": ["commit_gini_t3", "active_author_pressure_status_t3"],
+        "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS),
+    }
+    checksum = input_checksum([panel_path, panel_sidecar], options)
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("Author-pressure figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+
+    figure_data = compute_author_pressure_vs_churn_figure_data(pd.read_parquet(panel_path))
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(output_data_path, checksum, contract_version="cross-evidence-figure-data-v1", options=options)
+    figure = _author_pressure_vs_churn_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure,
+        figure_data,
+        figure_id="author_pressure_vs_churn",
+        category="prioritarias",
+        source=panel_path.as_posix(),
+        unit_of_analysis="team_semester",
+        variables=["commits_per_author_t3", "source_churn_t3", "planning_rework_signal_t2_t3", "planning_artifact_activity_t3"],
+        transformations=["complete_case_pair", "source_category_only_t3_for_churn", "anonymize_team_id", "log_y_outcomes"],
+        scale_notes=["commits per author linear", "source churn, planning rework, and planning activity logarithmic"],
+        limitations=["observational association", "team-semester sample n=14", "Gini and pressure status are metadata, not primary visual dimensions"],
+        paths=export_paths,
+        required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote author-pressure figure: %s", export_paths["png"])
     return figure_data
 
 
@@ -3616,6 +3775,7 @@ def main() -> None:
     parser.add_argument("--source-churn-vs-planning-rework-data-output", type=Path, default=None)
     parser.add_argument("--temporal-escalation-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-data-output", type=Path, default=None)
+    parser.add_argument("--author-pressure-vs-churn-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -3636,6 +3796,7 @@ def main() -> None:
             "source_churn_vs_planning_rework",
             "temporal_escalation_panel",
             "file_category_churn_by_cut",
+            "author_pressure_vs_churn",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -3659,6 +3820,7 @@ def main() -> None:
         "source_churn_vs_planning_rework",
         "temporal_escalation_panel",
         "file_category_churn_by_cut",
+        "author_pressure_vs_churn",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -3740,6 +3902,11 @@ def main() -> None:
     if "file_category_churn_by_cut" in selected:
         build_file_category_churn_figure(
             output_data_path=args.file_category_churn_data_output,
+            force=args.force,
+        )
+    if "author_pressure_vs_churn" in selected:
+        build_author_pressure_vs_churn_figure(
+            output_data_path=args.author_pressure_vs_churn_data_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

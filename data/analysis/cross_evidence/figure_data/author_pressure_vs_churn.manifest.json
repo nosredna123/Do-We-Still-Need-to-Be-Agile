@@ -1,0 +1,61 @@
+{
+  "anonymization_policy": "public_visual_ranked_or_aggregate",
+  "category": "prioritarias",
+  "checksums": {
+    "data": "d35699ed6bc59cf77346a074086dbead7ef536828b3a40db07725bd326d84d54",
+    "pdf": "c79a3e1a9600a5ed44600626e4b1a05ddfcacf5cf17f9faa5a55d7cdb1b2c4bf",
+    "plotly_json": "2ca1fb410060c8b298dcca142b8994a15ed8224c2b73663c81e31346edbb57d7",
+    "png": "e9bf09954d0899479fde24e3efc8d87576dee9128d58c3dfed1ad823e71b5ed2",
+    "svg": "6d4da4e0c4383bcb830a8280431dde820f7f4a85a82aa614bfa7f6df1fd8b46a"
+  },
+  "data_metadata_path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv.metadata.json",
+  "data_path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv",
+  "dimensions": {
+    "height": 850,
+    "png_scale": 2,
+    "width": 1400
+  },
+  "export_formats": [
+    "html",
+    "png",
+    "svg",
+    "pdf"
+  ],
+  "figure_id": "author_pressure_vs_churn",
+  "interactive_path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.html",
+  "limitations": [
+    "observational association",
+    "team-semester sample n=14",
+    "Gini and pressure status are metadata, not primary visual dimensions"
+  ],
+  "n_missing": 0,
+  "n_total": 42,
+  "n_valid": 42,
+  "priority": "required",
+  "scale_notes": [
+    "commits per author linear",
+    "source churn, planning rework, and planning activity logarithmic"
+  ],
+  "source": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+  "static_paths": {
+    "pdf": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.pdf",
+    "png": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.png",
+    "svg": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.svg"
+  },
+  "status": "success",
+  "theme": "plotly_white",
+  "transformations": [
+    "complete_case_pair",
+    "source_category_only_t3_for_churn",
+    "anonymize_team_id",
+    "log_y_outcomes"
+  ],
+  "unit_of_analysis": "team_semester",
+  "variables": [
+    "commits_per_author_t3",
+    "source_churn_t3",
+    "planning_rework_signal_t2_t3",
+    "planning_artifact_activity_t3"
+  ],
+  "visual_spec_version": "cross-evidence-visual-spec-v1"
+}
