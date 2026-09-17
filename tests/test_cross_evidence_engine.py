@@ -54,6 +54,35 @@ def git_file_row(
     }
 
 
+def evaluator_row(
+    cut: str,
+    *,
+    team: str = "TEAM_1",
+    semester: str = "2025.2",
+    engagement: float = 1.0,
+    progress: float = 2.0,
+    scope: float = 1.5,
+    complexity: float = 1.0,
+) -> dict[str, object]:
+    row: dict[str, object] = {
+        "ID_Equipe": team,
+        "Semestre": semester,
+        "temporal_marker": cut,
+    }
+    for metric, value in (
+        ("engagement_participation", engagement),
+        ("project_progress", progress),
+        ("scope_applicability", scope),
+        ("technical_complexity", complexity),
+    ):
+        row[f"{metric}_mean"] = value
+        row[f"{metric}_median"] = value
+        row[f"{metric}_iqr"] = 0.5
+        row[f"{metric}_std"] = 0.25
+        row[f"{metric}_n"] = 4
+    return row
+
+
 def test_classify_file_category_uses_source_extensions() -> None:
     result = classify("src/app.py", ".py")
 
@@ -244,3 +273,84 @@ def test_build_file_category_exclusions_report_persists_and_skips(tmp_path: Path
     assert first == second
     assert second["schema_version"] == "file-category-exclusions-v1"
     assert second["sources"]["file_category_churn_metrics"]["rows"] == 2
+
+
+def test_compute_evaluator_outcome_metrics_pivots_fields_deltas_and_gap() -> None:
+    engine = load_engine()
+    frame = pd.DataFrame(
+        [
+            evaluator_row("T1", progress=2.0, scope=1.0, complexity=1.0),
+            evaluator_row("T2", progress=3.0, scope=1.5, complexity=1.25),
+            evaluator_row("T3", progress=4.0, scope=2.0, complexity=2.0),
+        ]
+    )
+
+    result = engine.compute_evaluator_outcome_metrics(frame)
+    row = result.iloc[0]
+
+    assert len(result) == 1
+    assert row["project_progress_mean_t1"] == 2.0
+    assert row["project_progress_median_t2"] == 3.0
+    assert row["scope_applicability_iqr_t3"] == 0.5
+    assert row["technical_complexity_mean_delta_t1_t3"] == 1.0
+    assert row["project_progress_mean_delta_t1_t2"] == 1.0
+    assert row["progress_scope_gap_t1"] == 1.0
+    assert row["progress_scope_gap_t3"] == 2.0
+    assert row["progress_scope_gap_delta_t1_t3"] == 1.0
+    assert bool(row["evaluator_outcome_available"])
+    assert row["evaluator_outcome_observation_unit"] == "team_semester"
+    assert row["evaluator_outcome_contract_version"] == "cross-evidence-v1"
+
+
+def test_compute_evaluator_outcome_metrics_marks_missing_cut_unavailable() -> None:
+    engine = load_engine()
+    frame = pd.DataFrame(
+        [
+            evaluator_row("T1", progress=2.0, scope=1.0),
+            evaluator_row("T3", progress=4.0, scope=2.0),
+        ]
+    )
+
+    row = engine.compute_evaluator_outcome_metrics(frame).iloc[0]
+
+    assert not bool(row["evaluator_outcome_available"])
+    assert row["evaluator_outcome_unavailable_reason"] == "missing_required_temporal_cut:T2"
+    assert pd.isna(row["project_progress_mean_delta_t1_t3"])
+    assert pd.isna(row["progress_scope_gap_delta_t1_t3"])
+
+
+def test_compute_evaluator_outcome_metrics_rejects_invalid_input() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_evaluator_outcome_metrics(pd.DataFrame([{"ID_Equipe": "TEAM_1"}]))
+    with pytest.raises(ValueError, match="duplicate team-cut"):
+        engine.compute_evaluator_outcome_metrics(pd.DataFrame([evaluator_row("T1"), evaluator_row("T1")]))
+
+
+def test_build_evaluator_outcome_metrics_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    lake_dir = tmp_path / "lake"
+    lake_dir.mkdir()
+    evaluator = lake_dir / "evaluator_team_cuts.parquet"
+    output = tmp_path / "analysis" / "cross_evidence" / "datasets" / "evaluator_outcome_metrics.parquet"
+    pd.DataFrame(
+        [
+            evaluator_row("T1", progress=2.0, scope=1.0),
+            evaluator_row("T2", progress=3.0, scope=1.5),
+            evaluator_row("T3", progress=4.0, scope=2.0),
+        ]
+    ).to_parquet(evaluator, index=False)
+    evaluator.with_name(f"{evaluator.name}.metadata.json").write_text(
+        json.dumps({"status": "success", "input_checksum": "fixture"}),
+        encoding="utf-8",
+    )
+
+    first = engine.build_evaluator_outcome_metrics(lake_dir=lake_dir, output_path=output)
+    second = engine.build_evaluator_outcome_metrics(lake_dir=lake_dir, output_path=output)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-v1"
+    assert first.equals(second)
+    assert second.loc[0, "scope_applicability_mean_t3"] == 2.0

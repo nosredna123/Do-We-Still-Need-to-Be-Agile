@@ -32,6 +32,21 @@ UNKNOWN_CONFIDENCE = 0.5
 FILE_CATEGORY_CHURN_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 FILE_CATEGORY_EXCLUSIONS_CONTRACT_VERSION = CROSS_EVIDENCE_MANIFEST_VERSION
 FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION = "file-category-exclusions-v1"
+EVALUATOR_OUTCOME_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+CUTS = ("T1", "T2", "T3")
+TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
+EVALUATOR_OUTCOME_METRICS = (
+    "engagement_participation",
+    "project_progress",
+    "scope_applicability",
+    "technical_complexity",
+)
+EVALUATOR_OUTCOME_FIELDS = ("mean", "median", "iqr", "std", "n")
+EVALUATOR_OUTCOME_REQUIRED_COLUMNS = set(TEAM_SEMESTER_KEYS) | {"temporal_marker"} | {
+    f"{metric}_{field}"
+    for metric in EVALUATOR_OUTCOME_METRICS
+    for field in EVALUATOR_OUTCOME_FIELDS
+}
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -182,6 +197,134 @@ def _require_success_sidecar(path: Path) -> dict[str, Any]:
     if metadata.get("status") != "success":
         raise ValueError(f"Artifact sidecar is not successful: {metadata_path}")
     return metadata
+
+
+def compute_evaluator_outcome_metrics(evaluator: pd.DataFrame) -> pd.DataFrame:
+    """Pivot evaluator outcomes by team-semester and temporal cut."""
+    missing = EVALUATOR_OUTCOME_REQUIRED_COLUMNS - set(evaluator.columns)
+    if missing:
+        raise ValueError(f"evaluator_team_cuts missing columns: {sorted(missing)}")
+    if evaluator[TEAM_SEMESTER_KEYS + ["temporal_marker"]].isna().any().any():
+        raise ValueError("evaluator_team_cuts keys must be non-null")
+    if evaluator.duplicated(TEAM_SEMESTER_KEYS + ["temporal_marker"]).any():
+        raise ValueError("evaluator_team_cuts has duplicate team-cut observations")
+    invalid_cuts = set(evaluator["temporal_marker"].dropna()) - set(CUTS)
+    if invalid_cuts:
+        raise ValueError(f"evaluator_team_cuts has invalid temporal markers: {sorted(invalid_cuts)}")
+
+    rows: list[dict[str, Any]] = []
+    for key, group in evaluator.groupby(TEAM_SEMESTER_KEYS, dropna=False):
+        row: dict[str, Any] = dict(zip(TEAM_SEMESTER_KEYS, key))
+        cuts_present = set(group["temporal_marker"])
+        missing_cuts = [cut for cut in CUTS if cut not in cuts_present]
+        for metric in EVALUATOR_OUTCOME_METRICS:
+            for field in EVALUATOR_OUTCOME_FIELDS:
+                source = f"{metric}_{field}"
+                for cut in CUTS:
+                    current = group.loc[group["temporal_marker"] == cut, source]
+                    row[f"{source}_{cut.lower()}"] = current.iloc[0] if not current.empty else pd.NA
+            for left, right, name in (
+                ("t1", "t2", f"{metric}_mean_delta_t1_t2"),
+                ("t2", "t3", f"{metric}_mean_delta_t2_t3"),
+                ("t1", "t3", f"{metric}_mean_delta_t1_t3"),
+            ):
+                row[name] = (
+                    row[f"{metric}_mean_{right}"] - row[f"{metric}_mean_{left}"]
+                    if not missing_cuts
+                    else pd.NA
+                )
+
+        for cut in CUTS:
+            lower = cut.lower()
+            row[f"progress_scope_gap_{lower}"] = (
+                row[f"project_progress_mean_{lower}"] - row[f"scope_applicability_mean_{lower}"]
+                if not pd.isna(row[f"project_progress_mean_{lower}"]) and not pd.isna(row[f"scope_applicability_mean_{lower}"])
+                else pd.NA
+            )
+        for left, right, name in (
+            ("t1", "t2", "progress_scope_gap_delta_t1_t2"),
+            ("t2", "t3", "progress_scope_gap_delta_t2_t3"),
+            ("t1", "t3", "progress_scope_gap_delta_t1_t3"),
+        ):
+            row[name] = row[f"progress_scope_gap_{right}"] - row[f"progress_scope_gap_{left}"] if not missing_cuts else pd.NA
+
+        row["evaluator_outcome_available"] = not missing_cuts
+        row["evaluator_outcome_unavailable_reason"] = (
+            f"missing_required_temporal_cut:{missing_cuts[0]}" if missing_cuts else None
+        )
+        row["evaluator_outcome_observation_unit"] = "team_semester"
+        row["evaluator_outcome_contract_version"] = EVALUATOR_OUTCOME_CONTRACT_VERSION
+        rows.append(row)
+    return pd.DataFrame(rows).sort_values(TEAM_SEMESTER_KEYS).reset_index(drop=True)
+
+
+def write_evaluator_outcome_metrics(
+    metrics: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist evaluator outcome metrics and their sidecar."""
+    required = set(TEAM_SEMESTER_KEYS) | {
+        "scope_applicability_mean_t3",
+        "project_progress_mean_t3",
+        "progress_scope_gap_t3",
+        "evaluator_outcome_available",
+        "evaluator_outcome_observation_unit",
+        "evaluator_outcome_contract_version",
+    }
+    missing = required - set(metrics.columns)
+    if missing:
+        raise ValueError(f"evaluator_outcome_metrics output missing columns: {sorted(missing)}")
+    if metrics.empty:
+        raise ValueError("evaluator_outcome_metrics output is empty")
+    if metrics.duplicated(TEAM_SEMESTER_KEYS).any():
+        raise ValueError("evaluator_outcome_metrics has duplicate team-semester keys")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    metrics.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=EVALUATOR_OUTCOME_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_evaluator_outcome_metrics(
+    *,
+    lake_dir: Path = Path("data/lake"),
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the persisted evaluator outcome metrics artifact."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["evaluator_outcome_metrics"]["path"]))
+    evaluator_input = CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY["lake.evaluator_team_cuts"]
+    evaluator_path = lake_dir / Path(str(evaluator_input["path"])).name
+    evaluator_sidecar = lake_dir / Path(str(evaluator_input["metadata_path"])).name
+    _require_success_sidecar(evaluator_path)
+    options = {
+        "stage": "evaluator_outcome_metrics",
+        "contract_version": EVALUATOR_OUTCOME_CONTRACT_VERSION,
+        "metrics": list(EVALUATOR_OUTCOME_METRICS),
+        "fields": list(EVALUATOR_OUTCOME_FIELDS),
+        "delta_pairs": ["t1_t2", "t2_t3", "t1_t3"],
+        "progress_scope_gap": "project_progress_mean_minus_scope_applicability_mean",
+        "availability_policy": "complete_t1_t2_t3_required_for_deltas",
+    }
+    checksum = input_checksum([evaluator_path, evaluator_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Evaluator outcome metrics artifact is current: %s", output_path)
+        return pd.read_parquet(output_path)
+
+    evaluator = pd.read_parquet(evaluator_path)
+    metrics = compute_evaluator_outcome_metrics(evaluator)
+    invalidate_stale_artifact(output_path, checksum)
+    write_evaluator_outcome_metrics(metrics, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s evaluator outcome observations", len(metrics))
+    return metrics
 
 
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
@@ -453,13 +596,24 @@ def main() -> None:
     """Run the currently implemented cross-evidence artifact builders."""
     parser = argparse.ArgumentParser(description="Build cross-evidence extension artifacts")
     parser.add_argument("--lake-dir", type=Path, default=Path("data/lake"))
+    parser.add_argument("--evaluator-outcome-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
-    parser.add_argument("--only", choices=["file_category_churn_metrics", "file_category_exclusions"], nargs="+")
+    parser.add_argument(
+        "--only",
+        choices=["evaluator_outcome_metrics", "file_category_churn_metrics", "file_category_exclusions"],
+        nargs="+",
+    )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
-    selected = set(args.only or ["file_category_churn_metrics", "file_category_exclusions"])
+    selected = set(args.only or ["evaluator_outcome_metrics", "file_category_churn_metrics", "file_category_exclusions"])
     metrics_path = args.file_category_churn_output
+    if "evaluator_outcome_metrics" in selected:
+        build_evaluator_outcome_metrics(
+            lake_dir=args.lake_dir,
+            output_path=args.evaluator_outcome_output,
+            force=args.force,
+        )
     if "file_category_churn_metrics" in selected:
         build_file_category_churn_metrics(
             lake_dir=args.lake_dir,

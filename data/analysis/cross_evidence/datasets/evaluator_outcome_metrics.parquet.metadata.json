@@ -1,0 +1,29 @@
+{
+  "contract_version": "cross-evidence-v1",
+  "input_checksum": "d1ced6a6cdc8f7862544a5bd988ae6e3904706d1e46d50c171b00abbc63474d2",
+  "options": {
+    "availability_policy": "complete_t1_t2_t3_required_for_deltas",
+    "contract_version": "cross-evidence-v1",
+    "delta_pairs": [
+      "t1_t2",
+      "t2_t3",
+      "t1_t3"
+    ],
+    "fields": [
+      "mean",
+      "median",
+      "iqr",
+      "std",
+      "n"
+    ],
+    "metrics": [
+      "engagement_participation",
+      "project_progress",
+      "scope_applicability",
+      "technical_complexity"
+    ],
+    "progress_scope_gap": "project_progress_mean_minus_scope_applicability_mean",
+    "stage": "evaluator_outcome_metrics"
+  },
+  "status": "success"
+}
