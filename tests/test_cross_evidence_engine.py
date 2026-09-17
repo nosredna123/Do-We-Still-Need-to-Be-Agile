@@ -1404,6 +1404,96 @@ def test_build_source_churn_vs_planning_rework_figure_exports_and_skips(tmp_path
     assert entry["transformations"][-1] == "log_y"
 
 
+def temporal_escalation_fixture() -> tuple[pd.DataFrame, pd.DataFrame]:
+    temporal = pd.DataFrame(
+        [
+            {"metric_id": "planning_artifact_activity", "mean_t1": 10.0, "mean_t2": 20.0, "mean_t3": 40.0, "n_valid_t1": 4, "n_valid_t2": 4, "n_valid_t3": 4},
+            {"metric_id": "pi_line_delta", "mean_t1": 2.0, "mean_t2": 10.0, "mean_t3": 20.0, "n_valid_t1": 4, "n_valid_t2": 4, "n_valid_t3": 4},
+            {"metric_id": "cc_total", "mean_t1": 100.0, "mean_t2": 200.0, "mean_t3": 400.0, "n_valid_t1": 4, "n_valid_t2": 4, "n_valid_t3": 4},
+            {"metric_id": "cc_commit_n", "mean_t1": 2.0, "mean_t2": 3.0, "mean_t3": 4.0, "n_valid_t1": 4, "n_valid_t2": 4, "n_valid_t3": 4},
+            {"metric_id": "technical_complexity_mean", "mean_t1": 1.0, "mean_t2": 1.2, "mean_t3": 1.5, "n_valid_t1": 4, "n_valid_t2": 4, "n_valid_t3": 4},
+        ]
+    )
+    evaluator = pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "project_progress_mean_t1": 2.0, "project_progress_mean_t2": 3.0, "project_progress_mean_t3": 4.0},
+            {"ID_Equipe": "TEAM_2", "Semestre": "2026.1", "project_progress_mean_t1": 1.0, "project_progress_mean_t2": 2.0, "project_progress_mean_t3": 2.0},
+        ]
+    )
+    return temporal, evaluator
+
+
+def test_compute_temporal_escalation_figure_data_normalizes_six_metrics() -> None:
+    engine = load_engine()
+    temporal, evaluator = temporal_escalation_fixture()
+
+    result = engine.compute_temporal_escalation_figure_data(temporal, evaluator)
+
+    assert len(result) == 24
+    assert set(result["metric_id"]) == {
+        "planning_artifact_activity", "pi_line_delta", "cc_total", "cc_commit_n", "technical_complexity_mean", "project_progress"
+    }
+    assert result["temporal_marker"].isin({"T1", "T2", "T3"}).all()
+    assert result.loc[(result["metric_id"] == "cc_total") & (result["series"] == "global") & (result["temporal_marker"] == "T1"), "value_relative_t1"].iloc[0] == 1.0
+    assert result.loc[(result["metric_id"] == "cc_total") & (result["series"] == "global") & (result["temporal_marker"] == "T3"), "value_relative_t1"].iloc[0] == 4.0
+    assert set(result.loc[result["metric_id"] == "project_progress", "series"]) == {"global", "semester"}
+    assert result["transformation"].eq("relative_to_t1_baseline").all()
+
+
+def test_compute_temporal_escalation_figure_data_rejects_missing_metric() -> None:
+    engine = load_engine()
+    temporal, evaluator = temporal_escalation_fixture()
+    with pytest.raises(ValueError, match="exactly one row"):
+        engine.compute_temporal_escalation_figure_data(temporal.loc[temporal["metric_id"] != "cc_total"], evaluator)
+
+
+def test_build_temporal_escalation_figure_exports_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    temporal, evaluator = temporal_escalation_fixture()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    datasets.mkdir(parents=True)
+    temporal_path = datasets / "temporal_escalation_metrics.parquet"
+    evaluator_path = datasets / "evaluator_outcome_metrics.parquet"
+    temporal.to_parquet(temporal_path, index=False)
+    evaluator.to_parquet(evaluator_path, index=False)
+    for path in (temporal_path, evaluator_path):
+        path.with_name(f"{path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    source_frames = {
+        "planning_metrics": pd.DataFrame(
+            [{"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "planning_artifact_activity_t1": 1, "planning_artifact_activity_t2": 2, "planning_artifact_activity_t3": 4, "pi_line_delta_t1": 1, "pi_line_delta_t2": 2, "pi_line_delta_t3": 4}]
+        ),
+        "code_churn_metrics": pd.DataFrame(
+            [{"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "cc_total_t1": 10, "cc_total_t2": 20, "cc_total_t3": 40, "cc_commit_n_t1": 1, "cc_commit_n_t2": 2, "cc_commit_n_t3": 4}]
+        ),
+        "technical_degradation_metrics": pd.DataFrame(
+            [{"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "technical_complexity_mean_t1": 1, "technical_complexity_mean_t2": 2, "technical_complexity_mean_t3": 4}]
+        ),
+    }
+    for name, frame in source_frames.items():
+        source_path = tmp_path / "data" / "analysis" / f"{name}.parquet"
+        frame.to_parquet(source_path, index=False)
+        source_path.with_name(f"{source_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    data_path = tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data" / "temporal_escalation_panel.csv"
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_temporal_escalation_figure(output_data_path=data_path, figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=data_path.parent)
+        second = engine.build_temporal_escalation_figure(output_data_path=data_path, figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=data_path.parent)
+    finally:
+        os.chdir(old_cwd)
+    manifest_path = data_path.with_name(f"{data_path.stem}.manifest.json")
+    metadata = json.loads(data_path.with_name(f"{data_path.name}.metadata.json").read_text(encoding="utf-8"))
+    assert data_path.exists() and manifest_path.exists()
+    assert metadata["status"] == "success"
+    assert len(first) == len(second) == 39
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "temporal_escalation_panel.png").exists()
+    entry = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert entry["visual_spec_version"] == "cross-evidence-visual-spec-v1"
+    assert "relative_to_t1_baseline" in entry["transformations"]
+
+
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
     engine = load_engine()
 

@@ -502,6 +502,44 @@ SCOPE_LATE_INSTABILITY_SEMESTER_COLORS = {
     "2026.1": "#D97706",
 }
 SOURCE_CHURN_PLANNING_REWORK_SEMESTER_COLORS = SCOPE_LATE_INSTABILITY_SEMESTER_COLORS
+TEMPORAL_ESCALATION_FIGURE_METRICS = (
+    {
+        "metric_id": "planning_artifact_activity",
+        "source": "temporal_escalation_metrics",
+        "columns": {"T1": "mean_t1", "T2": "mean_t2", "T3": "mean_t3"},
+        "title": "Planning artifact activity",
+    },
+    {
+        "metric_id": "pi_line_delta",
+        "source": "temporal_escalation_metrics",
+        "columns": {"T1": "mean_t1", "T2": "mean_t2", "T3": "mean_t3"},
+        "title": "Planning artifact line delta",
+    },
+    {
+        "metric_id": "cc_total",
+        "source": "temporal_escalation_metrics",
+        "columns": {"T1": "mean_t1", "T2": "mean_t2", "T3": "mean_t3"},
+        "title": "Total churn",
+    },
+    {
+        "metric_id": "cc_commit_n",
+        "source": "temporal_escalation_metrics",
+        "columns": {"T1": "mean_t1", "T2": "mean_t2", "T3": "mean_t3"},
+        "title": "Commit count",
+    },
+    {
+        "metric_id": "technical_complexity_mean",
+        "source": "temporal_escalation_metrics",
+        "columns": {"T1": "mean_t1", "T2": "mean_t2", "T3": "mean_t3"},
+        "title": "Technical complexity",
+    },
+    {
+        "metric_id": "project_progress",
+        "source": "evaluator_outcome_metrics",
+        "columns": {"T1": "project_progress_mean_t1", "T2": "project_progress_mean_t2", "T3": "project_progress_mean_t3"},
+        "title": "Perceived project progress",
+    },
+)
 
 
 def compute_scope_vs_late_instability_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
@@ -817,6 +855,260 @@ def build_source_churn_vs_planning_rework_figure(
     manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
     manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
     logger.info("Wrote source churn versus planning rework figure: %s", export_paths["png"])
+    return figure_data
+
+
+def compute_temporal_escalation_figure_data(
+    temporal_metrics: pd.DataFrame,
+    evaluator_outcomes: pd.DataFrame,
+    semester_source_frames: dict[str, pd.DataFrame] | None = None,
+) -> pd.DataFrame:
+    """Prepare T1/T2/T3 values and T1-relative indices for CE-4.4."""
+    rows: list[dict[str, object]] = []
+    for spec in TEMPORAL_ESCALATION_FIGURE_METRICS:
+        source_name = str(spec["source"])
+        frame = temporal_metrics if source_name == "temporal_escalation_metrics" else evaluator_outcomes
+        metric_id = str(spec["metric_id"])
+        if source_name == "temporal_escalation_metrics":
+            required = {"metric_id", *dict(spec["columns"]).values()}
+            missing = required - set(frame.columns)
+            if missing:
+                raise ValueError(f"{source_name} missing columns: {sorted(missing)}")
+            matches = frame.loc[frame["metric_id"] == metric_id]
+            if len(matches) != 1:
+                raise ValueError(f"{source_name} must contain exactly one row for metric_id: {metric_id}")
+            source_row = matches.iloc[0]
+            values = {cut: pd.to_numeric(source_row[column], errors="coerce") for cut, column in dict(spec["columns"]).items()}
+            n_valid = {cut: int(source_row.get(f"n_valid_{cut.lower()}", 0)) for cut in ("T1", "T2", "T3")}
+        else:
+            required = {"Semestre", *dict(spec["columns"]).values()}
+            missing = required - set(frame.columns)
+            if missing:
+                raise ValueError(f"{source_name} missing columns: {sorted(missing)}")
+            series_values = {cut: pd.to_numeric(frame[column], errors="coerce") for cut, column in dict(spec["columns"]).items()}
+            values = {cut: (float(series.mean()) if series.notna().any() else pd.NA) for cut, series in series_values.items()}
+            n_valid = {cut: int(series_values[cut].notna().sum()) for cut in ("T1", "T2", "T3")}
+        baseline = values["T1"]
+        for cut in ("T1", "T2", "T3"):
+            current = values[cut]
+            relative = current / baseline if pd.notna(baseline) and baseline != 0 else pd.NA
+            rows.append(
+                {
+                    "figure_id": "temporal_escalation_panel",
+                    "metric_id": metric_id,
+                    "metric_title": spec["title"],
+                    "source_artifact": source_name,
+                    "temporal_marker": cut,
+                    "series": "global",
+                    "semester": pd.NA,
+                    "aggregation": "source_mean" if source_name == "temporal_escalation_metrics" else "all_team_semester_mean",
+                    "value_raw": current,
+                    "baseline_t1": baseline,
+                    "value_relative_t1": relative,
+                    "n_valid": n_valid[cut],
+                    "transformation": "relative_to_t1_baseline",
+                }
+            )
+        if source_name == "temporal_escalation_metrics" and semester_source_frames is not None:
+            source_artifact = str(next(item["source_artifact"] for item in TEMPORAL_ESCALATION_METRIC_SPECS if item["metric_id"] == metric_id))
+            source_frame = semester_source_frames.get(source_artifact)
+            if source_frame is None:
+                raise ValueError(f"Missing semester source frame: {source_artifact}")
+            source_spec = next(item for item in TEMPORAL_ESCALATION_METRIC_SPECS if item["metric_id"] == metric_id)
+            source_columns = dict(source_spec["columns"])
+            required_source = set(TEAM_SEMESTER_KEYS) | set(source_columns.values())
+            missing_source = required_source - set(source_frame.columns)
+            if missing_source:
+                raise ValueError(f"{source_artifact} missing columns: {sorted(missing_source)}")
+            for semester, group in source_frame.groupby("Semestre", dropna=False):
+                semester_values = {
+                    cut: pd.to_numeric(group[column], errors="coerce")
+                    for cut, column in source_columns.items()
+                }
+                semester_means = {
+                    cut: float(values_series.mean()) if values_series.notna().any() else pd.NA
+                    for cut, values_series in semester_values.items()
+                }
+                semester_baseline = semester_means["t1"]
+                for cut in ("t1", "t2", "t3"):
+                    current = semester_means[cut]
+                    relative = current / semester_baseline if pd.notna(semester_baseline) and semester_baseline != 0 else pd.NA
+                    rows.append(
+                        {
+                            "figure_id": "temporal_escalation_panel",
+                            "metric_id": metric_id,
+                            "metric_title": spec["title"],
+                            "source_artifact": source_name,
+                            "temporal_marker": cut.upper(),
+                            "series": "semester",
+                            "semester": semester,
+                            "aggregation": "semester_mean",
+                            "value_raw": current,
+                            "baseline_t1": semester_baseline,
+                            "value_relative_t1": relative,
+                            "n_valid": int(semester_values[cut].notna().sum()),
+                            "transformation": "relative_to_t1_baseline",
+                        }
+                    )
+        if source_name == "evaluator_outcome_metrics":
+            for semester, group in frame.groupby("Semestre", dropna=False):
+                semester_values = {cut: pd.to_numeric(group[column], errors="coerce") for cut, column in dict(spec["columns"]).items()}
+                semester_means = {cut: float(values_series.mean()) if values_series.notna().any() else pd.NA for cut, values_series in semester_values.items()}
+                semester_baseline = semester_means["T1"]
+                for cut in ("T1", "T2", "T3"):
+                    current = semester_means[cut]
+                    relative = current / semester_baseline if pd.notna(semester_baseline) and semester_baseline != 0 else pd.NA
+                    rows.append(
+                        {
+                            "figure_id": "temporal_escalation_panel",
+                            "metric_id": metric_id,
+                            "metric_title": spec["title"],
+                            "source_artifact": source_name,
+                            "temporal_marker": cut,
+                            "series": "semester",
+                            "semester": semester,
+                            "aggregation": "semester_mean",
+                            "value_raw": current,
+                            "baseline_t1": semester_baseline,
+                            "value_relative_t1": relative,
+                            "n_valid": int(semester_values[cut].notna().sum()),
+                            "transformation": "relative_to_t1_baseline",
+                        }
+                    )
+    return pd.DataFrame(rows)
+
+
+def _temporal_escalation_figure(figure_data: pd.DataFrame) -> plotly_go.Figure:
+    """Build the CE-4.4 six-panel relative T1 escalation figure."""
+    figure = make_subplots(
+        rows=3,
+        cols=2,
+        subplot_titles=[str(spec["title"]) for spec in TEMPORAL_ESCALATION_FIGURE_METRICS],
+        horizontal_spacing=0.12,
+        vertical_spacing=0.13,
+    )
+    for index, spec in enumerate(TEMPORAL_ESCALATION_FIGURE_METRICS):
+        row_index = index // 2 + 1
+        column_index = index % 2 + 1
+        subset = figure_data.loc[figure_data["metric_id"] == spec["metric_id"]]
+        global_values = subset.loc[subset["series"] == "global"].dropna(subset=["value_relative_t1"])
+        figure.add_trace(
+            plotly_go.Scatter(
+                x=global_values["temporal_marker"],
+                y=global_values["value_relative_t1"],
+                mode="lines+markers",
+                name="Global",
+                legendgroup="Global",
+                showlegend=index == 0,
+                line={"color": CROSS_EVIDENCE_VISUAL_PALETTE["context"], "width": 3},
+                marker={"size": 9},
+                customdata=global_values[["value_raw", "n_valid"]],
+                hovertemplate="Global %{x}<br>Relative to T1: %{y:.2f}<br>Raw: %{customdata[0]}<br>n: %{customdata[1]}<extra></extra>",
+            ),
+            row=row_index,
+            col=column_index,
+        )
+        for semester in sorted(subset["semester"].dropna().astype(str).unique()):
+            semester_values = subset.loc[(subset["series"] == "semester") & (subset["semester"].astype(str) == semester)].dropna(subset=["value_relative_t1"])
+            figure.add_trace(
+                plotly_go.Scatter(
+                    x=semester_values["temporal_marker"],
+                    y=semester_values["value_relative_t1"],
+                    mode="lines+markers",
+                    name=semester,
+                    legendgroup=semester,
+                    showlegend=index == 0,
+                    line={"color": SOURCE_CHURN_PLANNING_REWORK_SEMESTER_COLORS.get(semester, CROSS_EVIDENCE_VISUAL_PALETTE["context"]), "width": 2},
+                    marker={"size": 7},
+                    customdata=semester_values[["value_raw", "n_valid"]],
+                    hovertemplate=f"{semester} %{{x}}<br>Relative to T1: %{{y:.2f}}<br>Raw: %{{customdata[0]}}<br>n: %{{customdata[1]}}<extra></extra>",
+                ),
+                row=row_index,
+                col=column_index,
+            )
+        figure.update_xaxes(title_text="Temporal cut", categoryorder="array", categoryarray=["T1", "T2", "T3"], row=row_index, col=column_index)
+        figure.update_yaxes(title_text="Relative to T1 (T1=1.0)", row=row_index, col=column_index)
+    apply_cross_evidence_visual_theme(figure, title="Temporal escalation across planning, engineering, and perceived progress")
+    return figure
+
+
+def build_temporal_escalation_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load CE-4.4 temporal escalation figure data and exports."""
+    temporal_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["temporal_escalation_metrics"]["path"]))
+    evaluator_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["evaluator_outcome_metrics"]["path"]))
+    for path in (temporal_path, evaluator_path):
+        _require_success_sidecar(path)
+    semester_source_frames: dict[str, pd.DataFrame] = {}
+    semester_source_paths: list[Path] = []
+    for source_artifact in {str(spec["source_artifact"]) for spec in TEMPORAL_ESCALATION_METRIC_SPECS}:
+        entry = CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY[f"analysis.{source_artifact}"]
+        source_path = Path("data/analysis") / Path(str(entry["path"])).name
+        source_sidecar = Path("data/analysis") / Path(str(entry["metadata_path"])).name
+        _require_success_sidecar(source_path)
+        semester_source_frames[source_artifact] = pd.read_parquet(source_path)
+        semester_source_paths.extend([source_path, source_sidecar])
+    paths = cross_evidence_figure_export_paths("temporal_escalation_panel", category="prioritarias", figure_root=figure_root, figure_data_root=figure_data_root)
+    output_data_path = output_data_path or paths["data"]
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    options = {
+        "stage": "temporal_escalation_panel",
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "metrics": TEMPORAL_ESCALATION_FIGURE_METRICS,
+        "normalization": "relative_to_t1_baseline",
+        "series": ["global", "semester"],
+        "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS),
+    }
+    inputs = [path for source in (temporal_path, evaluator_path) for path in (source, source.with_name(f"{source.name}.metadata.json"))]
+    inputs.extend(semester_source_paths)
+    checksum = input_checksum(inputs, options)
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("Temporal escalation figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+
+    figure_data = compute_temporal_escalation_figure_data(
+        pd.read_parquet(temporal_path),
+        pd.read_parquet(evaluator_path),
+        semester_source_frames,
+    )
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(output_data_path, checksum, contract_version="cross-evidence-figure-data-v1", options=options)
+    figure = _temporal_escalation_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure,
+        figure_data,
+        figure_id="temporal_escalation_panel",
+        category="prioritarias",
+        source=f"{temporal_path.as_posix()} + {evaluator_path.as_posix()}",
+        unit_of_analysis="metric_family_cut",
+        variables=[spec["metric_id"] for spec in TEMPORAL_ESCALATION_FIGURE_METRICS],
+        transformations=["relative_to_t1_baseline", "global_and_semester_series", "no_interpolation"],
+        scale_notes=["all subplots use relative T1 index; raw values preserved in CSV"],
+        limitations=["observational descriptive panel", "2026.1 semester has n=5", "relative index is not a common raw unit"],
+        paths=export_paths,
+        required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote temporal escalation figure: %s", export_paths["png"])
     return figure_data
 
 
@@ -3138,6 +3430,7 @@ def main() -> None:
     parser.add_argument("--evidence-priority-matrix-output", type=Path, default=None)
     parser.add_argument("--scope-vs-late-instability-data-output", type=Path, default=None)
     parser.add_argument("--source-churn-vs-planning-rework-data-output", type=Path, default=None)
+    parser.add_argument("--temporal-escalation-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -3156,6 +3449,7 @@ def main() -> None:
             "evidence_priority_matrix",
             "scope_vs_late_instability",
             "source_churn_vs_planning_rework",
+            "temporal_escalation_panel",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -3177,6 +3471,7 @@ def main() -> None:
         "evidence_priority_matrix",
         "scope_vs_late_instability",
         "source_churn_vs_planning_rework",
+        "temporal_escalation_panel",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -3248,6 +3543,11 @@ def main() -> None:
     if "source_churn_vs_planning_rework" in selected:
         build_source_churn_vs_planning_rework_figure(
             output_data_path=args.source_churn_vs_planning_rework_data_output,
+            force=args.force,
+        )
+    if "temporal_escalation_panel" in selected:
+        build_temporal_escalation_figure(
+            output_data_path=args.temporal_escalation_data_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
