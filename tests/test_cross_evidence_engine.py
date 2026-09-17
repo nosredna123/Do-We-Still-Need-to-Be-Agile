@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 from typing import Any
+
+import pandas as pd
+import pytest
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -21,6 +25,33 @@ def load_engine() -> Any:
 def classify(path: str | None, extension: str | None = None, old_path: str | None = None) -> dict[str, object]:
     engine = load_engine()
     return engine.classify_file_category(path, extension, file_path_old=old_path)
+
+
+def git_file_row(
+    path: str,
+    *,
+    extension: str | None = None,
+    team: str = "TEAM_1",
+    semester: str = "2025.2",
+    cut: str = "T1",
+    status: str = "added",
+    old_path: str | None = None,
+    added: int | None = 10,
+    deleted: int | None = 2,
+    binary: bool = False,
+) -> dict[str, object]:
+    return {
+        "ID_Equipe": team,
+        "Semestre": semester,
+        "temporal_marker": cut,
+        "file_path": path,
+        "file_path_old": old_path,
+        "file_extension": extension if extension is not None else Path(path).suffix.lower(),
+        "change_status": status,
+        "lines_added": added,
+        "lines_deleted": deleted,
+        "is_binary": binary,
+    }
 
 
 def test_classify_file_category_uses_source_extensions() -> None:
@@ -86,3 +117,71 @@ def test_classify_file_category_infers_extension_and_falls_back_to_old_path() ->
     assert inferred["category_rule"] == "extension:source:.ts"
     assert fallback["file_category"] == "source"
     assert fallback["category_rule"] == "extension:source:.kt"
+
+
+def test_compute_file_category_churn_metrics_aggregates_by_team_cut_and_category() -> None:
+    engine = load_engine()
+    frame = pd.DataFrame(
+        [
+            git_file_row("src/app.py", added=10, deleted=2),
+            git_file_row("src/util.py", status="modified", added=4, deleted=1),
+            git_file_row("docs/schema.json", added=3, deleted=1),
+            git_file_row("dist/app.js", added=None, deleted=None, binary=True),
+            git_file_row("locale/messages.po", cut="T2", added=7, deleted=3),
+            git_file_row("src/unknown.flow", cut="T2", added=1, deleted=0),
+        ]
+    )
+
+    result = engine.compute_file_category_churn_metrics(frame)
+    t1_source = result.loc[
+        (result["temporal_marker"] == "T1") & (result["file_category"] == "source")
+    ].iloc[0]
+    t1_generated = result.loc[
+        (result["temporal_marker"] == "T1") & (result["file_category"] == "generated")
+    ].iloc[0]
+    t2_unknown = result.loc[
+        (result["temporal_marker"] == "T2") & (result["file_category"] == "unknown")
+    ].iloc[0]
+
+    assert t1_source["event_n"] == 2
+    assert t1_source["added_event_n"] == 1
+    assert t1_source["modified_event_n"] == 1
+    assert t1_source["lines_added"] == 14
+    assert t1_source["lines_deleted"] == 3
+    assert t1_source["churn_lines"] == 17
+    assert t1_source["total_event_n"] == 4
+    assert t1_source["category_event_share"] == 0.5
+    assert t1_generated["binary_event_n"] == 1
+    assert t1_generated["line_count_missing_event_n"] == 1
+    assert t1_generated["churn_lines"] == 0
+    assert t2_unknown["category_confidence_mean"] == 0.5
+    assert result["file_category_definition_version"].eq("file-category-rules-v1").all()
+
+
+def test_compute_file_category_churn_metrics_rejects_invalid_input() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_file_category_churn_metrics(pd.DataFrame([{"file_path": "src/app.py"}]))
+
+
+def test_build_file_category_churn_metrics_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    lake_dir = tmp_path / "lake"
+    lake_dir.mkdir()
+    git_files = lake_dir / "git_files.parquet"
+    output = tmp_path / "analysis" / "cross_evidence" / "datasets" / "file_category_churn_metrics.parquet"
+    pd.DataFrame([git_file_row("src/app.py", added=5, deleted=1)]).to_parquet(git_files, index=False)
+    git_files.with_name(f"{git_files.name}.metadata.json").write_text(
+        json.dumps({"status": "success", "input_checksum": "fixture"}),
+        encoding="utf-8",
+    )
+
+    first = engine.build_file_category_churn_metrics(lake_dir=lake_dir, output_path=output)
+    second = engine.build_file_category_churn_metrics(lake_dir=lake_dir, output_path=output)
+
+    assert output.exists()
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-v1"
+    assert first.equals(second)
+    assert second.loc[0, "file_category"] == "source"
