@@ -1,0 +1,59 @@
+{
+  "anonymization_policy": "public_visual_ranked_or_aggregate",
+  "category": "prioritarias",
+  "checksums": {
+    "data": "808aee8482f7883d7eff21e3b6d541ee77a38e43919ba80b5521e8d8644ffc20",
+    "pdf": "959e80797beabda4880db1285c777033b17bf89f4ceda318adedf1ae0c37f6e7",
+    "plotly_json": "4a7dc64cdfa44d926a236e72f5e1b6f4586c8637233b2d53a939e305b632fd88",
+    "png": "6fe6eba5a6e11ce2d0547469555a04714e40930f0813164d752c2b47219174d9",
+    "svg": "b7c8f0d65110a136d510d2396dcde249500dc8d4847d842ab6a214ef096a0723"
+  },
+  "data_metadata_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv.metadata.json",
+  "data_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv",
+  "dimensions": {
+    "height": 850,
+    "png_scale": 2,
+    "width": 1400
+  },
+  "export_formats": [
+    "html",
+    "png",
+    "svg",
+    "pdf"
+  ],
+  "figure_id": "source_churn_vs_planning_rework",
+  "interactive_path": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.html",
+  "limitations": [
+    "observational association",
+    "team-semester sample n=14",
+    "source churn excludes non-source file categories"
+  ],
+  "n_missing": 0,
+  "n_total": 14,
+  "n_valid": 14,
+  "priority": "required",
+  "scale_notes": [
+    "positive heavy-tailed variables shown on logarithmic axes"
+  ],
+  "source": "data/analysis/cross_evidence/datasets/late_instability_metrics.parquet",
+  "static_paths": {
+    "pdf": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.pdf",
+    "png": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.png",
+    "svg": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.svg"
+  },
+  "status": "success",
+  "theme": "plotly_white",
+  "transformations": [
+    "complete_case_pair",
+    "source_category_only_t3",
+    "anonymize_team_id",
+    "log_x",
+    "log_y"
+  ],
+  "unit_of_analysis": "team_semester",
+  "variables": [
+    "planning_rework_signal_t2_t3",
+    "source_churn_t3"
+  ],
+  "visual_spec_version": "cross-evidence-visual-spec-v1"
+}

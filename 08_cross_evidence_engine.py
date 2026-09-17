@@ -501,6 +501,7 @@ SCOPE_LATE_INSTABILITY_SEMESTER_COLORS = {
     "2025.2": "#2563EB",
     "2026.1": "#D97706",
 }
+SOURCE_CHURN_PLANNING_REWORK_SEMESTER_COLORS = SCOPE_LATE_INSTABILITY_SEMESTER_COLORS
 
 
 def compute_scope_vs_late_instability_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
@@ -656,6 +657,166 @@ def build_scope_vs_late_instability_figure(
     manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
     manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
     logger.info("Wrote scope versus late instability figure: %s", export_paths["png"])
+    return figure_data
+
+
+def compute_source_churn_vs_planning_rework_figure_data(late_instability: pd.DataFrame) -> pd.DataFrame:
+    """Prepare anonymized data for the source-churn versus rework figure."""
+    required = {
+        "ID_Equipe",
+        "Semestre",
+        "planning_rework_signal_t2_t3",
+        "source_churn_t3",
+    }
+    missing = required - set(late_instability.columns)
+    if missing:
+        raise ValueError(f"late_instability_metrics missing columns: {sorted(missing)}")
+    working = anonymize_cross_evidence_visual_data(
+        late_instability[["ID_Equipe", "Semestre", "planning_rework_signal_t2_t3", "source_churn_t3"]]
+    )
+    working["planning_rework_signal_t2_t3"] = pd.to_numeric(working["planning_rework_signal_t2_t3"], errors="coerce")
+    working["source_churn_t3"] = pd.to_numeric(working["source_churn_t3"], errors="coerce")
+    working = working.dropna(subset=["planning_rework_signal_t2_t3", "source_churn_t3"])
+    if (working[["planning_rework_signal_t2_t3", "source_churn_t3"]] <= 0).any().any():
+        raise ValueError("source churn and planning rework must be positive for log scales")
+    return working.rename(
+        columns={
+            "planning_rework_signal_t2_t3": "x_value",
+            "source_churn_t3": "y_value",
+        }
+    ).assign(
+        figure_id="source_churn_vs_planning_rework",
+        x="planning_rework_signal_t2_t3",
+        y="source_churn_t3",
+        x_scale="log",
+        y_scale="log",
+        transformation="complete_case_pair|source_category_only",
+    )[
+        [
+            "figure_id",
+            "anonymized_team_id",
+            "Semestre",
+            "x",
+            "x_value",
+            "y",
+            "y_value",
+            "x_scale",
+            "y_scale",
+            "transformation",
+        ]
+    ].rename(columns={"Semestre": "semester"})
+
+
+def _source_churn_vs_planning_rework_figure(figure_data: pd.DataFrame) -> plotly_go.Figure:
+    """Build the CE-4.3 log-log scatter figure."""
+    figure = plotly_go.Figure()
+    for semester in sorted(figure_data["semester"].astype(str).unique()):
+        points = figure_data.loc[figure_data["semester"].astype(str) == semester]
+        figure.add_trace(
+            plotly_go.Scatter(
+                x=points["x_value"],
+                y=points["y_value"],
+                mode="markers",
+                name=semester,
+                marker={
+                    "size": 11,
+                    "color": SOURCE_CHURN_PLANNING_REWORK_SEMESTER_COLORS.get(semester, CROSS_EVIDENCE_VISUAL_PALETTE["context"]),
+                    "line": {"width": 0.8, "color": "#FFFFFF"},
+                },
+                customdata=points[["anonymized_team_id", "semester"]],
+                hovertemplate="%{customdata[0]} (%{customdata[1]})<br>Planning rework: %{x}<br>Source churn: %{y}<extra></extra>",
+            )
+        )
+    apply_cross_evidence_visual_theme(figure, title="Source churn versus late planning rework")
+    figure.update_xaxes(
+        title_text="Late planning rework signal (T2-T3, log scale)",
+        type="log",
+        showgrid=True,
+        gridcolor="#E2E8F0",
+    )
+    figure.update_yaxes(
+        title_text="Source churn at T3 (lines, log scale)",
+        type="log",
+        showgrid=True,
+        gridcolor="#E2E8F0",
+    )
+    return figure
+
+
+def build_source_churn_vs_planning_rework_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load CE-4.3 figure data and publication exports."""
+    source_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["late_instability_metrics"]["path"]))
+    _require_success_sidecar(source_path)
+    source_sidecar = source_path.with_name(f"{source_path.name}.metadata.json")
+    paths = cross_evidence_figure_export_paths(
+        "source_churn_vs_planning_rework",
+        category="prioritarias",
+        figure_root=figure_root,
+        figure_data_root=figure_data_root,
+    )
+    output_data_path = output_data_path or paths["data"]
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    options = {
+        "stage": "source_churn_vs_planning_rework",
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "x": "planning_rework_signal_t2_t3",
+        "y": "source_churn_t3",
+        "x_scale": "log",
+        "y_scale": "log",
+        "source_policy": "file_category_source_only_t3",
+        "anonymization_policy": CROSS_EVIDENCE_VISUAL_ANONYMIZATION_POLICY,
+        "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS),
+    }
+    checksum = input_checksum([source_path, source_sidecar], options)
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("Source churn versus planning rework figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+
+    figure_data = compute_source_churn_vs_planning_rework_figure_data(pd.read_parquet(source_path))
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(
+        output_data_path,
+        checksum,
+        contract_version="cross-evidence-figure-data-v1",
+        options=options,
+    )
+    figure = _source_churn_vs_planning_rework_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure,
+        figure_data,
+        figure_id="source_churn_vs_planning_rework",
+        category="prioritarias",
+        source=source_path.as_posix(),
+        unit_of_analysis="team_semester",
+        variables=["planning_rework_signal_t2_t3", "source_churn_t3"],
+        transformations=["complete_case_pair", "source_category_only_t3", "anonymize_team_id", "log_x", "log_y"],
+        scale_notes=["positive heavy-tailed variables shown on logarithmic axes"],
+        limitations=["observational association", "team-semester sample n=14", "source churn excludes non-source file categories"],
+        paths=export_paths,
+        required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote source churn versus planning rework figure: %s", export_paths["png"])
     return figure_data
 
 
@@ -2976,6 +3137,7 @@ def main() -> None:
     parser.add_argument("--semester-stratified-output", type=Path, default=None)
     parser.add_argument("--evidence-priority-matrix-output", type=Path, default=None)
     parser.add_argument("--scope-vs-late-instability-data-output", type=Path, default=None)
+    parser.add_argument("--source-churn-vs-planning-rework-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -2993,6 +3155,7 @@ def main() -> None:
             "semester_stratified_results",
             "evidence_priority_matrix",
             "scope_vs_late_instability",
+            "source_churn_vs_planning_rework",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -3013,6 +3176,7 @@ def main() -> None:
         "semester_stratified_results",
         "evidence_priority_matrix",
         "scope_vs_late_instability",
+        "source_churn_vs_planning_rework",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -3079,6 +3243,11 @@ def main() -> None:
     if "scope_vs_late_instability" in selected:
         build_scope_vs_late_instability_figure(
             output_data_path=args.scope_vs_late_instability_data_output,
+            force=args.force,
+        )
+    if "source_churn_vs_planning_rework" in selected:
+        build_source_churn_vs_planning_rework_figure(
+            output_data_path=args.source_churn_vs_planning_rework_data_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

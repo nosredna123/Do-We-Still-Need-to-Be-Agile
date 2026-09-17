@@ -1331,6 +1331,79 @@ def test_build_scope_vs_late_instability_figure_exports_and_skips(tmp_path: Path
     assert entry["export_formats"] == ["html", "png", "svg", "pdf"]
 
 
+def test_compute_source_churn_vs_planning_rework_figure_data_uses_source_churn_and_log_scales() -> None:
+    engine = load_engine()
+    late = pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "planning_rework_signal_t2_t3": 10, "source_churn_t3": 100},
+            {"ID_Equipe": "TEAM_2", "Semestre": "2026.1", "planning_rework_signal_t2_t3": 100, "source_churn_t3": 10000},
+        ]
+    )
+
+    result = engine.compute_source_churn_vs_planning_rework_figure_data(late)
+
+    assert len(result) == 2
+    assert result["x"].eq("planning_rework_signal_t2_t3").all()
+    assert result["y"].eq("source_churn_t3").all()
+    assert result["x_scale"].eq("log").all()
+    assert result["y_scale"].eq("log").all()
+    assert result["transformation"].eq("complete_case_pair|source_category_only").all()
+
+
+def test_compute_source_churn_vs_planning_rework_rejects_nonpositive_values() -> None:
+    engine = load_engine()
+    late = pd.DataFrame(
+        [{"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "planning_rework_signal_t2_t3": 0, "source_churn_t3": 100}]
+    )
+
+    with pytest.raises(ValueError, match="must be positive"):
+        engine.compute_source_churn_vs_planning_rework_figure_data(late)
+
+
+def test_build_source_churn_vs_planning_rework_figure_exports_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    source_path = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets" / "late_instability_metrics.parquet"
+    source_path.parent.mkdir(parents=True)
+    late = pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "planning_rework_signal_t2_t3": 10, "source_churn_t3": 100},
+            {"ID_Equipe": "TEAM_2", "Semestre": "2026.1", "planning_rework_signal_t2_t3": 100, "source_churn_t3": 10000},
+        ]
+    )
+    late.to_parquet(source_path, index=False)
+    source_path.with_name(f"{source_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    data_path = tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data" / "source_churn_vs_planning_rework.csv"
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_source_churn_vs_planning_rework_figure(
+            output_data_path=data_path,
+            figure_root=tmp_path / "assets" / "figures" / "cross_evidence",
+            figure_data_root=data_path.parent,
+        )
+        second = engine.build_source_churn_vs_planning_rework_figure(
+            output_data_path=data_path,
+            figure_root=tmp_path / "assets" / "figures" / "cross_evidence",
+            figure_data_root=data_path.parent,
+        )
+    finally:
+        os.chdir(old_cwd)
+
+    manifest_path = data_path.with_name(f"{data_path.stem}.manifest.json")
+    metadata = json.loads(data_path.with_name(f"{data_path.name}.metadata.json").read_text(encoding="utf-8"))
+    assert data_path.exists()
+    assert manifest_path.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-figure-data-v1"
+    assert len(first) == len(second) == 2
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "source_churn_vs_planning_rework.pdf").exists()
+    entry = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert entry["visual_spec_version"] == "cross-evidence-visual-spec-v1"
+    assert entry["transformations"][-1] == "log_y"
+
+
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
     engine = load_engine()
 
