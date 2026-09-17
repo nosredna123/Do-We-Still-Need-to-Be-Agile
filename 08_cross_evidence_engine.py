@@ -44,6 +44,7 @@ CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION = "cross-evidence-best-worst-contrast
 CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION = "cross-evidence-leave-one-out-v1"
 CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION = "cross-evidence-extreme-overlap-v1"
 CROSS_EVIDENCE_SEMESTER_STRATIFIED_CONTRACT_VERSION = "cross-evidence-semester-stratified-v1"
+CROSS_EVIDENCE_PRIORITY_MATRIX_CONTRACT_VERSION = "cross-evidence-priority-matrix-v1"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -244,6 +245,13 @@ CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES = (
 CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE = 4
 CROSS_EVIDENCE_EXTREME_OVERLAP_MODES = ("top_top", "top_bottom", "bottom_bottom")
 CROSS_EVIDENCE_SEMESTER_STRATA = ("global", "2025.2", "2026.1")
+EVIDENCE_PRIORITY_SOURCE_ARTIFACTS = (
+    "cross_evidence_correlations",
+    "best_worst_project_contrasts",
+    "leave_one_out_sensitivity",
+    "extreme_case_overlap",
+    "semester_stratified_results",
+)
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -1975,6 +1983,326 @@ def build_semester_stratified_results(
     return results
 
 
+def _narrative_acts(value: object) -> str:
+    """Normalize a persisted narrative-act value for the priority matrix."""
+    if isinstance(value, str):
+        return value
+    return json.dumps(value if value is not None else [])
+
+
+def _priority_row(
+    *,
+    evidence_id: str,
+    source_artifact: str,
+    source_row_key: str,
+    evidence_tier: str,
+    evidence_scope: str,
+    narrative_acts: object,
+    publication_readiness: str,
+    recommended_use: str,
+    summary: str,
+    metric_columns: dict[str, object],
+) -> dict[str, object]:
+    """Build one normalized evidence-priority row."""
+    row: dict[str, object] = {
+        "evidence_id": evidence_id,
+        "source_artifact": source_artifact,
+        "source_row_key": source_row_key,
+        "evidence_tier": evidence_tier,
+        "evidence_scope": evidence_scope,
+        "narrative_acts": _narrative_acts(narrative_acts),
+        "publication_readiness": publication_readiness,
+        "recommended_use": recommended_use,
+        "summary": summary,
+        "contract_version": CROSS_EVIDENCE_PRIORITY_MATRIX_CONTRACT_VERSION,
+    }
+    row.update(metric_columns)
+    return row
+
+
+def _correlation_priority_row(
+    row: pd.Series,
+    loo_by_analysis: dict[str, pd.Series],
+) -> dict[str, object]:
+    """Classify one global correlation using its leave-one-out context."""
+    analysis_id = str(row["analysis_id"])
+    loo = loo_by_analysis.get(analysis_id)
+    robustness = str(loo["robustness_class"]) if loo is not None else "unavailable"
+    supports = str(row["verdict"]) == "supports"
+    robust = robustness in {"robust_all", "robust_most"}
+    if supports and robust:
+        tier, readiness, use = "A", "candidate_primary", "anchor_narrative_claim"
+        summary = "Supported global correlation with leave-one-out robustness."
+    elif supports:
+        tier, readiness, use = "B", "candidate_secondary", "support_narrative_claim"
+        summary = "Supported global correlation without strong robustness confirmation."
+    else:
+        tier, readiness, use = "C", "exploratory_only", "do_not_generalize"
+        summary = "Global correlation is inconclusive or does not support the expected direction."
+    return _priority_row(
+        evidence_id=f"correlation__{analysis_id}",
+        source_artifact="cross_evidence_correlations",
+        source_row_key=analysis_id,
+        evidence_tier=tier,
+        evidence_scope="global_cross_evidence",
+        narrative_acts=row["narrative_acts"],
+        publication_readiness=readiness,
+        recommended_use=use,
+        summary=summary,
+        metric_columns={
+            "analysis_id": analysis_id,
+            "stratum": "global",
+            "semester": pd.NA,
+            "priority": row["priority"],
+            "x": row["x"],
+            "y": row["y"],
+            "coefficient": row["coefficient"],
+            "p_value": row["p_value"],
+            "verdict": row["verdict"],
+            "robustness_class": robustness,
+            "overlap_n": pd.NA,
+            "jaccard": pd.NA,
+        },
+    )
+
+
+def compute_evidence_priority_matrix(
+    correlations: pd.DataFrame,
+    contrasts: pd.DataFrame,
+    leave_one_out: pd.DataFrame,
+    overlap: pd.DataFrame,
+    semester_stratified: pd.DataFrame,
+) -> pd.DataFrame:
+    """Consolidate CE-3.1 through CE-3.5 into an evidence-priority matrix."""
+    required_inputs = {
+        "cross_evidence_correlations": {"analysis_id", "narrative_acts", "priority", "x", "y", "coefficient", "p_value", "verdict"},
+        "best_worst_project_contrasts": {"contrast_id", "score_variable", "outcome_variable", "p_value", "status", "interpretation"},
+        "leave_one_out_sensitivity": {"analysis_id", "robustness_class", "loo_supports_n", "loo_tested_n"},
+        "extreme_case_overlap": {"overlap_id", "left_variable", "left_extreme", "right_variable", "right_extreme", "overlap_n", "jaccard"},
+        "semester_stratified_results": {"analysis_id", "stratum", "semester", "n_valid", "coefficient", "p_value", "verdict", "stratification_class", "warning"},
+    }
+    frames = {
+        "cross_evidence_correlations": correlations,
+        "best_worst_project_contrasts": contrasts,
+        "leave_one_out_sensitivity": leave_one_out,
+        "extreme_case_overlap": overlap,
+        "semester_stratified_results": semester_stratified,
+    }
+    for artifact, required in required_inputs.items():
+        missing = required - set(frames[artifact].columns)
+        if missing:
+            raise ValueError(f"{artifact} missing columns: {sorted(missing)}")
+        if frames[artifact].empty:
+            raise ValueError(f"{artifact} input is empty")
+
+    loo_by_analysis = leave_one_out.set_index("analysis_id").to_dict("index")
+    rows: list[dict[str, object]] = []
+    for _, source_row in correlations.iterrows():
+        rows.append(_correlation_priority_row(source_row, {key: pd.Series(value) for key, value in loo_by_analysis.items()}))
+
+    for _, source_row in contrasts.iterrows():
+        significant = source_row["status"] == "success" and pd.notna(source_row["p_value"]) and float(source_row["p_value"]) < 0.05
+        rows.append(
+            _priority_row(
+                evidence_id=f"contrast__{source_row['contrast_id']}",
+                source_artifact="best_worst_project_contrasts",
+                source_row_key=str(source_row["contrast_id"]),
+                evidence_tier="B",
+                evidence_scope="top_bottom_exploratory_contrast",
+                narrative_acts="[3]",
+                publication_readiness="candidate_secondary" if significant else "exploratory_only",
+                recommended_use="support_narrative_claim" if significant else "do_not_generalize",
+                summary="Best/worst contrast provides exploratory group-level support." if significant else "Best/worst contrast is exploratory and not statistically supported.",
+                metric_columns={
+                    "analysis_id": source_row["contrast_id"],
+                    "stratum": "top_bottom",
+                    "semester": pd.NA,
+                    "priority": pd.NA,
+                    "x": source_row["score_variable"],
+                    "y": source_row["outcome_variable"],
+                    "coefficient": pd.NA,
+                    "p_value": source_row["p_value"],
+                    "verdict": "supports" if significant else "inconclusive",
+                    "robustness_class": pd.NA,
+                    "overlap_n": pd.NA,
+                    "jaccard": pd.NA,
+                },
+            )
+        )
+
+    for _, source_row in leave_one_out.iterrows():
+        robust = source_row["robustness_class"] in {"robust_all", "robust_most"}
+        rows.append(
+            _priority_row(
+                evidence_id=f"leave_one_out__{source_row['analysis_id']}",
+                source_artifact="leave_one_out_sensitivity",
+                source_row_key=str(source_row["analysis_id"]),
+                evidence_tier="A" if robust else "C",
+                evidence_scope="robustness_diagnostic",
+                narrative_acts="[2, 3]",
+                publication_readiness="candidate_secondary" if robust else "exploratory_only",
+                recommended_use="guide_refactoring" if robust else "report_methodological_limitation",
+                summary="Leave-one-out analysis confirms stability." if robust else "Leave-one-out analysis indicates fragile or unsupported evidence.",
+                metric_columns={
+                    "analysis_id": source_row["analysis_id"],
+                    "stratum": "leave_one_out",
+                    "semester": pd.NA,
+                    "priority": pd.NA,
+                    "x": pd.NA,
+                    "y": pd.NA,
+                    "coefficient": source_row.get("original_coefficient", pd.NA),
+                    "p_value": source_row.get("original_p_value", pd.NA),
+                    "verdict": source_row.get("original_verdict", pd.NA),
+                    "robustness_class": source_row["robustness_class"],
+                    "overlap_n": pd.NA,
+                    "jaccard": pd.NA,
+                },
+            )
+        )
+
+    for _, source_row in overlap.iterrows():
+        meaningful = int(source_row["overlap_n"]) >= 2
+        rows.append(
+            _priority_row(
+                evidence_id=f"overlap__{source_row['overlap_id']}",
+                source_artifact="extreme_case_overlap",
+                source_row_key=str(source_row["overlap_id"]),
+                evidence_tier="B",
+                evidence_scope="ranked_extreme_case_overlap",
+                narrative_acts="[2, 3]",
+                publication_readiness="candidate_secondary" if meaningful else "exploratory_only",
+                recommended_use="describe_tail_convergence" if meaningful else "do_not_generalize",
+                summary="Extreme-case overlap supports convergence of tails." if meaningful else "Extreme-case overlap is weak and should remain descriptive.",
+                metric_columns={
+                    "analysis_id": source_row["overlap_id"],
+                    "stratum": f"{source_row['left_extreme']}_{source_row['right_extreme']}",
+                    "semester": pd.NA,
+                    "priority": pd.NA,
+                    "x": source_row["left_variable"],
+                    "y": source_row["right_variable"],
+                    "coefficient": pd.NA,
+                    "p_value": pd.NA,
+                    "verdict": "supports" if meaningful else "inconclusive",
+                    "robustness_class": pd.NA,
+                    "overlap_n": source_row["overlap_n"],
+                    "jaccard": source_row["jaccard"],
+                },
+            )
+        )
+
+    for _, source_row in semester_stratified.iterrows():
+        small_sample = pd.notna(source_row["warning"])
+        supports = source_row["verdict"] == "supports"
+        rows.append(
+            _priority_row(
+                evidence_id=f"semester__{source_row['analysis_id']}__{source_row['stratum']}__{source_row['semester'] if pd.notna(source_row['semester']) else 'global'}",
+                source_artifact="semester_stratified_results",
+                source_row_key=f"{source_row['analysis_id']}__{source_row['stratum']}__{source_row['semester']}",
+                evidence_tier="C",
+                evidence_scope="semester_stratified_methodological_warning",
+                narrative_acts=source_row["narrative_acts"],
+                publication_readiness="exploratory_only",
+                recommended_use="report_methodological_limitation" if small_sample else ("support_narrative_claim" if supports else "do_not_generalize"),
+                summary="Semester-stratified result requires contextualized interpretation." if small_sample else "Global/semester comparison provides contextual evidence.",
+                metric_columns={
+                    "analysis_id": source_row["analysis_id"],
+                    "stratum": source_row["stratum"],
+                    "semester": source_row["semester"],
+                    "priority": source_row["priority"],
+                    "x": source_row["x"],
+                    "y": source_row["y"],
+                    "coefficient": source_row["coefficient"],
+                    "p_value": source_row["p_value"],
+                    "verdict": source_row["verdict"],
+                    "robustness_class": source_row["stratification_class"],
+                    "overlap_n": pd.NA,
+                    "jaccard": pd.NA,
+                },
+            )
+        )
+    return pd.DataFrame(rows)
+
+
+def write_evidence_priority_matrix(
+    matrix: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist the evidence-priority matrix and sidecar."""
+    required = {
+        "evidence_id",
+        "source_artifact",
+        "evidence_tier",
+        "evidence_scope",
+        "narrative_acts",
+        "publication_readiness",
+        "recommended_use",
+        "summary",
+        "contract_version",
+    }
+    missing = required - set(matrix.columns)
+    if missing:
+        raise ValueError(f"evidence_priority_matrix output missing columns: {sorted(missing)}")
+    if matrix.empty:
+        raise ValueError("evidence_priority_matrix output is empty")
+    if matrix["evidence_id"].duplicated().any():
+        raise ValueError("evidence_priority_matrix has duplicate evidence_id rows")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    matrix.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_PRIORITY_MATRIX_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_evidence_priority_matrix(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the consolidated evidence-priority matrix."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["evidence_priority_matrix"]["path"]))
+    input_paths: list[Path] = []
+    for artifact in EVIDENCE_PRIORITY_SOURCE_ARTIFACTS:
+        source_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY[artifact]["path"]))
+        _require_success_sidecar(source_path)
+        input_paths.extend([source_path, source_path.with_name(f"{source_path.name}.metadata.json")])
+    options = {
+        "stage": "evidence_priority_matrix",
+        "contract_version": CROSS_EVIDENCE_PRIORITY_MATRIX_CONTRACT_VERSION,
+        "source_artifacts": list(EVIDENCE_PRIORITY_SOURCE_ARTIFACTS),
+        "granularity": "one_row_per_atomic_evidence_result",
+        "tier_policy": "A_primary_robust_support_B_secondary_exploratory_C_limitation_or_inconclusive",
+        "publication_readiness_values": ["candidate_primary", "candidate_secondary", "exploratory_only"],
+    }
+    checksum = input_checksum(input_paths, options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Evidence-priority matrix artifact is current: %s", output_path)
+        return pd.read_csv(output_path)
+
+    source_frames = {
+        artifact: pd.read_csv(Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY[artifact]["path"])))
+        for artifact in EVIDENCE_PRIORITY_SOURCE_ARTIFACTS
+    }
+    matrix = compute_evidence_priority_matrix(
+        source_frames["cross_evidence_correlations"],
+        source_frames["best_worst_project_contrasts"],
+        source_frames["leave_one_out_sensitivity"],
+        source_frames["extreme_case_overlap"],
+        source_frames["semester_stratified_results"],
+    )
+    invalidate_stale_artifact(output_path, checksum)
+    write_evidence_priority_matrix(matrix, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s evidence-priority matrix rows", len(matrix))
+    return matrix
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -2255,6 +2583,7 @@ def main() -> None:
     parser.add_argument("--leave-one-out-sensitivity-output", type=Path, default=None)
     parser.add_argument("--extreme-case-overlap-output", type=Path, default=None)
     parser.add_argument("--semester-stratified-output", type=Path, default=None)
+    parser.add_argument("--evidence-priority-matrix-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -2270,6 +2599,7 @@ def main() -> None:
             "leave_one_out_sensitivity",
             "extreme_case_overlap",
             "semester_stratified_results",
+            "evidence_priority_matrix",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -2288,6 +2618,7 @@ def main() -> None:
         "leave_one_out_sensitivity",
         "extreme_case_overlap",
         "semester_stratified_results",
+        "evidence_priority_matrix",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -2344,6 +2675,11 @@ def main() -> None:
     if "semester_stratified_results" in selected:
         build_semester_stratified_results(
             output_path=args.semester_stratified_output,
+            force=args.force,
+        )
+    if "evidence_priority_matrix" in selected:
+        build_evidence_priority_matrix(
+            output_path=args.evidence_priority_matrix_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

@@ -1191,3 +1191,80 @@ def test_build_semester_stratified_results_persists_and_skips_current_artifact(t
     first_keys = first[["analysis_id", "stratum", "semester"]].fillna("<NA>").astype(str)
     second_keys = second[["analysis_id", "stratum", "semester"]].fillna("<NA>").astype(str)
     assert first_keys.values.tolist() == second_keys.values.tolist()
+
+
+def priority_matrix_inputs() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    engine = load_engine()
+    panel = correlation_panel()
+    correlations = engine.compute_cross_evidence_correlations(panel)
+    contrasts = engine.compute_best_worst_project_contrasts(contrast_panel())
+    leave_one_out = engine.compute_leave_one_out_sensitivity(panel, correlations)
+    overlap = engine.compute_extreme_case_overlap(overlap_panel())
+    semester = engine.compute_semester_stratified_results(semester_panel())
+    return correlations, contrasts, leave_one_out, overlap, semester
+
+
+def test_compute_evidence_priority_matrix_preserves_atomic_rows_and_tiers() -> None:
+    engine = load_engine()
+    matrix = engine.compute_evidence_priority_matrix(*priority_matrix_inputs())
+
+    assert len(matrix) == 77
+    assert set(matrix["source_artifact"]) == {
+        "cross_evidence_correlations",
+        "best_worst_project_contrasts",
+        "leave_one_out_sensitivity",
+        "extreme_case_overlap",
+        "semester_stratified_results",
+    }
+    assert set(matrix["evidence_tier"]) == {"A", "B", "C"}
+    assert matrix["evidence_id"].is_unique
+    correlation = matrix.loc[matrix["evidence_id"] == "correlation__scope_vs_source_churn_t3"].iloc[0]
+    assert correlation["evidence_tier"] == "A"
+    assert correlation["recommended_use"] == "anchor_narrative_claim"
+    robust = matrix.loc[matrix["evidence_id"] == "leave_one_out__scope_vs_source_churn_t3"].iloc[0]
+    assert robust["evidence_tier"] == "A"
+    assert matrix["contract_version"].eq("cross-evidence-priority-matrix-v1").all()
+
+
+def test_compute_evidence_priority_matrix_rejects_missing_source_columns() -> None:
+    engine = load_engine()
+    inputs = list(priority_matrix_inputs())
+    inputs[0] = inputs[0].drop(columns=["verdict"])
+    with pytest.raises(ValueError, match="cross_evidence_correlations missing columns"):
+        engine.compute_evidence_priority_matrix(*inputs)
+
+
+def test_build_evidence_priority_matrix_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    results_dir = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    results_dir.mkdir(parents=True)
+    inputs = priority_matrix_inputs()
+    artifact_names = [
+        "cross_evidence_correlations",
+        "best_worst_project_contrasts",
+        "leave_one_out_sensitivity",
+        "extreme_case_overlap",
+        "semester_stratified_results",
+    ]
+    for artifact, frame in zip(artifact_names, inputs):
+        path = results_dir / f"{artifact}.csv"
+        frame.to_csv(path, index=False)
+        path.with_name(f"{path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    output = results_dir / "evidence_priority_matrix.csv"
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_evidence_priority_matrix(output_path=output)
+        second = engine.build_evidence_priority_matrix(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-priority-matrix-v1"
+    assert len(first) == len(second) == 77
+    assert first["evidence_id"].tolist() == second["evidence_id"].tolist()
