@@ -43,6 +43,7 @@ CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION = "cross-evidence-correlations-v1"
 CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION = "cross-evidence-best-worst-contrasts-v1"
 CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION = "cross-evidence-leave-one-out-v1"
 CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION = "cross-evidence-extreme-overlap-v1"
+CROSS_EVIDENCE_SEMESTER_STRATIFIED_CONTRACT_VERSION = "cross-evidence-semester-stratified-v1"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -242,6 +243,7 @@ CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES = (
 )
 CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE = 4
 CROSS_EVIDENCE_EXTREME_OVERLAP_MODES = ("top_top", "top_bottom", "bottom_bottom")
+CROSS_EVIDENCE_SEMESTER_STRATA = ("global", "2025.2", "2026.1")
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -1779,6 +1781,200 @@ def build_extreme_case_overlap(
     return overlap
 
 
+def _semester_stratification_class(
+    global_result: dict[str, object],
+    semester_results: list[dict[str, object]],
+    expected_direction: str,
+) -> str:
+    """Classify global versus semester-specific support without overstating replication."""
+    global_verdict = str(global_result["verdict"])
+    semester_verdicts = [str(result["verdict"]) for result in semester_results]
+    coefficients = [result["coefficient"] for result in semester_results if result["coefficient"] is not None]
+    signs = {1 if float(coefficient) > 0 else -1 for coefficient in coefficients if float(coefficient) != 0}
+    expected_sign = -1 if expected_direction == "negative" else 1
+    if len(signs) > 1:
+        return "direction_mixed"
+    if global_verdict == "supports" and "supports" in semester_verdicts:
+        return "global_supported_semester_supported"
+    if global_verdict == "supports":
+        return "global_supported_semester_inconclusive"
+    if global_verdict == "inconclusive" and semester_verdicts and all(verdict == "inconclusive" for verdict in semester_verdicts) and signs == {expected_sign}:
+        return "direction_consistent_inconclusive"
+    if global_verdict == "inconclusive":
+        return "global_inconclusive"
+    return "direction_mixed"
+
+
+def _semester_correlation_result(
+    frame: pd.DataFrame,
+    *,
+    analysis_id: str,
+    spec: dict[str, Any],
+    stratum: str,
+    semester: str | None,
+) -> dict[str, object]:
+    """Compute one global or semester-stratified Spearman result."""
+    x_name = str(spec["x"])
+    y_name = str(spec["y"])
+    pair = frame[[x_name, y_name]].apply(pd.to_numeric, errors="coerce")
+    values = pair.dropna()
+    n_total = int(len(pair))
+    n_valid = int(len(values))
+    warning: str | None = None
+    if n_valid < 6:
+        warning = "very_small_sample_n_lt_6"
+    elif n_valid < 10:
+        warning = "small_sample_n_lt_10"
+    row: dict[str, object] = {
+        "analysis_id": analysis_id,
+        "unit_of_analysis": "team_semester",
+        "stratum": stratum,
+        "semester": semester,
+        "test": "spearman",
+        "priority": spec["priority"],
+        "x": x_name,
+        "y": y_name,
+        "expected_direction": spec["expected_direction"],
+        "narrative_acts": json.dumps(spec["narrative_acts"]),
+        "n_total": n_total,
+        "n_valid": n_valid,
+        "n_missing": n_total - n_valid,
+        "coefficient": pd.NA,
+        "p_value": pd.NA,
+        "status": "unavailable",
+        "reason": None,
+        "warning": warning,
+        "verdict": "unavailable",
+        "stratification_class": None,
+        "contract_version": CROSS_EVIDENCE_SEMESTER_STRATIFIED_CONTRACT_VERSION,
+    }
+    if n_valid < 3:
+        row["reason"] = "insufficient_n"
+    elif values[x_name].nunique() < 2 or values[y_name].nunique() < 2:
+        row["reason"] = "zero_variance"
+    else:
+        coefficient, p_value = spearmanr(values[x_name], values[y_name])
+        row["coefficient"] = float(coefficient)
+        row["p_value"] = float(p_value)
+        row["status"] = "success"
+        row["verdict"] = _correlation_verdict(float(coefficient), float(p_value), str(spec["expected_direction"]))
+    return row
+
+
+def compute_semester_stratified_results(panel: pd.DataFrame) -> pd.DataFrame:
+    """Repeat declared cross-evidence correlations globally and by semester."""
+    required = set(TEAM_SEMESTER_KEYS) | {
+        str(spec["x"]) for spec in CROSS_EVIDENCE_CORRELATION_REGISTRY.values()
+    } | {str(spec["y"]) for spec in CROSS_EVIDENCE_CORRELATION_REGISTRY.values()}
+    missing = required - set(panel.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_panel missing columns: {sorted(missing)}")
+    if panel[TEAM_SEMESTER_KEYS].isna().any().any():
+        raise ValueError("cross_evidence_panel team-semester keys must be non-null")
+
+    rows: list[dict[str, object]] = []
+    for analysis_id, spec in CROSS_EVIDENCE_CORRELATION_REGISTRY.items():
+        global_result = _semester_correlation_result(
+            panel,
+            analysis_id=analysis_id,
+            spec=spec,
+            stratum="global",
+            semester=None,
+        )
+        semester_results = [
+            _semester_correlation_result(
+                group,
+                analysis_id=analysis_id,
+                spec=spec,
+                stratum="semester",
+                semester=str(semester),
+            )
+            for semester, group in sorted(panel.groupby("Semestre", dropna=False), key=lambda item: str(item[0]))
+        ]
+        classification = _semester_stratification_class(
+            global_result,
+            semester_results,
+            str(spec["expected_direction"]),
+        )
+        global_result["stratification_class"] = classification
+        rows.append(global_result)
+        for result in semester_results:
+            result["stratification_class"] = classification
+            rows.append(result)
+    return pd.DataFrame(rows)
+
+
+def write_semester_stratified_results(
+    results: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist semester-stratified results and sidecar."""
+    required = {
+        "analysis_id",
+        "stratum",
+        "semester",
+        "n_total",
+        "n_valid",
+        "coefficient",
+        "p_value",
+        "status",
+        "warning",
+        "verdict",
+        "stratification_class",
+        "contract_version",
+    }
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"semester_stratified_results output missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("semester_stratified_results output is empty")
+    if results.duplicated(["analysis_id", "stratum", "semester"]).any():
+        raise ValueError("semester_stratified_results has duplicate analysis strata")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    results.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_SEMESTER_STRATIFIED_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_semester_stratified_results(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load global and semester-stratified correlation results."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["semester_stratified_results"]["path"]))
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    _require_success_sidecar(panel_path)
+    panel_sidecar = panel_path.with_name(f"{panel_path.name}.metadata.json")
+    options = {
+        "stage": "semester_stratified_results",
+        "contract_version": CROSS_EVIDENCE_SEMESTER_STRATIFIED_CONTRACT_VERSION,
+        "registry": CROSS_EVIDENCE_CORRELATION_REGISTRY,
+        "strata": ["global", "observed_semester"],
+        "support_rule": "p_lt_0_05_and_expected_direction",
+        "warning_policy": {"small_sample": "n_lt_10", "very_small_sample": "n_lt_6"},
+    }
+    checksum = input_checksum([panel_path, panel_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Semester-stratified results artifact is current: %s", output_path)
+        return pd.read_csv(output_path)
+
+    results = compute_semester_stratified_results(pd.read_parquet(panel_path))
+    invalidate_stale_artifact(output_path, checksum)
+    write_semester_stratified_results(results, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s semester-stratified result rows", len(results))
+    return results
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -2058,6 +2254,7 @@ def main() -> None:
     parser.add_argument("--best-worst-contrasts-output", type=Path, default=None)
     parser.add_argument("--leave-one-out-sensitivity-output", type=Path, default=None)
     parser.add_argument("--extreme-case-overlap-output", type=Path, default=None)
+    parser.add_argument("--semester-stratified-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -2072,6 +2269,7 @@ def main() -> None:
             "best_worst_project_contrasts",
             "leave_one_out_sensitivity",
             "extreme_case_overlap",
+            "semester_stratified_results",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -2089,6 +2287,7 @@ def main() -> None:
         "best_worst_project_contrasts",
         "leave_one_out_sensitivity",
         "extreme_case_overlap",
+        "semester_stratified_results",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -2140,6 +2339,11 @@ def main() -> None:
     if "extreme_case_overlap" in selected:
         build_extreme_case_overlap(
             output_path=args.extreme_case_overlap_output,
+            force=args.force,
+        )
+    if "semester_stratified_results" in selected:
+        build_semester_stratified_results(
+            output_path=args.semester_stratified_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

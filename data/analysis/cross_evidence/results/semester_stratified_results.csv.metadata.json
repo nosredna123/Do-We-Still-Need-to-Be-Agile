@@ -1,0 +1,89 @@
+{
+  "contract_version": "cross-evidence-semester-stratified-v1",
+  "input_checksum": "812cf15e9e896ea197c24857e21d457aa9b672611810c343fe3e2ccc262e09f1",
+  "options": {
+    "contract_version": "cross-evidence-semester-stratified-v1",
+    "registry": {
+      "scope_vs_commits_per_author_t3": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          3
+        ],
+        "priority": "primary_candidate",
+        "x": "commits_per_author_t3",
+        "y": "scope_applicability_mean_t3"
+      },
+      "scope_vs_late_instability_index": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "priority": "secondary_support",
+        "x": "late_instability_index",
+        "y": "scope_applicability_mean_t3"
+      },
+      "scope_vs_pi_line_delta_t3": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "priority": "primary_candidate",
+        "x": "pi_line_delta_t3",
+        "y": "scope_applicability_mean_t3"
+      },
+      "scope_vs_planning_artifact_activity_t3": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "priority": "primary_candidate",
+        "x": "planning_artifact_activity_t3",
+        "y": "scope_applicability_mean_t3"
+      },
+      "scope_vs_planning_rework_t2_t3": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "priority": "primary_candidate",
+        "x": "planning_rework_signal_t2_t3",
+        "y": "scope_applicability_mean_t3"
+      },
+      "scope_vs_source_churn_t3": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "priority": "primary_candidate",
+        "x": "source_churn_t3",
+        "y": "scope_applicability_mean_t3"
+      },
+      "scope_vs_source_events_t3": {
+        "expected_direction": "negative",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "priority": "primary_candidate",
+        "x": "source_events_t3",
+        "y": "scope_applicability_mean_t3"
+      }
+    },
+    "stage": "semester_stratified_results",
+    "strata": [
+      "global",
+      "observed_semester"
+    ],
+    "support_rule": "p_lt_0_05_and_expected_direction",
+    "warning_policy": {
+      "small_sample": "n_lt_10",
+      "very_small_sample": "n_lt_6"
+    }
+  },
+  "status": "success"
+}

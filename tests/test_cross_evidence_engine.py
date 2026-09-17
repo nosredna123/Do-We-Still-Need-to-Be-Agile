@@ -1098,3 +1098,96 @@ def test_build_extreme_case_overlap_persists_and_skips_current_artifact(tmp_path
     assert metadata["contract_version"] == "cross-evidence-extreme-overlap-v1"
     assert first["overlap_id"].tolist() == second["overlap_id"].tolist()
     assert second["overlap_n"].astype(int).tolist() == first["overlap_n"].astype(int).tolist()
+
+
+def semester_panel() -> pd.DataFrame:
+    rows = []
+    for index in range(1, 10):
+        rows.append(
+            {
+                "ID_Equipe": f"TEAM_{index:02d}",
+                "Semestre": "2025.2",
+                "scope_applicability_mean_t3": 10 - index,
+                "source_churn_t3": index,
+                "source_events_t3": index * 2,
+                "pi_line_delta_t3": index * 3,
+                "planning_artifact_activity_t3": index * 4,
+                "planning_rework_signal_t2_t3": index * 5,
+                "commits_per_author_t3": index * 6,
+                "late_instability_index": index / 10,
+            }
+        )
+    for index in range(1, 6):
+        rows.append(
+            {
+                "ID_Equipe": f"TEAM_B{index}",
+                "Semestre": "2026.1",
+                "scope_applicability_mean_t3": 10 - index,
+                "source_churn_t3": index,
+                "source_events_t3": index * 2,
+                "pi_line_delta_t3": index * 3,
+                "planning_artifact_activity_t3": index * 4,
+                "planning_rework_signal_t2_t3": index * 5,
+                "commits_per_author_t3": index * 6,
+                "late_instability_index": index / 10,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def test_compute_semester_stratified_results_returns_global_and_semester_rows() -> None:
+    engine = load_engine()
+
+    result = engine.compute_semester_stratified_results(semester_panel())
+    global_row = result.loc[
+        (result["analysis_id"] == "scope_vs_source_churn_t3") & (result["stratum"] == "global")
+    ].iloc[0]
+    small_row = result.loc[
+        (result["analysis_id"] == "scope_vs_source_churn_t3") & (result["semester"] == "2026.1")
+    ].iloc[0]
+
+    assert len(result) == 21
+    assert set(result["stratum"]) == {"global", "semester"}
+    assert global_row["n_valid"] == 14
+    assert global_row["warning"] is None or pd.isna(global_row["warning"])
+    assert small_row["n_valid"] == 5
+    assert small_row["warning"] == "very_small_sample_n_lt_6"
+    assert small_row["status"] == "success"
+    assert global_row["stratification_class"] == "global_supported_semester_supported"
+    assert global_row["contract_version"] == "cross-evidence-semester-stratified-v1"
+
+
+def test_compute_semester_stratified_results_rejects_missing_columns() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_semester_stratified_results(semester_panel().drop(columns=["source_churn_t3"]))
+
+
+def test_build_semester_stratified_results_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    results_dir = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    datasets.mkdir(parents=True)
+    results_dir.mkdir(parents=True)
+    panel_path = datasets / "cross_evidence_panel.parquet"
+    output = results_dir / "semester_stratified_results.csv"
+    semester_panel().to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_semester_stratified_results(output_path=output)
+        second = engine.build_semester_stratified_results(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-semester-stratified-v1"
+    first_keys = first[["analysis_id", "stratum", "semester"]].fillna("<NA>").astype(str)
+    second_keys = second[["analysis_id", "stratum", "semester"]].fillna("<NA>").astype(str)
+    assert first_keys.values.tolist() == second_keys.values.tolist()
