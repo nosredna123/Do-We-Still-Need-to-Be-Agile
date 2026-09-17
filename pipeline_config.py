@@ -475,3 +475,42 @@ NARRATIVE_ACT_REGISTRY: dict[int, dict[str, str]] = {
         "title": "Ato 4 - A Inversao de Valores na Era da IA (Conclusion)",
     },
 }
+
+
+# --- Cross-evidence extension (docs/02c, CE-0.1) ---
+#
+# This block declares only the scope, versions, and stable relative output
+# layout for the independent cross-evidence extension. Artifact registries and
+# metric definitions belong to CE-0.2+ so this first task stays narrowly scoped.
+CROSS_EVIDENCE_CONTRACT_VERSION = "cross-evidence-v1"
+CROSS_EVIDENCE_MANIFEST_VERSION = "cross-evidence-manifest-v1"
+CROSS_EVIDENCE_OUTPUT_LAYOUT_VERSION = "cross-evidence-layout-v1"
+CROSS_EVIDENCE_SCOPE = "secondary_exploratory_evidence"
+CROSS_EVIDENCE_ROOT = "data/analysis/cross_evidence"
+CROSS_EVIDENCE_DATASETS_DIR = f"{CROSS_EVIDENCE_ROOT}/datasets"
+CROSS_EVIDENCE_RESULTS_DIR = f"{CROSS_EVIDENCE_ROOT}/results"
+CROSS_EVIDENCE_FIGURE_DATA_DIR = f"{CROSS_EVIDENCE_ROOT}/figure_data"
+CROSS_EVIDENCE_REPORTS_DIR = f"{CROSS_EVIDENCE_ROOT}/reports"
+CROSS_EVIDENCE_ARTIFACT_REPORTS_DIR = f"{CROSS_EVIDENCE_REPORTS_DIR}/artifact_reports"
+CROSS_EVIDENCE_GROUP_REPORTS_DIR = f"{CROSS_EVIDENCE_REPORTS_DIR}/group_reports"
+CROSS_EVIDENCE_ACT_REPORTS_DIR = f"{CROSS_EVIDENCE_REPORTS_DIR}/act_reports"
+CROSS_EVIDENCE_MANIFEST_PATH = f"{CROSS_EVIDENCE_ROOT}/cross_evidence_manifest.json"
+CROSS_EVIDENCE_EXCLUSIONS_PATH = f"{CROSS_EVIDENCE_ROOT}/cross_evidence_manifest_exclusions.json"
+CROSS_EVIDENCE_FIGURES_ROOT = "assets/figures/cross_evidence"
+CROSS_EVIDENCE_PRIORITY_FIGURES_DIR = f"{CROSS_EVIDENCE_FIGURES_ROOT}/prioritarias"
+CROSS_EVIDENCE_EXPLORATORY_FIGURES_DIR = f"{CROSS_EVIDENCE_FIGURES_ROOT}/exploratorias"
+CROSS_EVIDENCE_DASHBOARD_FIGURES_DIR = f"{CROSS_EVIDENCE_FIGURES_ROOT}/dashboard_interativo"
+CROSS_EVIDENCE_OUTPUT_DIRECTORIES = {
+    "root": CROSS_EVIDENCE_ROOT,
+    "datasets": CROSS_EVIDENCE_DATASETS_DIR,
+    "results": CROSS_EVIDENCE_RESULTS_DIR,
+    "figure_data": CROSS_EVIDENCE_FIGURE_DATA_DIR,
+    "reports": CROSS_EVIDENCE_REPORTS_DIR,
+    "artifact_reports": CROSS_EVIDENCE_ARTIFACT_REPORTS_DIR,
+    "group_reports": CROSS_EVIDENCE_GROUP_REPORTS_DIR,
+    "act_reports": CROSS_EVIDENCE_ACT_REPORTS_DIR,
+    "figures_root": CROSS_EVIDENCE_FIGURES_ROOT,
+    "priority_figures": CROSS_EVIDENCE_PRIORITY_FIGURES_DIR,
+    "exploratory_figures": CROSS_EVIDENCE_EXPLORATORY_FIGURES_DIR,
+    "dashboard_figures": CROSS_EVIDENCE_DASHBOARD_FIGURES_DIR,
+}
