@@ -488,6 +488,8 @@ CROSS_EVIDENCE_CONTRACT_VERSION = "cross-evidence-v1"
 CROSS_EVIDENCE_MANIFEST_VERSION = "cross-evidence-manifest-v1"
 CROSS_EVIDENCE_OUTPUT_LAYOUT_VERSION = "cross-evidence-layout-v1"
 CROSS_EVIDENCE_SCOPE = "secondary_exploratory_evidence"
+CROSS_EVIDENCE_COMPATIBILITY_POLICY_VERSION = "cross-evidence-compatibility-v1"
+CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY = "read_legacy_only"
 CROSS_EVIDENCE_ROOT = "data/analysis/cross_evidence"
 CROSS_EVIDENCE_DATASETS_DIR = f"{CROSS_EVIDENCE_ROOT}/datasets"
 CROSS_EVIDENCE_RESULTS_DIR = f"{CROSS_EVIDENCE_ROOT}/results"
@@ -941,5 +943,116 @@ CROSS_EVIDENCE_ARTIFACT_REGISTRY: dict[str, dict[str, object]] = {
             "cross_evidence.group_reports",
             "cross_evidence.act_reports",
         ],
+    },
+}
+
+CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY: dict[str, dict[str, object]] = {
+    "lake.evaluator_team_cuts": {
+        "path": "data/lake/evaluator_team_cuts.parquet",
+        "metadata_path": "data/lake/evaluator_team_cuts.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "lake",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "lake.git_commits": {
+        "path": "data/lake/git_commits.parquet",
+        "metadata_path": "data/lake/git_commits.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "lake",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "lake.git_files": {
+        "path": "data/lake/git_files.parquet",
+        "metadata_path": "data/lake/git_files.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "lake",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "lake.git_repository_snapshots": {
+        "path": "data/lake/git_repository_snapshots.parquet",
+        "metadata_path": "data/lake/git_repository_snapshots.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "lake",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "lake.git_team_cuts": {
+        "path": "data/lake/git_team_cuts.parquet",
+        "metadata_path": "data/lake/git_team_cuts.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "lake",
+        "required": False,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.planning_metrics": {
+        "path": "data/analysis/planning_metrics.parquet",
+        "metadata_path": "data/analysis/planning_metrics.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "analysis",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.code_churn_metrics": {
+        "path": "data/analysis/code_churn_metrics.parquet",
+        "metadata_path": "data/analysis/code_churn_metrics.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "analysis",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.technical_degradation_metrics": {
+        "path": "data/analysis/technical_degradation_metrics.parquet",
+        "metadata_path": "data/analysis/technical_degradation_metrics.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "analysis",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.integration_friction_metrics": {
+        "path": "data/analysis/integration_friction_metrics.parquet",
+        "metadata_path": "data/analysis/integration_friction_metrics.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "analysis",
+        "required": False,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.team_metrics": {
+        "path": "data/analysis/team_metrics.parquet",
+        "metadata_path": "data/analysis/team_metrics.parquet.metadata.json",
+        "kind": "parquet",
+        "source_layer": "analysis",
+        "required": True,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.correlation_results": {
+        "path": "data/analysis/correlation_results.csv",
+        "metadata_path": "data/analysis/correlation_results.csv.metadata.json",
+        "kind": "csv",
+        "source_layer": "analysis",
+        "required": False,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
+    },
+    "analysis.hypothesis_results": {
+        "path": "data/analysis/hypothesis_results.csv",
+        "metadata_path": "data/analysis/hypothesis_results.csv.metadata.json",
+        "kind": "csv",
+        "source_layer": "analysis",
+        "required": False,
+        "status_required": "success",
+        "compatibility_policy": CROSS_EVIDENCE_CURRENT_ARTIFACT_POLICY,
     },
 }
