@@ -11,6 +11,7 @@ from typing import Any
 
 import pandas as pd
 import plotly.graph_objects as plotly_go
+from plotly.subplots import make_subplots
 from scipy import stats as scipy_stats
 from scipy.stats import spearmanr
 
@@ -464,6 +465,198 @@ def build_cross_evidence_figure_manifest_entry(
         "checksums": existing_checksums,
         "export_formats": spec["export_formats"],
     }
+
+
+SCOPE_LATE_INSTABILITY_FIGURE_SPECS = (
+    {
+        "plot_id": "scope_vs_late_instability_index",
+        "y": "late_instability_index",
+        "title": "Late instability index",
+        "y_title": "Late instability index",
+        "y_scale": "linear",
+    },
+    {
+        "plot_id": "scope_vs_source_churn_t3",
+        "y": "source_churn_t3",
+        "title": "Source churn at T3",
+        "y_title": "Source churn (lines, log scale)",
+        "y_scale": "log",
+    },
+    {
+        "plot_id": "scope_vs_planning_artifact_activity_t3",
+        "y": "planning_artifact_activity_t3",
+        "title": "Planning artifact activity at T3",
+        "y_title": "Planning artifact activity (log scale)",
+        "y_scale": "log",
+    },
+    {
+        "plot_id": "scope_vs_commits_per_author_t3",
+        "y": "commits_per_author_t3",
+        "title": "Commits per author at T3",
+        "y_title": "Commits per author",
+        "y_scale": "linear",
+    },
+)
+SCOPE_LATE_INSTABILITY_SEMESTER_COLORS = {
+    "2025.2": "#2563EB",
+    "2026.1": "#D97706",
+}
+
+
+def compute_scope_vs_late_instability_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
+    """Prepare anonymized long-form data for the CE-4.2 subplot figure."""
+    required = {"ID_Equipe", "Semestre", "scope_applicability_mean_t3"} | {
+        str(spec["y"]) for spec in SCOPE_LATE_INSTABILITY_FIGURE_SPECS
+    }
+    missing = required - set(panel.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_panel missing columns: {sorted(missing)}")
+    working = anonymize_cross_evidence_visual_data(
+        panel[["ID_Equipe", "Semestre", "scope_applicability_mean_t3", *[str(spec["y"]) for spec in SCOPE_LATE_INSTABILITY_FIGURE_SPECS]]]
+    )
+    rows: list[dict[str, object]] = []
+    for spec in SCOPE_LATE_INSTABILITY_FIGURE_SPECS:
+        y_name = str(spec["y"])
+        for row in working.to_dict("records"):
+            x_value = pd.to_numeric(row["scope_applicability_mean_t3"], errors="coerce")
+            y_value = pd.to_numeric(row[y_name], errors="coerce")
+            rows.append(
+                {
+                    "figure_id": "scope_vs_late_instability",
+                    "plot_id": spec["plot_id"],
+                    "anonymized_team_id": row["anonymized_team_id"],
+                    "semester": row["Semestre"],
+                    "x": "scope_applicability_mean_t3",
+                    "x_value": x_value,
+                    "y": y_name,
+                    "y_value": y_value,
+                    "x_scale": "linear",
+                    "y_scale": spec["y_scale"],
+                    "transformation": "complete_case_pair",
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def _scope_late_instability_figure(
+    figure_data: pd.DataFrame,
+) -> plotly_go.Figure:
+    """Build the CE-4.2 four-panel Plotly figure from prepared data."""
+    figure = make_subplots(
+        rows=2,
+        cols=2,
+        subplot_titles=[str(spec["title"]) for spec in SCOPE_LATE_INSTABILITY_FIGURE_SPECS],
+        horizontal_spacing=0.12,
+        vertical_spacing=0.16,
+    )
+    for panel_index, spec in enumerate(SCOPE_LATE_INSTABILITY_FIGURE_SPECS):
+        row_index = panel_index // 2 + 1
+        column_index = panel_index % 2 + 1
+        subset = figure_data.loc[figure_data["plot_id"] == spec["plot_id"]]
+        for semester in sorted(subset["semester"].dropna().astype(str).unique()):
+            points = subset.loc[subset["semester"].astype(str) == semester].dropna(subset=["x_value", "y_value"])
+            figure.add_trace(
+                plotly_go.Scatter(
+                    x=points["x_value"],
+                    y=points["y_value"],
+                    mode="markers",
+                    name=semester,
+                    legendgroup=semester,
+                    showlegend=panel_index == 0,
+                    marker={"size": 10, "color": SCOPE_LATE_INSTABILITY_SEMESTER_COLORS.get(semester, CROSS_EVIDENCE_VISUAL_PALETTE["context"]), "line": {"width": 0.8, "color": "#FFFFFF"}},
+                    customdata=points[["anonymized_team_id", "semester"]],
+                    hovertemplate="%{customdata[0]} (%{customdata[1]})<br>Scope applicability: %{x}<br>Value: %{y}<extra></extra>",
+                ),
+                row=row_index,
+                col=column_index,
+            )
+        figure.update_xaxes(
+            title_text="Scope applicability at T3",
+            row=row_index,
+            col=column_index,
+        )
+        figure.update_yaxes(
+            title_text=str(spec["y_title"]),
+            type="log" if spec["y_scale"] == "log" else "linear",
+            row=row_index,
+            col=column_index,
+        )
+    apply_cross_evidence_visual_theme(figure, title="Scope applicability and late instability")
+    return figure
+
+
+def build_scope_vs_late_instability_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load CE-4.2 figure data and publication exports."""
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    _require_success_sidecar(panel_path)
+    panel_sidecar = panel_path.with_name(f"{panel_path.name}.metadata.json")
+    paths = cross_evidence_figure_export_paths(
+        "scope_vs_late_instability",
+        category="prioritarias",
+        figure_root=figure_root,
+        figure_data_root=figure_data_root,
+    )
+    output_data_path = output_data_path or paths["data"]
+    options = {
+        "stage": "scope_vs_late_instability",
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "subplot_specs": SCOPE_LATE_INSTABILITY_FIGURE_SPECS,
+        "semester_colors": SCOPE_LATE_INSTABILITY_SEMESTER_COLORS,
+        "anonymization_policy": CROSS_EVIDENCE_VISUAL_ANONYMIZATION_POLICY,
+        "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS),
+    }
+    checksum = input_checksum([panel_path, panel_sidecar], options)
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("Scope versus late instability figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+
+    figure_data = compute_scope_vs_late_instability_figure_data(pd.read_parquet(panel_path))
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(
+        output_data_path,
+        checksum,
+        contract_version="cross-evidence-figure-data-v1",
+        options=options,
+    )
+    figure = _scope_late_instability_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure,
+        figure_data,
+        figure_id="scope_vs_late_instability",
+        category="prioritarias",
+        source=panel_path.as_posix(),
+        unit_of_analysis="team_semester",
+        variables=["scope_applicability_mean_t3", "late_instability_index", "source_churn_t3", "planning_artifact_activity_t3", "commits_per_author_t3"],
+        transformations=["complete_case_pair", "anonymize_team_id", "four_subplot_panel", "log_y_source_churn_and_planning_activity"],
+        scale_notes=["scope and late instability linear", "source churn and planning activity logarithmic", "commits per author linear"],
+        limitations=["observational association", "team-semester sample n=14", "semester 2026.1 has n=5"],
+        paths=export_paths,
+        required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote scope versus late instability figure: %s", export_paths["png"])
+    return figure_data
 
 
 def _normalize_path(value: str | None) -> str:
@@ -2782,6 +2975,7 @@ def main() -> None:
     parser.add_argument("--extreme-case-overlap-output", type=Path, default=None)
     parser.add_argument("--semester-stratified-output", type=Path, default=None)
     parser.add_argument("--evidence-priority-matrix-output", type=Path, default=None)
+    parser.add_argument("--scope-vs-late-instability-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -2798,6 +2992,7 @@ def main() -> None:
             "extreme_case_overlap",
             "semester_stratified_results",
             "evidence_priority_matrix",
+            "scope_vs_late_instability",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -2817,6 +3012,7 @@ def main() -> None:
         "extreme_case_overlap",
         "semester_stratified_results",
         "evidence_priority_matrix",
+        "scope_vs_late_instability",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -2878,6 +3074,11 @@ def main() -> None:
     if "evidence_priority_matrix" in selected:
         build_evidence_priority_matrix(
             output_path=args.evidence_priority_matrix_output,
+            force=args.force,
+        )
+    if "scope_vs_late_instability" in selected:
+        build_scope_vs_late_instability_figure(
+            output_data_path=args.scope_vs_late_instability_data_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

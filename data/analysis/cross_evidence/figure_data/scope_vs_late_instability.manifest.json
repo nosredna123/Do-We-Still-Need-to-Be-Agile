@@ -1,0 +1,63 @@
+{
+  "anonymization_policy": "public_visual_ranked_or_aggregate",
+  "category": "prioritarias",
+  "checksums": {
+    "data": "98702c1d21826e7f5e1fe6d49e00504695b475bc1abda52c27346f3db5e7ab18",
+    "pdf": "5804d9cf648c83136280a4f0ddee100fe72d483754b537f29dbb52cab57efa4c",
+    "plotly_json": "d37ecfe7db2a540207015ee8835f34cfc0ad2a2bd072538d7460f42f570c6730",
+    "png": "cf7fac6db34e14464f7740176aabbea0a16003bd663d24c932770ddc1a5b8e16",
+    "svg": "a751674d5ff0a4921ca48f3241a16825a0bec9a8bbebf3600a09a9b20b229bb8"
+  },
+  "data_metadata_path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv.metadata.json",
+  "data_path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv",
+  "dimensions": {
+    "height": 850,
+    "png_scale": 2,
+    "width": 1400
+  },
+  "export_formats": [
+    "html",
+    "png",
+    "svg",
+    "pdf"
+  ],
+  "figure_id": "scope_vs_late_instability",
+  "interactive_path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.html",
+  "limitations": [
+    "observational association",
+    "team-semester sample n=14",
+    "semester 2026.1 has n=5"
+  ],
+  "n_missing": 0,
+  "n_total": 56,
+  "n_valid": 56,
+  "priority": "required",
+  "scale_notes": [
+    "scope and late instability linear",
+    "source churn and planning activity logarithmic",
+    "commits per author linear"
+  ],
+  "source": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+  "static_paths": {
+    "pdf": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.pdf",
+    "png": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.png",
+    "svg": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.svg"
+  },
+  "status": "success",
+  "theme": "plotly_white",
+  "transformations": [
+    "complete_case_pair",
+    "anonymize_team_id",
+    "four_subplot_panel",
+    "log_y_source_churn_and_planning_activity"
+  ],
+  "unit_of_analysis": "team_semester",
+  "variables": [
+    "scope_applicability_mean_t3",
+    "late_instability_index",
+    "source_churn_t3",
+    "planning_artifact_activity_t3",
+    "commits_per_author_t3"
+  ],
+  "visual_spec_version": "cross-evidence-visual-spec-v1"
+}

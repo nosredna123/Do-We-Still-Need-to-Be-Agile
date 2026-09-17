@@ -1270,6 +1270,67 @@ def test_build_evidence_priority_matrix_persists_and_skips_current_artifact(tmp_
     assert first["evidence_id"].tolist() == second["evidence_id"].tolist()
 
 
+def test_compute_scope_vs_late_instability_figure_data_builds_four_anonymized_panels() -> None:
+    engine = load_engine()
+    panel = correlation_panel().assign(
+        planning_artifact_activity_t3=lambda frame: frame["planning_artifact_activity_t3"],
+    )
+
+    result = engine.compute_scope_vs_late_instability_figure_data(panel)
+
+    assert len(result) == 20
+    assert set(result["plot_id"]) == {
+        "scope_vs_late_instability_index",
+        "scope_vs_source_churn_t3",
+        "scope_vs_planning_artifact_activity_t3",
+        "scope_vs_commits_per_author_t3",
+    }
+    assert result["anonymized_team_id"].isin({f"TEAM_{index:02d}" for index in range(1, 6)}).all()
+    assert result.loc[result["plot_id"] == "scope_vs_source_churn_t3", "y_scale"].eq("log").all()
+    assert result.loc[result["plot_id"] == "scope_vs_late_instability_index", "y_scale"].eq("linear").all()
+
+
+def test_build_scope_vs_late_instability_figure_exports_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    panel_path = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets" / "cross_evidence_panel.parquet"
+    panel_path.parent.mkdir(parents=True)
+    panel = correlation_panel().assign(
+        planning_artifact_activity_t3=lambda frame: frame["planning_artifact_activity_t3"],
+    )
+    panel.to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    data_path = tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data" / "scope_vs_late_instability.csv"
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_scope_vs_late_instability_figure(
+            output_data_path=data_path,
+            figure_root=tmp_path / "assets" / "figures" / "cross_evidence",
+            figure_data_root=data_path.parent,
+        )
+        second = engine.build_scope_vs_late_instability_figure(
+            output_data_path=data_path,
+            figure_root=tmp_path / "assets" / "figures" / "cross_evidence",
+            figure_data_root=data_path.parent,
+        )
+    finally:
+        os.chdir(old_cwd)
+
+    manifest_path = data_path.with_name(f"{data_path.stem}.manifest.json")
+    metadata = json.loads(data_path.with_name(f"{data_path.name}.metadata.json").read_text(encoding="utf-8"))
+    assert data_path.exists()
+    assert manifest_path.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-figure-data-v1"
+    assert len(first) == len(second) == 20
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "scope_vs_late_instability.png").exists()
+    entry = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert entry["visual_spec_version"] == "cross-evidence-visual-spec-v1"
+    assert entry["export_formats"] == ["html", "png", "svg", "pdf"]
+
+
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
     engine = load_engine()
 
