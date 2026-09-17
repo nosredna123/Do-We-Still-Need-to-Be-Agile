@@ -191,6 +191,63 @@ STUDENT_TEXT_QUESTION_REGISTRY = {
 PLANNING_FILE_EXTENSIONS = {".md", ".txt", ".rst", ".adoc", ".pdf", ".doc", ".docx", ".odt", ".yaml", ".yml", ".json", ".toml", ".drawio", ".puml", ".mmd", ".mermaid", ".uml", ".bpmn"}
 PLANNING_PATH_PATTERNS = {"docs/", "doc/", "documentation/", "requirements/", "spec/", "specs/", "architecture/", "design/", "planning/", "planejamento/", "requisitos/", "arquitetura/", "prototipo/", "prototype/"}
 PLANNING_DEFINITION_VERSION = "pi-v1"
+FILE_CATEGORY_DEFINITION_VERSION = "file-category-rules-v1"
+FILE_CATEGORY_RULES: dict[str, object] = {
+    "version": FILE_CATEGORY_DEFINITION_VERSION,
+    "default_category": "unknown",
+    "path_precedence": "path_context_over_extension",
+    "category_order": [
+        "generated",
+        "planning",
+        "test",
+        "source",
+        "localization",
+        "config",
+        "asset",
+        "unknown",
+    ],
+    "path_patterns": {
+        "generated": {
+            ".next/", "__pycache__/", "build/", "coverage/", "dist/",
+            "node_modules/", "target/", "vendor/",
+        },
+        "planning": PLANNING_PATH_PATTERNS,
+        "test": {
+            "__tests__/", "test/", "tests/", "spec/", "specs/",
+        },
+    },
+    "filename_suffixes": {
+        "generated": {".bundle.js", ".min.css", ".min.js"},
+        "config": {".d.ts"},
+        "test": {".spec.js", ".spec.jsx", ".spec.ts", ".spec.tsx", ".test.js", ".test.jsx", ".test.ts", ".test.tsx", "_test.py"},
+    },
+    "extensions": {
+        "source": SOURCE_CODE_EXTENSION_ALLOWLIST | {".m", ".mm", ".proto"},
+        "planning": PLANNING_FILE_EXTENSIONS,
+        "config": {
+            ".cfg", ".conf", ".csv", ".env", ".ini", ".json", ".lock",
+            ".properties", ".pyi", ".toml", ".typed", ".xml", ".yaml", ".yml",
+        },
+        "generated": {
+            ".class", ".dll", ".map", ".mo", ".o", ".obj", ".pyc", ".so",
+        },
+        "localization": {".arb", ".po", ".pot", ".xliff", ".xlf"},
+        "asset": {
+            ".avi", ".bin", ".bmp", ".doc", ".docx", ".eot", ".gif", ".gz",
+            ".ico", ".jpeg", ".jpg", ".mp3", ".mp4", ".odt", ".otf", ".pdf",
+            ".png", ".svg", ".tar", ".tgz", ".ttf", ".wav", ".webp", ".woff",
+            ".woff2", ".zip",
+        },
+    },
+    "contextual_extensions": {
+        "planning_when_path_matches_planning": {".json", ".toml", ".yaml", ".yml"},
+    },
+    "warnings": {
+        "empty_extension": "classify_by_path_or_unknown",
+        "generated_source_like_path": "generated_path_takes_precedence",
+        "planning_config_extension": "planning_path_takes_precedence_over_config_extension",
+    },
+}
 AI_DEFINITION_VERSION = "ai-v1"
 AI_T3_WINDOW_HOURS = 72
 AI_T3_WINDOW_BOUNDS = "[t3_start - hours, t3_start)"
