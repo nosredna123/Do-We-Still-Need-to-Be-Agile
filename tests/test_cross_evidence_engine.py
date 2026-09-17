@@ -1030,3 +1030,71 @@ def test_build_leave_one_out_sensitivity_persists_and_skips_current_artifact(tmp
     assert metadata["contract_version"] == "cross-evidence-leave-one-out-v1"
     assert first["analysis_id"].tolist() == second["analysis_id"].tolist()
     assert second.loc[0, "robustness_class"] == "robust_all"
+
+
+def overlap_panel() -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {"ID_Equipe": f"TEAM_{index:02d}", "Semestre": "2025.2", "planning_rework_signal_t2_t3": index, "source_churn_t3": index, "commits_per_author_t3": 9 - index, "scope_applicability_mean_t3": 10 - index}
+            for index in range(1, 9)
+        ]
+    )
+
+
+def test_compute_extreme_case_overlap_uses_fixed_four_and_persists_anonymized_keys() -> None:
+    engine = load_engine()
+
+    result = engine.compute_extreme_case_overlap(overlap_panel())
+    row = result.loc[
+        result["overlap_id"] == "planning_rework_signal_t2_t3__top__source_churn_t3__top"
+    ].iloc[0]
+    inverse = result.loc[
+        result["overlap_id"] == "planning_rework_signal_t2_t3__top__commits_per_author_t3__bottom"
+    ].iloc[0]
+
+    assert len(result) == 18
+    assert row["group_rule"] == "top_bottom_fixed_n"
+    assert row["group_size_requested"] == 4
+    assert row["left_group_n"] == 4
+    assert row["right_group_n"] == 4
+    assert row["overlap_n"] == 4
+    assert row["overlap_rate_left"] == 1.0
+    assert row["jaccard"] == 1.0
+    assert json.loads(row["overlap_keys"])[0] == {"ID_Equipe": "TEAM_05", "Semestre": "2025.2"}
+    assert inverse["overlap_n"] == 4
+    assert inverse["contract_version"] == "cross-evidence-extreme-overlap-v1"
+
+
+def test_compute_extreme_case_overlap_rejects_missing_columns() -> None:
+    engine = load_engine()
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_extreme_case_overlap(overlap_panel().drop(columns=["source_churn_t3"]))
+
+
+def test_build_extreme_case_overlap_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    datasets = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets"
+    results = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    datasets.mkdir(parents=True)
+    results.mkdir(parents=True)
+    panel_path = datasets / "cross_evidence_panel.parquet"
+    output = results / "extreme_case_overlap.csv"
+    overlap_panel().to_parquet(panel_path, index=False)
+    panel_path.with_name(f"{panel_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_extreme_case_overlap(output_path=output)
+        second = engine.build_extreme_case_overlap(output_path=output)
+    finally:
+        os.chdir(old_cwd)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-extreme-overlap-v1"
+    assert first["overlap_id"].tolist() == second["overlap_id"].tolist()
+    assert second["overlap_n"].astype(int).tolist() == first["overlap_n"].astype(int).tolist()

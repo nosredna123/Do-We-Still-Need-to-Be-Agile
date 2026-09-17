@@ -42,6 +42,7 @@ CROSS_EVIDENCE_PANEL_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CROSS_EVIDENCE_CORRELATION_CONTRACT_VERSION = "cross-evidence-correlations-v1"
 CROSS_EVIDENCE_BEST_WORST_CONTRACT_VERSION = "cross-evidence-best-worst-contrasts-v1"
 CROSS_EVIDENCE_LEAVE_ONE_OUT_CONTRACT_VERSION = "cross-evidence-leave-one-out-v1"
+CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION = "cross-evidence-extreme-overlap-v1"
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
@@ -233,6 +234,14 @@ CROSS_EVIDENCE_BEST_WORST_OUTCOME_VARIABLES = (
     "scope_applicability_mean_t3",
 )
 CROSS_EVIDENCE_BEST_WORST_GROUP_SIZE = 4
+CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES = (
+    "planning_rework_signal_t2_t3",
+    "source_churn_t3",
+    "commits_per_author_t3",
+    "scope_applicability_mean_t3",
+)
+CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE = 4
+CROSS_EVIDENCE_EXTREME_OVERLAP_MODES = ("top_top", "top_bottom", "bottom_bottom")
 FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
     "ID_Equipe",
     "Semestre",
@@ -1615,6 +1624,161 @@ def build_leave_one_out_sensitivity(
     return sensitivity
 
 
+def _ranked_extreme_keys(
+    panel: pd.DataFrame,
+    variable: str,
+    *,
+    ascending: bool,
+    group_size: int,
+) -> list[tuple[str, str]]:
+    """Return deterministic anonymized team-semester keys for one extreme."""
+    ranked = panel[[*TEAM_SEMESTER_KEYS, variable]].copy()
+    ranked[variable] = pd.to_numeric(ranked[variable], errors="coerce")
+    ranked = ranked.dropna(subset=[variable]).sort_values(
+        [variable, *TEAM_SEMESTER_KEYS], ascending=[ascending, True, True]
+    )
+    if len(ranked) < group_size:
+        raise ValueError(f"Not enough valid rows for extreme ranking: {variable}")
+    return [
+        (str(row[TEAM_SEMESTER_KEYS[0]]), str(row[TEAM_SEMESTER_KEYS[1]]))
+        for row in ranked.head(group_size).to_dict("records")
+    ]
+
+
+def compute_extreme_case_overlap(panel: pd.DataFrame) -> pd.DataFrame:
+    """Measure overlap among deterministic top/bottom extreme rankings."""
+    required = set(TEAM_SEMESTER_KEYS) | set(CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES)
+    missing = required - set(panel.columns)
+    if missing:
+        raise ValueError(f"cross_evidence_panel missing columns: {sorted(missing)}")
+    rankings: dict[str, dict[str, list[tuple[str, str]]]] = {}
+    for variable in CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES:
+        rankings[variable] = {
+            "top": _ranked_extreme_keys(
+                panel,
+                variable,
+                ascending=False,
+                group_size=CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE,
+            ),
+            "bottom": _ranked_extreme_keys(
+                panel,
+                variable,
+                ascending=True,
+                group_size=CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE,
+            ),
+        }
+
+    rows: list[dict[str, object]] = []
+    for left_index, left_variable in enumerate(CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES):
+        for right_variable in CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES[left_index + 1:]:
+            for mode in CROSS_EVIDENCE_EXTREME_OVERLAP_MODES:
+                left_side, right_side = mode.split("_")
+                left_keys = set(rankings[left_variable][left_side])
+                right_keys = set(rankings[right_variable][right_side])
+                overlap = sorted(left_keys & right_keys)
+                union_n = len(left_keys | right_keys)
+                rows.append(
+                    {
+                        "overlap_id": f"{left_variable}__{left_side}__{right_variable}__{right_side}",
+                        "unit_of_analysis": "team_semester",
+                        "left_variable": left_variable,
+                        "left_extreme": left_side,
+                        "right_variable": right_variable,
+                        "right_extreme": right_side,
+                        "group_rule": "top_bottom_fixed_n",
+                        "group_size_requested": CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE,
+                        "left_group_n": len(left_keys),
+                        "right_group_n": len(right_keys),
+                        "overlap_n": len(overlap),
+                        "overlap_rate_left": len(overlap) / len(left_keys),
+                        "overlap_rate_right": len(overlap) / len(right_keys),
+                        "jaccard": len(overlap) / union_n if union_n else 0.0,
+                        "overlap_keys": json.dumps(
+                            [
+                                {TEAM_SEMESTER_KEYS[0]: team, TEAM_SEMESTER_KEYS[1]: semester}
+                                for team, semester in overlap
+                            ],
+                            sort_keys=True,
+                        ),
+                        "contract_version": CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION,
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
+def write_extreme_case_overlap(
+    overlap: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist extreme-case overlap results and sidecar."""
+    required = {
+        "overlap_id",
+        "left_variable",
+        "left_extreme",
+        "right_variable",
+        "right_extreme",
+        "group_rule",
+        "overlap_n",
+        "overlap_rate_left",
+        "overlap_rate_right",
+        "jaccard",
+        "overlap_keys",
+        "contract_version",
+    }
+    missing = required - set(overlap.columns)
+    if missing:
+        raise ValueError(f"extreme_case_overlap output missing columns: {sorted(missing)}")
+    if overlap.empty:
+        raise ValueError("extreme_case_overlap output is empty")
+    if overlap["overlap_id"].duplicated().any():
+        raise ValueError("extreme_case_overlap has duplicate overlap_id rows")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    overlap.to_csv(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_extreme_case_overlap(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load extreme-case overlap results."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["extreme_case_overlap"]["path"]))
+    panel_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_panel"]["path"]))
+    _require_success_sidecar(panel_path)
+    panel_sidecar = panel_path.with_name(f"{panel_path.name}.metadata.json")
+    options = {
+        "stage": "extreme_case_overlap",
+        "contract_version": CROSS_EVIDENCE_EXTREME_OVERLAP_CONTRACT_VERSION,
+        "variables": list(CROSS_EVIDENCE_EXTREME_OVERLAP_VARIABLES),
+        "group_rule": "top_bottom_fixed_n",
+        "group_size": CROSS_EVIDENCE_EXTREME_OVERLAP_GROUP_SIZE,
+        "modes": list(CROSS_EVIDENCE_EXTREME_OVERLAP_MODES),
+        "tie_policy": "sort_by_value_then_ID_Equipe_then_Semestre",
+        "privacy_policy": "persist_anonymized_team_semester_keys_only",
+    }
+    checksum = input_checksum([panel_path, panel_sidecar], options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Extreme-case overlap artifact is current: %s", output_path)
+        return pd.read_csv(output_path)
+
+    overlap = compute_extreme_case_overlap(pd.read_parquet(panel_path))
+    invalidate_stale_artifact(output_path, checksum)
+    write_extreme_case_overlap(overlap, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s extreme-case overlap rows", len(overlap))
+    return overlap
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -1893,6 +2057,7 @@ def main() -> None:
     parser.add_argument("--cross-evidence-correlations-output", type=Path, default=None)
     parser.add_argument("--best-worst-contrasts-output", type=Path, default=None)
     parser.add_argument("--leave-one-out-sensitivity-output", type=Path, default=None)
+    parser.add_argument("--extreme-case-overlap-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -1906,6 +2071,7 @@ def main() -> None:
             "cross_evidence_correlations",
             "best_worst_project_contrasts",
             "leave_one_out_sensitivity",
+            "extreme_case_overlap",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -1922,6 +2088,7 @@ def main() -> None:
         "cross_evidence_correlations",
         "best_worst_project_contrasts",
         "leave_one_out_sensitivity",
+        "extreme_case_overlap",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -1968,6 +2135,11 @@ def main() -> None:
     if "leave_one_out_sensitivity" in selected:
         build_leave_one_out_sensitivity(
             output_path=args.leave_one_out_sensitivity_output,
+            force=args.force,
+        )
+    if "extreme_case_overlap" in selected:
+        build_extreme_case_overlap(
+            output_path=args.extreme_case_overlap_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
