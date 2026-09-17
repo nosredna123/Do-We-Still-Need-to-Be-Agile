@@ -540,6 +540,26 @@ TEMPORAL_ESCALATION_FIGURE_METRICS = (
         "title": "Perceived project progress",
     },
 )
+FILE_CATEGORY_CHURN_FIGURE_CATEGORIES = (
+    "source",
+    "planning",
+    "generated",
+    "config",
+    "localization",
+    "asset",
+    "test",
+    "unknown",
+)
+FILE_CATEGORY_CHURN_FIGURE_COLORS = {
+    "source": "#2563EB",
+    "planning": "#D97706",
+    "generated": "#DC2626",
+    "config": "#7C3AED",
+    "localization": "#DB2777",
+    "asset": "#059669",
+    "test": "#0891B2",
+    "unknown": "#64748B",
+}
 
 
 def compute_scope_vs_late_instability_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
@@ -1109,6 +1129,170 @@ def build_temporal_escalation_figure(
     manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
     manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
     logger.info("Wrote temporal escalation figure: %s", export_paths["png"])
+    return figure_data
+
+
+def compute_file_category_churn_figure_data(file_category_churn: pd.DataFrame) -> pd.DataFrame:
+    """Prepare category-complete absolute and relative data for CE-4.5."""
+    required = {"temporal_marker", "file_category", "event_n", "churn_lines", "total_event_n", "total_churn_lines", "category_event_share", "category_churn_share"}
+    missing = required - set(file_category_churn.columns)
+    if missing:
+        raise ValueError(f"file_category_churn_metrics missing columns: {sorted(missing)}")
+    cuts = [cut for cut in ("T1", "T2", "T3") if cut in set(file_category_churn["temporal_marker"])]
+    if not cuts:
+        raise ValueError("file_category_churn_metrics has no recognized temporal cuts")
+    observed = file_category_churn.groupby(["temporal_marker", "file_category"], as_index=False).agg(
+        event_n=("event_n", "sum"),
+        churn_lines=("churn_lines", "sum"),
+        total_event_n=("total_event_n", "max"),
+        total_churn_lines=("total_churn_lines", "max"),
+    )
+    grid = pd.MultiIndex.from_product(
+        [cuts, FILE_CATEGORY_CHURN_FIGURE_CATEGORIES],
+        names=["temporal_marker", "file_category"],
+    ).to_frame(index=False)
+    result = grid.merge(observed, on=["temporal_marker", "file_category"], how="left")
+    for column in ("event_n", "churn_lines"):
+        result[column] = pd.to_numeric(result[column], errors="coerce").fillna(0.0)
+    totals = result.groupby("temporal_marker")
+    result["total_event_n"] = totals["event_n"].transform("sum")
+    result["total_churn_lines"] = totals["churn_lines"].transform("sum")
+    result["category_event_share"] = result["event_n"] / result["total_event_n"].where(result["total_event_n"] != 0)
+    result["category_churn_share"] = result["churn_lines"] / result["total_churn_lines"].where(result["total_churn_lines"] != 0)
+    result[["category_event_share", "category_churn_share"]] = result[["category_event_share", "category_churn_share"]].fillna(0.0)
+    result["figure_id"] = "file_category_churn_by_cut"
+    result["absolute_value"] = result["churn_lines"]
+    result["relative_value"] = result["category_churn_share"]
+    result["transformation"] = "category_complete_grid|absolute_log_and_relative_100_percent"
+    return result[
+        [
+            "figure_id",
+            "temporal_marker",
+            "file_category",
+            "event_n",
+            "churn_lines",
+            "total_event_n",
+            "total_churn_lines",
+            "category_event_share",
+            "category_churn_share",
+            "absolute_value",
+            "relative_value",
+            "transformation",
+        ]
+    ].sort_values(["temporal_marker", "file_category"]).reset_index(drop=True)
+
+
+def _file_category_churn_figure(figure_data: pd.DataFrame) -> plotly_go.Figure:
+    """Build the CE-4.5 absolute-log and relative-100-percent bar panel."""
+    figure = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=["Absolute source-repository churn", "Churn composition by category"],
+        horizontal_spacing=0.12,
+    )
+    for category in FILE_CATEGORY_CHURN_FIGURE_CATEGORIES:
+        subset = figure_data.loc[figure_data["file_category"] == category]
+        color = FILE_CATEGORY_CHURN_FIGURE_COLORS[category]
+        figure.add_trace(
+            plotly_go.Bar(
+                x=subset["temporal_marker"],
+                y=subset["absolute_value"],
+                name=category,
+                legendgroup=category,
+                marker_color=color,
+                customdata=subset[["event_n", "churn_lines", "category_churn_share"]],
+                hovertemplate=f"{category}<br>%{{x}}<br>Churn lines: %{{customdata[1]}}<br>Events: %{{customdata[0]}}<extra></extra>",
+            ),
+            row=1,
+            col=1,
+        )
+        figure.add_trace(
+            plotly_go.Bar(
+                x=subset["temporal_marker"],
+                y=subset["relative_value"],
+                name=category,
+                legendgroup=category,
+                showlegend=False,
+                marker_color=color,
+                customdata=subset[["event_n", "churn_lines", "category_churn_share"]],
+                hovertemplate=f"{category}<br>%{{x}}<br>Churn share: %{{y:.1%}}<br>Churn lines: %{{customdata[1]}}<extra></extra>",
+            ),
+            row=1,
+            col=2,
+        )
+    figure.update_layout(barmode="stack")
+    apply_cross_evidence_visual_theme(figure, title="File-category churn by temporal cut")
+    figure.update_xaxes(title_text="Temporal cut", categoryorder="array", categoryarray=["T1", "T2", "T3"], row=1, col=1)
+    figure.update_xaxes(title_text="Temporal cut", categoryorder="array", categoryarray=["T1", "T2", "T3"], row=1, col=2)
+    figure.update_yaxes(title_text="Churn lines (log scale)", type="log", row=1, col=1)
+    figure.update_yaxes(title_text="Share of churn lines", tickformat=".0%", range=[0, 1], row=1, col=2)
+    return figure
+
+
+def build_file_category_churn_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load CE-4.5 file-category churn figure data and exports."""
+    source_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["file_category_churn_metrics"]["path"]))
+    _require_success_sidecar(source_path)
+    source_sidecar = source_path.with_name(f"{source_path.name}.metadata.json")
+    paths = cross_evidence_figure_export_paths("file_category_churn_by_cut", category="prioritarias", figure_root=figure_root, figure_data_root=figure_data_root)
+    output_data_path = output_data_path or paths["data"]
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    options = {
+        "stage": "file_category_churn_by_cut",
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "categories": list(FILE_CATEGORY_CHURN_FIGURE_CATEGORIES),
+        "absolute_measure": "churn_lines",
+        "absolute_scale": "log",
+        "relative_measure": "category_churn_share",
+        "relative_scale": "100_percent_stacked",
+        "zero_fill_policy": "explicit_category_cut_grid",
+        "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS),
+    }
+    checksum = input_checksum([source_path, source_sidecar], options)
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("File-category churn figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+
+    figure_data = compute_file_category_churn_figure_data(pd.read_parquet(source_path))
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(output_data_path, checksum, contract_version="cross-evidence-figure-data-v1", options=options)
+    figure = _file_category_churn_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure,
+        figure_data,
+        figure_id="file_category_churn_by_cut",
+        category="prioritarias",
+        source=source_path.as_posix(),
+        unit_of_analysis="team_semester_cut_category",
+        variables=["file_category", "temporal_marker", "churn_lines", "category_churn_share"],
+        transformations=["category_complete_grid", "zero_fill_missing_category_cut", "absolute_log_panel", "relative_100_percent_panel"],
+        scale_notes=["absolute churn lines shown on logarithmic scale", "relative panel shows 100 percent composition"],
+        limitations=["unknown category is retained", "absolute churn is volume-sensitive", "observational descriptive figure"],
+        paths=export_paths,
+        required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote file-category churn figure: %s", export_paths["png"])
     return figure_data
 
 
@@ -3431,6 +3615,7 @@ def main() -> None:
     parser.add_argument("--scope-vs-late-instability-data-output", type=Path, default=None)
     parser.add_argument("--source-churn-vs-planning-rework-data-output", type=Path, default=None)
     parser.add_argument("--temporal-escalation-data-output", type=Path, default=None)
+    parser.add_argument("--file-category-churn-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -3450,6 +3635,7 @@ def main() -> None:
             "scope_vs_late_instability",
             "source_churn_vs_planning_rework",
             "temporal_escalation_panel",
+            "file_category_churn_by_cut",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -3472,6 +3658,7 @@ def main() -> None:
         "scope_vs_late_instability",
         "source_churn_vs_planning_rework",
         "temporal_escalation_panel",
+        "file_category_churn_by_cut",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -3548,6 +3735,11 @@ def main() -> None:
     if "temporal_escalation_panel" in selected:
         build_temporal_escalation_figure(
             output_data_path=args.temporal_escalation_data_output,
+            force=args.force,
+        )
+    if "file_category_churn_by_cut" in selected:
+        build_file_category_churn_figure(
+            output_data_path=args.file_category_churn_data_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

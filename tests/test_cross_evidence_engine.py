@@ -1494,6 +1494,58 @@ def test_build_temporal_escalation_figure_exports_and_skips(tmp_path: Path) -> N
     assert "relative_to_t1_baseline" in entry["transformations"]
 
 
+def file_category_churn_fixture() -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {"temporal_marker": "T1", "file_category": "source", "event_n": 2, "churn_lines": 20, "total_event_n": 3, "total_churn_lines": 30, "category_event_share": 2 / 3, "category_churn_share": 2 / 3},
+            {"temporal_marker": "T1", "file_category": "planning", "event_n": 1, "churn_lines": 10, "total_event_n": 3, "total_churn_lines": 30, "category_event_share": 1 / 3, "category_churn_share": 1 / 3},
+            {"temporal_marker": "T2", "file_category": "source", "event_n": 4, "churn_lines": 80, "total_event_n": 5, "total_churn_lines": 100, "category_event_share": 4 / 5, "category_churn_share": 0.8},
+            {"temporal_marker": "T2", "file_category": "generated", "event_n": 1, "churn_lines": 20, "total_event_n": 5, "total_churn_lines": 100, "category_event_share": 0.2, "category_churn_share": 0.2},
+            {"temporal_marker": "T3", "file_category": "unknown", "event_n": 1, "churn_lines": 5, "total_event_n": 1, "total_churn_lines": 5, "category_event_share": 1.0, "category_churn_share": 1.0},
+        ]
+    )
+
+
+def test_compute_file_category_churn_figure_data_preserves_all_categories_and_zero_fills() -> None:
+    engine = load_engine()
+    result = engine.compute_file_category_churn_figure_data(file_category_churn_fixture())
+
+    assert len(result) == 24
+    assert set(result["file_category"]) == set(engine.FILE_CATEGORY_CHURN_FIGURE_CATEGORIES)
+    assert set(result["temporal_marker"]) == {"T1", "T2", "T3"}
+    absent = result.loc[(result["temporal_marker"] == "T1") & (result["file_category"] == "unknown")].iloc[0]
+    assert absent["event_n"] == 0
+    assert absent["churn_lines"] == 0
+    assert result.loc[result["temporal_marker"] == "T1", "category_churn_share"].sum() == pytest.approx(1.0)
+    assert result["transformation"].eq("category_complete_grid|absolute_log_and_relative_100_percent").all()
+
+
+def test_build_file_category_churn_figure_exports_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    source_path = tmp_path / "data" / "analysis" / "cross_evidence" / "datasets" / "file_category_churn_metrics.parquet"
+    source_path.parent.mkdir(parents=True)
+    file_category_churn_fixture().to_parquet(source_path, index=False)
+    source_path.with_name(f"{source_path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    data_path = tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data" / "file_category_churn_by_cut.csv"
+    old_cwd = Path.cwd()
+    try:
+        import os
+
+        os.chdir(tmp_path)
+        first = engine.build_file_category_churn_figure(output_data_path=data_path, figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=data_path.parent)
+        second = engine.build_file_category_churn_figure(output_data_path=data_path, figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=data_path.parent)
+    finally:
+        os.chdir(old_cwd)
+    manifest_path = data_path.with_name(f"{data_path.stem}.manifest.json")
+    metadata = json.loads(data_path.with_name(f"{data_path.name}.metadata.json").read_text(encoding="utf-8"))
+    assert data_path.exists() and manifest_path.exists()
+    assert metadata["status"] == "success"
+    assert len(first) == len(second) == 24
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "file_category_churn_by_cut.pdf").exists()
+    entry = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert "relative_100_percent_panel" in entry["transformations"]
+
+
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
     engine = load_engine()
 

@@ -1,0 +1,30 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "91c60f8f71e411d2f8f2e7638e0b18eb5b1502c416f33aa4607c9e94d56826d4",
+  "options": {
+    "absolute_measure": "churn_lines",
+    "absolute_scale": "log",
+    "categories": [
+      "source",
+      "planning",
+      "generated",
+      "config",
+      "localization",
+      "asset",
+      "test",
+      "unknown"
+    ],
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "relative_measure": "category_churn_share",
+    "relative_scale": "100_percent_stacked",
+    "stage": "file_category_churn_by_cut",
+    "visual_spec_version": "cross-evidence-visual-spec-v1",
+    "zero_fill_policy": "explicit_category_cut_grid"
+  },
+  "status": "success"
+}
