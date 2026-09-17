@@ -10,6 +10,7 @@ from pathlib import PurePosixPath
 from typing import Any
 
 import pandas as pd
+from scipy import stats as scipy_stats
 
 from pipeline_config import (
     CROSS_EVIDENCE_ARTIFACT_REGISTRY,
@@ -34,9 +35,43 @@ FILE_CATEGORY_EXCLUSIONS_CONTRACT_VERSION = CROSS_EVIDENCE_MANIFEST_VERSION
 FILE_CATEGORY_EXCLUSIONS_SCHEMA_VERSION = "file-category-exclusions-v1"
 EVALUATOR_OUTCOME_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 AUTHOR_PRESSURE_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
+TEMPORAL_ESCALATION_CONTRACT_VERSION = CROSS_EVIDENCE_CONTRACT_VERSION
 CUTS = ("T1", "T2", "T3")
 TEAM_SEMESTER_KEYS = ["ID_Equipe", "Semestre"]
 TEAM_SEMESTER_CUT_KEYS = ["ID_Equipe", "Semestre", "temporal_marker"]
+TEMPORAL_ESCALATION_PAIR_SPECS = (("t1", "t2"), ("t2", "t3"), ("t1", "t3"))
+TEMPORAL_ESCALATION_METRIC_SPECS = (
+    {
+        "metric_id": "planning_artifact_activity",
+        "source_artifact": "planning_metrics",
+        "columns": {"t1": "planning_artifact_activity_t1", "t2": "planning_artifact_activity_t2", "t3": "planning_artifact_activity_t3"},
+        "narrative_acts": [2, 3],
+    },
+    {
+        "metric_id": "pi_line_delta",
+        "source_artifact": "planning_metrics",
+        "columns": {"t1": "pi_line_delta_t1", "t2": "pi_line_delta_t2", "t3": "pi_line_delta_t3"},
+        "narrative_acts": [2],
+    },
+    {
+        "metric_id": "cc_total",
+        "source_artifact": "code_churn_metrics",
+        "columns": {"t1": "cc_total_t1", "t2": "cc_total_t2", "t3": "cc_total_t3"},
+        "narrative_acts": [2, 3, 4],
+    },
+    {
+        "metric_id": "cc_commit_n",
+        "source_artifact": "code_churn_metrics",
+        "columns": {"t1": "cc_commit_n_t1", "t2": "cc_commit_n_t2", "t3": "cc_commit_n_t3"},
+        "narrative_acts": [2, 3],
+    },
+    {
+        "metric_id": "technical_complexity_mean",
+        "source_artifact": "technical_degradation_metrics",
+        "columns": {"t1": "technical_complexity_mean_t1", "t2": "technical_complexity_mean_t2", "t3": "technical_complexity_mean_t3"},
+        "narrative_acts": [2, 3],
+    },
+)
 EVALUATOR_OUTCOME_METRICS = (
     "engagement_participation",
     "project_progress",
@@ -493,6 +528,161 @@ def build_author_pressure_metrics(
     return metrics
 
 
+def _wilcoxon_summary(left: pd.Series, right: pd.Series) -> dict[str, object]:
+    """Return signed-rank test diagnostics for one paired metric comparison."""
+    pair = pd.DataFrame({"left": pd.to_numeric(left, errors="coerce"), "right": pd.to_numeric(right, errors="coerce")}).dropna()
+    diff = pair["right"] - pair["left"]
+    if pair.empty:
+        return {"status": "unavailable", "reason": "insufficient_pair_n", "statistic": pd.NA, "p_value": pd.NA}
+    if (diff != 0).sum() == 0:
+        return {"status": "unavailable", "reason": "zero_delta", "statistic": pd.NA, "p_value": pd.NA}
+    statistic, p_value = scipy_stats.wilcoxon(pair["left"], pair["right"], zero_method="wilcox")
+    return {"status": "success", "reason": None, "statistic": float(statistic), "p_value": float(p_value)}
+
+
+def compute_temporal_escalation_metrics(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Summarize temporal escalation for declared metrics across T1/T2/T3."""
+    rows: list[dict[str, object]] = []
+    for spec in TEMPORAL_ESCALATION_METRIC_SPECS:
+        source_artifact = str(spec["source_artifact"])
+        if source_artifact not in frames:
+            raise ValueError(f"Missing source artifact frame: {source_artifact}")
+        frame = frames[source_artifact]
+        columns = dict(spec["columns"])
+        missing = (set(TEAM_SEMESTER_KEYS) | set(columns.values())) - set(frame.columns)
+        if missing:
+            raise ValueError(f"{source_artifact} missing columns: {sorted(missing)}")
+        if frame[TEAM_SEMESTER_KEYS].isna().any().any():
+            raise ValueError(f"{source_artifact} team-semester keys must be non-null")
+        if frame.duplicated(TEAM_SEMESTER_KEYS).any():
+            raise ValueError(f"{source_artifact} has duplicate team-semester keys")
+
+        values = {
+            cut: pd.to_numeric(frame[column], errors="coerce")
+            for cut, column in columns.items()
+        }
+        row: dict[str, object] = {
+            "metric_id": spec["metric_id"],
+            "source_artifact": source_artifact,
+            "unit_of_analysis": "metric_family",
+            "n_total": int(len(frame)),
+            "narrative_acts": json.dumps(spec["narrative_acts"]),
+            "temporal_escalation_contract_version": TEMPORAL_ESCALATION_CONTRACT_VERSION,
+        }
+        for cut in ("t1", "t2", "t3"):
+            series = values[cut].dropna()
+            row[f"n_valid_{cut}"] = int(len(series))
+            row[f"mean_{cut}"] = float(series.mean()) if not series.empty else pd.NA
+            row[f"median_{cut}"] = float(series.median()) if not series.empty else pd.NA
+            row[f"min_{cut}"] = float(series.min()) if not series.empty else pd.NA
+            row[f"max_{cut}"] = float(series.max()) if not series.empty else pd.NA
+
+        for left, right in TEMPORAL_ESCALATION_PAIR_SPECS:
+            pair_name = f"{left}_{right}"
+            pair = pd.DataFrame({"left": values[left], "right": values[right]}).dropna()
+            diff = pair["right"] - pair["left"]
+            row[f"{pair_name}_paired_n"] = int(len(pair))
+            row[f"{pair_name}_increase_n"] = int((diff > 0).sum())
+            row[f"{pair_name}_same_n"] = int((diff == 0).sum())
+            row[f"{pair_name}_decrease_n"] = int((diff < 0).sum())
+            row[f"{pair_name}_mean_delta"] = float(diff.mean()) if not diff.empty else pd.NA
+            row[f"{pair_name}_median_delta"] = float(diff.median()) if not diff.empty else pd.NA
+            row[f"{pair_name}_min_delta"] = float(diff.min()) if not diff.empty else pd.NA
+            row[f"{pair_name}_max_delta"] = float(diff.max()) if not diff.empty else pd.NA
+            test = _wilcoxon_summary(pair["left"], pair["right"])
+            row[f"{pair_name}_wilcoxon_status"] = test["status"]
+            row[f"{pair_name}_wilcoxon_reason"] = test["reason"]
+            row[f"{pair_name}_wilcoxon_statistic"] = test["statistic"]
+            row[f"{pair_name}_wilcoxon_p_value"] = test["p_value"]
+
+        t1_t3_pair = pd.DataFrame({"t1": values["t1"], "t3": values["t3"]}).dropna()
+        nonzero_denominator = t1_t3_pair.loc[t1_t3_pair["t1"] != 0]
+        ratios = nonzero_denominator["t3"] / nonzero_denominator["t1"]
+        row["t3_t1_ratio_valid_n"] = int(len(ratios))
+        row["t3_t1_ratio_zero_denominator_n"] = int(len(t1_t3_pair) - len(nonzero_denominator))
+        row["t3_t1_ratio_mean"] = float(ratios.mean()) if not ratios.empty else pd.NA
+        row["t3_t1_ratio_median"] = float(ratios.median()) if not ratios.empty else pd.NA
+        row["t3_t1_ratio_max"] = float(ratios.max()) if not ratios.empty else pd.NA
+        rows.append(row)
+    return pd.DataFrame(rows).sort_values("metric_id").reset_index(drop=True)
+
+
+def write_temporal_escalation_metrics(
+    metrics: pd.DataFrame,
+    output_path: Path,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+) -> None:
+    """Persist temporal escalation metrics and their sidecar."""
+    required = {
+        "metric_id",
+        "source_artifact",
+        "unit_of_analysis",
+        "n_total",
+        "t1_t3_paired_n",
+        "t1_t3_increase_n",
+        "t1_t3_wilcoxon_status",
+        "t3_t1_ratio_zero_denominator_n",
+        "temporal_escalation_contract_version",
+    }
+    missing = required - set(metrics.columns)
+    if missing:
+        raise ValueError(f"temporal_escalation_metrics output missing columns: {sorted(missing)}")
+    if metrics.empty:
+        raise ValueError("temporal_escalation_metrics output is empty")
+    if metrics["metric_id"].duplicated().any():
+        raise ValueError("temporal_escalation_metrics has duplicate metric_id rows")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    metrics.to_parquet(output_path, index=False)
+    write_artifact_metadata(
+        output_path,
+        source_checksum,
+        contract_version=TEMPORAL_ESCALATION_CONTRACT_VERSION,
+        options=options,
+    )
+
+
+def build_temporal_escalation_metrics(
+    *,
+    analysis_dir: Path = Path("data/analysis"),
+    output_path: Path | None = None,
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the persisted temporal escalation metrics artifact."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["temporal_escalation_metrics"]["path"]))
+    input_aliases = ["analysis.planning_metrics", "analysis.code_churn_metrics", "analysis.technical_degradation_metrics"]
+    input_paths: list[Path] = []
+    frames: dict[str, pd.DataFrame] = {}
+    for alias in input_aliases:
+        entry = CROSS_EVIDENCE_LEGACY_INPUT_REGISTRY[alias]
+        path = analysis_dir / Path(str(entry["path"])).name
+        sidecar = analysis_dir / Path(str(entry["metadata_path"])).name
+        _require_success_sidecar(path)
+        input_paths.extend([path, sidecar])
+        frames[alias.removeprefix("analysis.")] = pd.read_parquet(path)
+    options = {
+        "stage": "temporal_escalation_metrics",
+        "contract_version": TEMPORAL_ESCALATION_CONTRACT_VERSION,
+        "metric_specs": TEMPORAL_ESCALATION_METRIC_SPECS,
+        "wilcoxon_pairs": [f"{left}_{right}" for left, right in TEMPORAL_ESCALATION_PAIR_SPECS],
+        "ratio_policy": "exclude_zero_t1_denominator_and_count",
+        "source_policy": "specialized_phase2_parquets",
+    }
+    checksum = input_checksum(input_paths, options)
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Temporal escalation metrics artifact is current: %s", output_path)
+        return pd.read_parquet(output_path)
+
+    metrics = compute_temporal_escalation_metrics(frames)
+    invalidate_stale_artifact(output_path, checksum)
+    write_temporal_escalation_metrics(metrics, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote %s temporal escalation metric summaries", len(metrics))
+    return metrics
+
+
 def compute_file_category_churn_metrics(files: pd.DataFrame) -> pd.DataFrame:
     """Aggregate Git file events by team, semester, cut, and file category."""
     missing = FILE_CATEGORY_CHURN_REQUIRED_COLUMNS - set(files.columns)
@@ -762,18 +952,32 @@ def main() -> None:
     """Run the currently implemented cross-evidence artifact builders."""
     parser = argparse.ArgumentParser(description="Build cross-evidence extension artifacts")
     parser.add_argument("--lake-dir", type=Path, default=Path("data/lake"))
+    parser.add_argument("--analysis-dir", type=Path, default=Path("data/analysis"))
     parser.add_argument("--evaluator-outcome-output", type=Path, default=None)
     parser.add_argument("--author-pressure-output", type=Path, default=None)
+    parser.add_argument("--temporal-escalation-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
         "--only",
-        choices=["evaluator_outcome_metrics", "author_pressure_metrics", "file_category_churn_metrics", "file_category_exclusions"],
+        choices=[
+            "evaluator_outcome_metrics",
+            "author_pressure_metrics",
+            "temporal_escalation_metrics",
+            "file_category_churn_metrics",
+            "file_category_exclusions",
+        ],
         nargs="+",
     )
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
-    selected = set(args.only or ["evaluator_outcome_metrics", "author_pressure_metrics", "file_category_churn_metrics", "file_category_exclusions"])
+    selected = set(args.only or [
+        "evaluator_outcome_metrics",
+        "author_pressure_metrics",
+        "temporal_escalation_metrics",
+        "file_category_churn_metrics",
+        "file_category_exclusions",
+    ])
     metrics_path = args.file_category_churn_output
     if "evaluator_outcome_metrics" in selected:
         build_evaluator_outcome_metrics(
@@ -785,6 +989,12 @@ def main() -> None:
         build_author_pressure_metrics(
             lake_dir=args.lake_dir,
             output_path=args.author_pressure_output,
+            force=args.force,
+        )
+    if "temporal_escalation_metrics" in selected:
+        build_temporal_escalation_metrics(
+            analysis_dir=args.analysis_dir,
+            output_path=args.temporal_escalation_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:

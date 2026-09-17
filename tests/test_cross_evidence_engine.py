@@ -463,3 +463,95 @@ def test_build_author_pressure_metrics_persists_and_skips_current_artifact(tmp_p
     assert metadata["contract_version"] == "cross-evidence-v1"
     assert first.equals(second)
     assert second.loc[0, "commits_per_author"] == 1.5
+
+
+def temporal_source_frames() -> dict[str, pd.DataFrame]:
+    keys = [
+        {"ID_Equipe": "TEAM_1", "Semestre": "2025.2"},
+        {"ID_Equipe": "TEAM_2", "Semestre": "2025.2"},
+        {"ID_Equipe": "TEAM_3", "Semestre": "2026.1"},
+    ]
+    planning = pd.DataFrame(
+        [
+            keys[0] | {"planning_artifact_activity_t1": 1, "planning_artifact_activity_t2": 2, "planning_artifact_activity_t3": 4, "pi_line_delta_t1": 0, "pi_line_delta_t2": 2, "pi_line_delta_t3": 8},
+            keys[1] | {"planning_artifact_activity_t1": 2, "planning_artifact_activity_t2": 2, "planning_artifact_activity_t3": 3, "pi_line_delta_t1": 2, "pi_line_delta_t2": 3, "pi_line_delta_t3": 6},
+            keys[2] | {"planning_artifact_activity_t1": 3, "planning_artifact_activity_t2": 4, "planning_artifact_activity_t3": 2, "pi_line_delta_t1": 3, "pi_line_delta_t2": 4, "pi_line_delta_t3": 9},
+        ]
+    )
+    churn = pd.DataFrame(
+        [
+            keys[0] | {"cc_total_t1": 1, "cc_total_t2": 3, "cc_total_t3": 9, "cc_commit_n_t1": 1, "cc_commit_n_t2": 2, "cc_commit_n_t3": 3},
+            keys[1] | {"cc_total_t1": 2, "cc_total_t2": 2, "cc_total_t3": 8, "cc_commit_n_t1": 2, "cc_commit_n_t2": 2, "cc_commit_n_t3": 4},
+            keys[2] | {"cc_total_t1": 4, "cc_total_t2": 5, "cc_total_t3": 4, "cc_commit_n_t1": 3, "cc_commit_n_t2": 4, "cc_commit_n_t3": 2},
+        ]
+    )
+    degradation = pd.DataFrame(
+        [
+            keys[0] | {"technical_complexity_mean_t1": 1.0, "technical_complexity_mean_t2": 1.5, "technical_complexity_mean_t3": 2.0},
+            keys[1] | {"technical_complexity_mean_t1": 1.0, "technical_complexity_mean_t2": 1.0, "technical_complexity_mean_t3": 1.5},
+            keys[2] | {"technical_complexity_mean_t1": 2.0, "technical_complexity_mean_t2": 1.5, "technical_complexity_mean_t3": 1.0},
+        ]
+    )
+    return {
+        "planning_metrics": planning,
+        "code_churn_metrics": churn,
+        "technical_degradation_metrics": degradation,
+    }
+
+
+def test_compute_temporal_escalation_metrics_summarizes_deltas_ratios_and_wilcoxon() -> None:
+    engine = load_engine()
+
+    result = engine.compute_temporal_escalation_metrics(temporal_source_frames())
+    planning = result.loc[result["metric_id"] == "planning_artifact_activity"].iloc[0]
+    pi_delta = result.loc[result["metric_id"] == "pi_line_delta"].iloc[0]
+
+    assert len(result) == 5
+    assert planning["source_artifact"] == "planning_metrics"
+    assert planning["n_total"] == 3
+    assert planning["n_valid_t1"] == 3
+    assert planning["median_t3"] == 3
+    assert planning["t1_t3_paired_n"] == 3
+    assert planning["t1_t3_increase_n"] == 2
+    assert planning["t1_t3_same_n"] == 0
+    assert planning["t1_t3_decrease_n"] == 1
+    assert planning["t1_t3_median_delta"] == 1
+    assert planning["t1_t3_wilcoxon_status"] == "success"
+    assert planning["t3_t1_ratio_valid_n"] == 3
+    assert planning["t3_t1_ratio_zero_denominator_n"] == 0
+    assert pi_delta["t3_t1_ratio_valid_n"] == 2
+    assert pi_delta["t3_t1_ratio_zero_denominator_n"] == 1
+    assert pi_delta["temporal_escalation_contract_version"] == "cross-evidence-v1"
+
+
+def test_compute_temporal_escalation_metrics_rejects_invalid_input() -> None:
+    engine = load_engine()
+    frames = temporal_source_frames()
+    frames["planning_metrics"] = frames["planning_metrics"].drop(columns=["pi_line_delta_t3"])
+
+    with pytest.raises(ValueError, match="missing columns"):
+        engine.compute_temporal_escalation_metrics(frames)
+
+
+def test_build_temporal_escalation_metrics_persists_and_skips_current_artifact(tmp_path: Path) -> None:
+    engine = load_engine()
+    analysis_dir = tmp_path / "analysis"
+    analysis_dir.mkdir()
+    output = tmp_path / "analysis" / "cross_evidence" / "datasets" / "temporal_escalation_metrics.parquet"
+    for name, frame in temporal_source_frames().items():
+        path = analysis_dir / f"{name}.parquet"
+        frame.to_parquet(path, index=False)
+        path.with_name(f"{path.name}.metadata.json").write_text(
+            json.dumps({"status": "success", "input_checksum": name}),
+            encoding="utf-8",
+        )
+
+    first = engine.build_temporal_escalation_metrics(analysis_dir=analysis_dir, output_path=output)
+    second = engine.build_temporal_escalation_metrics(analysis_dir=analysis_dir, output_path=output)
+
+    metadata = json.loads(output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output.exists()
+    assert metadata["status"] == "success"
+    assert metadata["contract_version"] == "cross-evidence-v1"
+    assert first.equals(second)
+    assert set(second["metric_id"]) == {"planning_artifact_activity", "pi_line_delta", "cc_total", "cc_commit_n", "technical_complexity_mean"}

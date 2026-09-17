@@ -627,7 +627,6 @@ CROSS_EVIDENCE_ARTIFACT_REGISTRY: dict[str, dict[str, object]] = {
             "analysis.planning_metrics",
             "analysis.code_churn_metrics",
             "analysis.technical_degradation_metrics",
-            "analysis.team_metrics",
         ],
     },
     "late_instability_metrics": {
