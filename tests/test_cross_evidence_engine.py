@@ -1605,6 +1605,62 @@ def test_build_author_pressure_vs_churn_figure_exports_and_skips(tmp_path: Path)
     assert "log_y_outcomes" in entry["transformations"]
 
 
+def test_compute_pareto_extreme_cases_figure_data_builds_aggregate_heatmap_cells() -> None:
+    engine = load_engine()
+    overlap = pd.DataFrame(
+        [
+            {"overlap_id": "a", "left_variable": "rework", "left_extreme": "top", "right_variable": "churn", "right_extreme": "top", "overlap_n": 2, "group_size_requested": 4, "jaccard": 0.33, "overlap_rate_left": 0.5, "overlap_rate_right": 0.5},
+            {"overlap_id": "b", "left_variable": "rework", "left_extreme": "top", "right_variable": "churn", "right_extreme": "bottom", "overlap_n": 0, "group_size_requested": 4, "jaccard": 0.0, "overlap_rate_left": 0.0, "overlap_rate_right": 0.0},
+        ]
+    )
+    result = engine.compute_pareto_extreme_cases_figure_data(overlap)
+    assert len(result) == 2
+    assert result.loc[result["overlap_id"] == "a", "cell_label"].iloc[0] == "2/4"
+    assert result["transformation"].eq("jaccard_heatmap|overlap_n_over_k_cell_labels|anonymized_aggregate").all()
+
+
+def test_compute_leave_one_out_robustness_figure_data_preserves_intervals() -> None:
+    engine = load_engine()
+    sensitivity = pd.DataFrame(
+        [{"analysis_id": "a", "original_coefficient": -0.7, "coefficient_min": -0.8, "coefficient_max": -0.6, "p_value_max": 0.04, "loo_support_share": 1.0, "robustness_class": "robust_all"}]
+    )
+    result = engine.compute_leave_one_out_robustness_figure_data(sensitivity)
+    assert len(result) == 1
+    assert result.loc[0, "original_coefficient"] == -0.7
+    assert result.loc[0, "robustness_class"] == "robust_all"
+
+
+def test_build_ce47_figures_export_and_skip(tmp_path: Path) -> None:
+    engine = load_engine()
+    results = tmp_path / "data" / "analysis" / "cross_evidence" / "results"
+    results.mkdir(parents=True)
+    overlap = pd.DataFrame(
+        [{"overlap_id": "a", "left_variable": "rework", "left_extreme": "top", "right_variable": "churn", "right_extreme": "top", "overlap_n": 2, "group_size_requested": 4, "jaccard": 0.33, "overlap_rate_left": 0.5, "overlap_rate_right": 0.5}]
+    )
+    sensitivity = pd.DataFrame(
+        [{"analysis_id": "a", "original_coefficient": -0.7, "coefficient_min": -0.8, "coefficient_max": -0.6, "p_value_max": 0.04, "loo_support_share": 1.0, "robustness_class": "robust_all"}]
+    )
+    paths = []
+    for name, frame in (("extreme_case_overlap", overlap), ("leave_one_out_sensitivity", sensitivity)):
+        path = results / f"{name}.csv"
+        frame.to_csv(path, index=False)
+        path.with_name(f"{path.name}.metadata.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+        paths.append(path)
+    old_cwd = Path.cwd()
+    try:
+        import os
+        os.chdir(tmp_path)
+        pareto = engine.build_pareto_extreme_cases_figure(figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data")
+        robust = engine.build_leave_one_out_robustness_figure(figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data")
+        assert len(pareto) == len(robust) == 1
+        engine.build_pareto_extreme_cases_figure(figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data")
+        engine.build_leave_one_out_robustness_figure(figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data")
+    finally:
+        os.chdir(old_cwd)
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "pareto_extreme_cases.png").exists()
+    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "leave_one_out_robustness.png").exists()
+
+
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:
     engine = load_engine()
 

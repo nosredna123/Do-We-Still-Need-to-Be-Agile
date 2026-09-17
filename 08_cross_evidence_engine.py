@@ -580,6 +580,13 @@ AUTHOR_PRESSURE_FIGURE_SPECS = (
         "y_title": "Planning activity (log scale)",
     },
 )
+PARETO_EXTREME_CASES_COLORSCALE = [[0.0, "#F8FAFC"], [0.5, "#93C5FD"], [1.0, "#1D4ED8"]]
+LEAVE_ONE_OUT_ROBUSTNESS_COLORS = {
+    "robust_all": "#15803D",
+    "robust_most": "#2563EB",
+    "fragile": "#D97706",
+    "no_support": "#64748B",
+}
 
 
 def compute_scope_vs_late_instability_figure_data(panel: pd.DataFrame) -> pd.DataFrame:
@@ -1452,6 +1459,178 @@ def build_author_pressure_vs_churn_figure(
     manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
     manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
     logger.info("Wrote author-pressure figure: %s", export_paths["png"])
+    return figure_data
+
+
+def compute_pareto_extreme_cases_figure_data(overlap: pd.DataFrame) -> pd.DataFrame:
+    """Prepare heatmap cells for extreme-case Jaccard overlap."""
+    required = {"overlap_id", "left_variable", "left_extreme", "right_variable", "right_extreme", "overlap_n", "jaccard", "group_size_requested"}
+    missing = required - set(overlap.columns)
+    if missing:
+        raise ValueError(f"extreme_case_overlap missing columns: {sorted(missing)}")
+    result = overlap.copy()
+    result["pair_label"] = result["left_variable"] + " vs " + result["right_variable"]
+    result["mode"] = result["left_extreme"] + "_" + result["right_extreme"]
+    result["cell_label"] = result["overlap_n"].astype(int).astype(str) + "/" + result["group_size_requested"].astype(int).astype(str)
+    result["figure_id"] = "pareto_extreme_cases"
+    result["transformation"] = "jaccard_heatmap|overlap_n_over_k_cell_labels|anonymized_aggregate"
+    return result[["figure_id", "overlap_id", "pair_label", "mode", "left_variable", "right_variable", "left_extreme", "right_extreme", "overlap_n", "group_size_requested", "jaccard", "overlap_rate_left", "overlap_rate_right", "cell_label", "transformation"]].sort_values(["pair_label", "mode"]).reset_index(drop=True)
+
+
+def _pareto_extreme_cases_figure(figure_data: pd.DataFrame) -> plotly_go.Figure:
+    """Build the CE-4.7 Jaccard heatmap."""
+    pairs = sorted(figure_data["pair_label"].unique())
+    modes = ["top_top", "top_bottom", "bottom_bottom"]
+    matrix = figure_data.pivot(index="pair_label", columns="mode", values="jaccard").reindex(index=pairs, columns=modes)
+    labels = figure_data.pivot(index="pair_label", columns="mode", values="cell_label").reindex(index=pairs, columns=modes)
+    figure = plotly_go.Figure(
+        data=plotly_go.Heatmap(
+            z=matrix.values,
+            x=modes,
+            y=pairs,
+            text=labels.values,
+            texttemplate="%{text}",
+            colorscale=PARETO_EXTREME_CASES_COLORSCALE,
+            zmin=0,
+            zmax=1,
+            colorbar={"title": "Jaccard"},
+            hovertemplate="%{y}<br>%{x}<br>Jaccard: %{z:.2f}<br>Overlap: %{text}<extra></extra>",
+        )
+    )
+    apply_cross_evidence_visual_theme(figure, title="Extreme-case overlap across evidence dimensions")
+    figure.update_xaxes(title_text="Extreme pairing")
+    figure.update_yaxes(title_text="Variable pair", autorange="reversed")
+    return figure
+
+
+def build_pareto_extreme_cases_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the CE-4.7 extreme-case overlap figure."""
+    source_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["extreme_case_overlap"]["path"]))
+    _require_success_sidecar(source_path)
+    source_sidecar = source_path.with_name(f"{source_path.name}.metadata.json")
+    paths = cross_evidence_figure_export_paths("pareto_extreme_cases", category="prioritarias", figure_root=figure_root, figure_data_root=figure_data_root)
+    output_data_path = output_data_path or paths["data"]
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    options = {
+        "stage": "pareto_extreme_cases",
+        "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION,
+        "source_artifact": "extreme_case_overlap",
+        "heatmap_measure": "jaccard",
+        "cell_label": "overlap_n_over_group_size_requested",
+        "privacy_policy": "aggregate_only_no_overlap_keys_in_figure_data",
+        "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS),
+    }
+    checksum = input_checksum([source_path, source_sidecar], options)
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("Pareto extreme-case figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+    figure_data = compute_pareto_extreme_cases_figure_data(pd.read_csv(source_path))
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(output_data_path, checksum, contract_version="cross-evidence-figure-data-v1", options=options)
+    figure = _pareto_extreme_cases_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure, figure_data, figure_id="pareto_extreme_cases", category="prioritarias", source=source_path.as_posix(), unit_of_analysis="ranked_team_semester", variables=["jaccard", "overlap_n"], transformations=["jaccard_heatmap", "overlap_n_over_k_cell_labels", "anonymized_aggregate"], scale_notes=["Jaccard bounded from 0 to 1"], limitations=["descriptive extreme-case overlap", "no causal interpretation", "overlap keys excluded from figure data"], paths=export_paths, required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote Pareto extreme-case figure: %s", export_paths["png"])
+    return figure_data
+
+
+def compute_leave_one_out_robustness_figure_data(sensitivity: pd.DataFrame) -> pd.DataFrame:
+    """Prepare aggregate interval data for the leave-one-out robustness figure."""
+    required = {"analysis_id", "original_coefficient", "coefficient_min", "coefficient_max", "p_value_max", "loo_support_share", "robustness_class"}
+    missing = required - set(sensitivity.columns)
+    if missing:
+        raise ValueError(f"leave_one_out_sensitivity missing columns: {sorted(missing)}")
+    result = sensitivity.copy()
+    result["figure_id"] = "leave_one_out_robustness"
+    result["transformation"] = "coefficient_interval_with_original_point|aggregate_only"
+    return result[["figure_id", "analysis_id", "original_coefficient", "coefficient_min", "coefficient_max", "p_value_max", "loo_support_share", "robustness_class", "transformation"]].sort_values(["robustness_class", "analysis_id"]).reset_index(drop=True)
+
+
+def _leave_one_out_robustness_figure(figure_data: pd.DataFrame) -> plotly_go.Figure:
+    """Build the CE-4.7 leave-one-out coefficient interval figure."""
+    figure = plotly_go.Figure()
+    ordered = figure_data.reset_index(drop=True)
+    y_values = list(range(len(ordered)))
+    for robustness_class, color in LEAVE_ONE_OUT_ROBUSTNESS_COLORS.items():
+        subset = ordered.loc[ordered["robustness_class"] == robustness_class]
+        if subset.empty:
+            continue
+        indices = subset.index
+        for index in indices:
+            row = ordered.loc[index]
+            figure.add_trace(plotly_go.Scatter(x=[row["coefficient_min"], row["coefficient_max"]], y=[index, index], mode="lines", line={"color": color, "width": 5}, name=robustness_class, legendgroup=robustness_class, showlegend=bool(index == indices[0])))
+        figure.add_trace(plotly_go.Scatter(x=subset["original_coefficient"], y=list(indices), mode="markers", marker={"color": color, "size": 10}, name=f"{robustness_class} original", legendgroup=robustness_class, showlegend=False, customdata=subset[["analysis_id", "p_value_max", "loo_support_share"]], hovertemplate="%{customdata[0]}<br>Original rho: %{x:.3f}<br>Max p-value: %{customdata[1]:.3f}<br>Support share: %{customdata[2]:.1%}<extra></extra>"))
+    figure.add_vline(x=0, line_dash="dash", line_color="#64748B")
+    apply_cross_evidence_visual_theme(figure, title="Leave-one-out robustness of exploratory correlations")
+    figure.update_xaxes(title_text="Spearman coefficient", range=[-1, 1])
+    figure.update_yaxes(title_text="Analysis", tickmode="array", tickvals=y_values, ticktext=ordered["analysis_id"], autorange="reversed")
+    return figure
+
+
+def build_leave_one_out_robustness_figure(
+    *,
+    output_data_path: Path | None = None,
+    figure_root: Path = Path("assets/figures/cross_evidence"),
+    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    force: bool = False,
+) -> pd.DataFrame:
+    """Build or load the CE-4.7 leave-one-out robustness figure."""
+    source_path = Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["leave_one_out_sensitivity"]["path"]))
+    _require_success_sidecar(source_path)
+    source_sidecar = source_path.with_name(f"{source_path.name}.metadata.json")
+    paths = cross_evidence_figure_export_paths("leave_one_out_robustness", category="prioritarias", figure_root=figure_root, figure_data_root=figure_data_root)
+    output_data_path = output_data_path or paths["data"]
+    export_paths = dict(paths)
+    export_paths["data"] = output_data_path
+    options = {"stage": "leave_one_out_robustness", "visual_spec_version": CROSS_EVIDENCE_VISUAL_SPEC_VERSION, "interval_measure": "coefficient_min_to_max", "point_measure": "original_coefficient", "export_formats": list(CROSS_EVIDENCE_FIGURE_EXPORT_FORMATS)}
+    checksum = input_checksum([source_path, source_sidecar], options)
+    manifest_path = output_data_path.with_name(f"{output_data_path.stem}.manifest.json")
+    output_paths_ready = all(export_paths[key].is_file() for key in ("html", "png", "svg", "pdf")) and manifest_path.is_file()
+    if force:
+        invalidate_stale_artifact(output_data_path, "force-regeneration")
+    if not force and output_paths_ready and is_current_artifact(output_data_path, checksum):
+        logger.info("Leave-one-out robustness figure is current: %s", output_data_path)
+        return pd.read_csv(output_data_path)
+    figure_data = compute_leave_one_out_robustness_figure_data(pd.read_csv(source_path))
+    output_data_path.parent.mkdir(parents=True, exist_ok=True)
+    figure_data.to_csv(output_data_path, index=False)
+    write_artifact_metadata(output_data_path, checksum, contract_version="cross-evidence-figure-data-v1", options=options)
+    figure = _leave_one_out_robustness_figure(figure_data)
+    for path in (export_paths["html"], export_paths["png"], export_paths["svg"], export_paths["pdf"]):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(export_paths["html"], include_plotlyjs="cdn", full_html=True)
+    figure.write_image(export_paths["png"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT, scale=CROSS_EVIDENCE_FIGURE_PNG_SCALE)
+    figure.write_image(export_paths["svg"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_image(export_paths["pdf"], width=CROSS_EVIDENCE_FIGURE_WIDTH, height=CROSS_EVIDENCE_FIGURE_HEIGHT)
+    figure.write_json(export_paths["plotly_json"])
+    manifest_entry = build_cross_evidence_figure_manifest_entry(
+        figure, figure_data, figure_id="leave_one_out_robustness", category="prioritarias", source=source_path.as_posix(), unit_of_analysis="analysis_result", variables=["original_coefficient", "coefficient_min", "coefficient_max", "robustness_class"], transformations=["coefficient_interval_with_original_point", "aggregate_only"], scale_notes=["coefficient bounded from -1 to 1", "zero reference line"], limitations=["leave-one-out is sensitivity evidence, not causal validation", "individual removed observations are not displayed"], paths=export_paths, required=True,
+    )
+    manifest_entry["data_metadata_path"] = f"{output_data_path.as_posix()}.metadata.json"
+    manifest_path.write_text(json.dumps(manifest_entry, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    logger.info("Wrote leave-one-out robustness figure: %s", export_paths["png"])
     return figure_data
 
 
@@ -3776,6 +3955,8 @@ def main() -> None:
     parser.add_argument("--temporal-escalation-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-data-output", type=Path, default=None)
     parser.add_argument("--author-pressure-vs-churn-data-output", type=Path, default=None)
+    parser.add_argument("--pareto-extreme-cases-data-output", type=Path, default=None)
+    parser.add_argument("--leave-one-out-robustness-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
     parser.add_argument(
@@ -3797,6 +3978,8 @@ def main() -> None:
             "temporal_escalation_panel",
             "file_category_churn_by_cut",
             "author_pressure_vs_churn",
+            "pareto_extreme_cases",
+            "leave_one_out_robustness",
             "file_category_churn_metrics",
             "file_category_exclusions",
         ],
@@ -3821,6 +4004,8 @@ def main() -> None:
         "temporal_escalation_panel",
         "file_category_churn_by_cut",
         "author_pressure_vs_churn",
+        "pareto_extreme_cases",
+        "leave_one_out_robustness",
         "file_category_churn_metrics",
         "file_category_exclusions",
     ])
@@ -3907,6 +4092,16 @@ def main() -> None:
     if "author_pressure_vs_churn" in selected:
         build_author_pressure_vs_churn_figure(
             output_data_path=args.author_pressure_vs_churn_data_output,
+            force=args.force,
+        )
+    if "pareto_extreme_cases" in selected:
+        build_pareto_extreme_cases_figure(
+            output_data_path=args.pareto_extreme_cases_data_output,
+            force=args.force,
+        )
+    if "leave_one_out_robustness" in selected:
+        build_leave_one_out_robustness_figure(
+            output_data_path=args.leave_one_out_robustness_data_output,
             force=args.force,
         )
     if "file_category_churn_metrics" in selected:
