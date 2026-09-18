@@ -171,3 +171,82 @@ AUDIT_VERDICT_PROMPT = (
     "remediation is required.\n\n"
     "payload={payload_json}"
 )
+
+# --- Cross-evidence extension prompts ---
+#
+# These prompts are intentionally limited to aggregated, computed evidence for the
+# secondary cross-evidence layer. They never receive raw transcripts, answers, or
+# private narrative text and must work from fact-sheet JSON or computed matrices.
+CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION = "cross-evidence-artifact-report-v1"
+CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT = (
+    "You are a research documentation assistant specializing in aggregated "
+    "software-engineering evidence. Write concise, didactic English Markdown "
+    "that only uses facts present in the provided JSON fact sheet. Never invent "
+    "statistics, sample sizes, or narrative claims. When the evidence is weak, "
+    "non-significant, or unavailable, say so plainly. Do not use raw transcript "
+    "text, answer text, private evidence summaries, or any hidden source data."
+)
+CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT = (
+    "Write one Markdown report for the cross-evidence artifact described by this "
+    "fact sheet. Use exactly these level-2 headings, in this order: "
+    "'## What it is', '## How it was built', '## Narrative binding', "
+    "'## What the current data actually shows', '## Contribution assessment', "
+    "'## Known limitations'. In 'What it is', state the artifact id, unit of "
+    "analysis, row count or n_total, producer script, and contract version. In "
+    "'How it was built', summarize construction in one plain-language paragraph "
+    "using only the fact sheet values. In 'Narrative binding', name the narrative "
+    "acts and state which claim or caution they are meant to support or qualify. "
+    "In 'What the current data actually shows', cite the concrete summarized "
+    "numbers verbatim from the fact sheet: effect sizes, p-values, n_valid, "
+    "missingness, and cross-evidence labels. In 'Contribution assessment', "
+    "state the verdict and justify it only with the fact-sheet facts. In 'Known "
+    "limitations', list every limitation item and any exclusions summary present. "
+    "Do not add a title heading or any text outside these six sections.\n\n"
+    "fact_sheet={fact_sheet_json}"
+)
+
+CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION = "cross-evidence-group-report-v1"
+CROSS_EVIDENCE_GROUP_REPORT_PROMPT = (
+    "Write one Markdown synthesis for the cross-evidence group '{group_name}' "
+    "of a software engineering thesis. Use exactly these level-2 headings, in "
+    "this order: '## Group summary', '## Member artifacts', '## Evidence status', "
+    "'## Role in the narrative'. In 'Group summary', explain what this group "
+    "measures using only the provided metadata. In 'Member artifacts', list each "
+    "artifact_id with its status and what it contributes. In 'Evidence status', "
+    "state whether the group mainly supports, limits, or contextualizes the "
+    "narrative and justify this with only the aggregate numbers in the payload. "
+    "In 'Role in the narrative', explain whether it strengthens, qualifies, or "
+    "reframes the act-level argument without inventing evidence.\n\n"
+    "payload={payload_json}"
+)
+
+CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION = "cross-evidence-act-report-v1"
+CROSS_EVIDENCE_ACT_REPORT_PROMPT = (
+    "Write one Markdown synthesis for narrative act {act_number} ('{act_title}') "
+    "using only the cross-evidence fact sheet payload. Use exactly these level-2 "
+    "headings, in this order: '## Act summary', '## Bound artifacts', "
+    "'## Empirical status', '## Narrative interpretation'. In 'Act summary', "
+    "restated the act's role in one paragraph using only act_description and the "
+    "provided title. In 'Bound artifacts', list each artifact_id and its verdict. "
+    "In 'Empirical status', state the aggregate status and justify it only by "
+    "reference to the support, tested, and weak-count values present in the "
+    "payload. In 'Narrative interpretation', explain whether the act is "
+    "supported, constrained, or merely contextualized, without saying anything "
+    "that is not already encoded in the numeric evidence.\n\n"
+    "payload={payload_json}"
+)
+
+CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT_VERSION = "cross-evidence-consolidated-report-v1"
+CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT = (
+    "Write the consolidated Markdown cross-evidence report from this payload. Use "
+    "exactly these level-2 headings, in this order: '## Index', '## Evidence "
+    "matrix', '## Verdict', '## Limitations and interpretation'. In 'Index', "
+    "list each report path or artifact group in the payload. In 'Evidence "
+    "matrix', render a Markdown table with columns artifact_id, group_name, "
+    "unit_of_analysis, n_valid, principal_result, status. In 'Verdict', state "
+    "the aggregate verdict and verdict_reason exactly as provided, then explain "
+    "the result using only the counts and statuses present in the payload. In "
+    "'Limitations and interpretation', list the methodological warnings and "
+    "recommendations present in the payload without drawing new claims.\n\n"
+    "payload={payload_json}"
+)

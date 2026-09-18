@@ -315,3 +315,37 @@ def test_no_private_fields_reach_fact_sheet(tmp_path: Path) -> None:
         serialized = json.dumps(fact_sheet, default=str)
         for field in forbidden_fields:
             assert field not in serialized
+
+
+def test_cross_evidence_prompts_are_versioned_and_private_safe() -> None:
+    from pipeline_prompts import (
+        CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT,
+        CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION,
+        CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT,
+        CROSS_EVIDENCE_ACT_REPORT_PROMPT,
+        CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION,
+        CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT,
+        CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT_VERSION,
+        CROSS_EVIDENCE_GROUP_REPORT_PROMPT,
+        CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION,
+    )
+
+    required_versions = {
+        CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION: "cross-evidence-artifact-report-v1",
+        CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION: "cross-evidence-group-report-v1",
+        CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION: "cross-evidence-act-report-v1",
+        CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT_VERSION: "cross-evidence-consolidated-report-v1",
+    }
+    assert required_versions
+
+    forbidden_fields = {"answer_text", "evidence_summary_private", "transcript_text", "raw_text"}
+    for prompt_text in (
+        CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT,
+        CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT,
+        CROSS_EVIDENCE_GROUP_REPORT_PROMPT,
+        CROSS_EVIDENCE_ACT_REPORT_PROMPT,
+        CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT,
+    ):
+        assert isinstance(prompt_text, str)
+        for field in forbidden_fields:
+            assert field not in prompt_text
