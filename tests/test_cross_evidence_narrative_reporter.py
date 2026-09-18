@@ -1,0 +1,86 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+from pathlib import Path
+
+import pandas as pd
+import pytest
+
+
+MODULE_PATH = Path(__file__).parents[1] / "09_cross_evidence_narrative_reporter.py"
+SPEC = importlib.util.spec_from_file_location("cross_evidence_narrative_reporter", MODULE_PATH)
+assert SPEC is not None and SPEC.loader is not None
+REPORTER = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(REPORTER)
+
+
+def _write_metadata(path: Path, *, contract_version: str) -> None:
+    path.with_name(f"{path.name}.metadata.json").write_text(
+        json.dumps({"status": "success", "contract_version": contract_version, "input_checksum": f"checksum-{path.name}"}),
+        encoding="utf-8",
+    )
+
+
+def test_cross_evidence_artifact_reports_generate_and_skip(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    analysis_dir = tmp_path / "analysis"
+    cross_evidence_dir = analysis_dir / "cross_evidence"
+    cross_evidence_dir.mkdir(parents=True)
+    result_dir = cross_evidence_dir / "results"
+    result_dir.mkdir(parents=True)
+    figure_dir = cross_evidence_dir / "figure_data"
+    figure_dir.mkdir(parents=True)
+
+    result_path = result_dir / "cross_evidence_correlations.csv"
+    pd.DataFrame(
+        [
+            {
+                "analysis_id": "scope_vs_source_churn_t3",
+                "unit_of_analysis": "team_semester",
+                "priority": "primary_candidate",
+                "n_valid": 12,
+                "coefficient": -0.61,
+                "p_value": 0.02,
+                "status": "success",
+            }
+        ]
+    ).to_csv(result_path, index=False)
+    _write_metadata(result_path, contract_version="cross-evidence-correlations-v1")
+
+    figure_path = figure_dir / "scope_vs_late_instability.csv"
+    pd.DataFrame(
+        [
+            {"ID_Equipe": "TEAM_A", "Semestre": "2025.2", "scope_index": 0.8, "late_instability_index": 1.2},
+            {"ID_Equipe": "TEAM_B", "Semestre": "2025.2", "scope_index": 1.4, "late_instability_index": 2.1},
+        ]
+    ).to_csv(figure_path, index=False)
+    _write_metadata(figure_path, contract_version="cross-evidence-v1")
+
+    output_dir = cross_evidence_dir / "reports" / "artifact_reports"
+    calls: list[str] = []
+
+    def fake_mock_backend(prompt: str) -> str:
+        calls.append(prompt)
+        return "Mock cross-evidence report body"
+
+    monkeypatch.setattr(REPORTER, "mock_narrative_backend", fake_mock_backend)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "09_cross_evidence_narrative_reporter.py",
+            "--analysis-dir",
+            str(analysis_dir),
+            "--output-dir",
+            str(output_dir),
+            "--backend",
+            "mock",
+        ],
+    )
+
+    REPORTER.main()
+    assert (output_dir / "cross_evidence_correlations.md").exists()
+    assert (output_dir / "scope_vs_late_instability_data.md").exists()
+    assert len(calls) >= 2
+
+    REPORTER.main()
+    assert len(calls) == 2
