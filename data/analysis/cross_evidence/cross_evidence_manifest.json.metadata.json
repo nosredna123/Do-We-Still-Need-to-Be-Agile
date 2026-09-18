@@ -1,0 +1,11 @@
+{
+  "contract_version": "cross-evidence-manifest-v1",
+  "input_checksum": "6ceab7f703c5d41e7c9e7ae40b8bbae030d85ff9b126554eaf9fdce3a969fe5f",
+  "options": {
+    "artifact_count": 27,
+    "engine_script": "08_cross_evidence_engine.py",
+    "manifest_version": "cross-evidence-manifest-v1",
+    "stage": "cross_evidence_manifest"
+  },
+  "status": "success"
+}

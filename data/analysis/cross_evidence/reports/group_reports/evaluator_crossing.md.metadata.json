@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "a70773874b025ff2997381b91af298322ff23765e6b205665a765cb1565a5803",
+  "input_checksum": "35c41180dad1e2e4c6b8ba59eeae635f115f3f8b25e2c6b86adff839376e4409",
   "options": {
     "backend": "mock",
     "group_name": "evaluator_crossing",

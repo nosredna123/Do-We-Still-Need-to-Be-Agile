@@ -1,0 +1,108 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "99af49596f3b6a56b7026b8f94ddae2678cba0c385efdbb1b539a637ba615806",
+  "options": {
+    "artifact_id": "semester_stratified_results",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "semester_stratified_results",
+      "columns": [
+        "analysis_id",
+        "unit_of_analysis",
+        "stratum",
+        "semester",
+        "test",
+        "priority",
+        "x",
+        "y",
+        "expected_direction",
+        "narrative_acts",
+        "n_total",
+        "n_valid",
+        "n_missing",
+        "coefficient",
+        "p_value",
+        "status",
+        "reason",
+        "warning",
+        "verdict",
+        "stratification_class",
+        "contract_version"
+      ],
+      "contract_version": "cross-evidence-semester-stratified-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "methodological_warning",
+      "kind": "result",
+      "n_columns": 21,
+      "n_rows": 21,
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "numeric_summary": {
+        "coefficient": {
+          "max": -0.0594088525786004,
+          "mean": -0.5471827699998997,
+          "median": -0.5831555764121896,
+          "min": -0.7854963073359155,
+          "n_total": 21,
+          "n_valid": 21
+        },
+        "n_missing": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 21,
+          "n_valid": 21
+        },
+        "n_total": {
+          "max": 14.0,
+          "mean": 9.333333333333334,
+          "median": 9.0,
+          "min": 5.0,
+          "n_total": 21,
+          "n_valid": 21
+        },
+        "n_valid": {
+          "max": 14.0,
+          "mean": 9.333333333333334,
+          "median": 9.0,
+          "min": 5.0,
+          "n_total": 21,
+          "n_valid": 21
+        },
+        "p_value": {
+          "max": 0.8793286751743332,
+          "mean": 0.20724640062553665,
+          "median": 0.1816901138162092,
+          "min": 0.0031279384351483,
+          "n_total": 21,
+          "n_valid": 21
+        },
+        "reason": {
+          "max": null,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "n_total": 21,
+          "n_valid": 0
+        },
+        "semester": {
+          "max": 2026.1,
+          "mean": 2025.6499999999999,
+          "median": 2025.65,
+          "min": 2025.2,
+          "n_total": 21,
+          "n_valid": 14
+        }
+      },
+      "path": "data/analysis/cross_evidence/results/semester_stratified_results.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "analysis_result"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

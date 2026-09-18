@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "412a811f6b79f9fa021eaf527cc03ca95982c719ac131049d5ffcc036e4c0ff0",
+  "input_checksum": "a53b249b33e136090d73c0b199df87ef92e49e195b5846af67f737cf2acdab7f",
   "options": {
     "backend": "mock",
     "group_name": "temporal_escalation",

@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "579a550ac16e7d06fde13fbc3a088c1b10f875fbc9f53ab18105a7469b38faa8",
+  "input_checksum": "e8f5ecd24b32b834af299d29e8d145aea5506c119cf08fea0e72fd22518a1bbd",
   "options": {
     "artifact_id": "semester_stratified_results",
     "backend": "mock",

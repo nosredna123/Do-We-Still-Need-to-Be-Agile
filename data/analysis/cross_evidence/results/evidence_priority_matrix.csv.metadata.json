@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-priority-matrix-v1",
-  "input_checksum": "4ecf3543ac794cef98e902a180f826fd5ed0bd89533193848e9c9c0d8007bba1",
+  "input_checksum": "cf0439109afe858ca67bff54f674cc05c0d3a831cb63beee6df32f0cfb77936a",
   "options": {
     "contract_version": "cross-evidence-priority-matrix-v1",
     "granularity": "one_row_per_atomic_evidence_result",

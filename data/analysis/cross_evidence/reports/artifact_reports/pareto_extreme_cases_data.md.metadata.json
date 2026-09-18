@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "e9ff6c88fff0eea45ed128ba799896b21546268c6af4cb1683d4a1e23b09e5ef",
+  "input_checksum": "7c8d17eed97d9f30816a2808cc0fb7b524353963fd9fb9012ab91a933be806c7",
   "options": {
     "artifact_id": "pareto_extreme_cases_data",
     "backend": "mock",

@@ -1,0 +1,119 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "059c1a32ac6a5202acba032fc3e213737fe418297016b4849f7e7dfa0df8fa37",
+  "options": {
+    "artifact_id": "best_worst_project_contrasts",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "best_worst_project_contrasts",
+      "columns": [
+        "contrast_id",
+        "unit_of_analysis",
+        "score_variable",
+        "outcome_variable",
+        "group_rule",
+        "group_size_requested",
+        "low_group_n",
+        "high_group_n",
+        "low_score_min",
+        "low_score_max",
+        "high_score_min",
+        "high_score_max",
+        "low_mean",
+        "low_median",
+        "high_mean",
+        "high_median",
+        "median_difference_high_minus_low",
+        "cliffs_delta_high_vs_low",
+        "test",
+        "u_statistic",
+        "p_value",
+        "status",
+        "reason",
+        "interpretation",
+        "contract_version"
+      ],
+      "contract_version": "cross-evidence-best-worst-contrasts-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "kind": "result",
+      "n_columns": 25,
+      "n_rows": 24,
+      "narrative_acts": [
+        3
+      ],
+      "numeric_summary": {
+        "group_size_requested": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "high_group_n": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "high_score_max": {
+          "max": 4.0,
+          "mean": 2.2755102040816326,
+          "median": 2.0,
+          "min": 0.8265306122448981,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "high_score_min": {
+          "max": 4.0,
+          "mean": 2.239795918367347,
+          "median": 2.0,
+          "min": 0.7193877551020408,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "low_group_n": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "low_mean": {
+          "max": 33595.5,
+          "mean": 5495.8804776077095,
+          "median": 92.9625,
+          "min": 0.2780612244897959,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "low_score_max": {
+          "max": 3.5,
+          "mean": 1.9121315192743762,
+          "median": 1.8333333333333333,
+          "min": 0.4030612244897959,
+          "n_total": 24,
+          "n_valid": 24
+        },
+        "low_score_min": {
+          "max": 1.8333333333333333,
+          "mean": 1.050736961451247,
+          "median": 1.125,
+          "min": 0.1938775510204081,
+          "n_total": 24,
+          "n_valid": 24
+        }
+      },
+      "path": "data/analysis/cross_evidence/results/best_worst_project_contrasts.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "analysis_result"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

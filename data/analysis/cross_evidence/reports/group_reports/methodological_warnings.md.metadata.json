@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "0791ccab60a423a521838e7fce2aa53c3fa44ac12cbdcf849658e85943a7cb15",
+  "input_checksum": "c188fdabc243d258e93156e8f0dcb195d60a9379f39022df70ee66043a37bdaa",
   "options": {
     "backend": "mock",
     "group_name": "methodological_warnings",

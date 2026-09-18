@@ -1,0 +1,4 @@
+2026-09-18 07:49:00,043 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260918T104900Z.txt
+2026-09-18 07:49:00,043 - __main__ - INFO - Running stage cross-evidence-report: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/09_cross_evidence_narrative_reporter.py --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis --backend mock
+Cross-evidence narrative reports: written=0 skipped=20
+2026-09-18 07:49:00,755 - __main__ - INFO - Finished stage cross-evidence-report status=success duration_seconds=0.7

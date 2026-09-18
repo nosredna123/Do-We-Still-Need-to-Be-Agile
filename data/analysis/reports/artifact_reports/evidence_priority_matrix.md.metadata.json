@@ -1,0 +1,95 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "14c0a4b03a3166c17d1d3d2a24ec6802a87328fe47a7b1b000d3d5ef95a8a964",
+  "options": {
+    "artifact_id": "evidence_priority_matrix",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "evidence_priority_matrix",
+      "columns": [
+        "evidence_id",
+        "source_artifact",
+        "source_row_key",
+        "evidence_tier",
+        "evidence_scope",
+        "narrative_acts",
+        "publication_readiness",
+        "recommended_use",
+        "summary",
+        "contract_version",
+        "analysis_id",
+        "stratum",
+        "semester",
+        "priority",
+        "x",
+        "y",
+        "coefficient",
+        "p_value",
+        "verdict",
+        "robustness_class",
+        "overlap_n",
+        "jaccard"
+      ],
+      "contract_version": "cross-evidence-priority-matrix-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "descriptive_context",
+      "kind": "result",
+      "n_columns": 22,
+      "n_rows": 77,
+      "narrative_acts": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "numeric_summary": {
+        "coefficient": {
+          "max": -0.0594088525786004,
+          "mean": -0.5365907760412248,
+          "median": -0.5544826240669376,
+          "min": -0.7854963073359155,
+          "n_total": 77,
+          "n_valid": 35
+        },
+        "jaccard": {
+          "max": 0.6,
+          "mean": 0.2164021164021164,
+          "median": 0.1428571428571428,
+          "min": 0.0,
+          "n_total": 77,
+          "n_valid": 18
+        },
+        "overlap_n": {
+          "max": 3.0,
+          "mean": 1.2222222222222223,
+          "median": 1.0,
+          "min": 0.0,
+          "n_total": 77,
+          "n_valid": 18
+        },
+        "p_value": {
+          "max": 0.8857142857142857,
+          "mean": 0.20694046832180646,
+          "median": 0.1212991257224558,
+          "min": 0.0031279384351483,
+          "n_total": 77,
+          "n_valid": 59
+        },
+        "semester": {
+          "max": 2026.1,
+          "mean": 2025.6499999999999,
+          "median": 2025.65,
+          "min": 2025.2,
+          "n_total": 77,
+          "n_valid": 14
+        }
+      },
+      "path": "data/analysis/cross_evidence/results/evidence_priority_matrix.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "evidence_item"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

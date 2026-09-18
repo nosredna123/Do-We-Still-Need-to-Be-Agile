@@ -1,0 +1,11 @@
+{
+  "dry_run": true,
+  "force": false,
+  "log_path": "logs/pipeline_20260918T111303Z.txt",
+  "nlp_backend": "mock",
+  "stage_results": [],
+  "stages": [
+    "cross-evidence"
+  ],
+  "status": "dry_run"
+}

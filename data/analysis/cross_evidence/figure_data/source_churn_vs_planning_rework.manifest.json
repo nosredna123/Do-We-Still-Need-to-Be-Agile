@@ -3,10 +3,10 @@
   "category": "prioritarias",
   "checksums": {
     "data": "808aee8482f7883d7eff21e3b6d541ee77a38e43919ba80b5521e8d8644ffc20",
-    "pdf": "959e80797beabda4880db1285c777033b17bf89f4ceda318adedf1ae0c37f6e7",
+    "pdf": "f0298c740748fa5e72180ab988b265b3cb1c86c17a2f085b86ed603ec1572c88",
     "plotly_json": "4a7dc64cdfa44d926a236e72f5e1b6f4586c8637233b2d53a939e305b632fd88",
     "png": "6fe6eba5a6e11ce2d0547469555a04714e40930f0813164d752c2b47219174d9",
-    "svg": "b7c8f0d65110a136d510d2396dcde249500dc8d4847d842ab6a214ef096a0723"
+    "svg": "00fb717fac1cf4b6a7648cfff1ded22e7d25de1cbf4c7a49c023224813222328"
   },
   "data_metadata_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv.metadata.json",
   "data_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv",

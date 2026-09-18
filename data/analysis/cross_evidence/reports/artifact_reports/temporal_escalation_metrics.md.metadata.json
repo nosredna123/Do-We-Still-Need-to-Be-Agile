@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "a44a9cf629f8118f43ed26211d4b02b1781492cb3c4c34230cf00a3e2e2f4ede",
+  "input_checksum": "167c37547327beb3fdfa590dcd52977024a6e52ba8e6d952f0732b3c2fc19a77",
   "options": {
     "artifact_id": "temporal_escalation_metrics",
     "backend": "mock",

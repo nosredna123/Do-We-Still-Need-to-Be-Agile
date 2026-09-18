@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "4e09390c43de943eea5c9ef3956ebbb52635be699c5827eb48ac0976f1a040be",
+  "input_checksum": "ab662a1ff4ae27ac2c2155f27b711402dabdd68387853ee17080dc3cfaf70067",
   "options": {
     "artifact_id": "cross_evidence_manifest_exclusions",
     "backend": "mock",

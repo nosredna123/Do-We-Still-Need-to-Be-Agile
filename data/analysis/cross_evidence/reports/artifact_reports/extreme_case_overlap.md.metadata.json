@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "260c53a314c553b4074b4a31fd3092440a80f268565c416ab98b58271819f93b",
+  "input_checksum": "784f8bd28bed5194249a5e4f870f33ed6977137781ca20b371dbb909c882bb7c",
   "options": {
     "artifact_id": "extreme_case_overlap",
     "backend": "mock",

@@ -1,0 +1,25 @@
+2026-09-18 07:46:11,302 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260918T104611Z.txt
+2026-09-18 07:46:11,302 - __main__ - INFO - Running stage cross-evidence: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/08_cross_evidence_engine.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+2026-09-18 07:46:15,918 - __main__ - INFO - Finished stage cross-evidence status=success duration_seconds=4.6

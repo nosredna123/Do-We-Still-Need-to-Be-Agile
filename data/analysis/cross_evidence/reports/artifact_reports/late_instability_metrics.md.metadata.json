@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "3a7350736c8b11013e22557b94469f691c9d5c5c07df235318f86919fa320797",
+  "input_checksum": "12016c3815e6c1d21238bd3fb49f8c0c6c56f0de3050f0151bd9698803806bda",
   "options": {
     "artifact_id": "late_instability_metrics",
     "backend": "mock",

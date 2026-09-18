@@ -1,0 +1,64 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "ba8673945f3273b1f06edb71f71166ffb49488cf1f0b562425ecfe890a7f1de4",
+  "options": {
+    "artifact_id": "source_churn_vs_planning_rework_data",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "source_churn_vs_planning_rework_data",
+      "columns": [
+        "figure_id",
+        "anonymized_team_id",
+        "semester",
+        "x",
+        "x_value",
+        "y",
+        "y_value",
+        "x_scale",
+        "y_scale",
+        "transformation"
+      ],
+      "contract_version": "cross-evidence-figure-data-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "n_columns": 10,
+      "n_rows": 14,
+      "narrative_acts": [
+        2
+      ],
+      "numeric_summary": {
+        "semester": {
+          "max": 2026.1,
+          "mean": 2025.5214285714287,
+          "median": 2025.2,
+          "min": 2025.2,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "x_value": {
+          "max": 1130.0,
+          "mean": 163.64285714285714,
+          "median": 25.0,
+          "min": 2.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "y_value": {
+          "max": 2935876.0,
+          "mean": 223099.85714285713,
+          "median": 7135.0,
+          "min": 172.0,
+          "n_total": 14,
+          "n_valid": 14
+        }
+      },
+      "path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "team_semester"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

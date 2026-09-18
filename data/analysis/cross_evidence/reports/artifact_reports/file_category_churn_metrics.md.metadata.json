@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "b25939bf9424011744ce03a2364f4ea4fe0483daeb6e6342cb538e8b57213d10",
+  "input_checksum": "71361d2a0a2f74bddb69d592a36429bbd3334edb4907fc7bafbb4a0a40cb7726",
   "options": {
     "artifact_id": "file_category_churn_metrics",
     "backend": "mock",

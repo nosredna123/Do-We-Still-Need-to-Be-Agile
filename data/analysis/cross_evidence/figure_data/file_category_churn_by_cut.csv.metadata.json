@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-figure-data-v1",
-  "input_checksum": "91c60f8f71e411d2f8f2e7638e0b18eb5b1502c416f33aa4607c9e94d56826d4",
+  "input_checksum": "d5912bf58870e7067e9a0c8c2d7e070dacea473c650c4988c3d4edba310ccd02",
   "options": {
     "absolute_measure": "churn_lines",
     "absolute_scale": "log",
