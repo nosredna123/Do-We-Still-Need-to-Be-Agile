@@ -19,9 +19,9 @@ The current data shows the following statistics:
 - For `student_project_challenges_sentiment_score_median`: n_total = 6, n_valid = 6, mean = 0.0, median = 0.0, min = 0.0, max = 0.0.
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure." This is justified as all key numeric columns show a mean of 0.0 or a consistent value of 1.0, indicating a lack of variability and significant insights from the data.
+The deterministic verdict is "descriptive_infrastructure." This is justified as there are no significant tests conducted, and the data primarily provides descriptive statistics without inferential insights.
 
 ## Known limitations
 - The dataset has a very small row count (n = 6), which limits the generalizability of the findings.
-- All key numeric columns related to career expectation scores show a mean of 0.0, indicating no variation in those measures.
-- The dataset may not provide sufficient evidence to support any strong claims due to the lack of significant results.
+- All key numeric columns related to career expectation scores and sentiment scores show a mean and median of 0.0, indicating a lack of variability in those measures.
+- There are no significant tests or results available to support any strong conclusions.

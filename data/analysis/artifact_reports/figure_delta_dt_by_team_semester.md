@@ -5,14 +5,13 @@ The analytical artifact is a figure that analyzes data at the granularity of "te
 The figure was created by applying transformations to the data, specifically "melt_T1_T2_T3" and "no_interpolation". This process involved restructuring the dataset to facilitate analysis of the variable "technical_complexity" across different team semesters, allowing for a clearer visual representation of the data.
 
 ## Narrative binding
-The narrative acts associated with this artifact are 2 and 3. Act 2 supports the claim regarding the diagnosis of planning debt, while Act 3 provides evidence related to the human factor and the illusion of progress.
+The narrative acts associated with this artifact are 2 and 3. Act 2 supports the claim regarding the diagnosis of planning debt anatomy, while Act 3 provides evidence related to the human factor and the illusion of progress.
 
 ## What the current data actually shows
-The current data shows a total of 42 observations with no missing data (n_missing: 0). The analysis conducted was a correlation (analysis_id: "pi_vs_delta_dt_primary"), which yielded an inconclusive verdict. The p-values and coefficients are not provided, indicating a lack of significant results.
+The current data shows a total of 42 observations with no missing data (n_missing: 0). The analysis conducted was a correlation (analysis_id: "pi_vs_delta_dt_primary"), which yielded an inconclusive verdict (verdict: "inconclusive").
 
 ## Contribution assessment
-The overall verdict of the analysis is "inconclusive". This is justified by the fact that the correlation analysis did not yield significant results, as indicated by the verdict of "inconclusive" for the primary analysis.
+The overall contribution of this artifact is deemed inconclusive. This is justified by the correlation analysis, which did not provide significant results, as indicated by the verdict summary.
 
 ## Known limitations
-The limitations of this analysis include: 
-- team-semester observations; no causal interpretation.
+- Team-semester observations; no causal interpretation.

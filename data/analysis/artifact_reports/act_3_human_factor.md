@@ -18,4 +18,4 @@ This act argues that skipping upfront design collapses a team's asynchronous coo
 - **figure_ie_by_cut_or_corpus**: unavailable
 
 ## Empirical status
-The act is currently classified as unsupported by current tests. This conclusion is drawn from the counts of the verdicts, where 7 artifacts are categorized as descriptive infrastructure, while 5 are inconclusive and 2 are unavailable, indicating a lack of definitive empirical support for the claims made in this act.
+The aggregate act status is "unsupported_by_current_tests." This is justified by the counts in verdicts, where there are 7 artifacts classified as descriptive infrastructure, 5 as inconclusive, and 2 as unavailable, indicating a lack of empirical support for the claims made in this act.

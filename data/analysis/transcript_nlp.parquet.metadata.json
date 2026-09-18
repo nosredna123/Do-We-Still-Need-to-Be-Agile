@@ -1,6 +1,6 @@
 {
   "contract_version": "transcript-nlp-v1",
-  "input_checksum": "1932cb5b9a7c068068fda818f6d9c896086222edf60904f0d348c50e4c8c87c5",
+  "input_checksum": "63f48741c48573a60e16bc0515b18b92499df23a019032eb0250a252a05cb80d",
   "options": {
     "backend": "openai",
     "chunk_overlap_tokens": 500,

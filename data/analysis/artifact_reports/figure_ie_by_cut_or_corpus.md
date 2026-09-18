@@ -5,13 +5,13 @@ The analytical artifact is focused on the granularity/unit of analysis of "cut_c
 The artifact was constructed using a series of transformations applied to the source data from "cut_context_metrics.parquet". The transformations included melting context signals, preserving gaps, and avoiding interpolation. This process aimed to prepare the data for analysis while maintaining the integrity of the original observations.
 
 ## Narrative binding
-The narrative act number is 3, which is intended to support or falsify the claim associated with "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)".
+The narrative act number is 3, which is intended to support the claim related to "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)".
 
 ## What the current data actually shows
-The current data shows a total of 18 observations, with 9 valid observations and 9 missing. There are three complete transcript-score observations for the primary pair. All analyses conducted resulted in verdicts that are unavailable.
+The current data shows a total of 18 observations, with 9 valid observations and 9 missing. There are three complete transcript-score observations for the primary pair. All analyses conducted resulted in verdicts that are unavailable, with no significant p-values or coefficients reported.
 
 ## Contribution assessment
-The deterministic verdict is "unavailable". This is justified as all tests conducted, including the correlation analysis and the hypothesis test, returned verdicts that are also unavailable.
+The deterministic verdict is "unavailable". This is justified as all analyses conducted, including correlation and hypothesis tests, returned verdicts of "unavailable".
 
 ## Known limitations
 - Three complete transcript-score observations for the primary pair.

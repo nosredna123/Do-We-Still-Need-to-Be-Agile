@@ -1,6 +1,6 @@
 {
   "contract_version": "student-nlp-v1",
-  "input_checksum": "2d17b9a6d1c675082009bacdd97bcea82fad9fe65470462aea7b71c77ed9cef8",
+  "input_checksum": "a27d54dad6e5ca757b658c29df0f39aee381decae9c99d6e400e9823ac7f0c65",
   "options": {
     "backend": "openai",
     "enums": {

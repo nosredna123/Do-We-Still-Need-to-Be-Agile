@@ -2,7 +2,7 @@
 The granularity/unit of analysis is "team_semester" and "cut_context". The row count is 3. The producer script is "06_statistical_analyzer.py". The contract version is "mann-whitney-hypothesis-results-v1".
 
 ## How it was built
-The analytical artifact was constructed using a statistical analysis script that performed Mann-Whitney U tests on various group comparisons. The analysis aimed to explore relationships between different variables related to team performance and coordination, with a focus on understanding how these factors might influence outcomes in a semester context.
+The analytical artifact was constructed using a statistical analysis script that performed Mann-Whitney U tests on various group comparisons. The analysis aimed to explore differences in outcome variables based on specified group variables, with no multiple testing correction applied.
 
 ## Narrative binding
 The narrative acts are 2 and 3. They are meant to support or falsify the claims related to "A Anatomia da Divida de Planejamento (Diagnosis)" and "O Fator Humano e a Ilusao do Progresso (Evidence)".
@@ -16,6 +16,6 @@ The narrative acts are 2 and 3. They are meant to support or falsify the claims 
 The deterministic verdict is "inconclusive". This is justified as all tests resulted in inconclusive outcomes: "pi_high_vs_low_cc_primary" and "ai_high_vs_low_cc_primary" both had inconclusive verdicts, while "context_ie_high_vs_low_rework_primary" was unavailable due to insufficient group size.
 
 ## Known limitations
-- The analysis "context_ie_high_vs_low_rework_primary" had insufficient group size, leading to an unavailable result.
-- There were missing values in the "ai_high_vs_low_cc_primary" analysis, with 7 missing out of 14 total.
-- The overall results were inconclusive, indicating a lack of significant findings across the tests.
+- The analysis "context_ie_high_vs_low_rework_primary" was unavailable due to insufficient group size.
+- There were missing values in the "ai_high_vs_low_cc_primary" analysis.
+- The results for the tests were inconclusive.

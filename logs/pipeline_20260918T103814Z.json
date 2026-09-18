@@ -1,0 +1,169 @@
+{
+  "dry_run": false,
+  "force": false,
+  "log_path": "logs/pipeline_20260918T103814Z.txt",
+  "nlp_backend": "openai",
+  "stage_results": [
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/00_audio_preparer.py"
+      ],
+      "duration_seconds": 1.2,
+      "stage": "prepare",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/00_audio_transcriber.py"
+      ],
+      "duration_seconds": 0.8,
+      "stage": "transcribe",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_ner_extractor.py"
+      ],
+      "duration_seconds": 0.6,
+      "stage": "ner",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/01_anonymizer.py"
+      ],
+      "duration_seconds": 0.7,
+      "stage": "anonymize",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02_git_parser.py"
+      ],
+      "duration_seconds": 0.6,
+      "stage": "git",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/03_data_lake_builder.py"
+      ],
+      "duration_seconds": 0.6,
+      "stage": "lake",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py"
+      ],
+      "duration_seconds": 0.6,
+      "stage": "repo-snapshots",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json"
+      ],
+      "duration_seconds": 0.7,
+      "stage": "contracts",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--contract-report",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json",
+        "--catalog-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet",
+        "--transcript-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet",
+        "--textual-cut-signals-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet",
+        "--backend",
+        "openai"
+      ],
+      "duration_seconds": 0.7,
+      "stage": "nlp",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/05_metric_engine.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--contract-report",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/planning_metrics.parquet",
+        "--code-churn-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/code_churn_metrics.parquet",
+        "--technical-degradation-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/technical_degradation_metrics.parquet",
+        "--integration-friction-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/integration_friction_metrics.parquet",
+        "--cut-context-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet",
+        "--team-metrics-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet"
+      ],
+      "duration_seconds": 0.7,
+      "stage": "metrics",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/06_statistical_analyzer.py"
+      ],
+      "duration_seconds": 0.8,
+      "stage": "stats",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/07_artifact_narrative_reporter.py",
+        "--analysis-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis",
+        "--backend",
+        "openai"
+      ],
+      "duration_seconds": 1.0,
+      "stage": "narrative-audit",
+      "status": "success"
+    }
+  ],
+  "stages": [
+    "prepare",
+    "transcribe",
+    "ner",
+    "anonymize",
+    "git",
+    "lake",
+    "repo-snapshots",
+    "contracts",
+    "nlp",
+    "metrics",
+    "stats",
+    "narrative-audit"
+  ],
+  "status": "success"
+}

@@ -1,8 +1,8 @@
 ## What it is
-The analytical artifact is a dataset with a granularity/unit of analysis focused on technical degradation metrics. It contains 14 rows and 24 columns. The producer script used to generate this dataset is `05_metric_engine.py`, and it is based on contract version `technical-degradation-metrics-v1`.
+The analytical artifact is a dataset with a granularity/unit of analysis at the technical degradation metrics level. It contains 14 rows and 24 columns. The producer script used to generate this dataset is `05_metric_engine.py`, and it is based on contract version `technical-degradation-metrics-v1`.
 
 ## How it was built
-The dataset was constructed using a script that processes various technical metrics related to degradation over time. It aggregates data points from multiple sources to provide insights into the technical complexity and changes in performance metrics across different time intervals.
+The dataset was constructed using a script that processes various technical metrics related to degradation over time. It aggregates data points from multiple sources, ensuring that the metrics reflect changes in technical complexity and performance across different time intervals.
 
 ## Narrative binding
 The narrative acts associated with this dataset are 2 and 3. Act 2 supports the claim regarding the diagnosis of planning debt, while Act 3 provides evidence related to the human factor and the illusion of progress.

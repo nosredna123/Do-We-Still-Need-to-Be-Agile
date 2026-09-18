@@ -2,7 +2,7 @@
 The granularity/unit of analysis is at the semester level, with a total row count of 42 for evaluator team cuts, 812 for git commits, 51041 for git files, 42 for git repository snapshots, 33 for git team cuts, 187 for student responses, and 100 for transcript sessions. The producer script is `phase2_contracts.py`, and the contract version is `phase2-inputs-v1`.
 
 ## How it was built
-The analytical artifact was constructed by aggregating data from various sources related to software engineering contracts over two semesters. This involved collecting information on evaluator team cuts, git commits, git files, repository snapshots, team cuts, student responses, and transcript sessions. Each data type was processed and compiled to provide a comprehensive overview of the contract's performance and activities.
+The analytical artifact was constructed by aggregating data from various sources related to software engineering processes over two semesters. This included evaluations from team cuts, git commits, and student responses, among others. Each data source was processed to ensure consistency and accuracy, allowing for a comprehensive overview of the project's progress and challenges.
 
 ## Narrative binding
 The narrative acts are 1, 2, and 3. They are meant to support or falsify the following claims: 
@@ -19,11 +19,10 @@ The current data shows the following:
 - Git team cuts: 33 total rows
 - Student responses: 187 total rows
 - Transcript sessions: 100 total rows
-- No tests were conducted.
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure." This is justified by the overall summary indicating that the data provides a descriptive overview without any tests conducted to support further claims.
+The deterministic verdict is "descriptive_infrastructure." This is justified as there are no tests conducted, indicating that the data serves primarily to describe the existing infrastructure rather than to test specific hypotheses.
 
 ## Known limitations
-- No tests were conducted to validate the findings.
-- The data may not provide insights beyond descriptive statistics.
+- No tests were conducted.
+- The data may not provide insights into causal relationships due to its descriptive nature.
