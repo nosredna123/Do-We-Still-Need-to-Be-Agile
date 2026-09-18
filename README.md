@@ -39,6 +39,7 @@ The main entry point is `run_pipeline.py`. The default sequence is:
 ```text
 prepare -> transcribe -> ner -> anonymize -> git -> lake
 -> repo-snapshots -> nlp -> metrics -> stats
+-> narrative-audit -> cross-evidence -> cross-evidence-report
 ```
 
 `cleanup` is intentionally excluded from the default sequence because it is destructive and must be selected explicitly.
@@ -79,6 +80,15 @@ Stages can be selected independently. A selected stage does not automatically ru
 # Statistical manifest, correlations, hypotheses, and figures only
 .venv/bin/python run_pipeline.py --stages stats
 
+# Cross-evidence datasets, results, figures, and manifest
+.venv/bin/python run_pipeline.py --stages cross-evidence
+
+# Independent cross-evidence Markdown reports with the offline backend
+.venv/bin/python run_pipeline.py --stages cross-evidence-report --nlp-backend mock
+
+# Independent cross-evidence Markdown reports with the OpenAI backend
+.venv/bin/python run_pipeline.py --stages cross-evidence-report --nlp-backend openai
+
 # Continuous range of stages
 .venv/bin/python run_pipeline.py --from-stage lake --to-stage stats
 ```
@@ -92,6 +102,65 @@ The `mock` NLP backend is deterministic and is intended for offline tests and st
 ```
 
 Each producer owns its artifacts and validates checksums before resuming. A failed stage stops the pipeline immediately. Every execution writes a human-readable log and a structured JSON execution manifest in the configured log directory.
+
+## Cross-Evidence Extension
+
+The cross-evidence layer is additive. It does not replace or move the Phase 2
+datasets, statistical results, or existing artifact reports. It reads those
+persisted contracts and writes its own audited subtree after `narrative-audit`:
+
+```text
+data/analysis/cross_evidence/
+	datasets/       specialized Parquet inputs and the joined panel
+	results/        correlations, contrasts, robustness, overlap, and priority matrix
+	figure_data/    CSV sources for every cross-evidence figure
+	reports/        artifact, group, act, and consolidated Markdown reports
+	cross_evidence_manifest.json
+	cross_evidence_manifest_exclusions.json
+assets/figures/cross_evidence/
+	prioritarias/  publication-oriented HTML, PNG, SVG, PDF, and Plotly JSON exports
+```
+
+Run the engine after its Phase 2 inputs exist:
+
+```bash
+.venv/bin/python run_pipeline.py --stages cross-evidence
+```
+
+Run only selected engine artifacts when diagnosing or regenerating one layer:
+
+```bash
+.venv/bin/python 08_cross_evidence_engine.py --only file_category_churn_metrics
+.venv/bin/python 08_cross_evidence_engine.py --only cross_evidence_manifest --force
+```
+
+The engine validates input sidecars, schemas, join cardinality, and artifact
+dependencies. It generates file-category churn before late-instability metrics,
+then builds the panel, statistical results, figures, exclusions report, and
+aggregate manifest. Each output is skipped when its checksum is current;
+`--force` regenerates the selected artifacts.
+
+The independent reporter generates reports at four levels:
+
+- `reports/artifact_reports/`: one bounded fact-sheet report per dataset, result, or figure-data artifact.
+- `reports/group_reports/`: synthesis for temporal escalation, source churn, evaluator crossing, author pressure, robustness, and methodological warnings.
+- `reports/act_reports/`: one report for each narrative act.
+- `reports/00_cross_evidence_consolidated_report.md`: final index, evidence matrix, aggregate verdict, limitations, and interpretation.
+
+The reporter accepts `--backend mock` for deterministic offline structural
+validation and `--backend openai` for remote narrative generation. The pipeline
+maps its `--nlp-backend` option to the reporter backend. Neither backend receives
+raw transcripts, answer text, private evidence summaries, credentials, or the
+anonymization salt; prompts contain only bounded aggregate fact sheets.
+
+Cross-evidence is secondary exploratory evidence with
+`evidence_scope=secondary_exploratory_evidence`. Correlations, contrasts, and
+leave-one-out results are not causal confirmation. Interpret positive results
+with their sample size, missingness, semester stratification, outlier
+sensitivity, and publication-readiness label. The priority matrix preserves
+supporting and inconclusive results, while the exclusions manifest records
+unknown file categories, missing line counts, low-confidence classifications,
+and other methodological warnings.
 
 ## Phase 2 Artifacts
 
