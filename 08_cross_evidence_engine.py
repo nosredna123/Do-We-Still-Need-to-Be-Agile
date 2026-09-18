@@ -4112,6 +4112,8 @@ def main() -> None:
         "evaluator_outcome_metrics",
         "author_pressure_metrics",
         "temporal_escalation_metrics",
+        "file_category_churn_metrics",
+        "file_category_exclusions",
         "late_instability_metrics",
         "cross_evidence_panel",
         "cross_evidence_correlations",
@@ -4127,8 +4129,6 @@ def main() -> None:
         "author_pressure_vs_churn",
         "pareto_extreme_cases",
         "leave_one_out_robustness",
-        "file_category_churn_metrics",
-        "file_category_exclusions",
         "cross_evidence_manifest",
     ])
     _configure_runtime_paths(analysis_dir=args.analysis_dir, lake_dir=args.lake_dir)
@@ -4149,6 +4149,18 @@ def main() -> None:
         build_temporal_escalation_metrics(
             analysis_dir=args.analysis_dir,
             output_path=args.temporal_escalation_output,
+            force=args.force,
+        )
+    if "file_category_churn_metrics" in selected:
+        build_file_category_churn_metrics(
+            lake_dir=args.lake_dir,
+            output_path=args.file_category_churn_output,
+            force=args.force,
+        )
+    if "file_category_exclusions" in selected:
+        build_file_category_exclusions_report(
+            metrics_path=metrics_path,
+            output_path=args.file_category_exclusions_output,
             force=args.force,
         )
     if "late_instability_metrics" in selected:
@@ -4225,18 +4237,6 @@ def main() -> None:
     if "leave_one_out_robustness" in selected:
         build_leave_one_out_robustness_figure(
             output_data_path=args.leave_one_out_robustness_data_output,
-            force=args.force,
-        )
-    if "file_category_churn_metrics" in selected:
-        build_file_category_churn_metrics(
-            lake_dir=args.lake_dir,
-            output_path=args.file_category_churn_output,
-            force=args.force,
-        )
-    if "file_category_exclusions" in selected:
-        build_file_category_exclusions_report(
-            metrics_path=metrics_path,
-            output_path=args.file_category_exclusions_output,
             force=args.force,
         )
     if "cross_evidence_manifest" in selected:

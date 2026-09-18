@@ -329,6 +329,35 @@ def test_build_cross_evidence_manifest_persists_inventory_and_skips(tmp_path: Pa
     assert "cross_evidence_correlations" in first["missing_artifacts"]
 
 
+def test_engine_main_builds_file_category_before_late_instability(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    engine = load_engine()
+    calls: list[str] = []
+
+    def record_file_category(**_: object) -> None:
+        calls.append("file_category_churn_metrics")
+
+    def record_late_instability(**_: object) -> None:
+        calls.append("late_instability_metrics")
+
+    monkeypatch.setattr(engine, "build_file_category_churn_metrics", record_file_category)
+    monkeypatch.setattr(engine, "build_late_instability_metrics", record_late_instability)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "08_cross_evidence_engine.py",
+            "--only",
+            "file_category_churn_metrics",
+            "late_instability_metrics",
+        ],
+    )
+
+    engine.main()
+
+    assert calls == ["file_category_churn_metrics", "late_instability_metrics"]
+
+
 def test_compute_evaluator_outcome_metrics_pivots_fields_deltas_and_gap() -> None:
     engine = load_engine()
     frame = pd.DataFrame(
