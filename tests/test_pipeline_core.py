@@ -289,6 +289,86 @@ class PipelineCoreTests(unittest.TestCase):
             command,
         )
 
+    def test_pipeline_cross_evidence_stage_isolated_and_ordered_after_narrative_audit(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_cross_evidence", "run_pipeline.py"
+        )
+
+        self.assertEqual(
+            ["cross-evidence"],
+            orchestrator.resolve_stages(["cross-evidence"], None, None),
+        )
+        self.assertLess(
+            orchestrator.STAGES.index("narrative-audit"),
+            orchestrator.STAGES.index("cross-evidence"),
+        )
+        self.assertEqual(
+            "08_cross_evidence_engine.py",
+            orchestrator.STAGE_SCRIPTS["cross-evidence"],
+        )
+
+    def test_pipeline_cross_evidence_command_and_dry_run_requirements(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_cross_evidence_command", "run_pipeline.py"
+        )
+
+        command = orchestrator.build_stage_command(
+            "cross-evidence", [], [], "", True
+        )
+        self.assertEqual(
+            [
+                sys.executable,
+                str(REPO_ROOT / "08_cross_evidence_engine.py"),
+                "--lake-dir",
+                str(REPO_ROOT / "data" / "lake"),
+                "--analysis-dir",
+                str(REPO_ROOT / "data" / "analysis"),
+                "--force",
+            ],
+            command,
+        )
+        orchestrator.validate_dry_run_requirements(["cross-evidence"], "mock")
+
+    def test_pipeline_cross_evidence_report_stage_isolated_and_ordered(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_cross_evidence_report", "run_pipeline.py"
+        )
+
+        self.assertEqual(
+            ["cross-evidence-report"],
+            orchestrator.resolve_stages(["cross-evidence-report"], None, None),
+        )
+        self.assertLess(
+            orchestrator.STAGES.index("cross-evidence"),
+            orchestrator.STAGES.index("cross-evidence-report"),
+        )
+        self.assertEqual(
+            "09_cross_evidence_narrative_reporter.py",
+            orchestrator.STAGE_SCRIPTS["cross-evidence-report"],
+        )
+
+    def test_pipeline_cross_evidence_report_command_maps_mock_backend_and_force(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_cross_evidence_report_command", "run_pipeline.py"
+        )
+
+        command = orchestrator.build_stage_command(
+            "cross-evidence-report", [], [], "", True, nlp_backend="mock"
+        )
+        self.assertEqual(
+            [
+                sys.executable,
+                str(REPO_ROOT / "09_cross_evidence_narrative_reporter.py"),
+                "--analysis-dir",
+                str(REPO_ROOT / "data" / "analysis"),
+                "--backend",
+                "mock",
+                "--force",
+            ],
+            command,
+        )
+        orchestrator.validate_dry_run_requirements(["cross-evidence-report"], "mock")
+
     def test_pipeline_orchestrator_includes_phase2_contracts_before_nlp(self) -> None:
         orchestrator = load_script_module(
             "pipeline_orchestrator_phase2_contracts", "run_pipeline.py"
