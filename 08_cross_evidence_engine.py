@@ -4002,7 +4002,49 @@ def build_cross_evidence_manifest(
             "evidence_type": entry.get("evidence_type"),
             "status": "success" if artifact_path.exists() else "missing",
         }
-        if artifact_path.is_file():
+        if entry.get("kind") == "figure":
+            figure_id = artifact_id.removesuffix("_figure")
+            figure_manifest_path = RUNTIME_PATHS["analysis"] / "cross_evidence" / "figure_data" / f"{figure_id}.manifest.json"
+            record["figure_manifest_path"] = figure_manifest_path.as_posix()
+            record["figure_manifest_status"] = "missing"
+            record["exports"] = {}
+            if figure_manifest_path.is_file():
+                figure_manifest = json.loads(figure_manifest_path.read_text(encoding="utf-8"))
+                record["figure_manifest_status"] = figure_manifest.get("status")
+                record["checksums"] = figure_manifest.get("checksums", {})
+                data_path = _resolve_runtime_path(str(figure_manifest.get("data_path", "")))
+                data_metadata_path = _resolve_runtime_path(str(figure_manifest.get("data_metadata_path", "")))
+                data_ready = data_path.is_file() and data_metadata_path.is_file()
+                record["data_path"] = data_path.as_posix()
+                record["data_metadata_path"] = data_metadata_path.as_posix()
+                record["data_status"] = "success" if data_ready else "missing"
+                export_paths = {
+                    "html": figure_manifest.get("interactive_path"),
+                    **figure_manifest.get("static_paths", {}),
+                }
+                for export_format, export_path in export_paths.items():
+                    resolved_export_path = _resolve_runtime_path(str(export_path))
+                    record["exports"][export_format] = {
+                        "path": resolved_export_path.as_posix(),
+                        "status": "success" if resolved_export_path.is_file() else "missing",
+                    }
+                    if resolved_export_path.is_file():
+                        source_paths.append(resolved_export_path)
+                source_paths.extend(
+                    path for path in (figure_manifest_path, data_path, data_metadata_path)
+                    if path.is_file()
+                )
+                exports_ready = bool(record["exports"]) and all(
+                    export["status"] == "success" for export in record["exports"].values()
+                )
+                record["status"] = (
+                    "success"
+                    if figure_manifest.get("status") == "success" and data_ready and exports_ready
+                    else "invalid"
+                )
+            else:
+                record["status"] = "missing"
+        elif artifact_path.is_file():
             sidecar_path = artifact_path.with_name(f"{artifact_path.name}.metadata.json")
             record["checksum"] = file_checksum(artifact_path)
             record["sidecar_path"] = sidecar_path.as_posix()

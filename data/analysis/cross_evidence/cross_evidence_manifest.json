@@ -1,0 +1,571 @@
+{
+  "artifacts": {
+    "author_pressure_metrics": {
+      "artifact_id": "author_pressure_metrics",
+      "checksum": "4792f2bcfc9c14b3b70b32fb621bf666f2048ff09d9bbf361d29b6a1e5ce7b39",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "dataset",
+      "path": "data/analysis/cross_evidence/datasets/author_pressure_metrics.parquet",
+      "sidecar_contract_version": "cross-evidence-v1",
+      "sidecar_path": "data/analysis/cross_evidence/datasets/author_pressure_metrics.parquet.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester_cut"
+    },
+    "author_pressure_vs_churn_data": {
+      "artifact_id": "author_pressure_vs_churn_data",
+      "checksum": "d35699ed6bc59cf77346a074086dbead7ef536828b3a40db07725bd326d84d54",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "author_pressure_vs_churn_figure": {
+      "artifact_id": "author_pressure_vs_churn_figure",
+      "checksums": {
+        "data": "d35699ed6bc59cf77346a074086dbead7ef536828b3a40db07725bd326d84d54",
+        "pdf": "ce9159ecb85b47308dd27d2a911d9d17aa3ac2be0c641f7555421338965171f3",
+        "plotly_json": "2ca1fb410060c8b298dcca142b8994a15ed8224c2b73663c81e31346edbb57d7",
+        "png": "e9bf09954d0899479fde24e3efc8d87576dee9128d58c3dfed1ad823e71b5ed2",
+        "svg": "50435a6972c1dfb507a58a9e35d5d704bc3f78b4418223969bafc6a2ff908b42"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.png",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "best_worst_project_contrasts": {
+      "artifact_id": "best_worst_project_contrasts",
+      "checksum": "1b8b1e19ca38eb66b2a96f454cd532007964db5b7e5a69e19c17c88737f7dc72",
+      "contract_version": "cross-evidence-best-worst-contrasts-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "kind": "result",
+      "path": "data/analysis/cross_evidence/results/best_worst_project_contrasts.csv",
+      "sidecar_contract_version": "cross-evidence-best-worst-contrasts-v1",
+      "sidecar_path": "data/analysis/cross_evidence/results/best_worst_project_contrasts.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "cross_evidence_correlations": {
+      "artifact_id": "cross_evidence_correlations",
+      "checksum": "13ca93b3c3b69bd222d28e605c116f4d6195a54d5575f7ddc1fd48cd9d612881",
+      "contract_version": "cross-evidence-correlations-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "result",
+      "path": "data/analysis/cross_evidence/results/cross_evidence_correlations.csv",
+      "sidecar_contract_version": "cross-evidence-correlations-v1",
+      "sidecar_path": "data/analysis/cross_evidence/results/cross_evidence_correlations.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "cross_evidence_manifest_exclusions": {
+      "artifact_id": "cross_evidence_manifest_exclusions",
+      "checksum": "6a014a74db8d4ba80812da1a3eb6b21640b22f0d316110c0d189919348590f8a",
+      "contract_version": "cross-evidence-manifest-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "methodological_warning",
+      "kind": "manifest",
+      "path": "data/analysis/cross_evidence/cross_evidence_manifest_exclusions.json",
+      "sidecar_contract_version": "cross-evidence-manifest-v1",
+      "sidecar_path": "data/analysis/cross_evidence/cross_evidence_manifest_exclusions.json.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "artifact_inventory"
+    },
+    "cross_evidence_panel": {
+      "artifact_id": "cross_evidence_panel",
+      "checksum": "d85f180a87d37b5f172640b1cff4cee26580e4c992ccd8e3f49e4b6811464555",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "descriptive_context",
+      "kind": "dataset",
+      "path": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+      "sidecar_contract_version": "cross-evidence-v1",
+      "sidecar_path": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "evaluator_outcome_metrics": {
+      "artifact_id": "evaluator_outcome_metrics",
+      "checksum": "f01045e5d4ea783fae5cfaa3c27acdad688241dc3d15d23ebe9ef8e94c01033a",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "descriptive_context",
+      "kind": "dataset",
+      "path": "data/analysis/cross_evidence/datasets/evaluator_outcome_metrics.parquet",
+      "sidecar_contract_version": "cross-evidence-v1",
+      "sidecar_path": "data/analysis/cross_evidence/datasets/evaluator_outcome_metrics.parquet.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "evidence_priority_matrix": {
+      "artifact_id": "evidence_priority_matrix",
+      "checksum": "f1a93b90b6181eeb3d4c35544be28fee113fef7067dff47dfc7b4778261a2ae3",
+      "contract_version": "cross-evidence-priority-matrix-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "descriptive_context",
+      "kind": "result",
+      "path": "data/analysis/cross_evidence/results/evidence_priority_matrix.csv",
+      "sidecar_contract_version": "cross-evidence-priority-matrix-v1",
+      "sidecar_path": "data/analysis/cross_evidence/results/evidence_priority_matrix.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "evidence_item"
+    },
+    "extreme_case_overlap": {
+      "artifact_id": "extreme_case_overlap",
+      "checksum": "98be10a59272cd0d7ba339f91c111a46e2312f82b77f2fd73d3059e5996778a0",
+      "contract_version": "cross-evidence-extreme-overlap-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "kind": "result",
+      "path": "data/analysis/cross_evidence/results/extreme_case_overlap.csv",
+      "sidecar_contract_version": "cross-evidence-extreme-overlap-v1",
+      "sidecar_path": "data/analysis/cross_evidence/results/extreme_case_overlap.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "file_category_churn_by_cut_data": {
+      "artifact_id": "file_category_churn_by_cut_data",
+      "checksum": "fd02467ad321a174b99c23bd384ec4191d2396e0af20e3e7f799cb8ef7ebe432",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "methodological_warning",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester_cut_category"
+    },
+    "file_category_churn_by_cut_figure": {
+      "artifact_id": "file_category_churn_by_cut_figure",
+      "checksums": {
+        "data": "fd02467ad321a174b99c23bd384ec4191d2396e0af20e3e7f799cb8ef7ebe432",
+        "pdf": "5b10a0c4fc67005290dda90b9e4697237d0c80c2361e39e4ccac400c971a9502",
+        "plotly_json": "e62f22dff61b6b5382a4efed45222dd56799cc7f11389b7b0b356f5e91fca2ad",
+        "png": "4562e6ab70d0a3c9e2249fd5d5e038002731d88ea6963900f5eba91ae8239fd3",
+        "svg": "f04ebaf679a2a206cf62ce59e2a18ace5dced4a1c2c378c062a274f3ec5d57ff"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "methodological_warning",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/file_category_churn_by_cut.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/file_category_churn_by_cut.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/file_category_churn_by_cut.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/file_category_churn_by_cut.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/file_category_churn_by_cut.png",
+      "status": "success",
+      "unit_of_analysis": "team_semester_cut_category"
+    },
+    "file_category_churn_metrics": {
+      "artifact_id": "file_category_churn_metrics",
+      "checksum": "5ae587331a312bd0795352637c07b9459be96d2c60c05715f2df1947e4ebb480",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "dataset",
+      "path": "data/analysis/cross_evidence/datasets/file_category_churn_metrics.parquet",
+      "sidecar_contract_version": "cross-evidence-v1",
+      "sidecar_path": "data/analysis/cross_evidence/datasets/file_category_churn_metrics.parquet.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester_cut_category"
+    },
+    "late_instability_metrics": {
+      "artifact_id": "late_instability_metrics",
+      "checksum": "88b76462bf42f52f877f7b13bdf4918fb23e8970e1ed841a8bf5cd19ce496b04",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "dataset",
+      "path": "data/analysis/cross_evidence/datasets/late_instability_metrics.parquet",
+      "sidecar_contract_version": "cross-evidence-v1",
+      "sidecar_path": "data/analysis/cross_evidence/datasets/late_instability_metrics.parquet.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "leave_one_out_robustness_data": {
+      "artifact_id": "leave_one_out_robustness_data",
+      "checksum": "a8d38098949b5f54ade88936b3092ee16a119f5b5a67219fe35db0e41cb79423",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "leave_one_out_robustness_figure": {
+      "artifact_id": "leave_one_out_robustness_figure",
+      "checksums": {
+        "data": "a8d38098949b5f54ade88936b3092ee16a119f5b5a67219fe35db0e41cb79423",
+        "pdf": "be7b0567d7237f0db9d213843c4f372dd0f2f5445b32b236b7c50a88d9cd252b",
+        "plotly_json": "52d1d889a7c2f528a833618a8e2bbefc94174a499ca8cac0a9df91c748f3c005",
+        "png": "58059a0059313c03169942f44ab4be68903a1c85992976a1c51d5ea66db70083",
+        "svg": "f629019896212c1d005a9a292ab0f8cc3dce5b2b6ceb19d78bd9f7597099b7de"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.png",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "leave_one_out_sensitivity": {
+      "artifact_id": "leave_one_out_sensitivity",
+      "checksum": "19310000a28edd67091d16fd9e31632ac1f66c367dd3817fa1aa01d940d67f2f",
+      "contract_version": "cross-evidence-leave-one-out-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "result",
+      "path": "data/analysis/cross_evidence/results/leave_one_out_sensitivity.csv",
+      "sidecar_contract_version": "cross-evidence-leave-one-out-v1",
+      "sidecar_path": "data/analysis/cross_evidence/results/leave_one_out_sensitivity.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "pareto_extreme_cases_data": {
+      "artifact_id": "pareto_extreme_cases_data",
+      "checksum": "eb8830a1ff51e8b389b22ace3ea72d23a12687cd348bbeaeed2f62f184a18799",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "ranked_team_semester"
+    },
+    "pareto_extreme_cases_figure": {
+      "artifact_id": "pareto_extreme_cases_figure",
+      "checksums": {
+        "data": "eb8830a1ff51e8b389b22ace3ea72d23a12687cd348bbeaeed2f62f184a18799",
+        "pdf": "a168ad37f147977688dd9be9aedeab5f261a8d0974246442d87ea89a79434711",
+        "plotly_json": "04b80895cd21b5ad667d21634848bb4c53bfcc8d7edd7f3950d65c2526177086",
+        "png": "5f67782ca2b9fd6f601ef4e3f158b7629ed19b7b414c53c65186f7fd43c88b0c",
+        "svg": "5bbeddb93446020bab43cce85f85cf1e4c8c4386ff626c68679e88c9f537fbb8"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/pareto_extreme_cases.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/pareto_extreme_cases.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/pareto_extreme_cases.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/pareto_extreme_cases.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/pareto_extreme_cases.png",
+      "status": "success",
+      "unit_of_analysis": "ranked_team_semester"
+    },
+    "scope_vs_late_instability_data": {
+      "artifact_id": "scope_vs_late_instability_data",
+      "checksum": "98702c1d21826e7f5e1fe6d49e00504695b475bc1abda52c27346f3db5e7ab18",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "scope_vs_late_instability_figure": {
+      "artifact_id": "scope_vs_late_instability_figure",
+      "checksums": {
+        "data": "98702c1d21826e7f5e1fe6d49e00504695b475bc1abda52c27346f3db5e7ab18",
+        "pdf": "c9daa4f1041e6a35378b3bd2adbb2da89c348633cee29172187cc7b05d24b023",
+        "plotly_json": "d37ecfe7db2a540207015ee8835f34cfc0ad2a2bd072538d7460f42f570c6730",
+        "png": "cf7fac6db34e14464f7740176aabbea0a16003bd663d24c932770ddc1a5b8e16",
+        "svg": "fbd367e25d96ebc96472905eb3fa3b81b206dd526967c24df0370f972ee1144d"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/scope_vs_late_instability.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.png",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "semester_stratified_results": {
+      "artifact_id": "semester_stratified_results",
+      "checksum": "2db0fdd8f8c6e17efc370bc5e7d5cfaa103ffdf120675938fa47b7e765152fc8",
+      "contract_version": "cross-evidence-semester-stratified-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "methodological_warning",
+      "kind": "result",
+      "path": "data/analysis/cross_evidence/results/semester_stratified_results.csv",
+      "sidecar_contract_version": "cross-evidence-semester-stratified-v1",
+      "sidecar_path": "data/analysis/cross_evidence/results/semester_stratified_results.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "analysis_result"
+    },
+    "source_churn_vs_planning_rework_data": {
+      "artifact_id": "source_churn_vs_planning_rework_data",
+      "checksum": "808aee8482f7883d7eff21e3b6d541ee77a38e43919ba80b5521e8d8644ffc20",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "source_churn_vs_planning_rework_figure": {
+      "artifact_id": "source_churn_vs_planning_rework_figure",
+      "checksums": {
+        "data": "808aee8482f7883d7eff21e3b6d541ee77a38e43919ba80b5521e8d8644ffc20",
+        "pdf": "94f06ed031614b98d9d4f0097236ea73a01ad2d2af3477593bea20025f2ec6bd",
+        "plotly_json": "4a7dc64cdfa44d926a236e72f5e1b6f4586c8637233b2d53a939e305b632fd88",
+        "png": "6fe6eba5a6e11ce2d0547469555a04714e40930f0813164d752c2b47219174d9",
+        "svg": "eebbf50f8403625dd5aaeb3327a4dfdbc11923ff978160d648cf83d247bc529a"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/source_churn_vs_planning_rework.png",
+      "status": "success",
+      "unit_of_analysis": "team_semester"
+    },
+    "temporal_escalation_metrics": {
+      "artifact_id": "temporal_escalation_metrics",
+      "checksum": "b0bc10ff0ba76c418e09bbfe6e9212ed5cfba8bcc24b5819f882fa64539a8483",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "dataset",
+      "path": "data/analysis/cross_evidence/datasets/temporal_escalation_metrics.parquet",
+      "sidecar_contract_version": "cross-evidence-v1",
+      "sidecar_path": "data/analysis/cross_evidence/datasets/temporal_escalation_metrics.parquet.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "metric_family"
+    },
+    "temporal_escalation_panel_data": {
+      "artifact_id": "temporal_escalation_panel_data",
+      "checksum": "9e8336ad5289ad2bb7b42eff17f7915382fc0bb65725fa69ab66518e3d59cd60",
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv",
+      "sidecar_contract_version": "cross-evidence-figure-data-v1",
+      "sidecar_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv.metadata.json",
+      "sidecar_status": "success",
+      "status": "success",
+      "unit_of_analysis": "metric_family_cut"
+    },
+    "temporal_escalation_panel_figure": {
+      "artifact_id": "temporal_escalation_panel_figure",
+      "checksums": {
+        "data": "9e8336ad5289ad2bb7b42eff17f7915382fc0bb65725fa69ab66518e3d59cd60",
+        "pdf": "4b1b7d3192e66694f3fe1f793e646d5176aac01816fe639d6fc81026702ecb38",
+        "plotly_json": "709044a10d1098f5e52e9c69ef25ab73796e2d190295904c80b8b7dafbd8cdc0",
+        "png": "6884db73b4834a7592753be7a7c3b568aa597152426fb591c6959673e78a5da9",
+        "svg": "93c286db4350cb87be72c3412a7d6d93cdf6e846ccab4f2e98daf84c925077d8"
+      },
+      "contract_version": "cross-evidence-v1",
+      "data_metadata_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv.metadata.json",
+      "data_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv",
+      "data_status": "success",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "exports": {
+        "html": {
+          "path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.html",
+          "status": "success"
+        },
+        "pdf": {
+          "path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.pdf",
+          "status": "success"
+        },
+        "png": {
+          "path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.png",
+          "status": "success"
+        },
+        "svg": {
+          "path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.svg",
+          "status": "success"
+        }
+      },
+      "figure_manifest_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.manifest.json",
+      "figure_manifest_status": "success",
+      "kind": "figure",
+      "path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.png",
+      "status": "success",
+      "unit_of_analysis": "metric_family_cut"
+    }
+  },
+  "contract_version": "cross-evidence-manifest-v1",
+  "input_checksum": "0c6aa2a57bc85cdecb7e479c818245c8cd1170a1e9133282be6e4f89a5bb0d9c",
+  "manifest_version": "cross-evidence-manifest-v1",
+  "missing_artifacts": [],
+  "producer_script": "08_cross_evidence_engine.py",
+  "scope": "secondary_exploratory_evidence",
+  "status": "success"
+}

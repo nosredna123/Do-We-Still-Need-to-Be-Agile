@@ -316,6 +316,34 @@ def test_build_cross_evidence_manifest_persists_inventory_and_skips(tmp_path: Pa
         json.dumps({"status": "success", "contract_version": "cross-evidence-v1"}),
         encoding="utf-8",
     )
+    figure_data_dir = analysis_dir / "cross_evidence" / "figure_data"
+    figure_data_dir.mkdir(parents=True)
+    figure_data_path = figure_data_dir / "scope_vs_late_instability.csv"
+    figure_data_path.write_text("x,y\n1,2\n", encoding="utf-8")
+    figure_metadata_path = figure_data_path.with_name(f"{figure_data_path.name}.metadata.json")
+    figure_metadata_path.write_text(json.dumps({"status": "success"}), encoding="utf-8")
+    figure_exports = {}
+    for export_format in ("html", "png", "svg", "pdf"):
+        export_path = tmp_path / "figures" / f"scope_vs_late_instability.{export_format}"
+        export_path.parent.mkdir(parents=True, exist_ok=True)
+        export_path.write_bytes(b"figure")
+        figure_exports[export_format] = export_path
+    (figure_data_dir / "scope_vs_late_instability.manifest.json").write_text(
+        json.dumps(
+            {
+                "status": "success",
+                "data_path": str(figure_data_path),
+                "data_metadata_path": str(figure_metadata_path),
+                "interactive_path": str(figure_exports["html"]),
+                "static_paths": {
+                    export_format: str(figure_exports[export_format])
+                    for export_format in ("png", "svg", "pdf")
+                },
+                "checksums": {"png": "fixture-checksum"},
+            }
+        ),
+        encoding="utf-8",
+    )
     output_path = analysis_dir / "cross_evidence" / "cross_evidence_manifest.json"
 
     first = engine.build_cross_evidence_manifest(output_path=output_path)
@@ -326,6 +354,8 @@ def test_build_cross_evidence_manifest_persists_inventory_and_skips(tmp_path: Pa
     assert metadata["status"] == "success"
     assert first == second
     assert first["artifacts"]["evaluator_outcome_metrics"]["status"] == "success"
+    assert first["artifacts"]["scope_vs_late_instability_figure"]["status"] == "success"
+    assert first["artifacts"]["scope_vs_late_instability_figure"]["figure_manifest_status"] == "success"
     assert "cross_evidence_correlations" in first["missing_artifacts"]
 
 
