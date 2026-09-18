@@ -1,0 +1,18 @@
+{
+  "contract_version": "cross-evidence-group-report-v1",
+  "input_checksum": "b1a466a60c78da3bb0141208c9a4b37fd78c1fe3ed181648b340802027112838",
+  "options": {
+    "backend": "mock",
+    "group_name": "robustness",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "artifact_count": 0,
+      "group_name": "robustness",
+      "member_artifacts": [],
+      "status": "limits",
+      "verdict_counts": {}
+    },
+    "prompt_version": "cross-evidence-group-report-v1"
+  },
+  "status": "success"
+}

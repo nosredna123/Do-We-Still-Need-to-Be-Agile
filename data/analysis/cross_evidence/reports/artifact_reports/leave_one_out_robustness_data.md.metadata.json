@@ -1,0 +1,80 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "e3d1a5d087d06b56b567a3753cd0b4c58d575753af9768c5352afc311cec9fbb",
+  "options": {
+    "artifact_id": "leave_one_out_robustness_data",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "leave_one_out_robustness_data",
+      "columns": [
+        "figure_id",
+        "analysis_id",
+        "original_coefficient",
+        "coefficient_min",
+        "coefficient_max",
+        "p_value_max",
+        "loo_support_share",
+        "robustness_class",
+        "transformation"
+      ],
+      "contract_version": "cross-evidence-figure-data-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "n_columns": 9,
+      "n_rows": 7,
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "numeric_summary": {
+        "coefficient_max": {
+          "max": -0.174630713288139,
+          "mean": -0.43426754742467366,
+          "median": -0.448223234903528,
+          "min": -0.6725037594933305,
+          "n_total": 7,
+          "n_valid": 7
+        },
+        "coefficient_min": {
+          "max": -0.5699124492412846,
+          "mean": -0.6725534806053813,
+          "median": -0.6795816917193728,
+          "min": -0.7810117949610702,
+          "n_total": 7,
+          "n_valid": 7
+        },
+        "loo_support_share": {
+          "max": 1.0,
+          "mean": 0.4795918367346938,
+          "median": 0.1428571428571428,
+          "min": 0.0714285714285714,
+          "n_total": 7,
+          "n_valid": 7
+        },
+        "original_coefficient": {
+          "max": -0.2647382010005621,
+          "mean": -0.5207027851032128,
+          "median": -0.5207396621025063,
+          "min": -0.7284815485795703,
+          "n_total": 7,
+          "n_valid": 7
+        },
+        "p_value_max": {
+          "max": 0.5682629857514974,
+          "mean": 0.19260818765647383,
+          "median": 0.1245124600803049,
+          "min": 0.0117870367777658,
+          "n_total": 7,
+          "n_valid": 7
+        }
+      },
+      "path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "analysis_result"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

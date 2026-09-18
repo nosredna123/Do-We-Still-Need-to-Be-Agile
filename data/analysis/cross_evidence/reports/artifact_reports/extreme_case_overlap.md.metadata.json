@@ -1,0 +1,103 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "260c53a314c553b4074b4a31fd3092440a80f268565c416ab98b58271819f93b",
+  "options": {
+    "artifact_id": "extreme_case_overlap",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "extreme_case_overlap",
+      "columns": [
+        "overlap_id",
+        "unit_of_analysis",
+        "left_variable",
+        "left_extreme",
+        "right_variable",
+        "right_extreme",
+        "group_rule",
+        "group_size_requested",
+        "left_group_n",
+        "right_group_n",
+        "overlap_n",
+        "overlap_rate_left",
+        "overlap_rate_right",
+        "jaccard",
+        "overlap_keys",
+        "contract_version"
+      ],
+      "contract_version": "cross-evidence-extreme-overlap-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "kind": "result",
+      "n_columns": 16,
+      "n_rows": 18,
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "numeric_summary": {
+        "group_size_requested": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "jaccard": {
+          "max": 0.6,
+          "mean": 0.2164021164021164,
+          "median": 0.1428571428571428,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "left_group_n": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "overlap_n": {
+          "max": 3.0,
+          "mean": 1.2222222222222223,
+          "median": 1.0,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "overlap_rate_left": {
+          "max": 0.75,
+          "mean": 0.3055555555555556,
+          "median": 0.25,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "overlap_rate_right": {
+          "max": 0.75,
+          "mean": 0.3055555555555556,
+          "median": 0.25,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "right_group_n": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 18,
+          "n_valid": 18
+        }
+      },
+      "path": "data/analysis/cross_evidence/results/extreme_case_overlap.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "analysis_result"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

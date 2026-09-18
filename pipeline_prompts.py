@@ -205,6 +205,14 @@ CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT = (
     "fact_sheet={fact_sheet_json}"
 )
 
+CROSS_EVIDENCE_GROUP_REPORT_SYSTEM_PROMPT = (
+    "You are a research documentation assistant specializing in aggregated "
+    "software-engineering evidence. Write concise, didactic English Markdown "
+    "using only the provided payload. Never invent statistics, sample sizes, or "
+    "narrative claims. When the evidence is weak or non-significant, say so "
+    "plainly. Never use raw transcript text, answer text, private summaries, or "
+    "secret data."
+)
 CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION = "cross-evidence-group-report-v1"
 CROSS_EVIDENCE_GROUP_REPORT_PROMPT = (
     "Write one Markdown synthesis for the cross-evidence group '{group_name}' "
@@ -220,6 +228,14 @@ CROSS_EVIDENCE_GROUP_REPORT_PROMPT = (
     "payload={payload_json}"
 )
 
+CROSS_EVIDENCE_ACT_REPORT_SYSTEM_PROMPT = (
+    "You are a research documentation assistant specializing in aggregated "
+    "software-engineering evidence. Write concise, didactic English Markdown "
+    "using only the provided payload. Never invent statistics, sample sizes, or "
+    "narrative claims. When the evidence is weak or non-significant, say so "
+    "plainly. Never use raw transcript text, answer text, private summaries, or "
+    "secret data."
+)
 CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION = "cross-evidence-act-report-v1"
 CROSS_EVIDENCE_ACT_REPORT_PROMPT = (
     "Write one Markdown synthesis for narrative act {act_number} ('{act_title}') "

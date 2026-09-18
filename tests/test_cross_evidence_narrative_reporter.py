@@ -123,3 +123,73 @@ def test_cross_evidence_report_defaults_to_cross_evidence_reports_tree(tmp_path:
 
     expected_output = cross_evidence_dir / "reports" / "artifact_reports" / "cross_evidence_correlations.md"
     assert expected_output.exists()
+
+
+def test_cross_evidence_group_and_act_reports_generate(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    analysis_dir = tmp_path / "analysis"
+    cross_evidence_dir = analysis_dir / "cross_evidence"
+    (cross_evidence_dir / "results").mkdir(parents=True)
+    (cross_evidence_dir / "datasets").mkdir(parents=True)
+    (cross_evidence_dir / "figure_data").mkdir(parents=True)
+
+    result_path = cross_evidence_dir / "results" / "cross_evidence_correlations.csv"
+    pd.DataFrame([
+        {
+            "analysis_id": "scope_vs_source_churn_t3",
+            "unit_of_analysis": "team_semester",
+            "priority": "primary_candidate",
+            "n_valid": 12,
+            "coefficient": -0.61,
+            "p_value": 0.02,
+            "status": "success",
+        }
+    ]).to_csv(result_path, index=False)
+    _write_metadata(result_path, contract_version="cross-evidence-correlations-v1")
+
+    matrix_path = cross_evidence_dir / "results" / "evidence_priority_matrix.csv"
+    pd.DataFrame([
+        {
+            "source_artifact": "cross_evidence_correlations",
+            "analysis_id": "scope_vs_source_churn_t3",
+            "priority": "primary_candidate",
+            "verdict": "supports",
+            "narrative_acts": "[2, 3]",
+            "recommended_use": "anchor_narrative_claim",
+            "publication_readiness": "candidate_primary",
+            "summary": "Strong support.",
+            "evidence_scope": "global_cross_evidence",
+            "evidence_tier": "A",
+            "stratum": "global",
+            "semester": "",
+            "x": "source_churn_t3",
+            "y": "scope_applicability_mean_t3",
+            "coefficient": -0.61,
+            "p_value": 0.02,
+            "robustness_class": "robust_all",
+        }
+    ]).to_csv(matrix_path, index=False)
+    _write_metadata(matrix_path, contract_version="cross-evidence-priority-matrix-v1")
+
+    dataset_path = cross_evidence_dir / "datasets" / "temporal_escalation_metrics.parquet"
+    pd.DataFrame([
+        {"team_id": "T1", "metric_id": "source_churn_t3", "value": 15.0},
+        {"team_id": "T2", "metric_id": "planning_rework_signal_t2_t3", "value": 9.0},
+    ]).to_parquet(dataset_path, index=False)
+    _write_metadata(dataset_path, contract_version="cross-evidence-v1")
+
+    monkeypatch.setattr(REPORTER, "mock_narrative_backend", lambda prompt: "Mock cross-evidence synthesis")
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "09_cross_evidence_narrative_reporter.py",
+            "--analysis-dir",
+            str(analysis_dir),
+            "--backend",
+            "mock",
+        ],
+    )
+
+    REPORTER.main()
+
+    assert (cross_evidence_dir / "reports" / "group_reports" / "temporal_escalation.md").exists()
+    assert (cross_evidence_dir / "reports" / "act_reports" / "act_2_planning_debt.md").exists()

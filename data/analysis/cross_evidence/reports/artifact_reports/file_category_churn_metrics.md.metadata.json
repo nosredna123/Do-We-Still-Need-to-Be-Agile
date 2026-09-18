@@ -1,0 +1,119 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "b25939bf9424011744ce03a2364f4ea4fe0483daeb6e6342cb538e8b57213d10",
+  "options": {
+    "artifact_id": "file_category_churn_metrics",
+    "backend": "mock",
+    "fact_sheet": {
+      "artifact_id": "file_category_churn_metrics",
+      "columns": [
+        "ID_Equipe",
+        "Semestre",
+        "temporal_marker",
+        "file_category",
+        "event_n",
+        "added_event_n",
+        "deleted_event_n",
+        "modified_event_n",
+        "renamed_event_n",
+        "copied_event_n",
+        "binary_event_n",
+        "lines_added",
+        "lines_deleted",
+        "churn_lines",
+        "line_count_missing_event_n",
+        "category_warning_event_n",
+        "category_confidence_mean",
+        "total_event_n",
+        "total_churn_lines",
+        "category_event_share",
+        "category_churn_share",
+        "file_category_definition_version",
+        "contract_version"
+      ],
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "dataset",
+      "n_columns": 23,
+      "n_rows": 158,
+      "narrative_acts": [
+        2,
+        3,
+        4
+      ],
+      "numeric_summary": {
+        "category_confidence_mean": {
+          "max": 1.0,
+          "mean": 0.9013093496662515,
+          "median": 1.0,
+          "min": 0.5,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "category_event_share": {
+          "max": 1.0,
+          "mean": 0.2088607594936709,
+          "median": 0.08382936507936509,
+          "min": 0.00016911889058007779,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "category_warning_event_n": {
+          "max": 9055.0,
+          "mean": 66.86075949367088,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "churn_lines": {
+          "max": 7476092.0,
+          "mean": 87311.03797468354,
+          "median": 329.0,
+          "min": 0.0,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "event_n": {
+          "max": 13245.0,
+          "mean": 323.04430379746833,
+          "median": 12.0,
+          "min": 1.0,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "line_count_missing_event_n": {
+          "max": 12987.0,
+          "mean": 90.42405063291139,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "total_churn_lines": {
+          "max": 11762127.0,
+          "mean": 668754.8734177215,
+          "median": 12429.0,
+          "min": 2.0,
+          "n_total": 158,
+          "n_valid": 158
+        },
+        "total_event_n": {
+          "max": 32094.0,
+          "mean": 2298.721518987342,
+          "median": 151.5,
+          "min": 1.0,
+          "n_total": 158,
+          "n_valid": 158
+        }
+      },
+      "path": "data/analysis/cross_evidence/datasets/file_category_churn_metrics.parquet",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "team_semester_cut_category"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

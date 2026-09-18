@@ -19,18 +19,59 @@ from typing import Any
 import pandas as pd
 
 from llm_gateway import LLMCallGateway
-from pipeline_config import CROSS_EVIDENCE_ARTIFACT_REGISTRY, MODEL_CONFIG
+from pipeline_config import CROSS_EVIDENCE_ARTIFACT_REGISTRY, MODEL_CONFIG, NARRATIVE_ACT_REGISTRY
 from pipeline_core import ANALYSIS_DIR, PROJECT_ROOT, input_checksum, invalidate_stale_artifact, is_current_artifact, load_project_environment, write_artifact_metadata
 from pipeline_prompts import (
+    CROSS_EVIDENCE_ACT_REPORT_PROMPT,
+    CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION,
     CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT,
     CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION,
     CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT,
+    CROSS_EVIDENCE_GROUP_REPORT_PROMPT,
+    CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION,
 )
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_REPORTS_DIRNAME = "reports"
 MAX_SUMMARY_COLUMNS = 8
+GROUP_NAME_PATTERN_MAP = (
+    ("temporal_escalation", ("temporal", "delta", "escalation", "semester", "t2_t3")),
+    ("source_churn", ("source_churn", "source_events", "planning_rework", "file_category_churn")),
+    ("evaluator_crossing", ("scope", "progress", "evaluator", "project_progress", "scope_applicability")),
+    ("author_pressure", ("author", "commits_per_author", "commit_gini", "max_author")),
+    ("robustness", ("robustness", "leave_one_out", "overlap", "sensitivity")),
+)
+
+
+def _as_int_list(value: Any) -> list[int]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [int(item) for item in value if item is not None]
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return []
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            text = text.replace("[", "").replace("]", "").replace(" ", "")
+            if not text:
+                return []
+            return [int(part) for part in text.split(",") if part]
+        if isinstance(parsed, list):
+            return [int(item) for item in parsed if item is not None]
+        return [int(parsed)]
+    return [int(value)]
+
+
+def _group_name_for_analysis_id(analysis_id: str) -> str:
+    lowered = str(analysis_id).lower()
+    for group_name, patterns in GROUP_NAME_PATTERN_MAP:
+        if any(pattern in lowered for pattern in patterns):
+            return group_name
+    return "methodological_warnings"
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -180,7 +221,14 @@ def openai_narrative_backend(prompt: str, *, client: Any, model: str, system_pro
     )
 
 
-def _write_report(report_path: Path, content: str, *, source_checksum: str, options: dict[str, Any]) -> None:
+def _write_report(
+    report_path: Path,
+    content: str,
+    *,
+    source_checksum: str,
+    options: dict[str, Any],
+    contract_version: str,
+) -> None:
     if not content.strip():
         raise ValueError(f"Empty narrative report content for {report_path}")
     report_path.parent.mkdir(parents=True, exist_ok=True)
@@ -189,9 +237,100 @@ def _write_report(report_path: Path, content: str, *, source_checksum: str, opti
     write_artifact_metadata(
         report_path,
         source_checksum,
-        contract_version=CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION,
+        contract_version=contract_version,
         options=options,
     )
+
+
+def build_group_payload(group_name: str, matrix_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Aggregate evidence-matrix rows into a bounded synthetic group summary."""
+    group_rows = [
+        row for row in matrix_rows if _group_name_for_analysis_id(str(row.get("analysis_id", ""))) == group_name
+    ]
+    if not group_rows:
+        group_rows = [
+            row for row in matrix_rows if str(row.get("source_artifact", "")).startswith(group_name)
+        ]
+
+    vote_counts: dict[str, int] = {}
+    details: list[dict[str, Any]] = []
+    for row in group_rows:
+        verdict = str(row.get("verdict", "inconclusive")).lower()
+        vote_counts[verdict] = vote_counts.get(verdict, 0) + 1
+        details.append(
+            {
+                "analysis_id": row.get("analysis_id"),
+                "source_artifact": row.get("source_artifact"),
+                "priority": row.get("priority"),
+                "verdict": verdict,
+                "publication_readiness": row.get("publication_readiness"),
+                "recommended_use": row.get("recommended_use"),
+                "summary": row.get("summary"),
+                "coefficient": row.get("coefficient"),
+                "p_value": row.get("p_value"),
+                "robustness_class": row.get("robustness_class"),
+            }
+        )
+
+    if vote_counts.get("supports", 0) > 0:
+        status = "supports"
+    elif vote_counts.get("inconclusive", 0) > 0 and vote_counts.get("supports", 0) == 0:
+        status = "contextualizes"
+    else:
+        status = "limits"
+
+    return {
+        "group_name": group_name,
+        "artifact_count": len(details),
+        "status": status,
+        "verdict_counts": vote_counts,
+        "member_artifacts": details,
+    }
+
+
+def build_act_payload(act_number: int, matrix_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Aggregate evidence across one narrative act using the priority matrix."""
+    act_rows = [
+        row for row in matrix_rows if act_number in _as_int_list(row.get("narrative_acts"))
+    ]
+    counts: dict[str, int] = {}
+    for row in act_rows:
+        verdict = str(row.get("verdict", "inconclusive")).lower()
+        counts[verdict] = counts.get(verdict, 0) + 1
+
+    act_title = NARRATIVE_ACT_REGISTRY.get(act_number, {}).get("title", f"Act {act_number}")
+    act_description = {
+        1: "Contextualizes the broader historical and methodological ceiling of the Agile claim.",
+        2: "Diagnoses planning debt as late-stage rework and source churn under compressed design capacity.",
+        3: "Tests whether coordination pressure, late instability, and author concentration explain the apparent productivity illusion.",
+        4: "Reframes the thesis toward cognitive clarity, explicit specifications, and sustainable AI-supported delivery.",
+    }.get(act_number, "Synthesizes the evidence for this narrative act.")
+
+    if counts.get("supports", 0) > 0:
+        status = "supports"
+    elif counts.get("inconclusive", 0) > 0:
+        status = "contextualizes"
+    else:
+        status = "limits"
+
+    return {
+        "act_number": act_number,
+        "act_title": act_title,
+        "act_description": act_description,
+        "artifact_count": len(act_rows),
+        "status": status,
+        "verdict_counts": counts,
+        "bound_artifacts": [
+            {
+                "analysis_id": row.get("analysis_id"),
+                "source_artifact": row.get("source_artifact"),
+                "verdict": str(row.get("verdict", "inconclusive")).lower(),
+                "publication_readiness": row.get("publication_readiness"),
+                "recommended_use": row.get("recommended_use"),
+            }
+            for row in act_rows
+        ],
+    }
 
 
 def main() -> None:
@@ -214,6 +353,10 @@ def main() -> None:
     default_reports_root = analysis_dir / "cross_evidence" / "reports" / "artifact_reports"
     output_dir = args.output_dir or default_reports_root
     output_dir.mkdir(parents=True, exist_ok=True)
+    group_output_dir = output_dir.parent / "group_reports"
+    act_output_dir = output_dir.parent / "act_reports"
+    group_output_dir.mkdir(parents=True, exist_ok=True)
+    act_output_dir.mkdir(parents=True, exist_ok=True)
     selected = set(args.only) if args.only else None
 
     client = None
@@ -225,9 +368,14 @@ def main() -> None:
             raise RuntimeError("openai package is not installed") from error
         client = OpenAI()
 
-    def call_backend(prompt: str) -> str:
+    def call_backend(prompt: str, *, system_prompt: str | None = None) -> str:
         if client is not None:
-            return openai_narrative_backend(prompt, client=client, model=args.model, system_prompt=CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT)
+            return openai_narrative_backend(
+                prompt,
+                client=client,
+                model=args.model,
+                system_prompt=system_prompt or CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT,
+            )
         return mock_narrative_backend(prompt)
 
     generated = 0
@@ -262,9 +410,99 @@ def main() -> None:
             fact_sheet_json=json.dumps(fact_sheet, sort_keys=True, default=str)
         )
         content = call_backend(prompt)
-        _write_report(report_path, content, source_checksum=checksum, options=options)
+        _write_report(
+            report_path,
+            content,
+            source_checksum=checksum,
+            options=options,
+            contract_version=CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION,
+        )
         generated += 1
         logger.info("Generated cross-evidence artifact report: %s", report_path)
+
+    matrix_path = analysis_dir / "cross_evidence" / "results" / "evidence_priority_matrix.csv"
+    if matrix_path.is_file():
+        matrix_rows = pd.read_csv(matrix_path).to_dict("records")
+        group_names = [
+            "temporal_escalation",
+            "source_churn",
+            "evaluator_crossing",
+            "author_pressure",
+            "robustness",
+            "methodological_warnings",
+        ]
+        for group_name in group_names:
+            payload = build_group_payload(group_name, matrix_rows)
+            report_id = group_name
+            report_path = group_output_dir / f"{report_id}.md"
+            if selected is not None and report_id not in selected:
+                continue
+            options = {
+                "prompt_version": CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION,
+                "backend": args.backend,
+                "model": args.model,
+                "group_name": group_name,
+                "payload": payload,
+            }
+            source_paths = [matrix_path, _sidecar_path(matrix_path), Path(__file__).with_name("pipeline_prompts.py")]
+            checksum = input_checksum(source_paths, options)
+            if args.force:
+                invalidate_stale_artifact(report_path, "force-regeneration")
+            if is_current_artifact(report_path, checksum):
+                logger.info("Cross-evidence group report current, skipping LLM call: %s", report_path)
+                skipped += 1
+                continue
+            prompt = CROSS_EVIDENCE_GROUP_REPORT_PROMPT.format(
+                group_name=group_name,
+                payload_json=json.dumps(payload, sort_keys=True, default=str),
+            )
+            content = call_backend(prompt, system_prompt=CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT)
+            _write_report(
+                report_path,
+                content,
+                source_checksum=checksum,
+                options=options,
+                contract_version=CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION,
+            )
+            generated += 1
+            logger.info("Generated cross-evidence group report: %s", report_path)
+
+        for act_number in sorted(NARRATIVE_ACT_REGISTRY):
+            payload = build_act_payload(act_number, matrix_rows)
+            report_id = f"act_{act_number}_{NARRATIVE_ACT_REGISTRY[act_number]['slug']}"
+            report_path = act_output_dir / f"{report_id}.md"
+            if selected is not None and report_id not in selected:
+                continue
+            options = {
+                "prompt_version": CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION,
+                "backend": args.backend,
+                "model": args.model,
+                "act_number": act_number,
+                "payload": payload,
+            }
+            source_paths = [matrix_path, _sidecar_path(matrix_path), Path(__file__).with_name("pipeline_prompts.py")]
+            checksum = input_checksum(source_paths, options)
+            if args.force:
+                invalidate_stale_artifact(report_path, "force-regeneration")
+            if is_current_artifact(report_path, checksum):
+                logger.info("Cross-evidence act report current, skipping LLM call: %s", report_path)
+                skipped += 1
+                continue
+            prompt = CROSS_EVIDENCE_ACT_REPORT_PROMPT.format(
+                act_number=act_number,
+                act_title=NARRATIVE_ACT_REGISTRY[act_number]["title"],
+                payload_json=json.dumps(payload, sort_keys=True, default=str),
+            )
+            content = call_backend(prompt, system_prompt=CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT)
+            _write_report(
+                report_path,
+                content,
+                source_checksum=checksum,
+                options=options,
+                contract_version=CROSS_EVIDENCE_ACT_REPORT_PROMPT_VERSION,
+            )
+            generated += 1
+            logger.info("Generated cross-evidence act report: %s", report_path)
 
     print(f"Cross-evidence narrative reports: written={generated} skipped={skipped}")
 

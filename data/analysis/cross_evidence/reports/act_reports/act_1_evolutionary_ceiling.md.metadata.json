@@ -1,0 +1,20 @@
+{
+  "contract_version": "cross-evidence-act-report-v1",
+  "input_checksum": "ed2c967d55b979b327e0e0a1d9e8af48556035db43df3b95e2252c45150705f6",
+  "options": {
+    "act_number": 1,
+    "backend": "mock",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "act_description": "Contextualizes the broader historical and methodological ceiling of the Agile claim.",
+      "act_number": 1,
+      "act_title": "Ato 1 - O Teto Evolutivo do Agile (Context)",
+      "artifact_count": 0,
+      "bound_artifacts": [],
+      "status": "limits",
+      "verdict_counts": {}
+    },
+    "prompt_version": "cross-evidence-act-report-v1"
+  },
+  "status": "success"
+}
