@@ -27,6 +27,9 @@ from pipeline_prompts import (
     CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT,
     CROSS_EVIDENCE_ARTIFACT_REPORT_PROMPT_VERSION,
     CROSS_EVIDENCE_ARTIFACT_REPORT_SYSTEM_PROMPT,
+    CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT,
+    CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT_VERSION,
+    CROSS_EVIDENCE_CONSOLIDATED_REPORT_SYSTEM_PROMPT,
     CROSS_EVIDENCE_GROUP_REPORT_PROMPT,
     CROSS_EVIDENCE_GROUP_REPORT_PROMPT_VERSION,
 )
@@ -100,6 +103,13 @@ def _clean_number(value: Any) -> Any:
     if isinstance(value, float) and math.isnan(value):
         return None
     return value
+
+
+def _display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(path)
 
 
 def _summarize_numeric_columns(frame: pd.DataFrame, max_columns: int = MAX_SUMMARY_COLUMNS) -> dict[str, Any]:
@@ -210,6 +220,7 @@ def mock_narrative_backend(prompt: str) -> str:
 
 
 def openai_narrative_backend(prompt: str, *, client: Any, model: str, system_prompt: str) -> str:
+    _ = prompt
     config = MODEL_CONFIG["qualitative_mining"]
     gateway = LLMCallGateway(client)
     return gateway.chat_json(
@@ -333,6 +344,81 @@ def build_act_payload(act_number: int, matrix_rows: list[dict[str, Any]]) -> dic
     }
 
 
+def build_consolidated_payload(
+    *,
+    matrix_rows: list[dict[str, Any]],
+    report_root: Path,
+    artifact_reports_dir: Path,
+    group_reports_dir: Path,
+    act_reports_dir: Path,
+) -> dict[str, Any]:
+    """Assemble the final cross-evidence summary from the report hierarchy."""
+    evidence_rows: list[dict[str, Any]] = []
+    for row in matrix_rows:
+        evidence_rows.append(
+            {
+                "artifact_id": row.get("source_artifact"),
+                "group_name": _group_name_for_analysis_id(str(row.get("analysis_id", ""))),
+                "unit_of_analysis": row.get("unit_of_analysis") or row.get("stratum") or "analysis_result",
+                "n_valid": row.get("n_valid"),
+                "principal_result": row.get("summary") or row.get("recommended_use") or row.get("verdict"),
+                "status": str(row.get("verdict", "inconclusive")).lower(),
+            }
+        )
+
+    status_counts = {"supports": 0, "contextualizes": 0, "limits": 0}
+    for row in evidence_rows:
+        status = row["status"]
+        if status in status_counts:
+            status_counts[status] += 1
+        else:
+            status_counts["contextualizes"] += 1
+
+    if status_counts["supports"] > 0:
+        verdict = "supports"
+        verdict_reason = "supporting_evidence_present"
+    elif status_counts["contextualizes"] > 0:
+        verdict = "contextualizes"
+        verdict_reason = "evidence_is_mainly_contextual"
+    else:
+        verdict = "limits"
+        verdict_reason = "evidence_is_limiting"
+
+    methodological_warnings = [
+        {
+            "artifact_id": row.get("source_artifact"),
+            "group_name": _group_name_for_analysis_id(str(row.get("analysis_id", ""))),
+            "issue": row.get("summary") or row.get("recommended_use") or row.get("verdict"),
+        }
+        for row in matrix_rows
+        if str(row.get("publication_readiness", "")).lower() in {"exploratory_only", "do_not_generalize", "methodological_warning"}
+    ]
+
+    report_index = [
+        _display_path(report_root / "artifact_reports"),
+        _display_path(report_root / "group_reports"),
+        _display_path(report_root / "act_reports"),
+        _display_path(report_root / "00_cross_evidence_consolidated_report.md"),
+    ]
+
+    return {
+        "report_index": report_index,
+        "evidence_matrix": evidence_rows,
+        "aggregate_status": verdict,
+        "verdict": verdict,
+        "verdict_reason": verdict_reason,
+        "counts": status_counts,
+        "methodological_warnings": methodological_warnings,
+        "recommendations": [
+            "Treat the strongest associations as candidate hypotheses rather than confirmed claims.",
+            "Keep the warning-heavy evidence groups in a cautionary interpretation layer.",
+        ],
+        "artifact_reports_dir": _display_path(artifact_reports_dir),
+        "group_reports_dir": _display_path(group_reports_dir),
+        "act_reports_dir": _display_path(act_reports_dir),
+    }
+
+
 def main() -> None:
     """Generate every available cross-evidence artifact report that is missing or stale."""
     parser = argparse.ArgumentParser(description="Generate independent narrative reports for cross-evidence artifacts")
@@ -350,11 +436,13 @@ def main() -> None:
     args = parser.parse_args()
 
     analysis_dir = args.analysis_dir
-    default_reports_root = analysis_dir / "cross_evidence" / "reports" / "artifact_reports"
-    output_dir = args.output_dir or default_reports_root
+    default_reports_root = analysis_dir / "cross_evidence" / "reports"
+    default_artifact_reports_root = default_reports_root / "artifact_reports"
+    output_dir = args.output_dir or default_artifact_reports_root
     output_dir.mkdir(parents=True, exist_ok=True)
-    group_output_dir = output_dir.parent / "group_reports"
-    act_output_dir = output_dir.parent / "act_reports"
+    report_root = output_dir.parent if output_dir.parent.name == "reports" else default_reports_root
+    group_output_dir = report_root / "group_reports"
+    act_output_dir = report_root / "act_reports"
     group_output_dir.mkdir(parents=True, exist_ok=True)
     act_output_dir.mkdir(parents=True, exist_ok=True)
     selected = set(args.only) if args.only else None
@@ -503,6 +591,51 @@ def main() -> None:
             )
             generated += 1
             logger.info("Generated cross-evidence act report: %s", report_path)
+
+        consolidated_report_path = report_root / "00_cross_evidence_consolidated_report.md"
+        report_id = "00_cross_evidence_consolidated_report"
+        if selected is None or report_id in selected:
+            consolidated_payload = build_consolidated_payload(
+                matrix_rows=matrix_rows,
+                report_root=report_root,
+                artifact_reports_dir=output_dir,
+                group_reports_dir=group_output_dir,
+                act_reports_dir=act_output_dir,
+            )
+            options = {
+                "prompt_version": CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT_VERSION,
+                "backend": args.backend,
+                "model": args.model,
+                "payload": consolidated_payload,
+            }
+            source_paths = [
+                matrix_path,
+                _sidecar_path(matrix_path),
+                Path(__file__).with_name("pipeline_prompts.py"),
+                *[path for path in output_dir.glob("*.md")],
+                *[path for path in group_output_dir.glob("*.md")],
+                *[path for path in act_output_dir.glob("*.md")],
+            ]
+            checksum = input_checksum(source_paths, options)
+            if args.force:
+                invalidate_stale_artifact(consolidated_report_path, "force-regeneration")
+            if is_current_artifact(consolidated_report_path, checksum):
+                logger.info("Cross-evidence consolidated report current, skipping LLM call: %s", consolidated_report_path)
+                skipped += 1
+            else:
+                prompt = CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT.format(
+                    payload_json=json.dumps(consolidated_payload, sort_keys=True, default=str),
+                )
+                content = call_backend(prompt, system_prompt=CROSS_EVIDENCE_CONSOLIDATED_REPORT_SYSTEM_PROMPT)
+                _write_report(
+                    consolidated_report_path,
+                    content,
+                    source_checksum=checksum,
+                    options=options,
+                    contract_version=CROSS_EVIDENCE_CONSOLIDATED_REPORT_PROMPT_VERSION,
+                )
+                generated += 1
+                logger.info("Generated cross-evidence consolidated report: %s", consolidated_report_path)
 
     print(f"Cross-evidence narrative reports: written={generated} skipped={skipped}")
 
