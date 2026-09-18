@@ -211,7 +211,8 @@ def main() -> None:
     args = parser.parse_args()
 
     analysis_dir = args.analysis_dir
-    output_dir = args.output_dir or (analysis_dir / DEFAULT_REPORTS_DIRNAME / "artifact_reports")
+    default_reports_root = analysis_dir / "cross_evidence" / "reports" / "artifact_reports"
+    output_dir = args.output_dir or default_reports_root
     output_dir.mkdir(parents=True, exist_ok=True)
     selected = set(args.only) if args.only else None
 

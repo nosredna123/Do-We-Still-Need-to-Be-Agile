@@ -84,3 +84,42 @@ def test_cross_evidence_artifact_reports_generate_and_skip(tmp_path: Path, monke
 
     REPORTER.main()
     assert len(calls) == 2
+
+
+def test_cross_evidence_report_defaults_to_cross_evidence_reports_tree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    analysis_dir = tmp_path / "analysis"
+    cross_evidence_dir = analysis_dir / "cross_evidence"
+    cross_evidence_dir.mkdir(parents=True)
+    result_dir = cross_evidence_dir / "results"
+    result_dir.mkdir(parents=True)
+
+    result_path = result_dir / "cross_evidence_correlations.csv"
+    pd.DataFrame([
+        {
+            "analysis_id": "scope_vs_source_churn_t3",
+            "unit_of_analysis": "team_semester",
+            "priority": "primary_candidate",
+            "n_valid": 12,
+            "coefficient": -0.61,
+            "p_value": 0.02,
+            "status": "success",
+        }
+    ]).to_csv(result_path, index=False)
+    _write_metadata(result_path, contract_version="cross-evidence-correlations-v1")
+
+    monkeypatch.setattr(REPORTER, "mock_narrative_backend", lambda prompt: "Mock cross-evidence report body")
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "09_cross_evidence_narrative_reporter.py",
+            "--analysis-dir",
+            str(analysis_dir),
+            "--backend",
+            "mock",
+        ],
+    )
+
+    REPORTER.main()
+
+    expected_output = cross_evidence_dir / "reports" / "artifact_reports" / "cross_evidence_correlations.md"
+    assert expected_output.exists()
