@@ -16,4 +16,4 @@ Act 2, titled "A Anatomia da Divida de Planejamento (Diagnosis)," argues that sk
 - **figure_delta_dt_by_team_semester**: inconclusive
 
 ## Empirical status
-The aggregate act status is "unsupported_by_current_tests." This is justified by the counts in verdicts, where there are 7 artifacts classified as "descriptive_infrastructure" and 5 as "inconclusive," indicating a lack of definitive support for the claims made in this act.
+The aggregate act status is "unsupported_by_current_tests." This is justified by the counts in verdict_counts, which show 7 artifacts classified as "descriptive_infrastructure" and 5 as "inconclusive," indicating a lack of definitive support for the claims made in this act.

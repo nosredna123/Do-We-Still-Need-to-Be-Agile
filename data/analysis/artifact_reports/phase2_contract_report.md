@@ -1,28 +1,28 @@
 ## What it is
-The granularity/unit of analysis is at the semester level, with a total row count of 42 for evaluator team cuts, 812 for git commits, 51041 for git files, 42 for git repository snapshots, 33 for git team cuts, 187 for student responses, and 100 for transcript sessions. The producer script is `phase2_contracts.py`, and the contract version is `phase2-inputs-v1`.
+The granularity/unit of analysis for this artifact is at the contract level. The total row count is 187 for student responses, 100 for transcript sessions, 42 for evaluator team cuts, 812 for git commits, 51041 for git files, and 42 for git repository snapshots. The producer script used is `phase2_contracts.py`, and the contract version is `phase2-inputs-v1`.
 
 ## How it was built
-The analytical artifact was constructed by aggregating data from various sources related to software engineering processes over two semesters. This included evaluations from team cuts, git commits, and student responses, among others. Each data source was processed to ensure consistency and accuracy, allowing for a comprehensive overview of the project's progress and challenges.
+This analytical artifact was constructed by aggregating data from various sources related to contract performance and student responses over multiple semesters. The data was processed and compiled into a structured format, allowing for comprehensive analysis of trends and patterns in the context of agile project management.
 
 ## Narrative binding
-The narrative acts are 1, 2, and 3. They are meant to support or falsify the following claims: 
+The narrative acts included are 1, 2, and 3. They are meant to support or falsify the following claims: 
 - Act 1 - O Teto Evolutivo do Agile (Context)
 - Act 2 - A Anatomia da Divida de Planejamento (Diagnosis)
 - Act 3 - O Fator Humano e a Ilusao do Progresso (Evidence)
 
 ## What the current data actually shows
 The current data shows the following:
-- Evaluator team cuts: 42 total rows
-- Git commits: 812 total rows
-- Git files: 51041 total rows
-- Git repository snapshots: 42 total rows
-- Git team cuts: 33 total rows
-- Student responses: 187 total rows
-- Transcript sessions: 100 total rows
+- Total rows for student responses: 187
+- Total rows for transcript sessions: 100
+- Total rows for evaluator team cuts: 42
+- Total rows for git commits: 812
+- Total rows for git files: 51041
+- Total rows for git repository snapshots: 42
+- Missingness: Not specified.
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure." This is justified as there are no tests conducted, indicating that the data serves primarily to describe the existing infrastructure rather than to test specific hypotheses.
+The deterministic verdict is "descriptive_infrastructure." This is justified as there are no tests conducted, indicating that the analysis primarily serves to describe the existing data infrastructure without inferential claims.
 
 ## Known limitations
-- No tests were conducted.
-- The data may not provide insights into causal relationships due to its descriptive nature.
+- No tests conducted.
+- Missingness data is not specified.

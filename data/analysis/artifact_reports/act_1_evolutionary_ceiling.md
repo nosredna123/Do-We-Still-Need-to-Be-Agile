@@ -6,4 +6,4 @@ This act argues that the Agile Manifesto addressed the issue of waterfall paraly
   **Verdict:** descriptive_infrastructure
 
 ## Empirical status
-The aggregate act status is "not_yet_tested" because there is only one verdict, which is classified as descriptive infrastructure, indicating that the act has not been empirically tested.
+The aggregate act status is "not_yet_tested" because there is only one verdict, which is classified as descriptive infrastructure. This indicates that the act has not been empirically tested or validated.

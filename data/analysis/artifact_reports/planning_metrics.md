@@ -2,7 +2,7 @@
 The analytical artifact is a dataset with a granularity/unit of analysis of 14 rows. It contains 28 columns and was produced using the script `05_metric_engine.py`. The contract version is `planning-metrics-v1`.
 
 ## How it was built
-The dataset was constructed by executing a script that processes various planning metrics, aggregating data related to events, file counts, and activity signals over specified timeframes. The resulting data is stored in a parquet format, allowing for efficient querying and analysis.
+The dataset was constructed by executing a script that processes various planning metrics, aggregating data related to events, file counts, and other relevant metrics over specified timeframes. The resulting data is stored in a parquet format, which allows for efficient querying and analysis.
 
 ## Narrative binding
 The narrative act number is 2, which is meant to support or falsify the claim titled "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)."
@@ -18,11 +18,12 @@ The dataset includes the following key numeric columns with their respective sta
 - `planning_artifact_activity_t3`: n = 14, mean = 89.28571428571429, p-value = unavailable
 - `planning_rework_signal_t2_t3`: n = 14, mean = 163.64285714285714, p-value = unavailable
 
-All columns have valid data for all 14 entries, with no missingness reported.
+All columns have a total of 14 valid entries, with no missingness reported.
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure." This is justified as there are no tests conducted, and the dataset provides descriptive statistics without inferential analysis.
+The deterministic verdict is "descriptive_infrastructure." This is justified as the dataset provides descriptive statistics for various planning metrics, but no inferential tests were conducted, as indicated by the absence of tests in the verdict summary.
 
 ## Known limitations
-- No inferential statistics were conducted.
-- The p-values for all key numeric columns are unavailable.
+- No inferential statistical tests were performed.
+- The dataset has a small sample size of 14 rows.
+- There is no information on the significance of the results.

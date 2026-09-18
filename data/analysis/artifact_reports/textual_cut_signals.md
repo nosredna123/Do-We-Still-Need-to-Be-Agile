@@ -2,7 +2,7 @@
 The analytical artifact is a dataset with a granularity/unit of analysis of 6 rows. It contains 349 columns and was produced using the script `04_nlp_qualitative_miner.py`. The contract version is `textual-cut-signals-v2`.
 
 ## How it was built
-The dataset was constructed using a qualitative mining approach, which involved analyzing textual data to extract relevant signals related to student career expectations and project challenges. The process likely included data cleaning, transformation, and the application of natural language processing techniques to derive meaningful insights from the text.
+The dataset was constructed using a qualitative mining approach, which involved analyzing textual data to extract relevant signals related to student career expectations and project challenges. The process aimed to quantify qualitative insights into student sentiments and dependencies on AI.
 
 ## Narrative binding
 The narrative act number is 3, which is meant to support the claim titled "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)."
@@ -23,5 +23,5 @@ The deterministic verdict is "descriptive_infrastructure." This is justified as 
 
 ## Known limitations
 - The dataset has a very small row count (n = 6), which limits the generalizability of the findings.
-- All key numeric columns related to career expectation scores and sentiment scores show a mean and median of 0.0, indicating a lack of variability in those measures.
+- All key numeric columns related to career expectation AI dependency scores and project challenges sentiment scores show a mean and median of 0.0, indicating a lack of variability in those measures.
 - There are no significant tests or results available to support any strong conclusions.

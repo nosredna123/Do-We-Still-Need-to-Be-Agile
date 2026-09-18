@@ -2,7 +2,7 @@
 The analytical artifact is a dataset with a granularity/unit of analysis at the file level, containing 14 rows. It was produced using the script `05_metric_engine.py` and is based on contract version `code-churn-metrics-v1`.
 
 ## How it was built
-The dataset was constructed by executing a script that processes code churn metrics from a repository. It aggregates various metrics related to file events, commit churn, and total changes over specified time periods, ensuring that the data is structured for analysis.
+The dataset was constructed by executing a script that processes code churn metrics from a repository. It aggregates various metrics related to file events, commit churn, and total changes over specified time periods, resulting in a structured dataset suitable for analysis.
 
 ## Narrative binding
 The narrative act number is 2, which is meant to support or falsify the claim titled "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)."
@@ -18,9 +18,9 @@ The narrative act number is 2, which is meant to support or falsify the claim ti
 - cc_total_t3: mean = 964437.9285714285, n_valid = 14
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure." This is justified as the dataset provides descriptive statistics for various metrics, but no tests were conducted to support any inferential claims.
+The deterministic verdict is "descriptive_infrastructure." This is justified as the dataset provides descriptive statistics for various metrics, but no tests were conducted to support inferential claims.
 
 ## Known limitations
 - No inferential statistics were performed.
 - The dataset is limited to 14 rows, which may not provide a comprehensive view.
-- Exclusions summary: None provided.
+- All metrics are based on valid entries, but the absence of tests limits the conclusions that can be drawn.
