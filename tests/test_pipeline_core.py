@@ -477,6 +477,55 @@ class PipelineCoreTests(unittest.TestCase):
                 "06_statistical_analyzer.py",
             ]
 
+    def test_pipeline_orchestrator_dispatches_only_cross_evidence_stage(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_cross_evidence_dispatch", "run_pipeline.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            calls: list[list[str]] = []
+
+            def record_stage(command: list[str], log_path: Path) -> None:
+                calls.append(command)
+
+            with mock.patch.object(orchestrator, "run_stage_process", side_effect=record_stage):
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py",
+                    "--stages", "cross-evidence",
+                    "--log-dir", str(Path(tmp_dir) / "logs"),
+                ]):
+                    orchestrator.main()
+
+            manifest = json.loads(next((Path(tmp_dir) / "logs").glob("pipeline_*.json")).read_text(encoding="utf-8"))
+            assert manifest["status"] == "success"
+            assert [Path(command[1]).name for command in calls] == ["08_cross_evidence_engine.py"]
+
+    def test_pipeline_orchestrator_dispatches_mock_cross_evidence_report_only(self) -> None:
+        orchestrator = load_script_module(
+            "pipeline_orchestrator_cross_evidence_report_dispatch", "run_pipeline.py"
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            calls: list[list[str]] = []
+
+            def record_stage(command: list[str], log_path: Path) -> None:
+                calls.append(command)
+
+            with mock.patch.object(orchestrator, "run_stage_process", side_effect=record_stage):
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py",
+                    "--stages", "cross-evidence-report",
+                    "--nlp-backend", "mock",
+                    "--log-dir", str(Path(tmp_dir) / "logs"),
+                ]):
+                    orchestrator.main()
+
+            command = calls[0]
+            assert [Path(item).name for item in command[:2]] == [
+                Path(orchestrator.PYTHON_EXECUTABLE).name,
+                "09_cross_evidence_narrative_reporter.py",
+            ]
+            assert command[-1] == "mock"
+            assert command[-2] == "--backend"
+
     def test_pipeline_orchestrator_phase2_chain_fails_fast(self) -> None:
         orchestrator = load_script_module(
             "pipeline_orchestrator_phase2_fail_fast", "run_pipeline.py"

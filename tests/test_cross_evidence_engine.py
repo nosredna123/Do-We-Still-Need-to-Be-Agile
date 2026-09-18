@@ -469,6 +469,26 @@ def test_build_evaluator_outcome_metrics_persists_and_skips_current_artifact(tmp
     assert second.loc[0, "scope_applicability_mean_t3"] == 2.0
 
 
+def test_build_evaluator_outcome_metrics_fails_for_missing_input_or_sidecar(tmp_path: Path) -> None:
+    engine = load_engine()
+    lake_dir = tmp_path / "lake"
+    lake_dir.mkdir()
+    with pytest.raises(FileNotFoundError, match="Required artifact not found"):
+        engine.build_evaluator_outcome_metrics(lake_dir=lake_dir, output_path=tmp_path / "output.parquet")
+
+    evaluator = lake_dir / "evaluator_team_cuts.parquet"
+    pd.DataFrame([evaluator_row("T1")]).to_parquet(evaluator, index=False)
+    with pytest.raises(FileNotFoundError, match="Required sidecar not found"):
+        engine.build_evaluator_outcome_metrics(lake_dir=lake_dir, output_path=tmp_path / "output.parquet")
+
+    evaluator.with_name(f"{evaluator.name}.metadata.json").write_text(
+        json.dumps({"status": "failed"}),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="sidecar is not successful"):
+        engine.build_evaluator_outcome_metrics(lake_dir=lake_dir, output_path=tmp_path / "output.parquet")
+
+
 def test_compute_author_pressure_metrics_calculates_author_distribution_and_churn() -> None:
     engine = load_engine()
     frame = pd.DataFrame(
@@ -1742,8 +1762,21 @@ def test_build_ce47_figures_export_and_skip(tmp_path: Path) -> None:
         engine.build_leave_one_out_robustness_figure(figure_root=tmp_path / "assets" / "figures" / "cross_evidence", figure_data_root=tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data")
     finally:
         os.chdir(old_cwd)
-    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "pareto_extreme_cases.png").exists()
-    assert (tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias" / "leave_one_out_robustness.png").exists()
+    figure_data_root = tmp_path / "data" / "analysis" / "cross_evidence" / "figure_data"
+    figure_root = tmp_path / "assets" / "figures" / "cross_evidence" / "prioritarias"
+    for figure_id in ("pareto_extreme_cases", "leave_one_out_robustness"):
+        data_path = figure_data_root / f"{figure_id}.csv"
+        data_sidecar = data_path.with_name(f"{data_path.name}.metadata.json")
+        manifest_path = figure_data_root / f"{figure_id}.manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+        assert data_path.exists()
+        assert json.loads(data_sidecar.read_text(encoding="utf-8"))["status"] == "success"
+        assert manifest["status"] == "success"
+        assert manifest["anonymization_policy"] == "public_visual_ranked_or_aggregate"
+        declared_exports = [manifest["interactive_path"], *manifest["static_paths"].values()]
+        assert all(Path(export_path).exists() for export_path in declared_exports)
+        assert "ID_Equipe" not in pd.read_csv(data_path).columns
 
 
 def test_cross_evidence_visual_spec_defines_shared_publication_contract() -> None:

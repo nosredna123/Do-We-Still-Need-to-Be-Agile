@@ -80,10 +80,51 @@ def test_cross_evidence_artifact_reports_generate_and_skip(tmp_path: Path, monke
     REPORTER.main()
     assert (output_dir / "cross_evidence_correlations.md").exists()
     assert (output_dir / "scope_vs_late_instability_data.md").exists()
+    for report_name in ("cross_evidence_correlations.md", "scope_vs_late_instability_data.md"):
+        sidecar = output_dir / f"{report_name}.metadata.json"
+        assert sidecar.exists()
+        assert json.loads(sidecar.read_text(encoding="utf-8"))["status"] == "success"
     assert len(calls) >= 2
+
+    forbidden = ("answer_text", "transcript_text", "evidence_summary_private")
+    assert all(token not in "\n".join(calls) for token in forbidden)
 
     REPORTER.main()
     assert len(calls) == 2
+
+
+def test_cross_evidence_artifact_report_checksum_invalidation_is_selective(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    analysis_dir = tmp_path / "analysis"
+    result_dir = analysis_dir / "cross_evidence" / "results"
+    result_dir.mkdir(parents=True)
+    for artifact_name in ("cross_evidence_correlations", "best_worst_project_contrasts"):
+        path = result_dir / f"{artifact_name}.csv"
+        pd.DataFrame([{"analysis_id": artifact_name, "n_valid": 4, "coefficient": 0.2}]).to_csv(path, index=False)
+        _write_metadata(path, contract_version="cross-evidence-v1")
+
+    calls: list[str] = []
+    monkeypatch.setattr(REPORTER, "mock_narrative_backend", lambda prompt: calls.append(prompt) or "Mock report")
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "09_cross_evidence_narrative_reporter.py",
+            "--analysis-dir",
+            str(analysis_dir),
+            "--backend",
+            "mock",
+        ],
+    )
+
+    REPORTER.main()
+    assert len(calls) == 2
+    (result_dir / "cross_evidence_correlations.csv").write_text(
+        "analysis_id,n_valid,coefficient\ncross_evidence_correlations,5,0.4\n",
+        encoding="utf-8",
+    )
+    REPORTER.main()
+    assert len(calls) == 3
 
 
 def test_cross_evidence_report_defaults_to_cross_evidence_reports_tree(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
