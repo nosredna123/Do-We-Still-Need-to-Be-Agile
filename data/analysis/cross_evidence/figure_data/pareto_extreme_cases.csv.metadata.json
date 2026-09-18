@@ -1,0 +1,19 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "8328067c30951a1bf21cbe8148d4bc3c2ebd8284e6dfdd7673321c76e16a3862",
+  "options": {
+    "cell_label": "overlap_n_over_group_size_requested",
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "heatmap_measure": "jaccard",
+    "privacy_policy": "aggregate_only_no_overlap_keys_in_figure_data",
+    "source_artifact": "extreme_case_overlap",
+    "stage": "pareto_extreme_cases",
+    "visual_spec_version": "cross-evidence-visual-spec-v1"
+  },
+  "status": "success"
+}

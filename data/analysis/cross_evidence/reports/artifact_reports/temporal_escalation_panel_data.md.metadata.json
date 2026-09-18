@@ -1,0 +1,84 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "ff9743b5b08f81bda6e8e4f7cfb7ba8dc87fe906f9fb6a0c11d952dc4d499ea5",
+  "options": {
+    "artifact_id": "temporal_escalation_panel_data",
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "temporal_escalation_panel_data",
+      "columns": [
+        "figure_id",
+        "metric_id",
+        "metric_title",
+        "source_artifact",
+        "temporal_marker",
+        "series",
+        "semester",
+        "aggregation",
+        "value_raw",
+        "baseline_t1",
+        "value_relative_t1",
+        "n_valid",
+        "transformation"
+      ],
+      "contract_version": "cross-evidence-figure-data-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "n_columns": 13,
+      "n_rows": 54,
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "numeric_summary": {
+        "baseline_t1": {
+          "max": 6360.0,
+          "mean": 684.30219356261,
+          "median": 3.6166666666666667,
+          "min": 1.5833333333333333,
+          "n_total": 54,
+          "n_valid": 54
+        },
+        "n_valid": {
+          "max": 14.0,
+          "mean": 9.333333333333334,
+          "median": 9.0,
+          "min": 5.0,
+          "n_total": 54,
+          "n_valid": 54
+        },
+        "semester": {
+          "max": 2026.1,
+          "mean": 2025.6500000000005,
+          "median": 2025.65,
+          "min": 2025.2,
+          "n_total": 54,
+          "n_valid": 36
+        },
+        "value_raw": {
+          "max": 1485854.3333333333,
+          "mean": 47606.226372966885,
+          "median": 16.878571428571426,
+          "min": 1.5333333333333332,
+          "n_total": 54,
+          "n_valid": 54
+        },
+        "value_relative_t1": {
+          "max": 710.783937493356,
+          "mean": 35.20851230624151,
+          "median": 1.1328799502384408,
+          "min": 0.845360824742268,
+          "n_total": 54,
+          "n_valid": 54
+        }
+      },
+      "path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "metric_family_cut"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

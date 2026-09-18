@@ -1,0 +1,21 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "7a11d2d7390d335549603e70e71fc7ae06575d0c848a4d063b7cfea1f15de770",
+  "options": {
+    "anonymization_policy": "public_visual_ranked_or_aggregate",
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "source_policy": "file_category_source_only_t3",
+    "stage": "source_churn_vs_planning_rework",
+    "visual_spec_version": "cross-evidence-visual-spec-v1",
+    "x": "planning_rework_signal_t2_t3",
+    "x_scale": "log",
+    "y": "source_churn_t3",
+    "y_scale": "log"
+  },
+  "status": "success"
+}

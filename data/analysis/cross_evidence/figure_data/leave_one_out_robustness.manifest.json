@@ -1,0 +1,59 @@
+{
+  "anonymization_policy": "public_visual_ranked_or_aggregate",
+  "category": "prioritarias",
+  "checksums": {
+    "data": "a8d38098949b5f54ade88936b3092ee16a119f5b5a67219fe35db0e41cb79423",
+    "pdf": "be7b0567d7237f0db9d213843c4f372dd0f2f5445b32b236b7c50a88d9cd252b",
+    "plotly_json": "52d1d889a7c2f528a833618a8e2bbefc94174a499ca8cac0a9df91c748f3c005",
+    "png": "58059a0059313c03169942f44ab4be68903a1c85992976a1c51d5ea66db70083",
+    "svg": "f629019896212c1d005a9a292ab0f8cc3dce5b2b6ceb19d78bd9f7597099b7de"
+  },
+  "data_metadata_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv.metadata.json",
+  "data_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv",
+  "dimensions": {
+    "height": 850,
+    "png_scale": 2,
+    "width": 1400
+  },
+  "export_formats": [
+    "html",
+    "png",
+    "svg",
+    "pdf"
+  ],
+  "figure_id": "leave_one_out_robustness",
+  "interactive_path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.html",
+  "limitations": [
+    "leave-one-out is sensitivity evidence, not causal validation",
+    "individual removed observations are not displayed"
+  ],
+  "n_missing": 0,
+  "n_total": 7,
+  "n_valid": 7,
+  "plotly_trace_n": 10,
+  "priority": "required",
+  "scale_notes": [
+    "coefficient bounded from -1 to 1",
+    "zero reference line"
+  ],
+  "source": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/results/leave_one_out_sensitivity.csv",
+  "static_paths": {
+    "pdf": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.pdf",
+    "png": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.png",
+    "svg": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.svg"
+  },
+  "status": "success",
+  "theme": "plotly_white",
+  "transformations": [
+    "coefficient_interval_with_original_point",
+    "aggregate_only"
+  ],
+  "unit_of_analysis": "analysis_result",
+  "variables": [
+    "original_coefficient",
+    "coefficient_min",
+    "coefficient_max",
+    "robustness_class"
+  ],
+  "visual_spec_version": "cross-evidence-visual-spec-v1"
+}

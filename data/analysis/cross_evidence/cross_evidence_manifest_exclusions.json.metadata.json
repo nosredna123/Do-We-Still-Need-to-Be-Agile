@@ -1,0 +1,13 @@
+{
+  "contract_version": "cross-evidence-manifest-v1",
+  "input_checksum": "42415c63090be64dd51d7e5cb1231649c9155310fcc060fb0b5083f8e2287528",
+  "options": {
+    "affected_key_sample_limit": 50,
+    "contract_version": "cross-evidence-manifest-v1",
+    "file_category_definition_version": "file-category-rules-v1",
+    "schema_version": "file-category-exclusions-v1",
+    "source_artifact": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/datasets/file_category_churn_metrics.parquet",
+    "stage": "file_category_exclusions"
+  },
+  "status": "success"
+}

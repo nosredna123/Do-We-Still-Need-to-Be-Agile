@@ -1,0 +1,17 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "dbb44a6adf4694074a867ac74ab9a28d372087ca0d682491a2bb7184cf537178",
+  "options": {
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "interval_measure": "coefficient_min_to_max",
+    "point_measure": "original_coefficient",
+    "stage": "leave_one_out_robustness",
+    "visual_spec_version": "cross-evidence-visual-spec-v1"
+  },
+  "status": "success"
+}

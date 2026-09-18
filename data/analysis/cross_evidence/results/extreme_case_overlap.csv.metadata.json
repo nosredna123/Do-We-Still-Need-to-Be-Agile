@@ -1,0 +1,24 @@
+{
+  "contract_version": "cross-evidence-extreme-overlap-v1",
+  "input_checksum": "724f9bceb6a6b22dcc512c0e84d902c112b94b013bc9b2b6417531f8af9055ec",
+  "options": {
+    "contract_version": "cross-evidence-extreme-overlap-v1",
+    "group_rule": "top_bottom_fixed_n",
+    "group_size": 4,
+    "modes": [
+      "top_top",
+      "top_bottom",
+      "bottom_bottom"
+    ],
+    "privacy_policy": "persist_anonymized_team_semester_keys_only",
+    "stage": "extreme_case_overlap",
+    "tie_policy": "sort_by_value_then_ID_Equipe_then_Semestre",
+    "variables": [
+      "planning_rework_signal_t2_t3",
+      "source_churn_t3",
+      "commits_per_author_t3",
+      "scope_applicability_mean_t3"
+    ]
+  },
+  "status": "success"
+}

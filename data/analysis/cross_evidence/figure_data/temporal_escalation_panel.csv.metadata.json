@@ -1,0 +1,82 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "3195a3726a2ea32cf38c711fcd7e2044128a98cc0b12a27fe0acfd5376027557",
+  "options": {
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "metrics": [
+      {
+        "columns": {
+          "T1": "mean_t1",
+          "T2": "mean_t2",
+          "T3": "mean_t3"
+        },
+        "metric_id": "planning_artifact_activity",
+        "source": "temporal_escalation_metrics",
+        "title": "Planning artifact activity"
+      },
+      {
+        "columns": {
+          "T1": "mean_t1",
+          "T2": "mean_t2",
+          "T3": "mean_t3"
+        },
+        "metric_id": "pi_line_delta",
+        "source": "temporal_escalation_metrics",
+        "title": "Planning artifact line delta"
+      },
+      {
+        "columns": {
+          "T1": "mean_t1",
+          "T2": "mean_t2",
+          "T3": "mean_t3"
+        },
+        "metric_id": "cc_total",
+        "source": "temporal_escalation_metrics",
+        "title": "Total churn"
+      },
+      {
+        "columns": {
+          "T1": "mean_t1",
+          "T2": "mean_t2",
+          "T3": "mean_t3"
+        },
+        "metric_id": "cc_commit_n",
+        "source": "temporal_escalation_metrics",
+        "title": "Commit count"
+      },
+      {
+        "columns": {
+          "T1": "mean_t1",
+          "T2": "mean_t2",
+          "T3": "mean_t3"
+        },
+        "metric_id": "technical_complexity_mean",
+        "source": "temporal_escalation_metrics",
+        "title": "Technical complexity"
+      },
+      {
+        "columns": {
+          "T1": "project_progress_mean_t1",
+          "T2": "project_progress_mean_t2",
+          "T3": "project_progress_mean_t3"
+        },
+        "metric_id": "project_progress",
+        "source": "evaluator_outcome_metrics",
+        "title": "Perceived project progress"
+      }
+    ],
+    "normalization": "relative_to_t1_baseline",
+    "series": [
+      "global",
+      "semester"
+    ],
+    "stage": "temporal_escalation_panel",
+    "visual_spec_version": "cross-evidence-visual-spec-v1"
+  },
+  "status": "success"
+}

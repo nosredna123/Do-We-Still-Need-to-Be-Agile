@@ -1,0 +1,23 @@
+{
+  "contract_version": "cross-evidence-priority-matrix-v1",
+  "input_checksum": "1b7aaddeb1ea6a5a563085321acb58268428e0cfe4840073696948a3eb7a1c15",
+  "options": {
+    "contract_version": "cross-evidence-priority-matrix-v1",
+    "granularity": "one_row_per_atomic_evidence_result",
+    "publication_readiness_values": [
+      "candidate_primary",
+      "candidate_secondary",
+      "exploratory_only"
+    ],
+    "source_artifacts": [
+      "cross_evidence_correlations",
+      "best_worst_project_contrasts",
+      "leave_one_out_sensitivity",
+      "extreme_case_overlap",
+      "semester_stratified_results"
+    ],
+    "stage": "evidence_priority_matrix",
+    "tier_policy": "A_primary_robust_support_B_secondary_exploratory_C_limitation_or_inconclusive"
+  },
+  "status": "success"
+}

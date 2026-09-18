@@ -1,0 +1,62 @@
+{
+  "anonymization_policy": "public_visual_ranked_or_aggregate",
+  "category": "prioritarias",
+  "checksums": {
+    "data": "9e8336ad5289ad2bb7b42eff17f7915382fc0bb65725fa69ab66518e3d59cd60",
+    "pdf": "4b1b7d3192e66694f3fe1f793e646d5176aac01816fe639d6fc81026702ecb38",
+    "plotly_json": "709044a10d1098f5e52e9c69ef25ab73796e2d190295904c80b8b7dafbd8cdc0",
+    "png": "6884db73b4834a7592753be7a7c3b568aa597152426fb591c6959673e78a5da9",
+    "svg": "93c286db4350cb87be72c3412a7d6d93cdf6e846ccab4f2e98daf84c925077d8"
+  },
+  "data_metadata_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv.metadata.json",
+  "data_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv",
+  "dimensions": {
+    "height": 850,
+    "png_scale": 2,
+    "width": 1400
+  },
+  "export_formats": [
+    "html",
+    "png",
+    "svg",
+    "pdf"
+  ],
+  "figure_id": "temporal_escalation_panel",
+  "interactive_path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.html",
+  "limitations": [
+    "observational descriptive panel",
+    "2026.1 semester has n=5",
+    "relative index is not a common raw unit"
+  ],
+  "n_missing": 0,
+  "n_total": 54,
+  "n_valid": 54,
+  "plotly_trace_n": 18,
+  "priority": "required",
+  "scale_notes": [
+    "all subplots use relative T1 index; raw values preserved in CSV"
+  ],
+  "source": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/datasets/temporal_escalation_metrics.parquet + /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/datasets/evaluator_outcome_metrics.parquet",
+  "static_paths": {
+    "pdf": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.pdf",
+    "png": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.png",
+    "svg": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.svg"
+  },
+  "status": "success",
+  "theme": "plotly_white",
+  "transformations": [
+    "relative_to_t1_baseline",
+    "global_and_semester_series",
+    "no_interpolation"
+  ],
+  "unit_of_analysis": "metric_family_cut",
+  "variables": [
+    "planning_artifact_activity",
+    "pi_line_delta",
+    "cc_total",
+    "cc_commit_n",
+    "technical_complexity_mean",
+    "project_progress"
+  ],
+  "visual_spec_version": "cross-evidence-visual-spec-v1"
+}

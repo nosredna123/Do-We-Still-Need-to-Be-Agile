@@ -1,0 +1,38 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "f16c3e1a34fb40e89fe35a34d3e10be93736e383e096f32b1906776770ba24db",
+  "options": {
+    "artifact_id": "cross_evidence_manifest",
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "cross_evidence_manifest",
+      "contract_version": "cross-evidence-manifest-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "descriptive_context",
+      "kind": "manifest",
+      "narrative_acts": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "path": "data/analysis/cross_evidence/cross_evidence_manifest.json",
+      "producer_script": "08_cross_evidence_engine.py",
+      "status": "partial",
+      "summary_keys": [
+        "artifacts",
+        "contract_version",
+        "input_checksum",
+        "manifest_version",
+        "missing_artifacts",
+        "producer_script",
+        "scope",
+        "status"
+      ],
+      "unit_of_analysis": "artifact_inventory"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

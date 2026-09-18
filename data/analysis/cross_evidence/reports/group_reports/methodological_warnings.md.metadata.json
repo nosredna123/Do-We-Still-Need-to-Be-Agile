@@ -1,0 +1,45 @@
+{
+  "contract_version": "cross-evidence-group-report-v1",
+  "input_checksum": "6499647cf5be9a6ffb8596c850aa879843986f4a25c24326264d329c896dbc07",
+  "options": {
+    "backend": "openai",
+    "group_name": "methodological_warnings",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "artifact_count": 2,
+      "group_name": "methodological_warnings",
+      "member_artifacts": [
+        {
+          "analysis_id": "late_instability_index__planning_artifact_activity_t3__top_bottom_4",
+          "coefficient": NaN,
+          "p_value": 0.0285714285714285,
+          "priority": NaN,
+          "publication_readiness": "candidate_secondary",
+          "recommended_use": "support_narrative_claim",
+          "robustness_class": NaN,
+          "source_artifact": "best_worst_project_contrasts",
+          "summary": "Best/worst contrast provides exploratory group-level support.",
+          "verdict": "supports"
+        },
+        {
+          "analysis_id": "late_instability_index__late_instability_index__top_bottom_4",
+          "coefficient": NaN,
+          "p_value": 0.0285714285714285,
+          "priority": NaN,
+          "publication_readiness": "candidate_secondary",
+          "recommended_use": "support_narrative_claim",
+          "robustness_class": NaN,
+          "source_artifact": "best_worst_project_contrasts",
+          "summary": "Best/worst contrast provides exploratory group-level support.",
+          "verdict": "supports"
+        }
+      ],
+      "status": "supports",
+      "verdict_counts": {
+        "supports": 2
+      }
+    },
+    "prompt_version": "cross-evidence-group-report-v1"
+  },
+  "status": "success"
+}

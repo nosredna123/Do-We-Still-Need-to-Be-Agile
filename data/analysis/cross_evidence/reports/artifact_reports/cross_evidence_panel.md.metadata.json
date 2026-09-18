@@ -1,0 +1,143 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "2046fd3645f72e4799ef8f7ee4230d868945178cc53835d5f77875face53b793",
+  "options": {
+    "artifact_id": "cross_evidence_panel",
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "cross_evidence_panel",
+      "columns": [
+        "ID_Equipe",
+        "Semestre",
+        "project_progress_mean_t1",
+        "project_progress_mean_t2",
+        "project_progress_mean_t3",
+        "project_progress_mean_delta_t1_t3",
+        "scope_applicability_mean_t1",
+        "scope_applicability_mean_t2",
+        "scope_applicability_mean_t3",
+        "scope_applicability_mean_delta_t1_t3",
+        "technical_complexity_mean_t1",
+        "technical_complexity_mean_t2",
+        "technical_complexity_mean_t3",
+        "technical_complexity_mean_delta_t1_t3",
+        "engagement_participation_mean_t1",
+        "engagement_participation_mean_t2",
+        "engagement_participation_mean_t3",
+        "engagement_participation_mean_delta_t1_t3",
+        "progress_scope_gap_t1",
+        "progress_scope_gap_t2",
+        "progress_scope_gap_t3",
+        "progress_scope_gap_delta_t1_t3",
+        "evaluator_outcome_available",
+        "planning_rework_signal_t2_t3",
+        "planning_artifact_activity_t3",
+        "pi_line_delta_t3",
+        "cc_total_t3",
+        "cc_per_source_loc_t3",
+        "source_churn_t3",
+        "source_events_t3",
+        "commits_per_author_t3",
+        "commit_gini_t3",
+        "active_author_pressure_status_t3",
+        "author_churn_lines_t3",
+        "delta_dt_t2_t3",
+        "late_instability_index",
+        "late_instability_component_available_n",
+        "late_instability_component_missing_n",
+        "source_event_share_t3",
+        "source_churn_share_t3",
+        "commit_n_t3",
+        "author_n_t3",
+        "max_author_share_t3",
+        "churn_per_author_t3",
+        "cross_evidence_panel_available",
+        "cross_evidence_panel_observation_unit",
+        "cross_evidence_panel_contract_version"
+      ],
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "descriptive_context",
+      "kind": "dataset",
+      "n_columns": 47,
+      "n_rows": 14,
+      "narrative_acts": [
+        2,
+        3,
+        4
+      ],
+      "numeric_summary": {
+        "cc_per_source_loc_t3": {
+          "max": 1001.6288001362514,
+          "mean": 75.03158660127124,
+          "median": 1.614747722763192,
+          "min": 0.13312866313145408,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "cc_total_t3": {
+          "max": 11762127.0,
+          "mean": 964437.9285714285,
+          "median": 22869.0,
+          "min": 304.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "commits_per_author_t3": {
+          "max": 32.8,
+          "mean": 7.571825396825397,
+          "median": 4.475,
+          "min": 1.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "pi_line_delta_t3": {
+          "max": 60358.0,
+          "mean": 10164.57142857143,
+          "median": 705.5,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "project_progress_mean_t1": {
+          "max": 4.0,
+          "mean": 3.0386904761904767,
+          "median": 3.0,
+          "min": 2.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "project_progress_mean_t2": {
+          "max": 4.0,
+          "mean": 3.0297619047619047,
+          "median": 3.1875,
+          "min": 1.3333333333333333,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "source_churn_t3": {
+          "max": 2935876.0,
+          "mean": 223099.85714285713,
+          "median": 7135.0,
+          "min": 172.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "source_events_t3": {
+          "max": 11147.0,
+          "mean": 960.9285714285714,
+          "median": 117.5,
+          "min": 1.0,
+          "n_total": 14,
+          "n_valid": 14
+        }
+      },
+      "path": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "team_semester"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

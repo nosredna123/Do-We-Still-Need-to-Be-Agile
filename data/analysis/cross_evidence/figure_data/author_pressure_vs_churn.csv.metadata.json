@@ -1,0 +1,28 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "e9c8b2500b79038dfc197d5db1e08f74c7a33ccfe7cd1fd87c6170bf8058cec5",
+  "options": {
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "metadata_only": [
+      "commit_gini_t3",
+      "active_author_pressure_status_t3"
+    ],
+    "source_policy": "source_churn_t3_is_source_category_only",
+    "stage": "author_pressure_vs_churn",
+    "visual_spec_version": "cross-evidence-visual-spec-v1",
+    "x": "commits_per_author_t3",
+    "x_scale": "linear",
+    "y_scale": "log",
+    "y_variables": [
+      "source_churn_t3",
+      "planning_rework_signal_t2_t3",
+      "planning_artifact_activity_t3"
+    ]
+  },
+  "status": "success"
+}

@@ -1,0 +1,83 @@
+{
+  "contract_version": "cross-evidence-v1",
+  "input_checksum": "9b1024a3fc4df7c9c88f29d44c7b0465fd8d5584d899e56f017a315364984f3d",
+  "options": {
+    "contract_version": "cross-evidence-v1",
+    "metric_specs": [
+      {
+        "columns": {
+          "t1": "planning_artifact_activity_t1",
+          "t2": "planning_artifact_activity_t2",
+          "t3": "planning_artifact_activity_t3"
+        },
+        "metric_id": "planning_artifact_activity",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "source_artifact": "planning_metrics"
+      },
+      {
+        "columns": {
+          "t1": "pi_line_delta_t1",
+          "t2": "pi_line_delta_t2",
+          "t3": "pi_line_delta_t3"
+        },
+        "metric_id": "pi_line_delta",
+        "narrative_acts": [
+          2
+        ],
+        "source_artifact": "planning_metrics"
+      },
+      {
+        "columns": {
+          "t1": "cc_total_t1",
+          "t2": "cc_total_t2",
+          "t3": "cc_total_t3"
+        },
+        "metric_id": "cc_total",
+        "narrative_acts": [
+          2,
+          3,
+          4
+        ],
+        "source_artifact": "code_churn_metrics"
+      },
+      {
+        "columns": {
+          "t1": "cc_commit_n_t1",
+          "t2": "cc_commit_n_t2",
+          "t3": "cc_commit_n_t3"
+        },
+        "metric_id": "cc_commit_n",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "source_artifact": "code_churn_metrics"
+      },
+      {
+        "columns": {
+          "t1": "technical_complexity_mean_t1",
+          "t2": "technical_complexity_mean_t2",
+          "t3": "technical_complexity_mean_t3"
+        },
+        "metric_id": "technical_complexity_mean",
+        "narrative_acts": [
+          2,
+          3
+        ],
+        "source_artifact": "technical_degradation_metrics"
+      }
+    ],
+    "ratio_policy": "exclude_zero_t1_denominator_and_count",
+    "source_policy": "specialized_phase2_parquets",
+    "stage": "temporal_escalation_metrics",
+    "wilcoxon_pairs": [
+      "t1_t2",
+      "t2_t3",
+      "t1_t3"
+    ]
+  },
+  "status": "success"
+}

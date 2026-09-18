@@ -1,0 +1,123 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "be3e00c6432427268a6e4b29cc1e2df48d65f2f85f21701fe9b85a93dd164cd2",
+  "options": {
+    "artifact_id": "late_instability_metrics",
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "late_instability_metrics",
+      "columns": [
+        "ID_Equipe",
+        "Semestre",
+        "planning_rework_signal_t2_t3",
+        "planning_artifact_activity_t3",
+        "pi_line_delta_t3",
+        "cc_total_t3",
+        "cc_per_source_loc_t3",
+        "delta_dt_t2_t3",
+        "source_churn_t3",
+        "source_events_t3",
+        "commits_per_author_t3",
+        "commit_gini_t3",
+        "active_author_pressure_status_t3",
+        "author_churn_lines_t3",
+        "planning_rework_signal_t2_t3_rank_pct",
+        "planning_artifact_activity_t3_rank_pct",
+        "pi_line_delta_t3_rank_pct",
+        "source_churn_t3_rank_pct",
+        "source_events_t3_rank_pct",
+        "commits_per_author_t3_rank_pct",
+        "delta_dt_t2_t3_rank_pct",
+        "late_instability_component_available_n",
+        "late_instability_component_missing_n",
+        "late_instability_index",
+        "late_instability_index_definition",
+        "late_instability_observation_unit",
+        "late_instability_contract_version"
+      ],
+      "contract_version": "cross-evidence-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "dataset",
+      "n_columns": 27,
+      "n_rows": 14,
+      "narrative_acts": [
+        2,
+        3,
+        4
+      ],
+      "numeric_summary": {
+        "commits_per_author_t3_rank_pct": {
+          "max": 1.0,
+          "mean": 0.5357142857142858,
+          "median": 0.5357142857142857,
+          "min": 0.14285714285714285,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "delta_dt_t2_t3_rank_pct": {
+          "max": 1.0,
+          "mean": 0.5357142857142857,
+          "median": 0.5178571428571428,
+          "min": 0.07142857142857142,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "late_instability_component_available_n": {
+          "max": 7.0,
+          "mean": 7.0,
+          "median": 7.0,
+          "min": 7.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "late_instability_component_missing_n": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "planning_rework_signal_t2_t3": {
+          "max": 1130.0,
+          "mean": 163.64285714285714,
+          "median": 25.0,
+          "min": 2.0,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "planning_rework_signal_t2_t3_rank_pct": {
+          "max": 1.0,
+          "mean": 0.5357142857142857,
+          "median": 0.5357142857142857,
+          "min": 0.07142857142857142,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "source_churn_t3_rank_pct": {
+          "max": 1.0,
+          "mean": 0.5357142857142857,
+          "median": 0.5357142857142857,
+          "min": 0.07142857142857142,
+          "n_total": 14,
+          "n_valid": 14
+        },
+        "source_events_t3_rank_pct": {
+          "max": 1.0,
+          "mean": 0.5357142857142858,
+          "median": 0.5357142857142857,
+          "min": 0.07142857142857142,
+          "n_total": 14,
+          "n_valid": 14
+        }
+      },
+      "path": "data/analysis/cross_evidence/datasets/late_instability_metrics.parquet",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "team_semester"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

@@ -1,0 +1,75 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "9503bea7df81ccdf214916ad043da18d47780e6a17eb2a6f66d3b4b32df9b22f",
+  "options": {
+    "artifact_id": "author_pressure_vs_churn_data",
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "author_pressure_vs_churn_data",
+      "columns": [
+        "figure_id",
+        "plot_id",
+        "anonymized_team_id",
+        "semester",
+        "x",
+        "x_value",
+        "y",
+        "y_value",
+        "x_scale",
+        "y_scale",
+        "commit_gini_t3",
+        "active_author_pressure_status_t3",
+        "transformation"
+      ],
+      "contract_version": "cross-evidence-figure-data-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "primary_candidate",
+      "kind": "figure_data",
+      "n_columns": 13,
+      "n_rows": 42,
+      "narrative_acts": [
+        3
+      ],
+      "numeric_summary": {
+        "commit_gini_t3": {
+          "max": 0.5302325581395348,
+          "mean": 0.2473397745718178,
+          "median": 0.20553221288515405,
+          "min": 0.0,
+          "n_total": 42,
+          "n_valid": 42
+        },
+        "semester": {
+          "max": 2026.1,
+          "mean": 2025.5214285714285,
+          "median": 2025.2,
+          "min": 2025.2,
+          "n_total": 42,
+          "n_valid": 42
+        },
+        "x_value": {
+          "max": 32.8,
+          "mean": 7.571825396825395,
+          "median": 4.475,
+          "min": 1.0,
+          "n_total": 42,
+          "n_valid": 42
+        },
+        "y_value": {
+          "max": 2935876.0,
+          "mean": 74450.92857142857,
+          "median": 54.0,
+          "min": 2.0,
+          "n_total": 42,
+          "n_valid": 42
+        }
+      },
+      "path": "data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "team_semester"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}

@@ -1,0 +1,50 @@
+{
+  "contract_version": "cross-evidence-figure-data-v1",
+  "input_checksum": "f6943eb2fbe4d15ef26a478de46339beabc62aa09beed2880ce8d80fba9657b0",
+  "options": {
+    "anonymization_policy": "public_visual_ranked_or_aggregate",
+    "export_formats": [
+      "html",
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "semester_colors": {
+      "2025.2": "#2563EB",
+      "2026.1": "#D97706"
+    },
+    "stage": "scope_vs_late_instability",
+    "subplot_specs": [
+      {
+        "plot_id": "scope_vs_late_instability_index",
+        "title": "Late instability index",
+        "y": "late_instability_index",
+        "y_scale": "linear",
+        "y_title": "Late instability index"
+      },
+      {
+        "plot_id": "scope_vs_source_churn_t3",
+        "title": "Source churn at T3",
+        "y": "source_churn_t3",
+        "y_scale": "log",
+        "y_title": "Source churn (lines, log scale)"
+      },
+      {
+        "plot_id": "scope_vs_planning_artifact_activity_t3",
+        "title": "Planning artifact activity at T3",
+        "y": "planning_artifact_activity_t3",
+        "y_scale": "log",
+        "y_title": "Planning artifact activity (log scale)"
+      },
+      {
+        "plot_id": "scope_vs_commits_per_author_t3",
+        "title": "Commits per author at T3",
+        "y": "commits_per_author_t3",
+        "y_scale": "linear",
+        "y_title": "Commits per author"
+      }
+    ],
+    "visual_spec_version": "cross-evidence-visual-spec-v1"
+  },
+  "status": "success"
+}

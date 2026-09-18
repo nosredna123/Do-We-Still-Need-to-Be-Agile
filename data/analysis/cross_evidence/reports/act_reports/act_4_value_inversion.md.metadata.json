@@ -1,0 +1,20 @@
+{
+  "contract_version": "cross-evidence-act-report-v1",
+  "input_checksum": "fb4fd7b0a28b1bf4064c584790b3f5ac838ee8e77f5807c105fb4e3ec85c219d",
+  "options": {
+    "act_number": 4,
+    "backend": "openai",
+    "model": "gpt-4o-mini",
+    "payload": {
+      "act_description": "Reframes the thesis toward cognitive clarity, explicit specifications, and sustainable AI-supported delivery.",
+      "act_number": 4,
+      "act_title": "Ato 4 - A Inversao de Valores na Era da IA (Conclusion)",
+      "artifact_count": 0,
+      "bound_artifacts": [],
+      "status": "limits",
+      "verdict_counts": {}
+    },
+    "prompt_version": "cross-evidence-act-report-v1"
+  },
+  "status": "success"
+}

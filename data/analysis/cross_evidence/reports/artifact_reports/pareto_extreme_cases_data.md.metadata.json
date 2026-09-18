@@ -1,0 +1,86 @@
+{
+  "contract_version": "cross-evidence-artifact-report-v1",
+  "input_checksum": "359b1361db1582460259bff1597454d87cfff8a9d611b5828d78b9bbd258f4d7",
+  "options": {
+    "artifact_id": "pareto_extreme_cases_data",
+    "backend": "openai",
+    "fact_sheet": {
+      "artifact_id": "pareto_extreme_cases_data",
+      "columns": [
+        "figure_id",
+        "overlap_id",
+        "pair_label",
+        "mode",
+        "left_variable",
+        "right_variable",
+        "left_extreme",
+        "right_extreme",
+        "overlap_n",
+        "group_size_requested",
+        "jaccard",
+        "overlap_rate_left",
+        "overlap_rate_right",
+        "cell_label",
+        "transformation"
+      ],
+      "contract_version": "cross-evidence-figure-data-v1",
+      "evidence_scope": "secondary_exploratory_evidence",
+      "evidence_type": "secondary_support",
+      "kind": "figure_data",
+      "n_columns": 15,
+      "n_rows": 18,
+      "narrative_acts": [
+        2,
+        3
+      ],
+      "numeric_summary": {
+        "group_size_requested": {
+          "max": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "min": 4.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "jaccard": {
+          "max": 0.6,
+          "mean": 0.2164021164021164,
+          "median": 0.1428571428571428,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "overlap_n": {
+          "max": 3.0,
+          "mean": 1.2222222222222223,
+          "median": 1.0,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "overlap_rate_left": {
+          "max": 0.75,
+          "mean": 0.3055555555555556,
+          "median": 0.25,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        },
+        "overlap_rate_right": {
+          "max": 0.75,
+          "mean": 0.3055555555555556,
+          "median": 0.25,
+          "min": 0.0,
+          "n_total": 18,
+          "n_valid": 18
+        }
+      },
+      "path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv",
+      "producer_script": "08_cross_evidence_engine.py",
+      "unit_of_analysis": "ranked_team_semester"
+    },
+    "model": "gpt-4o-mini",
+    "prompt_version": "cross-evidence-artifact-report-v1"
+  },
+  "status": "success"
+}
