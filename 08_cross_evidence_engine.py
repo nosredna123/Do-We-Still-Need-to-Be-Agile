@@ -28,6 +28,10 @@ from pipeline_core import file_checksum, input_checksum, invalidate_stale_artifa
 
 
 logger = logging.getLogger(__name__)
+CROSS_EVIDENCE_ARTIFACT_REGISTRY = {
+    artifact_id: dict(entry)
+    for artifact_id, entry in CROSS_EVIDENCE_ARTIFACT_REGISTRY.items()
+}
 
 
 NORMAL_CONFIDENCE = 1.0
@@ -284,6 +288,39 @@ FILE_CATEGORY_CHURN_REQUIRED_COLUMNS = {
 }
 FILE_CATEGORY_CHURN_GROUP_COLUMNS = ["ID_Equipe", "Semestre", "temporal_marker", "file_category"]
 EXCLUSIONS_AFFECTED_KEY_SAMPLE_LIMIT = 50
+RUNTIME_PATHS = {
+    "analysis": Path("data/analysis"),
+    "lake": Path("data/lake"),
+}
+DEFAULT_REGISTRY_PATHS = {
+    artifact_id: str(entry["path"])
+    for artifact_id, entry in CROSS_EVIDENCE_ARTIFACT_REGISTRY.items()
+    if "path" in entry
+}
+
+
+def _resolve_runtime_path(value: str | Path) -> Path:
+    """Resolve configured data paths against the active CLI roots."""
+    path = Path(value)
+    normalized = path.as_posix()
+    if normalized.startswith("data/analysis/"):
+        return RUNTIME_PATHS["analysis"] / normalized[len("data/analysis/"):]
+    if normalized == "data/analysis":
+        return RUNTIME_PATHS["analysis"]
+    if normalized.startswith("data/lake/"):
+        return RUNTIME_PATHS["lake"] / normalized[len("data/lake/"):]
+    if normalized == "data/lake":
+        return RUNTIME_PATHS["lake"]
+    return path
+
+
+def _configure_runtime_paths(*, analysis_dir: Path, lake_dir: Path) -> None:
+    """Apply CLI roots to registry paths used by legacy builder functions."""
+    RUNTIME_PATHS["analysis"] = analysis_dir
+    RUNTIME_PATHS["lake"] = lake_dir
+    for artifact_id, entry in CROSS_EVIDENCE_ARTIFACT_REGISTRY.items():
+        if artifact_id in DEFAULT_REGISTRY_PATHS:
+            entry["path"] = _resolve_runtime_path(DEFAULT_REGISTRY_PATHS[artifact_id]).as_posix()
 
 
 def cross_evidence_visual_spec(
@@ -388,12 +425,14 @@ def cross_evidence_figure_export_paths(
     figure_id: str,
     *,
     category: str = "exploratorias",
-    figure_root: Path = Path("assets/figures/cross_evidence"),
-    figure_data_root: Path = Path("data/analysis/cross_evidence/figure_data"),
+    figure_root: Path | None = None,
+    figure_data_root: Path | None = None,
 ) -> dict[str, Path]:
     """Return stable data and publication paths for a cross-evidence figure."""
     if category not in CROSS_EVIDENCE_FIGURE_CATEGORIES:
         raise ValueError(f"Unknown cross-evidence figure category: {category}")
+    figure_root = figure_root or Path("assets/figures/cross_evidence")
+    figure_data_root = figure_data_root or RUNTIME_PATHS["analysis"] / "cross_evidence/figure_data"
     directory = figure_root / category
     data_path = figure_data_root / f"{figure_id}.csv"
     return {
@@ -458,6 +497,7 @@ def build_cross_evidence_figure_manifest_entry(
         "n_total": int(len(data)),
         "n_valid": int(len(valid)),
         "n_missing": int(len(data) - len(valid)),
+        "plotly_trace_n": len(figure.data),
         "data_path": paths["data"].as_posix(),
         "data_metadata_path": f"{paths['data'].as_posix()}.metadata.json",
         "interactive_path": paths["html"].as_posix(),
@@ -3934,6 +3974,85 @@ def build_file_category_exclusions_report(
     return payload
 
 
+def build_cross_evidence_manifest(
+    *,
+    output_path: Path | None = None,
+    force: bool = False,
+) -> dict[str, Any]:
+    """Persist an auditable inventory of the engine-owned cross-evidence outputs."""
+    output_path = output_path or Path(str(CROSS_EVIDENCE_ARTIFACT_REGISTRY["cross_evidence_manifest"]["path"]))
+    engine_entries = {
+        artifact_id: entry
+        for artifact_id, entry in CROSS_EVIDENCE_ARTIFACT_REGISTRY.items()
+        if entry.get("producer_script") == "08_cross_evidence_engine.py"
+        and artifact_id != "cross_evidence_manifest"
+    }
+    inventory: dict[str, dict[str, Any]] = {}
+    source_paths: list[Path] = []
+    missing_artifacts: list[str] = []
+    for artifact_id, entry in engine_entries.items():
+        artifact_path = Path(str(entry["path"]))
+        record: dict[str, Any] = {
+            "artifact_id": artifact_id,
+            "kind": entry.get("kind"),
+            "path": artifact_path.as_posix(),
+            "contract_version": entry.get("contract_version"),
+            "unit_of_analysis": entry.get("unit_of_analysis"),
+            "evidence_scope": entry.get("evidence_scope"),
+            "evidence_type": entry.get("evidence_type"),
+            "status": "success" if artifact_path.exists() else "missing",
+        }
+        if artifact_path.is_file():
+            sidecar_path = artifact_path.with_name(f"{artifact_path.name}.metadata.json")
+            record["checksum"] = file_checksum(artifact_path)
+            record["sidecar_path"] = sidecar_path.as_posix()
+            record["sidecar_status"] = "missing"
+            if sidecar_path.is_file():
+                sidecar = json.loads(sidecar_path.read_text(encoding="utf-8"))
+                record["sidecar_status"] = sidecar.get("status")
+                record["sidecar_contract_version"] = sidecar.get("contract_version")
+                source_paths.extend([artifact_path, sidecar_path])
+            else:
+                record["status"] = "invalid"
+        elif artifact_path.is_dir():
+            files = sorted(path for path in artifact_path.rglob("*") if path.is_file())
+            record["file_count"] = len(files)
+            record["files"] = [path.as_posix() for path in files]
+            source_paths.extend(files)
+        else:
+            missing_artifacts.append(artifact_id)
+        if record["status"] != "success":
+            missing_artifacts.append(artifact_id)
+        inventory[artifact_id] = record
+
+    options = {
+        "stage": "cross_evidence_manifest",
+        "manifest_version": CROSS_EVIDENCE_MANIFEST_VERSION,
+        "engine_script": "08_cross_evidence_engine.py",
+        "artifact_count": len(engine_entries),
+    }
+    checksum = input_checksum(source_paths, options)
+    if not force and is_current_artifact(output_path, checksum):
+        logger.info("Cross-evidence manifest is current: %s", output_path)
+        return json.loads(output_path.read_text(encoding="utf-8"))
+    if force:
+        invalidate_stale_artifact(output_path, "force-regeneration")
+
+    payload = {
+        "status": "success" if not missing_artifacts else "partial",
+        "contract_version": CROSS_EVIDENCE_MANIFEST_VERSION,
+        "manifest_version": CROSS_EVIDENCE_MANIFEST_VERSION,
+        "scope": "secondary_exploratory_evidence",
+        "producer_script": "08_cross_evidence_engine.py",
+        "input_checksum": checksum,
+        "missing_artifacts": sorted(set(missing_artifacts)),
+        "artifacts": inventory,
+    }
+    write_json_artifact(payload, output_path, source_checksum=checksum, options=options)
+    logger.info("Wrote cross-evidence manifest: %s", output_path)
+    return payload
+
+
 def main() -> None:
     """Run the currently implemented cross-evidence artifact builders."""
     parser = argparse.ArgumentParser(description="Build cross-evidence extension artifacts")
@@ -3959,6 +4078,7 @@ def main() -> None:
     parser.add_argument("--leave-one-out-robustness-data-output", type=Path, default=None)
     parser.add_argument("--file-category-churn-output", type=Path, default=None)
     parser.add_argument("--file-category-exclusions-output", type=Path, default=None)
+    parser.add_argument("--manifest-output", type=Path, default=None)
     parser.add_argument(
         "--only",
         choices=[
@@ -3982,6 +4102,7 @@ def main() -> None:
             "leave_one_out_robustness",
             "file_category_churn_metrics",
             "file_category_exclusions",
+            "cross_evidence_manifest",
         ],
         nargs="+",
     )
@@ -4008,7 +4129,9 @@ def main() -> None:
         "leave_one_out_robustness",
         "file_category_churn_metrics",
         "file_category_exclusions",
+        "cross_evidence_manifest",
     ])
+    _configure_runtime_paths(analysis_dir=args.analysis_dir, lake_dir=args.lake_dir)
     metrics_path = args.file_category_churn_output
     if "evaluator_outcome_metrics" in selected:
         build_evaluator_outcome_metrics(
@@ -4114,6 +4237,11 @@ def main() -> None:
         build_file_category_exclusions_report(
             metrics_path=metrics_path,
             output_path=args.file_category_exclusions_output,
+            force=args.force,
+        )
+    if "cross_evidence_manifest" in selected:
+        build_cross_evidence_manifest(
+            output_path=args.manifest_output,
             force=args.force,
         )
 

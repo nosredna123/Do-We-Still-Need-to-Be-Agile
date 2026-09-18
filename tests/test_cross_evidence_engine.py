@@ -303,6 +303,32 @@ def test_build_file_category_exclusions_report_persists_and_skips(tmp_path: Path
     assert second["sources"]["file_category_churn_metrics"]["rows"] == 2
 
 
+def test_build_cross_evidence_manifest_persists_inventory_and_skips(tmp_path: Path) -> None:
+    engine = load_engine()
+    analysis_dir = tmp_path / "analysis"
+    lake_dir = tmp_path / "lake"
+    getattr(engine, "_configure_runtime_paths")(analysis_dir=analysis_dir, lake_dir=lake_dir)
+
+    artifact_path = analysis_dir / "cross_evidence" / "datasets" / "evaluator_outcome_metrics.parquet"
+    artifact_path.parent.mkdir(parents=True)
+    artifact_path.write_bytes(b"fixture")
+    artifact_path.with_name(f"{artifact_path.name}.metadata.json").write_text(
+        json.dumps({"status": "success", "contract_version": "cross-evidence-v1"}),
+        encoding="utf-8",
+    )
+    output_path = analysis_dir / "cross_evidence" / "cross_evidence_manifest.json"
+
+    first = engine.build_cross_evidence_manifest(output_path=output_path)
+    second = engine.build_cross_evidence_manifest(output_path=output_path)
+
+    metadata = json.loads(output_path.with_name(f"{output_path.name}.metadata.json").read_text(encoding="utf-8"))
+    assert output_path.exists()
+    assert metadata["status"] == "success"
+    assert first == second
+    assert first["artifacts"]["evaluator_outcome_metrics"]["status"] == "success"
+    assert "cross_evidence_correlations" in first["missing_artifacts"]
+
+
 def test_compute_evaluator_outcome_metrics_pivots_fields_deltas_and_gap() -> None:
     engine = load_engine()
     frame = pd.DataFrame(
