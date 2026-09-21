@@ -1,0 +1,89 @@
+{
+  "version": "phase3-plot-book-v1",
+  "selection_policy": "paper candidates are selected only after report-first interpretation and source verification; leave-one-out and category exclusion figures remain qualification or supplementary visuals rather than positive evidence.",
+  "selected_figures": [
+    {
+      "figure_id": "scope_vs_late_instability",
+      "decision": "paper",
+      "section": "Results and Discussion",
+      "narrative_act": ["Act 2", "Act 3"],
+      "reason": "secondary exploratory but readable candidate pattern; must be framed as bounded and non-causal",
+      "source": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+      "physical_path": "assets/figures/cross_evidence/prioritarias/scope_vs_late_instability.png",
+      "report_first_path": [
+        "data/analysis/cross_evidence/reports/act_reports/act_2_planning_debt.md",
+        "data/analysis/cross_evidence/reports/00_cross_evidence_consolidated_report.md"
+      ],
+      "status": "exploratory"
+    },
+    {
+      "figure_id": "temporal_escalation_panel",
+      "decision": "paper",
+      "section": "Results",
+      "narrative_act": ["Act 2"],
+      "reason": "clear descriptive temporal escalation, not inferential proof",
+      "source": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+      "physical_path": "assets/figures/cross_evidence/prioritarias/temporal_escalation_panel.png",
+      "report_first_path": [
+        "data/analysis/artifact_reports/planning_metrics.md",
+        "data/analysis/artifact_reports/technical_degradation_metrics.md"
+      ],
+      "status": "descriptive"
+    },
+    {
+      "figure_id": "author_pressure_vs_churn",
+      "decision": "paper",
+      "section": "Results and Discussion",
+      "narrative_act": ["Act 3"],
+      "reason": "exploratory association candidate; must be described as candidate-level and constrained by the small team-semester sample",
+      "source": "data/analysis/cross_evidence/datasets/cross_evidence_panel.parquet",
+      "physical_path": "assets/figures/cross_evidence/prioritarias/author_pressure_vs_churn.png",
+      "report_first_path": [
+        "data/analysis/cross_evidence/reports/group_reports/author_pressure_vs_churn.md",
+        "data/analysis/cross_evidence/reports/00_cross_evidence_consolidated_report.md"
+      ],
+      "status": "exploratory"
+    },
+    {
+      "figure_id": "leave_one_out_robustness",
+      "decision": "supplementary",
+      "section": "Results or Discussion",
+      "narrative_act": ["Act 2", "Act 3"],
+      "reason": "qualification visual; demonstrates fragility and sensitivity, never positive evidence",
+      "source": "data/analysis/cross_evidence/results/leave_one_out_sensitivity.csv",
+      "physical_path": "assets/figures/cross_evidence/prioritarias/leave_one_out_robustness.png",
+      "report_first_path": [
+        "data/analysis/cross_evidence/reports/00_cross_evidence_consolidated_report.md"
+      ],
+      "status": "qualification"
+    },
+    {
+      "figure_id": "file_category_churn_by_cut",
+      "decision": "supplementary",
+      "section": "Discussion and Threats to Validity",
+      "narrative_act": ["Act 2"],
+      "reason": "valid as a methodological warning only when exclusion burden is disclosed; not a positive result",
+      "source": "data/analysis/cross_evidence/datasets/file_category_churn_metrics.parquet",
+      "physical_path": "assets/figures/cross_evidence/prioritarias/file_category_churn_by_cut.png",
+      "report_first_path": [
+        "data/analysis/cross_evidence/reports/artifact_reports/file_category_churn_by_cut_data.md",
+        "data/analysis/cross_evidence/reports/00_cross_evidence_consolidated_report.md"
+      ],
+      "status": "methodological_warning"
+    },
+    {
+      "figure_id": "pi_vs_cc",
+      "decision": "supplementary",
+      "section": "Results",
+      "narrative_act": ["Act 2"],
+      "reason": "null primary result; acceptable as an illustrative descriptive scatter but not as evidence of an effect",
+      "source": "data/analysis/team_metrics.parquet",
+      "physical_path": "assets/figures/prioritarias/pi_vs_cc.png",
+      "report_first_path": [
+        "data/analysis/artifact_reports/figure_pi_vs_cc.md",
+        "data/analysis/artifact_reports/00_consolidated_audit.md"
+      ],
+      "status": "null_descriptive"
+    }
+  ]
+}
