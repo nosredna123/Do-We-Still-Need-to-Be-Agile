@@ -253,6 +253,26 @@ transformation applied to it, and the resulting value. No new data are
 collected and no new LLM calls are issued beyond the fixed-rubric scoring
 already described in this section.
 
+\textbf{A note on $T_1$/$T_2$/$T_3$ for Git-derived metrics.} For every
+metric below that is computed from commit or file history (M3, M4, M6, M7,
+M8), the labels $T_1$, $T_2$, $T_3$ do not each denote a single calendar
+day; they denote the three \emph{windows} bounded by the corresponding
+status-presentation dates (Section~\ref{sec:method}A). Concretely, $T_1$
+covers every commit from a team's first commit up to (but not including)
+that team's $T_1$ presentation date; $T_2$ covers commits from the $T_1$
+date up to the $T_2$ date; and $T_3$ covers every commit from the $T_2$
+date onward, through final delivery. In our collected repositories, the
+$T_1$ window spans roughly three to eight weeks of calendar time, not a
+single day -- it is only the student surveys and evaluator scorecards
+(Section~\ref{sec:method}A) that are administered on a fixed day or
+narrow week-long window. A team with commits inside this multi-week $T_1$
+window has therefore had substantial calendar time to plan before the
+first formal checkpoint; conversely, a team with \emph{zero} commits in
+this window went the entire multi-week pre-checkpoint period without any
+repository activity at all. This window-based definition is not new to
+this subsection: it is the same definition already used to compute every
+Git-derived value reported anywhere in this paper.
+
 % PROVENANCE: All nine scripts below live under paper_v8/scripts/metrics/,
 % write CSV artifacts to paper_v8/data/, and read only already-persisted,
 % frozen Phase 1/2 lake and analysis Parquet files or the frozen
@@ -396,13 +416,15 @@ the qualitative record, was present from day one.
 \subsubsection{RQ3: Upfront planning quality, destructive rework, and evaluator outcomes (primary)}
 
 \textbf{M6 -- $T_1$ Planning-Quality Score.} For team $i$ in semester $s$, we
-take the subject line of every commit made before that team's $T_1$
-checkpoint, concatenate them in chronological order into a single text
-block, and rate that block once with a large language model on a $\{1,\dots,10\}$
-scale of clarity, specificity, and coherence, using a fixed rubric prompt at
-zero decoding temperature, judged only from the supplied text.
-$\mathrm{PlanningScore}(i,s)$ is undefined (missing) when a team made zero
-commits before $T_1$, since there is no text to rate.
+take the subject line of every commit made anywhere in that team's $T_1$
+window (defined above -- from the team's first commit up to its $T_1$
+presentation date), concatenate them in chronological order into a single
+text block, and rate that block once with a large language model on a
+$\{1,\dots,10\}$ scale of clarity, specificity, and coherence, using a
+fixed rubric prompt at zero decoding temperature, judged only from the
+supplied text. $\mathrm{PlanningScore}(i,s)$ is undefined (missing) when a
+team made zero commits across the \emph{entire} $T_1$ window, since there
+is no text at all to rate.
 % PROVENANCE: source paper_v4/advanced_metrics/outputs/team_level_signals.csv
 % (team-semester grain; one LLM call per team-semester, model gpt-4o-mini,
 % temperature 0, prompt "planning" in
@@ -413,7 +435,8 @@ commits before $T_1$, since there is no text to rate.
 
 \textbf{M7 -- $T_1$ Planning-Omission Rate.} For cohort $s$, the omission
 rate is the share of teams for which $\mathrm{PlanningScore}$ (M6) is
-undefined, i.e., teams with no commits at all before $T_1$:
+undefined, i.e., teams with no commits at all across the entire multi-week
+$T_1$ window (defined above), not merely on a single day:
 \[
 \mathrm{OmissionRate}(s)
 =\frac{\left|\left\{i\in\mathrm{teams}(s):P(i,s)=\mathrm{NaN}\right\}\right|}
@@ -431,12 +454,12 @@ source of the abstract's ``55\% of the first cohort'' claim.
 the recorded file-level changes. The filters cover dependency directories
 (\path{node_modules}, \path{venv}, and \path{.venv}), lockfiles, JSON data,
 images, icons, caches, source maps, and minified artifacts. For every
-remaining file, we record the earliest checkpoint ($T_1$, $T_2$, or $T_3$) at
-which it appears in that team's history. Restricting to file-change records
-observed at $T_3$, we then sum lines added plus lines deleted separately for
-files whose earliest checkpoint was $T_1$ or $T_2$ (destructive rework of
-pre-existing work) versus files first seen at $T_3$ itself (deferred new
-development):
+remaining file, we record the earliest window ($T_1$, $T_2$, or $T_3$, as
+defined above) in which it appears in that team's history. Restricting to
+file-change records observed in the $T_3$ window, we then sum lines added
+plus lines deleted separately for files whose earliest window was $T_1$ or
+$T_2$ (destructive rework of pre-existing work) versus files first seen in
+the $T_3$ window itself (deferred new development):
 \[
 \begin{aligned}
 \mathrm{TotalChurn}_{T_3}(i,s)
@@ -704,11 +727,15 @@ integration work, rather than one teammate absorbing the entire crunch.
 
 Applying the omission-rate formula (M7) to the collected $T_1$ commit
 records confirms the abstract's headline finding: $55.6\%$ ($5/9$) of teams
-in the first cohort (2025.2) made no commits at all before their $T_1$
-checkpoint, versus $0\%$ ($0/5$) in the second cohort (2026.1). Among the
-nine teams with a scorable $T_1$ planning artifact, the mean Planning-Quality
-Score (M6) is $3.56$ out of $10$ --- low even where planning text existed at
-all.
+in the first cohort (2025.2) made no commits at all during the entire $T_1$
+window, versus $0\%$ ($0/5$) in the second cohort (2026.1). Recall
+(Section~\ref{sec:advanced-metrics}) that this window spans roughly three
+to eight weeks of calendar time in our data, from each team's first commit
+up to its $T_1$ presentation date -- so this is not an artifact of a
+missing day-one commit; it reflects several weeks of complete repository
+inactivity for over half of the first cohort. Among the nine teams with a
+scorable $T_1$ planning artifact, the mean Planning-Quality Score (M6) is
+$3.56$ out of $10$ --- low even where planning text existed at all.
 
 Figure~\ref{fig:rq3} shows the T3 Rework-Churn volume (M8) for a
 median-split contrast of planning quality (M9): teams below the median
