@@ -436,6 +436,47 @@ disproportionate $T_3$ rework (up to $100{,}000+$ lines for a single team)
 while high-planning teams contained rework to comparatively nominal levels
 (Section~\ref{sec:results}).
 
+Table~\ref{tab:metrics_summary} consolidates M1--M9 by research question. RQ1
+metrics triangulate a team-level behavioral signal (M1) against cohort-level
+self-report (M2, M3), a grain mismatch stated explicitly rather than papered
+over. RQ2 metrics contrast quantitative repository density (M4) against
+qualitative coordination friction (M5) on a shared $T_1\text{--}T_3$ axis.
+RQ3 metrics form a single evidentiary chain at team-semester grain: an
+upfront planning signal (M6), its cohort-level omission rate (M7), a
+late-stage destructive-rework signal (M8), and their joint, evaluator-outcome
+association (M9). All nine metrics reuse already-persisted, frozen artifacts;
+none reruns Phase 1/2 or issues new LLM calls. Concrete values, figures, and
+the RQ3 group-contrast findings are reported in Section~\ref{sec:results}.
+
+\begin{table*}[t]
+\caption{Summary of Metrics M1--M9, Grouped by Research Question}
+\label{tab:metrics_summary}
+\centering
+\begin{tabularx}{\textwidth}{@{}p{0.7cm}p{3.6cm}p{2.6cm}X@{}}
+\toprule
+\textbf{ID} & \textbf{Metric} & \textbf{Grain} & \textbf{Source Artifact (script)} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{RQ1 -- GenAI adoption and role-perception}} \\
+\midrule
+M1 & AI-Authorship Density (behavioral) & Team-semester $\times$ cut & \texttt{integration\_friction\_metrics.parquet} (\path{m1_ai_authorship_density.py}) \\
+M2 & AI-Dependency Trajectory (perceptual) & Cohort $\times$ cut & \texttt{textual\_cut\_signals.parquet} (\path{m2_ai_dependency_trajectory.py}) \\
+M3 & Perceived Role-Disruption Risk & Cohort $\times$ cut & \texttt{student\_responses.parquet} (\path{m3_role_disruption_risk.py}) \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{RQ2 -- Repository density vs. coordination friction}} \\
+\midrule
+M4 & Repository Activity Density & Semester $\times$ cut & \texttt{code\_churn\_metrics.parquet} (\path{m4_repo_activity_density.py}) \\
+M5 & Coordination-Friction Trajectory & Cohort $\times$ cut & \texttt{cohort\_temporal\_friction.csv} (\path{m5_coordination_friction_trajectory.py}) \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{RQ3 -- Planning quality, destructive rework, and outcomes (primary)}} \\
+\midrule
+M6 & $T_1$ Planning-Quality Score & Team-semester & \texttt{team\_level\_signals.csv} (\path{m6_t1_planning_quality.py}) \\
+M7 & $T_1$ Planning-Omission Rate & Cohort & \texttt{team\_level\_signals.csv} (\path{m7_planning_omission_rate.py}) \\
+M8 & Rework Severity Ratio & Team-semester & \texttt{team\_level\_signals.csv} (\path{m8_rework_severity_ratio.py}) \\
+M9 & Planning vs. Rework/Outcome Association & Team-semester & \texttt{team\_level\_signals.csv} + \texttt{evaluator\_outcome\_metrics.parquet} (\path{m9_planning_vs_rework_association.py}) \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
 \section{Results}
 \label{sec:results}
 
