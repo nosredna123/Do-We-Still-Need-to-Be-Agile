@@ -1,4 +1,4 @@
-ID_Equipe,Semestre,cut,ai_author_share_median,ai_commit_n,ai_churn,ai_gini
+ID_Equipe,Semestre,cut,author_share_median,commit_n,churn,author_gini
 TEAM_01,2025.2,T1,0.5,7,15770.0,0.0714285714285714
 TEAM_01,2025.2,T2,,0,0.0,
 TEAM_01,2025.2,T3,1.0,12,1366581.0,0.0

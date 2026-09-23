@@ -1,4 +1,4 @@
-"""M3 -- Perceived Role-Disruption Risk (raw Likert survey proxy for RQ1).
+"""M2 -- Perceived Role-Disruption Risk (raw Likert survey proxy for RQ1).
 
 Definition
 ----------
@@ -20,7 +20,7 @@ ordinal scores.
 Grain constraint
 ----------------
 `data/lake/student_responses.parquet` carries `Semestre` and `temporal_marker`
-only (no `ID_Equipe`) -- same cohort-level constraint as M2.
+only (no `ID_Equipe`) -- same cohort-level constraint as M1.
 
 Source artifact (read-only, Phase 2 lake contract, frozen)
 -----------------------------------------------------------
@@ -30,7 +30,7 @@ Source artifact (read-only, Phase 2 lake contract, frozen)
 
 Output
 ------
-    paper_v8/data/m3_role_disruption_risk.csv
+    paper_v8/data/m2_role_disruption_risk.csv
     columns: Semestre, temporal_marker, role, n_total, n_valid, n_missing,
              mean, std, median, q1, q3, iqr, mode, mode_n, mode_share
 """
@@ -43,7 +43,7 @@ from _paths import LAKE_DIR, ensure_output_dir
 from phase2_contracts import load_phase2_inputs
 from pipeline_statistics import summarize_numeric_distribution
 
-OUTPUT_PATH = ensure_output_dir() / "m3_role_disruption_risk.csv"
+OUTPUT_PATH = ensure_output_dir() / "m2_role_disruption_risk.csv"
 SCALE_TYPE = "likert_1_5_role_disruption"
 SCALE_VERSION = "v1"
 

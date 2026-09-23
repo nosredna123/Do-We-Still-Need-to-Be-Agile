@@ -1,11 +1,25 @@
 # Plan — "Advanced Metrics Operationalization" subsection (paper_v8)
 
-Status: IMPLEMENTED (2026-09-23). All 9 scripts under
+Status: IMPLEMENTED (2026-09-23, corrected 2026-09-23). All 9 scripts under
 `paper_v8/scripts/metrics/` run successfully and write to `paper_v8/data/`.
 The LaTeX subsection is drafted in `paper_v8/latex_code/main.tex`
 (`\subsection{Advanced Metrics Operationalization}`), formalizing M1-M9 with
 `% PROVENANCE:` comment blocks per metric. Tables/figures are deferred to the
-future Results section per decision in \u00a74.
+future Results section per decision in §4.
+
+**Correction (2026-09-23):** the original M1 ("AI-Authorship Density") was
+factually wrong — the underlying `ai_*` columns in
+`integration_friction_metrics.parquet` have no AI-tool detection logic; they
+are generic commit-authorship concentration in a 72h pre-T3 window. This
+metric was renamed to "Pre-Deadline Author-Concentration Density" and moved
+from RQ1 (AI-adoption) to RQ2 (integration-pressure proxy). All metrics were
+renumbered accordingly: M1/M2 = RQ1 (self-report only), M3/M4/M5 = RQ2,
+M6-M9 = RQ3 (unchanged). Scripts renamed to match. The visible LaTeX text was
+also rewritten to describe raw-to-metric transformation logic in plain
+methodological terms, without repo/pipeline jargon ("Phase 2", script names,
+"already computed upstream") — that jargon is now confined to the invisible
+`% PROVENANCE` comments only. See `/memories/repo/paper-v8-advanced-metrics.md`
+for full details.
 
 ## 0. Ground rules carried over from repo memory
 - Phase 2 (00–09 pipeline) is frozen (2026-09-21): consume `data/lake/*.parquet` and

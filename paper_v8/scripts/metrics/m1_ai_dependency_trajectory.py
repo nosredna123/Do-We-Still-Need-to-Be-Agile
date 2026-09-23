@@ -1,4 +1,4 @@
-"""M2 -- Self-Reported AI-Dependency Trajectory (perception proxy for RQ1).
+"""M1 -- Self-Reported AI-Dependency Trajectory (perception proxy for RQ1).
 
 Definition
 ----------
@@ -31,7 +31,7 @@ Source artifact (read-only, Phase 2, frozen)
 
 Output
 ------
-    paper_v8/data/m2_ai_dependency_trajectory.csv
+    paper_v8/data/m1_ai_dependency_trajectory.csv
     columns: Semestre, temporal_marker, ai_dependency_composite_mean,
              n_question_families_available
 """
@@ -42,7 +42,7 @@ import pandas as pd
 from _paths import ANALYSIS_DIR, ensure_output_dir
 
 SOURCE_PATH = ANALYSIS_DIR / "textual_cut_signals.parquet"
-OUTPUT_PATH = ensure_output_dir() / "m2_ai_dependency_trajectory.csv"
+OUTPUT_PATH = ensure_output_dir() / "m1_ai_dependency_trajectory.csv"
 
 QUESTION_FAMILIES = (
     "student_ai_benefit",

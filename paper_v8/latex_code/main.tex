@@ -247,11 +247,12 @@ Our data collection framework triangulates four distinct evidentiary channels to
 
 Sections~\ref{sec:method}A--D established \emph{what} was collected. This
 subsection formalizes \emph{how} raw Git history, evaluator scorecards, and
-survey or transcript text become the nine metrics (M1--M9) used for RQ1--RQ3.
-All metrics derive from artifacts already produced by our data-processing
-pipeline. No new data are collected and no new LLM calls are issued. For each
-metric, we identify a reproducible processing path from the raw artifact to
-the reported value.
+survey or transcript text become the nine metrics (M1--M9) used for
+RQ1--RQ3. Each metric below states, in order: the raw input, the exact
+transformation applied to it, and the resulting value. No new data are
+collected and no new LLM calls are issued beyond the fixed-rubric scoring
+already described in this section and in Section~\ref{sec:advanced-metrics}'s
+provenance notes.
 
 % PROVENANCE: All nine scripts below live under paper_v8/scripts/metrics/,
 % write CSV artifacts to paper_v8/data/, and read only already-persisted,
@@ -262,79 +263,109 @@ the reported value.
 
 \subsubsection{RQ1: Generative-AI adoption and role-perception metrics}
 
-Two structurally different signals triangulate RQ1: a \emph{behavioral} proxy
-observed directly in Git history, and a \emph{perceptual} proxy self-reported
-by students. They cannot be joined at the team level, because survey
-responses are anonymized at the cohort~$\times$~cut grain and carry no team
-identifier; this asymmetry is a construct-validity limitation we state
-explicitly rather than resolve by fabricating a join.
+RQ1 is operationalized entirely from self-reported survey text and Likert
+items, at cohort~$\times$~cut grain (survey responses are anonymized and
+carry no team identifier). We do not treat any Git-derived signal as
+evidence of AI-tool usage: as detailed under M3 (Section~\ref{sec:advanced-metrics},
+RQ2), our repository data can identify \emph{which teammate} authored a
+commit and \emph{how concentrated} authorship was before a deadline, but
+cannot determine whether a generative-AI tool assisted that commit. This
+absence of a verified behavioral AI-usage signal is treated as an explicit
+construct-validity limitation rather than papered over with a proxy.
 
-\textbf{M1 -- AI-Authorship Density.} For team $i$ in semester $s$ and cut
-$c \in \{T_1, T_2, T_3\}$, let $\mathrm{AuthorShare}_{i,s,c}$ be the median,
-across commit authors flagged as AI-pattern authors, of their share of
-commits in cut $c$:
-\[
-\begin{aligned}
-\mathrm{AIAuthDensity}(i,s,c)
-  &= \underset{a \in A_{\mathrm{AI}}}{\mathrm{median}}
-     \left(\frac{C(a,i,s,c)}{C(i,s,c)}\right).
-\end{aligned}
-\]
-% PROVENANCE: source data/analysis/integration_friction_metrics.parquet
-% (team-semester grain, produced by 05_metric_engine.py /
-% 08_cross_evidence_engine.py). Re-exposed, not recomputed, by
-% paper_v8/scripts/metrics/m1_ai_authorship_density.py, which writes
-% paper_v8/data/m1_ai_authorship_density.csv.
-This value, and its associated commit count and Gini concentration, are
-already computed by the frozen Phase 2 pipeline; M1 reshapes them into a tidy
-team~$\times$~cut trajectory for direct comparison against M2 and M4.
-
-\textbf{M2 -- AI-Dependency Trajectory.} Six LLM-coded question families
-capture benefits, career impact, tool dependency, career expectations,
-project challenges, and project feeling. Each uses an ordinal $[0,4]$ scale.
-For cohort-cut $(s,c)$, the composite is the unweighted mean across families:
+\textbf{M1 -- Self-Reported AI-Dependency Trajectory.} Each student's
+free-text answer to six survey prompts (perceived AI benefit, five-year
+career-impact expectation, autonomy/tool-dependency balance, career
+expectations, anticipated project challenges, and feelings about the
+project) is independently rated by a large language model on an ordinal
+$[0,4]$ ``AI-dependency'' scale, one rating per individual response, using a
+fixed rubric prompt at zero decoding temperature. For cohort-cut $(s,c)$,
+each question family's per-response ratings are averaged, and the composite
+trajectory value is the unweighted mean across the six family means:
 \[
 \mathrm{AIDependency}(s,c) = \frac{1}{|Q|} \sum_{q \in Q} \overline{\mathrm{ai\_dependency\_score}}_{q,s,c}.
 \]
 % PROVENANCE: source data/analysis/textual_cut_signals.parquet (Semestre x
 % temporal_marker grain, no ID_Equipe; produced by
-% 04_nlp_qualitative_miner.py's aggregation stage). Computed by
-% paper_v8/scripts/metrics/m2_ai_dependency_trajectory.py, writing
-% paper_v8/data/m2_ai_dependency_trajectory.csv. Deterministic mean-of-means;
-% no new LLM calls issued.
-No LLM scoring is performed by our script; it only averages already-scored,
-already-aggregated values.
+% 04_nlp_qualitative_miner.py's aggregation stage, itself built from
+% per-response LLM scores using pipeline_prompts.py's STUDENT_NLP_PROMPT,
+% model gpt-4o-mini, temperature 0). Computed by
+% paper_v8/scripts/metrics/m1_ai_dependency_trajectory.py, writing
+% paper_v8/data/m1_ai_dependency_trajectory.csv. This script only averages
+% already-scored, already-aggregated per-family means; it issues no new LLM
+% calls.
 
-\textbf{M3 -- Perceived Role-Disruption Risk.} For each surveyed SE role
+\textbf{M2 -- Perceived Role-Disruption Risk.} For each surveyed SE role
 (backend, frontend, QA, project manager, product manager, and Scrum Master)
-and cohort-cut $(s,c)$, we summarize the raw 5-point Likert item directly from
-the survey instrument, with no LLM involved:
+and cohort-cut $(s,c)$, we summarize the raw 5-point Likert item (``this role
+will be extinct or severely affected by generative AI tools,'' 1~=~strongly
+disagree, 5~=~strongly agree) exactly as submitted by students, with no LLM
+or other transformation involved:
 \[
 \mathrm{RoleRisk}(r,s,c) = \mathrm{SummarizeDistribution}\big(\{\ell_{r,s,c}\}\big),
 \]
 where $\mathrm{SummarizeDistribution}(\cdot)$ returns mean, median, IQR, and
-missingness, reusing the same distribution-summary primitive Phase 2 uses for
-its own ordinal scores.
+missingness over the raw item values $\ell_{r,s,c}$.
 % PROVENANCE: source data/lake/student_responses.parquet (Semestre x
 % temporal_marker grain, no ID_Equipe; validated via
 % phase2_contracts.load_phase2_inputs, contract "student_responses").
-% Computed by paper_v8/scripts/metrics/m3_role_disruption_risk.py, writing
-% paper_v8/data/m3_role_disruption_risk.csv. New metric, zero LLM calls
+% Computed by paper_v8/scripts/metrics/m2_role_disruption_risk.py, writing
+% paper_v8/data/m2_role_disruption_risk.csv. New metric, zero LLM calls
 % (raw structured Likert responses).
 
 \subsubsection{RQ2: Repository temporal density vs. qualitative coordination friction}
 
-\textbf{M4 -- Repository Activity Density.} For semester $s$ (and pooled
-across both semesters) and cut $c$, we summarize the cross-team distribution
-of two already-computed Phase 2 churn signals, total line churn
-$\mathrm{cc\_total}$ and commit count $\mathrm{cc\_commit\_n}$. Let
-$\mathcal{S}$ denote the distribution summary. For either metric $m$, we use:
+\textbf{M3 -- Pre-Deadline Author-Concentration Density.} For team $i$ in
+semester $s$, we take every commit in the 72-hour window immediately
+preceding that team's $T_3$ checkpoint and group it by the committing
+teammate's identifier. Let $C(a,i,s)$ be teammate $a$'s commit count in that
+window and $C(i,s)$ the window's total commit count; we report the median
+per-teammate commit share and the Gini coefficient of the per-teammate
+commit-count distribution:
 \[
-\mathrm{ActivityDensity}(s,c,m)
-  = \mathcal{S}\bigl(\{m_{i,s,c}:i\in\mathrm{teams}(s)\}\bigr).
+\begin{aligned}
+\mathrm{AuthorShare}(i,s)
+  &= \underset{a}{\mathrm{median}}
+     \left(\frac{C(a,i,s)}{C(i,s)}\right), \\
+\mathrm{AuthorGini}(i,s)
+  &= \mathrm{Gini}\bigl(\{C(a,i,s)\}_a\bigr).
+\end{aligned}
 \]
+We emphasize what this metric can and cannot support: it identifies how
+unevenly commit volume was distributed across identified human teammates
+immediately before the deadline; it does \emph{not} identify whether any
+individual commit involved generative-AI assistance, since no tool-identity
+signal (author name/email pattern, commit-message marker, or similar) is
+present in our collected data. We therefore report M3 as an
+integration-pressure proxy for RQ2, not as AI-adoption evidence for RQ1.
+% PROVENANCE: source data/analysis/integration_friction_metrics.parquet
+% (team-semester grain; the underlying per-teammate commit counts, shares,
+% and Gini coefficient are computed directly from the raw ID_Autor_Local
+% field in data/lake/git_commits.parquet, restricted to a fixed 72-hour
+% pre-T3 window; no AI/human classification is applied anywhere in this
+% computation). Re-exposed, not recomputed, by
+% paper_v8/scripts/metrics/m3_author_concentration_density.py, writing
+% paper_v8/data/m3_author_concentration_density.csv.
+
+\textbf{M4 -- Repository Activity Density.} For every commit, we take the
+per-file line-addition and line-deletion counts reported by a standard Git
+diff and sum them into a single per-commit churn value (binary file changes,
+for which line-level diffs are undefined, are counted separately as binary
+events rather than contributing to churn). For semester $s$ (and pooled
+across both semesters) and cut $c \in \{T_1,T_2,T_3\}$, we summarize the
+cross-team distribution of two aggregates: total churn
+$\mathrm{cc\_total}$ (summed over all commits in the cut) and commit count
+$\mathrm{cc\_commit\_n}$. Here $m$ denotes either aggregate:
+\[
+\mathrm{AD}(s,c,m)
+  = \mathcal{S}\bigl(\{m_{i,s,c}:i\in\mathrm{teams}(s)\}\bigr),
+\]
+where $\mathcal{S}(\cdot)$ returns mean, median, IQR, and missingness. No
+file-path or extension filtering is applied to these totals.
 % PROVENANCE: source data/analysis/code_churn_metrics.parquet (team-semester
-% grain, produced by 05_metric_engine.py). Computed by
+% grain; computed from per-commit lines_added/lines_deleted sums in
+% data/lake/git_commits.parquet, with binary events tracked separately per
+% pipeline_config.py's excluded-from-line-churn policy). Computed by
 % paper_v8/scripts/metrics/m4_repo_activity_density.py, writing
 % paper_v8/data/m4_repo_activity_density.csv.
 Empirically, mean $\mathrm{cc\_total}$ escalates by roughly two orders of
@@ -342,14 +373,19 @@ magnitude from $T_1$ to $T_3$ in both cohorts (Section~\ref{sec:results}),
 confirming that repository-visible activity concentrates sharply at the
 deadline.
 
-\textbf{M5 -- Qualitative Coordination-Friction Trajectory.} For cut $c$, the
-cohort-pooled coordination-friction score is an LLM-coded rating in $[1,10]$
-of the transcript text for that cut (prompt \texttt{cohort\_coordination\_friction}),
-already computed upstream; M5 performs no re-scoring.
+\textbf{M5 -- Qualitative Coordination-Friction Trajectory.} For each cut
+$c \in \{T_1,T_2,T_3\}$, we pool the full transcript text of every recorded
+status-presentation session for that cut, across all teams and both
+semesters, into one text block. Each of the three resulting blocks is rated
+once by a large language model on a $[1,10]$ coordination-friction scale
+(considering blockers, misunderstandings, handoff problems, merge/integration
+conflicts, and repeated coordination overhead), using a fixed rubric prompt
+at zero decoding temperature, judged only from the supplied text.
 % PROVENANCE: source paper_v4/advanced_metrics/outputs/cohort_temporal_friction.csv
-% (Semestre x temporal_marker grain, Semestre pooled as "all"; produced by
-% 12_paper_signals_extractor.py, a frozen signals pipeline adjacent to but
-% not part of the 00-09 Phase 1/2 chain). Re-exposed by
+% (Semestre x temporal_marker grain, Semestre pooled as "all"; one LLM call
+% per cut, three calls total, model gpt-4o-mini, temperature 0, prompt
+% "cohort_coordination_friction" in paper_v4/advanced_metrics/llm_prompts.py;
+% produced by 12_paper_signals_extractor.py). Re-exposed, not re-scored, by
 % paper_v8/scripts/metrics/m5_coordination_friction_trajectory.py, writing
 % paper_v8/data/m5_coordination_friction_trajectory.csv.
 The contrast between M4 and M5 is the core empirical basis for RQ2: unlike
@@ -361,20 +397,25 @@ the qualitative record, was present from day one.
 
 \subsubsection{RQ3: Upfront planning quality, destructive rework, and evaluator outcomes (primary)}
 
-\textbf{M6 -- $T_1$ Planning-Quality Score.} For team $i$ in semester $s$,
-$\mathrm{PlanningScore}(i,s) \in \{1,\dots,10\}$ is an LLM-assigned integer
-judging the clarity, specificity, and coherence of the team's $T_1$ commit
-messages against a fixed rubric prompt; it is undefined (missing) when a team
-made zero commits before the $T_1$ cut.
+\textbf{M6 -- $T_1$ Planning-Quality Score.} For team $i$ in semester $s$, we
+take the subject line of every commit made before that team's $T_1$
+checkpoint, concatenate them in chronological order into a single text
+block, and rate that block once with a large language model on a $\{1,\dots,10\}$
+scale of clarity, specificity, and coherence, using a fixed rubric prompt at
+zero decoding temperature, judged only from the supplied text.
+$\mathrm{PlanningScore}(i,s)$ is undefined (missing) when a team made zero
+commits before $T_1$, since there is no text to rate.
 % PROVENANCE: source paper_v4/advanced_metrics/outputs/team_level_signals.csv
-% (team-semester grain; produced by 12_paper_signals_extractor.py's
-% "planning" LLM task, one call per team-semester, cached in
-% paper_v4/advanced_metrics/llm_cache/). Re-exposed by
+% (team-semester grain; one LLM call per team-semester, model gpt-4o-mini,
+% temperature 0, prompt "planning" in
+% paper_v4/advanced_metrics/llm_prompts.py; produced by
+% 12_paper_signals_extractor.py). Re-exposed by
 % paper_v8/scripts/metrics/m6_t1_planning_quality.py, writing
 % paper_v8/data/m6_t1_planning_quality.csv.
 
 \textbf{M7 -- $T_1$ Planning-Omission Rate.} For cohort $s$, the omission
-rate formalizes teams with no observable $T_1$ planning signal at all:
+rate is the share of teams for which $\mathrm{PlanningScore}$ (M6) is
+undefined, i.e., teams with no commits at all before $T_1$:
 \[
 \mathrm{OmissionRate}(s)
 =\frac{\left|\left\{i\in\mathrm{teams}(s):P(i,s)=\mathrm{NaN}\right\}\right|}
@@ -384,14 +425,20 @@ rate formalizes teams with no observable $T_1$ planning signal at all:
 % paper_v4/advanced_metrics/outputs/team_level_signals.csv by
 % paper_v8/scripts/metrics/m7_planning_omission_rate.py, writing
 % paper_v8/data/m7_planning_omission_rate.csv.
-The persisted signals give an omission rate of $55.6\%$ ($5/9$) for 2025.2
-and $0\%$ ($0/5$) for 2026.1. The former is the source of the abstract's
-``55\% of the first cohort'' claim.
+Applying this to the collected commit records gives an omission rate of
+$55.6\%$ ($5/9$) for 2025.2 and $0\%$ ($0/5$) for 2026.1. The former is the
+source of the abstract's ``55\% of the first cohort'' claim.
 
-\textbf{M8 -- Rework Severity Ratio.} File-provenance analysis already
-separates each team's $T_3$ line churn into rework of pre-existing files
-(earliest appearance at $T_1$ or $T_2$) versus deferred new development
-(earliest appearance at $T_3$ itself):
+\textbf{M8 -- Rework Ratio.} For each team, we exclude boilerplate paths from
+the recorded file-level changes. The filters cover dependency directories
+(\path{node_modules}, \path{venv}, and \path{.venv}), lockfiles, JSON data,
+images, icons, caches, source maps, and minified artifacts. For every
+remaining file, we record the earliest checkpoint ($T_1$, $T_2$, or $T_3$) at
+which it appears in that team's history. Restricting to file-change records
+observed at $T_3$, we then sum lines added plus lines deleted separately for
+files whose earliest checkpoint was $T_1$ or $T_2$ (destructive rework of
+pre-existing work) versus files first seen at $T_3$ itself (deferred new
+development):
 \[
 \begin{aligned}
 \mathrm{TotalChurn}_{T_3}(i,s)
@@ -404,28 +451,35 @@ separates each team's $T_3$ line churn into rework of pre-existing files
 \]
 % PROVENANCE: rework_churn_t3 / deferred_churn_t3 columns from
 % paper_v4/advanced_metrics/outputs/team_level_signals.csv (produced by
-% 12_paper_signals_extractor.py's file-provenance step, cross-checked
-% against data/processed/clean_repos/). Derived deterministically by
+% 12_paper_signals_extractor.py's file-provenance step, applied to
+% data/lake/git_files.parquet, cross-checked against
+% data/processed/clean_repos/). Derived deterministically by
 % paper_v8/scripts/metrics/m8_rework_severity_ratio.py, writing
 % paper_v8/data/m8_rework_severity_ratio.csv.
 $\mathrm{ReworkRatio}_{T_3}$ isolates \emph{what fraction} of late-cycle churn
 is destructive rather than raw volume, making teams of very different scale
 comparable.
 
-\textbf{M9 -- Planning Quality vs. Rework/Outcome Association.} We join M6,
-M8, and four independent evaluator outcomes at team-semester grain: project
-progress, scope, technical complexity, and engagement at $T_3$. Given
-$n \leq 14$, we report two descriptive views: (a) Spearman rank
-correlation $\rho\big(\mathrm{PlanningScore}, Y\big)$ for each outcome $Y$;
-and (b) a median-split contrast of $\mathrm{PlanningScore}$ (teams with a
-missing score, per M7, are excluded from the split and reported separately,
-not imputed), summarizing each $Y$ per group with the same distribution
-primitive used throughout this subsection.
+\textbf{M9 -- Planning Quality vs. Rework/Outcome Association.} We join, at
+team-semester grain, the $T_1$ Planning-Quality Score (M6), the Rework
+Severity Ratio and rework-churn volume (M8), and four independent evaluator
+outcomes at $T_3$ (project progress, scope/applicability, technical
+complexity, and engagement/participation, each the arithmetic mean of the
+numeric scores independently submitted per team-cut by every evaluator on
+the panel, on the bounded scales already described in
+Section~\ref{sec:method}). Given $n \leq 14$, we report two descriptive
+views: (a) Spearman rank correlation $\rho\big(\mathrm{PlanningScore}, Y\big)$
+for each outcome $Y$; and (b) a median-split contrast of
+$\mathrm{PlanningScore}$ (teams with an undefined score, per M7, are excluded
+from the split and reported separately, not imputed), summarizing each $Y$
+per group with the same distribution-summary procedure used throughout this
+subsection.
 % PROVENANCE: joins paper_v4/advanced_metrics/outputs/team_level_signals.csv
 % with data/analysis/cross_evidence/datasets/evaluator_outcome_metrics.parquet
-% (team-semester grain, produced by 08_cross_evidence_engine.py). Computed by
-% paper_v8/scripts/metrics/m9_planning_vs_rework_association.py, writing
-% paper_v8/data/m9_planning_vs_rework_association.csv and
+% (team-semester grain, itself an arithmetic-mean aggregation of raw
+% per-evaluator form submissions in data/lake/evaluator_team_cuts.parquet).
+% Computed by paper_v8/scripts/metrics/m9_planning_vs_rework_association.py,
+% writing paper_v8/data/m9_planning_vs_rework_association.csv and
 % paper_v8/data/m9_planning_vs_rework_association_group_contrast.csv. Uses
 % scipy.stats.spearmanr (scipy==1.11.4, already pinned in requirements.txt).
 Consistent with this project's own exploratory-evidence stance (Threats to
@@ -436,45 +490,42 @@ disproportionate $T_3$ rework (up to $100{,}000+$ lines for a single team)
 while high-planning teams contained rework to comparatively nominal levels
 (Section~\ref{sec:results}).
 
-Table~\ref{tab:metrics_summary} consolidates M1--M9 by research question. RQ1
-metrics triangulate a team-level behavioral signal (M1) against cohort-level
-self-report (M2, M3), a grain mismatch stated explicitly rather than papered
-over. RQ2 metrics contrast quantitative repository density (M4) against
-qualitative coordination friction (M5) on a shared $T_1\text{--}T_3$ axis.
-RQ3 metrics form a single evidentiary chain at team-semester grain: an
-upfront planning signal (M6), its cohort-level omission rate (M7), a
-late-stage destructive-rework signal (M8), and their joint, evaluator-outcome
-association (M9). All nine metrics reuse already-persisted, frozen artifacts;
-none reruns Phase 1/2 or issues new LLM calls. Concrete values, figures, and
+Table~\ref{tab:metrics_summary} summarizes M1--M9. RQ1 relies exclusively on
+self-reported survey signals (M1, M2), since no
+verified behavioral AI-usage signal exists in our repository data. RQ2
+contrasts a repository-derived integration-pressure proxy (M3) and
+quantitative activity density (M4) against qualitative coordination friction
+(M5) on a shared $T_1\text{--}T_3$ axis. RQ3 forms a single evidentiary chain
+at team-semester grain: an upfront planning signal (M6), its cohort-level
+omission rate (M7), a late-stage destructive-rework signal (M8), and their
+joint association with evaluator outcomes (M9). Concrete values, figures, and
 the RQ3 group-contrast findings are reported in Section~\ref{sec:results}.
 
 \begin{table*}[t]
 \caption{Summary of Metrics M1--M9, Grouped by Research Question}
 \label{tab:metrics_summary}
 \centering
-\begin{tabularx}{\textwidth}{@{}p{0.7cm}p{4.4cm}p{2.6cm}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{ID} & \textbf{Metric} & \textbf{Grain} & \textbf{Source Artifact} \\
 \midrule
 \multicolumn{4}{@{}l}{\textit{RQ1 -- GenAI adoption and role-perception}} \\
 \midrule
-M1 & AI-Authorship Density (behavioral) & Team-semester $\times$ cut & \texttt{integration\_friction\_metrics.parquet} \\
-M2 & AI-Dependency Trajectory (perceptual) & Cohort $\times$ cut & \texttt{textual\_cut\_signals.parquet} \\
-M3 & Perceived Role-Disruption Risk & Cohort $\times$ cut & \texttt{student\_responses.parquet} \\
+M1 & Self-Reported AI-Dependency Trajectory & Cohort $\times$ cut & \path{textual_cut_signals.parquet} \\
+M2 & Perceived Role-Disruption Risk & Cohort $\times$ cut & \path{student_responses.parquet} \\
 \midrule
 \multicolumn{4}{@{}l}{\textit{RQ2 -- Repository density vs. coordination friction}} \\
 \midrule
-M4 & Repository Activity Density & Semester $\times$ cut & \texttt{code\_churn\_metrics.parquet} \\
-M5 & Coordination-Friction Trajectory & Cohort $\times$ cut & \texttt{cohort\_temporal\_friction.csv} \\
+M3 & Pre-Deadline Author-Concentration Density & Team-semester & \path{integration_friction_metrics.parquet} \\
+M4 & Repository Activity Density & Semester $\times$ cut & \path{code_churn_metrics.parquet} \\
+M5 & Coordination-Friction Trajectory & Cohort $\times$ cut & \path{cohort_temporal_friction.csv} \\
 \midrule
 \multicolumn{4}{@{}l}{\textit{RQ3 -- Planning quality, destructive rework, and outcomes (primary)}} \\
 \midrule
-M6 & $T_1$ Planning-Quality Score & Team-semester & \texttt{team\_level\_signals.csv} \\
-M7 & $T_1$ Planning-Omission Rate & Cohort & \texttt{team\_level\_signals.csv} \\
-M8 & Rework Severity Ratio & Team-semester & \texttt{team\_level\_signals.csv} \\
-M9 & Planning vs. Rework/Outcome Association & Team-semester & \texttt{team\_level\_signals.csv} 
-
-+ \texttt{evaluator\_outcome\_metrics.parquet} \\
+M6 & $T_1$ Planning-Quality Score & Team-semester & \path{team_level_signals.csv} \\
+M7 & $T_1$ Planning-Omission Rate & Cohort & \path{team_level_signals.csv} \\
+M8 & Rework Severity Ratio & Team-semester & \path{team_level_signals.csv} \\
+M9 & Planning vs. Rework/Outcome Association & Team-semester & \path{team_level_signals.csv} + \path{evaluator_outcome_metrics.parquet} \\
 \bottomrule
 \end{tabularx}
 \end{table*}
