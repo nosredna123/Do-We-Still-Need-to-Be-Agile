@@ -68,20 +68,20 @@
       },
       {
         "analysis_id": "context_ie_temporal_primary",
-        "coefficient": NaN,
+        "coefficient": 1.0,
         "confidence_interval": null,
         "confidence_interval_method": "not_calculated_v1",
         "figure": null,
         "n_missing": 3,
         "n_total": 6,
         "n_valid": 3,
-        "p_value": NaN,
+        "p_value": 0.0,
         "priority": "primary",
-        "reason": "zero_variance",
-        "status": "unavailable",
+        "reason": null,
+        "status": "success",
         "test": "spearman",
         "unit_of_analysis": "cut_context",
-        "warning": null,
+        "warning": "small_sample_n_lt_10",
         "x": "ie_transcript_coordination_friction_score_mean",
         "x_missing": 3,
         "y": "ie_transcript_rework_signal_score_mean",
@@ -89,7 +89,7 @@
       }
     ],
     "rejected": [],
-    "results_input_checksum": "b53abef149799763979b6b04e2f8ec7fef2b7a5cd26029e8567f321c51bab772",
+    "results_input_checksum": "e583771ffb1cb155e0d303ef68d33a1f0e4ed25cc6657ca22b140184452ebd23",
     "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/correlation_results.csv",
     "status": "success"
   },
@@ -6063,8 +6063,8 @@
         "group_variable": "ie_transcript_coordination_friction_score_mean",
         "interpretation": "exploratory_observational",
         "multiple_testing_correction": "none_v1",
-        "n_group_high": 0,
-        "n_group_low": 3,
+        "n_group_high": 1,
+        "n_group_low": 2,
         "n_missing": 3,
         "n_total": 6,
         "n_valid": 3,
@@ -6072,7 +6072,7 @@
         "p_value": NaN,
         "priority": "primary",
         "reason": "insufficient_group_n",
-        "split_median": 0.0,
+        "split_median": 1.9642857142857142,
         "split_rule": "median_low_le_high_gt",
         "status": "unavailable",
         "test": "mann_whitney_u",
@@ -6106,13 +6106,13 @@
         "unit_of_analysis": "team_semester"
       }
     },
-    "results_input_checksum": "b5ea73aa638e3d1c18489231586d931bb82a9ce0495580168fe8d756ff2f6c26",
+    "results_input_checksum": "0747beada75d0746c16e36bdc9fb237a6873c59a765f6c370cc2f839ded0b59d",
     "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/hypothesis_results.csv",
     "status": "success"
   },
   "input_artifacts": {
     "cut_context_metrics": {
-      "checksum": "3c012ac83f2eeb6afb55b84548b7f6b7abba9ab50f1df91cd1d3089d9e420546",
+      "checksum": "9d5532ed631939b50129842ad1a673759b7c9041051209df6ce96c140a187b72",
       "contract_version": "cut-context-metrics-v1",
       "n_rows": 6,
       "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet",
@@ -6140,7 +6140,7 @@
       "unit_of_analysis": "transcript_session"
     }
   },
-  "input_checksum": "809ea35af8944990d9cb6cdaae6bd0506093698a4e3b406d648762a13489a00b",
+  "input_checksum": "330c758577a511e6f9728ba49ca33d5fe46035eacf6d4c7b2387f4f4cd32a5cb",
   "manifest_version": "phase2-statistics-v2",
   "metric_definition_versions": {
     "ai": "ai-v1",

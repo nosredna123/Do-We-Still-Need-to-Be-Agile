@@ -3,10 +3,10 @@
   "category": "prioritarias",
   "checksums": {
     "data": "9e8336ad5289ad2bb7b42eff17f7915382fc0bb65725fa69ab66518e3d59cd60",
-    "pdf": "4b1b7d3192e66694f3fe1f793e646d5176aac01816fe639d6fc81026702ecb38",
+    "pdf": "b240708484d745cf3fa7038a9666fe12ee321448e5be6aab2885541a1761238c",
     "plotly_json": "709044a10d1098f5e52e9c69ef25ab73796e2d190295904c80b8b7dafbd8cdc0",
     "png": "6884db73b4834a7592753be7a7c3b568aa597152426fb591c6959673e78a5da9",
-    "svg": "93c286db4350cb87be72c3412a7d6d93cdf6e846ccab4f2e98daf84c925077d8"
+    "svg": "ea26283d175aeea8a4a6851880052492628014b0e5a39f1a8c91c68f1ac49eee"
   },
   "data_metadata_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv.metadata.json",
   "data_path": "data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv",

@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-consolidated-report-v1",
-  "input_checksum": "01b40a0bdb72dfaf7de945adc6fc6114d89e5395a0454254caf53f89cc394b43",
+  "input_checksum": "e69431486c382d95049ba06ec2acf5752ba961723459fa48d0ac82e815a51e2d",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",

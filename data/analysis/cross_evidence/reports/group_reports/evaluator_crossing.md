@@ -12,7 +12,7 @@ The 'evaluator_crossing' group measures the relationships between various softwa
 
 3. **scope_vs_late_instability_index**
    - **Status**: Inconclusive
-   - **Contribution**: Indicates a fragile correlation that does not support the expected direction.
+   - **Contribution**: Indicates a fragile correlation that does not clearly support the expected direction.
 
 4. **scope_applicability_mean_t3__planning_artifact_activity_t3__top_bottom_4**
    - **Status**: Inconclusive
@@ -28,7 +28,7 @@ The 'evaluator_crossing' group measures the relationships between various softwa
 
 7. **scope_applicability_mean_t3__scope_applicability_mean_t3__top_bottom_4**
    - **Status**: Supports
-   - **Contribution**: Provides exploratory group-level support for scope applicability.
+   - **Contribution**: Provides exploratory support for the relationship within scope applicability.
 
 8. **project_progress_mean_t3__planning_artifact_activity_t3__top_bottom_4**
    - **Status**: Inconclusive
@@ -44,63 +44,63 @@ The 'evaluator_crossing' group measures the relationships between various softwa
 
 11. **project_progress_mean_t3__scope_applicability_mean_t3__top_bottom_4**
     - **Status**: Supports
-    - **Contribution**: Provides exploratory group-level support for project progress and scope applicability.
+    - **Contribution**: Provides exploratory support for the relationship between project progress and scope applicability.
 
 12. **late_instability_index__scope_applicability_mean_t3__top_bottom_4**
     - **Status**: Inconclusive
     - **Contribution**: Lacks statistical support for the best/worst contrast.
 
-13. **commits_per_author_t3__top__scope_applicability_mean_t3__top**
+13. **scope_vs_planning_artifact_activity_t3** (duplicate)
+    - **Status**: Supports
+    - **Contribution**: Confirms stability in the correlation with scope.
+
+14. **scope_vs_commits_per_author_t3** (duplicate)
+    - **Status**: Supports
+    - **Contribution**: Confirms stability in the correlation with scope.
+
+15. **scope_vs_late_instability_index** (duplicate)
+    - **Status**: Inconclusive
+    - **Contribution**: Indicates fragile or unsupported evidence.
+
+16. **commits_per_author_t3__top__scope_applicability_mean_t3__top**
     - **Status**: Inconclusive
     - **Contribution**: Weak evidence for extreme-case overlap.
 
-14. **commits_per_author_t3__top__scope_applicability_mean_t3__bottom**
+17. **commits_per_author_t3__top__scope_applicability_mean_t3__bottom**
     - **Status**: Supports
-    - **Contribution**: Indicates convergence of tails in extreme cases.
+    - **Contribution**: Supports convergence of tails in the data.
 
-15. **commits_per_author_t3__bottom__scope_applicability_mean_t3__bottom**
+18. **commits_per_author_t3__bottom__scope_applicability_mean_t3__bottom**
     - **Status**: Inconclusive
     - **Contribution**: Weak evidence for extreme-case overlap.
 
-16. **scope_vs_planning_artifact_activity_t3** (duplicate)
+19. **scope_vs_planning_artifact_activity_t3** (duplicate)
     - **Status**: Supports
-    - **Contribution**: Provides contextual evidence for the relationship between planning artifact activity and scope.
+    - **Contribution**: Provides contextual evidence for the relationship with scope.
 
-17. **scope_vs_commits_per_author_t3** (duplicate)
+20. **scope_vs_planning_artifact_activity_t3** (duplicate)
+    - **Status**: Inconclusive
+    - **Contribution**: Requires contextualized interpretation.
+
+21. **scope_vs_planning_artifact_activity_t3** (duplicate)
+    - **Status**: Inconclusive
+    - **Contribution**: Requires contextualized interpretation.
+
+22. **scope_vs_commits_per_author_t3** (duplicate)
     - **Status**: Supports
-    - **Contribution**: Provides contextual evidence for the relationship between commits per author and scope.
+    - **Contribution**: Provides contextual evidence for the relationship with scope.
 
-18. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Lacks statistical support for the expected direction.
-
-19. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
+23. **scope_vs_commits_per_author_t3** (duplicate)
+    - **Status**: Supports
     - **Contribution**: Requires contextualized interpretation.
 
-20. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation.
-
-21. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation.
-
-22. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation.
-
-23. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation.
-
-24. **scope_vs_late_instability_index** (duplicate)
+24. **scope_vs_commits_per_author_t3** (duplicate)
     - **Status**: Inconclusive
     - **Contribution**: Requires contextualized interpretation.
 
 25. **scope_vs_late_instability_index** (duplicate)
     - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation.
+    - **Contribution**: Provides contextual evidence but lacks clarity.
 
 26. **scope_vs_late_instability_index** (duplicate)
     - **Status**: Inconclusive
@@ -111,7 +111,7 @@ The 'evaluator_crossing' group measures the relationships between various softwa
     - **Contribution**: Requires contextualized interpretation.
 
 ## Evidence status
-The group mainly supports the narrative, with 11 artifacts providing supportive evidence and 16 artifacts classified as inconclusive. The majority of the significant findings reinforce the relationships being examined, particularly regarding planning artifact activity and commits per author.
+The group mainly supports the narrative, with 11 artifacts providing supportive evidence and 16 artifacts being inconclusive. The significant number of supportive artifacts indicates a stronger alignment with the narrative's claims.
 
 ## Role in the narrative
-The evidence from this group strengthens the act-level argument by providing robust correlations that support the relationships between scope, planning, and author contributions. The supportive findings help to validate the narrative claims, while the inconclusive results highlight areas that require further exploration.
+The evidence from this group strengthens the act-level argument by providing robust correlations that highlight the relationships between scope, planning activities, and commits per author. The supportive findings enhance the overall understanding of how these factors interact in software engineering contexts.

@@ -2,30 +2,22 @@
 The analytical artifact is a statistical dataset manifest with a unit of analysis of "cut_context". It contains 6 rows and was produced using the script "06_statistical_analyzer.py". The contract version is "statistical-dataset-manifest-v1".
 
 ## How it was built
-The dataset was constructed by aggregating various metrics related to cut context analysis over specified semesters and temporal markers. The data was processed to ensure completeness and accuracy, with attention given to the variables of interest, which include various scores and metrics related to student responses and team performance.
+The dataset was constructed by aggregating various metrics related to cut context analysis over specified semesters. The data was processed to ensure completeness and accuracy, with attention given to the variables of interest, which include various scores and metrics related to student responses and team performance.
 
 ## Narrative binding
-The narrative acts associated with this dataset are 2, 3, and 4. These acts are intended to support or falsify claims regarding the anatomy of planning debt, the human factor in progress perception, and the inversion of values in the era of AI.
+The narrative acts associated with this dataset are 2, 3, and 4. These acts are intended to support or falsify the claims regarding the anatomy of planning debt, the human factor in progress illusions, and the inversion of values in the era of AI.
 
 ## What the current data actually shows
 The dataset contains the following concrete numbers: 
-- n: 6 (for cut_context_metrics)
-- n: 1122 (for student_nlp)
-- n: 14 (for team_metrics)
-- n: 100 (for transcript_nlp)
-- p-values: Not applicable
-- coefficients: Not applicable
-- missingness: 
-  - For cut_context_metrics: 3 missing values in various float64 variables.
-  - For student_nlp: No missing values.
-  - For team_metrics: Various missing values across multiple variables.
-  - For transcript_nlp: No missing values.
+- For cut_context_metrics: n = 6, with missingness in several variables (e.g., 3 missing for "ie_transcript_coordination_friction_score_iqr", "ie_transcript_coordination_friction_score_mean", etc.).
+- For student_nlp: n = 1122, with no missing values across all variables.
+- For team_metrics: n = 14, with missingness in several variables (e.g., 7 missing for "ai_author_share_iqr_before_t3_window").
+- For transcript_nlp: n = 100, with no missing values across all variables.
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure". This is justified as the dataset provides a foundational overview of the metrics without significant inferential testing or results.
+The deterministic verdict for this dataset is "descriptive_infrastructure". This is justified as the dataset provides a foundational overview of the metrics without significant inferential tests or results.
 
 ## Known limitations
-The limitations include:
-- Missing values in several variables across the datasets, particularly in team_metrics.
-- Exclusions due to missing values in specific variables, such as "ai_author_share_iqr_before_t3_window" and others in team_metrics.
-- The dataset does not provide inferential statistics or significant results, limiting its analytical depth.
+The known limitations include:
+- Missing values in several variables across the datasets, particularly in team_metrics and cut_context_metrics.
+- Exclusions due to missing values in specific variables, such as "ai_author_share_iqr_before_t3_window" and "ie_transcript_coordination_friction_score_iqr".

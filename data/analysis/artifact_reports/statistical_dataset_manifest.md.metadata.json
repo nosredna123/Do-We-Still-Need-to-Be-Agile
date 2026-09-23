@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "e53d3788f6ddb8598da600d2a195272eaa5ebf2fb350d99e6b604fb41a04118b",
+  "input_checksum": "bab95869f07d5ed27dbeebe688e7fb856eb754612d76c51e5622925e220843e2",
   "options": {
     "backend": "openai",
     "fact_sheet": {

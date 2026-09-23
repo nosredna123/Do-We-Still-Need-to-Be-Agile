@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "bd507a1baaaf3423c15b7439935ef98eb151d77a6fb4637eb544271e742a604d",
+  "input_checksum": "f6c3aa6d1952180050241dea4ea89fbcc193b8cfdb0221f25f34fe76ac240f28",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -9,9 +9,9 @@
       "contract_version": "textual-cut-signals-v2",
       "key_numeric_columns": {
         "student_career_expectation_ai_dependency_score_iqr": {
-          "max": 0.0,
-          "mean": 0.0,
-          "median": 0.0,
+          "max": 1.75,
+          "mean": 0.9166666666666666,
+          "median": 1.0,
           "min": 0.0,
           "n_total": 6,
           "n_valid": 6
@@ -25,18 +25,18 @@
           "n_valid": 6
         },
         "student_career_expectation_ai_dependency_score_mode_n": {
-          "max": 46.0,
-          "mean": 31.166666666666668,
-          "median": 31.0,
-          "min": 18.0,
+          "max": 40.0,
+          "mean": 22.166666666666668,
+          "median": 20.0,
+          "min": 11.0,
           "n_total": 6,
           "n_valid": 6
         },
         "student_career_expectation_ai_dependency_score_mode_share": {
-          "max": 1.0,
-          "mean": 1.0,
-          "median": 1.0,
-          "min": 1.0,
+          "max": 0.8695652173913043,
+          "mean": 0.6947191515722798,
+          "median": 0.6875,
+          "min": 0.5853658536585366,
           "n_total": 6,
           "n_valid": 6
         },
@@ -49,9 +49,9 @@
           "n_valid": 6
         },
         "student_career_expectation_ai_dependency_score_q3": {
-          "max": 0.0,
-          "mean": 0.0,
-          "median": 0.0,
+          "max": 1.75,
+          "mean": 0.9166666666666666,
+          "median": 1.0,
           "min": 0.0,
           "n_total": 6,
           "n_valid": 6

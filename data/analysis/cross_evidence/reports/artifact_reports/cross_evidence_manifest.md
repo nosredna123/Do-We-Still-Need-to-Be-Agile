@@ -6,21 +6,21 @@
 - **Contract Version**: cross-evidence-manifest-v1  
 
 ## How it was built
-The cross-evidence artifact was constructed using the script "08_cross_evidence_engine.py" and is categorized under the contract version "cross-evidence-manifest-v1". It serves as a manifest for secondary exploratory evidence, focusing on descriptive context related to an inventory of artifacts.
+The cross-evidence manifest was constructed using the producer script "08_cross_evidence_engine.py" and is categorized under the contract version "cross-evidence-manifest-v1". It serves as a secondary exploratory evidence source, providing a descriptive context for the artifacts included in the inventory.
 
 ## Narrative binding
-The narrative acts identified are 1, 2, 3, and 4. These acts are intended to support or qualify various claims or cautions, although specific claims or cautions are not detailed in the fact sheet.
+The narrative acts identified are 1, 2, 3, and 4. These acts are intended to support or qualify various claims or cautions related to the evidence scope and context of the artifacts.
 
 ## What the current data actually shows
 - **Effect Sizes**: Not specified  
-- **p-values**: Not specified  
+- **P-values**: Not specified  
 - **n_valid**: Not specified  
 - **Missingness**: Not specified  
 - **Cross-evidence Labels**: Not specified  
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is that it is partial. This is justified by the status being labeled as "partial" in the fact sheet.
+The verdict on the contribution of this artifact is not determinable due to the absence of specific quantitative data such as effect sizes, p-values, and valid sample sizes.
 
 ## Known limitations
-- Limitations are not specified in the fact sheet.  
+- Limitations are not specified.  
 - Exclusions summary is not provided.

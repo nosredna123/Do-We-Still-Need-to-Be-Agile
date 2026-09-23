@@ -8,4 +8,4 @@ There are no bound artifacts for this act.
 The aggregate status is classified as "limits." This is justified by the absence of support, tested, and weak evidence, as indicated by the artifact count being zero.
 
 ## Narrative interpretation
-The act is merely contextualized, as there are no supporting artifacts to substantiate its claims.
+The act is merely contextualized, as there is no supporting evidence to affirm its claims or conclusions.

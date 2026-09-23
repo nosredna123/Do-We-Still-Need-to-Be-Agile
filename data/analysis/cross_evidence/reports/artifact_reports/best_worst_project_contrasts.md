@@ -10,19 +10,20 @@ The artifact was constructed using a script that processes data related to best 
 
 ## Narrative binding
 - **Narrative Acts**: 3  
-- **Claim or Caution Supported/Qualified**: The narrative acts are intended to support or qualify the interpretation of the results regarding the contrasts between project outcomes.
+- **Claim or Caution Supported/Qualified**: The narrative acts are intended to support the interpretation of the results regarding the contrasts between high and low scoring groups.
 
 ## What the current data actually shows
-- **Effect Sizes**: Not specified  
-- **p-values**: Not specified  
+- **Effect Sizes**: 
+  - Low Mean: 5495.88  
+  - High Mean: 2.24 (high_score_min), 2.28 (high_score_max)  
+- **P-Values**: Not specified in the fact sheet.  
 - **n_valid**: 24  
-- **Missingness**: Not specified  
-- **Cross-evidence Labels**: Not specified  
+- **Missingness**: Not specified in the fact sheet.  
+- **Cross-Evidence Labels**: Not specified in the fact sheet.  
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is unclear due to the lack of specific effect sizes and p-values. While the data provides a valid sample size of 24, the absence of detailed statistical significance limits the ability to draw strong conclusions.
+The verdict on the contribution of this artifact is that it provides secondary exploratory evidence regarding project contrasts. This is justified by the presence of valid data points (n_valid = 24) and the structured analysis of score differences between groups.
 
 ## Known limitations
-- No specific effect sizes or p-values are provided.  
-- The evidence is categorized as secondary exploratory evidence, which may indicate a lower level of reliability.  
-- No exclusions summary is present.
+- No specific limitations are listed in the fact sheet.  
+- Exclusions summary: Not specified in the fact sheet.

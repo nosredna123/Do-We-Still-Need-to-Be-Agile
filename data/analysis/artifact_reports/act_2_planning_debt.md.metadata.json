@@ -1,13 +1,13 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "3a714e1bc63b653fa08aea3703fd1a801168b22c85ba13dd838ef03a5c279be6",
+  "input_checksum": "83ce2f52897ea5df13e247ba3148c174a0a9edef8c62a21d38fe42ed1129f97d",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",
     "payload": {
       "act_description": "Argues that skipping BDUF does not remove planning work; it defers and multiplies it as Planning Debt, visible as structural drift and as human/computational waste such as Code Churn.",
       "act_number": 2,
-      "act_status": "unsupported_by_current_tests",
+      "act_status": "partially_supported",
       "act_title": "Ato 2 - A Anatomia da Divida de Planejamento (Diagnosis)",
       "artifact_verdicts": [
         {
@@ -40,7 +40,7 @@
         },
         {
           "artifact_id": "correlation_results",
-          "verdict": "inconclusive"
+          "verdict": "supports_partially"
         },
         {
           "artifact_id": "hypothesis_results",
@@ -61,7 +61,8 @@
       ],
       "verdict_counts": {
         "descriptive_infrastructure": 7,
-        "inconclusive": 5
+        "inconclusive": 4,
+        "supports_partially": 1
       }
     },
     "prompt_version": "act-synthesis-v1"

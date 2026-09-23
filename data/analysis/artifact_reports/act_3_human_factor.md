@@ -1,5 +1,5 @@
 ## Act summary
-This act argues that skipping upfront design collapses a team's asynchronous coordination capacity, producing cognitive overload and a late-stage integration bottleneck, which is referred to as the 'hero developer' pattern.
+Act 3 argues that skipping upfront design collapses a team's asynchronous coordination capacity, producing cognitive overload and a late-stage integration bottleneck (the 'hero developer' pattern).
 
 ## Artifacts bound to this act
 - **phase2_contract_report**: descriptive_infrastructure
@@ -8,14 +8,14 @@ This act argues that skipping upfront design collapses a team's asynchronous coo
 - **textual_cut_signals**: descriptive_infrastructure
 - **technical_degradation_metrics**: descriptive_infrastructure
 - **integration_friction_metrics**: descriptive_infrastructure
-- **cut_context_metrics**: unavailable
+- **cut_context_metrics**: supports_partially
 - **team_metrics**: inconclusive
 - **statistical_dataset_manifest**: descriptive_infrastructure
-- **correlation_results**: inconclusive
+- **correlation_results**: supports_partially
 - **hypothesis_results**: inconclusive
 - **figure_delta_dt_by_team_semester**: inconclusive
 - **figure_ai_before_t3**: inconclusive
-- **figure_ie_by_cut_or_corpus**: unavailable
+- **figure_ie_by_cut_or_corpus**: supports_partially
 
 ## Empirical status
-The aggregate act status is "unsupported_by_current_tests." This is justified by the counts in verdicts, where there are 7 artifacts classified as descriptive infrastructure, 5 as inconclusive, and 2 as unavailable, indicating a lack of empirical support for the claims made in this act.
+The act is currently classified as partially supported. This classification is based on the presence of 7 artifacts categorized as descriptive infrastructure, 4 as inconclusive, and 3 as supports partially.

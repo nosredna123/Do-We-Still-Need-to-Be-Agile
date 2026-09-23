@@ -22,7 +22,8 @@ The narrative act present is 3, which is meant to support or qualify claims rega
 - **Max Author Share**: Mean = 0.58, Max = 1.0, Min = 0.24, n_valid = 33  
 
 ## Contribution assessment
-The contribution assessment is that the dataset provides a comprehensive overview of author pressure metrics across different teams and semesters, with valid data for all 33 entries. The metrics included are relevant for understanding team dynamics in software development.
+The contribution assessment is that the dataset provides a comprehensive overview of author pressure metrics, with valid data for all 33 entries across various metrics, indicating a robust dataset for exploratory analysis.
 
 ## Known limitations
-- No limitations or exclusions are explicitly stated in the fact sheet.
+- No known limitations were specified in the fact sheet.
+- There are no exclusions mentioned.

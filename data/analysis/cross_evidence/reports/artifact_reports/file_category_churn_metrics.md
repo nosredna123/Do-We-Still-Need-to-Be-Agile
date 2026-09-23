@@ -10,7 +10,7 @@ The dataset was constructed using a script that processes data related to file c
 
 ## Narrative binding
 - **Narrative Acts**: 2, 3, 4  
-- These acts are meant to support or qualify claims regarding the dynamics of file category churn and the associated metrics.
+- These acts are meant to support or qualify claims regarding the dynamics of file category changes and their implications for software engineering practices.
 
 ## What the current data actually shows
 - **Category Confidence Mean**: Mean = 0.901, n_valid = 158  
@@ -23,8 +23,7 @@ The dataset was constructed using a script that processes data related to file c
 - **Total Event N**: Mean = 2298.722, n_valid = 158  
 
 ## Contribution assessment
-The dataset provides a comprehensive overview of file category churn metrics, with valid data for all 158 rows. The metrics included offer insights into event counts and churn lines, which are essential for understanding file category dynamics.
+The dataset provides a comprehensive overview of file category churn metrics, with valid data for all 158 rows. The metrics included can inform understanding of file changes and their impact on software projects, supporting exploratory evidence in software engineering.
 
 ## Known limitations
-- No specific limitations were mentioned in the fact sheet.
-- There are no exclusions summarized in the provided data.
+- No specific limitations or exclusions are mentioned in the fact sheet.

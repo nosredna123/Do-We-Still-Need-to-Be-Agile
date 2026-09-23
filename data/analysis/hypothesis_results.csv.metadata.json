@@ -1,6 +1,6 @@
 {
   "contract_version": "mann-whitney-hypothesis-results-v1",
-  "input_checksum": "b5ea73aa638e3d1c18489231586d931bb82a9ce0495580168fe8d756ff2f6c26",
+  "input_checksum": "0747beada75d0746c16e36bdc9fb237a6873c59a765f6c370cc2f839ded0b59d",
   "options": {
     "minimum_group_n": 3,
     "multiple_testing_correction": "none_v1",

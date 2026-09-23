@@ -8,23 +8,23 @@ The 'temporal_escalation' group measures the relationship between project scope,
 
 2. **scope_vs_planning_rework_t2_t3**
    - **Status**: Inconclusive
-   - **Contribution**: Suggests a potential relationship between scope and planning rework, but the evidence is fragile and inconclusive.
+   - **Contribution**: Suggests a potential relationship between scope and planning rework, but the evidence is fragile and does not support a definitive conclusion.
 
 3. **scope_applicability_mean_t3__planning_rework_signal_t2_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Offers an exploratory contrast that lacks statistical support.
+   - **Contribution**: Offers exploratory insights but lacks statistical support for its claims.
 
 4. **scope_applicability_mean_t3__pi_line_delta_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Provides an exploratory contrast without statistical backing.
+   - **Contribution**: Similar to the previous artifact, it provides exploratory insights without strong statistical backing.
 
 5. **project_progress_mean_t3__planning_rework_signal_t2_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Presents an exploratory contrast that is not statistically supported.
+   - **Contribution**: Provides exploratory insights but lacks statistical significance.
 
 6. **project_progress_mean_t3__pi_line_delta_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Offers an exploratory contrast lacking statistical support.
+   - **Contribution**: Offers exploratory insights without strong statistical support.
 
 7. **late_instability_index__planning_rework_signal_t2_t3__top_bottom_4**
    - **Status**: Supports
@@ -32,7 +32,7 @@ The 'temporal_escalation' group measures the relationship between project scope,
 
 8. **late_instability_index__pi_line_delta_t3__top_bottom_4**
    - **Status**: Supports
-   - **Contribution**: Offers exploratory group-level support for the relationship between late instability and performance metrics.
+   - **Contribution**: Similar to the previous artifact, it supports the relationship between late instability and performance metrics.
 
 9. **scope_vs_pi_line_delta_t3** (from leave-one-out sensitivity)
    - **Status**: Supports
@@ -44,39 +44,39 @@ The 'temporal_escalation' group measures the relationship between project scope,
 
 11. **planning_rework_signal_t2_t3__top__source_churn_t3__top**
     - **Status**: Supports
-    - **Contribution**: Supports convergence of tails in extreme-case overlap analysis.
+    - **Contribution**: Supports the convergence of tails in extreme-case overlaps.
 
 12. **planning_rework_signal_t2_t3__top__source_churn_t3__bottom**
     - **Status**: Inconclusive
-    - **Contribution**: Weak exploratory evidence that should remain descriptive.
+    - **Contribution**: Weak evidence that should remain descriptive.
 
 13. **planning_rework_signal_t2_t3__bottom__source_churn_t3__bottom**
     - **Status**: Supports
-    - **Contribution**: Supports convergence of tails in extreme-case overlap analysis.
+    - **Contribution**: Supports the convergence of tails in extreme-case overlaps.
 
 14. **planning_rework_signal_t2_t3__top__commits_per_author_t3__top**
     - **Status**: Supports
-    - **Contribution**: Supports convergence of tails in extreme-case overlap analysis.
+    - **Contribution**: Supports the convergence of tails in extreme-case overlaps.
 
 15. **planning_rework_signal_t2_t3__top__commits_per_author_t3__bottom**
     - **Status**: Inconclusive
-    - **Contribution**: Weak exploratory evidence that should remain descriptive.
+    - **Contribution**: Weak evidence that should remain descriptive.
 
 16. **planning_rework_signal_t2_t3__bottom__commits_per_author_t3__bottom**
     - **Status**: Supports
-    - **Contribution**: Supports convergence of tails in extreme-case overlap analysis.
+    - **Contribution**: Supports the convergence of tails in extreme-case overlaps.
 
 17. **planning_rework_signal_t2_t3__top__scope_applicability_mean_t3__top**
     - **Status**: Inconclusive
-    - **Contribution**: Weak exploratory evidence that should remain descriptive.
+    - **Contribution**: Weak evidence that should remain descriptive.
 
 18. **planning_rework_signal_t2_t3__top__scope_applicability_mean_t3__bottom**
     - **Status**: Supports
-    - **Contribution**: Supports convergence of tails in extreme-case overlap analysis.
+    - **Contribution**: Supports the convergence of tails in extreme-case overlaps.
 
 19. **planning_rework_signal_t2_t3__bottom__scope_applicability_mean_t3__bottom**
     - **Status**: Inconclusive
-    - **Contribution**: Weak exploratory evidence that should remain descriptive.
+    - **Contribution**: Weak evidence that should remain descriptive.
 
 20. **scope_vs_pi_line_delta_t3** (from semester stratified results)
     - **Status**: Supports
@@ -84,11 +84,11 @@ The 'temporal_escalation' group measures the relationship between project scope,
 
 21. **scope_vs_pi_line_delta_t3** (from semester stratified results)
     - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation of semester-stratified results.
+    - **Contribution**: Requires contextualized interpretation of results.
 
 22. **scope_vs_pi_line_delta_t3** (from semester stratified results)
     - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation of semester-stratified results.
+    - **Contribution**: Requires contextualized interpretation of results.
 
 23. **scope_vs_planning_rework_t2_t3** (from semester stratified results)
     - **Status**: Inconclusive
@@ -96,14 +96,14 @@ The 'temporal_escalation' group measures the relationship between project scope,
 
 24. **scope_vs_planning_rework_t2_t3** (from semester stratified results)
     - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation of semester-stratified results.
+    - **Contribution**: Requires contextualized interpretation of results.
 
 25. **scope_vs_planning_rework_t2_t3** (from semester stratified results)
     - **Status**: Inconclusive
-    - **Contribution**: Requires contextualized interpretation of semester-stratified results.
+    - **Contribution**: Requires contextualized interpretation of results.
 
 ## Evidence status
-The group mainly supports the narrative, with 9 artifacts providing supportive evidence and 16 artifacts being inconclusive. The presence of robust support from key analyses indicates a significant relationship between project scope and performance metrics.
+The group mainly supports the narrative, with 9 artifacts providing supportive evidence and 16 artifacts being inconclusive. The presence of robust correlations in several key analyses strengthens the overall argument.
 
 ## Role in the narrative
-The evidence from this group strengthens the act-level argument by confirming the importance of managing project scope to mitigate planning rework and enhance performance outcomes.
+The evidence from this group strengthens the act-level argument by providing significant correlations and insights into the relationships between project scope, planning rework, and performance metrics.

@@ -1,0 +1,157 @@
+2026-09-23 12:12:49,554 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260923T151249Z.txt
+2026-09-23 12:12:49,554 - __main__ - INFO - Running stage nlp: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/04_nlp_qualitative_miner.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --catalog-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/.private/student_prompt_catalog.parquet --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/student_nlp.parquet --transcript-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/transcript_nlp.parquet --textual-cut-signals-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/textual_cut_signals.parquet --backend openai --force
+INFO:__main__:Student NLP queue: total=1122 completed=0 pending=1122
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=1/1122 pending=1121 observation=2025.2/alunos_t1.csv:0/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=2/1122 pending=1120 observation=2025.2/alunos_t1.csv:0/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=3/1122 pending=1119 observation=2025.2/alunos_t1.csv:0/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=4/1122 pending=1118 observation=2025.2/alunos_t1.csv:0/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=5/1122 pending=1117 observation=2025.2/alunos_t1.csv:0/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=6/1122 pending=1116 observation=2025.2/alunos_t1.csv:0/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=7/1122 pending=1115 observation=2025.2/alunos_t1.csv:1/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=8/1122 pending=1114 observation=2025.2/alunos_t1.csv:1/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=9/1122 pending=1113 observation=2025.2/alunos_t1.csv:1/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=10/1122 pending=1112 observation=2025.2/alunos_t1.csv:1/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=11/1122 pending=1111 observation=2025.2/alunos_t1.csv:1/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=12/1122 pending=1110 observation=2025.2/alunos_t1.csv:1/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=13/1122 pending=1109 observation=2025.2/alunos_t1.csv:2/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=14/1122 pending=1108 observation=2025.2/alunos_t1.csv:2/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=15/1122 pending=1107 observation=2025.2/alunos_t1.csv:2/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=16/1122 pending=1106 observation=2025.2/alunos_t1.csv:2/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=17/1122 pending=1105 observation=2025.2/alunos_t1.csv:2/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=18/1122 pending=1104 observation=2025.2/alunos_t1.csv:2/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=19/1122 pending=1103 observation=2025.2/alunos_t1.csv:3/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=20/1122 pending=1102 observation=2025.2/alunos_t1.csv:3/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=21/1122 pending=1101 observation=2025.2/alunos_t1.csv:3/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=22/1122 pending=1100 observation=2025.2/alunos_t1.csv:3/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=23/1122 pending=1099 observation=2025.2/alunos_t1.csv:3/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=24/1122 pending=1098 observation=2025.2/alunos_t1.csv:3/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=25/1122 pending=1097 observation=2025.2/alunos_t1.csv:4/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=26/1122 pending=1096 observation=2025.2/alunos_t1.csv:4/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=27/1122 pending=1095 observation=2025.2/alunos_t1.csv:4/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=28/1122 pending=1094 observation=2025.2/alunos_t1.csv:4/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=29/1122 pending=1093 observation=2025.2/alunos_t1.csv:4/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=30/1122 pending=1092 observation=2025.2/alunos_t1.csv:4/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=31/1122 pending=1091 observation=2025.2/alunos_t1.csv:5/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=32/1122 pending=1090 observation=2025.2/alunos_t1.csv:5/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=33/1122 pending=1089 observation=2025.2/alunos_t1.csv:5/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=34/1122 pending=1088 observation=2025.2/alunos_t1.csv:5/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=35/1122 pending=1087 observation=2025.2/alunos_t1.csv:5/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=36/1122 pending=1086 observation=2025.2/alunos_t1.csv:5/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=37/1122 pending=1085 observation=2025.2/alunos_t1.csv:6/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=38/1122 pending=1084 observation=2025.2/alunos_t1.csv:6/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=39/1122 pending=1083 observation=2025.2/alunos_t1.csv:6/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=40/1122 pending=1082 observation=2025.2/alunos_t1.csv:6/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=41/1122 pending=1081 observation=2025.2/alunos_t1.csv:6/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=42/1122 pending=1080 observation=2025.2/alunos_t1.csv:6/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=43/1122 pending=1079 observation=2025.2/alunos_t1.csv:7/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=44/1122 pending=1078 observation=2025.2/alunos_t1.csv:7/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=45/1122 pending=1077 observation=2025.2/alunos_t1.csv:7/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=46/1122 pending=1076 observation=2025.2/alunos_t1.csv:7/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=47/1122 pending=1075 observation=2025.2/alunos_t1.csv:7/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=48/1122 pending=1074 observation=2025.2/alunos_t1.csv:7/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=49/1122 pending=1073 observation=2025.2/alunos_t1.csv:8/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=50/1122 pending=1072 observation=2025.2/alunos_t1.csv:8/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=51/1122 pending=1071 observation=2025.2/alunos_t1.csv:8/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=52/1122 pending=1070 observation=2025.2/alunos_t1.csv:8/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=53/1122 pending=1069 observation=2025.2/alunos_t1.csv:8/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=54/1122 pending=1068 observation=2025.2/alunos_t1.csv:8/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=55/1122 pending=1067 observation=2025.2/alunos_t1.csv:9/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=56/1122 pending=1066 observation=2025.2/alunos_t1.csv:9/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=57/1122 pending=1065 observation=2025.2/alunos_t1.csv:9/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=58/1122 pending=1064 observation=2025.2/alunos_t1.csv:9/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=59/1122 pending=1063 observation=2025.2/alunos_t1.csv:9/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=60/1122 pending=1062 observation=2025.2/alunos_t1.csv:9/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=61/1122 pending=1061 observation=2025.2/alunos_t1.csv:10/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=62/1122 pending=1060 observation=2025.2/alunos_t1.csv:10/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=63/1122 pending=1059 observation=2025.2/alunos_t1.csv:10/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=64/1122 pending=1058 observation=2025.2/alunos_t1.csv:10/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=65/1122 pending=1057 observation=2025.2/alunos_t1.csv:10/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=66/1122 pending=1056 observation=2025.2/alunos_t1.csv:10/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=67/1122 pending=1055 observation=2025.2/alunos_t1.csv:11/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=68/1122 pending=1054 observation=2025.2/alunos_t1.csv:11/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=69/1122 pending=1053 observation=2025.2/alunos_t1.csv:11/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=70/1122 pending=1052 observation=2025.2/alunos_t1.csv:11/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=71/1122 pending=1051 observation=2025.2/alunos_t1.csv:11/autonomy_tool_dependency
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=72/1122 pending=1050 observation=2025.2/alunos_t1.csv:11/career_expectation
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=73/1122 pending=1049 observation=2025.2/alunos_t1.csv:12/ai_benefit
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=74/1122 pending=1048 observation=2025.2/alunos_t1.csv:12/ai_career_impact_5y
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=75/1122 pending=1047 observation=2025.2/alunos_t1.csv:12/project_feeling
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=76/1122 pending=1046 observation=2025.2/alunos_t1.csv:12/project_challenges
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Student NLP progress: completed=77/1122 pending=1045 observation=2025.2/alunos_t1.csv:12/autonomy_tool_dependency

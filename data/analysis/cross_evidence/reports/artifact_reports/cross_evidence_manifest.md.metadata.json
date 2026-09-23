@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "f16c3e1a34fb40e89fe35a34d3e10be93736e383e096f32b1906776770ba24db",
+  "input_checksum": "dedf316724ea4d26ee58cea5e31c5970af21eee6ece6d63d26aedcdfbfe6483b",
   "options": {
     "artifact_id": "cross_evidence_manifest",
     "backend": "openai",
@@ -18,7 +18,7 @@
       ],
       "path": "data/analysis/cross_evidence/cross_evidence_manifest.json",
       "producer_script": "08_cross_evidence_engine.py",
-      "status": "partial",
+      "status": "success",
       "summary_keys": [
         "artifacts",
         "contract_version",

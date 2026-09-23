@@ -6,14 +6,14 @@
 - **Contract Version**: cross-evidence-manifest-v1  
 
 ## How it was built
-The artifact was constructed using the script "08_cross_evidence_engine.py" and is categorized under the "cross-evidence-manifest-v1" contract version. It focuses on secondary exploratory evidence and serves as a methodological warning, indicating potential issues or considerations in the analysis.
+The artifact was constructed using the script "08_cross_evidence_engine.py" and is categorized under the "cross-evidence-manifest-v1" contract version. It focuses on secondary exploratory evidence and serves as a methodological warning. The specific details regarding the row count are not provided.
 
 ## Narrative binding
 The narrative acts include:  
 1. Act 1: Supports the need for caution in interpreting exploratory evidence.  
-2. Act 2: Qualifies the reliability of findings based on methodological concerns.  
-3. Act 3: Highlights the importance of understanding exclusions in the data.  
-4. Act 4: Emphasizes the necessity of careful evaluation of evidence scope.
+2. Act 2: Qualifies the reliability of the findings presented.  
+3. Act 3: Highlights potential methodological issues.  
+4. Act 4: Emphasizes the importance of considering exclusions in the analysis.  
 
 ## What the current data actually shows
 - **Effect Sizes**: Not specified  
@@ -23,7 +23,7 @@ The narrative acts include:
 - **Cross-evidence Labels**: Not specified  
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is unclear due to the lack of specific quantitative data such as effect sizes, p-values, and valid sample sizes. The absence of these metrics limits the ability to assess the impact or significance of the findings.
+The verdict on the contribution of this artifact is unclear due to the lack of specific quantitative data such as effect sizes, p-values, and valid sample sizes. The absence of these metrics limits the ability to assess the strength and relevance of the evidence provided.
 
 ## Known limitations
 - Limitations are not specified in the fact sheet.  

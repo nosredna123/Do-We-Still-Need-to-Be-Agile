@@ -1,13 +1,13 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "01a77e102a70310b47233500efc579a356fdfccdd52d0a1202e50851a227a2b4",
+  "input_checksum": "e51a8a7e203634f742478bfcc173205ae6793e27223f040323322cbfcc48c1ff",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",
     "payload": {
       "act_description": "Argues that skipping upfront design collapses a team's asynchronous coordination capacity, producing cognitive overload and a late-stage integration bottleneck (the 'hero developer' pattern).",
       "act_number": 3,
-      "act_status": "unsupported_by_current_tests",
+      "act_status": "partially_supported",
       "act_title": "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)",
       "artifact_verdicts": [
         {
@@ -36,7 +36,7 @@
         },
         {
           "artifact_id": "cut_context_metrics",
-          "verdict": "unavailable"
+          "verdict": "supports_partially"
         },
         {
           "artifact_id": "team_metrics",
@@ -48,7 +48,7 @@
         },
         {
           "artifact_id": "correlation_results",
-          "verdict": "inconclusive"
+          "verdict": "supports_partially"
         },
         {
           "artifact_id": "hypothesis_results",
@@ -64,13 +64,13 @@
         },
         {
           "artifact_id": "figure_ie_by_cut_or_corpus",
-          "verdict": "unavailable"
+          "verdict": "supports_partially"
         }
       ],
       "verdict_counts": {
         "descriptive_infrastructure": 7,
-        "inconclusive": 5,
-        "unavailable": 2
+        "inconclusive": 4,
+        "supports_partially": 3
       }
     },
     "prompt_version": "act-synthesis-v1"

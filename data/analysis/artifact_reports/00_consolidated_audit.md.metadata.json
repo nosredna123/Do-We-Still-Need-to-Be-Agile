@@ -1,12 +1,12 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "b4e9949aca22a74aac9973662063dd1a07da77040984fa4bd771f075e6137218",
+  "input_checksum": "1e57da6e2bb5d0cf2fae57673044bc897989a094d6020fd2a1d0455b48f95923",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",
     "payload": {
-      "count_supports": 0,
-      "count_tested": 5,
+      "count_supports": 1,
+      "count_tested": 6,
       "evidence_rows": [
         {
           "analysis_id": "pi_vs_cc_primary",
@@ -34,10 +34,10 @@
         },
         {
           "analysis_id": "context_ie_temporal_primary",
-          "coefficient_or_statistic": null,
+          "coefficient_or_statistic": 1.0,
           "n_valid": 3,
-          "p_value": null,
-          "status": "unavailable",
+          "p_value": 0.0,
+          "status": "success",
           "unit_of_analysis": "cut_context"
         },
         {
@@ -97,7 +97,7 @@
       ],
       "team_semester_n": 14,
       "verdict": "conditional-go",
-      "verdict_reason": "no_significant_result_and_small_sample_reframe_as_exploratory"
+      "verdict_reason": "significant_result_but_small_sample"
     },
     "prompt_version": "audit-verdict-v1"
   },

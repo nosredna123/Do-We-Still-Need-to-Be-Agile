@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "0dea0c6019a53edcb7fb4ec26e959f61e06d87281fe812d0b95908323ceb0ab6",
+  "input_checksum": "327e8b8e804ddb6e2bf416cdd4be5325b97def6b5a1499bbc7d58d7ca24225c7",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -84,20 +84,20 @@
         },
         {
           "analysis_id": "context_ie_temporal_primary",
-          "coefficient": null,
+          "coefficient": 1.0,
           "confidence_interval": null,
           "confidence_interval_method": "not_calculated_v1",
           "figure": null,
           "n_missing": 3,
           "n_total": 6,
           "n_valid": 3,
-          "p_value": null,
+          "p_value": 0.0,
           "priority": "primary",
-          "reason": "zero_variance",
-          "status": "unavailable",
+          "reason": null,
+          "status": "success",
           "test": "spearman",
           "unit_of_analysis": "cut_context",
-          "warning": null,
+          "warning": "small_sample_n_lt_10",
           "x": "ie_transcript_coordination_friction_score_mean",
           "x_missing": 3,
           "y": "ie_transcript_rework_signal_score_mean",
@@ -105,7 +105,7 @@
         }
       ],
       "verdict_summary": {
-        "overall": "inconclusive",
+        "overall": "supports_partially",
         "tests": [
           {
             "analysis_id": "pi_vs_cc_primary",
@@ -125,7 +125,7 @@
           {
             "analysis_id": "context_ie_temporal_primary",
             "kind": "correlation",
-            "verdict": "unavailable"
+            "verdict": "supports"
           }
         ]
       }

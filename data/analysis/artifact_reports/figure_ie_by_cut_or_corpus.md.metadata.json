@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "84e24c602911cde79fece4f8468a85cc2e6b272b3d293d42ad686d0b61722303",
+  "input_checksum": "0c8fde7a644c044ad7237ea428538d9d87acf18655ccb788adaffc5945d69218",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -35,12 +35,12 @@
         "score"
       ],
       "verdict_summary": {
-        "overall": "unavailable",
+        "overall": "supports_partially",
         "tests": [
           {
             "analysis_id": "context_ie_temporal_primary",
             "kind": "correlation",
-            "verdict": "unavailable"
+            "verdict": "supports"
           },
           {
             "analysis_id": "context_ie_high_vs_low_rework_primary",

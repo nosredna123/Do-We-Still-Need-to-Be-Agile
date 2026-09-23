@@ -62,9 +62,9 @@ The narrative acts identified are 2 and 3. These acts are meant to support or qu
   - n_valid: 24
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is that it provides valuable exploratory evidence regarding file category churn. The data includes a range of metrics that can inform understanding of usage patterns, although it is categorized as secondary exploratory evidence.
+The contribution assessment is inconclusive due to the nature of the evidence being classified as secondary exploratory evidence and methodological warnings. The data provides descriptive statistics but lacks inferential claims.
 
 ## Known limitations
 - The evidence is classified as secondary exploratory evidence.
-- The artifact does not provide direct causal claims or definitive conclusions.
-- There is no information on potential biases or external factors affecting the data.
+- The data is subject to methodological warnings.
+- No exclusions summary is provided.

@@ -78,15 +78,12 @@
 | semester_stratified_results      | temporal_escalation    | semester         | null    | Semester-stratified result requires contextualized interpretation.   | inconclusive |
 | semester_stratified_results      | temporal_escalation    | semester         | null    | Semester-stratified result requires contextualized interpretation.   | inconclusive |
 | semester_stratified_results      | evaluator_crossing     | global           | null    | Global/semester comparison provides contextual evidence.             | inconclusive |
-| semester_stratified_results      | evaluator_crossing     | semester         | null    | Semester-stratified result requires contextualized interpretation.   | supports    |
-| semester_stratified_results      | evaluator_crossing     | semester         | null    | Semester-stratified result requires contextualized interpretation.   | inconclusive |
-| semester_stratified_results      | evaluator_crossing     | global           | null    | Global/semester comparison provides contextual evidence.             | inconclusive |
 | semester_stratified_results      | evaluator_crossing     | semester         | null    | Semester-stratified result requires contextualized interpretation.   | inconclusive |
 | semester_stratified_results      | evaluator_crossing     | semester         | null    | Semester-stratified result requires contextualized interpretation.   | inconclusive |
 
 ## Verdict
-- **Aggregate Verdict**: supports
-- **Verdict Reason**: supporting_evidence_present
+- **Aggregate verdict**: supports
+- **Verdict reason**: supporting_evidence_present
 
 The evidence includes 28 supporting results and 49 contextualizing results. There are no results that limit the findings. However, a significant number of results are inconclusive.
 

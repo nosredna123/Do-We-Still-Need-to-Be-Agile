@@ -9,11 +9,11 @@ Act 2, titled "A Anatomia da Divida de Planejamento (Diagnosis)," argues that sk
 - **technical_degradation_metrics**: descriptive_infrastructure
 - **team_metrics**: inconclusive
 - **statistical_dataset_manifest**: descriptive_infrastructure
-- **correlation_results**: inconclusive
+- **correlation_results**: supports_partially
 - **hypothesis_results**: inconclusive
 - **figure_pi_vs_cc**: inconclusive
 - **figure_cc_by_temporal_cut**: descriptive_infrastructure
 - **figure_delta_dt_by_team_semester**: inconclusive
 
 ## Empirical status
-The aggregate act status is "unsupported_by_current_tests." This is justified by the counts in verdict_counts, which show 7 artifacts classified as "descriptive_infrastructure" and 5 as "inconclusive," indicating a lack of definitive support for the claims made in this act.
+The act is currently classified as "partially_supported." This classification is justified by the presence of 7 artifacts categorized as "descriptive_infrastructure," 4 as "inconclusive," and 1 that "supports_partially."
