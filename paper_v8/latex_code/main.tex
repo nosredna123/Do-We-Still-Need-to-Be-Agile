@@ -1004,25 +1004,120 @@ gaps and temporal patterns, but remain interventions for future study rather
 than demonstrated effects of the present cohorts.
 
 \section{Threats to Validity}
-[to be rewritten...]
-\textbf{Construct.} We used GPT-4o mini as a qualitative coder for planning
-quality and coordination friction. Although the prompts were structured and the
-temperature was set to zero, LLM evaluations retain interpretative variance.
-Moreover, M8 can classify a $T_3$ change as rework only when the file existed
-in an earlier window. Late-starting teams may therefore exhibit low measured
-rework because their work is classified as deferred development or because
-their total activity is low. We kept missing M6 scores distinct from observed
-score 1 in the primary analysis and reported floor imputation as a sensitivity
-analysis; its near-zero correlations show that the planning--rework association
-is not robust to this defensible alternative operationalization.
 
-\textbf{Internal.} Observational design: no intervention, no randomization. 
-GenAI exposure was self-reported and treated as the underlying context of the 
-cohorts rather than a manipulated variable.
+\subsection{Construct validity}
 
-\textbf{External.} $N=14$ team-semesters from two semesters of one course; 
-student greenfield micro-team context. Generalization to industrial settings 
-requires further study.
+The study measures repository-visible evidence, not the full latent constructs
+of planning, coordination, effort, or AI use. M6 rates the clarity,
+specificity, and coherence of $T_1$ commit subject lines. Those messages may
+document implementation rather than architecture, and concise messages may
+understate planning performed in meetings or uncommitted local artifacts.
+Likewise, zero $T_1$ commits establish omission from the required repository,
+not the absence of all private or verbal planning. We therefore distinguish
+\emph{planning omission} (M7) from an observed low planning-quality score (M6)
+and avoid treating the former as a measured score in the primary analysis.
+Future studies should score versioned requirements, architecture decisions,
+interfaces, and acceptance criteria directly, using a rubric validated by
+multiple human raters.
+
+M8 is a file-provenance proxy, not a semantic observation of destructive
+rework. Changes to files first seen before $T_3$ may be corrective rework,
+productive iteration, or ordinary feature evolution. Conversely, work first
+committed at $T_3$ is classified as deferred even if it replaces abandoned or
+uncommitted earlier work. This definition particularly affects late-starting
+teams, which have fewer earlier files eligible to count as rework. We mitigate
+this limitation by reporting rework, deferred churn, total churn, rework ratio,
+and first-active window together (Table~\ref{tab:rq3_team_level}); future work
+should combine provenance with issue links, semantic change classification,
+and manual validation of a stratified change sample.
+
+The remaining metrics have related boundaries. Git line churn is not effort or
+productivity; commit authorship concentration is not workload, collaboration
+quality, or AI authorship; and the survey measures perceived dependency rather
+than observed tool use. M5 consists of one cohort-pooled LLM rating per
+checkpoint, so it cannot support team-level differences or an inferential
+friction trajectory. Although fixed prompts and temperature zero improve
+procedural consistency, a single-model rating does not establish construct
+validity or inter-rater reliability. Replication should retain team-level
+transcript links, use independent human coding and model comparisons, and
+capture tool-use telemetry with informed consent.
+
+\subsection{Internal validity}
+
+The study is observational: teams were not randomized to planning conditions,
+Agile methods, or SDD, and adherence to any named process was not measured.
+Consequently, the data cannot show that Agile caused planning omission, that
+planning quality caused rework, or that SDD would improve outcomes. Team
+experience, project difficulty, technology choices, instructor guidance,
+deadline behavior, repository habits, and cohort-specific conditions may
+explain the observed differences. The independent evaluator protocol reduces
+score convergence among evaluators, but it does not remove differences in
+project context or guarantee that evaluators were insensitive to presentation
+quality.
+
+Temporal ordering provides only limited protection against reverse
+explanation. M6 precedes the $T_3$ outcomes, but early commit messages may
+already reflect team capability, engagement, or task tractability. The sharp
+cohort difference in planning omission may similarly reflect changes between
+semesters rather than an instructional effect. Repository centralization was
+required and all windows were defined consistently, which improves artifact
+comparability, but compliance cannot rule out uncommitted or off-platform work.
+A stronger design would prospectively assign or match process conditions,
+measure baseline team characteristics, standardize project constraints, and
+pre-register the outcomes and missing-data rules.
+
+\subsection{Statistical conclusion validity}
+
+The principal limitation is sample size and sensitivity. The study contains
+14 team-semesters, while M9's primary complete-case analysis contains only nine
+observed planning scores. None of the six reported Spearman associations is
+conventionally significant. The apparent $7.8\times$ mean rework contrast is
+dominated by TEAM\_09: removing that observation lowers the remaining
+low-planning mean to $1{,}415$, and the group medians do not reproduce the mean
+contrast. Assigning the five omission cases the defensible rubric floor changes
+the rework correlations from negative to approximately zero. These results
+prevent a general claim that higher planning scores predict lower rework or
+better evaluator outcomes.
+
+Median splitting further discards ordinal information and is unstable when
+scores are tied, while testing six correlated outcomes increases the chance of
+apparently favorable patterns. We use the split only as a descriptive view,
+report exact $n$, coefficients, and $p$ values, retain the null results, and
+present medians, leave-one-out behavior, omitted cases, and floor imputation.
+No multiplicity-adjusted confirmatory inference is claimed. M5's three pooled
+checkpoint scores are descriptive only and provide no independent basis for a
+statistical trend test. Larger multi-course samples, preregistered primary
+outcomes, continuous or ordinal models, robust estimators, and uncertainty
+intervals are required before assessing effect magnitude or generality.
+
+\subsection{External validity and reproducibility}
+
+The evidence comes from 14 student teams in two offerings of one undergraduate
+course, working on heterogeneous greenfield projects under shared academic
+deadlines. Student teams, grading incentives, short project horizons, and
+course-mandated GenAI components differ from established industrial systems,
+long-lived products, and professional governance structures. Results should
+therefore be transferred first to comparable project-based software engineering
+courses, not directly to industry or to Agile development in general.
+
+The two cohorts also provide temporal replication rather than independent
+institutional replication: they share the course context but differ in students,
+evaluators, and semester conditions. Future studies should include multiple
+institutions, professional teams, longer projects, and explicit comparisons of
+process conditions. They should also record model and tool versions because
+changes in AI systems may alter both development behavior and automated coding
+of qualitative evidence.
+
+Finally, anonymization and restricted handling of prompts, transcripts,
+identities, and repository URLs protect participants but limit independent
+verification at the raw-record level. To mitigate this trade-off, the analysis
+retains versioned aggregate artifacts, explicit team-semester keys, fixed
+prompts, an LLM-call ledger, generated table data, and executable scripts.
+These materials support denominator and transformation audits but are not
+equivalent to unrestricted raw-data replication. Any public artifact package
+must undergo a separate privacy review; controlled access or independently
+collected replication data would provide stronger reproducibility without
+weakening participant protection.
 
 \section{Conclusion}
 [to be written...]
