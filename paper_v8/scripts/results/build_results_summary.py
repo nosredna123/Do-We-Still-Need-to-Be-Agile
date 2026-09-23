@@ -55,10 +55,20 @@ def summarize_rq1() -> dict[str, object]:
         .apply(lambda g: (g["mean"] * g["n_valid"]).sum() / g["n_valid"].sum())
         .sort_values(ascending=False)
     )
+    role_by_cut = (
+        m2.groupby(["role", "temporal_marker"])
+        .apply(lambda g: (g["mean"] * g["n_valid"]).sum() / g["n_valid"].sum())
+        .unstack("temporal_marker")[["T1", "T2", "T3"]]
+        .reindex(role_pooled.index)
+    )
 
     return {
         "m1_ai_dependency_trajectory_by_semester": trajectory,
         "m2_role_pooled_mean_ranked": {role: round(float(v), 3) for role, v in role_pooled.items()},
+        "m2_role_pooled_mean_by_cut": {
+            role: {cut: round(float(value), 3) for cut, value in row.items()}
+            for role, row in role_by_cut.iterrows()
+        },
         "m2_highest_risk_role": role_pooled.index[0],
         "m2_lowest_risk_role": role_pooled.index[-1],
     }

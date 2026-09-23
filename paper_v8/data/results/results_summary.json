@@ -22,6 +22,38 @@
       "QA": 2.112,
       "Project Manager": 2.005
     },
+    "m2_role_pooled_mean_by_cut": {
+      "Frontend": {
+        "T1": 2.868,
+        "T2": 2.672,
+        "T3": 2.897
+      },
+      "Scrum Master": {
+        "T1": 2.588,
+        "T2": 2.23,
+        "T3": 2.466
+      },
+      "Backend": {
+        "T1": 2.368,
+        "T2": 2.213,
+        "T3": 2.362
+      },
+      "Product Manager": {
+        "T1": 2.221,
+        "T2": 2.016,
+        "T3": 2.207
+      },
+      "QA": {
+        "T1": 2.103,
+        "T2": 2.016,
+        "T3": 2.224
+      },
+      "Project Manager": {
+        "T1": 2.029,
+        "T2": 1.885,
+        "T3": 2.103
+      }
+    },
     "m2_highest_risk_role": "Frontend",
     "m2_lowest_risk_role": "Project Manager"
   },

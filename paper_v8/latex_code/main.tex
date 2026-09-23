@@ -629,37 +629,43 @@ earlier.
 \subsection{RQ1: Generative-AI adoption and role-perception trajectory}
 
 The self-reported AI-dependency composite (M1) is broadly stable across the
-project lifecycle rather than sharply escalating: in 2025.2 it moves from
-$1.21$ at $T_1$ to $1.28$ at $T_3$ ($\Delta{=}+0.07$ on the $[0,4]$ scale),
-and in 2026.1 from $1.16$ to $1.32$ ($\Delta{=}+0.17$). Both cohorts show a
-small net increase, consistent with growing reliance on generative-AI tools
+project lifecycle rather than sharply escalating. In 2025.2 it moves from
+$1.21$ at $T_1$ to $1.30$ at $T_2$ and back down slightly to $1.28$ at $T_3$
+($\Delta_{T_1 \to T_3}{=}+0.07$ on the $[0,4]$ scale), a non-monotonic
+pattern that peaks mid-semester rather than at the deadline. In 2026.1 it
+rises monotonically, from $1.16$ at $T_1$ to $1.31$ at $T_2$ to $1.32$ at
+$T_3$ ($\Delta_{T_1 \to T_3}{=}+0.17$). Both cohorts show a small net
+increase by $T_3$, consistent with growing reliance on generative-AI tools
 as the semester progresses, but the magnitude is modest relative to the
 scale's range --- students do not report a dramatic escalation in perceived
 AI dependency, even though (Section~\ref{sec:results}B) repository activity
 escalates by two orders of magnitude over the same window.
 
-Table~\ref{tab:role_risk} ranks the six surveyed roles by their pooled
-perceived risk of AI-driven displacement (M2, response-weighted mean across
-all cohort-cuts, $1$--$5$ scale). Contrary to the common assumption that
-implementation-heavy or highly proceduralized roles (QA, Backend) are seen
-as most automatable, students rank \textbf{Frontend} development as the
-role most at risk ($2.81$) and \textbf{Scrum Master} second ($2.43$),
-while \textbf{Project Manager} is perceived as least at risk ($2.01$).
+Table~\ref{tab:role_risk} ranks the six surveyed roles by their perceived
+risk of AI-driven displacement (M2, response-weighted mean per checkpoint,
+$1$--$5$ scale). Contrary to the common assumption that implementation-heavy
+or highly proceduralized roles (QA, Backend) are seen as most automatable,
+students rank \textbf{Frontend} development as the role most at risk at
+every checkpoint ($2.87$--$2.90$) and \textbf{Scrum Master} second, while
+\textbf{Project Manager} is perceived as least at risk throughout. Every
+role shows the same non-monotonic shape already seen in M1: perceived risk
+dips at $T_2$ before rebounding by $T_3$ to roughly its $T_1$ level, rather
+than escalating steadily across the semester.
 
 \begin{table}[t]
-\caption{Perceived AI Role-Disruption Risk (M2), Pooled Across Cohort-Cuts}
+\caption{Perceived AI Role-Disruption Risk (M2) by Checkpoint (1--5 scale)}
 \label{tab:role_risk}
 \centering
-\begin{tabular}{@{}lc@{}}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Role} & \textbf{Pooled mean risk (1--5)} \\
+\textbf{Role} & \textbf{$T_1$} & \textbf{$T_2$} & \textbf{$T_3$} \\
 \midrule
-Frontend & 2.81 \\
-Scrum Master & 2.43 \\
-Backend & 2.32 \\
-Product Manager & 2.15 \\
-QA & 2.11 \\
-Project Manager & 2.01 \\
+Frontend & 2.87 & 2.67 & 2.90 \\
+Scrum Master & 2.59 & 2.23 & 2.47 \\
+Backend & 2.37 & 2.21 & 2.36 \\
+Product Manager & 2.22 & 2.02 & 2.21 \\
+QA & 2.10 & 2.02 & 2.22 \\
+Project Manager & 2.03 & 1.89 & 2.10 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -668,15 +674,17 @@ Project Manager & 2.01 \\
 
 Figure~\ref{fig:rq2} contrasts repository activity density (M4) against
 coordination friction (M5) across the three checkpoints, pooled over both
-cohorts. Mean total churn escalates from $3{,}615$ lines at $T_1$ to
-$964{,}438$ lines at $T_3$ --- a $266.8\times$ increase --- confirming that
-repository-visible activity concentrates sharply at the deadline. Over the
-same window, the LLM-coded coordination-friction score is constant at
-$8/10$ at every checkpoint ($T_1$, $T_2$, and $T_3$ all score $8$), the
-central empirical basis for RQ2: friction is not an emergent property of
-late-cycle crunch, but a standing condition already near-ceiling at the
-very first checkpoint, while repository metadata only becomes a visible
-proxy for it much later.
+cohorts. Mean total churn escalates in two stages: from $3{,}615$ lines at
+$T_1$ to $17{,}314$ lines at $T_2$ (a $4.8\times$ increase), then to
+$964{,}438$ lines at $T_3$ (a further $55.7\times$ increase, $266.8\times$
+overall from $T_1$ to $T_3$) --- confirming that repository-visible
+activity concentrates sharply at the deadline rather than growing steadily
+across the semester. Over the same window, the LLM-coded
+coordination-friction score is constant at $8/10$ at every checkpoint
+($T_1$, $T_2$, and $T_3$ all score $8$), the central empirical basis for
+RQ2: friction is not an emergent property of late-cycle crunch, but a
+standing condition already near-ceiling at the very first checkpoint, while
+repository metadata only becomes a visible proxy for it much later.
 
 \begin{figure*}[t]
 \centering
