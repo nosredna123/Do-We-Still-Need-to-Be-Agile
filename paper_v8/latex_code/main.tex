@@ -850,7 +850,158 @@ Engagement/participation ($T_3$) & $-0.35$ & $0.36$ & $-0.26$ & $0.37$ \\
 \section{Discussion}
 \label{sec:discussion}
 
-[to be written...]
+\subsection{Code became visible late; coordination problems did not}
+
+The clearest result is not a causal effect of planning, but a temporal
+asymmetry between repository activity and coordination. Mean repository churn increased
+by $266.8\times$ from $T_1$ to $T_3$, whereas the transcript-derived
+coordination-friction score was already $8/10$ at $T_1$ and remained there.
+In this AI-supported course setting, visible repository change was therefore a
+lagging indicator of a coordination problem already present near the start.
+The modest movement in self-reported AI dependency (M1) sharpens this reading:
+the late activity surge was not accompanied by a comparably dramatic change
+in perceived dependency. Because the repositories contain no verified signal
+of tool use at commit level, these observations cannot establish that GenAI
+caused either the surge or the friction. They do show why implementation
+volume alone is an incomplete account of project progress.
+
+The friction trajectory is itself coarse: M5 contains one pooled LLM rating
+per checkpoint, not a team-level longitudinal measure. It supports a contrast
+between early qualitative concerns and late repository visibility, but cannot
+show that every team experienced the same friction or that friction caused the
+activity spike. Likewise, M3's median author share of $0.30$ and Gini
+coefficient of $0.21$ indicate moderate, distributed pre-deadline activity;
+they do not support a generalized ``hero developer'' account of integration.
+The role-perception results point in the same non-deterministic direction:
+Frontend remained the role perceived as most exposed to disruption, but all
+roles dipped at $T_2$ and rebounded at $T_3$, rather than following a simple
+escalating displacement narrative.
+
+This distinction is consistent with longstanding arguments that adding
+production capacity does not remove communication and integration costs
+\cite{brooks_1975_mythical_man_month,demarco_lister_1987_peopleware}. The
+educational implication is that rapid production can coexist with unresolved
+interfaces, scope assumptions, and ownership boundaries. A course assessment
+that observes only the final executable system or the volume of repository
+activity may detect output while missing the coordination conditions under
+which that output was assembled.
+
+\subsection{Planning omission and planning quality are different problems}
+
+The team-level evidence distinguishes two forms of weak early planning.
+First, five of nine teams in 2025.2 left no repository-visible artifact during
+the multi-week $T_1$ window. This is a strong descriptive result about
+\emph{omission}: under the course rule that repositories should contain the
+project artifacts, reviewers had no persistent baseline from which to inspect
+those teams' early reasoning. Second, among the nine teams that did leave an
+artifact, the mean planning-quality score was only $3.56/10$. This is a
+different problem: evidence existed, but its clarity, specificity, and
+coherence were often limited. Collapsing omission and low quality into one
+measure would conceal this distinction.
+
+The contrast between cohorts is suggestive but not explanatory. The omission
+rate changed from $55.6\%$ in 2025.2 to zero in 2026.1, yet the observational
+design does not identify whether this difference arose from instruction,
+cohort composition, project selection, informal expectations, or another
+semester-specific condition. Accordingly, the result should not be read as
+evidence that one process intervention solved planning. It instead identifies
+a concrete teaching and governance question: should teams be required to make
+their early architectural assumptions inspectable before implementation
+accelerates?
+
+This interpretation also refines the notion of \emph{planning debt}. The debt
+metaphor describes a decision to defer work now while accepting possible later
+costs \cite{cunningham_1992_technical_debt,kruchten2012technicaldebt}. In our
+data, planning omission is observable, but its later ``interest'' is not
+uniform: some omitted teams produced little total activity, some introduced
+mostly deferred work, three first became active at $T_2$, and two only at
+$T_3$. Planning debt
+is therefore best treated here as a candidate mechanism with multiple possible
+manifestations, not as a single quantity already validated by churn.
+
+\subsection{The rework result is a tail event, not a general law}
+
+The initial mean comparison appears striking: below-median planning teams
+averaged $7.8\times$ more $T_3$ rework than above-median teams. The underlying
+distribution changes the interpretation. TEAM\_09 accounts for $100{,}629$
+rework lines; after removing it, the remaining low-group mean falls to
+$1{,}415$, and the group medians place low-planning teams below high-planning
+teams ($1{,}249$ versus $2{,}786$). Assigning the five omission cases the
+rubric floor similarly moves both rework correlations to approximately zero.
+The evidence therefore supports the existence of a severe low-score case, but
+not a stable dose--response relationship in which each increase in planning
+quality predicts less rework.
+
+M8 also creates an important structural asymmetry. A file can count as rework
+at $T_3$ only if it appeared earlier. Teams that begin late have fewer files
+eligible for that classification; their work can appear as deferred churn or
+low total activity instead. Zero measured rework can consequently mean either
+stable prior work or no prior baseline to revise. The combination of rework,
+deferred churn, total churn, and first-active window in
+Table~\ref{tab:rq3_team_level} is more informative than any one of those
+columns in isolation. The evaluator outcomes reinforce this caution: none of
+their rank associations with M6 is statistically reliable, and their signs do
+not form a consistent quality gradient.
+
+These findings do not make the extreme case irrelevant. Tail failures matter
+in software projects because one integration collapse may dominate schedule
+and coordination costs. They do, however, change the claim from ``poor
+planning generally causes rework'' to a narrower hypothesis: weak or absent
+shared planning artifacts may leave some teams exposed to severe integration
+failure, while other teams fail through delayed or limited production instead.
+Testing that hypothesis requires more teams and measures that distinguish
+these failure modes prospectively.
+
+\subsection{Agile is not the same as absence of alignment}
+
+The results should not be interpreted as evidence that Agile itself caused
+planning omission. Teams were free to select or improvise their process, and
+the study did not measure adherence to a named Agile method. Moreover, the
+Agile Manifesto values working software over comprehensive documentation; it
+does not prescribe zero documentation or prohibit architectural reasoning
+\cite{agile_manifesto_2001}. The observed omission is better understood as a
+risk of a planning-light interpretation of agility: iteration without a
+persistent, reviewable account of interfaces, constraints, and acceptance
+conditions.
+
+This distinction matters more when implementation can begin quickly. A shared
+artifact need not be a fixed, exhaustive BDUF document. It can be revised as
+teams learn, provided that changes remain explicit and synchronized with the
+code. In this sense, the relevant contrast is not ``Agile versus planning,''
+but tacit coordination versus inspectable coordination. Iteration and feedback
+remain valuable; the question is whether they operate against a sufficiently
+clear shared state.
+
+\subsection{SDD as a mechanism and a testable intervention}
+
+SDD offers a plausible mechanism for making that shared state explicit. A
+machine-readable specification can record scope boundaries, interfaces,
+acceptance conditions, and unresolved decisions in a form accessible to both
+teammates and AI tools. Used as a living artifact, it could reduce divergent
+local assumptions, make changes reviewable, and provide a common context for
+generation and validation. This complements iterative development rather than
+requiring a return to immutable, exhaustive design. Contemporary SDD proposals
+similarly treat specifications as executable or operational inputs to
+AI-assisted development \cite{github2025spec,thoughtworks202Xspec}.
+
+The present study did not introduce SDD, randomize teams, or compare process
+conditions. It therefore cannot establish that SDD would reduce friction or
+rework. The results justify a testable proposition instead: in AI-supported
+team projects, requiring a versioned specification before implementation and
+maintaining it through delivery may improve coordination visibility and reduce
+the risk of extreme integration failures. A credible evaluation should compare
+process conditions prospectively, score specification quality independently,
+record actual AI-tool use, and distinguish productive iteration, deferred
+development, abandonment, and destructive rework.
+
+For software engineering education, this suggests three practical hypotheses.
+Students may benefit from being assessed on the inspectability of engineering
+reasoning, not document volume; coordination checkpoints may explicitly review
+interfaces and unresolved assumptions before code accumulation; and AI-assisted
+work may be evaluated through verification and integration practices as well as
+generated output. These recommendations follow from the observed measurement
+gaps and temporal patterns, but remain interventions for future study rather
+than demonstrated effects of the present cohorts.
 
 \section{Threats to Validity}
 [to be rewritten...]
