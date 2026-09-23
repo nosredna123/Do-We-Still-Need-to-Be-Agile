@@ -503,7 +503,7 @@ the RQ3 group-contrast findings are reported in Section~\ref{sec:results}.
 \caption{Summary of Metrics M1--M9, Grouped by Research Question}
 \label{tab:metrics_summary}
 \centering
-\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{2.6cm}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{2.6cm}@{}}
 \toprule
 \textbf{ID} & \textbf{Metric} & \textbf{Grain} \\
 \midrule
@@ -525,10 +525,89 @@ M7 & $T_1$ Planning-Omission Rate & Cohort \\
 M8 & Rework Severity Ratio & Team-semester \\
 M9 & Planning vs. Rework/Outcome Association & Team-semester \\
 \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{LLM Usage in Data Extraction, Processing, and Metrics}
+\label{sec:llm-usage}
+
+Every automated scoring/coding step used anywhere in this study routes
+through a single centralized gateway to the OpenAI API: the Chat Completions
+API for all text scoring and coding tasks, and the Audio Transcriptions API
+for audio-to-text transcription. No call bypasses this gateway. All text
+scoring/coding tasks use one model, \texttt{gpt-4o-mini}, at a fixed decoding
+temperature of 0 for determinism; transcription uses \texttt{whisper-1}. Of
+the several LLM-assisted tasks used across data extraction and processing,
+three feed a metric (M1--M9) directly and are detailed here; the remaining
+tasks (audio transcription and PII redaction for anonymization, and
+free-text narrative-report generation used only for internal auditing) are
+upstream data-preparation or background reporting steps and are out of scope
+for this subsection.
+
+% PROVENANCE: All three tasks below route through llm_gateway.py's
+% LLMCallGateway and are persisted to data/analysis/.private/llm_call_ledger.parquet
+% (restricted directory; not redistributed as raw ledger rows). The
+% paper-facing aggregation is produced by
+% paper_v8/scripts/llm_usage/aggregate_llm_calls.py, which filters that
+% ledger to successful, non-test calls for these three tasks and writes
+% paper_v8/data/llm_usage/llm_calls_metric_bound.csv (one row per call: task,
+% metric fed, identifier, model, temperature, prompt text, response text,
+% parsed value, status).
+
+Table~\ref{tab:llm_prompt_catalog} lists the three metric-bound tasks, the
+metric each feeds, and its fixed rubric prompt.
+
+\begin{table}[t]
+\caption{Metric-Bound LLM Tasks and Their Fixed Rubric Prompts}
+\label{tab:llm_prompt_catalog}
+\centering
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{0.75cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Task} & \textbf{Feeds} & \textbf{Prompt (verbatim)} \\
+\midrule
+Survey Coding & M1 & \small\emph{``Analyze the anonymized student response below for the declared question construct. Return JSON only with exactly these fields: sentiment\_\allowbreak score (integer -2..2), cognitive\_\allowbreak load\_\allowbreak score (integer 0..4), ai\_\allowbreak dependency\_\allowbreak score (integer 0..4), methodological\_\allowbreak orientation (structured\textbar\allowbreak mixed\textbar\allowbreak vibe\_\allowbreak coding\textbar\allowbreak insufficient\_\allowbreak evidence), and planning\_\allowbreak debt\_\allowbreak signal (present\textbar\allowbreak absent\textbar\allowbreak insufficient\_\allowbreak evidence). Use insufficient\_\allowbreak evidence when the response does not support a conclusion.''} \\
+\addlinespace
+Coordination- Friction Scoring & M5 & \small\emph{``Evaluate the level of coordination friction reflected in this cohort transcript block. Score the evidence from 1 (little or no coordination friction) to 10 (severe, repeated coordination friction). Consider blockers, misunderstandings, handoff problems, merge or integration conflicts, and repeated coordination overhead. Judge only the supplied text. Do not infer missing evidence.''} \\
+\addlinespace
+Planning- Quality Scoring & M6 & \small\emph{``Evaluate the planning quality reflected in these $T_1$ commit messages. Score the evidence from 1 (no meaningful planning) to 10 (clear, specific, and coherent planning). Judge only the supplied text. Do not infer missing evidence.''} \\
+\bottomrule
 \end{tabularx}
 \end{table}
 
+Each task operates at a different granularity: Survey Coding rates one
+individual student free-text response at a time; Coordination-Friction
+Scoring rates one cohort-pooled transcript block per checkpoint ($T_1$,
+$T_2$, $T_3$); Planning-Quality Scoring rates one team-semester's
+concatenated $T_1$ commit-message text at a time. Across all three tasks, we
+issued several hundred calls in total, at a total cost on the order of a few
+tenths of a US dollar.
 
+For concreteness, two representative, already-anonymized call/response pairs
+follow. A low-scoring Planning-Quality call:
+\begin{quote}
+\small
+\emph{Context: ``First commit / Add empty frontend and backend folders with
+.gitkeep / Atualiza\c{c}\~{a}o do backend: descreva o que foi alterado /
+Update README.md / Initial frontend / Home / login''} \\
+Response: \texttt{\{"t1\_planning\_score": 3\}}
+\end{quote}
+A Coordination-Friction call for the $T_1$ checkpoint (transcript context
+omitted for length):
+\begin{quote}
+\small
+Response: \texttt{\{"coordination\_friction": 8\}}
+\end{quote}
+
+\textbf{Persistence and auditability.} Every call, successful or failed, is
+recorded to a structured, append-only ledger before and after execution:
+a correlation id, the operation and model used, the full prompt and response
+text (and their hashes), token usage, wall-clock duration, estimated cost,
+and status. This lets every LLM-derived value reported in this paper be
+traced back to the exact call that produced it.
+
+\textbf{Human review.} All LLM outputs used in this study were subsequently
+reviewed by the research team, which manually corrected a small number of
+minor errors where needed; no material corrections were required.
 
 \section{Results}
 \label{sec:results}

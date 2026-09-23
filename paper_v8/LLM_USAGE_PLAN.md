@@ -1,6 +1,16 @@
 # Plan — "LLM Usage in Data Extraction, Processing, and Metrics" subsection (paper_v8)
 
-Status: DRAFT for approval. No LaTeX written yet.
+Status: IMPLEMENTED (2026-09-23). LaTeX subsection drafted in
+`paper_v8/latex_code/main.tex` (`\subsection{LLM Usage in Data Extraction,
+Processing, and Metrics}`, `\label{sec:llm-usage}`), placed after
+`sec:advanced-metrics` and before `\section{Results}`. New script
+`paper_v8/scripts/llm_usage/aggregate_llm_calls.py` (+ its `_paths.py`
+helper) writes `paper_v8/data/llm_usage/llm_calls_metric_bound.csv` (1,134
+rows: 1,122 Survey Coding + 9 Planning-Quality Scoring + 3
+Coordination-Friction Scoring; mock-model test rows excluded). All three
+tasks turned out to be sourced from the single private ledger
+(`data/analysis/.private/llm_call_ledger.parquet`), simplifying the
+two-source design originally sketched in §4 below.
 
 ## 0. Placement and scope
 
