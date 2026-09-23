@@ -25,8 +25,14 @@ and reports two descriptive (non-causal) views, given n<=14 team-semesters:
     are split into "low" (<= median) and "high" (> median) planning-quality
     groups; each outcome Y is summarized per group with
     `pipeline_statistics.summarize_numeric_distribution`. Teams with a missing
-    t1_planning_score (see M7) are excluded from this split and are reported
-    separately -- they are not assigned to "low" by fabrication.
+    t1_planning_score (see M7) are excluded from this split and summarized as
+    an "omitted" group -- they are not assigned to "low" in the primary view.
+
+(c) A prespecified sensitivity view in which missing scores are assigned the
+    rubric floor (1). Correlations and a median-split contrast are recomputed
+    over all 14 team-semesters. This tests the substantive alternative that no
+    T1 repository activity should count as the lowest planning-quality value;
+    it does not replace the primary complete-case analysis.
 
 All statistics here are exploratory/descriptive, consistent with this repo's
 own "conditional-go" verdict on primary Phase 2 tests
@@ -47,6 +53,11 @@ Output
     paper_v8/data/m9_planning_vs_rework_association_group_contrast.csv
     columns: planning_group, outcome, n_total, n_valid, n_missing, mean, std,
              median, q1, q3, iqr
+    paper_v8/data/m9_planning_vs_rework_association_floor_sensitivity.csv
+    columns: outcome, n, spearman_rho, spearman_p
+    paper_v8/data/m9_planning_vs_rework_association_floor_sensitivity_group_contrast.csv
+    columns: planning_group, outcome, n_total, n_valid, n_missing, mean, std,
+             median, q1, q3, iqr
 """
 
 from __future__ import annotations
@@ -62,6 +73,12 @@ TEAM_SIGNALS_PATH = PAPER_V4_OUTPUTS_DIR / "team_level_signals.csv"
 EVALUATOR_OUTCOME_PATH = CROSS_EVIDENCE_DATASETS_DIR / "evaluator_outcome_metrics.parquet"
 CORRELATION_OUTPUT_PATH = ensure_output_dir() / "m9_planning_vs_rework_association.csv"
 GROUP_CONTRAST_OUTPUT_PATH = ensure_output_dir() / "m9_planning_vs_rework_association_group_contrast.csv"
+SENSITIVITY_CORRELATION_OUTPUT_PATH = (
+    ensure_output_dir() / "m9_planning_vs_rework_association_floor_sensitivity.csv"
+)
+SENSITIVITY_GROUP_CONTRAST_OUTPUT_PATH = (
+    ensure_output_dir() / "m9_planning_vs_rework_association_floor_sensitivity_group_contrast.csv"
+)
 
 OUTCOME_COLUMNS = (
     "rework_churn_t3",
@@ -94,33 +111,36 @@ def build_joined_frame() -> pd.DataFrame:
     return team_signals.merge(evaluator_outcomes, on=["ID_Equipe", "Semestre"], how="left")
 
 
-def build_correlations(joined: pd.DataFrame) -> pd.DataFrame:
-    """Spearman rho(t1_planning_score, outcome) for each outcome, over non-missing pairs."""
-    scored = joined.dropna(subset=["t1_planning_score"])
+def build_correlations(joined: pd.DataFrame, score_column: str = "t1_planning_score") -> pd.DataFrame:
+    """Spearman rho(score, outcome) for each outcome, over non-missing pairs."""
+    scored = joined.dropna(subset=[score_column])
     rows: list[dict[str, object]] = []
     for outcome in OUTCOME_COLUMNS:
         if outcome not in scored.columns:
             continue
-        pair = scored[["t1_planning_score", outcome]].dropna()
+        pair = scored[[score_column, outcome]].dropna()
         n = int(len(pair))
         if n < 3:
             rows.append({"outcome": outcome, "n": n, "spearman_rho": None, "spearman_p": None})
             continue
-        rho, p_value = spearmanr(pair["t1_planning_score"], pair[outcome])
+        rho, p_value = spearmanr(pair[score_column], pair[outcome])
         rows.append({"outcome": outcome, "n": n, "spearman_rho": float(rho), "spearman_p": float(p_value)})
     return pd.DataFrame(rows)
 
 
 def build_group_contrast(joined: pd.DataFrame) -> pd.DataFrame:
-    """Median-split low/high planning-quality group contrast per outcome."""
+    """Primary median split plus a separate summary of omitted teams."""
     scored = joined.dropna(subset=["t1_planning_score"]).copy()
     median_score = scored["t1_planning_score"].median()
     scored["planning_group"] = scored["t1_planning_score"].apply(
         lambda value: "low" if value <= median_score else "high"
     )
 
+    omitted = joined[joined["t1_planning_score"].isna()].copy()
+    omitted["planning_group"] = "omitted"
+
     rows: list[dict[str, object]] = []
-    for group_name, group in scored.groupby("planning_group"):
+    for group_name, group in pd.concat([scored, omitted]).groupby("planning_group"):
         for outcome in OUTCOME_COLUMNS:
             if outcome not in group.columns:
                 continue
@@ -132,14 +152,42 @@ def build_group_contrast(joined: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def build_floor_sensitivity(joined: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Assign the rubric floor to omitted teams and recompute M9 over n=14."""
+    sensitivity = joined.copy()
+    sensitivity["planning_score_floor"] = sensitivity["t1_planning_score"].fillna(1.0)
+    correlations = build_correlations(sensitivity, score_column="planning_score_floor")
+
+    median_score = sensitivity["planning_score_floor"].median()
+    sensitivity["planning_group"] = sensitivity["planning_score_floor"].apply(
+        lambda value: "low" if value <= median_score else "high"
+    )
+    rows: list[dict[str, object]] = []
+    for group_name, group in sensitivity.groupby("planning_group"):
+        for outcome in OUTCOME_COLUMNS:
+            if outcome not in group.columns:
+                continue
+            values = pd.to_numeric(group[outcome], errors="coerce")
+            summary = summarize_numeric_distribution(
+                values, scale_type=SCALE_TYPE, scale_version=SCALE_VERSION
+            )
+            rows.append({"planning_group": group_name, "outcome": outcome, **summary})
+    return correlations, pd.DataFrame(rows)
+
+
 def main() -> None:
     joined = build_joined_frame()
     correlations = build_correlations(joined)
     group_contrast = build_group_contrast(joined)
+    sensitivity_correlations, sensitivity_group_contrast = build_floor_sensitivity(joined)
     correlations.to_csv(CORRELATION_OUTPUT_PATH, index=False)
     group_contrast.to_csv(GROUP_CONTRAST_OUTPUT_PATH, index=False)
+    sensitivity_correlations.to_csv(SENSITIVITY_CORRELATION_OUTPUT_PATH, index=False)
+    sensitivity_group_contrast.to_csv(SENSITIVITY_GROUP_CONTRAST_OUTPUT_PATH, index=False)
     print(f"Wrote {len(correlations)} rows to {CORRELATION_OUTPUT_PATH}")
     print(f"Wrote {len(group_contrast)} rows to {GROUP_CONTRAST_OUTPUT_PATH}")
+    print(f"Wrote {len(sensitivity_correlations)} rows to {SENSITIVITY_CORRELATION_OUTPUT_PATH}")
+    print(f"Wrote {len(sensitivity_group_contrast)} rows to {SENSITIVITY_GROUP_CONTRAST_OUTPUT_PATH}")
 
 
 if __name__ == "__main__":

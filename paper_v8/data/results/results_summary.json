@@ -133,6 +133,60 @@
       "high": 2731.8,
       "low_over_high_ratio": 7.78
     },
+    "m9_group_contrast_rework_churn_t3_median": {
+      "low": 1249.0,
+      "high": 2786.0
+    },
+    "m9_omitted_rework_churn_t3": {
+      "n": 5,
+      "mean": 1633.0,
+      "median": 172.0
+    },
+    "m9_low_group_without_max_rework_case": {
+      "n": 4,
+      "mean_rework_churn_t3": 1415.0,
+      "median_rework_churn_t3": 1201.5
+    },
+    "m9_floor_sensitivity_correlations": {
+      "rework_churn_t3": {
+        "n": 14,
+        "spearman_rho": 0.061,
+        "spearman_p": 0.836
+      },
+      "rework_ratio_t3": {
+        "n": 14,
+        "spearman_rho": 0.061,
+        "spearman_p": 0.835
+      },
+      "project_progress_mean_t3": {
+        "n": 14,
+        "spearman_rho": -0.152,
+        "spearman_p": 0.603
+      },
+      "scope_applicability_mean_t3": {
+        "n": 14,
+        "spearman_rho": -0.132,
+        "spearman_p": 0.654
+      },
+      "technical_complexity_mean_t3": {
+        "n": 14,
+        "spearman_rho": -0.008,
+        "spearman_p": 0.979
+      },
+      "engagement_participation_mean_t3": {
+        "n": 14,
+        "spearman_rho": -0.26,
+        "spearman_p": 0.37
+      }
+    },
+    "m9_floor_sensitivity_rework_group_contrast": {
+      "low_n": 8,
+      "high_n": 6,
+      "low_mean": 14102.9,
+      "high_mean": 2093.0,
+      "low_median": 1145.0,
+      "high_median": 1133.5
+    },
     "m9_group_contrast_project_progress_mean_t3": {
       "low": 3.542,
       "high": 3.667

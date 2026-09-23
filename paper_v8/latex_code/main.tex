@@ -43,14 +43,13 @@ was taken to an extreme: 55\% of the first cohort completely omitted
 substantive early architectural alignment. While repository metadata 
 spiked late at $T_3$, LLM-derived qualitative transcript analysis revealed 
 that human coordination friction remained chronically high (8/10) from the 
-very beginning. Critically, teams with low upfront planning quality were 
-heavily penalized with catastrophic late-stage rework during integration 
-(up to 100,000+ lines), whereas high-planning teams contained rework to 
-nominal levels despite producing massive volumes of deferred code. We 
-present Spec-Driven Development (SDD) not merely as a proposal, but as a 
-data-backed necessity for the AI era: when generating code is trivial, 
-upfront machine-readable specifications act as the primary shield against 
-destructive rework.
+very beginning. Among teams with scorable early artifacts, one low-planning
+team incurred more than 100,000 lines of late-stage rework, but this extreme
+case drove the mean group contrast: median and sensitivity analyses did not
+show a robust monotonic planning--rework association. We therefore present
+Spec-Driven Development (SDD) as a testable response to the coordination
+risks exposed by AI-assisted delivery, rather than as a causal conclusion
+established by this exploratory sample.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -91,9 +90,19 @@ reality'' arc, asking three questions:
 
 This paper makes three primary contributions to the empirical understanding of software engineering processes in the GenAI era. First, we provide a mixed-methods characterization of the dissonance between developer expectations and integration realities. Utilizing longitudinal survey data and qualitative sentiment tracking, we map a distinct trajectory from initial technological hubris---where students presume AI will seamlessly automate implementation and replace coding roles---to late-stage disillusionment driven by chronic architectural and coordination friction (Section~\ref{sec:results}). 
 
-Second, our primary empirical contribution isolates the mechanical and evaluative costs of deferred planning. To overcome the unreliability of student commit messages, we employ Large Language Models (LLMs) to conduct an artifact state analysis directly on the repository baseline at $T_1$. By cross-referencing this upfront architectural clarity with file provenance (separating deferred new development from destructive rework churn) and double-blind evaluator scorecards, we provide concrete evidence that planning quality governs integration stability. Teams exhibiting poor upfront artifact quality incurred massive rework churn and suffered severe penalties in peer-reviewed project evolution scores, whereas high-planning teams effectively contained AI-generated code volumes without destabilizing the core architecture (Section~\ref{sec:results}).
+Second, our primary empirical contribution distinguishes planning omission
+from planning quality and tests both against file-provenance rework and
+blind-scored outcomes. The data identify substantial early repository
+inactivity and one catastrophic rework case among low-scoring teams, while
+robustness checks show that these observations do not establish a general
+monotonic relationship between planning score and rework
+(Section~\ref{sec:results}).
 
-Finally, we synthesize these empirical findings into a data-backed methodological proposition. Rather than presenting Spec-Driven Development (SDD) as a mere theoretical alternative to Agile empiricism, we demonstrate it as a structural necessity. Because Generative AI drives the cost of code generation toward zero while severely compounding contextual integration friction, establishing explicit, machine-readable specifications upfront serves as a mandatory countermeasure to safely absorb AI-generated throughput and prevent late-stage project collapse (Section~\ref{sec:discussion}).
+Finally, we synthesize these empirical findings into a methodological
+proposition for future testing. Spec-Driven Development (SDD) may provide a
+structured response to the persistent coordination friction observed here,
+but intervention studies are required before it can be treated as a necessary
+or sufficient countermeasure (Section~\ref{sec:discussion}).
 
 \section{Background and Related Work}
 
@@ -424,7 +433,9 @@ $\{1,\dots,10\}$ scale of clarity, specificity, and coherence, using a
 fixed rubric prompt at zero decoding temperature, judged only from the
 supplied text. $\mathrm{PlanningScore}(i,s)$ is undefined (missing) when a
 team made zero commits across the \emph{entire} $T_1$ window, since there
-is no text at all to rate.
+is no text at all to rate. This is an absence of the measurement artifact,
+not an observed LLM score of 1; planning omission is therefore represented
+separately by M7.
 % PROVENANCE: source paper_v4/advanced_metrics/outputs/team_level_signals.csv
 % (team-semester grain; one LLM call per team-semester, model gpt-4o-mini,
 % temperature 0, prompt "planning" in
@@ -491,24 +502,25 @@ the panel, on the bounded scales already described in
 Section~\ref{sec:method}). Given $n \leq 14$, we report two descriptive
 views: (a) Spearman rank correlation $\rho\big(\mathrm{PlanningScore}, Y\big)$
 for each outcome $Y$; and (b) a median-split contrast of
-$\mathrm{PlanningScore}$ (teams with an undefined score, per M7, are excluded
-from the split and reported separately, not imputed), summarizing each $Y$
-per group with the same distribution-summary procedure used throughout this
-subsection.
+$\mathrm{PlanningScore}$. The primary analysis uses the nine teams with an
+observed score and reports the five omission cases separately. A sensitivity
+analysis then assigns those five cases the rubric floor (1, ``no meaningful
+planning'') and recomputes both views across all 14 team-semesters. This
+explicitly tests, rather than assumes, whether repository silence should be
+treated as the lowest planning-quality value.
 % PROVENANCE: joins paper_v4/advanced_metrics/outputs/team_level_signals.csv
 % with data/analysis/cross_evidence/datasets/evaluator_outcome_metrics.parquet
 % (team-semester grain, itself an arithmetic-mean aggregation of raw
 % per-evaluator form submissions in data/lake/evaluator_team_cuts.parquet).
 % Computed by paper_v8/scripts/metrics/m9_planning_vs_rework_association.py,
-% writing paper_v8/data/m9_planning_vs_rework_association.csv and
-% paper_v8/data/m9_planning_vs_rework_association_group_contrast.csv. Uses
+% writing paper_v8/data/m9_planning_vs_rework_association.csv,
+% paper_v8/data/m9_planning_vs_rework_association_group_contrast.csv, and
+% the corresponding floor_sensitivity CSVs. Uses
 % scipy.stats.spearmanr (scipy==1.11.4, already pinned in requirements.txt).
 Consistent with this project's own exploratory-evidence stance (Threats to
-Validity), no correlation in (a) is presented as more than descriptive
-association at $n=9$ scored teams; the median-split contrast in (b) is the
-quantitative basis for the abstract's claim that low-planning teams incurred
-disproportionate $T_3$ rework (up to $100{,}000+$ lines for a single team)
-while high-planning teams contained rework to comparatively nominal levels
+Validity), neither view is presented as causal or confirmatory. Reporting the
+complete-case and floor-imputed estimates together exposes the influence of
+missing planning artifacts and individual extreme cases
 (Section~\ref{sec:results}).
 
 Table~\ref{tab:metrics_summary} summarizes M1--M9. RQ1 relies exclusively on
@@ -737,53 +749,50 @@ inactivity for over half of the first cohort. Among the nine teams with a
 scorable $T_1$ planning artifact, the mean Planning-Quality Score (M6) is
 $3.56$ out of $10$ --- low even where planning text existed at all.
 
-Figure~\ref{fig:rq3} shows the T3 Rework-Churn volume (M8) for a
-median-split contrast of planning quality (M9): teams below the median
-planning score have a mean $T_3$ rework churn of $21{,}258$ lines, versus
-$2{,}732$ lines for teams above the median --- a $7.8\times$ difference.
-The single most extreme case, TEAM\_09 (2025.2), incurred $100{,}629$ lines
-of $T_3$ rework churn, the source of the abstract's ``100,000+ lines''
-claim. The same low-vs-high split shows a modest, narrative-consistent
-direction on independent evaluator outcomes: mean $T_3$ project-progress
-score is $3.54$ for low-planning teams versus $3.67$ for high-planning teams.
+Figure~\ref{fig:rq3} reports all three empirically distinct groups. Among the
+nine scored teams, the below-median group has mean $T_3$ rework churn of
+$21{,}258$ lines, versus $2{,}732$ above the median. This $7.8\times$ mean
+contrast is not distributionally robust: the corresponding medians are
+$1{,}249$ and $2{,}786$ lines, respectively. TEAM\_09 (2025.2), with
+$100{,}629$ rework lines, drives the low-group mean; removing that case lowers
+the remaining low-group mean to $1{,}415$. The five planning-omission teams
+also have comparatively low rework (mean $1{,}633$; median $172$), so omission
+cannot be interpreted as observed catastrophic rework under M8.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/rq3_rework_by_planning_group.png}
-\caption{$T_3$ rework-churn volume (log scale) for teams with below- vs.
-above-median $T_1$ planning-quality scores.}
+\caption{$T_3$ rework churn by $T_1$ planning-evidence group. One is added
+before log transformation so zero-rework observations remain visible.}
 \label{fig:rq3}
 \end{figure*}
 
-Table~\ref{tab:rq3_correlations} reports the Spearman rank correlations
-between the $T_1$ Planning-Quality Score and each outcome across the nine
-scored teams. The rework-related outcomes (rework-churn volume, rework
-ratio) and the engagement/participation outcome show the expected negative
-direction (higher planning quality, less rework), while scope/applicability
-and technical complexity are essentially flat. The project-progress
-correlation is also negative, the opposite sign from the group-contrast
-direction reported above; at $n=9$ this sign instability is expected and is
-exactly why we do not treat either statistic as more than descriptive.
-Consistent with this project's exploratory-evidence stance (Threats to
-Validity), none of these correlations reaches conventional significance at
-$n=9$; they are reported as descriptive context alongside the group
-contrast above, which remains the primary quantitative basis for the
-planning-quality-vs.-rework claim.
+Table~\ref{tab:rq3_correlations} reports both the primary complete-case
+correlations and the floor-imputation sensitivity analysis. In the nine
+scored teams, rework-churn volume has $\rho=-0.31$; after assigning score 1
+to the five omission cases, the estimate becomes $\rho=0.06$ at $n=14$.
+Rework ratio changes similarly from $-0.26$ to $0.06$. None of the estimates
+is conventionally significant. Together with the median and leave-one-out
+results, this means the data support planning omission and an extreme
+low-score rework case, but do not support a robust monotonic association
+between planning score and rework or evaluator outcomes.
 
 \begin{table}[t]
-\caption{Spearman Correlations: $T_1$ Planning-Quality Score vs. Outcomes ($n=9$)}
+\caption{Spearman Correlations: Complete Cases and Floor-Imputation Sensitivity}
 \label{tab:rq3_correlations}
 \centering
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
-\textbf{Outcome} & \textbf{n} & $\boldsymbol{\rho}$ & \textbf{p} \\
+& \multicolumn{2}{c}{$n=9$ observed} & \multicolumn{2}{c}{$n=14$ floor} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+\textbf{Outcome} & $\boldsymbol{\rho}$ & \textbf{p} & $\boldsymbol{\rho}$ & \textbf{p} \\
 \midrule
-Rework-churn volume ($T_3$) & 9 & $-0.31$ & $0.42$ \\
-Rework ratio ($T_3$) & 9 & $-0.26$ & $0.51$ \\
-Project progress ($T_3$) & 9 & $-0.26$ & $0.51$ \\
-Scope/applicability ($T_3$) & 9 & $-0.05$ & $0.90$ \\
-Technical complexity ($T_3$) & 9 & $-0.12$ & $0.75$ \\
-Engagement/participation ($T_3$) & 9 & $-0.35$ & $0.36$ \\
+Rework churn ($T_3$) & $-0.31$ & $0.42$ & $0.06$ & $0.84$ \\
+Rework ratio ($T_3$) & $-0.26$ & $0.51$ & $0.06$ & $0.84$ \\
+Project progress ($T_3$) & $-0.26$ & $0.51$ & $-0.15$ & $0.60$ \\
+Scope/applicability ($T_3$) & $-0.05$ & $0.90$ & $-0.13$ & $0.65$ \\
+Technical complexity ($T_3$) & $-0.12$ & $0.75$ & $-0.01$ & $0.98$ \\
+Engagement/participation ($T_3$) & $-0.35$ & $0.36$ & $-0.26$ & $0.37$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -798,6 +807,13 @@ Engagement/participation ($T_3$) & 9 & $-0.35$ & $0.36$ \\
 \textbf{Construct.} We used GPT-4o mini as a qualitative coder for planning
 quality and coordination friction. Although the prompts were structured and the
 temperature was set to zero, LLM evaluations retain interpretative variance.
+Moreover, M8 can classify a $T_3$ change as rework only when the file existed
+in an earlier window. Late-starting teams may therefore exhibit low measured
+rework because their work is classified as deferred development or because
+their total activity is low. We kept missing M6 scores distinct from observed
+score 1 in the primary analysis and reported floor imputation as a sensitivity
+analysis; its near-zero correlations show that the planning--rework association
+is not robust to this defensible alternative operationalization.
 
 \textbf{Internal.} Observational design: no intervention, no randomization. 
 GenAI exposure was self-reported and treated as the underlying context of the 

@@ -19,6 +19,8 @@ Source artifacts (read-only)
     paper_v8/data/m8_rework_severity_ratio.csv
     paper_v8/data/m9_planning_vs_rework_association.csv
     paper_v8/data/m9_planning_vs_rework_association_group_contrast.csv
+    paper_v8/data/m9_planning_vs_rework_association_floor_sensitivity.csv
+    paper_v8/data/m9_planning_vs_rework_association_floor_sensitivity_group_contrast.csv
 
 Output
 ------
@@ -105,13 +107,27 @@ def summarize_rq3() -> dict[str, object]:
     m8 = pd.read_csv(DATA_DIR / "m8_rework_severity_ratio.csv")
     m9_corr = pd.read_csv(DATA_DIR / "m9_planning_vs_rework_association.csv")
     m9_group = pd.read_csv(DATA_DIR / "m9_planning_vs_rework_association_group_contrast.csv")
+    m9_sensitivity_corr = pd.read_csv(DATA_DIR / "m9_planning_vs_rework_association_floor_sensitivity.csv")
+    m9_sensitivity_group = pd.read_csv(
+        DATA_DIR / "m9_planning_vs_rework_association_floor_sensitivity_group_contrast.csv"
+    )
 
     omission = m7.set_index("Semestre")[["n_teams", "n_omitted", "omission_rate"]].to_dict("index")
 
     rework_extreme = m8.sort_values("rework_churn_t3", ascending=False).iloc[0]
 
-    group_rework = m9_group[m9_group["outcome"] == "rework_churn_t3"].set_index("planning_group")["mean"]
+    group_rework_rows = m9_group[m9_group["outcome"] == "rework_churn_t3"].set_index("planning_group")
+    group_rework = group_rework_rows["mean"]
     group_progress = m9_group[m9_group["outcome"] == "project_progress_mean_t3"].set_index("planning_group")["mean"]
+    sensitivity_rework = m9_sensitivity_group[
+        m9_sensitivity_group["outcome"] == "rework_churn_t3"
+    ].set_index("planning_group")
+
+    joined = m8.merge(m6, on=["ID_Equipe", "Semestre"], how="left")
+    scored = joined.dropna(subset=["t1_planning_score"]).copy()
+    planning_median = scored["t1_planning_score"].median()
+    low_scored = scored[scored["t1_planning_score"] <= planning_median]
+    low_without_max = low_scored.drop(index=low_scored["rework_churn_t3"].idxmax())
 
     return {
         "m6_planning_score_scored_n": int(m6["t1_planning_score"].notna().sum()),
@@ -127,6 +143,31 @@ def summarize_rq3() -> dict[str, object]:
             "low": round(float(group_rework["low"]), 1),
             "high": round(float(group_rework["high"]), 1),
             "low_over_high_ratio": round(float(group_rework["low"] / group_rework["high"]), 2),
+        },
+        "m9_group_contrast_rework_churn_t3_median": {
+            "low": round(float(group_rework_rows.loc["low", "median"]), 1),
+            "high": round(float(group_rework_rows.loc["high", "median"]), 1),
+        },
+        "m9_omitted_rework_churn_t3": {
+            "n": int(group_rework_rows.loc["omitted", "n_valid"]),
+            "mean": round(float(group_rework_rows.loc["omitted", "mean"]), 1),
+            "median": round(float(group_rework_rows.loc["omitted", "median"]), 1),
+        },
+        "m9_low_group_without_max_rework_case": {
+            "n": int(len(low_without_max)),
+            "mean_rework_churn_t3": round(float(low_without_max["rework_churn_t3"].mean()), 1),
+            "median_rework_churn_t3": round(float(low_without_max["rework_churn_t3"].median()), 1),
+        },
+        "m9_floor_sensitivity_correlations": m9_sensitivity_corr.set_index("outcome")[
+            ["n", "spearman_rho", "spearman_p"]
+        ].round(3).to_dict("index"),
+        "m9_floor_sensitivity_rework_group_contrast": {
+            "low_n": int(sensitivity_rework.loc["low", "n_valid"]),
+            "high_n": int(sensitivity_rework.loc["high", "n_valid"]),
+            "low_mean": round(float(sensitivity_rework.loc["low", "mean"]), 1),
+            "high_mean": round(float(sensitivity_rework.loc["high", "mean"]), 1),
+            "low_median": round(float(sensitivity_rework.loc["low", "median"]), 1),
+            "high_median": round(float(sensitivity_rework.loc["high", "median"]), 1),
         },
         "m9_group_contrast_project_progress_mean_t3": {
             "low": round(float(group_progress["low"]), 3),

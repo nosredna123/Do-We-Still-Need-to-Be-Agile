@@ -9,9 +9,8 @@ Figures
 1. rq2_activity_density_vs_friction: repository activity density (M4,
    log-scale line) against qualitative coordination friction (M5, secondary
    axis), across T1-T3, pooled across both cohorts.
-2. rq3_rework_by_planning_group: T3 rework-churn volume (M8) for the
-   low-vs-high planning-quality group split already computed in M9,
-   log-scale strip/box plot.
+2. rq3_rework_by_planning_group: T3 rework-churn volume (M8) for teams
+    with omitted, low, and high T1 planning evidence, log-scale strip/box plot.
 
 Source artifacts (read-only)
 -----------------------------
@@ -84,7 +83,7 @@ def build_rq2_figure() -> go.Figure:
 
 
 def build_rq3_figure() -> go.Figure:
-    """T3 rework-churn volume by low-vs-high T1 planning-quality group."""
+    """T3 rework churn for omitted, low, and high T1 planning evidence."""
     m6 = pd.read_csv(DATA_DIR / "m6_t1_planning_quality.csv")
     m8 = pd.read_csv(DATA_DIR / "m8_rework_severity_ratio.csv")
 
@@ -94,16 +93,20 @@ def build_rq3_figure() -> go.Figure:
     scored["planning_group"] = scored["t1_planning_score"].apply(
         lambda value: "Low planning quality (<= median)" if value <= median_score else "High planning quality (> median)"
     )
+    omitted = joined[joined["t1_planning_score"].isna()].copy()
+    omitted["planning_group"] = "No T1 repository activity"
+    plotted = pd.concat([omitted, scored], ignore_index=True)
 
     figure = go.Figure()
     for group_name, color in (
+        ("No T1 repository activity", "#7f7f7f"),
         ("Low planning quality (<= median)", "#d62728"),
         ("High planning quality (> median)", "#2ca02c"),
     ):
-        group = scored[scored["planning_group"] == group_name]
+        group = plotted[plotted["planning_group"] == group_name]
         figure.add_trace(
             go.Box(
-                y=group["rework_churn_t3"],
+                y=group["rework_churn_t3"] + 1,
                 name=group_name,
                 boxpoints="all",
                 jitter=0.4,
@@ -111,8 +114,8 @@ def build_rq3_figure() -> go.Figure:
             )
         )
     figure.update_layout(
-        title="RQ3: Low-planning teams incur disproportionate T3 destructive rework",
-        yaxis={"title": "T3 rework churn (lines added + deleted, log scale)", "type": "log"},
+        title="RQ3: T3 rework varies across T1 planning-evidence groups",
+        yaxis={"title": "T3 rework churn + 1 (lines, log scale)", "type": "log"},
         showlegend=False,
         width=FIGURE_WIDTH,
         height=FIGURE_HEIGHT,
