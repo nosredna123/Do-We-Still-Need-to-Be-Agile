@@ -6,6 +6,7 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{balance}
 \usepackage{xurl}
 
@@ -15,6 +16,7 @@
 % =====================================================================
 
 \begin{document}
+\raggedbottom
 
 \title{Do We Still Need to Be Agile? What Two Cohorts of Student Projects Reveal About Planning Discipline in the GenAI-Era}
 
@@ -215,11 +217,11 @@ Our data collection framework triangulates four distinct evidentiary channels to
 
 \textbf{3. Multi-Checkpoint Student Surveys:} Students completed identical survey instruments at $T_1$, $T_2$, and $T_3$ (totaling six instrument cycles). These surveys systematically captured data across five core constructs: Demographics, Professional Experience, GenAI Adoption, Perceptions of AI Impact on SE Roles, and Project Expectations. To ensure replicability, the core dimensions and sample variables tracked across these checkpoints are detailed in Table~\ref{tab:survey_instrument}.
 
-\begin{table}[htbp]
+\begin{table*}[t]
 \caption{Structure of the Multi-Checkpoint Survey Instrument}
 \label{tab:survey_instrument}
 \centering
-\begin{tabular}{@{}p{2.8cm}p{4.2cm}p{1.2cm}@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.5cm}@{}}
 \toprule
 \textbf{Construct} & \textbf{Evaluated Variables \& Inquiries} & \textbf{Data Type} \\
 \midrule
@@ -233,8 +235,8 @@ Our data collection framework triangulates four distinct evidentiary channels to
 \addlinespace
 \textbf{Expectations \& Motivation} & Confidence levels prior to project initiation, Motivation to learn new techniques, Expected 5-year impact of AI on the industry. & 5-point Likert \& Open-ended \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{tabularx}
+\end{table*}
 
 \textbf{4. Qualitative Meeting Transcripts:} To capture coordination dynamics and evaluative feedback, audio recordings were collected from the three formal status presentation checkpoints. This dataset comprises the full audio records of the student presentations alongside the subsequent deliberative discussions among the supervisors in a private chat group. Crucially, these supervisory discussions were free-form qualitative reflections, completely decoupled from the numeric scorecasting process. To make the transcription data computationally feasible for LLM analysis, the raw text was segmented into analytical chunks, yielding 100 distinct fragments for the 2025.2 cohort (35 at $T_1$, 37 at $T_2$, and 28 at $T_3$).
 
@@ -245,15 +247,11 @@ Our data collection framework triangulates four distinct evidentiary channels to
 
 Sections~\ref{sec:method}A--D established \emph{what} was collected. This
 subsection formalizes \emph{how} raw Git history, evaluator scorecards, and
-survey/transcript text are transformed into the nine team- or cohort-level
-metrics (M1--M9) that operationalize RQ1--RQ3. Every metric is derived from
-artifacts already produced by our data pipeline (\texttt{00}--\texttt{09} and
-\texttt{12\_paper\_signals\_extractor.py}); this subsection adds no new raw
-data collection and issues no new LLM calls beyond those already cached in the
-pipeline. For each metric we state the exact processing path from raw
-artifact to reported value and name the extraction script that reproduces it,
-so that every number appearing later in this paper is independently
-auditable against the project's public repository.
+survey or transcript text become the nine metrics (M1--M9) used for RQ1--RQ3.
+All metrics derive from artifacts produced by pipeline stages 00--09 and
+\path{12_paper_signals_extractor.py}. No new data are collected and no new LLM
+calls are issued. For each metric, we identify a reproducible processing path
+from the raw artifact to the reported value.
 
 % PROVENANCE: All nine scripts below live under paper_v8/scripts/metrics/,
 % write CSV artifacts to paper_v8/data/, and read only already-persisted,
@@ -276,7 +274,11 @@ $c \in \{T_1, T_2, T_3\}$, let $\mathrm{AuthorShare}_{i,s,c}$ be the median,
 across commit authors flagged as AI-pattern authors, of their share of
 commits in cut $c$:
 \[
-\mathrm{AI\text{-}AuthorshipDensity}(i,s,c) = \mathrm{median}_{a \in A_{\mathrm{AI}}} \left( \frac{\mathrm{commits}(a,i,s,c)}{\mathrm{commits}(i,s,c)} \right).
+\begin{aligned}
+\mathrm{AIAuthDensity}(i,s,c)
+  &= \underset{a \in A_{\mathrm{AI}}}{\mathrm{median}}
+     \left(\frac{C(a,i,s,c)}{C(i,s,c)}\right).
+\end{aligned}
 \]
 % PROVENANCE: source data/analysis/integration_friction_metrics.parquet
 % (team-semester grain, produced by 05_metric_engine.py /
@@ -287,11 +289,10 @@ This value, and its associated commit count and Gini concentration, are
 already computed by the frozen Phase 2 pipeline; M1 reshapes them into a tidy
 team~$\times$~cut trajectory for direct comparison against M2 and M4.
 
-\textbf{M2 -- Self-Reported AI-Dependency Trajectory.} For cohort-cut
-$(s,c)$, let $Q$ be the six already LLM-coded student-text question families
-(benefit, five-year career impact, autonomy/tool-dependency, career
-expectation, project challenges, project feeling), each scored on an ordinal
-$[0,4]$ scale. The composite is an unweighted mean of the six family means:
+\textbf{M2 -- AI-Dependency Trajectory.} Six LLM-coded question families
+capture benefits, career impact, tool dependency, career expectations,
+project challenges, and project feeling. Each uses an ordinal $[0,4]$ scale.
+For cohort-cut $(s,c)$, the composite is the unweighted mean across families:
 \[
 \mathrm{AIDependency}(s,c) = \frac{1}{|Q|} \sum_{q \in Q} \overline{\mathrm{ai\_dependency\_score}}_{q,s,c}.
 \]
@@ -304,18 +305,16 @@ $[0,4]$ scale. The composite is an unweighted mean of the six family means:
 No LLM scoring is performed by our script; it only averages already-scored,
 already-aggregated values.
 
-\textbf{M3 -- Perceived Role-Disruption Risk.} For each SE role
-$r \in \{\text{Backend}, \text{Frontend}, \text{QA}, \text{Project Manager},
-\text{Product Manager}, \text{Scrum Master}\}$ and cohort-cut $(s,c)$, we
-summarize the raw 5-point Likert item (``this role will be extinct or
-severely affected by generative AI'') directly from the survey instrument,
-with no LLM involved:
+\textbf{M3 -- Perceived Role-Disruption Risk.} For each surveyed SE role
+(backend, frontend, QA, project manager, product manager, and Scrum Master)
+and cohort-cut $(s,c)$, we summarize the raw 5-point Likert item directly from
+the survey instrument, with no LLM involved:
 \[
 \mathrm{RoleRisk}(r,s,c) = \mathrm{SummarizeDistribution}\big(\{\ell_{r,s,c}\}\big),
 \]
 where $\mathrm{SummarizeDistribution}(\cdot)$ returns mean, median, IQR, and
 missingness, reusing the same primitive Phase 2 uses for its own ordinal
-scores (\texttt{pipeline\_statistics.summarize\_numeric\_distribution}).
+scores (\path{pipeline_statistics.summarize_numeric_distribution}).
 % PROVENANCE: source data/lake/student_responses.parquet (Semestre x
 % temporal_marker grain, no ID_Equipe; validated via
 % phase2_contracts.load_phase2_inputs, contract "student_responses").
@@ -328,9 +327,11 @@ scores (\texttt{pipeline\_statistics.summarize\_numeric\_distribution}).
 \textbf{M4 -- Repository Activity Density.} For semester $s$ (and pooled
 across both semesters) and cut $c$, we summarize the cross-team distribution
 of two already-computed Phase 2 churn signals, total line churn
-$\mathrm{cc\_total}$ and commit count $\mathrm{cc\_commit\_n}$:
+$\mathrm{cc\_total}$ and commit count $\mathrm{cc\_commit\_n}$. Let
+$\mathcal{S}$ denote the distribution summary. For either metric $m$, we use:
 \[
-\mathrm{ActivityDensity}(s,c,m) = \mathrm{SummarizeDistribution}\big(\{m_{i,s,c} : i \in \mathrm{teams}(s)\}\big), \; m \in \{\mathrm{cc\_total}, \mathrm{cc\_commit\_n}\}.
+\mathrm{ActivityDensity}(s,c,m)
+  = \mathcal{S}\bigl(\{m_{i,s,c}:i\in\mathrm{teams}(s)\}\bigr).
 \]
 % PROVENANCE: source data/analysis/code_churn_metrics.parquet (team-semester
 % grain, produced by 05_metric_engine.py). Computed by
@@ -375,23 +376,28 @@ made zero commits before the $T_1$ cut.
 \textbf{M7 -- $T_1$ Planning-Omission Rate.} For cohort $s$, the omission
 rate formalizes teams with no observable $T_1$ planning signal at all:
 \[
-\mathrm{OmissionRate}(s) = \frac{|\{i \in \mathrm{teams}(s) : \mathrm{PlanningScore}(i,s) = \mathrm{NaN}\}|}{|\mathrm{teams}(s)|}.
+\mathrm{OmissionRate}(s)
+=\frac{\left|\left\{i\in\mathrm{teams}(s):P(i,s)=\mathrm{NaN}\right\}\right|}
+       {|\mathrm{teams}(s)|}.
 \]
 % PROVENANCE: derived deterministically (no LLM calls) from
 % paper_v4/advanced_metrics/outputs/team_level_signals.csv by
 % paper_v8/scripts/metrics/m7_planning_omission_rate.py, writing
 % paper_v8/data/m7_planning_omission_rate.csv.
-Applying this formula to the persisted signals yields
-$\mathrm{OmissionRate}(2025.2) = 5/9 \approx 55.6\%$ and
-$\mathrm{OmissionRate}(2026.1) = 0/5 = 0\%$, which is the exact source of the
-abstract's ``55\% of the first cohort'' claim.
+The persisted signals give an omission rate of $55.6\%$ ($5/9$) for 2025.2
+and $0\%$ ($0/5$) for 2026.1. The former is the source of the abstract's
+``55\% of the first cohort'' claim.
 
 \textbf{M8 -- Rework Severity Ratio.} File-provenance analysis already
 separates each team's $T_3$ line churn into rework of pre-existing files
 (earliest appearance at $T_1$ or $T_2$) versus deferred new development
 (earliest appearance at $T_3$ itself):
 \[
-\mathrm{TotalChurn}_{T_3}(i,s) = \mathrm{ReworkChurn}_{T_3}(i,s) + \mathrm{DeferredChurn}_{T_3}(i,s),
+\begin{aligned}
+\mathrm{TotalChurn}_{T_3}(i,s)
+  &= \mathrm{ReworkChurn}_{T_3}(i,s) \\
+  &\quad + \mathrm{DeferredChurn}_{T_3}(i,s),
+\end{aligned}
 \]
 \[
 \mathrm{ReworkRatio}_{T_3}(i,s) = \frac{\mathrm{ReworkChurn}_{T_3}(i,s)}{\mathrm{TotalChurn}_{T_3}(i,s)}.
@@ -407,10 +413,9 @@ is destructive rather than raw volume, making teams of very different scale
 comparable.
 
 \textbf{M9 -- Planning Quality vs. Rework/Outcome Association.} We join M6,
-M8, and the independent evaluator scorecards
-($\mathrm{ProjectProgress}_{T_3}$, $\mathrm{Scope}_{T_3}$,
-$\mathrm{TechComplexity}_{T_3}$, $\mathrm{Engagement}_{T_3}$) at team-semester
-grain and report two descriptive views, given $n \leq 14$: (a) Spearman rank
+M8, and four independent evaluator outcomes at team-semester grain: project
+progress, scope, technical complexity, and engagement at $T_3$. Given
+$n \leq 14$, we report two descriptive views: (a) Spearman rank
 correlation $\rho\big(\mathrm{PlanningScore}, Y\big)$ for each outcome $Y$;
 and (b) a median-split contrast of $\mathrm{PlanningScore}$ (teams with a
 missing score, per M7, are excluded from the split and reported separately,
@@ -430,6 +435,11 @@ quantitative basis for the abstract's claim that low-planning teams incurred
 disproportionate $T_3$ rework (up to $100{,}000+$ lines for a single team)
 while high-planning teams contained rework to comparatively nominal levels
 (Section~\ref{sec:results}).
+
+\section{Results}
+\label{sec:results}
+
+[to be written...]
 
 \section{Discussion}
 \label{sec:discussion}
