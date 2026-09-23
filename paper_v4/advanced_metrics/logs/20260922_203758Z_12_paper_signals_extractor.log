@@ -1,0 +1,6 @@
+2026-09-22 17:37:58,565 - INFO - Step 1: Loading lake inputs
+2026-09-22 17:37:58,625 - INFO - Step 2: Building team-level signals
+2026-09-22 17:37:58,751 - INFO - Saved team-level signals to /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v4/advanced_metrics/outputs/team_level_signals.csv with 14 rows
+2026-09-22 17:37:58,751 - INFO - Step 3: Building cohort-level friction artifact
+2026-09-22 17:38:11,293 - INFO - Saved cohort friction output to /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v4/advanced_metrics/outputs/cohort_temporal_friction.csv with 3 rows
+2026-09-22 17:38:11,293 - INFO - Pipeline complete. Team-level rows: 14

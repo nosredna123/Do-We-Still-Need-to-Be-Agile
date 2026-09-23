@@ -1,0 +1,38 @@
+{
+  "2025.2_TEAM_01_Planning": {
+    "t1_planning_score": 3
+  },
+  "2025.2_TEAM_04_Planning": {
+    "t1_planning_score": 1
+  },
+  "2025.2_TEAM_07_Planning": {
+    "t1_planning_score": 5
+  },
+  "2025.2_TEAM_09_Planning": {
+    "t1_planning_score": 1
+  },
+  "2026.1_TEAM_01_Planning": {
+    "t1_planning_score": 1
+  },
+  "2026.1_TEAM_02_Planning": {
+    "t1_planning_score": 4
+  },
+  "2026.1_TEAM_03_Planning": {
+    "t1_planning_score": 3
+  },
+  "2026.1_TEAM_04_Planning": {
+    "t1_planning_score": 7
+  },
+  "2026.1_TEAM_05_Planning": {
+    "t1_planning_score": 7
+  },
+  "all_cohort_T1_CoordinationFriction": {
+    "coordination_friction": 8
+  },
+  "all_cohort_T2_CoordinationFriction": {
+    "coordination_friction": 8
+  },
+  "all_cohort_T3_CoordinationFriction": {
+    "coordination_friction": 8
+  }
+}
