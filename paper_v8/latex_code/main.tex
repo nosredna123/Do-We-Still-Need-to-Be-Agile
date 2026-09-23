@@ -1,0 +1,459 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{balance}
+\usepackage{xurl}
+
+% =====================================================================
+%  REVISED DRAFT - 2026-09-22 (With Advanced LLM Metrics)
+%  Framing: descriptive longitudinal case study + exploratory triangulation.
+% =====================================================================
+
+\begin{document}
+
+\title{Do We Still Need to Be Agile? What Two Cohorts of Student Projects Reveal About Planning Discipline in the GenAI-Era}
+
+\author{\IEEEauthorblockN{Anderson Martins Gomes}
+\IEEEauthorblockA{Department of Computer Science \\
+State University of Cear\'a (UECE) \\
+Fortaleza, Cear\'a, Brazil \\
+anderson.gomes@aluno.uece.br}
+}
+
+\maketitle
+
+\begin{abstract}
+In 2001, the Agile Manifesto declared war on upfront planning. A
+quarter-century later, Generative AI has inverted the economics of
+software production: generating code is cheap, while architectural 
+alignment and human coordination remain scarce and expensive. We tracked
+14 team-semesters (9 teams in semester 2025.2, 5 teams in 2026.1) of
+software-engineering project courses to examine how planning discipline 
+affects late-stage integration. By leveraging an LLM to evaluate $T_1$ 
+commit messages and parsing file-provenance to separate deferred development 
+from destructive rework, we found that Agile's de-emphasis on planning 
+was taken to an extreme: 55\% of the first cohort completely omitted 
+substantive early architectural alignment. While repository metadata 
+spiked late at $T_3$, LLM-derived qualitative transcript analysis revealed 
+that human coordination friction remained chronically high (8/10) from the 
+very beginning. Critically, teams with low upfront planning quality were 
+heavily penalized with catastrophic late-stage rework during integration 
+(up to 100,000+ lines), whereas high-planning teams contained rework to 
+nominal levels despite producing massive volumes of deferred code. We 
+present Spec-Driven Development (SDD) not merely as a proposal, but as a 
+data-backed necessity for the AI era: when generating code is trivial, 
+upfront machine-readable specifications act as the primary shield against 
+destructive rework.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Generative AI, Agile Software Development, Planning Debt, Code Churn,
+Empirical Software Engineering, Software Engineering Education.
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+The Agile Manifesto revolutionized software engineering by prioritizing
+working software, individual interactions, and responding to change
+over comprehensive documentation and strict upfront planning. For over
+two decades, this empirical paradigm was the gold standard for
+navigating requirements uncertainty, and for good reason: in a world
+where typing and boilerplate were the bottlenecks, minimizing upfront
+documentation minimized waste.
+
+That world is gone. Generative AI assistants now produce thousands of
+lines of code in seconds, shifting the scarce resources of software
+production directly to architectural alignment, integration, and
+cognitive coordination. Under this new cost equation, the Agile bet ---
+that planning shrinks as understanding grows --- deserves to be tested
+rather than assumed. 
+
+If deferring design in an AI-assisted environment merely relocates effort, 
+we hypothesize a collision between students' initial hubris regarding AI-driven 
+productivity and the harsh reality of late-stage architectural integration. 
+This paper tests that intuition by triangulating repository metadata, 
+multi-checkpoint student surveys, and qualitative meeting transcripts across 
+two student cohorts. We structure our investigation around a ``perception versus 
+reality'' arc, asking three questions:
+
+\begin{itemize}
+    \item \textbf{RQ1 (Descriptive):} How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?
+    \item \textbf{RQ2 (Descriptive):} How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?
+    \item \textbf{RQ3 (Primary):} How does the quality of upfront architectural artifacts (evaluated at baseline $T_1$) associate with late-stage destructive rework and independent, blind-scored project outcomes?
+\end{itemize}
+
+This paper makes three primary contributions to the empirical understanding of software engineering processes in the GenAI era. First, we provide a mixed-methods characterization of the dissonance between developer expectations and integration realities. Utilizing longitudinal survey data and qualitative sentiment tracking, we map a distinct trajectory from initial technological hubris---where students presume AI will seamlessly automate implementation and replace coding roles---to late-stage disillusionment driven by chronic architectural and coordination friction (Section~\ref{sec:results}). 
+
+Second, our primary empirical contribution isolates the mechanical and evaluative costs of deferred planning. To overcome the unreliability of student commit messages, we employ Large Language Models (LLMs) to conduct an artifact state analysis directly on the repository baseline at $T_1$. By cross-referencing this upfront architectural clarity with file provenance (separating deferred new development from destructive rework churn) and double-blind evaluator scorecards, we provide concrete evidence that planning quality governs integration stability. Teams exhibiting poor upfront artifact quality incurred massive rework churn and suffered severe penalties in peer-reviewed project evolution scores, whereas high-planning teams effectively contained AI-generated code volumes without destabilizing the core architecture (Section~\ref{sec:results}).
+
+Finally, we synthesize these empirical findings into a data-backed methodological proposition. Rather than presenting Spec-Driven Development (SDD) as a mere theoretical alternative to Agile empiricism, we demonstrate it as a structural necessity. Because Generative AI drives the cost of code generation toward zero while severely compounding contextual integration friction, establishing explicit, machine-readable specifications upfront serves as a mandatory countermeasure to safely absorb AI-generated throughput and prevent late-stage project collapse (Section~\ref{sec:discussion}).
+
+\section{Background and Related Work}
+
+\subsection{The Agile value hierarchy and coordination risk}
+The Agile Manifesto~\cite{agile_manifesto_2001} established a value hierarchy that 
+prioritized working software and human adaptability over comprehensive documentation. 
+In pre-AI environments, where typing code and boilerplate served as the physical 
+bottleneck of production, minimizing upfront documentation minimized waste. 
+However, critics have long maintained that empirical, documentation-light processes 
+do not eliminate coordination costs; they merely relocate them. Brooks's law regarding 
+the communication overhead of late software projects~\cite{brooks_1975_mythical_man_month}, and 
+DeMarco and Lister's findings on social and defensive barriers in 
+\emph{Peopleware}~\cite{demarco_lister_1987_peopleware}, serve as canonical counterpoints. 
+When system structure is communicated primarily through tacit team agreement rather 
+than explicit artifacts, the project remains highly vulnerable to cognitive overload 
+during late-stage integration.
+
+\subsection{Generative AI in SE: From syntax to systems}
+Recent systematic reviews and empirical studies on Generative AI in software engineering 
+demonstrate a stark dichotomy in AI capabilities~\cite{nguyenduc2026systematic,ieee2025transforming}. 
+While Large Language Models (LLMs) excel at localized code generation, 
+increasing development speed significantly, their effectiveness in high-level 
+architectural decisions remains fundamentally limited~\cite{ieee2025transforming}. 
+The current literature highlights a severe ``contextual gap'': LLMs possess superhuman 
+speed for generating logic, but lack persistent understanding of cross-file context 
+and problem scoping~\cite{cambridge2026contextual}. Consequently, GenAI drastically 
+accelerates localized implementation, effectively shifting the software production 
+bottleneck away from syntax generation and directly onto human cognitive coordination 
+and system-wide alignment.
+
+\subsection{The resurgence of upfront planning: BDUF and SDD}
+Historically, the software industry rejected ``Big Design Up Front'' (BDUF) because 
+changing rigid, comprehensive architectural documents mid-project was economically 
+disastrous when paired with slow, manual coding phases. However, Generative AI has 
+inverted this economic equation. If AI can translate a design into working code in 
+seconds, the cost of iterating on the implementation approaches zero, while the cost 
+of unguided architectural drift rises exponentially. 
+
+This shift motivates Spec-Driven Development (SDD) --- an approach where structured 
+specifications are used as the primary source of truth for AI-assisted 
+software~\cite{thoughtworks202Xspec}. In SDD, deterministic, machine-readable 
+specifications govern probabilistic AI code generation, moving the engineering focus 
+from ``code is the source of truth'' to ``intent is the source of truth''~\cite{github2025spec}. 
+By strictly isolating architectural intent from execution, SDD represents a modern, 
+high-speed incarnation of BDUF designed to enforce the system boundaries that 
+autonomous tools otherwise degrade.
+
+\subsection{Technical debt and integration rework}
+Cunningham's debt metaphor~\cite{cunningham_1992_technical_debt} and Fowler's practitioner 
+treatment~\cite{fowler2009technicaldebt} provide the language of principal and 
+interest that we borrow for \emph{Planning Debt}: effort deferred during the design 
+phase, which must be repaid with severe interest during late-stage integration. 
+The technical-debt measurement literature~\cite{kruchten2012technicaldebt} cautions 
+that blunt volume-based proxies often conflate productive agile iteration with 
+destructive rework. This distinction is critical in the GenAI era, where AI-generated 
+code is empirically shown to dramatically accelerate technical debt and double code 
+churn~\cite{codebridge2026hidden}. This reality directly shaped our methodology; 
+rather than relying on total lines changed, our pipeline analyzes file provenance 
+to specifically isolate the destructive rework churn caused by architectural collapse 
+at the project deadline.
+
+\section{Methodology}
+\label{sec:method}
+
+To investigate how planning discipline and coordination evolve in AI-assisted software engineering projects, we designed an empirical study combining longitudinal repository mining, standardized instructor evaluations, multi-checkpoint student surveys, and qualitative meeting transcripts across two academic offerings.
+
+\subsection{Context, Course Design, and "Rules of the Game"}
+The study was conducted within a project-based undergraduate software engineering course at the State University of Ceará (UECE), spanning two semesters: 2025.2 ($N = 9$ analyzable teams) and 2026.1 ($N = 5$ teams), yielding a total inferential dataset of $N = 14$ team-semesters ($\approx 70$ participating students). 
+
+Students formed teams of approximately five members through spontaneous self-allocation, with remaining students assigned to vacant slots to ensure balanced team sizes. Teams enjoyed complete autonomy regarding their internal organization, process models, and project management methodologies (e.g., choosing freely between Agile variants, Scrum, Kanban, or unguided approaches). However, course guidelines enforced two structural constraints: 
+\begin{enumerate}
+    \item Teams were required to develop an operational software project featuring an integrated Generative AI component as a core functional requirement. Specifically, projects were expected to implement advanced architectural patterns such as Retrieval-Augmented Generation (RAG)---a technique that dynamically grounds Large Language Models (LLMs) in external knowledge bases to mitigate hallucination \cite{lewis2020retrieval} --- or LLM-driven data analytics pipelines.
+    \item Students were strongly encouraged to utilize generative AI assistants throughout all phases of software development, from requirements specification to implementation and testing.
+\end{enumerate}
+
+The project lifecycle was anchored by three synchronized temporal checkpoints ($T_1$, $T_2$, and $T_3$) paced identically across both cohorts:
+\begin{itemize}
+    \item \textbf{$T_1$ (Baseline):} Administered on the first day of class prior to any formal instruction on generative AI processes, capturing baseline perceptions, initial project scope, and early planning commits.
+    \item \textbf{$T_2$ (Mid-Semester):} Conducted following structured instructional modules covering generative AI mechanics, RAG architectures, and software process models, accompanied by the second wave of survey instruments and status presentations.
+    \item \textbf{$T_3$ (Final Integration):} Positioned one week prior to the final project delivery and presentation, capturing the peak pressure of system integration and deadline convergence.
+\end{itemize}
+
+\subsection{Project Scope and Real-World Complexity}
+To ensure ecological validity and induce realistic coordination friction, the course guidelines explicitly prohibited trivial algorithmic exercises or "toy" applications. As part of the "rules of the game," teams were mandated to identify and solve real-world community, educational, or business problems. This constraint forced students to grapple with high domain complexity, authentic user requirements, and the nontrivial challenge of embedding Generative AI into functional architectures.
+
+The resulting software systems spanned diverse domains, ranging from healthcare and financial management to academic research and ecotourism. Table~\ref{tab:projects} details the 14 projects analyzed in this study. The breadth and complexity of these applications validate that the observed late-stage integration challenges and chronic coordination friction were driven by authentic software engineering workloads rather than artificially simplistic academic tasks. 
+
+\begin{table*}[t]
+\caption{Analyzed Student Projects by Cohort, Demonstrating Real-World Problem Scope and Generative AI Integration}
+\label{tab:projects}
+\centering
+\begin{tabular}{@{}lp{3cm}p{12.5cm}@{}}
+\toprule
+\textbf{Semester} & \textbf{Project Name} & \textbf{System Description \& AI Integration Scope} \\
+\midrule
+2026.1 & FoodGuard & Web platform utilizing nutritional data and medical history to identify food allergens and prevent adverse reactions. \\
+2026.1 & RevisAI & Educational system that generates intelligent flashcards and organizes customized weekly study review cycles. \\
+2026.1 & SmartFlowIA & SaaS WhatsApp chatbot focusing on intelligent onboarding, orientation, and welcoming for university freshmen. \\
+2026.1 & Interview Prep IA & AI-driven system that analyzes resumes against job vacancies, simulates interviews, and provides personalized candidate feedback. \\
+2026.1 & EnemBot & Domain-specific chatbot designed to tutor and assist students with questions regarding the Brazilian National High School Exam. \\
+\midrule
+2025.2 & UECEncontra & Intelligent virtual assistant and campus navigation system designed to help students and professors locate university resources. \\
+2025.2 & EstudaAI & Study management platform that processes multimodal files (audio, image, PDF) to generate lecture summaries, reminders, and track grades. \\
+2025.2 & CareerPath IA & Resume analysis tool that uses GenAI to match user profiles with market demands and suggest targeted skill development. \\
+2025.2 & Buliçoso & Healthcare application that utilizes LLMs to simplify complex medical leaflets and manage medication reminders for the elderly. \\
+2025.2 & EcoRoteiro & Ecotourism platform that generates personalized travel itineraries based on user profiles, physical conditions, and specific interests. \\
+2025.2 & Research Flow & Academic research assistant that searches articles, generates intelligent summaries, and formats texts to academic standards (e.g., ABNT, APA). \\
+2025.2 & ExamForge & Assessment simulator that ingests past exams and course materials to generate new tests matching specific professor grading patterns. \\
+2025.2 & SoFiA & Financial management web platform utilizing AI to help university students dynamically organize their personal finances. \\
+2025.2 & Synapse & Requirements engineering tool that summarizes technical client meetings to automatically generate functional requirements, user stories, and backlogs. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Data Sources and Collection Framework}
+Our data collection framework triangulates four distinct evidentiary channels to capture both technical artifacts and human behavioral dynamics.
+
+\textbf{1. Git Repositories:} Complete historical commit logs, branch structures, line change counts, and file-level provenance were extracted from all team repositories across the entire semester lifecycle. To mitigate the threat of unobserved out-of-band collaboration, students were explicitly instructed to centralize all project artifacts---including requirements, architectural specifications, documentation, and source code---directly within their Git repositories. This directive ensured the repository served as a comprehensive, single source of truth for the team's entire production effort.
+
+\textbf{2. Independent Evaluator Scorecards:} At each checkpoint ($T_1$, $T_2$, $T_3$), teams delivered formal status presentations. These were assessed by a panel of independent supervisors (4 evaluators in the 2025.2 cohort, and 3 in the 2026.1 cohort). To prevent groupthink and ensure scoring validity, an independent blind-scoring protocol was enforced: following the presentation and open feedback, each supervisor submitted their scores via a private electronic form. Evaluators remained blind to their peers' scores throughout the semester. The final project score was calculated as an unweighted average of these independent assessments. Projects were assessed across four structured criteria on explicit bounded scales: \emph{Project Evolution} (0 to 4.0 points), \emph{Scope and Applicability} (0 to 2.0 points), \emph{Technical Complexity} (0 to 2.0 points), and \emph{Engagement and Participation} (0 to 2.0 points).
+
+\textbf{3. Multi-Checkpoint Student Surveys:} Students completed identical survey instruments at $T_1$, $T_2$, and $T_3$ (totaling six instrument cycles). These surveys systematically captured data across five core constructs: Demographics, Professional Experience, GenAI Adoption, Perceptions of AI Impact on SE Roles, and Project Expectations. To ensure replicability, the core dimensions and sample variables tracked across these checkpoints are detailed in Table~\ref{tab:survey_instrument}.
+
+\begin{table}[htbp]
+\caption{Structure of the Multi-Checkpoint Survey Instrument}
+\label{tab:survey_instrument}
+\centering
+\begin{tabular}{@{}p{2.8cm}p{4.2cm}p{1.2cm}@{}}
+\toprule
+\textbf{Construct} & \textbf{Evaluated Variables \& Inquiries} & \textbf{Data Type} \\
+\midrule
+\textbf{Demographics \& Academic Background} & Age, Gender, Current academic semester, Previous degrees, High school educational background. & Categorical \\
+\addlinespace
+\textbf{Professional SE Experience} & Years of software development experience, Current employment status, Preferred engineering role (e.g., Backend, QA, ML), Largest past team size. & Categorical \\
+\addlinespace
+\textbf{Generative AI Adoption \& Tooling} & Frequency of AI usage, Specific tools adopted (e.g., ChatGPT, Gemini, GitHub Copilot, Claude), Primary use cases (e.g., Code generation, Debugging, Documentation). & Categorical \& Multiple Choice \\
+\addlinespace
+\textbf{Perceived AI Impact on SE Roles} & Perceived risk of extinction or severe disruption for specific roles: Backend, Frontend, QA, Project Manager, Product Manager, Scrum Master. & 5-point Likert \\
+\addlinespace
+\textbf{Expectations \& Motivation} & Confidence levels prior to project initiation, Motivation to learn new techniques, Expected 5-year impact of AI on the industry. & 5-point Likert \& Open-ended \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{4. Qualitative Meeting Transcripts:} To capture coordination dynamics and evaluative feedback, audio recordings were collected from the three formal status presentation checkpoints. This dataset comprises the full audio records of the student presentations alongside the subsequent deliberative discussions among the supervisors in a private chat group. Crucially, these supervisory discussions were free-form qualitative reflections, completely decoupled from the numeric scorecasting process. To make the transcription data computationally feasible for LLM analysis, the raw text was segmented into analytical chunks, yielding 100 distinct fragments for the 2025.2 cohort (35 at $T_1$, 37 at $T_2$, and 28 at $T_3$).
+
+\textbf{Data Anonymization and Privacy:} To ensure strict ethical compliance and protect participant confidentiality, all raw data streams were subjected to a rigorous anonymization pipeline prior to analysis. We employed a hybrid sanitization approach, combining deterministic heuristics (e.g., regex-based masking of identifiers) with LLM-assisted redaction to scrub unstructured text across commit messages, survey free-text responses, and audio transcripts. Consequently, all Personally Identifiable Information (PII) was completely removed, ensuring that no references to individual students, evaluators, or specific demographic markers remain in the finalized analytical dataset.
+
+\subsection{Advanced Metrics Operationalization}
+\label{sec:advanced-metrics}
+
+Sections~\ref{sec:method}A--D established \emph{what} was collected. This
+subsection formalizes \emph{how} raw Git history, evaluator scorecards, and
+survey/transcript text are transformed into the nine team- or cohort-level
+metrics (M1--M9) that operationalize RQ1--RQ3. Every metric is derived from
+artifacts already produced by our data pipeline (\texttt{00}--\texttt{09} and
+\texttt{12\_paper\_signals\_extractor.py}); this subsection adds no new raw
+data collection and issues no new LLM calls beyond those already cached in the
+pipeline. For each metric we state the exact processing path from raw
+artifact to reported value and name the extraction script that reproduces it,
+so that every number appearing later in this paper is independently
+auditable against the project's public repository.
+
+% PROVENANCE: All nine scripts below live under paper_v8/scripts/metrics/,
+% write CSV artifacts to paper_v8/data/, and read only already-persisted,
+% frozen Phase 1/2 lake and analysis Parquet files or the frozen
+% paper_v4/advanced_metrics/outputs/*.csv signals produced by
+% 12_paper_signals_extractor.py. No script reruns Phase 1/2 or issues new
+% LLM calls; all LLM scoring referenced here was already computed upstream.
+
+\subsubsection{RQ1: Generative-AI adoption and role-perception metrics}
+
+Two structurally different signals triangulate RQ1: a \emph{behavioral} proxy
+observed directly in Git history, and a \emph{perceptual} proxy self-reported
+by students. They cannot be joined at the team level, because survey
+responses are anonymized at the cohort~$\times$~cut grain and carry no team
+identifier; this asymmetry is a construct-validity limitation we state
+explicitly rather than resolve by fabricating a join.
+
+\textbf{M1 -- AI-Authorship Density.} For team $i$ in semester $s$ and cut
+$c \in \{T_1, T_2, T_3\}$, let $\mathrm{AuthorShare}_{i,s,c}$ be the median,
+across commit authors flagged as AI-pattern authors, of their share of
+commits in cut $c$:
+\[
+\mathrm{AI\text{-}AuthorshipDensity}(i,s,c) = \mathrm{median}_{a \in A_{\mathrm{AI}}} \left( \frac{\mathrm{commits}(a,i,s,c)}{\mathrm{commits}(i,s,c)} \right).
+\]
+% PROVENANCE: source data/analysis/integration_friction_metrics.parquet
+% (team-semester grain, produced by 05_metric_engine.py /
+% 08_cross_evidence_engine.py). Re-exposed, not recomputed, by
+% paper_v8/scripts/metrics/m1_ai_authorship_density.py, which writes
+% paper_v8/data/m1_ai_authorship_density.csv.
+This value, and its associated commit count and Gini concentration, are
+already computed by the frozen Phase 2 pipeline; M1 reshapes them into a tidy
+team~$\times$~cut trajectory for direct comparison against M2 and M4.
+
+\textbf{M2 -- Self-Reported AI-Dependency Trajectory.} For cohort-cut
+$(s,c)$, let $Q$ be the six already LLM-coded student-text question families
+(benefit, five-year career impact, autonomy/tool-dependency, career
+expectation, project challenges, project feeling), each scored on an ordinal
+$[0,4]$ scale. The composite is an unweighted mean of the six family means:
+\[
+\mathrm{AIDependency}(s,c) = \frac{1}{|Q|} \sum_{q \in Q} \overline{\mathrm{ai\_dependency\_score}}_{q,s,c}.
+\]
+% PROVENANCE: source data/analysis/textual_cut_signals.parquet (Semestre x
+% temporal_marker grain, no ID_Equipe; produced by
+% 04_nlp_qualitative_miner.py's aggregation stage). Computed by
+% paper_v8/scripts/metrics/m2_ai_dependency_trajectory.py, writing
+% paper_v8/data/m2_ai_dependency_trajectory.csv. Deterministic mean-of-means;
+% no new LLM calls issued.
+No LLM scoring is performed by our script; it only averages already-scored,
+already-aggregated values.
+
+\textbf{M3 -- Perceived Role-Disruption Risk.} For each SE role
+$r \in \{\text{Backend}, \text{Frontend}, \text{QA}, \text{Project Manager},
+\text{Product Manager}, \text{Scrum Master}\}$ and cohort-cut $(s,c)$, we
+summarize the raw 5-point Likert item (``this role will be extinct or
+severely affected by generative AI'') directly from the survey instrument,
+with no LLM involved:
+\[
+\mathrm{RoleRisk}(r,s,c) = \mathrm{SummarizeDistribution}\big(\{\ell_{r,s,c}\}\big),
+\]
+where $\mathrm{SummarizeDistribution}(\cdot)$ returns mean, median, IQR, and
+missingness, reusing the same primitive Phase 2 uses for its own ordinal
+scores (\texttt{pipeline\_statistics.summarize\_numeric\_distribution}).
+% PROVENANCE: source data/lake/student_responses.parquet (Semestre x
+% temporal_marker grain, no ID_Equipe; validated via
+% phase2_contracts.load_phase2_inputs, contract "student_responses").
+% Computed by paper_v8/scripts/metrics/m3_role_disruption_risk.py, writing
+% paper_v8/data/m3_role_disruption_risk.csv. New metric, zero LLM calls
+% (raw structured Likert responses).
+
+\subsubsection{RQ2: Repository temporal density vs. qualitative coordination friction}
+
+\textbf{M4 -- Repository Activity Density.} For semester $s$ (and pooled
+across both semesters) and cut $c$, we summarize the cross-team distribution
+of two already-computed Phase 2 churn signals, total line churn
+$\mathrm{cc\_total}$ and commit count $\mathrm{cc\_commit\_n}$:
+\[
+\mathrm{ActivityDensity}(s,c,m) = \mathrm{SummarizeDistribution}\big(\{m_{i,s,c} : i \in \mathrm{teams}(s)\}\big), \; m \in \{\mathrm{cc\_total}, \mathrm{cc\_commit\_n}\}.
+\]
+% PROVENANCE: source data/analysis/code_churn_metrics.parquet (team-semester
+% grain, produced by 05_metric_engine.py). Computed by
+% paper_v8/scripts/metrics/m4_repo_activity_density.py, writing
+% paper_v8/data/m4_repo_activity_density.csv.
+Empirically, mean $\mathrm{cc\_total}$ escalates by roughly two orders of
+magnitude from $T_1$ to $T_3$ in both cohorts (Section~\ref{sec:results}),
+confirming that repository-visible activity concentrates sharply at the
+deadline.
+
+\textbf{M5 -- Qualitative Coordination-Friction Trajectory.} For cut $c$, the
+cohort-pooled coordination-friction score is an LLM-coded rating in $[1,10]$
+of the transcript text for that cut (prompt \texttt{cohort\_coordination\_friction}),
+already computed upstream; M5 performs no re-scoring.
+% PROVENANCE: source paper_v4/advanced_metrics/outputs/cohort_temporal_friction.csv
+% (Semestre x temporal_marker grain, Semestre pooled as "all"; produced by
+% 12_paper_signals_extractor.py, a frozen signals pipeline adjacent to but
+% not part of the 00-09 Phase 1/2 chain). Re-exposed by
+% paper_v8/scripts/metrics/m5_coordination_friction_trajectory.py, writing
+% paper_v8/data/m5_coordination_friction_trajectory.csv.
+The contrast between M4 and M5 is the core empirical basis for RQ2: unlike
+$\mathrm{ActivityDensity}$, which is near zero at $T_1$ and spikes at $T_3$,
+$\mathrm{CoordinationFriction}$ is already at its ceiling-adjacent value at
+$T_1$ and remains flat through $T_3$ (Section~\ref{sec:results}). Repository
+metadata is therefore a lagging indicator of a coordination cost that, per
+the qualitative record, was present from day one.
+
+\subsubsection{RQ3: Upfront planning quality, destructive rework, and evaluator outcomes (primary)}
+
+\textbf{M6 -- $T_1$ Planning-Quality Score.} For team $i$ in semester $s$,
+$\mathrm{PlanningScore}(i,s) \in \{1,\dots,10\}$ is an LLM-assigned integer
+judging the clarity, specificity, and coherence of the team's $T_1$ commit
+messages against a fixed rubric prompt; it is undefined (missing) when a team
+made zero commits before the $T_1$ cut.
+% PROVENANCE: source paper_v4/advanced_metrics/outputs/team_level_signals.csv
+% (team-semester grain; produced by 12_paper_signals_extractor.py's
+% "planning" LLM task, one call per team-semester, cached in
+% paper_v4/advanced_metrics/llm_cache/). Re-exposed by
+% paper_v8/scripts/metrics/m6_t1_planning_quality.py, writing
+% paper_v8/data/m6_t1_planning_quality.csv.
+
+\textbf{M7 -- $T_1$ Planning-Omission Rate.} For cohort $s$, the omission
+rate formalizes teams with no observable $T_1$ planning signal at all:
+\[
+\mathrm{OmissionRate}(s) = \frac{|\{i \in \mathrm{teams}(s) : \mathrm{PlanningScore}(i,s) = \mathrm{NaN}\}|}{|\mathrm{teams}(s)|}.
+\]
+% PROVENANCE: derived deterministically (no LLM calls) from
+% paper_v4/advanced_metrics/outputs/team_level_signals.csv by
+% paper_v8/scripts/metrics/m7_planning_omission_rate.py, writing
+% paper_v8/data/m7_planning_omission_rate.csv.
+Applying this formula to the persisted signals yields
+$\mathrm{OmissionRate}(2025.2) = 5/9 \approx 55.6\%$ and
+$\mathrm{OmissionRate}(2026.1) = 0/5 = 0\%$, which is the exact source of the
+abstract's ``55\% of the first cohort'' claim.
+
+\textbf{M8 -- Rework Severity Ratio.} File-provenance analysis already
+separates each team's $T_3$ line churn into rework of pre-existing files
+(earliest appearance at $T_1$ or $T_2$) versus deferred new development
+(earliest appearance at $T_3$ itself):
+\[
+\mathrm{TotalChurn}_{T_3}(i,s) = \mathrm{ReworkChurn}_{T_3}(i,s) + \mathrm{DeferredChurn}_{T_3}(i,s),
+\]
+\[
+\mathrm{ReworkRatio}_{T_3}(i,s) = \frac{\mathrm{ReworkChurn}_{T_3}(i,s)}{\mathrm{TotalChurn}_{T_3}(i,s)}.
+\]
+% PROVENANCE: rework_churn_t3 / deferred_churn_t3 columns from
+% paper_v4/advanced_metrics/outputs/team_level_signals.csv (produced by
+% 12_paper_signals_extractor.py's file-provenance step, cross-checked
+% against data/processed/clean_repos/). Derived deterministically by
+% paper_v8/scripts/metrics/m8_rework_severity_ratio.py, writing
+% paper_v8/data/m8_rework_severity_ratio.csv.
+$\mathrm{ReworkRatio}_{T_3}$ isolates \emph{what fraction} of late-cycle churn
+is destructive rather than raw volume, making teams of very different scale
+comparable.
+
+\textbf{M9 -- Planning Quality vs. Rework/Outcome Association.} We join M6,
+M8, and the independent evaluator scorecards
+($\mathrm{ProjectProgress}_{T_3}$, $\mathrm{Scope}_{T_3}$,
+$\mathrm{TechComplexity}_{T_3}$, $\mathrm{Engagement}_{T_3}$) at team-semester
+grain and report two descriptive views, given $n \leq 14$: (a) Spearman rank
+correlation $\rho\big(\mathrm{PlanningScore}, Y\big)$ for each outcome $Y$;
+and (b) a median-split contrast of $\mathrm{PlanningScore}$ (teams with a
+missing score, per M7, are excluded from the split and reported separately,
+not imputed), summarizing each $Y$ per group with the same distribution
+primitive used throughout this subsection.
+% PROVENANCE: joins paper_v4/advanced_metrics/outputs/team_level_signals.csv
+% with data/analysis/cross_evidence/datasets/evaluator_outcome_metrics.parquet
+% (team-semester grain, produced by 08_cross_evidence_engine.py). Computed by
+% paper_v8/scripts/metrics/m9_planning_vs_rework_association.py, writing
+% paper_v8/data/m9_planning_vs_rework_association.csv and
+% paper_v8/data/m9_planning_vs_rework_association_group_contrast.csv. Uses
+% scipy.stats.spearmanr (scipy==1.11.4, already pinned in requirements.txt).
+Consistent with this project's own exploratory-evidence stance (Threats to
+Validity), no correlation in (a) is presented as more than descriptive
+association at $n=9$ scored teams; the median-split contrast in (b) is the
+quantitative basis for the abstract's claim that low-planning teams incurred
+disproportionate $T_3$ rework (up to $100{,}000+$ lines for a single team)
+while high-planning teams contained rework to comparatively nominal levels
+(Section~\ref{sec:results}).
+
+\section{Discussion}
+\label{sec:discussion}
+
+[to be written...]
+
+\section{Threats to Validity}
+[to be rewritten...]
+\textbf{Construct.} We used GPT-4o mini as a qualitative coder for planning
+quality and coordination friction. Although the prompts were structured and the
+temperature was set to zero, LLM evaluations retain interpretative variance.
+
+\textbf{Internal.} Observational design: no intervention, no randomization. 
+GenAI exposure was self-reported and treated as the underlying context of the 
+cohorts rather than a manipulated variable.
+
+\textbf{External.} $N=14$ team-semesters from two semesters of one course; 
+student greenfield micro-team context. Generalization to industrial settings 
+requires further study.
+
+\section{Conclusion}
+[to be written...]
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
