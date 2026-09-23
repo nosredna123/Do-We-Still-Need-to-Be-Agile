@@ -1120,7 +1120,36 @@ collected replication data would provide stronger reproducibility without
 weakening participant protection.
 
 \section{Conclusion}
-[to be written...]
+
+Do we still need to be Agile? Our evidence supports a qualified yes. Iteration,
+feedback, and adaptation remain valuable, but they should not be confused with
+the absence of persistent planning artifacts. In AI-supported development,
+where implementation can begin quickly, teams still need an inspectable and
+revisable account of scope, interfaces, constraints, and acceptance conditions.
+The relevant evolution is therefore not from Agile back to immutable Big Design
+Up Front, but from tacit coordination toward explicit, living specifications.
+
+Three findings motivate this position. First, $55.6\%$ of the 2025.2 teams
+made no repository-visible contribution during the multi-week $T_1$ window,
+whereas every 2026.1 team did. Second, mean repository churn grew by
+$266.8\times$ while the pooled coordination-friction rating remained $8/10$
+at all three checkpoints, showing that late repository visibility and early
+coordination concerns followed different temporal patterns. Third, one
+low-scoring team incurred more than $100{,}000$ lines of $T_3$ rework, but
+medians, leave-one-out analysis, and floor imputation showed that this case did
+not constitute a robust monotonic planning--rework relationship. These results
+document planning omission, persistent friction, and a consequential tail
+failure; they do not establish that planning quality caused project outcomes
+or that SDD is superior to Agile.
+
+The next step is a preregistered, multi-course intervention comparing usual
+team practice with an iterative SDD condition built around versioned, machine-
+readable specifications. Such a study should independently score specification
+quality, record consented AI-tool use, retain team-linked coordination evidence,
+and distinguish productive iteration from deferred development and destructive
+rework. Until that comparison is available, SDD should be treated as a
+testable extension of Agile practice: a way to preserve adaptability while
+making shared intent inspectable to both people and AI systems.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
