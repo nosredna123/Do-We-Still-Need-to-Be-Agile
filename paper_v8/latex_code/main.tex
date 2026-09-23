@@ -501,34 +501,34 @@ omission rate (M7), a late-stage destructive-rework signal (M8), and their
 joint association with evaluator outcomes (M9). Concrete values, figures, and
 the RQ3 group-contrast findings are reported in Section~\ref{sec:results}.
 
-\begin{table*}[t]
+\begin{table}[t]
 \caption{Summary of Metrics M1--M9, Grouped by Research Question}
 \label{tab:metrics_summary}
 \centering
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X@{}}
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{2.6cm}}
 \toprule
-\textbf{ID} & \textbf{Metric} & \textbf{Grain} & \textbf{Source Artifact} \\
+\textbf{ID} & \textbf{Metric} & \textbf{Grain} \\
 \midrule
-\multicolumn{4}{@{}l}{\textit{RQ1 -- GenAI adoption and role-perception}} \\
+\multicolumn{3}{@{}l}{\textit{RQ1 -- GenAI adoption and role-perception}} \\
 \midrule
-M1 & Self-Reported AI-Dependency Trajectory & Cohort $\times$ cut & \path{textual_cut_signals.parquet} \\
-M2 & Perceived Role-Disruption Risk & Cohort $\times$ cut & \path{student_responses.parquet} \\
+M1 & Self-Reported AI-Dependency Trajectory & Cohort $\times$ cut \\
+M2 & Perceived Role-Disruption Risk & Cohort $\times$ cut \\
 \midrule
-\multicolumn{4}{@{}l}{\textit{RQ2 -- Repository density vs. coordination friction}} \\
+\multicolumn{3}{@{}l}{\textit{RQ2 -- Repository density vs. coordination friction}} \\
 \midrule
-M3 & Pre-Deadline Author-Concentration Density & Team-semester & \path{integration_friction_metrics.parquet} \\
-M4 & Repository Activity Density & Semester $\times$ cut & \path{code_churn_metrics.parquet} \\
-M5 & Coordination-Friction Trajectory & Cohort $\times$ cut & \path{cohort_temporal_friction.csv} \\
+M3 & Pre-Deadline Author-Concentration Density & Team-semester \\
+M4 & Repository Activity Density & Semester $\times$ cut \\
+M5 & Coordination-Friction Trajectory & Cohort $\times$ cut \\
 \midrule
-\multicolumn{4}{@{}l}{\textit{RQ3 -- Planning quality, destructive rework, and outcomes (primary)}} \\
+\multicolumn{3}{@{}l}{\textit{RQ3 -- Planning quality, destructive rework, and outcomes (primary)}} \\
 \midrule
-M6 & $T_1$ Planning-Quality Score & Team-semester & \path{team_level_signals.csv} \\
-M7 & $T_1$ Planning-Omission Rate & Cohort & \path{team_level_signals.csv} \\
-M8 & Rework Severity Ratio & Team-semester & \path{team_level_signals.csv} \\
-M9 & Planning vs. Rework/Outcome Association & Team-semester & \path{team_level_signals.csv} + \path{evaluator_outcome_metrics.parquet} \\
+M6 & $T_1$ Planning-Quality Score & Team-semester \\
+M7 & $T_1$ Planning-Omission Rate & Cohort \\
+M8 & Rework Severity Ratio & Team-semester \\
+M9 & Planning vs. Rework/Outcome Association & Team-semester \\
 \bottomrule
 \end{tabularx}
-\end{table*}
+\end{table}
 
 \section{Results}
 \label{sec:results}
