@@ -612,7 +612,146 @@ minor errors where needed; no material corrections were required.
 \section{Results}
 \label{sec:results}
 
-[to be written...]
+This section reports the empirical values produced by the metrics
+formalized in Sections~\ref{sec:advanced-metrics} and~\ref{sec:llm-usage},
+organized by research question. Every number below traces to a row in
+\path{paper_v8/data/results/results_summary.json}, computed by
+\path{paper_v8/scripts/results/build_results_summary.py} directly from the
+M1--M9 CSVs; no new metric is introduced in this section.
+
+% PROVENANCE: paper_v8/scripts/results/build_results_summary.py reads
+% paper_v8/data/m1..m9*.csv (already produced by paper_v8/scripts/metrics/)
+% and writes paper_v8/data/results/results_summary.json. Figures are
+% produced by paper_v8/scripts/results/generate_figures.py (plotly +
+% kaleido, already-pinned dependencies) into paper_v8/figures/. Neither
+% script recomputes M1-M9 or issues new LLM calls.
+
+\subsection{RQ1: Generative-AI adoption and role-perception trajectory}
+
+The self-reported AI-dependency composite (M1) is broadly stable across the
+project lifecycle rather than sharply escalating: in 2025.2 it moves from
+$1.21$ at $T_1$ to $1.28$ at $T_3$ ($\Delta{=}+0.07$ on the $[0,4]$ scale),
+and in 2026.1 from $1.16$ to $1.32$ ($\Delta{=}+0.17$). Both cohorts show a
+small net increase, consistent with growing reliance on generative-AI tools
+as the semester progresses, but the magnitude is modest relative to the
+scale's range --- students do not report a dramatic escalation in perceived
+AI dependency, even though (Section~\ref{sec:results}B) repository activity
+escalates by two orders of magnitude over the same window.
+
+Table~\ref{tab:role_risk} ranks the six surveyed roles by their pooled
+perceived risk of AI-driven displacement (M2, response-weighted mean across
+all cohort-cuts, $1$--$5$ scale). Contrary to the common assumption that
+implementation-heavy or highly proceduralized roles (QA, Backend) are seen
+as most automatable, students rank \textbf{Frontend} development as the
+role most at risk ($2.81$) and \textbf{Scrum Master} second ($2.43$),
+while \textbf{Project Manager} is perceived as least at risk ($2.01$).
+
+\begin{table}[t]
+\caption{Perceived AI Role-Disruption Risk (M2), Pooled Across Cohort-Cuts}
+\label{tab:role_risk}
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Role} & \textbf{Pooled mean risk (1--5)} \\
+\midrule
+Frontend & 2.81 \\
+Scrum Master & 2.43 \\
+Backend & 2.32 \\
+Product Manager & 2.15 \\
+QA & 2.11 \\
+Project Manager & 2.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ2: Repository temporal density vs. qualitative coordination friction}
+
+Figure~\ref{fig:rq2} contrasts repository activity density (M4) against
+coordination friction (M5) across the three checkpoints, pooled over both
+cohorts. Mean total churn escalates from $3{,}615$ lines at $T_1$ to
+$964{,}438$ lines at $T_3$ --- a $266.8\times$ increase --- confirming that
+repository-visible activity concentrates sharply at the deadline. Over the
+same window, the LLM-coded coordination-friction score is constant at
+$8/10$ at every checkpoint ($T_1$, $T_2$, and $T_3$ all score $8$), the
+central empirical basis for RQ2: friction is not an emergent property of
+late-cycle crunch, but a standing condition already near-ceiling at the
+very first checkpoint, while repository metadata only becomes a visible
+proxy for it much later.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/rq2_activity_density_vs_friction.png}
+\caption{Repository activity density (log scale, left axis) vs. coordination
+friction (right axis), $T_1$--$T_3$, pooled across cohorts.}
+\label{fig:rq2}
+\end{figure}
+
+M3 provides additional context. Across the 14 team-semesters with commits
+in the 72 hours before $T_3$, the median per-teammate commit share is $0.30$
+and the median Gini coefficient is $0.21$. This moderate concentration of
+last-minute commit volume is consistent with compressed but distributed
+integration work, rather than one teammate absorbing the entire crunch.
+
+\subsection{RQ3: Upfront planning quality, destructive rework, and evaluator outcomes (primary)}
+
+Applying the omission-rate formula (M7) to the collected $T_1$ commit
+records confirms the abstract's headline finding: $55.6\%$ ($5/9$) of teams
+in the first cohort (2025.2) made no commits at all before their $T_1$
+checkpoint, versus $0\%$ ($0/5$) in the second cohort (2026.1). Among the
+nine teams with a scorable $T_1$ planning artifact, the mean Planning-Quality
+Score (M6) is $3.56$ out of $10$ --- low even where planning text existed at
+all.
+
+Figure~\ref{fig:rq3} shows the T3 Rework-Churn volume (M8) for a
+median-split contrast of planning quality (M9): teams below the median
+planning score have a mean $T_3$ rework churn of $21{,}258$ lines, versus
+$2{,}732$ lines for teams above the median --- a $7.8\times$ difference.
+The single most extreme case, TEAM\_09 (2025.2), incurred $100{,}629$ lines
+of $T_3$ rework churn, the source of the abstract's ``100,000+ lines''
+claim. The same low-vs-high split shows a modest, narrative-consistent
+direction on independent evaluator outcomes: mean $T_3$ project-progress
+score is $3.54$ for low-planning teams versus $3.67$ for high-planning teams.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/rq3_rework_by_planning_group.png}
+\caption{$T_3$ rework-churn volume (log scale) for teams with below- vs.
+above-median $T_1$ planning-quality scores.}
+\label{fig:rq3}
+\end{figure}
+
+Table~\ref{tab:rq3_correlations} reports the Spearman rank correlations
+between the $T_1$ Planning-Quality Score and each outcome across the nine
+scored teams. The rework-related outcomes (rework-churn volume, rework
+ratio) and the engagement/participation outcome show the expected negative
+direction (higher planning quality, less rework), while scope/applicability
+and technical complexity are essentially flat. The project-progress
+correlation is also negative, the opposite sign from the group-contrast
+direction reported above; at $n=9$ this sign instability is expected and is
+exactly why we do not treat either statistic as more than descriptive.
+Consistent with this project's exploratory-evidence stance (Threats to
+Validity), none of these correlations reaches conventional significance at
+$n=9$; they are reported as descriptive context alongside the group
+contrast above, which remains the primary quantitative basis for the
+planning-quality-vs.-rework claim.
+
+\begin{table}[t]
+\caption{Spearman Correlations: $T_1$ Planning-Quality Score vs. Outcomes ($n=9$)}
+\label{tab:rq3_correlations}
+\centering
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Outcome} & \textbf{n} & $\boldsymbol{\rho}$ & \textbf{p} \\
+\midrule
+Rework-churn volume ($T_3$) & 9 & $-0.31$ & $0.42$ \\
+Rework ratio ($T_3$) & 9 & $-0.26$ & $0.51$ \\
+Project progress ($T_3$) & 9 & $-0.26$ & $0.51$ \\
+Scope/applicability ($T_3$) & 9 & $-0.05$ & $0.90$ \\
+Technical complexity ($T_3$) & 9 & $-0.12$ & $0.75$ \\
+Engagement/participation ($T_3$) & 9 & $-0.35$ & $0.36$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Discussion}
 \label{sec:discussion}

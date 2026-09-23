@@ -1,0 +1,109 @@
+{
+  "rq1": {
+    "m1_ai_dependency_trajectory_by_semester": {
+      "2025.2": {
+        "T1": 1.21,
+        "T2": 1.301,
+        "T3": 1.283,
+        "delta_t1_t3": 0.073
+      },
+      "2026.1": {
+        "T1": 1.159,
+        "T2": 1.308,
+        "T3": 1.324,
+        "delta_t1_t3": 0.165
+      }
+    },
+    "m2_role_pooled_mean_ranked": {
+      "Frontend": 2.813,
+      "Scrum Master": 2.433,
+      "Backend": 2.316,
+      "Product Manager": 2.15,
+      "QA": 2.112,
+      "Project Manager": 2.005
+    },
+    "m2_highest_risk_role": "Frontend",
+    "m2_lowest_risk_role": "Project Manager"
+  },
+  "rq2": {
+    "m4_pooled_cc_total_mean_by_cut": {
+      "T1": 3615.3,
+      "T2": 17314.2,
+      "T3": 964437.9
+    },
+    "m4_activity_density_fold_increase_t1_to_t3": 266.8,
+    "m5_coordination_friction_by_cut": {
+      "T1": 8,
+      "T2": 8,
+      "T3": 8
+    },
+    "m5_friction_range_t1_to_t3": 0,
+    "m3_pre_t3_author_share_median_of_medians": 0.299,
+    "m3_pre_t3_author_gini_median": 0.206,
+    "m3_n_team_semesters_with_t3_commits": 14
+  },
+  "rq3": {
+    "m6_planning_score_scored_n": 9,
+    "m6_planning_score_mean_scored": 3.56,
+    "m7_omission_by_semester": {
+      "2025.2": {
+        "n_teams": 9,
+        "n_omitted": 5,
+        "omission_rate": 0.556
+      },
+      "2026.1": {
+        "n_teams": 5,
+        "n_omitted": 0,
+        "omission_rate": 0.0
+      },
+      "all": {
+        "n_teams": 14,
+        "n_omitted": 5,
+        "omission_rate": 0.357
+      }
+    },
+    "m8_max_rework_team": "TEAM_09|2025.2",
+    "m8_max_rework_churn_t3": 100629.0,
+    "m9_correlations": {
+      "rework_churn_t3": {
+        "n": 9,
+        "spearman_rho": -0.308,
+        "spearman_p": 0.42
+      },
+      "rework_ratio_t3": {
+        "n": 9,
+        "spearman_rho": -0.256,
+        "spearman_p": 0.505
+      },
+      "project_progress_mean_t3": {
+        "n": 9,
+        "spearman_rho": -0.257,
+        "spearman_p": 0.505
+      },
+      "scope_applicability_mean_t3": {
+        "n": 9,
+        "spearman_rho": -0.051,
+        "spearman_p": 0.897
+      },
+      "technical_complexity_mean_t3": {
+        "n": 9,
+        "spearman_rho": -0.122,
+        "spearman_p": 0.754
+      },
+      "engagement_participation_mean_t3": {
+        "n": 9,
+        "spearman_rho": -0.345,
+        "spearman_p": 0.363
+      }
+    },
+    "m9_group_contrast_rework_churn_t3_mean": {
+      "low": 21257.8,
+      "high": 2731.8,
+      "low_over_high_ratio": 7.78
+    },
+    "m9_group_contrast_project_progress_mean_t3": {
+      "low": 3.542,
+      "high": 3.667
+    }
+  }
+}
