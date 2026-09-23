@@ -660,6 +660,9 @@ earlier.
 % paper_v8/scripts/results/generate_figures.py (plotly + kaleido,
 % already-pinned dependencies) into paper_v8/figures/. Neither script
 % recomputes M1-M9 or issues new LLM calls.
+% paper_v8/scripts/results/build_team_level_commit_table.py writes the
+% 14-row source for Table~\ref{tab:rq3_team_level} to
+% paper_v8/data/results/team_level_commit_rework.csv.
 
 \subsection{RQ1: Generative-AI adoption and role-perception trajectory}
 
@@ -748,6 +751,53 @@ missing day-one commit; it reflects several weeks of complete repository
 inactivity for over half of the first cohort. Among the nine teams with a
 scorable $T_1$ planning artifact, the mean Planning-Quality Score (M6) is
 $3.56$ out of $10$ --- low even where planning text existed at all.
+
+Table~\ref{tab:rq3_team_level} exposes the underlying team-semester records
+before aggregation. It separates absence of a $T_1$ planning artifact from
+an observed low score and shows activity in every temporal window. This is
+important for interpreting M8: teams first active at $T_2$ or $T_3$ have a
+smaller earlier file baseline that can subsequently be classified as rework.
+
+\begin{table*}[t]
+\caption{Team-Level Repository Activity, Planning Evidence, and $T_3$ Churn Across All 14 Team-Semesters}
+\label{tab:rq3_team_level}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lrrrcrrrrr@{}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Commits}} & & & \multicolumn{4}{c}{\textbf{$T_3$ churn (lines)}} \\
+\cmidrule(lr){2-4}\cmidrule(l){7-10}
+\textbf{Team-semester} & \textbf{$T_1$} & \textbf{$T_2$} & \textbf{$T_3$} &
+\textbf{First} & \textbf{M6} & \textbf{Rework} & \textbf{Deferred} &
+\textbf{Total} & \textbf{Ratio} \\
+\midrule
+2025.2/TEAM\_01 & 7 & 0 & 12 & $T_1$ & 3 & 1,154 & 1,452 & 2,606 & 0.443 \\
+2025.2/TEAM\_02 & 0 & 37 & 164 & $T_2$ & -- & 6,952 & 22,622 & 29,574 & 0.235 \\
+2025.2/TEAM\_03 & 0 & 0 & 9 & $T_3$ & -- & 0 & 16,418 & 16,418 & 0.000 \\
+2025.2/TEAM\_04 & 9 & 11 & 43 & $T_1$ & 1 & 1,249 & 20,005 & 21,254 & 0.059 \\
+2025.2/TEAM\_05 & 0 & 0 & 1 & $T_3$ & -- & 0 & 2,532 & 2,532 & 0.000 \\
+2025.2/TEAM\_07 & 7 & 30 & 36 & $T_1$ & 5 & 59 & 160,240 & 160,299 & 0.000 \\
+2025.2/TEAM\_08 & 0 & 23 & 3 & $T_2$ & -- & 172 & 0 & 172 & 1.000 \\
+2025.2/TEAM\_09 & 1 & 29 & 77 & $T_1$ & 1 & 100,629 & 20,745 & 121,374 & 0.829 \\
+2025.2/TEAM\_10 & 0 & 11 & 7 & $T_2$ & -- & 1,041 & 1,161 & 2,202 & 0.473 \\
+\midrule
+2026.1/TEAM\_01 & 1 & 1 & 1 & $T_1$ & 1 & 2,780 & 4,431 & 7,211 & 0.386 \\
+2026.1/TEAM\_02 & 11 & 21 & 38 & $T_1$ & 4 & 5,296 & 2,275 & 7,571 & 0.700 \\
+2026.1/TEAM\_03 & 25 & 29 & 17 & $T_1$ & 3 & 477 & 0 & 477 & 1.000 \\
+2026.1/TEAM\_04 & 10 & 0 & 17 & $T_1$ & 7 & 1,113 & 66,140 & 67,253 & 0.017 \\
+2026.1/TEAM\_05 & 40 & 37 & 47 & $T_1$ & 7 & 4,459 & 3,547 & 8,006 & 0.557 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}
+\begin{minipage}{0.98\textwidth}
+\footnotesize\emph{Note:} ``First'' is the first window containing a commit.
+M6 is the observed $T_1$ Planning-Quality Score; ``--'' denotes no $T_1$
+repository artifact and is not an observed score of 1. The floor value 1 is
+assigned to these five cases only in the sensitivity analysis reported in
+Table~\ref{tab:rq3_correlations}.
+\end{minipage}
+\end{table*}
 
 Figure~\ref{fig:rq3} reports all three empirically distinct groups. Among the
 nine scored teams, the below-median group has mean $T_3$ rework churn of
