@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 20:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 20:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -186,6 +186,9 @@ File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
+Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2023/05/13 v2.17o AMS math features
@@ -397,24 +400,24 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 .aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -439,7 +442,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 12.
+Package hyperref Info: Link coloring OFF on input line 13.
 
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
 .out)
@@ -477,102 +480,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 176.
 
-
-Underfull \hbox (badness 2103) in paragraph at lines 218--218
-[]|\OT1/ptm/b/n/9 Metric fam-ily and com-po-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 220--220
-[]|\OT1/ptm/m/n/9 Perception panel and self-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-[]|\OT1/ptm/m/n/9 Clean mag-ni-tude, in-ten-sity,
- []
-
-
-Overfull \hbox (22.24588pt too wide) in paragraph at lines 223--224
-\OT1/ptm/m/n/9 semester/checkpoint/window|  
- []
-
-
-Underfull \hbox (badness 2582) in paragraph at lines 225--225
-[]|\OT1/ptm/m/n/9 Upfront ar-chi-tec-tural ar-ti-facts
- []
-
-[5]
-Overfull \hbox (1.85385pt too wide) in paragraph at lines 256--256
-[]|\OT1/ptm/b/n/9 Feeds| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-[]|\OT1/ptm/m/n/9 Planning
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 ev-i-dence
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-[]|\OT1/ptm/m/n/9 M6b
- []
-
-
-Overfull \hbox (3.5728pt too wide) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 (struc-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 tured
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 T1
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 plan-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 ning
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\OT1/ptm/m/n/9 con-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--259
-[]|\OT1/ptm/m/n/9 Goals, ar-chi-tec-ture/design,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--259
-\OT1/ptm/m/n/9 task de-com-po-si-tion,
- []
-
-
-Underfull \hbox (badness 5316) in paragraph at lines 258--259
-\OT1/ptm/m/n/9 risk/dependency, and lit-eral
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--259
-\OT1/ptm/m/n/9 ev-i-dence quotes from $\OML/cmm/m/it/9 T[]$
- []
-
-) (./sections/results.tex
+[5]) (./sections/results.tex
 <../figures/rq1_m1_perception_with_sd.png, id=204, 1806.75pt x 1043.9pt>
 File: ../figures/rq1_m1_perception_with_sd.png Graphic file (type png)
 <use ../figures/rq1_m1_perception_with_sd.png>
@@ -653,29 +561,7 @@ Underfull \hbox (badness 1406) in paragraph at lines 2--12
 
 ) (./sections/conclusion.tex)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.bbl
-Underfull \hbox (badness 2253) in paragraph at lines 26--30
-\OT1/ptm/m/n/8 [On-line]. Avail-able: []$https : / / github . blog / ai-[]and-[
-]ml / generative-[]ai /
- []
-
-
-Overfull \hbox (21.19739pt too wide) in paragraph at lines 26--30
-\OT1/ptm/m/n/8 spec-[]driven-[]development-[]with-[]ai-[]get-[]started-[]with-[
-]a-[]new-[]open-[]source-[]toolkit/$[] 
- []
-
-[13]
-Underfull \hbox (badness 2088) in paragraph at lines 33--36
-[]\OT1/ptm/m/n/8 Thoughtworks, ``Spec-driven de-vel-op-ment,'' 2025. [On-
- []
-
-
-Underfull \hbox (badness 2384) in paragraph at lines 140--144
-\OT1/ptm/m/n/8 ware: Why 'it works' isn't enough,'' Febru-ary
- []
-
-)
+.bbl [13])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -698,10 +584,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: DA7EED0C366A5A24DBCA550CC518E08D;11808.
  ) 
 Here is how much of TeX's memory you used:
- 10435 strings out of 476182
- 167814 string characters out of 5795595
- 1950975 words of memory out of 5000000
- 32201 multiletter control sequences out of 15000+600000
+ 10460 strings out of 476182
+ 168396 string characters out of 5795595
+ 1957975 words of memory out of 5000000
+ 32222 multiletter control sequences out of 15000+600000
  598559 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,14n,79p,1089b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -722,7 +608,7 @@ ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
 Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (14 pages, 798734 bytes).
+/latex/build/main.pdf (14 pages, 798995 bytes).
 PDF statistics:
  408 PDF objects out of 1000 (max. 8388607)
  340 compressed objects within 4 object streams
