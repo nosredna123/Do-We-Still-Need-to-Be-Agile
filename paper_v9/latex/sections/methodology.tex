@@ -26,35 +26,33 @@ The project lifecycle was anchored by three synchronized temporal checkpoints ($
 % V9 input coverage: paper_v9/data/manifests/input_inventory.json.
 
 \subsection{Project Scope and Real-World Complexity}
-Course guidelines prohibited trivial algorithmic exercises and required teams
-to address community, educational, or business problems. The resulting systems
-covered healthcare, finance, academic research, education, and ecotourism,
-while embedding Generative AI into functional architectures. This constraint
-was retained because it provides the empirical context for interpreting
-repository change, planning evidence, and evaluator outcomes.
+To ensure ecological validity and induce realistic coordination friction, the course guidelines explicitly prohibited trivial algorithmic exercises or ``toy'' applications. As part of the ``rules of the game,'' teams were mandated to identify and solve real-world community, educational, or business problems. This constraint forced students to grapple with high domain complexity, authentic user requirements, and the nontrivial challenge of embedding Generative AI into functional architectures.
+
+The resulting software systems spanned diverse domains, ranging from healthcare and financial management to academic research and ecotourism. Table~\ref{tab:projects} details the 14 projects analyzed in this study. The breadth and complexity of these applications validate that the observed late-stage integration challenges and chronic coordination friction were driven by authentic software engineering workloads rather than artificially simplistic academic tasks.
 
 \begin{table*}[t]
-\caption{Analyzed Student Projects by Cohort and Domain}
+\caption{Analyzed Student Projects by Cohort, Demonstrating Real-World Problem Scope and Generative AI Integration}
 \label{tab:projects}
 \centering
-\begin{tabular}{@{}llp{11.5cm}@{}}
+\begin{tabular}{@{}lp{3cm}p{12.5cm}@{}}
 \toprule
-\textbf{Semester} & \textbf{Project} & \textbf{System description and AI integration scope} \\
+\textbf{Semester} & \textbf{Project Name} & \textbf{System Description \& AI Integration Scope} \\
 \midrule
-2026.1 & FoodGuard & Web platform using nutritional data and medical history to identify food allergens. \\
-2026.1 & RevisAI & Educational system generating flashcards and customized study cycles. \\
-2026.1 & SmartFlowIA & WhatsApp chatbot for university-freshman onboarding and orientation. \\
-2026.1 & Interview Prep IA & Resume analysis, interview simulation, and candidate feedback. \\
-2026.1 & EnemBot & Domain-specific chatbot for Brazilian National High School Exam tutoring. \\
-2025.2 & UECEncontra & Virtual assistant and campus-navigation system for university resources. \\
-2025.2 & EstudaAI & Multimodal study-management platform for summaries, reminders, and grades. \\
-2025.2 & CareerPath IA & Resume analysis and targeted skill-development recommendations. \\
-2025.2 & Buliçoso & Medical-leaflet simplification and medication reminders for older adults. \\
-2025.2 & EcoRoteiro & Personalized ecotourism itineraries based on user profiles and constraints. \\
-2025.2 & Research Flow & Academic research assistant for article search, summaries, and formatting. \\
-2025.2 & ExamForge & Exam simulator generating assessments from prior materials. \\
-2025.2 & SoFiA & Financial-management platform for university students. \\
-2025.2 & Synapse & Requirements tool generating requirements, user stories, and backlogs. \\
+2026.1 & FoodGuard & Web platform utilizing nutritional data and medical history to identify food allergens and prevent adverse reactions. \\
+2026.1 & RevisAI & Educational system that generates intelligent flashcards and organizes customized weekly study review cycles. \\
+2026.1 & SmartFlowIA & SaaS WhatsApp chatbot focusing on intelligent onboarding, orientation, and welcoming for university freshmen. \\
+2026.1 & Interview Prep IA & AI-driven system that analyzes resumes against job vacancies, simulates interviews, and provides personalized candidate feedback. \\
+2026.1 & EnemBot & Domain-specific chatbot designed to tutor and assist students with questions regarding the Brazilian National High School Exam. \\
+\midrule
+2025.2 & UECEncontra & Intelligent virtual assistant and campus navigation system designed to help students and professors locate university resources. \\
+2025.2 & EstudaAI & Study management platform that processes multimodal files (audio, image, PDF) to generate lecture summaries, reminders, and track grades. \\
+2025.2 & CareerPath IA & Resume analysis tool that uses GenAI to match user profiles with market demands and suggest targeted skill development. \\
+2025.2 & Buliçoso & Healthcare application that utilizes LLMs to simplify complex medical leaflets and manage medication reminders for the elderly. \\
+2025.2 & EcoRoteiro & Ecotourism platform that generates personalized travel itineraries based on user profiles, physical conditions, and specific interests. \\
+2025.2 & Research Flow & Academic research assistant that searches articles, generates intelligent summaries, and formats texts to academic standards (e.g., ABNT, APA). \\
+2025.2 & ExamForge & Assessment simulator that ingests past exams and course materials to generate new tests matching specific professor grading patterns. \\
+2025.2 & SoFiA & Financial management web platform utilizing AI to help university students dynamically organize their personal finances. \\
+2025.2 & Synapse & Requirements engineering tool that summarizes technical client meetings to automatically generate functional requirements, user stories, and backlogs. \\
 \bottomrule
 \end{tabular}
 \end{table*}

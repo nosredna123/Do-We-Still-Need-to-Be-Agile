@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 17:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 18:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -465,16 +465,19 @@ b/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts
 
 
 ]
-Underfull \hbox (badness 2269) in paragraph at lines 106--111
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \hbox (badness 2269) in paragraph at lines 104--109
 \OT1/ptm/m/n/10 tools, prior ex-pe-ri-ence, au-ton-omy/tool bal-ance, and ex-
  []
 
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-16.
+14.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 2626) in paragraph at lines 149--156
+) [2]
+Underfull \hbox (badness 2626) in paragraph at lines 147--154
 \OT1/ptm/m/n/10 cor-re-la-tion iden-ti-fiers, op-er-a-tion/model, prompts and r
 e-
  []
@@ -489,7 +492,7 @@ Underfull \hbox (badness 6032) in paragraph at lines 2--1
 \OT1/ptm/m/n/10 Quan-ti-ta-tive claims will be sourced ex-clu-sively from
  []
 
-[2]) (./sections/threats_to_validity.tex) (./sections/conclusion.tex)
+) (./sections/threats_to_validity.tex) (./sections/conclusion.tex)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
 .bbl
 Underfull \hbox (badness 2253) in paragraph at lines 54--58
@@ -538,11 +541,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  10312 strings out of 476182
  164205 string characters out of 5795595
- 1949975 words of memory out of 5000000
+ 1951975 words of memory out of 5000000
  32133 multiletter control sequences out of 15000+600000
  594674 words of font info for 100 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,79p,548b,443s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,556b,441s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive
@@ -553,10 +556,10 @@ w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (3 pages, 130922 bytes).
+/latex/build/main.pdf (3 pages, 133108 bytes).
 PDF statistics:
- 170 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 171 PDF objects out of 1000 (max. 8388607)
+ 144 compressed objects within 2 object streams
  38 named destinations out of 1000 (max. 500000)
  105 words of extra memory for PDF output out of 10000 (max. 10000000)
 
