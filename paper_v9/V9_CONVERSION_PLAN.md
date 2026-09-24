@@ -1,5 +1,16 @@
 # Plano de Conversao V8 para V9
 
+## Protocolo de execucao manual
+
+O plano e executado como uma fila de tarefas bloqueadoras. Para cada tarefa,
+o agente deve executar somente o escopo declarado, validar os entregaveis,
+apresentar resultados e aguardar aprovacao manual explicita. A proxima tarefa
+nao pode ser iniciada antes dessa aprovacao, inclusive quando sua dependencia
+tecnica ja estiver disponivel.
+
+Cada tarefa deve registrar: objetivo, entradas, alteracoes, artefatos gerados,
+comandos de validacao, limitacoes e decisao solicitada ao usuario.
+
 ## 1. Objetivo e limites
 
 Este plano produz uma versao v9 reproduzivel do artigo a partir da v8 e das
@@ -21,6 +32,15 @@ Invariantes do projeto:
   resposta e evidencia citada versionados.
 - Os resultados sao descritivos ou exploratorios. Nenhum script ou texto deve
   inferir causalidade sem desenho que a sustente.
+- O artigo, todos os scripts v9, comentarios de codigo, docstrings, manifests,
+  nomes de colunas, rotulos de figuras, tabelas, relatorios gerados e mensagens
+  de erro devem estar em ingles tecnico internacional, adequado a artigos
+  cientificos. Portugues permanece apenas em dados brutos, texto-fonte citado,
+  valores observados e, quando necessario, evidencia literal acompanhada de
+  traducao/interpretacao em ingles.
+- A lingua deve ser validada antes de cada gate editorial; termos metodologicos,
+  nomes de metricas e rotulos precisam ser consistentes entre scripts, dados,
+  figuras e LaTeX.
 
 ## 2. Estrutura de destino
 
@@ -70,9 +90,49 @@ produtor persistira um sidecar `<artefato>.metadata.json` contendo pelo menos:
 Os scripts usarao escrita atomica (`.partial` seguido de rename) e nao
 sobrescreverao artefatos atuais quando o checksum coincidir.
 
-## 3. Fundacao tecnica e governanca
+## 3. Tarefas de fundacao
 
-### Fase 0 - Congelamento da baseline e contrato v9
+### Tarefa 0.1 - Configurar e validar ambiente LaTeX local
+
+**Objetivo:** garantir que a v9 podera gerar um PDF IEEE correto antes da
+conversao de scripts, dados ou texto.
+
+**Escopo:**
+
+1. Detectar `pdflatex`, `latexmk`, `bibtex` ou `biber`, a distribuicao LaTeX e
+  a disponibilidade de `IEEEtran.cls`.
+2. Instalar somente dependencias ausentes para IEEEtran, bibliografia, tabelas
+  e figuras. Se forem necessarios privilegios administrativos, interromper e
+  informar o comando para execucao manual do usuario.
+3. Criar documento de teste temporario que use IEEEtran, `cite`, `booktabs`,
+  `tabularx`, `graphicx`, bibliografia e uma figura local.
+4. Compilar por `latexmk` ou sequencia equivalente e verificar PDF, log,
+  referencias e citacoes resolvidas.
+5. Registrar comandos, versoes e limitacoes em `paper_v9/REPRODUCIBILITY.md`.
+
+**Entregaveis:** comando de compilacao documentado e PDF de teste em
+`paper_v9/latex/build/` ou diretorio temporario rastreado.
+
+**Validacao:** compilacao encerra com sucesso, gera PDF legivel e nao contem
+erros fatais, figuras ausentes ou referencias bibliograficas nao resolvidas.
+
+**Gate manual:** aprovar o ambiente LaTeX antes da Tarefa 0.2.
+
+### Tarefa 0.2 - Congelar baseline v8 e registrar inventario
+
+**Objetivo:** tornar toda diferenca v8--v9 rastreavel.
+
+**Escopo:** criar manifesto com hashes de LaTeX, scripts, dados, figuras e
+notebooks M1--M9; extrair e registrar titulo, RQs e secoes v8 como invariantes;
+registrar a reorganizacao existente dos notebooks em `metricas_v8-analysis/`.
+
+**Validacao:** hashes, nove notebooks e invariantes textuais conferem.
+
+**Gate manual:** aprovar baseline antes da Tarefa 1.1.
+
+## 4. Fundacao tecnica e governanca
+
+### Tarefa 1.1 - Criar contrato e utilitarios comuns v9
 
 1. Registrar um manifesto de baseline com hashes de `paper_v8/latex_code`, dos
    scripts v8, dos nove notebooks de analise e dos contratos de entrada.
@@ -88,10 +148,12 @@ sobrescreverao artefatos atuais quando o checksum coincidir.
 5. Criar testes de contrato para chaves, schemas, politica de artefatos,
    manifests, checksum/resume e idempotencia.
 
-Gate 0: todos os caminhos de entrada/saida resolvem sem tocar em `paper_v8/`;
-um segundo run sem `--force` deve pular artefatos atuais.
+**Validacao:** todos os caminhos de entrada/saida resolvem sem tocar em
+`paper_v8/`; testes de importacao e sentinelas da politica de artefatos passam.
 
-### Fase 1 - Contratos de entradas
+**Gate manual:** aprovar infraestrutura antes da Tarefa 1.2.
+
+### Tarefa 1.2 - Implementar resume, manifestos e inventario de entradas
 
 1. Declarar em `paper_v9/data/manifests/input_inventory.json` os contratos
    consumidos da raiz do repositorio: lake, analises regeneradas, parent mirrors,
@@ -104,8 +166,11 @@ um segundo run sem `--force` deve pular artefatos atuais.
 4. Versionar a politica de exclusao observada no manifesto, incluindo `.history/`,
    `backup/`, dependencias, ambientes, build e extensoes fora da allowlist.
 
-Gate 1: entradas completas, checksums persistidos e nenhuma metrica v9 aceita
-um artefato incompatível ou sem proveniencia.
+**Validacao:** um segundo run sem `--force` reutiliza artefatos atuais; entrada,
+configuracao ou sidecar divergente exige regeneracao; M4/M8 rejeitam contratos
+antigos.
+
+**Gate manual:** aprovar contratos e resume antes da Tarefa 2.1.
 
 ## 4. Implementacao das familias M1--M9
 
@@ -372,15 +437,40 @@ Somente apos todas as secoes receberem aprovacao explicita:
 4. Registrar um changelog v8--v9 com cada afirmacao removida, alterada ou nova
    e o artefato que a sustenta.
 
-## 8. Ordem de execucao resumida
+## 8. Fila sequencial de tarefas e gates
 
-1. Fases 0--1: fundacao, contratos e manifests.
-2. Fases 2--4: scripts e dados M1--M9; M6b inclui reprocessamento LLM auditavel.
-3. Fases 5--6: resultados, candidatas de visualizacao e aprovacao de figuras.
-4. Fase 7: modularizacao do LaTeX sem alteracao substantiva inicial.
-5. Fase 8: revisao editorial sequencial com gates de aprovacao.
-6. Fases 9--10: reproducibilidade, compilacao, revisao manual e changelog.
+Cada item requer aprovacao explicita antes do proximo:
 
-Nao iniciar a Fase 8 antes de os dados, manifests e figuras aprovadas das Fases
-2--6 estarem completos. Nao iniciar uma secao editorial posterior sem aprovacao
-explicita da secao anterior.
+1. Tarefa 0.1: configurar e validar ambiente LaTeX/PDF.
+2. Tarefa 0.2: congelar baseline v8 e inventario.
+3. Tarefa 1.1: criar utilitarios e contrato comum v9.
+4. Tarefa 1.2: implementar resume, manifestos e inventario de entradas.
+5. Tarefa 2.1: implementar e validar M1.
+6. Tarefa 2.2: implementar e validar M2.
+7. Tarefa 3.1: implementar e validar M3.
+8. Tarefa 3.2: implementar e validar M4.
+9. Tarefa 3.3: implementar e validar M5.
+10. Tarefa 4.1: implementar e validar M6a.
+11. Tarefa 4.2: apresentar protocolo, prompt, custo e amostra de M6b.
+12. Tarefa 4.3: executar M6b somente apos aprovacao especifica do protocolo.
+13. Tarefa 4.4: implementar e validar M7.
+14. Tarefa 4.5: implementar e validar M8.
+15. Tarefa 4.6: implementar e validar M9.
+16. Tarefa 5.1: gerar catalogo de resultados rastreavel.
+17. Tarefa 5.2: gerar candidatos de visualizacao e realizar oficina de escolha.
+18. Tarefa 6.1: criar esqueleto LaTeX modular compilavel.
+19. Tarefa 7.1: revisar e aprovar Methodology.
+20. Tarefa 7.2: revisar e aprovar Results.
+21. Tarefa 7.3: revisar e aprovar Discussion.
+22. Tarefa 7.4: revisar e aprovar Threats to Validity.
+23. Tarefa 7.5: revisar e aprovar Conclusion.
+24. Tarefa 7.6: revisar e aprovar Abstract.
+25. Tarefa 7.7: revisar e aprovar Introduction.
+26. Tarefa 7.8: revisar e aprovar Background and Related Work.
+27. Tarefa 8.1: executar preflight de reproducibilidade e compilacao final.
+28. Tarefa 8.2: executar revisao final de submissao e changelog v8--v9.
+
+Nao iniciar revisao de LaTeX antes das metricas, dados, manifestos e figuras
+aprovados. Nao iniciar uma secao editorial posterior sem aprovacao da secao
+anterior. Toda tarefa valida tambem o requisito de ingles internacional para
+codigo, artefatos gerados e texto cientifico.
