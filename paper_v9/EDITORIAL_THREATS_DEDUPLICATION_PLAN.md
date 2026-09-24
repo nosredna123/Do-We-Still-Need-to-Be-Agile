@@ -215,7 +215,7 @@ The next section may be edited only after the user's authorization. If the coher
 |---|---:|---|---|---|---|
 | Methodology | [x] | Removed the repeated general causal/observability caveat from the statistical overview; softened the repository "single source of truth" wording without changing the collection protocol. | Metric grains, scales, transformations, missingness rules, proxy boundaries, and quantitative details retained. | PDF rebuilt; no undefined references or overfull boxes; final coherence review completed. | Pending user authorization |
 | Results | [x] | Consolidated repeated causal, population-level, generalization, and proxy-validity caveats while retaining local evidence-stream, sensitivity-summary, scale, denominator, coverage, and proxy qualifiers. | Quantitative results, units, denominators, cohort/checkpoint labels, missingness states, and local interpretation boundaries retained. | PDF rebuilt after clearing stale generated auxiliaries; no fatal errors, undefined references, or overfull boxes; final coherence review completed. | Pending user authorization |
-| Discussion | [ ] |  |  |  |  |
+| Discussion | [x] | Consolidated the repeated causal/measurement-boundary explanation in RQ2 and the repeated limitation inventory in the scope subsection. | Preserved the interpretation of M3/M4/M5, the RQ1 repeated-cohort-panel boundary, all SDD conditional language, and the bounded final implication. | PDF rebuilt after clearing stale generated auxiliaries; no fatal errors, undefined references, or overfull boxes; final coherence review completed. | Pending user authorization |
 | Threats to Validity | [ ] |  |  |  |  |
 | Conclusion | [ ] |  |  |  |  |
 | Introduction | [ ] |  |  |  |  |
