@@ -1,0 +1,15 @@
+ID_Equipe,Semestre,pi_available,pi_unavailable_reason,pi_file_count_t1,pi_line_delta_t1,pi_renamed_count_t1,pi_deleted_count_t1,pi_binary_event_count_t1,planning_artifact_activity_t1,pi_observation_unit,pi_definition_version,planning_artifact_present_t1,planning_scope_log1p_t1,measurement_status,analysis_level,clean_rework_churn_t3,baseline_eligible_for_rework_t3,cohort,eligibility_label
+TEAM_01,2025.2,True,,4,62.0,0,0,0,4,team_semester,pi-v1,True,4.143134726391533,available,team_semester,262.0,True,2025.2,Baseline eligible
+TEAM_01,2026.1,True,,1,2.0,0,0,0,1,team_semester,pi-v1,True,1.0986122886681096,available,team_semester,2513.0,True,2026.1,Baseline eligible
+TEAM_02,2025.2,True,,0,0.0,0,0,0,0,team_semester,pi-v1,False,0.0,available,team_semester,6519.0,True,2025.2,Baseline eligible
+TEAM_02,2026.1,True,,5,118.0,0,0,1,5,team_semester,pi-v1,True,4.77912349311153,available,team_semester,5278.0,True,2026.1,Baseline eligible
+TEAM_03,2025.2,True,,0,0.0,0,0,0,0,team_semester,pi-v1,False,0.0,available,team_semester,0.0,False,2025.2,Baseline not observed
+TEAM_03,2026.1,True,,7,114.0,1,0,3,7,team_semester,pi-v1,True,4.74493212836325,available,team_semester,196.0,True,2026.1,Baseline eligible
+TEAM_04,2025.2,True,,8,232.0,0,1,2,8,team_semester,pi-v1,True,5.4510384535657,available,team_semester,860.0,True,2025.2,Baseline eligible
+TEAM_04,2026.1,True,,3,79.0,0,0,1,3,team_semester,pi-v1,True,4.382026634673881,available,team_semester,863.0,True,2026.1,Baseline eligible
+TEAM_05,2025.2,True,,0,0.0,0,0,0,0,team_semester,pi-v1,False,0.0,available,team_semester,0.0,False,2025.2,Baseline not observed
+TEAM_05,2026.1,True,,4,222.0,0,0,0,4,team_semester,pi-v1,True,5.407171771460119,available,team_semester,4302.0,True,2026.1,Baseline eligible
+TEAM_07,2025.2,True,,3,11.0,0,0,0,3,team_semester,pi-v1,True,2.4849066497880004,available,team_semester,0.0,True,2025.2,Baseline eligible
+TEAM_08,2025.2,True,,0,0.0,0,0,0,0,team_semester,pi-v1,False,0.0,available,team_semester,172.0,True,2025.2,Baseline eligible
+TEAM_09,2025.2,True,,1,2.0,0,0,0,1,team_semester,pi-v1,True,1.0986122886681096,available,team_semester,15518.0,True,2025.2,Baseline eligible
+TEAM_10,2025.2,True,,0,0.0,0,0,0,0,team_semester,pi-v1,False,0.0,available,team_semester,825.0,True,2025.2,Baseline eligible

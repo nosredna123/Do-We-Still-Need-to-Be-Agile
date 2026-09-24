@@ -267,3 +267,168 @@ observed 2025.2 transcript corpus. The three patterns are compatible with the
 RQ2 descriptive contrast, but they do not establish that repository activity
 causes coordination friction, that lexical markers measure friction without
 error, or that the 2025.2 transcript trajectory generalizes to 2026.1.
+
+\subsection{RQ3: How does the quality of upfront architectural artifacts (evaluated at baseline $T_1$) associate with late-stage destructive rework and independent, blind-scored project outcomes?}
+
+RQ3 is evaluated at team-semester grain across 14 observations. The analysis
+separates observable upfront architectural artifacts from their semantic
+interpretation, separates rework magnitude from a baseline-conditioned ratio,
+and treats evaluator outcomes as independent T3 scorecard summaries. All
+associations are descriptive and exploratory; no predictor is interpreted as a
+causal determinant.
+% PROVENANCE: RQ3 coverage and grains are declared in the M6a, M6b, M7, M8,
+% and M9 metadata files under paper_v9/data/metrics/. The executed verification
+% notebooks are verify_m6.ipynb through verify_m9.ipynb.
+
+M6a (T1 architectural-artifact evidence) records whether a T1 architectural
+artifact was observed and its
+repository-visible structural scope. An artifact is present in 4 of 9
+team-semesters in 2025.2 and in all 5 team-semesters in 2026.1. Among the
+2025.2 observations, the median T1 file count is zero and the median T1 line
+delta is zero; among the 2026.1 observations, the corresponding medians are
+4 files and 114 changed lines. The largest observed T1 line delta is 232 in
+2025.2 and 222 in 2026.1. These are structural observations, not measures of
+architectural quality or planning intent. Figure~\ref{fig:rq3-presence}
+summarizes the cohort-level presence pattern.
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{../figures/rq3_architectural_artifact_presence.png}
+\caption{T1 architectural-artifact presence by cohort. ``No repository
+artifact observed'' is an observation state, not evidence that planning did
+not occur elsewhere.}
+\label{fig:rq3-presence}
+\end{figure*}
+% PROVENANCE: M6a values are from
+% paper_v9/data/metrics/m6a_structural_planning.csv and
+% m6_structural_planning.metadata.json. The official output retains all 14
+% team-semesters and does not publish the legacy numeric planning score.
+
+M6b (structured T1 planning-content evidence) adds structured evidence from T1
+commit subjects for 9 of the 14
+team-semesters; 5 cases have no T1 subjects and were not measured. The reviewed fields cover planning
+evidence, goals, architecture/design, task decomposition, risk/dependency,
+and literal evidence quotes. They are retained as separate exploratory fields,
+with no composite planning or architectural-quality score.
+% PROVENANCE: M6b is from
+% paper_v9/data/metrics/m6b_llm_planning_content.json and
+% m6_llm_planning_content.metadata.json. Human review approval and exact-quote
+% validation are recorded in m6b_llm_planning_sample_for_review.md.
+
+M7 shows that repository inactivity is not equivalent to architectural-artifact
+absence. At $T_1$, 7 of 9 team-semesters are inactive in the 2025.2 seven-day
+window and 3 of 5 are inactive in 2026.1; by $T_3$, no team-semester is
+inactive in either cohort. M7 is therefore used as a repository timing and
+coverage diagnostic, not as a planning-omission measure and not as an M9
+predictor.
+% PROVENANCE: M7 checkpoint values are from
+% paper_v9/data/metrics/m7_checkpoint_inactivity.csv and
+% m7_repository_inactivity.metadata.json.
+
+M8 reports late-stage changes to previously observed clean paths as a
+file-provenance proxy for destructive rework. Among the 14 team-semesters,
+12 are baseline-eligible. The T3 clean-rework ratio ranges from $0.000$ to
+$1.000$ among the reported observations, while clean rework magnitude ranges
+from zero to $15{,}518$ lines. For example, the largest magnitude occurs in
+2025.2/TEAM\_09, whereas 2025.2/TEAM\_08 and 2026.1/TEAM\_03 have a ratio of
+$1.000$ but very different absolute magnitudes ($172$ and $196$ lines).
+Baseline-ineligible cases remain separate and are not interpreted as stable or
+low-rework cases. Because path provenance does not establish semantic defects,
+M8 is not a direct defect measure. Figure~\ref{fig:rq3-profile} displays the
+artifact-scope/rework profile on a logarithmic rework axis, preserving baseline
+eligibility.
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{../figures/rq3_architecture_rework_profile.png}
+\caption{T1 architectural-artifact scope versus T3 clean-rework magnitude.
+Points represent team-semesters; the vertical scale is logarithmic. Clean
+rework is a file-provenance proxy, not semantic defect validation.}
+\label{fig:rq3-profile}
+\end{figure*}
+% PROVENANCE: M8 values and eligibility are from
+% paper_v9/data/metrics/m8_rework_magnitude.csv,
+% m8_rework_participation.csv, and m8_baseline_eligibility.csv. The clean-path
+% policy and proxy limitation are declared in m8_clean_rework.metadata.json.
+
+The primary M9 associations do not support a general monotonic relationship
+between T1 artifact scope and later rework. Across all 14 team-semesters,
+Spearman's $\rho$ is $0.206$ for T1 file count versus T3 clean-rework
+magnitude and $0.301$ for log-transformed T1 line scope versus that magnitude.
+Within the 12 baseline-eligible cases, the corresponding associations with the
+T3 clean-rework ratio are $-0.032$ and $-0.060$. Their exploratory p-values
+range from $0.296$ to $0.922$, and the small sample does not support
+confirmatory inference.
+% PROVENANCE: M9 magnitude and ratio associations are from
+% paper_v9/data/metrics/m9_planning_vs_rework_m6a_m8a.csv and
+% m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv.
+
+The independent blind-scored T3 outcomes are similarly weakly associated with
+the structural predictors. For T1 file count, the correlations range from
+$-0.079$ for engagement/participation to $0.271$ for technical complexity;
+for log-transformed T1 line scope, they range from $-0.143$ to $0.222$ across
+the four outcomes. The outcome summaries themselves vary across the 14
+team-semesters: mean project progress is $3.55 \pm 0.67$, while the other
+three recorded outcome means range from $1.76 \pm 0.24$ to $1.88 \pm 0.25$
+on their respective scorecard scales.
+% PROVENANCE: Outcome associations are from
+% paper_v9/data/metrics/m9_planning_vs_outcomes_m6a_t3.csv; outcome
+% distributions are computed from data/lake/evaluator_team_cuts.parquet.
+
+The approved M6b structured planning-content fields produce a separate, smaller exploratory view with
+$n=9$. Its largest absolute association with clean-rework magnitude is
+$\rho=-0.408$ for task-decomposition evidence; its largest positive
+association with an evaluator outcome is $\rho=0.479$ for task-decomposition
+evidence versus scope applicability. Leave-one-out diagnostics for the M6a
+rework analyses produce ranges of $0.078$--$0.377$ for T1 file count and
+$0.194$--$0.494$ for T1 line scope when predicting rework magnitude. For the
+eligible-stratum rework ratio, the corresponding ranges are
+$-0.222$--$0.165$ and $-0.221$--$0.137$. These diagnostics expose sensitivity
+to individual team-semesters rather than confidence intervals.
+Table~\ref{tab:rq3-associations} reports the primary M9 association values;
+Figure~\ref{fig:rq3-sensitivity} visualizes the leave-one-out ranges.
+
+\begin{table*}[t]
+\caption{Primary RQ3 Association Results}
+\label{tab:rq3-associations}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llr r r r@{}}
+\toprule
+\textbf{Predictor} & \textbf{Outcome} & \textbf{Stratum} & \textbf{$n$} & \textbf{$\rho$} & \textbf{Exploratory $p$} \\
+\midrule
+T1 artifact file count & T3 rework magnitude & All team-semesters & 14 & 0.206 & 0.479 \\
+T1 artifact line scope & T3 rework magnitude & All team-semesters & 14 & 0.301 & 0.296 \\
+T1 artifact file count & T3 rework ratio & Baseline-eligible & 12 & $-0.032$ & 0.922 \\
+T1 artifact line scope & T3 rework ratio & Baseline-eligible & 12 & $-0.060$ & 0.853 \\
+T1 artifact file count & Project progress & All team-semesters & 14 & 0.100 & 0.733 \\
+T1 artifact file count & Scope applicability & All team-semesters & 14 & 0.025 & 0.931 \\
+T1 artifact file count & Technical complexity & All team-semesters & 14 & 0.271 & 0.349 \\
+T1 artifact file count & Engagement/participation & All team-semesters & 14 & $-0.079$ & 0.790 \\
+T1 artifact line scope & Project progress & All team-semesters & 14 & 0.096 & 0.745 \\
+T1 artifact line scope & Scope applicability & All team-semesters & 14 & 0.038 & 0.897 \\
+T1 artifact line scope & Technical complexity & All team-semesters & 14 & 0.222 & 0.446 \\
+T1 artifact line scope & Engagement/participation & All team-semesters & 14 & $-0.143$ & 0.626 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% PROVENANCE: Table~\ref{tab:rq3-associations} is transcribed from the
+% official M9 CSV artifacts under paper_v9/data/metrics/.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{../figures/rq3_association_sensitivity.png}
+\caption{RQ3 association sensitivity. Points show full-analysis Spearman
+values; horizontal segments show leave-one-out ranges. These ranges are
+descriptive diagnostics, not confidence intervals.}
+\label{fig:rq3-sensitivity}
+\end{figure*}
+% PROVENANCE: M6b associations and leave-one-out diagnostics are from
+% paper_v9/data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv and
+% m9_leave_one_out_intervals.csv. M7 is explicitly excluded from M9.
+
+Overall, the RQ3 evidence establishes a measurable contrast between observable
+T1 artifact scope, late clean-path changes, and independent evaluator outcomes,
+but it does not establish that artifact quality causes less destructive rework
+or better project outcomes. The principal result is therefore a bounded,
+exploratory association profile with explicit missingness and influence
+diagnostics, not a causal planning-effect estimate.
