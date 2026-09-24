@@ -205,7 +205,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 
 ### Fase 2: RQ1 - Percepção e Adoção de IA
 - [x] 2.1 - Implementar e validar M1 (Painel de Percepções) — aprovado em 2026-09-24 para escopo descritivo M1 v2
-- [ ] 2.2 - Implementar e validar M2 (Percepção de Risco por Papel)
+- [x] 2.2 - Implementar e validar M2 (Percepção de Risco por Papel) — aprovado em 2026-09-24 para escopo descritivo
 
 ### Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
 - [ ] 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade)
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 5/28 tarefas concluídas (18%)  
-**Próxima tarefa:** 2.2 - Implementar e validar M2 (Percepção de Risco por Papel)
+**Progresso Total:** 6/28 tarefas concluídas (21%)
+**Próxima tarefa:** 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade)
 
 ## 1. Objetivo e limites
 
@@ -653,17 +653,24 @@ Preservar itens Likert por papel de projeto e escala, tratando resultados como p
 3. Preservar estrutura de respostas, sem agregar papéis em índice único
 4. Reportar distribuições por papel, resumos por corte/semestre, pareamento T1–T3 quando observado
 5. Criar manifesto com cobertura por papel
+6. Criar `paper_v9/metricas_v8-analysis/analyze_m2.md` com matriz V8→V9 e limitações
 
 #### Saída (Output)
 - `paper_v9/data/metrics/m2_role_perception_distributions.csv`
 - `paper_v9/data/metrics/m2_role_perception_by_team_semester.csv`
+- `paper_v9/data/metrics/m2_role_perception_paired_t1_t3.csv`
 - `paper_v9/data/metrics/m2_role_perception.metadata.json`
 - `paper_v9/scripts/metrics/m2_role_perception.py` (testado)
+- `paper_v9/verification_notebooks/verify_m2.ipynb` (executado end-to-end)
 
 #### Validação
 - [ ] Papéis mantidos separados (não agregados)
 - [ ] Pareamento real de respondentes documentado
 - [ ] Cobertura por papel-semestre clara
+- [ ] Pareamento T1–T3 reportado sem expor identificadores
+- [ ] M2 descrito como percepção de disrupção, não risco objetivo ou uso real
+- [ ] Matriz V8→V9 registrada em `analyze_m2.md`
+- [ ] Notebook verifica, demonstra artefatos e analisa preliminarmente RQ1
 - [ ] Segunda execução sem `--force` reutiliza (checksum match)
 
 #### Gate
