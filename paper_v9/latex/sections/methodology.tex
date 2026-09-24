@@ -62,7 +62,7 @@ The resulting software systems spanned diverse domains, ranging from healthcare 
 \subsection{Data Sources and Collection Framework}
 Our data collection framework triangulates four distinct evidentiary channels to capture both technical artifacts and human behavioral dynamics.
 
-\textbf{1. Git Repositories:} Complete historical commit logs, branch structures, line change counts, and file-level provenance were extracted from all team repositories across the entire semester lifecycle. To mitigate the threat of unobserved out-of-band collaboration, students were explicitly instructed to centralize all project artifacts---including requirements, architectural specifications, documentation, and source code---directly within their Git repositories. This directive ensured the repository served as a comprehensive, single source of truth for the team's entire production effort. The analysis used read-only repository histories and standardized event tables; Git remains repository evidence, not AI-use telemetry.
+\textbf{1. Git Repositories:} Complete historical commit logs, branch structures, line change counts, and file-level provenance were extracted from all team repositories across the entire semester lifecycle. Students were explicitly instructed to centralize all project artifacts---including requirements, architectural specifications, documentation, and source code---directly within their Git repositories. This directive defined the repository as the intended source of truth for the team's production effort. The analysis used read-only repository histories and standardized event tables; Git remains repository evidence, not AI-use telemetry.
 
 \textbf{2. Independent Evaluator Scorecards:} At each checkpoint ($T_1$, $T_2$, $T_3$), teams delivered formal status presentations. These were assessed by a panel of independent supervisors (4 evaluators in the 2025.2 cohort, and 3 in the 2026.1 cohort). To prevent groupthink and ensure scoring validity, an independent blind-scoring protocol was enforced: following the presentation and open feedback, each supervisor submitted their scores via a private electronic form. Evaluators remained blind to their peers' scores throughout the semester. The final project score was calculated as an unweighted average of these independent assessments. Projects were assessed across four structured criteria on explicit bounded scales: \emph{Project Evolution} (0 to 4.0 points), \emph{Scope and Applicability} (0 to 2.0 points), \emph{Technical Complexity} (0 to 2.0 points), and \emph{Engagement and Participation} (0 to 2.0 points). These observations were organized by team-semester and checkpoint for analysis.
 
@@ -107,10 +107,11 @@ are therefore summaries of nearby periods, not independent observations.
 
 For exploratory associations, Spearman's rank correlation $\rho$ measures the
 strength and direction of a monotonic relationship between two ranked variables
-without assuming a linear scale~\cite{spearman1904proof}. It does not establish
-causality, and its interpretation is limited by sample size, ties, missingness,
-and influential observations. M9 reports exploratory p-values as descriptive
-diagnostics rather than confirmatory significance tests. Leave-one-out analysis
+without assuming a linear scale~\cite{spearman1904proof}. Its handling of ties
+is retained in the metric definition; study-specific limits from sample size,
+missingness, and influential observations are addressed in Threats to Validity.
+M9 reports exploratory p-values as descriptive diagnostics rather than
+confirmatory significance tests. Leave-one-out analysis
 recomputes an association after removing each eligible team-semester in turn;
 the resulting range shows sensitivity to influential cases and is not a
 confidence interval. These summaries are always interpreted with their
