@@ -16,7 +16,7 @@ The V8 analysis separates three concepts that must not be collapsed:
 - A repository artifact count or line delta is observable scope, not semantic quality.
 - No T1 artifact is distinct from an observed low score; the output preserves availability and absence states.
 - Planning may occur outside the repository, so repository absence is not proof of planning absence.
-- M6a is deterministic and requires no new LLM call. M6b is explicitly deferred to the separate protocol and approval task.
+- M6a is deterministic and requires no new LLM call. M6b was executed under the approved protocol and human review was approved on 2026-09-24.
 
 ## V9 decision
 
@@ -35,7 +35,7 @@ The official M6a output intentionally excludes `t1_planning_score`. The V8 score
 | v8_recommendation | v9_decision | status | evidence | limitation_or_approval |
 |---|---|---|---|---|
 | Preserve the T1 planning metric at team-semester grain. | Publish one deterministic M6a row per team-semester from `planning_metrics.parquet`. | applied | `m6a_structural_planning.csv` | Structural observation, not semantic quality. |
-| Separate structural presence/scope from textual content. | M6a contains artifact presence and scope; M6b remains a separate gated task. | applied | M6a CSV, plan Tasks 4.1--4.2 | M6b needs an approved protocol before execution. |
+| Separate structural presence/scope from textual content. | M6a contains structural fields; approved M6b publishes separate validated textual categories. | applied | M6a/M6b outputs and M9 structured associations | No composite M6b score; five cases remain unavailable. |
 | Preserve missingness rather than assigning a low score. | Retain `pi_available`, `pi_unavailable_reason`, and `measurement_status`; do not impute a score floor. | applied | M6a schema and metadata | Repository absence does not prove absence of off-repository planning. |
 | Do not treat the opaque legacy score as architectural quality. | Exclude `t1_planning_score` from official M6a output and compare it only for audit. | applied | `verify_m6.ipynb`, M6a schema | Legacy score remains a frozen V8 reference. |
 
@@ -47,4 +47,4 @@ The official M6a output intentionally excludes `t1_planning_score`. The V8 score
 
 ## Interpretation boundary
 
-M6a is an exploratory structural baseline for RQ3. It describes whether T1 planning artifacts were observed and their repository-visible scope. It does not measure architectural quality, planning intent, effort, project success, or causality. M6b remains `unavailable_pending_structured_reprocessing` until its prompt, JSON schema, cost, sample, and approval gate are complete.
+M6a is an exploratory structural baseline for RQ3. It describes whether T1 planning artifacts were observed and their repository-visible scope. It does not measure architectural quality, planning intent, effort, project success, or causality. M6b is approved for exploratory use through separate structured fields for nine observed team-semesters; five remain `unavailable_not_measured`, and no composite score is produced.

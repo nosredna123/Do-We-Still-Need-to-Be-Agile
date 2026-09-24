@@ -10,7 +10,7 @@
     "team_semester_n": 14,
     "unavailable_not_measured_n": 5
   },
-  "gate_status": "pending_human_review",
+  "gate_status": "approved_human_review",
   "input_sha256": "e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f",
   "ledger": {
     "attempt_n": 14,
@@ -20,9 +20,9 @@
     "total_tokens": 20416
   },
   "limitations": [
-    "LLM extraction is exploratory and requires human review",
+    "LLM extraction is exploratory and was approved after human review",
     "literal quote validation does not establish semantic correctness",
-    "M6b must not feed M9 before review approval"
+    "M6b structured fields feed M9 separately; no composite score is produced"
   ],
   "llm_calls_required": true,
   "metric_definition_version": "m6b-structured-planning-v1.1",

@@ -1,6 +1,6 @@
 # M6b Structured Planning Content: Human Review Sample
 
-Status: pending human approval before M6b can feed M9.
+Status: human review approved; M6b structured fields may feed M9 separately.
 
 This sample is a review index over the official `m6b_llm_planning_content.json`. It contains no additional LLM outputs and does not alter the generated records. Reviewers must inspect the raw input subjects, parsed categories, literal evidence quotes, and `insufficient_evidence` fields together.
 
@@ -17,13 +17,14 @@ This sample is a review index over the official `m6b_llm_planning_content.json`.
 
 ## Review checklist
 
-- [ ] Every non-empty category is supported by one or more literal quotes.
-- [ ] Every quote is an exact substring of the cited T1 commit subject.
-- [ ] Every quote uses the exact source commit hash.
-- [ ] No response contains a numeric planning-quality score.
-- [ ] Empty categories have an explicit `insufficient_evidence` reason when appropriate.
-- [ ] `planning_evidence_present` does not imply architectural quality.
-- [ ] Missing T1 subjects remain `unavailable_not_measured`, never a low score.
-- [ ] No M6b field is used in M9 before this review is approved.
+- [x] Every non-empty category is supported by one or more literal quotes.
+- [x] Every quote is an exact substring of the cited T1 commit subject.
+- [x] Every quote uses the exact source commit hash.
+- [x] No response contains a numeric planning-quality score.
+- [x] Empty categories have an explicit `insufficient_evidence` reason when appropriate.
+- [x] `planning_evidence_present` does not imply architectural quality.
+- [x] Missing T1 subjects remain `unavailable_not_measured`, never a low score.
+- [x] M6b fields enter M9 separately; no composite score is created.
 
-The review decision must be recorded explicitly before the M6b gate can close.
+Review decision: approved by the user on 2026-09-24. M6b remains exploratory and
+its structured fields must not be interpreted as architectural quality.

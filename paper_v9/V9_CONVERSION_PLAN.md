@@ -215,10 +215,10 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 ### Fase 4: RQ3 - Planejamento, Retrabalho e Associações
 - [x] 4.1 - Implementar e validar M6a (Planejamento Estrutural) — aprovado em 2026-09-24 para escopo estrutural determinístico
 - [x] 4.2 - Apresentar protocolo, prompt, custo e amostra de M6b (Análise LLM de Planejamento) — aprovado em 2026-09-24 para execução controlada
-- [ ] 4.3 - Executar M6b após aprovação específica do protocolo — execução técnica concluída; revisão humana da amostra pendente
+- [x] 4.3 - Executar M6b após aprovação específica do protocolo — aprovado em 2026-09-24; nove casos observados, cinco indisponíveis, campos estruturados propagados separadamente
 - [ ] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório) — implementação técnica concluída; aprovação manual pendente
 - [ ] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline) — implementação técnica concluída; aprovação manual pendente
-- [ ] 4.6 - Implementar e validar M9 (Associações Estratificadas)
+- [ ] 4.6 - Implementar e validar M9 (Associações Estratificadas) — implementação técnica concluída; aprovação manual pendente
 
 ### Fase 5: Resultados e Visualizações
 - [ ] 5.1 - Gerar catálogo de artefatos de resultados
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 12/28 tarefas concluídas (43%)
-**Tarefas técnicas concluídas:** 4.3 (M6b executado; revisão humana pendente), 4.4 (M7 gerado; gate manual pendente) e 4.5 (M8 gerado; gate manual pendente)
+**Progresso Total:** 14/28 tarefas concluídas (50%)
+**Tarefas técnicas concluídas:** 4.4 (M7 gerado; gate manual pendente), 4.5 (M8 gerado; gate manual pendente) e 4.6 (M9 gerado; gate manual pendente)
 
 ## 1. Objetivo e limites
 
@@ -957,15 +957,15 @@ Executar extração estruturada LLM em todas as 14 equipe-semestrais, persistind
 - `paper_v9/scripts/metrics/m6_llm_planning_content.py` (testado, com cache)
 
 #### Validação (técnica)
-- [ ] Todas as 14 respostas são JSON válido
-- [ ] Todos os fields obrigatórios presentes
-- [ ] `insufficient_evidence` declarado onde apropriado
-- [ ] Payloads versionados (permitir reproducibilidade)
-- [ ] Cache funcionando (rerun não gasta tokens)
-- [ ] Amostra de 8 extraída corretamente
+- [x] Todas as 14 respostas são JSON válido
+- [x] Todos os fields obrigatórios presentes
+- [x] `insufficient_evidence` declarado onde apropriado
+- [x] Payloads versionados (permitir reproducibilidade)
+- [x] Cache funcionando (rerun não gasta tokens)
+- [x] Amostra revisada e aprovada; oito casos documentados
 
 #### Gate
-**Status ao completar:** Aguardar aprovação manual de qualidade da amostra antes de usar M6b em texto
+**Status ao completar:** ✓ APROVADO para uso exploratório estruturado; sem score composto
 
 ---
 
@@ -1096,18 +1096,23 @@ Calcular associações descritivas entre planning (M6a/M6b) e rework/outcomes (M
 - `paper_v9/data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv` (condicional a 4.3)
 - `paper_v9/data/metrics/m9_leave_one_out_intervals.csv` (jacknife para sensibilidade)
 - `paper_v9/data/metrics/m9_structured_associations.metadata.json`
-- `paper_v9/scripts/metrics/m9_structured_associations.py` (testado)
+- `paper_v9/scripts/metrics/m9_structured_associations.py`
+- `paper_v9/tests/test_m9.py`
+- `paper_v9/verification_notebooks/verify_m9.ipynb`
+- `paper_v9/metricas_v8-analysis/analyze_m9.md`
+- `paper_v9/data/metrics/m9_structured_associations.html`
+- `paper_v9/figures/m9_structured_associations.{pdf,svg,png}`
 
 #### Validação
-- [ ] Todos os numeradores/denominadores declarados
-- [ ] Estratificação clara (qual subset, por quê)
-- [ ] Leave-one-out intervalos razoáveis (não invertidos)
-- [ ] M7 não aparece como preditor
-- [ ] Ausências e casos extremos documentados
-- [ ] Segunda execução reutiliza (checksum match)
+- [x] Todos os numeradores/denominadores declarados
+- [x] Estratificação clara (qual subset, por quê)
+- [x] Leave-one-out intervalos razoáveis (não invertidos)
+- [x] M7 não aparece como preditor
+- [x] Ausências e casos extremos documentados
+- [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** ✓ APROVADO para Fase 5 (Resultados e Visualizações)
+**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Fase 5 (Resultados e Visualizações)
 
 ---
 

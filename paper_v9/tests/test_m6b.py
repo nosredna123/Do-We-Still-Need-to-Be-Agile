@@ -13,7 +13,7 @@ def test_m6b_real_outputs_have_validated_coverage_and_provenance() -> None:
     assert sum(record["status"] == "success" for record in records) == 9
     assert sum(record["status"] == "unavailable_not_measured" for record in records) == 5
     assert metadata["status"] == "success"
-    assert metadata["gate_status"] == "pending_human_review"
+    assert metadata["gate_status"] == "approved_human_review"
     assert metadata["llm_calls_required"] is True
     assert metadata["model"] == "gpt-4o-mini"
     assert metadata["temperature"] == 0.0
@@ -44,6 +44,6 @@ def test_m6b_review_sample_exists_and_gate_is_pending() -> None:
     sample = Path("paper_v9/data/metrics/m6b_llm_planning_sample_for_review.md")
     assert sample.is_file()
     text = sample.read_text(encoding="utf-8")
-    assert "pending human approval" in text
+    assert "human review approved" in text
     assert "Every quote is an exact substring" in text
-    assert "No M6b field is used in M9" in text
+    assert "M6b fields enter M9 separately" in text
