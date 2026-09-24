@@ -1,0 +1,15 @@
+Semestre,ID_Equipe,clean_rework_churn_t3,clean_deferred_churn_t3,prior_clean_path_n,clean_total_churn_t3,baseline_eligible_for_rework_t3,clean_rework_ratio_t3,measurement_status
+2025.2,TEAM_01,262.0,1451.0,30,1713.0,True,0.15294804436660828,baseline_eligible
+2025.2,TEAM_02,6519.0,21550.0,33,28069.0,True,0.23224910043108055,baseline_eligible
+2025.2,TEAM_03,0.0,15186.0,0,15186.0,False,0.0,baseline_not_observed
+2025.2,TEAM_04,860.0,11797.0,47,12657.0,True,0.06794659081930947,baseline_eligible
+2025.2,TEAM_05,0.0,2482.0,0,2482.0,False,0.0,baseline_not_observed
+2025.2,TEAM_07,0.0,5837.0,129,5837.0,True,0.0,baseline_eligible
+2025.2,TEAM_08,172.0,0.0,32,172.0,True,1.0,baseline_eligible
+2025.2,TEAM_09,15518.0,11684.0,161,27202.0,True,0.5704727593559297,baseline_eligible
+2025.2,TEAM_10,825.0,1013.0,26,1838.0,True,0.44885745375408054,baseline_eligible
+2026.1,TEAM_01,2513.0,4033.0,106,6546.0,True,0.3838985640085548,baseline_eligible
+2026.1,TEAM_02,5278.0,2275.0,43,7553.0,True,0.6987951807228916,baseline_eligible
+2026.1,TEAM_03,196.0,0.0,65,196.0,True,1.0,baseline_eligible
+2026.1,TEAM_04,863.0,18606.0,25,19469.0,True,0.04432687862756177,baseline_eligible
+2026.1,TEAM_05,4302.0,3103.0,130,7405.0,True,0.5809588116137745,baseline_eligible

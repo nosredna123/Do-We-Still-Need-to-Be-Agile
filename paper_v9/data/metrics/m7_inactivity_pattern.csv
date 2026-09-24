@@ -1,0 +1,15 @@
+ID_Equipe,Semestre,T1,T2,T3,inactive_checkpoint_n,inactivity_pattern,analysis_level
+TEAM_01,2025.2,True,False,False,1,t1_only,team_semester_checkpoint_windows
+TEAM_01,2026.1,True,False,False,1,t1_only,team_semester_checkpoint_windows
+TEAM_02,2025.2,True,False,False,1,t1_only,team_semester_checkpoint_windows
+TEAM_02,2026.1,False,False,False,0,never_inactive,team_semester_checkpoint_windows
+TEAM_03,2025.2,True,True,False,2,intermittent,team_semester_checkpoint_windows
+TEAM_03,2026.1,False,False,False,0,never_inactive,team_semester_checkpoint_windows
+TEAM_04,2025.2,False,False,False,0,never_inactive,team_semester_checkpoint_windows
+TEAM_04,2026.1,True,True,False,2,intermittent,team_semester_checkpoint_windows
+TEAM_05,2025.2,True,True,False,2,intermittent,team_semester_checkpoint_windows
+TEAM_05,2026.1,True,False,False,1,t1_only,team_semester_checkpoint_windows
+TEAM_07,2025.2,False,False,False,0,never_inactive,team_semester_checkpoint_windows
+TEAM_08,2025.2,True,False,False,1,t1_only,team_semester_checkpoint_windows
+TEAM_09,2025.2,True,False,False,1,t1_only,team_semester_checkpoint_windows
+TEAM_10,2025.2,True,False,False,1,t1_only,team_semester_checkpoint_windows

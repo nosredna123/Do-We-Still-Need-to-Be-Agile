@@ -210,14 +210,14 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 ### Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
 - [x] 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade) — aprovado em 2026-09-24 para escopo descritivo M3a-M3c
 - [x] 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal) — aprovado em 2026-09-24 para escopo descritivo M4a-M4d
-- [ ] 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
+- [x] 3.3 - Implementar e validar M5 (Evidência Textual de Fricção) — aprovado em 2026-09-24 para escopo determinístico descritivo
 
 ### Fase 4: RQ3 - Planejamento, Retrabalho e Associações
 - [x] 4.1 - Implementar e validar M6a (Planejamento Estrutural) — aprovado em 2026-09-24 para escopo estrutural determinístico
 - [x] 4.2 - Apresentar protocolo, prompt, custo e amostra de M6b (Análise LLM de Planejamento) — aprovado em 2026-09-24 para execução controlada
 - [ ] 4.3 - Executar M6b após aprovação específica do protocolo — execução técnica concluída; revisão humana da amostra pendente
-- [ ] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório)
-- [ ] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline)
+- [ ] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório) — implementação técnica concluída; aprovação manual pendente
+- [ ] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline) — implementação técnica concluída; aprovação manual pendente
 - [ ] 4.6 - Implementar e validar M9 (Associações Estratificadas)
 
 ### Fase 5: Resultados e Visualizações
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 10/28 tarefas concluídas (36%)
-**Tarefa em execução:** 4.3 - Revisar amostra humana e aprovar M6b antes de usá-lo em M9
+**Progresso Total:** 12/28 tarefas concluídas (43%)
+**Tarefas técnicas concluídas:** 4.3 (M6b executado; revisão humana pendente), 4.4 (M7 gerado; gate manual pendente) e 4.5 (M8 gerado; gate manual pendente)
 
 ## 1. Objetivo e limites
 
@@ -993,17 +993,23 @@ Capturar trajetória de inatividade de repositório, usando janelas retrospectiv
 - `paper_v9/data/metrics/m7_inactivity_trajectory.csv`
 - `paper_v9/data/metrics/m7_inactivity_pattern.csv`
 - `paper_v9/data/metrics/m7_repository_inactivity.metadata.json`
-- `paper_v9/scripts/metrics/m7_repository_inactivity.py` (testado)
+- `paper_v9/scripts/metrics/m7_repository_inactivity.py`
+- `paper_v9/tests/test_m7.py`
+- `paper_v9/verification_notebooks/verify_m7.ipynb`
+- `paper_v9/metricas_v8-analysis/analyze_m7.md`
+- `paper_v9/data/metrics/m7_checkpoint_inactivity.csv`
+- `paper_v9/data/metrics/m7_inactivity_trajectory.html`
+- `paper_v9/figures/m7_repository_inactivity_trajectory.{pdf,svg,png}`
 
 #### Validação
-- [ ] Trajetórias de 70 dias (−63 a +7)  cobertas
-- [ ] Rótulo `repository_inactivity` usado
-- [ ] Padrões por checkpoint claros
-- [ ] Cobertura T1 documentada
-- [ ] Segunda execução reutiliza (checksum match)
+- [x] Trajetórias de 71 janelas (−63 a +7) cobertas
+- [x] Rótulo `repository_inactivity` usado
+- [x] Padrões por checkpoint claros
+- [x] Cobertura T1 documentada
+- [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** ✓ APROVADO para Tarefa 4.5
+**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Tarefa 4.5
 
 ---
 
@@ -1038,17 +1044,22 @@ Medir magnitude de retrabalho limpo em caminhos com baseline T1/T2, condicionado
 - `paper_v9/data/metrics/m8_rework_trajectory.csv`
 - `paper_v9/data/metrics/m8_baseline_eligibility.csv`
 - `paper_v9/data/metrics/m8_clean_rework.metadata.json`
-- `paper_v9/scripts/metrics/m8_clean_rework.py` (testado)
+- `paper_v9/scripts/metrics/m8_clean_rework.py`
+- `paper_v9/tests/test_m8.py`
+- `paper_v9/verification_notebooks/verify_m8.ipynb`
+- `paper_v9/metricas_v8-analysis/analyze_m8.md`
+- `paper_v9/data/metrics/m8_clean_rework_trajectory.html`
+- `paper_v9/figures/m8_clean_rework_trajectory.{pdf,svg,png}`
 
 #### Validação
-- [ ] M8 usa mesma política de artefatos de M4
-- [ ] Zeros, mediana, máximo reportados explicitamente
-- [ ] Razão M8b somente para baseline elegível + churn > 0
-- [ ] Trajetórias de 28 dias (−21 a +7) cobertas
-- [ ] Segunda execução reutiliza (checksum match)
+- [x] M8 usa mesma política de artefatos de M4
+- [x] Zeros, mediana, máximo reportados explicitamente
+- [x] Razão M8b somente para baseline elegível + churn > 0
+- [x] Trajetórias de 29 janelas inclusivas (−21 a +7) cobertas
+- [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** ✓ APROVADO para Tarefa 4.6
+**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Tarefa 4.6
 
 ---
 
