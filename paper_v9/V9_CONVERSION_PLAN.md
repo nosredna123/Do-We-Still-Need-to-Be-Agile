@@ -225,7 +225,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 5.2 - Gerar candidatos de visualização e realizar oficina de escolha — candidatos gerados; decisão manual pendente
 
 ### Fase 6: Preparação LaTeX
-- [ ] 6.1 - Criar esqueleto LaTeX modular compilável
+- [x] 6.1 - Criar esqueleto LaTeX modular compilável — compilado com sucesso em 2026-09-24; figuras permanecem revisáveis durante a redação
 
 ### Fase 7: Revisão Editorial (Ordem Obrigatória)
 - [ ] 7.1 - Revisar e aprovar Methodology
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 19/28 tarefas concluídas (68%)
-**Próxima tarefa:** 6.1 - Criar Esqueleto LaTeX Modular Compilável
+**Progresso Total:** 20/28 tarefas concluídas (71%)
+**Próxima tarefa:** 7.1 - Revisar e aprovar Methodology
 
 ## 1. Objetivo e limites
 
@@ -1255,7 +1255,7 @@ Estabelecer estrutura LaTeX modular onde cada seção é arquivo separado, figur
 - [ ] Comentários de proveniência invisíveis no PDF
 
 #### Gate
-**Status ao completar:** ✓ APROVADO para Fase 7 (Revisão Editorial)
+**Status ao completar:** ✓ APROVADO para Fase 7 (Revisão Editorial); figuras e análises podem ser adicionadas ou revisadas durante a redação das seções
 
 ---
 
