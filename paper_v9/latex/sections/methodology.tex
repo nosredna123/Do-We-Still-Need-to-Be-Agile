@@ -96,6 +96,26 @@ Our data collection framework triangulates four distinct evidentiary channels to
 % paper_v9/data/manifests/input_inventory.json; survey and evaluator schemas
 % are validated by paper_v9/tests/test_input_contracts.py.
 
+\subsection{Statistical and Analytical Concepts}
+
+The analysis uses descriptive summaries to preserve the scale and grain of each
+evidence stream. Means are reported with standard deviations when the metric is
+an approximately interval-like score; medians and interquartile ranges are used
+for skewed counts and ratios. Proportions retain their denominators, and rolling
+seven-day windows are indexed relative to evaluator anchors; overlapping windows
+are therefore summaries of nearby periods, not independent observations.
+
+For exploratory associations, Spearman's rank correlation $\rho$ measures the
+strength and direction of a monotonic relationship between two ranked variables
+without assuming a linear scale~\cite{spearman1904proof}. It does not establish
+causality, and its interpretation is limited by sample size, ties, missingness,
+and influential observations. M9 reports exploratory p-values as descriptive
+diagnostics rather than confirmatory significance tests. Leave-one-out analysis
+recomputes an association after removing each eligible team-semester in turn;
+the resulting range shows sensitivity to influential cases and is not a
+confidence interval. These summaries are always interpreted with their
+denominator, stratum, and measurement-availability state.
+
 \subsection{Advanced Metrics Operationalization}
 \label{sec:advanced-metrics}
 
