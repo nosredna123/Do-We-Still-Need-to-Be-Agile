@@ -1,0 +1,33 @@
+{
+  "anchor": "last T3 evaluator vote",
+  "artifacts": [
+    "m4_churn_magnitude.csv",
+    "m4_commit_intensity.csv",
+    "m4_artifact_composition.csv",
+    "m4_rolling_7day_trajectory.csv",
+    "m4_churn_magnitude_pooled.csv",
+    "m4_commit_intensity_pooled.csv",
+    "m4_artifact_composition_pooled.csv",
+    "m4_rolling_7day_trajectory_pooled.csv",
+    "m4_clean_change_dynamics.metadata.json"
+  ],
+  "clean_definition": "pipeline_config.is_measurement_code_path",
+  "config_sha256": "49c089172571f916670a4ea7c68d4ceb51345e0e2994601d4c6d66daf602e2ce",
+  "contract_version": "m4-clean-change-dynamics-v1",
+  "coverage": {
+    "rolling_rows": 994,
+    "team_semesters": 14
+  },
+  "gate_status": "pending",
+  "input_sha256": "743869c0170c2f3c1acc4add221c82c646d69d5bba21915a9107cad7d62e177b",
+  "limitations": [
+    "clean path provenance is not semantic defect validation",
+    "rolling windows overlap",
+    "M4 does not measure coordination friction"
+  ],
+  "metric_definition_version": "m4-clean-change-dynamics-v1",
+  "policy_version": "code-churn-metrics-v2",
+  "rq": "RQ2",
+  "status": "success",
+  "unit_of_analysis": "team-semester, checkpoint, and rolling window"
+}

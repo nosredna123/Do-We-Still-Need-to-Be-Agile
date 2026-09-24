@@ -751,6 +751,18 @@ Medir magnitude e trajetória de mudança "limpa" (conforme política central de
 - `paper_v9/data/metrics/m4_commit_intensity.csv`
 - `paper_v9/data/metrics/m4_artifact_composition.csv`
 - `paper_v9/data/metrics/m4_rolling_7day_trajectory.csv`
+- `paper_v9/data/metrics/m4_churn_magnitude_pooled.csv`
+- `paper_v9/data/metrics/m4_commit_intensity_pooled.csv`
+- `paper_v9/data/metrics/m4_artifact_composition_pooled.csv`
+- `paper_v9/data/metrics/m4_rolling_7day_trajectory_pooled.csv`
+- `paper_v9/data/metrics/m4_clean_change_dynamics.metadata.json`
+- `paper_v9/scripts/metrics/m4_clean_change_dynamics.py`
+- `paper_v9/tests/test_m4.py`
+- `paper_v9/verification_notebooks/verify_m4.ipynb`
+- `paper_v9/data/metrics/m4_churn_magnitude.csv`
+- `paper_v9/data/metrics/m4_commit_intensity.csv`
+- `paper_v9/data/metrics/m4_artifact_composition.csv`
+- `paper_v9/data/metrics/m4_rolling_7day_trajectory.csv`
 - `paper_v9/data/metrics/m4_clean_change_dynamics.metadata.json`
 - `paper_v9/scripts/metrics/m4_clean_change_dynamics.py` (testado)
 
