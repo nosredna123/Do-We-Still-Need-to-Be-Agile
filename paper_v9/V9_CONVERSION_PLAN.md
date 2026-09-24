@@ -1,15 +1,192 @@
-# Plano de Conversao V8 para V9
+# Plano de Conversão V8 para V9 - Estrutura de Fases e Tarefas
 
-## Protocolo de execucao manual
+## Protocolo de Execução Manual
 
-O plano e executado como uma fila de tarefas bloqueadoras. Para cada tarefa,
-o agente deve executar somente o escopo declarado, validar os entregaveis,
-apresentar resultados e aguardar aprovacao manual explicita. A proxima tarefa
-nao pode ser iniciada antes dessa aprovacao, inclusive quando sua dependencia
-tecnica ja estiver disponivel.
+O plano é executado como uma **fila de tarefas bloqueadoras**. Para cada tarefa:
 
-Cada tarefa deve registrar: objetivo, entradas, alteracoes, artefatos gerados,
-comandos de validacao, limitacoes e decisao solicitada ao usuario.
+1. **Fazer perguntas de esclarecimento** se a tarefa apresentar ambiguidade ou dependência de decisões não registradas
+2. **Executar somente o escopo declarado** da tarefa
+3. **Validar todos os entregáveis** conforme critérios explícitos
+4. **Apresentar resultados** com evidência de sucesso
+5. **Aguardar aprovação manual explícita** antes de prosseguir
+6. **Registrar cada tarefa** com: objetivo, entrada (input), processamento, saída (output), validação, limitações e decisão
+
+A próxima tarefa **não pode** ser iniciada antes da aprovação, mesmo que sua dependência técnica já esteja disponível.
+
+### Princípios de Engenharia Obrigatórios (Todos os Scripts, Notebooks e Código)
+
+Todo código produzido no plano v9 (scripts de métricas, utilitários comuns, notebooks de verificação, orquestradores) **DEVE** seguir:
+
+1. **DRY (Don't Repeat Yourself)**
+   - Nenhuma lógica de resolução de caminhos, hashing, resume, ou política de artefatos duplicada fora de `paper_v9/scripts/common/`
+   - Notebooks de verificação devem importar funções dos scripts de métrica, não reimplementar cálculos
+   - Constantes compartilhadas (checkpoints T1/T2/T3, chaves compostas, contratos de política) centralizadas em um único módulo
+
+2. **KISS (Keep It Simple, Stupid)**
+   - Preferir funções pequenas e diretas a abstrações genéricas não solicitadas
+   - Evitar frameworks, classes ou camadas de indireção quando uma função simples resolve
+   - Notebooks devem ser lineares e legíveis (célula = um passo de verificação claro), sem "mágica" implícita
+
+3. **Fail Fast**
+   - Validar entradas no início de cada função/script; levantar exceção imediatamente se contrato não for satisfeito (chave ausente, schema inválido, contrato de política desatualizado)
+   - **Nunca** mascarar dados ausentes ou inválidos com valores default silenciosos (`0`, `""`, `NaN` implícito)
+   - Scripts devem abortar com mensagem de erro clara ao primeiro problema, não continuar processamento parcial
+   - Notebooks de verificação devem usar `assert` explícitos que interrompem a execução ao primeiro dado inconsistente, em vez de apenas reportar warnings no final
+
+Essas diretrizes se aplicam a **todas** as tarefas de 1.1 em diante e serão verificadas como parte da validação de cada entrega.
+
+### Estrutura de Cada Tarefa
+
+Cada tarefa segue este formato:
+
+```
+## Tarefa X.Y - Nome da Tarefa
+
+**Fase:** Nome da Fase  
+**Dependências:** Tarefas predecessoras  
+**Estimativa:** Tempo aproximado
+
+### Objetivo
+Descrição clara do que será entregue.
+
+### Entrada (Input)
+- Arquivo/diretório/contrato
+- Estrutura esperada
+- Validações pré-requisito
+
+### Escopo
+1. Item de escopo 1
+2. Item de escopo 2
+3. ...
+
+### Saída (Output)
+- Arquivo 1 (localização, formato, tamanho esperado)
+- Arquivo 2
+- ...
+
+### Validação
+Critérios que confirmam sucesso:
+- [ ] Critério 1
+- [ ] Critério 2
+
+### Limitações Conhecidas
+- Limitação 1
+- Limitação 2
+
+### Questões de Esclarecimento (se necessário)
+Antes de executar, esclarecer:
+- Pergunta 1?
+- Pergunta 2?
+
+### Gate
+**Status esperado ao completar:** APROVADO para próxima tarefa
+```
+
+## Protocolo Obrigatório de Validação com Dados V8
+
+**Antes de qualquer nova tarefa de métrica (2.1+), é OBRIGATÓRIO:**
+
+1. **Analisar dados e código-fonte v8**
+   - Ler análises existentes em `paper_v9/metricas_v8-analysis/` (se disponível) ou `paper_v8/` (notebooks exploratórios)
+   - Entender **exatamente** como a métrica foi calculada em v8 (fórmula, tratamento de casos extremos, exclusões)
+   - Identificar casos reais nos dados v8 que exemplifiquem a métrica
+   - Documentar quaisquer ambiguidades ou suposições em v8 que v9 deve resolver
+
+2. **Esclarecer gaps antes de implementar**
+   - Se o código v8 ou documentação estiverem incompletos ou ambíguos, registrar questões de esclarecimento
+   - Pedir aprovação explícita de como v9 diferirá de v8 (se aplicável)
+   - Confirmar que a unidade de análise (equipe-semestre vs. corpus global) está clara
+
+3. **Gerar notebook de verificação v9**
+   - Para cada métrica M1–M9, criar notebook em `paper_v9/verification_notebooks/verify_m{N}.ipynb`
+   - Notebook deve:
+     - Carregar dados brutos e processados (CSV da métrica)
+     - Validar tipos de dados, ranges esperados, ausências
+     - Comparar resumos (média, mediana, std) com v8 onde aplicável
+     - Plotar distribuições, trajetórias, padrões por team-semestre
+     - Executar testes de sanidade: nenhum valor impossível, cobertura declarada, sem NaN silencioso
+     - Apontar outliers, gaps e exceções com justificativas
+     - **Falhar explicitamente** se os dados não forem válidos
+   - Notebook deve ser executável end-to-end (sem interrupções, sem passos manuais)
+
+4. **Validar contra dados reais antes de usar em artigo**
+   - Executar `pytest` dos testes de métrica
+   - Executar notebook de verificação
+   - Revisar manualmente ao menos 2–3 equipe-semestrais em detalhe (rastrear dados brutos → entrada → saída)
+   - Registrar desvios de v8 e justificativa
+
+### Estrutura de Validação por Métrica
+
+Para cada métrica M1–M9, criar 3 artefatos **antes** de usar dados em artigo:
+
+| Artefato | Localização | Responsabilidade |
+|----------|-----------|-----------------|
+| Análise V8 | `paper_v9/metricas_v8-analysis/analyze_m{N}.md` ou notebook v8 | Ler, resumir, identificar ambiguidades |
+| Script de Métrica | `paper_v9/scripts/metrics/m{N}_*.py` | Implementar conforme v8, com correções aprovadas |
+| Notebook de Verificação | `paper_v9/verification_notebooks/verify_m{N}.ipynb` | Validar outputs, comparar com v8, apontar desvios |
+
+---
+
+## Status das Tarefas de Fundação
+
+✓ **Tarefa 0.1 CONCLUÍDA** (2026-09-24)  
+Validação do ambiente LaTeX: pdfTeX, BibTeX, IEEEtran.cls instalados. PDF de teste gerado. Documentação em REPRODUCIBILITY.md.
+
+✓ **Tarefa 0.2 CONCLUÍDA** (2026-09-24)  
+Congelamento de baseline v8: título e RQs registrados como invariantes, todos 9 métricas (M1–M9) hashadas, LaTeX e figuras congeladas em SHA256.
+
+---
+
+## Checklist de Execução do Plano V9
+
+### Fase 0: Fundação (Concluída)
+- [x] 0.1 - Configurar e validar ambiente LaTeX local
+- [x] 0.2 - Congelar baseline v8 e registrar inventário
+
+### Fase 1: Infraestrutura Técnica e Governança
+- [ ] 1.1 - Criar contrato e utilitários comuns v9
+- [ ] 1.2 - Implementar resume, manifestos e inventário de entradas
+
+### Fase 2: RQ1 - Percepção e Adoção de IA
+- [ ] 2.1 - Implementar e validar M1 (Painel de Percepções)
+- [ ] 2.2 - Implementar e validar M2 (Percepção de Risco por Papel)
+
+### Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
+- [ ] 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade)
+- [ ] 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal)
+- [ ] 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
+
+### Fase 4: RQ3 - Planejamento, Retrabalho e Associações
+- [ ] 4.1 - Implementar e validar M6a (Planejamento Estrutural)
+- [ ] 4.2 - Apresentar protocolo, prompt, custo e amostra de M6b (Análise LLM de Planejamento)
+- [ ] 4.3 - Executar M6b após aprovação específica do protocolo
+- [ ] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório)
+- [ ] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline)
+- [ ] 4.6 - Implementar e validar M9 (Associações Estratificadas)
+
+### Fase 5: Resultados e Visualizações
+- [ ] 5.1 - Gerar catálogo de artefatos de resultados
+- [ ] 5.2 - Gerar candidatos de visualização e realizar oficina de escolha
+
+### Fase 6: Preparação LaTeX
+- [ ] 6.1 - Criar esqueleto LaTeX modular compilável
+
+### Fase 7: Revisão Editorial (Ordem Obrigatória)
+- [ ] 7.1 - Revisar e aprovar Methodology
+- [ ] 7.2 - Revisar e aprovar Results
+- [ ] 7.3 - Revisar e aprovar Discussion
+- [ ] 7.4 - Revisar e aprovar Threats to Validity
+- [ ] 7.5 - Revisar e aprovar Conclusion
+- [ ] 7.6 - Revisar e aprovar Abstract
+- [ ] 7.7 - Revisar e aprovar Introduction
+- [ ] 7.8 - Revisar e aprovar Background and Related Work
+
+### Fase 8: Verificação Final e Entrega
+- [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
+- [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
+
+**Progresso Total:** 2/28 tarefas concluídas (7%)  
+**Próxima tarefa:** 1.1 - Criar contrato e utilitários comuns v9
 
 ## 1. Objetivo e limites
 
@@ -130,54 +307,841 @@ registrar a reorganizacao existente dos notebooks em `metricas_v8-analysis/`.
 
 **Gate manual:** aprovar baseline antes da Tarefa 1.1.
 
-## 4. Fundacao tecnica e governanca
+---
 
-### Tarefa 1.1 - Criar contrato e utilitarios comuns v9
+# FASES DETALHADAS DO PLANO V9
 
-1. Registrar um manifesto de baseline com hashes de `paper_v8/latex_code`, dos
-   scripts v8, dos nove notebooks de analise e dos contratos de entrada.
-2. Criar `paper_v9/scripts/common/paths.py`, `provenance.py`, `resume.py` e
-   `statistics.py` para resolver diretorios, checksums, escrita atomica,
-   manifests e resumos descritivos.
-3. Criar `paper_v9/scripts/common/artifact_policy.py` como adaptador para a
-   politica central `pipeline_config.is_measurement_code_path`; nao duplicar
-   whitelist/blacklist em scripts v9.
-4. Criar um comando orquestrador v9 com estagios `metrics`, `results`,
-   `figures`, `latex-check` e `all`, todos com resume por padrao e `--force`
-   explicito.
-5. Criar testes de contrato para chaves, schemas, politica de artefatos,
-   manifests, checksum/resume e idempotencia.
+## Fase 1: Infraestrutura Técnica e Governança
 
-**Validacao:** todos os caminhos de entrada/saida resolvem sem tocar em
-`paper_v8/`; testes de importacao e sentinelas da politica de artefatos passam.
+Objetivo: Estabelecer utilitários comuns, contratos de dados, e policies compartilhadas que sustentarão todas as implementações de métricas (M1–M9).
 
-**Gate manual:** aprovar infraestrutura antes da Tarefa 1.2.
+### Tarefa 1.1 - Criar Contrato e Utilitários Comuns V9
 
-### Tarefa 1.2 - Implementar resume, manifestos e inventario de entradas
+**Dependências:** 0.1 ✓, 0.2 ✓  
+**Estimativa:** 3–4 horas  
+**Prioridade:** CRÍTICA (bloqueador de todas as métricas)
 
-1. Declarar em `paper_v9/data/manifests/input_inventory.json` os contratos
-   consumidos da raiz do repositorio: lake, analises regeneradas, parent mirrors,
-   formularios processados, artefatos de avaliacoes e cache LLM quando aplicavel.
-2. Validar as chaves compostas `ID_Equipe, Semestre` onde a unidade e equipe-
-   semestre; nunca associar respostas estudantis ou transcricoes a equipes sem
-   chave observada.
-3. Validar que M4/M8 usam `code-churn-metrics-v2`, `cc-v2-clean-paths` e a
-   politica de artefatos vigente; falhar para contratos antigos.
-4. Versionar a politica de exclusao observada no manifesto, incluindo `.history/`,
-   `backup/`, dependencias, ambientes, build e extensoes fora da allowlist.
+#### Objetivo
+Estabelecer infraestrutura reutilizável para caminhos, manifests, checksums, escrita atômica, políticas de artefatos e orquestração de v9.
 
-**Validacao:** um segundo run sem `--force` reutiliza artefatos atuais; entrada,
-configuracao ou sidecar divergente exige regeneracao; M4/M8 rejeitam contratos
-antigos.
+#### Entrada (Input)
+- `paper_v9/data/manifests/v8_baseline_manifest.json` (manifest baseline congelado de 0.2)
+- `pipeline_config.is_measurement_code_path` (política central de artefatos do repositório)
+- Estrutura de diretórios v9 criada em 0.1/0.2
 
-**Gate manual:** aprovar contratos e resume antes da Tarefa 2.1.
+#### Escopo
 
-## 4. Implementacao das familias M1--M9
+1. **Criar `paper_v9/scripts/common/paths.py`**
+   - Função `resolve_data_dir()` → retorna caminho absoluto de `paper_v9/data/`
+   - Função `resolve_metrics_dir()` → retorna `paper_v9/data/metrics/`
+   - Função `resolve_results_dir()` → retorna `paper_v9/data/results/`
+   - Função `resolve_scripts_dir()` → retorna `paper_v9/scripts/`
+   - Testes unitários para cada função
+   - **Nenhum caminho absoluto codificado; tudo relativo ao workspace root**
 
-Cada familia tera um script principal em `paper_v9/scripts/metrics/`, dados em
-`paper_v9/data/metrics/`, manifesto proprio e teste focal. As nomenclaturas de
-saida podem conter subcomponentes (por exemplo, `m4a`), mas cada familia tera um
-manifesto agregador `mN_*.manifest.json`.
+2. **Criar `paper_v9/scripts/common/provenance.py`**
+   - Classe `FileHash` com métodos:
+     - `compute_sha256(filepath) → str`
+     - `verify_hash(filepath, expected_hash) → bool`
+     - `write_hash_sidecar(artifact_path, computed_hash) → sidecar_path`
+   - Suporte para `.metadata.json` sidecar com schema definido
+   - Testes de idempotência (mesmo arquivo = mesmo hash)
+
+3. **Criar `paper_v9/scripts/common/resume.py`**
+   - Classe `ArtifactCache` com métodos:
+     - `should_regenerate(artifact_path, input_hash, config_hash) → bool`
+     - `mark_complete(artifact_path) → None`
+     - `clear_cache(artifact_path) → None`
+   - Lógica: regenerar se faltam metadata, hashes divergem, ou `--force` ativado
+   - Resumo por padrão; `--force` força recomputação
+
+4. **Criar `paper_v9/scripts/common/statistics.py`**
+   - Funções para sumários descritivos (median, mean, std, min, max, percentiles)
+   - Nenhuma inferência causal; apenas estatísticas exploratórias
+   - Retorna dicts estruturados (não strings formatadas)
+
+5. **Criar `paper_v9/scripts/common/artifact_policy.py`**
+   - Importa `pipeline_config.is_measurement_code_path`
+   - Fornece interface única: `is_clean_path(filepath, policy_version) → bool`
+   - **Não duplicar whitelist/blacklist; apenas adaptar**
+   - Testes contra `code-churn-metrics-v2` policy
+
+6. **Criar orquestrador v9: `paper_v9/scripts/orchestrate_v9.py`**
+   - CLI com subcomandos: `metrics`, `results`, `figures`, `latex-check`, `all`
+   - Flag `--force` para desabilitar resume
+   - Flag `--verbose` para debug output
+   - Retorna status JSON com artifacts gerados e hashes
+
+7. **Criar suite de testes de contrato: `paper_v9/tests/test_contracts.py`**
+   - Testes de importação de todos os módulos comuns
+   - Testes de validade de chaves compostas (`ID_Equipe, Semestre`)
+   - Testes de política de artefatos
+   - Testes de manifests (schemas, checksums)
+   - Testes de idempotência (run 2× = mesmos hashes)
+
+#### Saída (Output)
+- `paper_v9/scripts/common/paths.py` (~150 linhas, 100% testadas)
+- `paper_v9/scripts/common/provenance.py` (~200 linhas, 100% testadas)
+- `paper_v9/scripts/common/resume.py` (~150 linhas, 100% testadas)
+- `paper_v9/scripts/common/statistics.py` (~100 linhas, 100% testadas)
+- `paper_v9/scripts/common/artifact_policy.py` (~80 linhas, 100% testadas)
+- `paper_v9/scripts/orchestrate_v9.py` (~250 linhas, CLI funcional)
+- `paper_v9/tests/test_contracts.py` (~300 linhas, todos os testes passam)
+- `paper_v9/scripts/common/__init__.py` (importa todos os módulos)
+- `paper_v9/INFRASTRUCTURE.md` (documentação de uso dos módulos comuns)
+
+#### Validação
+- [ ] Todos os imports funcionam: `from paper_v9.scripts.common import paths, provenance, resume, statistics, artifact_policy`
+- [ ] `pytest paper_v9/tests/test_contracts.py -v` passa 100%
+- [ ] `python paper_v9/scripts/orchestrate_v9.py --help` funciona
+- [ ] Nenhum caminho absoluto em `paper_v9/scripts/common/*.py`
+- [ ] Arquivo `.metadata.json` é criado com schema válido após primeiro artifact
+- [ ] Segunda execução sem `--force` reutiliza artifact (resume = True)
+- [ ] Todos os logs e mensagens de erro em **inglês técnico internacional**
+
+#### Limitações Conhecidas
+- tlmgr em modo user está desabilitado no sistema (não afeta v9 scripts)
+- Whitelist de artefatos pode estar desatualizada se `pipeline_config` for modificado externamente
+
+#### Questões de Esclarecimento
+Antes de executar, esclarecer:
+1. **Versão de Python esperada?** (assumindo 3.11.15 do .venv)
+2. **Todos os scripts common devem ter docstrings e type hints?** (assumindo sim)
+3. **Namespace para imports: `paper_v9.scripts.common` ou `v9.scripts.common`?** (assumindo anterior)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 1.2
+
+---
+
+### Tarefa 1.2 - Implementar Resume, Manifestos e Inventário de Entradas
+
+**Dependências:** 1.1 ✓  
+**Estimativa:** 2–3 horas  
+**Prioridade:** ALTA (bloqueia todas as métricas)
+
+#### Objetivo
+Estabelecer contrato de entrada, validar chaves compostas (ID_Equipe, Semestre), definir inventário de fontes de dados que alimentarão M1–M9, e documentar política de exclusão de artefatos.
+
+#### Entrada (Input)
+- `paper_v9/scripts/common/` (infraestrutura de 1.1)
+- `pipeline_config.is_measurement_code_path` (policy central)
+- Datasets de raiz do repo: lake, git mirrors, formulários processados, transcripts, avaliações
+- V8 baseline manifest (`v8_baseline_manifest.json`)
+
+#### Escopo
+
+1. **Criar `paper_v9/data/manifests/input_inventory.json`**
+   - Declarar todas as fontes de dados consumidas:
+     - Lake (data/lake/): estrutura, schemas, versão do contrato
+     - Git parent mirrors (data/raw/repos_parent_cache/): política read-only
+     - Formulários processados (data/processed/surveys/): checksum esperado
+     - Transcripts (data/processed/transcripts/): cobertura por sessão/semestre
+     - Avaliações de projeto (data/processed/evaluations/): checksum de hashes de equipes
+   - Versionar cada entrada: contrato_version, data_hash, timestamp
+   - Exemplo para M4/M8: referenciar `code-churn-metrics-v2`, `cc-v2-clean-paths`
+
+2. **Validar chaves compostas `(ID_Equipe, Semestre)`**
+   - Criar script `paper_v9/scripts/common/validate_keys.py`
+   - Garantir que nunca associamos respostas estudantis ou transcripts a equipes sem chave observada
+   - Testar contra todas as 14 equipe-semestrais
+   - Gerar relatório de cobertura por checkpoint (T1, T2, T3)
+
+3. **Definir exclusões de artefatos (`.history/`, `backup/`, etc.)**
+   - Registrar whitelist de diretórios analisados
+   - Registrar blacklist de padrões a descartar: `.git/`, `node_modules/`, `.env`, etc.
+   - Versionar política em `input_inventory.json`
+   - Testar contra 1–2 repositórios reais
+
+4. **Verificar validade de M4/M8 contratos**
+   - Confirmar que inputs para M4/M8 usam `code-churn-metrics-v2`
+   - Confirmar que `cc-v2-clean-paths` está presente
+   - Falhar se versão de contrato anterior for detectada
+   - Gerar `input_inventory.json` com políticas vigentes
+
+5. **Criar resumo de inventário: `paper_v9/INPUTS_SUMMARY.md`**
+   - Lista todas as fontes de dados
+   - Registra checksums esperados
+   - Documenta coberturas por team-semestre
+   - Referencia v8 baseline para comparação
+
+#### Saída (Output)
+- `paper_v9/data/manifests/input_inventory.json` (~100–200 linhas, validação JSON rigorosa)
+- `paper_v9/scripts/common/validate_keys.py` (~150 linhas, 100% testado)
+- `paper_v9/INPUTS_SUMMARY.md` (2–3 KB, narrativa clara)
+- `paper_v9/tests/test_input_contracts.py` (~200 linhas, cobertura de chaves e exclusões)
+
+#### Validação
+- [ ] `input_inventory.json` valida como JSON bem-formado
+- [ ] Todos os 14 team-semesters têm chaves `(ID_Equipe, Semestre)` no lake
+- [ ] `pytest paper_v9/tests/test_input_contracts.py -v` passa 100%
+- [ ] M4/M8 rejeitam contratos antigos (codigo-churn-metrics-v1, etc.)
+- [ ] Whitelist/blacklist testados contra 2+ repositórios reais
+- [ ] Relatório de cobertura T1/T2/T3 sem lacunas críticas
+
+#### Limitações Conhecidas
+- Alguns team-semesters podem ter gaps temporários em transcripts (não invalidar, apenas documentar)
+- Política de exclusão pode evoluir; manifest versionado permite retrospecção
+
+#### Questões de Esclarecimento
+Antes de executar, esclarecer:
+1. **Qual é o formato exato de chaves de team-semestre no lake?** (p. ex., `extensao3-2025_2-team_02`)
+2. **Qual versão mínima de code-churn-metrics é aceitável para M4/M8?** (assumindo v2 única)
+3. **Gaps em transcripts (p. ex., sessão 3 faltando) devem bloquear ou apenas documentar?** (assumindo documentar)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Fase 2 (M1–M2)
+
+---
+
+
+
+## Fase 2: RQ1 - Percepção e Adoção de IA
+
+Objetivo: Implementar as métricas que descrevem como estudantes desenvolvadores utilizam IA generativa e como isso molda suas percepções longitudinais sobre papéis de engenharia de software e expectativas de projeto.
+
+### Tarefa 2.1 - Implementar e Validar M1 (Painel de Percepções)
+
+**Dependências:** 1.2 ✓  
+**Estimativa:** 2–3 horas (análise v8) + 2–3 horas (implementação) + 1–2 horas (verificação)  
+**Métrica RQ:** RQ1  
+
+#### Pré-Requisito Obrigatório: Análise V8
+Antes de implementar, **DEVE**:
+1. Ler e resumir `paper_v8/` (análise de M1, fórmulas, tratamento de dados)
+2. Identificar e registrar em `paper_v9/metricas_v8-analysis/analyze_m1.md`:
+   - Como M1 foi calculada em v8 (itens Likert, agregação, familias)
+   - Quais familias de percepção foram mantidas separadas
+   - Quaisquer exclusões, transformações ou ajustes aplicados
+   - Exemplos concretos de 2–3 equipe-semestrais (valores brutos → resultado final)
+   - Ambiguidades ou gaps no código/documentação v8
+3. Pedir esclarecimento sobre desvios v9 desejados (se houver)
+
+#### Objetivo
+Produzir indicadores separados de percepção (não compostos) por semestre e marco temporal, preservando as distinções entre benefício percebido de IA, equilíbrio autonomia/ferramentas, impacto na carreira e expectativas/desafios de projeto.
+
+#### Entrada (Input)
+- Survey responses (data/processed/surveys/) para T1, T2, T3
+- Questões de percepção mapeadas: familias de itens Likert
+- Input inventory e validação de chaves (Tarefa 1.2)
+- **Análise v8 registrada em `paper_v9/metricas_v8-analysis/analyze_m1.md`**
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m1_rq1_perception_panel.py`
+2. Extrair famílias de percepção: AI benefit, autonomy/tool balance, career impact, project expectations
+3. Manter separados (não agregar em índice único)
+4. Reportar cobertura por pergunta, distribuição, ausências, mudança descritiva T1–T3
+5. Declarar `unavailable_not_measured` explicitamente onde dados faltam
+6. Gerar CSV longo e CSV largo (wide format para tabelas)
+7. Criar manifesto `m1_rq1_perception_panel.metadata.json`
+8. **Validar contra dados v8: comparar resumos estatísticos, distribuições, coberturas**
+
+#### Saída (Output)
+- `paper_v9/metricas_v8-analysis/analyze_m1.md` (~2–3 KB, resumo de v8)
+- `paper_v9/data/metrics/m1_rq1_perception_panel_long.csv` (structure: team_semester, checkpoint, perception_family, mean, std, n, coverage)
+- `paper_v9/data/metrics/m1_rq1_perception_panel_wide.csv`
+- `paper_v9/data/metrics/m1_rq1_perception_panel.metadata.json` (checksum, coverage summary)
+- `paper_v9/scripts/metrics/m1_rq1_perception_panel.py` (testado)
+- **`paper_v9/verification_notebooks/verify_m1.ipynb`** (validação de dados, comparação com v8)
+
+#### Validação
+- [ ] Análise v8 completa e registrada em `analyze_m1.md`
+- [ ] M1 CSV válidos e bem-formados
+- [ ] Nenhuma média de famílias heterogêneas
+- [ ] `unavailable_not_measured` declarado onde apropriado
+- [ ] Notebook `verify_m1.ipynb` executa end-to-end sem erros
+- [ ] Notebook valida tipos, ranges, distribuições
+- [ ] Notebook compara resumos com v8 (médias, medianas, std)
+- [ ] Segunda execução sem `--force` reutiliza (checksum match)
+- [ ] Cobertura T1/T2/T3 documentada; sem lacunas inesperadas
+- [ ] Pelo menos 2–3 equipe-semestrais validadas manualmente
+
+#### Limitações Conhecidas
+- Alguns respondentes podem ter pulado questões (registrar como ausência)
+- Não agregar percepções heterogêneas (falhar se scripts tentarem)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 2.2
+
+---
+
+### Tarefa 2.2 - Implementar e Validar M2 (Percepção de Risco por Papel)
+
+**Dependências:** 2.1 ✓  
+**Estimativa:** 2–3 horas  
+**Métrica RQ:** RQ1  
+
+#### Objetivo
+Preservar itens Likert por papel de projeto e escala, tratando resultados como perceção de papel (complementa M1), não como evidência de uso real de ferramentas.
+
+#### Entrada (Input)
+- Survey responses (data/processed/surveys/) com role attribution
+- Input inventory e validação de chaves (Tarefa 1.2)
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m2_role_perception.py`
+2. Extrair percepção de risco/disrupção por papel (developer, architect, QA, etc.)
+3. Preservar estrutura de respostas, sem agregar papéis em índice único
+4. Reportar distribuições por papel, resumos por corte/semestre, pareamento T1–T3 quando observado
+5. Criar manifesto com cobertura por papel
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m2_role_perception_distributions.csv`
+- `paper_v9/data/metrics/m2_role_perception_by_team_semester.csv`
+- `paper_v9/data/metrics/m2_role_perception.metadata.json`
+- `paper_v9/scripts/metrics/m2_role_perception.py` (testado)
+
+#### Validação
+- [ ] Papéis mantidos separados (não agregados)
+- [ ] Pareamento real de respondentes documentado
+- [ ] Cobertura por papel-semestre clara
+- [ ] Segunda execução sem `--force` reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Fase 3 (M3–M5)
+
+---
+
+## Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
+
+Objetivo: Implementar métricas que contrastam densidade temporal de atividade de repositório com tipificação qualitativa de fricção de coordenação humana ao longo do ciclo de vida do projeto.
+
+### Tarefa 3.1 - Implementar e Validar M3 (Dinâmica de Autoria e Atividade)
+
+**Dependências:** 1.2 ✓  
+**Estimativa:** 3–4 horas  
+**Métrica RQ:** RQ2  
+
+#### Objetivo
+Capturar dinâmica de autoria e atividade usando parent mirrors read-only, data de committer e último voto de avaliador como âncora.
+
+#### Entrada (Input)
+- Git parent mirrors (data/raw/repos_parent_cache/) — read-only
+- Avaliações (data/processed/evaluations/) para T3 anchor
+- Input inventory (Tarefa 1.2)
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m3_author_activity_dynamics.py`
+2. M3a: participação de commits na fase final (T2–T3)
+3. M3b: concentração final de autoria (Herfindahl-Hirschman ou similar)
+4. M3c: dinâmica/rolling de autoria e atividade em janela de 7 dias
+5. Manter autoria, concentração e volume como construtos separados
+6. Usar T3 evaluator vote como âncora temporal
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m3_author_activity_participation.csv`
+- `paper_v9/data/metrics/m3_author_concentration.csv`
+- `paper_v9/data/metrics/m3_activity_rolling_7day.csv`
+- `paper_v9/data/metrics/m3_author_activity_dynamics.metadata.json`
+- `paper_v9/scripts/metrics/m3_author_activity_dynamics.py` (testado)
+
+#### Validação
+- [ ] Autoria, concentração e volume tratados como construtos separados
+- [ ] Janelas de 7 dias alinhadas corretamente
+- [ ] Todas as 14 equipe-semestrais cobertas
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 3.2
+
+---
+
+### Tarefa 3.2 - Implementar e Validar M4 (Mudança Limpa e Trajetória Temporal)
+
+**Dependências:** 1.2 ✓ (especialmente validação code-churn-metrics-v2)  
+**Estimativa:** 4–5 horas  
+**Métrica RQ:** RQ2  
+
+#### Objetivo
+Medir magnitude e trajetória de mudança "limpa" (conforme política central de artefatos) usando análise de proveniência de caminho, separando desenvolvimento adiado de retrabalho destrutivo.
+
+#### Entrada (Input)
+- Git parent mirrors (data/raw/repos_parent_cache/)
+- Policy `code-churn-metrics-v2` e `cc-v2-clean-paths` (validação em 1.2)
+- T3 anchor points (data/processed/evaluations/)
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m4_clean_change_dynamics.py`
+2. M4a: magnitude de churn source/test limpo (LOC)
+3. M4b: intensidade por commit tocante e amplitude de caminhos limpos
+4. M4c: composição de artefatos e filas de review de desconhecidos
+5. M4d: janela diária retrospectiva de 7 dias, alinhada a T3, para churn limpo e caminhos únicos
+6. **Não usar contagem de commits como resultado principal**; pertence a M3
+7. Usar atomic writes + resume por hash
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m4_churn_magnitude.csv`
+- `paper_v9/data/metrics/m4_commit_intensity.csv`
+- `paper_v9/data/metrics/m4_artifact_composition.csv`
+- `paper_v9/data/metrics/m4_rolling_7day_trajectory.csv`
+- `paper_v9/data/metrics/m4_clean_change_dynamics.metadata.json`
+- `paper_v9/scripts/metrics/m4_clean_change_dynamics.py` (testado)
+
+#### Validação
+- [ ] M4 usa política de artefatos v2; rejeita v1
+- [ ] Churn medido em LOC (não contagem de commits)
+- [ ] Janelas de 7 dias alinhadas a T3 ± dias
+- [ ] Todas as 14 equipe-semestrais cobertas
+- [ ] Atomic writes: `.partial` → rename
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 3.3
+
+---
+
+### Tarefa 3.3 - Implementar e Validar M5 (Evidência Textual de Fricção)
+
+**Dependências:** 1.2 ✓  
+**Estimativa:** 3–4 horas  
+**Métrica RQ:** RQ2  
+**Nota:** Neste moment apenas processamento de corpus, sem LLM novo. LLM futuro será extensão opcional.
+
+#### Objetivo
+Reconstruir corpus global por marco a partir de chunks técnicos, medir densidade de marcadores de fricção, sem LLM novo por enquanto.
+
+#### Entrada (Input)
+- Transcripts (data/processed/transcripts/) por sessão e semestre
+- Segmentação técnica (chunks) de v8 ou documento de análise v8
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m5_coordination_evidence.py`
+2. M5a: densidade de marcadores por mil tokens (fricção, bloqueio, retrabalho, etc.)
+3. M5b: composição por alinhamento/repasse/integração/bloqueio/retrabalho
+4. M5c: cobertura de corpus, sessões de origem, chunks técnicos
+5. Versionar léxico de marcadores
+6. Expor fila auditável de trechos para revisão humana
+7. **Proibir correlação com medidas equipe-semestral quando grãos forem incompatíveis** (corpus global ≠ equipe-semestre)
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m5_marker_density.csv`
+- `paper_v9/data/metrics/m5_marker_composition.csv`
+- `paper_v9/data/metrics/m5_corpus_coverage.csv`
+- `paper_v9/data/metrics/m5_evidence_audit_trail.csv` (trechos exemplo para revisão)
+- `paper_v9/data/metrics/m5_lexicon.json` (versão do léxico)
+- `paper_v9/data/metrics/m5_coordination_evidence.metadata.json`
+- `paper_v9/scripts/metrics/m5_coordination_evidence.py` (testado)
+
+#### Validação
+- [ ] Léxico versionado e documentado
+- [ ] Fila auditável de trechos acessível
+- [ ] Nenhuma correlação implícita com M3/M4
+- [ ] Cobertura de corpus clara (qual % de sessões, qual % de tokens)
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Fase 4 (M6–M9)
+
+---
+
+## Fase 4: RQ3 - Planejamento, Retrabalho e Associações
+
+Objetivo: Implementar métricas que testam se qualidade de artefatos de planejamento no início (T1) associa-se com retrabalho destrutivo tardio e desfechos independentes do projeto.
+
+### Tarefa 4.1 - Implementar e Validar M6a (Planejamento Estrutural)
+
+**Dependências:** 1.2 ✓  
+**Estimativa:** 2–3 horas  
+**Métrica RQ:** RQ3  
+
+#### Objetivo
+Quantificar presença, contagem e escopo de artefatos de planejamento T1 por regra determinística.
+
+#### Entrada (Input)
+- T1 artifacts (data/lake/ ou data/processed/) — commits, docs, designs
+- Regra de decisão de v8 (paper_v8/METRICS_PLAN.md)
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m6_structural_planning.py`
+2. M6a: detectar presença/contagem/escopo de artefatos T1 (determinístico, sem LLM)
+3. Usar regra de v8 como baseline
+4. Criar manifesto com cobertura
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m6a_structural_planning.csv`
+- `paper_v9/data/metrics/m6_structural_planning.metadata.json`
+- `paper_v9/scripts/metrics/m6_structural_planning.py` (testado)
+
+#### Validação
+- [ ] M6a CSV bem-formado (team_semester, has_planning, artifact_count, scope_score, etc.)
+- [ ] Todas as 14 equipe-semestrais com scores
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 4.2
+
+---
+
+### Tarefa 4.2 - Apresentar Protocolo, Prompt, Custo e Amostra de M6b (Análise LLM de Planejamento)
+
+**Dependências:** 4.1 ✓  
+**Estimativa:** 2–3 horas  
+**Métrica RQ:** RQ3  
+
+#### Objetivo
+**Não executar M6b neste momento.** Apenas apresentar e ganhar aprovação explícita para:
+- Protocolo de extração LLM estruturada
+- Prompt exato e validação de JSON
+- Estimativa de custo (tokens, $)
+- Amostra piloto de 2–3 team-semesters com exemplos
+
+#### Entrada (Input)
+- T1 planning artifacts (amostra)
+- Modelo LLM (p. ex., GPT-4, Llama 2, etc.)
+- Budget constraints (se houver)
+
+#### Escopo
+1. Criar documento `paper_v9/M6B_LLM_PROTOCOL.md` com:
+   - Objetivo de M6b (extrair goals, architecture, task decomposition, risk/dependency)
+   - Prompt exato (incluindo contexto, exemplos, instruções de validação)
+   - Schema JSON esperado (fields obrigatórios, types, validações)
+   - Tratamento de `insufficient_evidence`
+2. Rodar piloto em 2–3 team-semesters (amostra estratificada)
+3. Gerar `paper_v9/M6B_PILOT_RESULTS.json` com payloads, respostas, tokens consumidos
+4. Estimar custo total para 14 team-semesters
+5. Documentar cache strategy (se aplicável)
+
+#### Saída (Output)
+- `paper_v9/M6B_LLM_PROTOCOL.md` (~2–3 KB, detalhado)
+- `paper_v9/M6B_PILOT_RESULTS.json` (exemplos de 2–3 team-semesters)
+- `paper_v9/M6B_COST_ESTIMATE.txt` (tokens, custo estimado, duração)
+- Recomendação: "Aprovado para execução?" Sim/Não
+
+#### Validação (Manual)
+- [ ] Prompt é claro e não ambíguo
+- [ ] JSON schema válido
+- [ ] Amostra piloto gera respostas estruturadas
+- [ ] Validação de resposta passaria em 100% da amostra
+- [ ] Custo estimado aceito
+
+#### Gate
+**Status ao completar:** Aguardar aprovação manual de protocolo antes de Tarefa 4.3
+
+---
+
+### Tarefa 4.3 - Executar M6b (Análise LLM de Planejamento) — Somente Após Aprovação de 4.2
+
+**Dependências:** 4.2 ✓ (aprovação explícita)  
+**Estimativa:** 2–4 horas (incluindo cache, retries)  
+**Métrica RQ:** RQ3  
+
+#### Objetivo
+Executar extração estruturada LLM em todas as 14 equipe-semestrais, persistindo payloads/respostas/cache. Criar amostra para revisão humana antes de permitir em texto principal.
+
+#### Entrada (Input)
+- Protocolo aprovado (M6B_LLM_PROTOCOL.md)
+- T1 planning artifacts (todos os 14 team-semesters)
+- Budget aprovado
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m6_llm_planning_content.py`
+2. Executar prompt LLM em todos os 14 team-semesters
+3. Persistir: payload (input), resposta bruta (output), cache key, modelo/temperatura/versão
+4. Validar JSON resposta conforme schema
+5. Tratar `insufficient_evidence` explicitamente
+6. Gerar `paper_v9/data/metrics/m6b_llm_planning_content.json` (todos os resultados)
+7. Estratificar amostra para revisão humana (top 3, bottom 3, middle 2)
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m6b_llm_planning_content.json` (todas as 14 respostas + metadados)
+- `paper_v9/data/metrics/m6b_llm_planning_sample_for_review.md` (amostra de 8 team-semesters com notas)
+- `paper_v9/data/metrics/m6_llm_planning_content.metadata.json` (cache keys, custos realizados, versão modelo)
+- `paper_v9/scripts/metrics/m6_llm_planning_content.py` (testado, com cache)
+
+#### Validação (técnica)
+- [ ] Todas as 14 respostas são JSON válido
+- [ ] Todos os fields obrigatórios presentes
+- [ ] `insufficient_evidence` declarado onde apropriado
+- [ ] Payloads versionados (permitir reproducibilidade)
+- [ ] Cache funcionando (rerun não gasta tokens)
+- [ ] Amostra de 8 extraída corretamente
+
+#### Gate
+**Status ao completar:** Aguardar aprovação manual de qualidade da amostra antes de usar M6b em texto
+
+---
+
+### Tarefa 4.4 - Implementar e Validar M7 (Dinâmica de Inatividade de Repositório)
+
+**Dependências:** 1.2 ✓  
+**Estimativa:** 2–3 horas  
+**Métrica RQ:** RQ3  
+
+#### Objetivo
+Capturar trajetória de inatividade de repositório, usando janelas retrospectivas de 7 dias ancoradas em T3.
+
+#### Entrada (Input)
+- Git parent mirrors (data/raw/repos_parent_cache/)
+- T3 anchor points (data/processed/evaluations/)
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m7_repository_inactivity.py`
+2. M7a: trajetória diária de inatividade em janelas de 7 dias, -63 a +7 dias de T3
+3. M7b: padrão por checkpoints (nunca inativa, apenas T1, intermitente)
+4. M7c: cobertura de avaliação T1 entre equipes inativas
+5. Rótulo exato: `repository_inactivity` (não `planning_omission`)
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m7_inactivity_trajectory.csv`
+- `paper_v9/data/metrics/m7_inactivity_pattern.csv`
+- `paper_v9/data/metrics/m7_repository_inactivity.metadata.json`
+- `paper_v9/scripts/metrics/m7_repository_inactivity.py` (testado)
+
+#### Validação
+- [ ] Trajetórias de 70 dias (−63 a +7)  cobertas
+- [ ] Rótulo `repository_inactivity` usado
+- [ ] Padrões por checkpoint claros
+- [ ] Cobertura T1 documentada
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 4.5
+
+---
+
+### Tarefa 4.5 - Implementar e Validar M8 (Retrabalho Limpo com Baseline)
+
+**Dependências:** 1.2 ✓ (validação code-churn-metrics-v2), 3.2 ✓ (M4 fornece política)  
+**Estimativa:** 4–5 horas  
+**Métrica RQ:** RQ3  
+
+#### Objetivo
+Medir magnitude de retrabalho limpo em caminhos com baseline T1/T2, condicionado à proveniência de caminho e elegibilidade de baseline.
+
+#### Entrada (Input)
+- Git parent mirrors (data/raw/repos_parent_cache/)
+- Política `code-churn-metrics-v2` (M4)
+- T1/T2 baseline (git snapshots em checkpoints)
+- T3 anchor points
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m8_clean_rework.py`
+2. M8a: magnitude de retrabalho limpo em caminhos com baseline T1/T2 (LOC)
+3. M8b: participação de retrabalho limpo no churn T3 (razão, somente if baseline + churn > 0)
+4. M8c: trajetória diária de retrabalho limpo em janelas de 7 dias, -21 a +7 dias de T3
+5. M8d: número de caminhos limpos pré-existentes e elegibilidade de baseline
+6. **Sempre reportar:** zeros, cobertura, mediana, total, máximo, participação do máximo
+7. Não chamar proveniência de caminho de "defeito" sem validação semântica
+8. Usar mesma política de M4
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m8_rework_magnitude.csv`
+- `paper_v9/data/metrics/m8_rework_participation.csv`
+- `paper_v9/data/metrics/m8_rework_trajectory.csv`
+- `paper_v9/data/metrics/m8_baseline_eligibility.csv`
+- `paper_v9/data/metrics/m8_clean_rework.metadata.json`
+- `paper_v9/scripts/metrics/m8_clean_rework.py` (testado)
+
+#### Validação
+- [ ] M8 usa mesma política de artefatos de M4
+- [ ] Zeros, mediana, máximo reportados explicitamente
+- [ ] Razão M8b somente para baseline elegível + churn > 0
+- [ ] Trajetórias de 28 dias (−21 a +7) cobertas
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 4.6
+
+---
+
+### Tarefa 4.6 - Implementar e Validar M9 (Associações Estratificadas)
+
+**Dependências:** 4.1 ✓ (M6a), 4.3+ (M6b somente se aprovado), 4.5 ✓ (M8), independentes de outcomes T3  
+**Estimativa:** 3–4 horas  
+**Métrica RQ:** RQ3  
+
+#### Objetivo
+Calcular associações descritivas entre planning (M6a/M6b) e rework/outcomes (M8a/M8b), com estratificação, cobertura clara, e intervalos leave-one-out.
+
+#### Entrada (Input)
+- M6a (Tarefa 4.1)
+- M6b se aprovado (Tarefa 4.3); se não, só M6a
+- M8a, M8b (Tarefa 4.5)
+- Outcomes T3 independentes (avaliador blind-scored)
+
+#### Escopo
+1. Criar `paper_v9/scripts/metrics/m9_structured_associations.py`
+2. M9a: M6a vs. M8a em todas as 14 equipe-semestrais (Spearman descritivo)
+3. M9b: M6a vs. M8b somente no estrato elegível para razão retrabalho
+4. M9c: M6a vs. outcomes independentes T3 dos avaliadores
+5. M9d: M6b vs. outcomes somente após aprovação humana de M6b (condicional)
+6. Produzir Spearman descritivo (ρ, p-value), tabela cobertura/estratos, intervalo leave-one-out
+7. **Não imputar nota 1 para ausência de Git**
+8. **Não usar M7 como preditor independente**
+9. Declarar denominador, estrato, ausências, influência de casos extremos
+
+#### Saída (Output)
+- `paper_v9/data/metrics/m9_planning_vs_rework_m6a_m8a.csv` (todos os 14 team-semesters, Spearman)
+- `paper_v9/data/metrics/m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv` (subset elegível)
+- `paper_v9/data/metrics/m9_planning_vs_outcomes_m6a_t3.csv` (outcomes blind-scored)
+- `paper_v9/data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv` (condicional a 4.3)
+- `paper_v9/data/metrics/m9_leave_one_out_intervals.csv` (jacknife para sensibilidade)
+- `paper_v9/data/metrics/m9_structured_associations.metadata.json`
+- `paper_v9/scripts/metrics/m9_structured_associations.py` (testado)
+
+#### Validação
+- [ ] Todos os numeradores/denominadores declarados
+- [ ] Estratificação clara (qual subset, por quê)
+- [ ] Leave-one-out intervalos razoáveis (não invertidos)
+- [ ] M7 não aparece como preditor
+- [ ] Ausências e casos extremos documentados
+- [ ] Segunda execução reutiliza (checksum match)
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Fase 5 (Resultados e Visualizações)
+
+---
+
+## Fase 5: Resultados e Visualizações
+
+Objetivo: Consolidar artefatos M1–M9 em catálogo de resultados rastreável, gerar candidatos de visualização, e aprovar tabelas/figuras finais antes de LaTeX.
+
+### Tarefa 5.1 - Gerar Catálogo de Artefatos de Resultados
+
+**Dependências:** Todas as tarefas de métricas (2.1, 2.2, 3.1, 3.2, 3.3, 4.1, 4.5, 4.6) ✓; 4.3 se aprovado  
+**Estimativa:** 2–3 horas  
+**Prioridade:** ALTA
+
+#### Objetivo
+Consolidar M1–M9 em JSON único `results_summary.json` com números aprovados para LaTeX. Falhar se referências apontarem para artefatos/metadados ausentes.
+
+#### Entrada (Input)
+- Todos os CSVs e metadados de M1–M9 (paper_v9/data/metrics/)
+- Manifesto de entrada (Tarefa 1.2)
+
+#### Escopo
+1. Criar `paper_v9/scripts/results/build_results_summary.py`
+2. Consolidar números-chave de M1–M9 em único JSON
+3. Validar referências (todos os CSVs existem, checksums conferem)
+4. Falhar graciosamente com mensagens claras se dados faltam
+5. Gerar `paper_v9/data/results/results_summary.json`
+
+#### Saída (Output)
+- `paper_v9/data/results/results_summary.json` (~5–10 KB, validado)
+- `paper_v9/scripts/results/build_results_summary.py` (testado)
+- Relatório de validação (`paper_v9/RESULTS_VALIDATION.txt`)
+
+#### Validação
+- [ ] JSON bem-formado e completo
+- [ ] Todas as referências resolvidas
+- [ ] Segunda execução produce JSON idêntico
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Tarefa 5.2
+
+---
+
+### Tarefa 5.2 - Gerar Candidatos de Visualização e Realizar Oficina de Escolha
+
+**Dependências:** 5.1 ✓  
+**Estimativa:** 3–4 horas (depende de iteração com usuário)  
+**Prioridade:** ALTA
+
+#### Objetivo
+Gerar 4–5 candidatos de visualização (tabelas + figuras), com dados subjacentes e trade-offs, para aprovação humana antes de entrar em LaTeX.
+
+#### Entrada (Input)
+- `results_summary.json` (Tarefa 5.1)
+- Dados M1–M9 completos
+
+#### Escopo
+1. Criar `paper_v9/scripts/results/generate_figure_candidates.py`
+2. Candidato RQ1: painel pequeno M1 (indicadores separados) + ranking M2
+3. Candidato RQ2: painel temporal M3/M4d/M5 (eixos explícitos, sem correlação implícita)
+4. Candidato RQ3: perfil equipe-semestral (M6a/M8a/M8b/elegibilidade + M8c trajetória)
+5. Candidato RQ3: intervalos leave-one-out M9 (qual formato: gráfico forest-plot ou tabela?)
+6. Gerar CSVs de dados subjacentes (um per figura)
+7. Documentar trade-offs: clareza vs. densidade, evidência vs. impacto visual
+
+#### Saída (Output)
+- `paper_v9/figures/candidates_rq1_perception_panel.pdf` + `_data.csv`
+- `paper_v9/figures/candidates_rq2_temporal_dynamics.pdf` + `_data.csv`
+- `paper_v9/figures/candidates_rq3_planning_rework_profile.pdf` + `_data.csv`
+- `paper_v9/figures/candidates_rq3_associations_leave_one_out.pdf` + `_data.csv`
+- `paper_v9/FIGURES_CANDIDATES_WORKSHOP.md` (3–5 KB, descrição de cada candidato + trade-offs)
+- `paper_v9/scripts/results/generate_figure_candidates.py` (testado)
+
+#### Validação (Manual)
+- [ ] Cada candidato tem CSV de dados
+- [ ] Cada candidato documenta seu propósito e limitações
+- [ ] Trade-offs são claros e justificados
+- [ ] Nenhuma figura entra em LaTeX antes de aprovação explícita
+
+#### Gate
+**Status ao completar:** Aguardar aprovação manual de figuras antes de Tarefa 6.1
+
+---
+
+## Fase 6: Preparação LaTeX
+
+Objetivo: Criar esqueleto LaTeX modular que aceita figuras aprovadas e numeração rastreável.
+
+### Tarefa 6.1 - Criar Esqueleto LaTeX Modular Compilável
+
+**Dependências:** 0.1 ✓ (ambiente LaTeX), 5.2 ✓ (figuras aprovadas)  
+**Estimativa:** 2–3 horas  
+**Prioridade:** ALTA
+
+#### Objetivo
+Estabelecer estrutura LaTeX modular onde cada seção é arquivo separado, figuras estão em `paper_v9/figures/`, e numeração é rastreável via manifesto.
+
+#### Entrada (Input)
+- `paper_v8/latex_code/main.tex` (baseline v8, read-only)
+- Figuras aprovadas de 5.2
+- REPRODUCIBILITY.md (ambiente LaTeX validado)
+
+#### Escopo
+1. Criar `paper_v9/latex/main.tex` (preâmbulo, título, autores, `\input` de seções)
+2. Criar 8 arquivos de seção em `paper_v9/latex/sections/`:
+   - abstract.tex
+   - introduction.tex
+   - background_related_work.tex
+   - methodology.tex
+   - results.tex
+   - discussion.tex
+   - threats_to_validity.tex
+   - conclusion.tex
+3. Copiar `references.bib` de v8 (ler-only até revisão)
+4. Criar `paper_v9/latex/tables/` para tabelas (se houver)
+5. Linkar figuras: `../figures/` (caminhos relativos)
+6. Adicionar comentários invisíveis de proveniência: `% M1 data: paper_v9/data/metrics/m1_*.csv`
+7. Compilar e verificar estrutura (sem conteúdo ainda)
+
+#### Saída (Output)
+- `paper_v9/latex/main.tex` (~50 linhas, structure only)
+- `paper_v9/latex/sections/abstract.tex` (placeholder)
+- `paper_v9/latex/sections/introduction.tex` (placeholder)
+- `paper_v9/latex/sections/background_related_work.tex` (placeholder)
+- `paper_v9/latex/sections/methodology.tex` (placeholder)
+- `paper_v9/latex/sections/results.tex` (placeholder)
+- `paper_v9/latex/sections/discussion.tex` (placeholder)
+- `paper_v9/latex/sections/threats_to_validity.tex` (placeholder)
+- `paper_v9/latex/sections/conclusion.tex` (placeholder)
+- `paper_v9/latex/references.bib` (copied from v8)
+- `paper_v9/latex/build/main.pdf` (esqueleto compilável, sem conteúdo)
+
+#### Validação
+- [ ] `pdflatex main.tex` compila sem erros (placeholders OK)
+- [ ] PDF gera com estrutura (TOC, section numbers)
+- [ ] Caminhos de figuras relativos (não absolutos)
+- [ ] Comentários de proveniência invisíveis no PDF
+
+#### Gate
+**Status ao completar:** ✓ APROVADO para Fase 7 (Revisão Editorial)
+
+---
+
+## Fase 7: Revisão Editorial (Ordem Obrigatória)
+
+Objetivo: Reescrever cada seção em ordem fixada (Methodology → Results → Discussion → Threats → Conclusion → Abstract → Introduction → Background), com aprovação manual entre cada uma.
+
+**Orientação Geral para Fase 7:**
+- Uma seção só avança quando a seção anterior for aprovada
+- Toda afirmação quantitativa deve ter referência em `results_summary.json`
+- Remover afirmações v8 que não sejam sustentadas por dados v9
+- Idioma: English técnico internacional; nenhum jargão de pipeline
+
+---
 
 ### Fase 2 - RQ1: M1 e M2
 
