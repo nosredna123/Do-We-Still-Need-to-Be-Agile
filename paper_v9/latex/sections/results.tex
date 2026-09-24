@@ -4,7 +4,7 @@ validated V9 metric artifacts. Results are organized by research question and
 retain the analytical grain of each metric; no claim combines incompatible
 grains or treats self-reported evidence as behavioral telemetry.
 
-\subsection{RQ1: Generative-AI adoption and role-perception trajectory}
+\subsection{RQ1: How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?}
 
 RQ1 is supported by two distinct evidence streams: the M1 survey panel,
 which summarizes six perception families and separately reports self-reported
@@ -147,3 +147,123 @@ population-level estimates.
 % paper_v9/verification_notebooks/verify_m2.ipynb. The paired analysis uses
 % hashed anonymized respondent identifiers and is approved only as a
 % privacy-preserving descriptive sensitivity analysis.
+
+\subsection{RQ2: How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?}
+
+RQ2 contrasts three descriptive evidence streams that operate at different
+grains. M3 measures repository activity timing, author participation, and
+concentration for 14 team-semesters. M4 measures clean source/test change at
+team-semester and checkpoint grain. M5 counts candidate coordination markers
+within a global transcript corpus by checkpoint. The measures are therefore
+reported side by side as complementary descriptions, not as a common-scale
+effect or a statistical correlation.
+% PROVENANCE: RQ2 coverage and grains are declared in
+% paper_v9/data/metrics/m3_author_activity_dynamics.metadata.json,
+% m4_clean_change_dynamics.metadata.json, and
+% m5_coordination_evidence.metadata.json.
+
+M3 shows a pronounced concentration of repository activity around the final
+evaluator anchor. In the semester-pooled rolling view, total commits increase
+from $95$ at 21 days before the anchor to $159$ one day before, peak at $302$
+one day after, and fall to $28$ at seven days after. At the anchor itself,
+all 14 team-semesters have observed activity; at $-7$ days, only 5 of 14 are
+active, and at $+7$ days, 7 of 14 remain active. The corresponding median
+commit count per team-semester is $12.5$ at the anchor and $0.5$ at $+7$ days.
+These rolling windows overlap, so adjacent points are temporal summaries rather
+than independent observations.
+Figure~\ref{fig:rq2-m3} visualizes this pooled temporal shape; the dashed line
+marks the final evaluator anchor.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{../figures/rq2_m3_activity_pooled.png}
+\caption{M3 pooled rolling repository activity. The vertical marker identifies
+the $T_3$ evaluator anchor; the annotation identifies the pooled peak.}
+\label{fig:rq2-m3}
+\end{figure*}
+% PROVENANCE: Values are from
+% paper_v9/data/metrics/m3_activity_rolling_7day_pooled.csv. The M3
+% verification notebook is paper_v9/verification_notebooks/verify_m3.ipynb.
+
+The checkpoint participation view shows the same concentration with substantial
+heterogeneity. Across the 14 team-semesters, 7 have any post-checkpoint
+activity. The final-window share of all commits ranges from $9.5\%$ to
+$100.0\%$; three team-semesters have fewer than ten total commits, and their
+shares should be treated as small-denominator descriptions. In the author
+concentration output, the median pre-anchor window contains 12.5 commits,
+3.5 active days, and 3 authors, with a median maximum-author share of $0.50$
+and median Gini coefficient of $0.22$. Post-anchor windows are frequently
+inactive; where activity exists, concentration statistics are not interpreted
+for no-activity cases.
+% PROVENANCE: Checkpoint and author summaries are from
+% paper_v9/data/metrics/m3_author_activity_participation.csv and
+% m3_author_concentration.csv. No author identity is exposed in these outputs.
+
+M4 reproduces the temporal increase using a narrower clean-change definition.
+Pooled clean churn rises from $21{,}718$ lines across 7 observed team-semesters
+at $T_1$, to $47{,}545$ lines across 10 at $T_2$, and $136{,}325$ lines across
+all 14 at $T_3$. The median clean churn per team-semester rises from $66.5$
+lines at $T_1$ to $3{,}232.5$ at $T_2$ and $6{,}975.5$ at $T_3$. Clean change
+accounts for $42.9\%$, $19.6\%$, and $1.0\%$ of all recorded churn at the
+three checkpoints, respectively, because excluded or non-measurement paths
+dominate the raw line-change total in the final checkpoint. This distinction is
+why M4 is not interchangeable with total repository activity.
+% PROVENANCE: M4 pooled endpoint values are from
+% paper_v9/data/metrics/m4_churn_magnitude_pooled.csv and
+% m4_artifact_composition_pooled.csv. The clean-path definition and its
+% limitation are declared in m4_clean_change_dynamics.metadata.json.
+
+M5 provides a separate textual axis for the 2025.2 transcript corpus. The
+corpus contains 35, 37, and 28 transcript chunks at $T_1$, $T_2$, and $T_3$,
+respectively, with two source sessions at each checkpoint. Candidate marker
+density increases from $0.515$ to $1.132$ and $1.287$ markers per 1,000
+transcript tokens. Marker counts are 12, 54, and 40, over 23,296, 47,705,
+and 31,087 tokens. The composition also changes: integration markers account
+for 20 of 54 markers at $T_2$, while blockers account for 7 of 40 at $T_3$.
+These are deterministic lexical matches in a global corpus, not diagnoses of
+coordination failure; transcript coverage is unavailable for 2026.1.
+% PROVENANCE: M5 density, composition, coverage, lexicon, and audit rows are
+% from paper_v9/data/metrics/m5_marker_density.csv,
+% m5_marker_composition.csv, m5_corpus_coverage.csv,
+% m5_lexicon.json, and m5_evidence_audit_trail.csv. No new LLM calls are
+% required by M5.
+
+Table~\ref{tab:rq2-summary} consolidates the principal RQ2 values while
+retaining their distinct units and analytical grains. Figure~\ref{fig:rq2-m4-m5}
+shows the M4 and M5 checkpoint trajectories in separate panels.
+
+\begin{table*}[t]
+\caption{RQ2 Temporal Summary with Explicit Units}
+\label{tab:rq2-summary}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Unit / grain} & \textbf{$T_1$ or $-7$} & \textbf{$T_2$ or $-1$} & \textbf{$T_3$ or $0$} & \textbf{Post-anchor} & \textbf{Coverage} \\
+\midrule
+M3 activity & Pooled commits / rolling window & 52 ($-7$) & 159 ($-1$) & 294 ($0$) & 302 ($+1$); 28 ($+7$) & 14 team-semesters \\
+M4 clean change & Clean churn lines / checkpoint & 21,718 & 47,545 & 136,325 & -- & 7 / 10 / 14 observed \\
+M5 lexical evidence & Markers per 1,000 tokens / global corpus & 0.515 & 1.132 & 1.287 & -- & 2025.2 only \\
+\bottomrule
+\end{tabular}
+\end{table*}
+% PROVENANCE: Table~\ref{tab:rq2-summary} is transcribed from
+% paper_v9/data/metrics/m3_activity_rolling_7day_pooled.csv,
+% m4_churn_magnitude_pooled.csv, and m5_marker_density.csv.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{../figures/rq2_m4_m5_checkpoint_panels.png}
+\caption{RQ2 checkpoint summaries with explicit units. M4 clean source/test
+churn and M5 lexical marker density use separate panels and scales.}
+\label{fig:rq2-m4-m5}
+\end{figure*}
+
+Taken together, M3 and M4 show that repository-visible activity and clean
+source/test change become most concentrated near the final checkpoint, while
+M5 shows an increase in candidate coordination-language density across the
+observed 2025.2 transcript corpus. The three patterns are compatible with the
+RQ2 descriptive contrast, but they do not establish that repository activity
+causes coordination friction, that lexical markers measure friction without
+error, or that the 2025.2 transcript trajectory generalizes to 2026.1.

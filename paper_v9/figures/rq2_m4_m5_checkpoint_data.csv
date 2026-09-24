@@ -1,0 +1,4 @@
+temporal_marker,team_semester_n,observed_clean_team_semester_n,total_clean_churn,median_clean_churn,total_all_churn,median_clean_unique_file_n,clean_share_of_all_churn,aggregation_grain
+T1,14,7,21718.0,66.5,50614.0,0.5,0.4290907654008772,temporal_marker_across_semesters
+T2,14,10,47545.0,3232.5,242399.0,31.0,0.196143548446982,temporal_marker_across_semesters
+T3,14,14,136325.0,6975.5,13502131.0,83.0,0.0100965543883406,temporal_marker_across_semesters

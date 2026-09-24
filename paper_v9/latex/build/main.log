@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 19:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 19:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -471,89 +471,133 @@ Underfull \vbox (badness 1087) has occurred while \output is active []
 Underfull \vbox (badness 1087) has occurred while \output is active []
 
  [2]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 156.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 156.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 156.
+
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
 61.
-
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [3]
-Underfull \hbox (badness 2103) in paragraph at lines 192--192
+)
+Underfull \hbox (badness 3078) in paragraph at lines 156--163
+ \OT1/ptm/m/it/10 3) RQ3: How does the qual-ity of up-front ar-chi-tec-
+ []
+
+
+Underfull \hbox (badness 1838) in paragraph at lines 156--163
+\OT1/ptm/m/it/10 project out-comes?: [][][] \OT1/ptm/b/n/10 M6 -- Up-front ar-c
+hi-tec-tural ar-ti-
+ []
+
+
+Underfull \hbox (badness 1629) in paragraph at lines 156--163
+\OT1/ptm/m/n/10 categories---goals, ar-chi-tec-ture/design, task de-com-po-si-t
+ion,
+ []
+
+[3]
+Underfull \hbox (badness 2103) in paragraph at lines 195--195
 []|\OT1/ptm/b/n/9 Metric fam-ily and com-po-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 194--194
+Underfull \hbox (badness 10000) in paragraph at lines 197--197
 []|\OT1/ptm/m/n/9 Perception panel and self-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 197--197
+Underfull \hbox (badness 10000) in paragraph at lines 200--200
 []|\OT1/ptm/m/n/9 Clean mag-ni-tude, in-ten-sity,
  []
 
 
-Overfull \hbox (22.24588pt too wide) in paragraph at lines 197--198
+Overfull \hbox (22.24588pt too wide) in paragraph at lines 200--201
 \OT1/ptm/m/n/9 semester/checkpoint/window|  
  []
 
 
-Overfull \hbox (1.85385pt too wide) in paragraph at lines 230--230
+Underfull \hbox (badness 2582) in paragraph at lines 202--202
+[]|\OT1/ptm/m/n/9 Upfront ar-chi-tec-tural ar-ti-facts
+ []
+
+
+Overfull \hbox (1.85385pt too wide) in paragraph at lines 233--233
 []|\OT1/ptm/b/n/9 Feeds| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--232
+Underfull \hbox (badness 10000) in paragraph at lines 235--235
 []|\OT1/ptm/m/n/9 Planning
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--232
+Underfull \hbox (badness 10000) in paragraph at lines 235--235
 \OT1/ptm/m/n/9 ev-i-dence
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--233
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 []|\OT1/ptm/m/n/9 Goals, ar-chi-tec-ture/design,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--233
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 \OT1/ptm/m/n/9 task de-com-po-si-tion,
  []
 
 
-Underfull \hbox (badness 5316) in paragraph at lines 232--233
+Underfull \hbox (badness 5316) in paragraph at lines 235--236
 \OT1/ptm/m/n/9 risk/dependency, and lit-eral
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 232--233
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 \OT1/ptm/m/n/9 ev-i-dence quotes from $\OML/cmm/m/it/9 T[]$
  []
 
 ) (./sections/results.tex
-<../figures/rq1_m1_perception_with_sd.png, id=108, 1806.75pt x 1043.9pt>
+<../figures/rq1_m1_perception_with_sd.png, id=112, 1806.75pt x 1043.9pt>
 File: ../figures/rq1_m1_perception_with_sd.png Graphic file (type png)
 <use ../figures/rq1_m1_perception_with_sd.png>
 Package pdftex.def Info: ../figures/rq1_m1_perception_with_sd.png  used on inpu
 t line 45.
 (pdftex.def)             Requested size: 516.0pt x 298.1358pt.
  [4]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 Underfull \vbox (badness 1953) has occurred while \output is active []
 
-<../figures/rq1_m2_role_perception_heatmap.png, id=122, 1806.75pt x 863.225pt>
+ [5 <../figures/rq1_m1_perception_with_sd.png>]
+<../figures/rq1_m2_role_perception_heatmap.png, id=135, 1806.75pt x 863.225pt>
 File: ../figures/rq1_m2_role_perception_heatmap.png Graphic file (type png)
 <use ../figures/rq1_m2_role_perception_heatmap.png>
 Package pdftex.def Info: ../figures/rq1_m2_role_perception_heatmap.png  used on
  input line 127.
 (pdftex.def)             Requested size: 516.0pt x 246.53539pt.
-)
-(./sections/discussion.tex
-Underfull \vbox (badness 1953) has occurred while \output is active []
-
- [5 <../figures/rq1_m1_perception_with_sd.png>]) (./sections/threats_to_validit
-y.tex)
-(./sections/conclusion.tex)
+<../figures/rq2_m3_activity_pooled.png, id=137, 2409.0pt x 1124.2pt>
+File: ../figures/rq2_m3_activity_pooled.png Graphic file (type png)
+<use ../figures/rq2_m3_activity_pooled.png>
+Package pdftex.def Info: ../figures/rq2_m3_activity_pooled.png  used on input l
+ine 179.
+(pdftex.def)             Requested size: 516.0pt x 240.78914pt.
+<../figures/rq2_m4_m5_checkpoint_panels.png, id=140, 2409.0pt x 1003.75pt>
+File: ../figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
+<use ../figures/rq2_m4_m5_checkpoint_panels.png>
+Package pdftex.def Info: ../figures/rq2_m4_m5_checkpoint_panels.png  used on in
+put line 257.
+(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
+) (./sections/discussion.tex)
+(./sections/threats_to_validity.tex) (./sections/conclusion.tex)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
 .bbl
 Underfull \hbox (badness 2253) in paragraph at lines 54--58
@@ -567,7 +611,7 @@ Overfull \hbox (21.19739pt too wide) in paragraph at lines 54--58
 ]a-[]new-[]open-[]source-[]toolkit/$[] 
  []
 
-
+[6]
 Underfull \hbox (badness 2088) in paragraph at lines 61--64
 []\OT1/ptm/m/n/8 Thoughtworks, ``Spec-driven de-vel-op-ment,'' 2025. [On-
  []
@@ -577,7 +621,7 @@ Underfull \hbox (badness 2384) in paragraph at lines 67--71
 \OT1/ptm/m/n/8 ware: Why 'it works' isn't enough,'' Febru-ary
  []
 
-[6 <../figures/rq1_m2_role_perception_heatmap.png>])
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -589,9 +633,8 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[7
-
-]
+[7 <../figures/rq1_m2_role_perception_heatmap.png>] [8 <../figures/rq2_m3_activ
+ity_pooled.png> <../figures/rq2_m4_m5_checkpoint_panels.png>]
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
 .aux)
  ***********
@@ -599,16 +642,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D162B9F0DCCADFDE0C78222429F8DE29;3962.
+(rerunfilecheck)             Checksum: 69AC7CCC6043F1157592A4220E840AC8;7212.
  ) 
 Here is how much of TeX's memory you used:
- 10367 strings out of 476182
- 165492 string characters out of 5795595
+ 10390 strings out of 476182
+ 166244 string characters out of 5795595
  1952975 words of memory out of 5000000
- 32167 multiletter control sequences out of 15000+600000
+ 32185 multiletter control sequences out of 15000+600000
  599074 words of font info for 107 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1077b,592s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,1089b,590s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
@@ -626,10 +669,10 @@ texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf
 e1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (7 pages, 405724 bytes).
+/latex/build/main.pdf (8 pages, 585658 bytes).
 PDF statistics:
- 266 PDF objects out of 1000 (max. 8388607)
- 214 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 147 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 285 PDF objects out of 1000 (max. 8388607)
+ 228 compressed objects within 3 object streams
+ 57 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 

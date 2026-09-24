@@ -111,7 +111,7 @@ team's evaluator presentation dates, not single calendar days. This distinction
 is retained throughout the repository-derived families and is made explicit in
 the corresponding artifacts and provenance comments.
 
-\subsubsection{RQ1: Generative-AI adoption and role-perception metrics}
+\subsubsection{RQ1: How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?}
 
 RQ1 is operationalized at cohort-by-semester/checkpoint grain because the
 anonymized survey responses contain no team identifier. M1 separates the
@@ -131,7 +131,7 @@ summarized by cohort, checkpoint, and role. Where privacy-preserving respondent
 identifiers permit it, paired T1--T3 sensitivity summaries are reported without
 exposing identities.
 
-\subsubsection{RQ2: Repository temporal density vs. qualitative coordination friction}
+\subsubsection{RQ2: How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?}
 
 \textbf{M3 -- Author activity dynamics.} M3 separates phase activity, author
 concentration, and rolling seven-day activity. A secondary pooled relative-window
@@ -151,10 +151,10 @@ alignment, handoff, integration, blockers, and rework. It reports density,
 composition, corpus coverage, and an auditable chunk queue. M5 is not joined or
 correlated with team-semester M3/M4 observations.
 
-\subsubsection{RQ3: Upfront planning quality, clean rework, and evaluator outcomes (primary)}
+\subsubsection{RQ3: How does the quality of upfront architectural artifacts (evaluated at baseline $T_1$) associate with late-stage destructive rework and independent, blind-scored project outcomes?}
 
-\textbf{M6 -- Structural and declarative planning evidence.} M6a reports T1
-artifact presence and repository-visible scope. Approved M6b extraction reports
+\textbf{M6 -- Upfront architectural artifacts.} M6a reports T1 artifact
+presence and repository-visible scope. Approved M6b extraction reports
 separate structured categories---goals, architecture/design, task decomposition,
 risk/dependency, and literal evidence quotes---for nine observed team-semesters;
 five cases without T1 commit subjects remain
@@ -166,15 +166,18 @@ inactivity around evaluator checkpoints and in T3-relative rolling windows. It
 describes repository timing and coverage only; it does not identify planning
 omission and is not an independent M9 predictor.
 
-\textbf{M8 -- Clean rework with baseline.} M8 separates clean rework magnitude,
-the clean rework ratio, the late-stage rolling trajectory, and baseline
-eligibility. A path first observed at T1 or T2 is eligible for the provenance
+\textbf{M8 -- Destructive rework proxy with baseline.} M8 separates clean
+rework magnitude, the clean rework ratio, the late-stage rolling trajectory,
+and baseline eligibility. This is a path-provenance proxy for destructive
+rework, not semantic defect validation. A path first observed at T1 or T2 is
+eligible for the provenance
 analysis; baseline-ineligible cases remain separate and are not imputed as
 stability or low quality.
 
-\textbf{M9 -- Stratified associations.} M9 reports descriptive Spearman
-associations between M6a predictors and M8a/M8b or independent T3 evaluator
-outcomes, restricting ratio analyses to the baseline-eligible stratum. Approved
+\textbf{M9 -- Architectural artifacts, destructive rework, and independent
+outcomes.} M9 reports descriptive Spearman associations between M6a predictors
+and M8a/M8b or independent, blind-scored T3 evaluator outcomes, restricting
+ratio analyses to the baseline-eligible stratum. Approved
 M6b fields enter a separate non-composite association output for observed cases.
 Leave-one-out diagnostics expose influence. No M7 predictor or floor-imputation
 analysis is used.
@@ -196,10 +199,10 @@ M2 & Role-specific perceived disruption components & Cohort $\times$ checkpoint 
 M3 & Activity, author concentration, and rolling activity & Team-semester/window \\
 M4 & Clean magnitude, intensity, composition, and trajectory & Team-semester/checkpoint/window \\
 M5 & Transcript density, composition, and coverage & Global corpus/checkpoint \\
-M6 & Structural T1 scope and structured declarative evidence & Team-semester \\
+M6 & Upfront architectural artifacts and structured evidence & Team-semester \\
 M7 & Repository inactivity trajectory and checkpoint pattern & Team-semester/window \\
-M8 & Clean rework, ratio, trajectory, and eligibility & Team-semester/window \\
-M9 & Stratified associations and influence diagnostics & Team-semester/stratum \\
+M8 & Destructive rework proxy, ratio, trajectory, and eligibility & Team-semester/window \\
+M9 & Artifact--rework--outcome associations and influence diagnostics & Team-semester/stratum \\
 \bottomrule
 \end{tabular}
 \end{table}
