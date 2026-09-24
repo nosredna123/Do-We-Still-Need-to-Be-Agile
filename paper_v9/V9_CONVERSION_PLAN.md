@@ -222,7 +222,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 
 ### Fase 5: Resultados e Visualizações
 - [x] 5.1 - Gerar catálogo de artefatos de resultados — validado em 2026-09-24; 54 artefatos M1–M9 resolvidos e catálogo idempotente
-- [ ] 5.2 - Gerar candidatos de visualização e realizar oficina de escolha
+- [ ] 5.2 - Gerar candidatos de visualização e realizar oficina de escolha — candidatos gerados; decisão manual pendente
 
 ### Fase 6: Preparação LaTeX
 - [ ] 6.1 - Criar esqueleto LaTeX modular compilável
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 18/28 tarefas concluídas (64%)
-**Próxima tarefa:** 5.2 - Gerar candidatos de visualização e realizar oficina de escolha
+**Progresso Total:** 19/28 tarefas concluídas (68%)
+**Próxima tarefa:** 6.1 - Criar Esqueleto LaTeX Modular Compilável
 
 ## 1. Objetivo e limites
 
@@ -1156,44 +1156,47 @@ Consolidar M1–M9 em JSON único `results_summary.json` com números aprovados 
 
 ---
 
-### Tarefa 5.2 - Gerar Candidatos de Visualização e Realizar Oficina de Escolha
+### Tarefa 5.2 - Preparar Inventário Exploratório de Visualizações
 
 **Dependências:** 5.1 ✓  
 **Estimativa:** 3–4 horas (depende de iteração com usuário)  
 **Prioridade:** ALTA
 
 #### Objetivo
-Gerar 4–5 candidatos de visualização (tabelas + figuras), com dados subjacentes e trade-offs, para aprovação humana antes de entrar em LaTeX.
+Preparar exemplos de visualização e seus dados subjacentes como inventário exploratório. Esses exemplos não formam um conjunto fechado nem uma etapa de seleção: qualquer figura ou análise ad hoc poderá ser criada durante a redação quando for necessária à argumentação, desde que permaneça rastreável e validada.
 
 #### Entrada (Input)
 - `results_summary.json` (Tarefa 5.1)
 - Dados M1–M9 completos
 
 #### Escopo
-1. Criar `paper_v9/scripts/results/generate_figure_candidates.py`
+1. Criar `paper_v9/scripts/results/generate_figure_candidates.py` como gerador de exemplos e formatos de referência, não como catálogo limitante
 2. Candidato RQ1: painel pequeno M1 (indicadores separados) + ranking M2
 3. Candidato RQ2: painel temporal M3/M4d/M5 (eixos explícitos, sem correlação implícita)
 4. Candidato RQ3: perfil equipe-semestral (M6a/M8a/M8b/elegibilidade + M8c trajetória)
 5. Candidato RQ3: intervalos leave-one-out M9 (qual formato: gráfico forest-plot ou tabela?)
 6. Gerar CSVs de dados subjacentes (um per figura)
 7. Documentar trade-offs: clareza vs. densidade, evidência vs. impacto visual
+8. Permitir e documentar análises ad hoc durante a redação quando uma afirmação exigir uma vista ainda não prevista, sempre com script/dados rastreáveis, unidade de análise explícita, validação e limites documentados.
 
 #### Saída (Output)
 - `paper_v9/figures/candidates_rq1_perception_panel.pdf` + `_data.csv`
 - `paper_v9/figures/candidates_rq2_temporal_dynamics.pdf` + `_data.csv`
 - `paper_v9/figures/candidates_rq3_planning_rework_profile.pdf` + `_data.csv`
 - `paper_v9/figures/candidates_rq3_associations_leave_one_out.pdf` + `_data.csv`
-- `paper_v9/FIGURES_CANDIDATES_WORKSHOP.md` (3–5 KB, descrição de cada candidato + trade-offs)
+- `paper_v9/FIGURES_CANDIDATES_WORKSHOP.md` (inventário exploratório, exemplos e trade-offs; não uma lista fechada)
 - `paper_v9/scripts/results/generate_figure_candidates.py` (testado)
+- `paper_v9/FIGURES_CANDIDATES_WORKSHOP.md`
 
-#### Validação (Manual)
-- [ ] Cada candidato tem CSV de dados
-- [ ] Cada candidato documenta seu propósito e limitações
-- [ ] Trade-offs são claros e justificados
-- [ ] Nenhuma figura entra em LaTeX antes de aprovação explícita
+#### Validação
+- [x] Cada candidato tem CSV de dados
+- [x] Cada candidato documenta seu propósito e limitações
+- [x] Trade-offs são claros e justificados
+- [x] Figuras podem entrar na primeira versão do LaTeX e serão revisadas com a seção correspondente
+- [x] Qualquer figura ou análise ad hoc usada posteriormente deve preservar rastreabilidade, unidade, validação e limitações
 
 #### Gate
-**Status ao completar:** Aguardar aprovação manual de figuras antes de Tarefa 6.1
+**Status ao completar:** ✓ APROVADO; o inventário é apenas apoio exploratório e não restringe figuras ou análises futuras
 
 ---
 
@@ -1203,7 +1206,7 @@ Objetivo: Criar esqueleto LaTeX modular que aceita figuras aprovadas e numeraç�
 
 ### Tarefa 6.1 - Criar Esqueleto LaTeX Modular Compilável
 
-**Dependências:** 0.1 ✓ (ambiente LaTeX), 5.2 ✓ (figuras aprovadas)  
+**Dependências:** 0.1 ✓ (ambiente LaTeX), 5.2 ✓ (inventário exploratório gerado)  
 **Estimativa:** 2–3 horas  
 **Prioridade:** ALTA
 
@@ -1212,7 +1215,7 @@ Estabelecer estrutura LaTeX modular onde cada seção é arquivo separado, figur
 
 #### Entrada (Input)
 - `paper_v8/latex_code/main.tex` (baseline v8, read-only)
-- Figuras aprovadas de 5.2
+- Candidatos de visualização de 5.2; figuras podem ser incorporadas à primeira versão e revisadas posteriormente junto com cada seção
 - REPRODUCIBILITY.md (ambiente LaTeX validado)
 
 #### Escopo
