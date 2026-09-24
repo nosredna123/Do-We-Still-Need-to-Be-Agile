@@ -1,2 +1,25 @@
 \section{Threats to Validity}
-Threats to validity will document grain differences, Git coverage, path classification, transcript lexical coding, LLM review, sample size, and influential cases.
+The constructs are measured through complementary but imperfect proxies. M1
+and M2 are self-reported survey measures rather than behavioral telemetry. M6a
+captures repository-visible T1 architectural artifacts, while M6b extracts
+structured evidence from commit subjects; neither establishes architectural
+quality or planning intent. M8 uses file-path provenance to identify changes to
+previously observed clean paths, not semantic defects or destructive intent.
+M5 is based on deterministic lexical markers in transcript text; its counts are
+candidate textual evidence, not direct diagnoses of coordination friction.
+These distinctions limit the interpretation of every metric and prevent their
+being treated as interchangeable measures of quality, effort, or productivity.
+
+The observational design and small sample constrain causal and external
+validity. M9 associations are exploratory, not causal or confirmatory, and
+leave-one-out ranges show sensitivity to individual team-semesters. Analytical
+grains differ across student responses, team-semesters, rolling windows, and a
+global transcript corpus, so denominators cannot be pooled implicitly. The
+study covers 14 team-semesters in one educational setting; transcript evidence
+is available only for 2025.2, and Git cannot observe planning or collaboration
+outside the repositories. Five M6b cases lacked T1 commit subjects and were
+not measured; missing evidence was not converted into a low score. The
+external SDD literature therefore motivates a testable intervention hypothesis,
+but this study neither implements nor evaluates SDD. Its results support the
+need to test more explicit specification and coordination practices under
+Generative AI, not a claim that SDD has already improved outcomes.
