@@ -213,9 +213,9 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
 
 ### Fase 4: RQ3 - Planejamento, Retrabalho e Associações
-- [ ] 4.1 - Implementar e validar M6a (Planejamento Estrutural)
-- [ ] 4.2 - Apresentar protocolo, prompt, custo e amostra de M6b (Análise LLM de Planejamento)
-- [ ] 4.3 - Executar M6b após aprovação específica do protocolo
+- [x] 4.1 - Implementar e validar M6a (Planejamento Estrutural) — aprovado em 2026-09-24 para escopo estrutural determinístico
+- [x] 4.2 - Apresentar protocolo, prompt, custo e amostra de M6b (Análise LLM de Planejamento) — aprovado em 2026-09-24 para execução controlada
+- [ ] 4.3 - Executar M6b após aprovação específica do protocolo — execução técnica concluída; revisão humana da amostra pendente
 - [ ] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório)
 - [ ] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline)
 - [ ] 4.6 - Implementar e validar M9 (Associações Estratificadas)
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 8/28 tarefas concluídas (29%)
-**Tarefa em execução:** 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
+**Progresso Total:** 10/28 tarefas concluídas (36%)
+**Tarefa em execução:** 4.3 - Revisar amostra humana e aprovar M6b antes de usá-lo em M9
 
 ## 1. Objetivo e limites
 
@@ -856,15 +856,22 @@ Quantificar presença, contagem e escopo de artefatos de planejamento T1 por reg
 #### Saída (Output)
 - `paper_v9/data/metrics/m6a_structural_planning.csv`
 - `paper_v9/data/metrics/m6_structural_planning.metadata.json`
-- `paper_v9/scripts/metrics/m6_structural_planning.py` (testado)
+- `paper_v9/scripts/metrics/m6_structural_planning.py`
+- `paper_v9/tests/test_m6.py`
+- `paper_v9/verification_notebooks/verify_m6.ipynb`
+- `paper_v9/metricas_v8-analysis/analyze_m6.md`
+- `paper_v9/figures/m6a_planning_scope_t1.{pdf,svg,png}`
+- `paper_v9/figures/m6a_planning_presence_t1.{pdf,svg,png}`
+- `paper_v9/data/metrics/m6a_planning_scope_t1.html`
+- `paper_v9/data/metrics/m6a_planning_presence_t1.html`
 
 #### Validação
-- [ ] M6a CSV bem-formado (team_semester, has_planning, artifact_count, scope_score, etc.)
-- [ ] Todas as 14 equipe-semestrais com scores
-- [ ] Segunda execução reutiliza (checksum match)
+- [x] M6a CSV bem-formado (team_semester, has_planning, artifact_count, scope_score, etc.)
+- [x] Todas as 14 equipe-semestrais com scores estruturais
+- [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** ✓ APROVADO para Tarefa 4.2
+**Status ao completar:** APROVAÇÃO MANUAL PENDENTE para Tarefa 4.2
 
 ---
 
@@ -901,17 +908,22 @@ Quantificar presença, contagem e escopo de artefatos de planejamento T1 por reg
 - `paper_v9/M6B_LLM_PROTOCOL.md` (~2–3 KB, detalhado)
 - `paper_v9/M6B_PILOT_RESULTS.json` (exemplos de 2–3 team-semesters)
 - `paper_v9/M6B_COST_ESTIMATE.txt` (tokens, custo estimado, duração)
+- `paper_v9/data/metrics/m6b_llm_planning_content.json`
+- `paper_v9/data/metrics/m6_llm_planning_content.metadata.json`
+- `paper_v9/data/metrics/m6b_llm_planning_sample_for_review.md`
+- `paper_v9/scripts/metrics/m6_llm_planning_content.py`
+- `paper_v9/tests/test_m6b.py`
 - Recomendação: "Aprovado para execução?" Sim/Não
 
 #### Validação (Manual)
-- [ ] Prompt é claro e não ambíguo
-- [ ] JSON schema válido
-- [ ] Amostra piloto gera respostas estruturadas
-- [ ] Validação de resposta passaria em 100% da amostra
-- [ ] Custo estimado aceito
+- [x] Prompt é claro e não ambíguo
+- [x] JSON schema e validações estão definidos
+- [x] Amostra piloto gera respostas estruturadas — 9 respostas válidas e 5 casos indisponíveis
+- [x] Validação de resposta passa em 100% dos registros aceitos
+- [x] Custo estimado aceito — execução registrada no ledger central
 
 #### Gate
-**Status ao completar:** Aguardar aprovação manual de protocolo antes de Tarefa 4.3
+**Status ao completar:** ✓ APROVADO para execução controlada da Tarefa 4.3
 
 ---
 

@@ -1,0 +1,34 @@
+{
+  "artifacts": [
+    "m6b_llm_planning_content.json",
+    "m6_llm_planning_content.metadata.json"
+  ],
+  "config_sha256": "2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3",
+  "contract_version": "m6b-structured-planning-v1.1",
+  "coverage": {
+    "success_n": 9,
+    "team_semester_n": 14,
+    "unavailable_not_measured_n": 5
+  },
+  "gate_status": "pending_human_review",
+  "input_sha256": "e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f",
+  "ledger": {
+    "attempt_n": 14,
+    "estimated_cost_usd": 0.0058668,
+    "path": "data/analysis/.private/llm_call_ledger.parquet",
+    "success_n": 14,
+    "total_tokens": 20416
+  },
+  "limitations": [
+    "LLM extraction is exploratory and requires human review",
+    "literal quote validation does not establish semantic correctness",
+    "M6b must not feed M9 before review approval"
+  ],
+  "llm_calls_required": true,
+  "metric_definition_version": "m6b-structured-planning-v1.1",
+  "model": "gpt-4o-mini",
+  "rq": "RQ3",
+  "status": "success",
+  "temperature": 0.0,
+  "unit_of_analysis": "team_semester"
+}
