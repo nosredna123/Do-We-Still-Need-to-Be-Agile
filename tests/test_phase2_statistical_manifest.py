@@ -307,8 +307,56 @@ def test_run_persisted_hypotheses_rejects_zero_variance_groups(tmp_path: Path) -
 
 
 def test_generate_persisted_figures_creates_categorized_publication_outputs(tmp_path: Path) -> None:
-	project_root = Path(__file__).parents[1]
-	analysis_dir = project_root / "data" / "analysis"
+	# generate_persisted_figures derives assets/figures from analysis_dir.parent.parent,
+	# so the fixture must mirror the real "<root>/data/analysis" nesting to stay isolated.
+	analysis_dir = tmp_path / "data" / "analysis"
+	analysis_dir.mkdir(parents=True)
+	team = pd.DataFrame(
+		[
+			{
+				"ID_Equipe": "TEAM_01", "Semestre": "2025.2", "unit_of_analysis": "team_semester",
+				"pi_file_count_t1": 3, "delta_dt_t1_t3": 1.0,
+				"cc_total_t1": 10, "cc_total_t2": 20, "cc_total_t3": 30,
+				"cc_per_source_loc_t1": 0.1, "cc_per_source_loc_t2": 0.2, "cc_per_source_loc_t3": 0.3,
+				"repo_source_loc_t3": 100, "technical_complexity_mean_t1": 1.0, "technical_complexity_mean_t2": 2.0, "technical_complexity_mean_t3": 3.0,
+				"ai_max_author_share_before_t3_window": 0.5, "ai_churn_before_t3_window": 5, "ai_commit_n_before_t3_window": 2,
+				"ai_gini_t1": 0.1, "ai_gini_t2": 0.2, "ai_gini_t3": 0.3,
+				"pi_available": True, "cc_source_loc_available_t3": True, "technical_complexity_n_t3": 3, "ai_available": True,
+			},
+			{
+				"ID_Equipe": "TEAM_02", "Semestre": "2026.1", "unit_of_analysis": "team_semester",
+				"pi_file_count_t1": 1, "delta_dt_t1_t3": 0.5,
+				"cc_total_t1": 4, "cc_total_t2": 8, "cc_total_t3": 12,
+				"cc_per_source_loc_t1": 0.05, "cc_per_source_loc_t2": 0.1, "cc_per_source_loc_t3": 0.15,
+				"repo_source_loc_t3": 80, "technical_complexity_mean_t1": 1.5, "technical_complexity_mean_t2": 1.8, "technical_complexity_mean_t3": 2.1,
+				"ai_max_author_share_before_t3_window": 0.7, "ai_churn_before_t3_window": 3, "ai_commit_n_before_t3_window": 1,
+				"ai_gini_t1": 0.2, "ai_gini_t2": 0.25, "ai_gini_t3": 0.3,
+				"pi_available": True, "cc_source_loc_available_t3": True, "technical_complexity_n_t3": 2, "ai_available": True,
+			},
+		]
+	)
+	_write_input(
+		analysis_dir, "team_metrics", team,
+		contract_version="team-metrics-v1",
+		options={"pi_definition_version": "pi-v1", "cc_definition_version": "cc-v2-clean-paths", "dt_definition_version": "dt-v1", "ai_definition_version": "ai-v1"},
+	)
+	context = pd.DataFrame(
+		[
+			{"Semestre": "2025.2", "temporal_marker": marker, "unit_of_analysis": "cut_context",
+			 "ie_transcript_coordination_friction_score_mean": 1.0, "ie_transcript_rework_signal_score_mean": 1.5,
+			 "ie_transcript_planning_clarity_score_mean": 2.0}
+			for marker in ("T1", "T2", "T3")
+		]
+	)
+	_write_input(
+		analysis_dir, "cut_context_metrics", context,
+		contract_version="cut-context-metrics-v1",
+		options={"ie_definition_version": "ie-v1", "statistical_summary_version": "distribution-summary-v1"},
+	)
+	(analysis_dir / "correlation_results.csv").write_text("figure_id,rho\n", encoding="utf-8")
+	(analysis_dir / "hypothesis_results.csv").write_text("test,p_value\n", encoding="utf-8")
+	(analysis_dir / "statistical_dataset_manifest.json").write_text(json.dumps({"status": "success"}), encoding="utf-8")
+
 	figure_manifest = STATISTICAL_ANALYZER.generate_persisted_figures(analysis_dir, force=True)
 
 	assert figure_manifest["status"] == "success"
@@ -338,6 +386,11 @@ def test_generate_persisted_figures_creates_categorized_publication_outputs(tmp_
 		assert Path(entry["static_paths"]["svg"]).is_file()
 		if entry["priority"] == "required":
 			assert Path(entry["static_paths"]["pdf"]).is_file()
+		# Every generated artifact must live under the isolated tmp_path tree,
+		# never under the real, tracked assets/ or data/analysis/ directories.
+		assert str(tmp_path) in entry["data_path"]
+		assert str(tmp_path) in entry["interactive_path"]
 	manifest_path = analysis_dir / "figure_manifest.json"
 	assert manifest_path.is_file()
 	assert "TEAM_" not in manifest_path.read_text(encoding="utf-8")
+

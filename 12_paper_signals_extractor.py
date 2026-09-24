@@ -50,7 +50,7 @@ def configure_logging() -> logging.Logger:
     return logger
 
 
-logger = configure_logging()
+logger = logging.getLogger("paper_signals_extractor")
 
 
 def ensure_dir(path: Path) -> Path:
@@ -503,4 +503,5 @@ def run_pipeline() -> None:
 
 
 if __name__ == "__main__":
+    configure_logging()
     run_pipeline()

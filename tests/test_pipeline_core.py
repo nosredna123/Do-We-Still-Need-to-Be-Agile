@@ -107,13 +107,22 @@ class PipelineCoreTests(unittest.TestCase):
                 encoding="utf-8",
             )
             output_dir = tmp_path / "ner_candidates"
+            # Redirect the LLM call ledger so this test never writes into the
+            # real, tracked data/analysis/.private/llm_call_ledger.parquet.
+            real_gateway_cls = ner_extractor.LLMCallGateway
+            ledger_path = tmp_path / "llm_call_ledger.parquet"
 
             with mock.patch("openai.OpenAI", return_value=client):
-                with mock.patch.object(sys, "argv", [
-                    "01_ner_extractor.py", "--transcripts-dir", str(transcripts_dir),
-                    "--output-dir", str(output_dir),
-                ]):
-                    ner_extractor.main()
+                with mock.patch.object(
+                    ner_extractor,
+                    "LLMCallGateway",
+                    lambda gateway_client: real_gateway_cls(gateway_client, ledger_path=ledger_path),
+                ):
+                    with mock.patch.object(sys, "argv", [
+                        "01_ner_extractor.py", "--transcripts-dir", str(transcripts_dir),
+                        "--output-dir", str(output_dir),
+                    ]):
+                        ner_extractor.main()
 
             output_path = output_dir / "session" / "feedback.ner.json"
             self.assertEqual(
@@ -123,6 +132,8 @@ class PipelineCoreTests(unittest.TestCase):
             request_kwargs = client.chat.completions.create.call_args.kwargs
             self.assertEqual("gpt-4o-mini", request_kwargs["model"])
             self.assertEqual({"type": "json_object"}, request_kwargs["response_format"])
+            self.assertTrue(ledger_path.exists())
+
 
     def test_ner_extractor_skips_current_transcript(self) -> None:
         ner_extractor = load_script_module("ner_extractor_skip", "01_ner_extractor.py")
@@ -561,18 +572,21 @@ class PipelineCoreTests(unittest.TestCase):
     def test_pipeline_orchestrator_runs_selected_stage_with_force(self) -> None:
         orchestrator = load_script_module("pipeline_orchestrator", "run_pipeline.py")
 
-        with mock.patch.object(orchestrator, "run_stage_process") as run_stage:
-            with mock.patch.object(sys, "argv", [
-                "run_pipeline.py", "--stages", "git", "--force",
-            ]):
-                orchestrator.main()
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            log_dir = Path(tmp_dir) / "logs"
+            with mock.patch.object(orchestrator, "run_stage_process") as run_stage:
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py", "--stages", "git", "--force",
+                    "--log-dir", str(log_dir),
+                ]):
+                    orchestrator.main()
 
-        call = run_stage.call_args
-        self.assertEqual(
-            [sys.executable, str(REPO_ROOT / "02_git_parser.py"), "--force"],
-            call.args[0],
-        )
-        self.assertTrue(str(call.args[1]).endswith(".txt"))
+            call = run_stage.call_args
+            self.assertEqual(
+                [sys.executable, str(REPO_ROOT / "02_git_parser.py"), "--force"],
+                call.args[0],
+            )
+            self.assertTrue(str(call.args[1]).endswith(".txt"))
 
     def test_pipeline_orchestrator_writes_timestamped_execution_log(self) -> None:
         orchestrator = load_script_module("pipeline_orchestrator_logging", "run_pipeline.py")
@@ -626,18 +640,21 @@ class PipelineCoreTests(unittest.TestCase):
             "pipeline_orchestrator_dry_run", "run_pipeline.py"
         )
 
-        with mock.patch.object(orchestrator.subprocess, "run") as run:
-            with mock.patch.object(sys, "argv", [
-                "run_pipeline.py", "--from-stage", "anonymize", "--to-stage", "lake",
-                "--csv", "raw/students.csv", "--dry-run",
-            ]):
-                orchestrator.main()
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            log_dir = Path(tmp_dir) / "logs"
+            with mock.patch.object(orchestrator.subprocess, "run") as run:
+                with mock.patch.object(sys, "argv", [
+                    "run_pipeline.py", "--from-stage", "anonymize", "--to-stage", "lake",
+                    "--csv", "raw/students.csv", "--dry-run",
+                    "--log-dir", str(log_dir),
+                ]):
+                    orchestrator.main()
 
-        run.assert_not_called()
-        self.assertEqual(
-            ["anonymize", "git", "lake"],
-            orchestrator.resolve_stages(None, "anonymize", "lake"),
-        )
+            run.assert_not_called()
+            self.assertEqual(
+                ["anonymize", "git", "lake"],
+                orchestrator.resolve_stages(None, "anonymize", "lake"),
+            )
 
     def test_pipeline_orchestrator_passes_anonymizer_inputs(self) -> None:
         orchestrator = load_script_module(
@@ -1014,6 +1031,7 @@ class PipelineCoreTests(unittest.TestCase):
             transcript_path.write_text("Alice: relatou cansaço\n", encoding="utf-8")
             output_dir = tmp_path / "anon"
             mapping_path = tmp_path / "chave_relacional.json"
+            transcripts_output_dir = tmp_path / "transcripts_anon"
 
             subprocess.run(
                 [
@@ -1027,6 +1045,8 @@ class PipelineCoreTests(unittest.TestCase):
                     str(output_dir),
                     "--mapping-path",
                     str(mapping_path),
+                    "--transcripts-output-dir",
+                    str(transcripts_output_dir),
                     "--salt",
                     "pepper",
                 ],
@@ -1385,8 +1405,19 @@ class PipelineCoreTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             audio_path = Path(tmp_dir) / "audio.mp3"
             audio_path.write_bytes(b"audio")
+            # Redirect the LLM call ledger so this test never writes into the
+            # real, tracked data/analysis/.private/llm_call_ledger.parquet.
+            real_gateway_cls = audio_transcriber.LLMCallGateway
+            ledger_path = Path(tmp_dir) / "llm_call_ledger.parquet"
             with mock.patch("openai.OpenAI", return_value=client):
-                audio_transcriber.transcribe_audio_file(audio_path, api_key="test")
+                with mock.patch.object(
+                    audio_transcriber,
+                    "LLMCallGateway",
+                    lambda gateway_client: real_gateway_cls(gateway_client, ledger_path=ledger_path),
+                ):
+                    audio_transcriber.transcribe_audio_file(audio_path, api_key="test")
+
+            ledger_written = ledger_path.exists()
 
         request_kwargs = client.audio.transcriptions.create.call_args.kwargs
         self.assertEqual("pt", request_kwargs["language"])
@@ -1394,6 +1425,7 @@ class PipelineCoreTests(unittest.TestCase):
         self.assertIn("nomes próprios", request_kwargs["prompt"])
         self.assertNotRegex(request_kwargs["prompt"], r"@[\w.-]+")
         self.assertFalse(hasattr(pipeline_prompts, "TRANSCRIPTION_PROMPT_EN_REFERENCE"))
+        self.assertTrue(ledger_written)
 
     def test_audio_transcriber_recursively_processes_session_folders(self) -> None:
         audio_transcriber = load_script_module(
@@ -1441,14 +1473,23 @@ class PipelineCoreTests(unittest.TestCase):
             client.audio.transcriptions.create.side_effect = RuntimeError(
                 "request rejected"
             )
+            # Redirect the LLM call ledger so this test never writes into the
+            # real, tracked data/analysis/.private/llm_call_ledger.parquet.
+            real_gateway_cls = audio_transcriber.LLMCallGateway
+            ledger_path = tmp_path / "llm_call_ledger.parquet"
 
             with mock.patch("openai.OpenAI", return_value=client):
-                with mock.patch.object(sys, "argv", [
-                    "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
-                    "--output-dir", str(output_dir),
-                ]):
-                    with self.assertRaisesRegex(RuntimeError, "request rejected"):
-                        audio_transcriber.main()
+                with mock.patch.object(
+                    audio_transcriber,
+                    "LLMCallGateway",
+                    lambda gateway_client: real_gateway_cls(gateway_client, ledger_path=ledger_path),
+                ):
+                    with mock.patch.object(sys, "argv", [
+                        "00_audio_transcriber.py", "--audio-dir", str(audio_dir),
+                        "--output-dir", str(output_dir),
+                    ]):
+                        with self.assertRaisesRegex(RuntimeError, "request rejected"):
+                            audio_transcriber.main()
 
             self.assertFalse((output_dir / "failed.json").exists())
 

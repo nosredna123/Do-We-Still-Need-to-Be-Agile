@@ -4,6 +4,7 @@ import importlib.util
 import json
 import logging
 from pathlib import Path
+from unittest import mock
 
 import pandas as pd
 import pytest
@@ -131,7 +132,7 @@ def test_write_student_nlp_rejects_missing_required_output_columns(tmp_path: Pat
         )
 
 
-def test_openai_student_backend_uses_versioned_json_request() -> None:
+def test_openai_student_backend_uses_versioned_json_request(tmp_path: Path) -> None:
     miner = load_miner()
     client = type("Client", (), {})()
     client.chat = type("Chat", (), {})()
@@ -145,12 +146,22 @@ def test_openai_student_backend_uses_versioned_json_request() -> None:
         return type("Response", (), {"choices": [choice]})()
 
     client.chat.completions.create = create
-    response = miner.openai_student_backend("prompt", client=client, model="mock-model")
+    # Redirect the LLM call ledger so this test never writes into the real,
+    # tracked data/analysis/.private/llm_call_ledger.parquet.
+    real_gateway_cls = miner.LLMCallGateway
+    ledger_path = tmp_path / "llm_call_ledger.parquet"
+    with mock.patch.object(
+        miner,
+        "LLMCallGateway",
+        lambda gateway_client: real_gateway_cls(gateway_client, ledger_path=ledger_path),
+    ):
+        response = miner.openai_student_backend("prompt", client=client, model="mock-model")
 
     assert json.loads(response)["sentiment_score"] == 1
     assert calls[0]["model"] == "mock-model"
     assert calls[0]["response_format"] == {"type": "json_object"}
     assert calls[0]["temperature"] == 0
+    assert ledger_path.exists()
 
 
 def test_mine_student_prompts_logs_processing_progress(caplog, tmp_path: Path) -> None:
