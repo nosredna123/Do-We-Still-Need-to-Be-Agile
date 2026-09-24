@@ -28,6 +28,19 @@ P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
   tasks,'' in \emph{Advances in Neural Information Processing Systems},
   vol.~33, 2020, pp. 9459--9474.
 
+\bibitem{github2025spec}
+\BIBentryALTinterwordspacing
+{GitHub Blog}, ``Spec-driven development with ai: Get started with a new open
+  source toolkit,'' September 2025. [Online]. Available:
+  \url{https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{thoughtworks202Xspec}
+\BIBentryALTinterwordspacing
+{Thoughtworks}, ``Spec-driven development,'' 2025. [Online]. Available:
+  \url{https://www.thoughtworks.com/en-br/insights/decoder/s/spec-driven-development}
+\BIBentrySTDinterwordspacing
+
 \bibitem{nguyenduc2026systematic}
 \BIBentryALTinterwordspacing
 A.~Nguyen-Duc \emph{et~al.}, ``A systematic literature review on generative ai
@@ -47,19 +60,6 @@ A.~Nguyen-Duc \emph{et~al.}, ``A systematic literature review on generative ai
 {Cambridge Advance Online}, ``The contextual gap in genai for software
   engineering,'' July 2026. [Online]. Available:
   \url{https://advanceonline.cam.ac.uk/blog/the-contextual-gap-in-genai-for-software-engineering}
-\BIBentrySTDinterwordspacing
-
-\bibitem{github2025spec}
-\BIBentryALTinterwordspacing
-{GitHub Blog}, ``Spec-driven development with ai: Get started with a new open
-  source toolkit,'' September 2025. [Online]. Available:
-  \url{https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{thoughtworks202Xspec}
-\BIBentryALTinterwordspacing
-{Thoughtworks}, ``Spec-driven development,'' 2025. [Online]. Available:
-  \url{https://www.thoughtworks.com/en-br/insights/decoder/s/spec-driven-development}
 \BIBentrySTDinterwordspacing
 
 \bibitem{codebridge2026hidden}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 19:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 19:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -579,26 +579,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 238--239
  []
 
 ) (./sections/results.tex [4]
-<../figures/rq1_m1_perception_with_sd.png, id=124, 1806.75pt x 1043.9pt>
+<../figures/rq1_m1_perception_with_sd.png, id=144, 1806.75pt x 1043.9pt>
 File: ../figures/rq1_m1_perception_with_sd.png Graphic file (type png)
 <use ../figures/rq1_m1_perception_with_sd.png>
 Package pdftex.def Info: ../figures/rq1_m1_perception_with_sd.png  used on inpu
 t line 45.
 (pdftex.def)             Requested size: 516.0pt x 298.1358pt.
-<../figures/rq1_m2_role_perception_heatmap.png, id=127, 1806.75pt x 863.225pt>
+<../figures/rq1_m2_role_perception_heatmap.png, id=147, 1806.75pt x 863.225pt>
 File: ../figures/rq1_m2_role_perception_heatmap.png Graphic file (type png)
 <use ../figures/rq1_m2_role_perception_heatmap.png>
 Package pdftex.def Info: ../figures/rq1_m2_role_perception_heatmap.png  used on
  input line 127.
 (pdftex.def)             Requested size: 516.0pt x 246.53539pt.
-<../figures/rq2_m3_activity_pooled.png, id=129, 2409.0pt x 1124.2pt>
+<../figures/rq2_m3_activity_pooled.png, id=149, 2409.0pt x 1124.2pt>
 File: ../figures/rq2_m3_activity_pooled.png Graphic file (type png)
 <use ../figures/rq2_m3_activity_pooled.png>
 Package pdftex.def Info: ../figures/rq2_m3_activity_pooled.png  used on input l
 ine 179.
 (pdftex.def)             Requested size: 516.0pt x 240.78914pt.
  [5]
-<../figures/rq2_m4_m5_checkpoint_panels.png, id=140, 2409.0pt x 1003.75pt>
+<../figures/rq2_m4_m5_checkpoint_panels.png, id=160, 2409.0pt x 1003.75pt>
 File: ../figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
 <use ../figures/rq2_m4_m5_checkpoint_panels.png>
 Package pdftex.def Info: ../figures/rq2_m4_m5_checkpoint_panels.png  used on in
@@ -620,7 +620,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-<../figures/rq3_architectural_artifact_presence.png, id=142, 2409.0pt x 1003.75
+<../figures/rq3_architectural_artifact_presence.png, id=162, 2409.0pt x 1003.75
 pt>
 File: ../figures/rq3_architectural_artifact_presence.png Graphic file (type png
 )
@@ -629,7 +629,7 @@ Package pdftex.def Info: ../figures/rq3_architectural_artifact_presence.png  us
 ed on input line 295.
 (pdftex.def)             Requested size: 516.0pt x 214.9903pt.
  [6 <../figures/rq1_m1_perception_with_sd.png>]
-<../figures/rq3_architecture_rework_profile.png, id=155, 2409.0pt x 1124.2pt>
+<../figures/rq3_architecture_rework_profile.png, id=176, 2409.0pt x 1124.2pt>
 File: ../figures/rq3_architecture_rework_profile.png Graphic file (type png)
 <use ../figures/rq3_architecture_rework_profile.png>
 Package pdftex.def Info: ../figures/rq3_architecture_rework_profile.png  used o
@@ -644,7 +644,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [7 <../figures/rq1_m2_role_perception_heatmap.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-<../figures/rq3_association_sensitivity.png, id=168, 2409.0pt x 1043.9pt>
+<../figures/rq3_association_sensitivity.png, id=188, 2409.0pt x 1043.9pt>
 File: ../figures/rq3_association_sensitivity.png Graphic file (type png)
 <use ../figures/rq3_association_sensitivity.png>
 Package pdftex.def Info: ../figures/rq3_association_sensitivity.png  used on in
@@ -655,23 +655,27 @@ put line 419.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8 <../figures/rq2_m3_activity_pooled.png> <../figures/rq2_m4_m5_checkpoint_pa
-nels.png>]) (./sections/threats_to_validity.tex) (./sections/conclusion.tex)
+nels.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9 <../figures/rq3_architectural_artifact_presence.png> <../figures/rq3_archit
+ecture_rework_profile.png>] [10 <../figures/rq3_association_sensitivity.png>])
+(./sections/threats_to_validity.tex) (./sections/conclusion.tex)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.bbl [9 <../figures/rq3_architectural_artifact_presence.png> <../figures/rq3_ar
-chitecture_rework_profile.png>]
-Underfull \hbox (badness 2253) in paragraph at lines 54--58
+.bbl
+Underfull \hbox (badness 2253) in paragraph at lines 33--37
 \OT1/ptm/m/n/8 [On-line]. Avail-able: []$https : / / github . blog / ai-[]and-[
 ]ml / generative-[]ai /
  []
 
 
-Overfull \hbox (21.19739pt too wide) in paragraph at lines 54--58
+Overfull \hbox (21.19739pt too wide) in paragraph at lines 33--37
 \OT1/ptm/m/n/8 spec-[]driven-[]development-[]with-[]ai-[]get-[]started-[]with-[
 ]a-[]new-[]open-[]source-[]toolkit/$[] 
  []
 
 
-Underfull \hbox (badness 2088) in paragraph at lines 61--64
+Underfull \hbox (badness 2088) in paragraph at lines 40--43
 []\OT1/ptm/m/n/8 Thoughtworks, ``Spec-driven de-vel-op-ment,'' 2025. [On-
  []
 
@@ -680,7 +684,7 @@ Underfull \hbox (badness 2384) in paragraph at lines 67--71
 \OT1/ptm/m/n/8 ware: Why 'it works' isn't enough,'' Febru-ary
  []
 
-[10 <../figures/rq3_association_sensitivity.png>])
+[11])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -692,7 +696,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[11
+[12
 
 ]
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
@@ -702,16 +706,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C9F28F0EA4AF1D3D802EEAE0FBF2834E;8242.
+(rerunfilecheck)             Checksum: 1A7AD99644EA8FA8AEE9EA541DC50BEF;9729.
  ) 
 Here is how much of TeX's memory you used:
- 10386 strings out of 476182
- 166962 string characters out of 5795595
+ 10397 strings out of 476182
+ 167119 string characters out of 5795595
  1952975 words of memory out of 5000000
- 32178 multiletter control sequences out of 15000+600000
+ 32183 multiletter control sequences out of 15000+600000
  598559 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1089b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,1089b,590s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
@@ -729,10 +733,10 @@ ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
 Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (11 pages, 776530 bytes).
+/latex/build/main.pdf (12 pages, 783287 bytes).
 PDF statistics:
- 311 PDF objects out of 1000 (max. 8388607)
- 247 compressed objects within 3 object streams
- 65 named destinations out of 1000 (max. 500000)
- 188 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 338 PDF objects out of 1000 (max. 8388607)
+ 273 compressed objects within 3 object streams
+ 71 named destinations out of 1000 (max. 500000)
+ 228 words of extra memory for PDF output out of 10000 (max. 10000000)
 
