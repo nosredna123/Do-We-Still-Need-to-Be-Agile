@@ -214,7 +214,7 @@ The next section may be edited only after the user's authorization. If the coher
 | Section | Reviewed | Duplicates removed/consolidated | Local qualifiers retained | Validation | Approval |
 |---|---:|---|---|---|---|
 | Methodology | [x] | Removed the repeated general causal/observability caveat from the statistical overview; softened the repository "single source of truth" wording without changing the collection protocol. | Metric grains, scales, transformations, missingness rules, proxy boundaries, and quantitative details retained. | PDF rebuilt; no undefined references or overfull boxes; final coherence review completed. | Pending user authorization |
-| Results | [ ] |  |  |  |  |
+| Results | [x] | Consolidated repeated causal, population-level, generalization, and proxy-validity caveats while retaining local evidence-stream, sensitivity-summary, scale, denominator, coverage, and proxy qualifiers. | Quantitative results, units, denominators, cohort/checkpoint labels, missingness states, and local interpretation boundaries retained. | PDF rebuilt after clearing stale generated auxiliaries; no fatal errors, undefined references, or overfull boxes; final coherence review completed. | Pending user authorization |
 | Discussion | [ ] |  |  |  |  |
 | Threats to Validity | [ ] |  |  |  |  |
 | Conclusion | [ ] |  |  |  |  |
