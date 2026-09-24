@@ -1,0 +1,352 @@
+{
+  "artifact_policy": {
+    "cc_definition_version": "cc-v2-clean-paths",
+    "current_policy_version": "code-churn-metrics-v2",
+    "excluded_path_patterns": [
+      ".env/",
+      ".git/",
+      ".history/",
+      ".next/",
+      ".tox/",
+      ".venv/",
+      "backup/",
+      "backups/",
+      "build/",
+      "coverage/",
+      "dist/",
+      "env/",
+      "node_modules/",
+      "site-packages/",
+      "target/",
+      "vendor/",
+      "venv/"
+    ],
+    "excluded_path_patterns_version": "source-exclusions-v4",
+    "policy_function": "pipeline_config.is_measurement_code_path",
+    "source_code_extension_allowlist": [
+      ".c",
+      ".cc",
+      ".cpp",
+      ".cs",
+      ".css",
+      ".dart",
+      ".go",
+      ".h",
+      ".hpp",
+      ".html",
+      ".java",
+      ".js",
+      ".jsx",
+      ".kt",
+      ".php",
+      ".py",
+      ".rb",
+      ".rs",
+      ".scss",
+      ".sh",
+      ".sql",
+      ".swift",
+      ".ts",
+      ".tsx",
+      ".vue"
+    ]
+  },
+  "checkpoint_coverage": {
+    "dataset": "git_team_cuts",
+    "expected_combinations": 42,
+    "missing_combinations": [
+      [
+        "TEAM_01",
+        "2025.2",
+        "T2"
+      ],
+      [
+        "TEAM_02",
+        "2025.2",
+        "T1"
+      ],
+      [
+        "TEAM_03",
+        "2025.2",
+        "T1"
+      ],
+      [
+        "TEAM_03",
+        "2025.2",
+        "T2"
+      ],
+      [
+        "TEAM_04",
+        "2026.1",
+        "T2"
+      ],
+      [
+        "TEAM_05",
+        "2025.2",
+        "T1"
+      ],
+      [
+        "TEAM_05",
+        "2025.2",
+        "T2"
+      ],
+      [
+        "TEAM_08",
+        "2025.2",
+        "T1"
+      ],
+      [
+        "TEAM_10",
+        "2025.2",
+        "T1"
+      ]
+    ],
+    "observed_combinations": 33
+  },
+  "evaluations": {
+    "canonical_lake_contract": "evaluator_team_cuts",
+    "note": "There is no separate raw 'evaluations' directory; evaluator scores are embedded in student_responses.parquet and aggregated per team-semester in evaluator_team_cuts.parquet."
+  },
+  "generated_at": "2026-09-24T17:14:59.386757+00:00",
+  "generated_by": "paper_v9.scripts.common.build_input_inventory",
+  "git_parent_mirrors": {
+    "note": "Bare/mirror clones are not content-hashed here (large, binary git objects). Team-semester activity is consumed through the git_repository_snapshots, git_commits, and git_files lake contracts, which are individually hashed above.",
+    "path": "data/raw/repos_parent_cache",
+    "policy": "read_only",
+    "repo_count": 14,
+    "repo_directories": [
+      "extensao3-2025_2-team_01-software_development_extension_lll-1930641bc289.git",
+      "extensao3-2025_2-team_02-EstudaAI-1953213cc45b.git",
+      "extensao3-2025_2-team_03-career-path-ai-671a7f548397.git",
+      "extensao3-2025_2-team_04-Bulicoso-1596a9c51e60.git",
+      "extensao3-2025_2-team_05-ecoroteiro-ex3-829bfc0e2da3.git",
+      "extensao3-2025_2-team_07-Projeto-Research-Flow-52c168a459d8.git",
+      "extensao3-2025_2-team_08-ExamForge-80e19be1a764.git",
+      "extensao3-2025_2-team_09-SoFiA-59690ae48d74.git",
+      "extensao3-2025_2-team_10-Extensao-3-Synapse-1ea204dc650c.git",
+      "extensao3-2026_1-team1-foodguard-4f38369906d5.git",
+      "extensao3-2026_1-team2-revisai-fc0269144b84.git",
+      "extensao3-2026_1-team3-interview-17c184cfaa5e.git",
+      "extensao3-2026_1-team4-SmartFlow-WhatsApp-AI-2d2e1132b2a4.git",
+      "extensao3-2026_1-team5-enembot-836dc10bc759.git"
+    ]
+  },
+  "lake_contracts": {
+    "evaluator_team_cuts": {
+      "has_team_semester_key": true,
+      "parquet_path": "data/lake/evaluator_team_cuts.parquet",
+      "parquet_sha256": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
+      "rows": 42,
+      "semesters": [
+        "2025.2",
+        "2026.1"
+      ],
+      "sidecar_path": "data/lake/evaluator_team_cuts.parquet.metadata.json",
+      "sidecar_sha256": "89d8886c0309c5f161f7c38ae22f06c0c01d7d89b7713a69972b3178d0e897b8",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "git_commits": {
+      "has_team_semester_key": true,
+      "parquet_path": "data/lake/git_commits.parquet",
+      "parquet_sha256": "e5d3d2035ee0879324902a16061608390e8e3132e2d4c0629c4de112a1f8566c",
+      "rows": 812,
+      "semesters": [
+        "2025.2",
+        "2026.1"
+      ],
+      "sidecar_path": "data/lake/git_commits.parquet.metadata.json",
+      "sidecar_sha256": "89d8886c0309c5f161f7c38ae22f06c0c01d7d89b7713a69972b3178d0e897b8",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "git_files": {
+      "has_team_semester_key": true,
+      "parquet_path": "data/lake/git_files.parquet",
+      "parquet_sha256": "c13269b33fcef0db61856678fc4ca8a9c86e2e8155d80f170de93f9274c1d1fa",
+      "rows": 51041,
+      "semesters": [
+        "2025.2",
+        "2026.1"
+      ],
+      "sidecar_path": "data/lake/git_files.parquet.metadata.json",
+      "sidecar_sha256": "89d8886c0309c5f161f7c38ae22f06c0c01d7d89b7713a69972b3178d0e897b8",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "git_repository_snapshots": {
+      "has_team_semester_key": true,
+      "parquet_path": "data/lake/git_repository_snapshots.parquet",
+      "parquet_sha256": "4b31da16e5e212d34a0768d05795c991c347f5b86e522afffa0de91dcce62253",
+      "rows": 42,
+      "semesters": [
+        "2025.2",
+        "2026.1"
+      ],
+      "sidecar_path": "data/lake/git_repository_snapshots.parquet.metadata.json",
+      "sidecar_sha256": "e36646ab905024ac1c1ef213aaedf1109b3190142b7cbfb20c2d45f3575979af",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "git_team_cuts": {
+      "has_team_semester_key": true,
+      "parquet_path": "data/lake/git_team_cuts.parquet",
+      "parquet_sha256": "832464590d65c0e386859f781d17cc4aa8bed1faa17a37f6fb2c4a365db69a80",
+      "rows": 33,
+      "semesters": [
+        "2025.2",
+        "2026.1"
+      ],
+      "sidecar_path": "data/lake/git_team_cuts.parquet.metadata.json",
+      "sidecar_sha256": "89d8886c0309c5f161f7c38ae22f06c0c01d7d89b7713a69972b3178d0e897b8",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "student_responses": {
+      "has_team_semester_key": false,
+      "parquet_path": "data/lake/student_responses.parquet",
+      "parquet_sha256": "0fdca4311fdd05e87b09e96315ba386189d688b4b70741bccc2a03a08ddd58d8",
+      "rows": 187,
+      "semesters": [
+        "2025.2",
+        "2026.1"
+      ],
+      "sidecar_path": "data/lake/student_responses.parquet.metadata.json",
+      "sidecar_sha256": "89d8886c0309c5f161f7c38ae22f06c0c01d7d89b7713a69972b3178d0e897b8",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "transcript_sessions": {
+      "has_team_semester_key": false,
+      "parquet_path": "data/lake/transcript_sessions.parquet",
+      "parquet_sha256": "f5d976a184c385090eb24f084ca46f2d66dbef04a22b3c49aa02715b42b3ee87",
+      "rows": 100,
+      "semesters": [
+        "2025.2"
+      ],
+      "sidecar_path": "data/lake/transcript_sessions.parquet.metadata.json",
+      "sidecar_sha256": "89d8886c0309c5f161f7c38ae22f06c0c01d7d89b7713a69972b3178d0e897b8",
+      "temporal_markers": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    }
+  },
+  "processed_transcripts": {
+    "canonical_lake_contract": "transcript_sessions",
+    "covered_semesters": [
+      "2025.2"
+    ],
+    "missing_semesters": [],
+    "note": "Known coverage gap, not a blocker: semesters listed in missing_semesters have zero transcript sessions and must be declared as unavailable_not_measured by M5, never imputed.",
+    "path": "data/processed/transcripts_anon"
+  },
+  "team_semester_key_validation": {
+    "datasets": {
+      "evaluator_team_cuts": {
+        "key_count": 14,
+        "missing_from_dataset": [],
+        "missing_from_reference": []
+      },
+      "git_commits": {
+        "key_count": 14,
+        "missing_from_dataset": [],
+        "missing_from_reference": []
+      },
+      "git_files": {
+        "key_count": 14,
+        "missing_from_dataset": [],
+        "missing_from_reference": []
+      },
+      "git_repository_snapshots": {
+        "key_count": 14,
+        "missing_from_dataset": [],
+        "missing_from_reference": []
+      },
+      "git_team_cuts": {
+        "key_count": 14,
+        "missing_from_dataset": [],
+        "missing_from_reference": []
+      }
+    },
+    "reference_dataset": "git_repository_snapshots",
+    "reference_key_count": 14,
+    "reference_keys": [
+      [
+        "TEAM_01",
+        "2025.2"
+      ],
+      [
+        "TEAM_01",
+        "2026.1"
+      ],
+      [
+        "TEAM_02",
+        "2025.2"
+      ],
+      [
+        "TEAM_02",
+        "2026.1"
+      ],
+      [
+        "TEAM_03",
+        "2025.2"
+      ],
+      [
+        "TEAM_03",
+        "2026.1"
+      ],
+      [
+        "TEAM_04",
+        "2025.2"
+      ],
+      [
+        "TEAM_04",
+        "2026.1"
+      ],
+      [
+        "TEAM_05",
+        "2025.2"
+      ],
+      [
+        "TEAM_05",
+        "2026.1"
+      ],
+      [
+        "TEAM_07",
+        "2025.2"
+      ],
+      [
+        "TEAM_08",
+        "2025.2"
+      ],
+      [
+        "TEAM_09",
+        "2025.2"
+      ],
+      [
+        "TEAM_10",
+        "2025.2"
+      ]
+    ]
+  }
+}

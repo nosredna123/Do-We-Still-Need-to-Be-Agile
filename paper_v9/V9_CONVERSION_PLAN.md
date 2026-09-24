@@ -138,6 +138,9 @@ Congelamento de baseline v8: título e RQs registrados como invariantes, todos 9
 ✓ **Tarefa 1.1 CONCLUÍDA** (2026-09-24)  
 Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `statistics.py`, `artifact_policy.py` (todos reaproveitando `pipeline_core`/`pipeline_config`, sem duplicar lógica), orquestrador `orchestrate_v9.py` com stages `metrics/results/figures/latex-check/all`, e suite `test_contracts.py` com 13 testes (100% passando). Suite completa do repositório (273 passed, 6 skipped) permanece verde. Documentado em `INFRASTRUCTURE.md`.
 
+✓ **Tarefa 1.2 CONCLUÍDA** (2026-09-24)  
+`input_inventory.json` gerado a partir de dados reais (`build_input_inventory.py`): 7 contratos do lake hashados (sha256 real), 14 team-semesters validados contra `git_repository_snapshots` como referência canônica, 9 lacunas de checkpoint documentadas (idênticas ao `lake_validation_report.json`), gap de transcripts 2026.1 registrado explicitamente. `validate_keys.py` valida chaves compostas e rejeita contratos `code-churn-metrics` desatualizados (fail-fast). `test_input_contracts.py` com 14 testes (unitários sintéticos + integração contra dados reais), 100% passando. Suite completa (287 passed, 6 skipped) permanece verde. Documentado em `INPUTS_SUMMARY.md`.
+
 ---
 
 ## Checklist de Execução do Plano V9
@@ -148,7 +151,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 
 ### Fase 1: Infraestrutura Técnica e Governança
 - [x] 1.1 - Criar contrato e utilitários comuns v9
-- [ ] 1.2 - Implementar resume, manifestos e inventário de entradas
+- [x] 1.2 - Implementar resume, manifestos e inventário de entradas
 
 ### Fase 2: RQ1 - Percepção e Adoção de IA
 - [ ] 2.1 - Implementar e validar M1 (Painel de Percepções)
@@ -188,8 +191,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 3/28 tarefas concluídas (11%)  
-**Próxima tarefa:** 1.2 - Implementar resume, manifestos e inventário de entradas
+**Progresso Total:** 4/28 tarefas concluídas (14%)  
+**Próxima tarefa:** 2.1 - Implementar e validar M1 (Painel de Percepções)
 
 ## 1. Objetivo e limites
 
