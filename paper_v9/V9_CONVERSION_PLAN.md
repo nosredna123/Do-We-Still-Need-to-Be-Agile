@@ -216,9 +216,9 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [x] 4.1 - Implementar e validar M6a (Planejamento Estrutural) — aprovado em 2026-09-24 para escopo estrutural determinístico
 - [x] 4.2 - Apresentar protocolo, prompt, custo e amostra de M6b (Análise LLM de Planejamento) — aprovado em 2026-09-24 para execução controlada
 - [x] 4.3 - Executar M6b após aprovação específica do protocolo — aprovado em 2026-09-24; nove casos observados, cinco indisponíveis, campos estruturados propagados separadamente
-- [ ] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório) — implementação técnica concluída; aprovação manual pendente
-- [ ] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline) — implementação técnica concluída; aprovação manual pendente
-- [ ] 4.6 - Implementar e validar M9 (Associações Estratificadas) — implementação técnica concluída; aprovação manual pendente
+- [x] 4.4 - Implementar e validar M7 (Dinâmica de Inatividade de Repositório) — aprovado em 2026-09-24 para escopo descritivo
+- [x] 4.5 - Implementar e validar M8 (Retrabalho Limpo com Baseline) — aprovado em 2026-09-24 para escopo descritivo
+- [x] 4.6 - Implementar e validar M9 (Associações Estratificadas) — aprovado em 2026-09-24 para escopo exploratório descritivo
 
 ### Fase 5: Resultados e Visualizações
 - [ ] 5.1 - Gerar catálogo de artefatos de resultados
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 14/28 tarefas concluídas (50%)
-**Tarefas técnicas concluídas:** 4.4 (M7 gerado; gate manual pendente), 4.5 (M8 gerado; gate manual pendente) e 4.6 (M9 gerado; gate manual pendente)
+**Progresso Total:** 17/28 tarefas concluídas (61%)
+**Próxima tarefa:** 5.1 - Gerar Catálogo de Artefatos de Resultados
 
 ## 1. Objetivo e limites
 
@@ -826,7 +826,7 @@ Reconstruir corpus global por marco a partir de chunks técnicos, medir densidad
 - [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Fase 4 (M6–M9)
+**Status ao completar:** ✓ APROVADO para Fase 4 (M6–M9)
 
 ---
 
@@ -871,7 +871,7 @@ Quantificar presença, contagem e escopo de artefatos de planejamento T1 por reg
 - [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** APROVAÇÃO MANUAL PENDENTE para Tarefa 4.2
+**Status ao completar:** ✓ APROVADO para Tarefa 4.2
 
 ---
 
@@ -1009,7 +1009,7 @@ Capturar trajetória de inatividade de repositório, usando janelas retrospectiv
 - [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Tarefa 4.5
+**Status ao completar:** ✓ APROVADO para Tarefa 4.5
 
 ---
 
@@ -1059,7 +1059,7 @@ Medir magnitude de retrabalho limpo em caminhos com baseline T1/T2, condicionado
 - [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Tarefa 4.6
+**Status ao completar:** ✓ APROVADO para Tarefa 4.6
 
 ---
 
@@ -1112,7 +1112,7 @@ Calcular associações descritivas entre planning (M6a/M6b) e rework/outcomes (M
 - [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Fase 5 (Resultados e Visualizações)
+**Status ao completar:** ✓ APROVADO para Fase 5 (Resultados e Visualizações)
 
 ---
 

@@ -15,7 +15,7 @@
     "m6b_observed": 9,
     "team_semesters": 14
   },
-  "gate_status": "pending",
+  "gate_status": "approved",
   "inference": "exploratory_descriptive",
   "input_sha256": "db787f14543e4bd7f9b75f420aae73d3d0222161d0d3cb448c9129d3f858ce60",
   "limitations": [

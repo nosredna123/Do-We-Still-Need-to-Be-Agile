@@ -15,7 +15,7 @@
     "tokens": 102088,
     "transcript_chunks": 100
   },
-  "gate_status": "pending",
+  "gate_status": "approved",
   "inference": "descriptive_only",
   "input_sha256": "f5d976a184c385090eb24f084ca46f2d66dbef04a22b3c49aa02715b42b3ee87",
   "legacy_source": "paper_v8/data/m5_coordination_friction_trajectory.csv",

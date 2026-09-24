@@ -15,7 +15,7 @@
     "team_semesters": 14,
     "trajectory_rows": 406
   },
-  "gate_status": "pending",
+  "gate_status": "approved",
   "inference": "exploratory_descriptive",
   "input_sha256": "743869c0170c2f3c1acc4add221c82c646d69d5bba21915a9107cad7d62e177b",
   "limitations": [
