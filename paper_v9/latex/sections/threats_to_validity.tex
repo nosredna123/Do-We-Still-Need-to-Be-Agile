@@ -2,8 +2,9 @@
 The constructs are measured through complementary but imperfect proxies. M1
 and M2 are self-reported survey measures rather than behavioral telemetry. M6a
 captures repository-visible T1 architectural artifacts, while M6b extracts
-structured evidence from commit subjects; neither establishes architectural
-quality or planning intent. M8 uses file-path provenance to identify changes to
+structured evidence from commit subjects. M6b remains exploratory and its
+categories were subject to human review; neither measure establishes
+architectural quality or planning intent. M8 uses file-path provenance to identify changes to
 previously observed clean paths, not semantic defects or destructive intent.
 M5 is based on deterministic lexical markers in transcript text; its counts are
 candidate textual evidence, not direct diagnoses of coordination friction.
@@ -14,7 +15,8 @@ The observational design and small sample constrain causal and external
 validity. M9 associations are exploratory, not causal or confirmatory, and
 leave-one-out ranges show sensitivity to individual team-semesters. Analytical
 grains differ across student responses, team-semesters, rolling windows, and a
-global transcript corpus, so denominators cannot be pooled implicitly. The
+global transcript corpus, so denominators cannot be pooled implicitly. Rolling
+windows overlap, so adjacent values are not independent observations. The
 study covers 14 team-semesters in one educational setting; transcript evidence
 is available only for 2025.2, and Git cannot observe planning or collaboration
 outside the repositories. Five M6b cases lacked T1 commit subjects and were
