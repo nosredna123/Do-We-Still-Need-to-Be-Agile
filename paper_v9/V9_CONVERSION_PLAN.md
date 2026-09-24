@@ -1463,9 +1463,64 @@ zero, ausencia, estrato inelegivel ou caso dominante.
 5. Adicionar comentarios invisiveis de proveniencia para cada numero/figura,
    sem expor jargao de pipeline no texto renderizado.
 
-### Fase 8 - Revisao por secoes, com bloqueio de aprovacao
+### Fase 7 - Revisao por secoes, com bloqueio de aprovacao
 
 A ordem e obrigatoria. Uma secao so avanca quando o usuario aprovar a anterior.
+
+Regra editorial transversal: esta fase e uma revisao incremental da versao
+atual, nao uma reescrita completa. Para todas as secoes, preservar ao maximo a
+redacao, estrutura, subsecoes, organizacao argumentativa e contribuicoes da V8.
+Alterar somente o necessario para corrigir evidencia, contratos v9, numeros,
+nomenclatura, provenance, clareza ou limites de interpretacao. Qualquer criacao,
+remocao, fusao, divisao ou reordenacao de secao/subsecao exige aprovacao previa
+explicita do usuario.
+
+Regra de apresentacao cientifica: o texto do artigo deve apresentar a V9 como
+uma metodologia unica, acabada e coerente, resultado do estudo. Nao mencionar
+no texto narrativo as transicoes V8--V9, conversoes, versoes intermediarias,
+gates de desenvolvimento ou o processo interno de revisao. Essas informacoes
+permanecem somente em manifests, comentarios de provenance, analises de
+tracabilidade e documentacao interna. Dados, processos, familias/componentes
+de metricas, tabelas e figuras devem ser descritos como partes integradas do
+desenho de pesquisa, sem historia de desenvolvimento visivel ao leitor.
+
+Regra de rastreamento LaTeX: metadados e informacoes de provenance que ajudem a
+localizar entradas, transformacoes, scripts, checksums, tabelas ou figuras
+devem ser registrados como comentarios LaTeX imediatamente junto ao trecho,
+numero, tabela ou figura correspondente. Esses comentarios sao invisiveis no
+PDF e servem apenas ao rastreamento interno; nao devem introduzir jargao de
+pipeline ou historia de desenvolvimento no texto publicado.
+
+### Decisoes gerais confirmadas para a Fase 7
+
+- Methodology: corrigir apenas os trechos necessarios, preservando a estrutura
+   aprovada e alinhando-a aos contratos v9.
+- Results: permitir analises ad hoc quando a narrativa exigir, desde que tenham
+   dados/script rastreaveis, unidade explicita, validacao e limitacoes.
+- Figuras: candidatos e novas figuras podem entrar provisoriamente na primeira
+   versao e ser revisados junto com cada secao.
+- M6b: tratar como evidencia textual exploratoria estruturada, sem score composto
+   e sem alegacao de qualidade arquitetural.
+- Claims V8 incompatíveis: remover ou reformular durante a revisao, sempre com
+   proveniencia explicita para os dados V9 ou para a comparacao historica.
+- Methodology: tratar a revisão como revisão editorial, não reescrita completa;
+   preservar ao máximo a redação, estrutura e argumentação atuais da V8, alterando
+   apenas definições, números, nomenclatura, provenance e limitações incompatíveis
+   com os contratos v9. A nomenclatura e a terminologia devem ser ajustadas para
+   permanecer coerentes com o fluxo V9 implementado, mas esses são ajustes locais
+   e não justificam reescrever o fluxo. Uma alteração estrutural no fluxo
+   metodológico só é justificável quando houver mudança metodológica real entre
+   V8 e V9.
+- Study design: manter explicitamente as duas coortes, 14 team-semesters, três
+   checkpoints e a assimetria de cobertura textual entre semestres.
+- Metric detail: apresentar M1–M9 como definições metodológicas, fontes,
+   transformações, missingness e limites, sem resultados numéricos detalhados.
+- LLM disclosure: resumir modelo, temperatura, cache, ledger, citações literais
+   e revisão humana; manter prompts completos como material de proveniência.
+- Figures and tables: permitir tabelas e figuras provisórias quando ajudarem a
+   explicação, sempre rastreáveis e sujeitas à revisão da seção.
+- Language: escrever a Methodology em inglês técnico internacional, preservando
+   título e RQs literalmente.
 
 1. **Methodology**
    - substituir definicoes M1--M9 por contratos v9;
@@ -1491,17 +1546,19 @@ A ordem e obrigatoria. Uma secao so avanca quando o usuario aprovar a anterior.
    - reescrever somente apos as quatro secoes anteriores; resumir achados e
      limites sem introduzir evidencia nova.
    - Gate: conclusao aprovada.
-6. **Abstract**
-   - reescrever exclusivamente a partir do texto aprovado das secoes finais.
-   - Gate: resumo aprovado.
-7. **Introduction**
+6. **Introduction**
    - corrigir motivacao, contribuicoes e linguagem de RQ1 conforme evidencia
      disponivel/indisponivel; titulo e RQs nao mudam.
    - Gate: introducao aprovada.
-8. **Background and Related Work**
+7. **Background and Related Work**
    - fazer apenas as correcoes necessarias para alinhar termos e reivindicacoes
      metodologicas; referencias novas somente se indispensaveis e verificadas.
    - Gate: texto completo aprovado.
+8. **Abstract**
+   - reescrever exclusivamente a partir do texto aprovado de Methodology,
+     Results, Discussion, Threats to Validity, Conclusion, Introduction e
+     Background and Related Work.
+   - Gate: resumo final aprovado.
 
 ## 7. Verificacao final e entrega
 
@@ -1559,9 +1616,9 @@ Cada item requer aprovacao explicita antes do proximo:
 21. Tarefa 7.3: revisar e aprovar Discussion.
 22. Tarefa 7.4: revisar e aprovar Threats to Validity.
 23. Tarefa 7.5: revisar e aprovar Conclusion.
-24. Tarefa 7.6: revisar e aprovar Abstract.
-25. Tarefa 7.7: revisar e aprovar Introduction.
-26. Tarefa 7.8: revisar e aprovar Background and Related Work.
+24. Tarefa 7.6: revisar e aprovar Introduction.
+25. Tarefa 7.7: revisar e aprovar Background and Related Work.
+26. Tarefa 7.8: revisar e aprovar Abstract por último.
 27. Tarefa 8.1: executar preflight de reproducibilidade e compilacao final.
 28. Tarefa 8.2: executar revisao final de submissao e changelog v8--v9.
 

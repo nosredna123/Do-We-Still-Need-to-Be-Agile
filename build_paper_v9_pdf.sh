@@ -26,4 +26,6 @@ if [[ ! -s "$PDF_PATH" ]]; then
   exit 1
 fi
 
+cp "$PDF_PATH" "$LATEX_DIR/main.pdf"
 echo "Generated: $PDF_PATH"
+echo "Synchronized: $LATEX_DIR/main.pdf"
