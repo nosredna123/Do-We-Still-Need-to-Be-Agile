@@ -20,8 +20,64 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{github2025spec}
+\BIBentryALTinterwordspacing
+{GitHub Blog}, ``Spec-driven development with ai: Get started with a new open source toolkit,'' September 2025. [Online]. Available: \url{https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{thoughtworks202Xspec}
+\BIBentryALTinterwordspacing
+{Thoughtworks}, ``Spec-driven development,'' 2025. [Online]. Available: \url{https://www.thoughtworks.com/en-br/insights/decoder/s/spec-driven-development}
+\BIBentrySTDinterwordspacing
+
+\bibitem{agile_manifesto_2001}
+\BIBentryALTinterwordspacing
+K.~Beck, M.~Beedle, A.~van Bennekum, A.~Cockburn, W.~Cunningham, M.~Fowler, J.~Grenning, J.~Highsmith, A.~Hunt, R.~Jeffries, J.~Kern, B.~Marick, R.~C. Martin, S.~Mellor, K.~Schwaber, J.~Sutherland, and D.~Thomas, ``Manifesto for agile software development,'' 2001. [Online]. Available: \url{https://agilemanifesto.org/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{brooks_1975_mythical_man_month}
+F.~P. Brooks, \emph{The Mythical Man-Month: Essays on Software Engineering}.\hskip 1em plus 0.5em minus 0.4em\relax Addison-Wesley, 1975.
+
+\bibitem{demarco_lister_1987_peopleware}
+T.~DeMarco and T.~Lister, \emph{Peopleware: Productive Projects and Teams}.\hskip 1em plus 0.5em minus 0.4em\relax Dorset House, 1987.
+
+\bibitem{carleton2024generative}
+A.~Carleton, D.~Falessi, H.~Zhang, and X.~Xia, ``Generative ai: Redefining the future of software engineering,'' \emph{IEEE Software}, vol.~41, no.~6, pp. 34--37, 2024.
+
+\bibitem{banh2025copiloting}
+L.~Banh, F.~Holldack, and G.~Strobel, ``Copiloting the future: How generative ai transforms software engineering,'' \emph{Information and Software Technology}, vol. 183, p. 107751, 2025.
+
+\bibitem{russo2024navigating}
+D.~Russo \emph{et~al.}, ``Navigating the complexity of generative ai adoption in software engineering,'' \emph{ACM Transactions on Software Engineering and Methodology}, vol.~33, 2024.
+
+\bibitem{barke2023grounded}
+S.~Barke, M.~B. James, and N.~Polikarpova, ``Grounded copilot: How programmers interact with code-generating models,'' \emph{Proceedings of the ACM on Programming Languages}, vol.~7, 2023.
+
+\bibitem{yabaku2024usage}
+M.~Yabaku and S.~Ouhbi, ``On usage and assessment of generative ai by computer science students in software development projects,'' in \emph{2024 36th International Conference on Software Engineering Education and Training (CSEE\&T)}, 2024.
+
+\bibitem{verdecchia2018architectural}
+R.~Verdecchia, ``Architectural technical debt identification: Moving forward,'' in \emph{2018 IEEE International Conference on Software Architecture Companion (ICSA-C)}, 2018, pp. 43--44.
+
+\bibitem{nayebi2019longitudinal}
+M.~Nayebi, Y.~Cai, R.~Kazman, G.~Ruhe, Q.~Feng, C.~Carlson, and F.~Chew, ``A longitudinal study of identifying and paying down architecture debt,'' in \emph{2019 IEEE/ACM 41st International Conference on Software Engineering: Software Engineering in Practice (ICSE-SEIP)}, 2019, pp. 171--180.
+
+\bibitem{cunningham_1992_technical_debt}
+W.~Cunningham, ``The wycash portfolio management system,'' in \emph{OOPSLA '92 Experience Report}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 1992.
+
+\bibitem{fowler2009technicaldebt}
+\BIBentryALTinterwordspacing
+M.~Fowler, ``Technical debt quadrant,'' 2009. [Online]. Available: \url{https://martinfowler.com/bliki/TechnicalDebtQuadrant.html}
+\BIBentrySTDinterwordspacing
+
+\bibitem{kruchten2012technicaldebt}
+P.~Kruchten, R.~L. Nord, and I.~Ozkaya, ``Technical debt: From metaphor to theory and practice,'' \emph{IEEE Software}, vol.~29, no.~6, pp. 18--21, 2012.
+
 \bibitem{lewis2020retrieval}
 P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal, H.~K{\"{u}}ttler, M.~Lewis, W.~Yih, T.~Rockt{\"{a}}schel, S.~Riedel, and D.~Kiela, ``Retrieval-augmented generation for knowledge-intensive {NLP} tasks,'' in \emph{Advances in Neural Information Processing Systems}, vol.~33, 2020, pp. 9459--9474.
+
+\bibitem{spearman1904proof}
+C.~Spearman, ``The proof and measurement of association between two things,'' \emph{The American Journal of Psychology}, vol.~15, no.~1, pp. 72--101, 1904.
 
 \bibitem{nguyenduc2026systematic}
 \BIBentryALTinterwordspacing
@@ -38,42 +94,19 @@ A.~Nguyen-Duc \emph{et~al.}, ``A systematic literature review on generative ai i
 {Cambridge Advance Online}, ``The contextual gap in genai for software engineering,'' July 2026. [Online]. Available: \url{https://advanceonline.cam.ac.uk/blog/the-contextual-gap-in-genai-for-software-engineering}
 \BIBentrySTDinterwordspacing
 
-\bibitem{github2025spec}
-\BIBentryALTinterwordspacing
-{GitHub Blog}, ``Spec-driven development with ai: Get started with a new open source toolkit,'' September 2025. [Online]. Available: \url{https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{thoughtworks202Xspec}
-\BIBentryALTinterwordspacing
-{Thoughtworks}, ``Spec-driven development,'' 2025. [Online]. Available: \url{https://www.thoughtworks.com/en-br/insights/decoder/s/spec-driven-development}
-\BIBentrySTDinterwordspacing
-
 \bibitem{codebridge2026hidden}
 \BIBentryALTinterwordspacing
 {Codebridge}, ``The hidden costs of ai-generated software: Why 'it works' isn't enough,'' February 2026. [Online]. Available: \url{https://www.codebridge.tech/articles/the-hidden-costs-of-ai-generated-software-why-it-works-isnt-enough}
 \BIBentrySTDinterwordspacing
 
-\bibitem{agile_manifesto_2001}
-\BIBentryALTinterwordspacing
-K.~Beck, M.~Beedle, A.~van Bennekum, A.~Cockburn, W.~Cunningham, M.~Fowler, J.~Grenning, J.~Highsmith, A.~Hunt, R.~Jeffries, J.~Kern, B.~Marick, R.~C. Martin, S.~Mellor, K.~Schwaber, J.~Sutherland, and D.~Thomas, ``Manifesto for agile software development,'' 2001. [Online]. Available: \url{https://agilemanifesto.org/}
-\BIBentrySTDinterwordspacing
+\bibitem{staron2025exploring}
+M.~Staron and S.~Abrah{\~a}o, ``Exploring generative ai in automated software engineering,'' \emph{IEEE Software}, vol.~42, no.~3, pp. 142--145, 2025.
 
-\bibitem{cunningham_1992_technical_debt}
-W.~Cunningham, ``The wycash portfolio management system,'' in \emph{OOPSLA '92 Experience Report}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 1992.
+\bibitem{stol2018abc}
+K.-J. Stol and B.~Fitzgerald, ``The abc of software engineering research,'' \emph{ACM Transactions on Software Engineering and Methodology}, vol.~27, no.~3, 2018.
 
-\bibitem{fowler2009technicaldebt}
-\BIBentryALTinterwordspacing
-M.~Fowler, ``Technical debt quadrant,'' 2009. [Online]. Available: \url{https://martinfowler.com/bliki/TechnicalDebtQuadrant.html}
-\BIBentrySTDinterwordspacing
-
-\bibitem{kruchten2012technicaldebt}
-P.~Kruchten, R.~L. Nord, and I.~Ozkaya, ``Technical debt: From metaphor to theory and practice,'' \emph{IEEE Software}, vol.~29, no.~6, pp. 18--21, 2012.
-
-\bibitem{brooks_1975_mythical_man_month}
-F.~P. Brooks, \emph{The Mythical Man-Month: Essays on Software Engineering}.\hskip 1em plus 0.5em minus 0.4em\relax Addison-Wesley, 1975.
-
-\bibitem{demarco_lister_1987_peopleware}
-T.~DeMarco and T.~Lister, \emph{Peopleware: Productive Projects and Teams}.\hskip 1em plus 0.5em minus 0.4em\relax Dorset House, 1987.
+\bibitem{runeson2009case}
+P.~Runeson, M.~Host, A.~J. Rainer, and B.~Regnell, ``Case study research in software engineering: Guidelines and examples,'' \emph{Empirical Software Engineering}, vol.~14, 2009.
 
 \bibitem{li_2015_technical_debt_mapping}
 Z.~Li, P.~Avgeriou, and P.~Liang, ``A systematic mapping study on technical debt and its management,'' \emph{Journal of Systems and Software}, vol. 101, pp. 193--220, 2015.
