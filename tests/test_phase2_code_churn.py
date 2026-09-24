@@ -34,10 +34,11 @@ def commits_frame() -> pd.DataFrame:
 def files_frame() -> pd.DataFrame:
     return pd.DataFrame(
         [
-            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "file_path": "src/a.py", "is_binary": False},
-            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "file_path": "assets/logo.png", "is_binary": True},
-            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c2", "file_path": "src/b.py", "is_binary": False},
-            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c3", "file_path": "src/c.py", "is_binary": False},
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "timestamp": pd.Timestamp("2025-10-18", tz="UTC"), "file_path": "src/a.py", "file_extension": ".py", "lines_added": 10, "lines_deleted": 2, "is_binary": False},
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "timestamp": pd.Timestamp("2025-10-18", tz="UTC"), "file_path": "assets/logo.png", "file_extension": ".png", "lines_added": None, "lines_deleted": None, "is_binary": True},
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c2", "timestamp": pd.Timestamp("2025-10-19", tz="UTC"), "file_path": "src/b.py", "file_extension": ".py", "lines_added": 4, "lines_deleted": 1, "is_binary": False},
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c2", "timestamp": pd.Timestamp("2025-10-19", tz="UTC"), "file_path": ".history/src/b_20251019.py", "file_extension": ".py", "lines_added": 100, "lines_deleted": 100, "is_binary": False},
+            {"ID_Equipe": "TEAM_1", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c3", "timestamp": pd.Timestamp("2025-10-27", tz="UTC"), "file_path": "src/c.py", "file_extension": ".py", "lines_added": 2, "lines_deleted": 0, "is_binary": False},
         ]
     )
 
@@ -61,8 +62,8 @@ def test_compute_code_churn_aggregates_repositories_and_binary_events() -> None:
     assert row["cc_total_t1"] == 19
     assert row["repo_source_loc_t1"] == 150
     assert row["cc_per_source_loc_t1"] == pytest.approx(19 / 150)
-    assert row["cc_binary_file_events_t1"] == 1
-    assert row["cc_unique_changed_files_t1"] == 4
+    assert row["cc_binary_file_events_t1"] == 0
+    assert row["cc_unique_changed_files_t1"] == 3
     assert row["cc_median_per_commit_t1"] == 5
     assert row["cc_commit_churn_n_valid_t1"] == 3
     assert bool(row["cc_source_loc_available_t1"])
@@ -115,7 +116,7 @@ def test_write_code_churn_metrics_writes_sidecar_and_rejects_stale(tmp_path: Pat
         output.with_name(f"{output.name}.metadata.json").read_text(encoding="utf-8")
     )
     assert metadata["status"] == "success"
-    assert metadata["contract_version"] == "code-churn-metrics-v1"
+    assert metadata["contract_version"] == "code-churn-metrics-v2"
     with pytest.raises(ValueError, match="immutable"):
         engine.write_code_churn_metrics(
             result,

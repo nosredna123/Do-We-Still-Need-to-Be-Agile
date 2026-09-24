@@ -5,14 +5,14 @@
     "executed": [
       {
         "analysis_id": "pi_vs_cc_primary",
-        "coefficient": -0.006766649524509584,
+        "coefficient": -0.15563293906372047,
         "confidence_interval": null,
         "confidence_interval_method": "not_calculated_v1",
         "figure": "pi_vs_cc.png",
         "n_missing": 0,
         "n_total": 14,
         "n_valid": 14,
-        "p_value": 0.9816838660605893,
+        "p_value": 0.5952186358602511,
         "priority": "primary",
         "reason": null,
         "status": "success",
@@ -47,14 +47,14 @@
       },
       {
         "analysis_id": "ai_vs_cc_primary",
-        "coefficient": 0.21428571428571433,
+        "coefficient": -0.10714285714285716,
         "confidence_interval": null,
         "confidence_interval_method": "not_calculated_v1",
         "figure": "ai_before_t3.png",
         "n_missing": 7,
         "n_total": 14,
         "n_valid": 7,
-        "p_value": 0.6445115810207203,
+        "p_value": 0.8191508555699912,
         "priority": "primary",
         "reason": null,
         "status": "success",
@@ -89,7 +89,7 @@
       }
     ],
     "rejected": [],
-    "results_input_checksum": "e583771ffb1cb155e0d303ef68d33a1f0e4ed25cc6657ca22b140184452ebd23",
+    "results_input_checksum": "7a76e58992d1988aa1375be3bea2d4e150d6e6ca5c1d6a311c3116ea2df3358f",
     "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/correlation_results.csv",
     "status": "success"
   },
@@ -3722,7 +3722,7 @@
           "numeric": true
         },
         {
-          "dtype": "int64",
+          "dtype": "float64",
           "n_missing": 0,
           "n_total": 14,
           "n_valid": 14,
@@ -3947,9 +3947,9 @@
         },
         {
           "dtype": "float64",
-          "n_missing": 5,
+          "n_missing": 7,
           "n_total": 14,
-          "n_valid": 9,
+          "n_valid": 7,
           "name": "cc_per_changed_file_t1",
           "numeric": true
         },
@@ -5178,13 +5178,13 @@
     {
       "dataset": "team_metrics",
       "example_key_hashes": [
+        "a6a0ad3b91d8bb46f50b6fc261e5bfde2ca6fc4b1ebae913d509b1dbfaa104e6",
         "504d719e1cba87e006d48bbed2ef7cd7000be1ea8c374dc43b3716193eb32fb6",
         "5af9c1eb238cb918d4f66e389d1be4c368c74934edb36475f8fefb1ebea85f4b",
         "dea7416a1da2940ea4bce8a1e2e8964ed11b820410b27ea3803daf883170cfe6",
-        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37",
-        "c5b8f71dc3a1bfc213ef0dc5a9a85cdb98a3eed768a962d4d38445e3a575523c"
+        "5581937914e5ad341861f48db74c0cbaba5316c4894c4cccb17741347c102d37"
       ],
-      "n_excluded": 5,
+      "n_excluded": 7,
       "reason": "missing_value",
       "unit_of_analysis": "team_semester",
       "variable": "cc_per_changed_file_t1"
@@ -6027,14 +6027,14 @@
         "n_total": 14,
         "n_valid": 14,
         "outcome_variable": "cc_per_source_loc_t3",
-        "p_value": 0.7103729603729605,
+        "p_value": 0.6200466200466201,
         "priority": "primary",
         "reason": null,
         "split_median": 2.0,
         "split_rule": "median_low_le_high_gt",
         "status": "success",
         "test": "mann_whitney_u",
-        "u_statistic": 21.0,
+        "u_statistic": 29.0,
         "unit_of_analysis": "team_semester"
       },
       {
@@ -6048,14 +6048,14 @@
         "n_total": 14,
         "n_valid": 7,
         "outcome_variable": "cc_total_t3",
-        "p_value": 1.0,
+        "p_value": 0.8571428571428571,
         "priority": "primary",
         "reason": null,
         "split_median": 0.5111111111111111,
         "split_rule": "median_low_le_high_gt",
         "status": "success",
         "test": "mann_whitney_u",
-        "u_statistic": 6.0,
+        "u_statistic": 7.0,
         "unit_of_analysis": "team_semester"
       },
       {
@@ -6106,7 +6106,7 @@
         "unit_of_analysis": "team_semester"
       }
     },
-    "results_input_checksum": "0747beada75d0746c16e36bdc9fb237a6873c59a765f6c370cc2f839ded0b59d",
+    "results_input_checksum": "26c1f5e969e232b387dc146b027139b462d72ef8413940a21a3173a98dcaa8b0",
     "results_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/hypothesis_results.csv",
     "status": "success"
   },
@@ -6126,7 +6126,7 @@
       "unit_of_analysis": "student_response"
     },
     "team_metrics": {
-      "checksum": "ed54681c638eb721b95e890198dc0ea4c83dbd4dfda89a3b6a70e36d9167c5da",
+      "checksum": "921c1df1c1284fde754684f3b08c8f6758b4884b5af842c27b25c7ade3e5f315",
       "contract_version": "team-metrics-v1",
       "n_rows": 14,
       "path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet",
@@ -6140,11 +6140,11 @@
       "unit_of_analysis": "transcript_session"
     }
   },
-  "input_checksum": "330c758577a511e6f9728ba49ca33d5fe46035eacf6d4c7b2387f4f4cd32a5cb",
+  "input_checksum": "dbc3849bb3caa639b03b116ea46c9cabdfc1543101c5f92294b5ff73e494ad45",
   "manifest_version": "phase2-statistics-v2",
   "metric_definition_versions": {
     "ai": "ai-v1",
-    "cc": "cc-v1",
+    "cc": "cc-v2-clean-paths",
     "dt": "dt-v1",
     "ie": "ie-v1",
     "pi": "pi-v1",

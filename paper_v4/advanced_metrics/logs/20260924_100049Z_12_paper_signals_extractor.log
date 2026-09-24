@@ -1,0 +1,2 @@
+2026-09-24 07:00:49,166 - INFO - Saved team-level signals to /tmp/pytest-of-amg/pytest-7/test_team_level_signal_builder0/team_level_signals.csv with 2 rows
+2026-09-24 07:00:49,168 - INFO - Saved cohort friction output to /tmp/pytest-of-amg/pytest-7/test_team_level_signal_builder0/cohort_temporal_friction.csv with 3 rows

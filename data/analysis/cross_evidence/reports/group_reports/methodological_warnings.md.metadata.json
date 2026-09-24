@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "6499647cf5be9a6ffb8596c850aa879843986f4a25c24326264d329c896dbc07",
+  "input_checksum": "702dc21ce3f678f862e857f23f0243bf3eb8ad743513f066438ad8e2180f7400",
   "options": {
     "backend": "openai",
     "group_name": "methodological_warnings",

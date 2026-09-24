@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "a5072623877885d59f5c956aff67d96c74e6444ed3a37037319b88f7c24d1597",
+  "input_checksum": "d14797410bf203f459ab051f93efc00c6c31e8177b21c58b44cc0151b287331c",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -30,14 +30,14 @@
           "n_total": 14,
           "n_valid": 14,
           "outcome_variable": "cc_per_source_loc_t3",
-          "p_value": 0.7103729603729605,
+          "p_value": 0.6200466200466201,
           "priority": "primary",
           "reason": null,
           "split_median": 2.0,
           "split_rule": "median_low_le_high_gt",
           "status": "success",
           "test": "mann_whitney_u",
-          "u_statistic": 21.0,
+          "u_statistic": 29.0,
           "unit_of_analysis": "team_semester"
         },
         {
@@ -51,14 +51,14 @@
           "n_total": 14,
           "n_valid": 7,
           "outcome_variable": "cc_total_t3",
-          "p_value": 1.0,
+          "p_value": 0.8571428571428571,
           "priority": "primary",
           "reason": null,
           "split_median": 0.5111111111111111,
           "split_rule": "median_low_le_high_gt",
           "status": "success",
           "test": "mann_whitney_u",
-          "u_statistic": 6.0,
+          "u_statistic": 7.0,
           "unit_of_analysis": "team_semester"
         },
         {

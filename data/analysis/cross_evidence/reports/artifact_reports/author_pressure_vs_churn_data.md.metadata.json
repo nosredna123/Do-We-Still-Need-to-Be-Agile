@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "9503bea7df81ccdf214916ad043da18d47780e6a17eb2a6f66d3b4b32df9b22f",
+  "input_checksum": "082e26acd5ba9fe97c61bb5aa4d96f73417711ed25dbfa05453d34ac4f9bac62",
   "options": {
     "artifact_id": "author_pressure_vs_churn_data",
     "backend": "openai",
@@ -56,8 +56,8 @@
           "n_valid": 42
         },
         "y_value": {
-          "max": 2935876.0,
-          "mean": 74450.92857142857,
+          "max": 27949.0,
+          "mean": 3294.6190476190477,
           "median": 54.0,
           "min": 2.0,
           "n_total": 42,

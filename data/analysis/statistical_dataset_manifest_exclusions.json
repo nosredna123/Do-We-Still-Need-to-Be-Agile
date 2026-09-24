@@ -988,8 +988,12 @@
     },
     {
       "dataset": "team_metrics",
-      "n_excluded": 5,
+      "n_excluded": 7,
       "observation_keys": [
+        {
+          "ID_Equipe": "TEAM_01",
+          "Semestre": "2026.1"
+        },
         {
           "ID_Equipe": "TEAM_02",
           "Semestre": "2025.2"
@@ -1004,6 +1008,10 @@
         },
         {
           "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
           "Semestre": "2025.2"
         },
         {
@@ -2687,7 +2695,7 @@
       "variable": "transcript_session_n"
     }
   ],
-  "input_checksum": "330c758577a511e6f9728ba49ca33d5fe46035eacf6d4c7b2387f4f4cd32a5cb",
+  "input_checksum": "dbc3849bb3caa639b03b116ea46c9cabdfc1543101c5f92294b5ff73e494ad45",
   "status": "success",
   "unit_policy": "true_observation_keys_are_private"
 }

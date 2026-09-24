@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "a81925e1485ea4db4ed961a8bd90de9f560e760c865352af339ea635d8138a01",
+  "input_checksum": "e418f4bb50547e727ce75c8a339f4ecf7177278430004db2747be03451afb1fb",
   "options": {
     "backend": "openai",
     "group_name": "robustness",

@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "bab95869f07d5ed27dbeebe688e7fb856eb754612d76c51e5622925e220843e2",
+  "input_checksum": "39a2d52a76becef5e3347e7c1cba529229d9e2fda1f0928f9d697dc86b4a70ae",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -2744,7 +2744,7 @@
               "name": "cc_commit_churn_mode_t2"
             },
             {
-              "dtype": "int64",
+              "dtype": "float64",
               "n_missing": 0,
               "n_total": 14,
               "name": "cc_commit_churn_mode_t3"
@@ -2913,7 +2913,7 @@
             },
             {
               "dtype": "float64",
-              "n_missing": 5,
+              "n_missing": 7,
               "n_total": 14,
               "name": "cc_per_changed_file_t1"
             },
@@ -3683,7 +3683,7 @@
           },
           {
             "dataset": "team_metrics",
-            "n_excluded": 5,
+            "n_excluded": 7,
             "reason": "missing_value",
             "variable": "cc_per_changed_file_t1"
           },

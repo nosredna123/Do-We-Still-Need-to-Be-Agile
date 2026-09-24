@@ -1,5 +1,5 @@
 ## Act summary
-Act 2, titled "A Anatomia da Divida de Planejamento (Diagnosis)," argues that skipping Big Design Up Front (BDUF) does not eliminate planning work; instead, it defers and multiplies it, resulting in Planning Debt. This debt manifests as structural drift and human/computational waste, such as Code Churn.
+Act 2, titled "A Anatomia da Divida de Planejamento (Diagnosis)", argues that skipping Big Design Up Front (BDUF) does not eliminate planning work; instead, it defers and multiplies it, resulting in Planning Debt. This debt manifests as structural drift and human/computational waste, such as Code Churn.
 
 ## Artifacts bound to this act
 - **phase2_contract_report**: descriptive_infrastructure
@@ -16,4 +16,4 @@ Act 2, titled "A Anatomia da Divida de Planejamento (Diagnosis)," argues that sk
 - **figure_delta_dt_by_team_semester**: inconclusive
 
 ## Empirical status
-The act is currently classified as "partially_supported." This classification is justified by the presence of 7 artifacts categorized as "descriptive_infrastructure," 4 as "inconclusive," and 1 that "supports_partially."
+The act is currently classified as "partially_supported". This classification is justified by the presence of 7 artifacts categorized as "descriptive_infrastructure", 4 as "inconclusive", and 1 that "supports_partially".

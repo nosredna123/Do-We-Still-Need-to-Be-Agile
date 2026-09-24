@@ -18,4 +18,4 @@ Act 3 argues that skipping upfront design collapses a team's asynchronous coordi
 - **figure_ie_by_cut_or_corpus**: supports_partially
 
 ## Empirical status
-The act is currently classified as partially supported. This classification is based on the presence of 7 artifacts categorized as descriptive infrastructure, 4 as inconclusive, and 3 as supports partially.
+The act is currently classified as partially supported. This classification is based on the counts of the verdicts, which include 7 instances of descriptive infrastructure, 4 inconclusive verdicts, and 3 instances of partial support.

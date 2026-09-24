@@ -49,7 +49,7 @@ def test_compute_code_churn_uses_observed_source_loc_without_zero_fallback() -> 
         [{"ID_Equipe": "TEAM_01", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "timestamp": pd.Timestamp("2025-10-18", tz="UTC"), "lines_added": 3, "lines_deleted": 1, "files_changed": 2}]
     )
     files = pd.DataFrame(
-        [{"ID_Equipe": "TEAM_01", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "file_path": "src/a.py", "is_binary": False}]
+        [{"ID_Equipe": "TEAM_01", "Semestre": "2025.2", "temporal_marker": "T1", "commit_hash": "c1", "timestamp": pd.Timestamp("2025-10-18", tz="UTC"), "file_path": "src/a.py", "file_extension": ".py", "lines_added": 3, "lines_deleted": 1, "is_binary": False}]
     )
     snapshots = pd.DataFrame(
         [{"ID_Equipe": "TEAM_01", "Semestre": "2025.2", "temporal_marker": "T1", "repo_source_loc": 10}]

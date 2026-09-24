@@ -129,6 +129,33 @@ def test_classify_file_category_lets_generated_path_override_source_extension() 
     assert result["category_warning"] == "generated_path_takes_precedence"
 
 
+def test_classify_file_category_treats_virtual_environments_as_generated() -> None:
+    result = classify("venv/bin/python", ".py")
+
+    assert result["file_category"] == "generated"
+    assert result["category_rule"] == "path:generated:venv/"
+    assert result["category_confidence"] == 0.8
+    assert result["category_warning"] == "generated_path_takes_precedence"
+
+
+def test_classify_file_category_treats_editor_history_as_generated() -> None:
+    result = classify(".history/src/app_20251113000000.py", ".py")
+
+    assert result["file_category"] == "generated"
+    assert result["category_rule"] == "path:generated:.history/"
+    assert result["category_confidence"] == 0.8
+    assert result["category_warning"] == "generated_path_takes_precedence"
+
+
+def test_classify_file_category_treats_backup_code_as_generated() -> None:
+    result = classify("backend/testes/backups/llm_service.py", ".py")
+
+    assert result["file_category"] == "generated"
+    assert result["category_rule"] == "path:generated:backups/"
+    assert result["category_confidence"] == 0.8
+    assert result["category_warning"] == "generated_path_takes_precedence"
+
+
 def test_classify_file_category_uses_planning_context_for_contextual_config() -> None:
     result = classify("docs/architecture/schema.json", ".json")
 
@@ -212,7 +239,7 @@ def test_compute_file_category_churn_metrics_aggregates_by_team_cut_and_category
     assert t1_generated["line_count_missing_event_n"] == 1
     assert t1_generated["churn_lines"] == 0
     assert t2_unknown["category_confidence_mean"] == 0.5
-    assert result["file_category_definition_version"].eq("file-category-rules-v1").all()
+    assert result["file_category_definition_version"].eq("file-category-rules-v4").all()
 
 
 def test_compute_file_category_churn_metrics_rejects_invalid_input() -> None:

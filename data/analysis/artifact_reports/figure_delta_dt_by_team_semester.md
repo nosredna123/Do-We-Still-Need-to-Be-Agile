@@ -2,16 +2,17 @@
 The analytical artifact is a figure that analyzes data at the granularity of "team_semester" with a total row count of 42. It was produced using the script "06_statistical_analyzer.py" and is based on contract version "team_metrics.parquet".
 
 ## How it was built
-The figure was created by applying transformations to the data, specifically "melt_T1_T2_T3" and "no_interpolation". This process involved restructuring the dataset to facilitate analysis of the variable "technical_complexity" across different team semesters, allowing for a clearer visual representation of the data.
+The figure was created by applying transformations to the dataset, specifically using the "melt_T1_T2_T3" method and avoiding interpolation. This process allowed for the aggregation of data across different time points while maintaining the integrity of the original observations.
 
 ## Narrative binding
 The narrative acts associated with this artifact are 2 and 3. Act 2 supports the claim regarding the diagnosis of planning debt, while Act 3 provides evidence related to the human factor and the illusion of progress.
 
 ## What the current data actually shows
-The current data shows a total of 42 observations with no missing data (n_missing: 0). The analysis conducted (analysis_id: "pi_vs_delta_dt_primary") yielded an inconclusive verdict with no significant correlation found (p-values and coefficients are not provided).
+The current data shows a total of 42 valid observations with no missing data (n_missing: 0). The analysis conducted was a correlation test (analysis_id: "pi_vs_delta_dt_primary") which resulted in an inconclusive verdict (verdict: "inconclusive").
 
 ## Contribution assessment
-The overall verdict of the analysis is "inconclusive". This is justified by the fact that the correlation analysis did not yield significant results, as indicated by the verdict summary.
+The overall contribution of this artifact is deemed inconclusive. This is justified by the correlation analysis yielding an inconclusive result, indicating that no definitive conclusions can be drawn from the data.
 
 ## Known limitations
-- Team-semester observations; no causal interpretation.
+The limitations of this analysis include: 
+- team-semester observations; no causal interpretation.

@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "b08fcb037cfda960db15fafa1bbc5a7e70e00035e0c441f792d851204b449f5c",
+  "input_checksum": "a011bf1a560ee41a7dca77b9d79c63dae7b62cf34c36793da80e3aeed4e20c06",
   "options": {
     "artifact_id": "evidence_priority_matrix",
     "backend": "openai",
@@ -44,16 +44,16 @@
       ],
       "numeric_summary": {
         "coefficient": {
-          "max": -0.0594088525786004,
-          "mean": -0.5365907760412248,
-          "median": -0.5544826240669376,
+          "max": -0.2376354103144018,
+          "mean": -0.5804202179159421,
+          "median": -0.5831555764121896,
           "min": -0.7854963073359155,
           "n_total": 77,
           "n_valid": 35
         },
         "jaccard": {
           "max": 0.6,
-          "mean": 0.2164021164021164,
+          "mean": 0.21375661375661373,
           "median": 0.1428571428571428,
           "min": 0.0,
           "n_total": 77,
@@ -69,8 +69,8 @@
         },
         "p_value": {
           "max": 0.8857142857142857,
-          "mean": 0.20694046832180646,
-          "median": 0.1212991257224558,
+          "mean": 0.12857866996541645,
+          "median": 0.0667530151696345,
           "min": 0.0031279384351483,
           "n_total": 77,
           "n_valid": 59

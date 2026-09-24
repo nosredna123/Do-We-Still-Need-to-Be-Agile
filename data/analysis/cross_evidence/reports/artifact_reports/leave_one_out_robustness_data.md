@@ -6,46 +6,24 @@
 - **Contract Version**: cross-evidence-figure-data-v1  
 
 ## How it was built
-The artifact was constructed by processing data from a CSV file located at `data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv` using the script `08_cross_evidence_engine.py`. It includes 9 columns and 7 rows of data related to various analysis results.
+The artifact was constructed by aggregating data from various analyses to evaluate the robustness of results through a leave-one-out approach. The data includes coefficients, p-values, and support shares, which were processed using the specified producer script.
 
 ## Narrative binding
-The narrative acts identified are 2 and 3. These acts are meant to support or qualify claims regarding the robustness of the analysis results.
+The narrative acts identified are 2 and 3. These acts are meant to support or qualify claims regarding the robustness of the analysis results and the reliability of the coefficients derived from the data.
 
 ## What the current data actually shows
-- **Original Coefficient**:  
-  - Max: -0.2647382010005621  
-  - Mean: -0.5207027851032128  
-  - Median: -0.5207396621025063  
-  - Min: -0.7284815485795703  
-  - n_valid: 7  
-- **Coefficient Min**:  
-  - Max: -0.5699124492412846  
-  - Mean: -0.6725534806053813  
-  - Median: -0.6795816917193728  
-  - Min: -0.7810117949610702  
-  - n_valid: 7  
-- **Coefficient Max**:  
-  - Max: -0.174630713288139  
-  - Mean: -0.43426754742467366  
-  - Median: -0.448223234903528  
-  - Min: -0.6725037594933305  
-  - n_valid: 7  
-- **P-value Max**:  
-  - Max: 0.5682629857514974  
-  - Mean: 0.19260818765647383  
-  - Median: 0.1245124600803049  
-  - Min: 0.0117870367777658  
-  - n_valid: 7  
-- **LOO Support Share**:  
-  - Max: 1.0  
-  - Mean: 0.4795918367346938  
-  - Median: 0.1428571428571428  
-  - Min: 0.0714285714285714  
-  - n_valid: 7  
+- **Effect Sizes**:  
+  - Original Coefficient: Mean = -0.5692339157349859, Max = -0.3805611639383081, Min = -0.7284815485795703  
+  - Coefficient Min: Mean = -0.7236397367688436, Max = -0.6795816917193728, Min = -0.7810117949610702  
+  - Coefficient Max: Mean = -0.47255839545972805, Max = -0.263803843477827, Min = -0.6725037594933305  
+- **P-Values**: Mean = 0.13780752691559844, Max = 0.3838101411210045, Min = 0.0117870367777658  
+- **n_valid**: 7  
+- **Missingness**: None reported  
+- **Cross-Evidence Labels**: None reported  
 
 ## Contribution assessment
-The contribution assessment is inconclusive due to the variability in the p-values and the range of coefficients. The maximum p-value of 0.5682629857514974 suggests a lack of statistical significance in the findings.
+The verdict on the contribution of this artifact is that it provides exploratory evidence regarding the robustness of analysis results. This is justified by the presence of valid coefficients and p-values, indicating a structured approach to evaluating the data.
 
 ## Known limitations
-- The data is based on a small sample size (n_total = 7), which may limit the generalizability of the results.
-- All data points are valid, but the maximum p-value indicates potential non-significance in the results.
+- No specific limitations were listed in the fact sheet.  
+- No exclusions summary was provided.

@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "ed20bcf34f95593349f8b3b499cadab4b0da589da5aee12f8da5149e5ffa01de",
+  "input_checksum": "3bce140a146acd5c41ed4555f12b085f2d0e586f4b3d779ea78ceb328f157e4b",
   "options": {
     "artifact_id": "temporal_escalation_metrics",
     "backend": "openai",
@@ -107,24 +107,24 @@
           "n_valid": 5
         },
         "t2_t3_max_delta": {
-          "max": 11750325.0,
-          "mean": 2362297.2,
+          "max": 60358.0,
+          "mean": 17285.4,
           "median": 675.0,
           "min": 0.9999999999999999,
           "n_total": 5,
           "n_valid": 5
         },
         "t2_t3_mean_delta": {
-          "max": 947123.7142857143,
-          "mean": 191173.27380952385,
+          "max": 8696.857142857143,
+          "mean": 3016.816666666667,
           "median": 28.214285714285715,
           "min": 0.22619047619047622,
           "n_total": 5,
           "n_valid": 5
         },
         "t2_t3_median_delta": {
-          "max": 9118.0,
-          "mean": 1832.3375,
+          "max": 3033.5,
+          "mean": 615.4375,
           "median": 9.5,
           "min": 0.1875,
           "n_total": 5,
@@ -132,9 +132,9 @@
         },
         "t2_t3_min_delta": {
           "max": -0.125,
-          "mean": -6146.225,
+          "mean": -1587.825,
           "median": -320.0,
-          "min": -27679.0,
+          "min": -4887.0,
           "n_total": 5,
           "n_valid": 5
         },

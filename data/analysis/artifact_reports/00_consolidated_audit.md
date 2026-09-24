@@ -23,21 +23,21 @@
 - data/analysis/artifact_reports/transcript_nlp.md
 
 ## Evidence table
-| analysis_id                               | unit_of_analysis | n_valid | coefficient_or_statistic | p_value                | status     |
-|-------------------------------------------|-------------------|---------|--------------------------|------------------------|------------|
-| pi_vs_cc_primary                          | team_semester     | 14      | -0.0067666495245095      | 0.9816838660605892     | success    |
-| pi_vs_delta_dt_primary                    | team_semester     | 14      | -0.0147096475119091      | 0.960194880594909      | success    |
-| ai_vs_cc_primary                          | team_semester     | 7       | 0.2142857142857143       | 0.6445115810207203     | success    |
-| context_ie_temporal_primary               | cut_context       | 3       | 1.0                      | 0.0                    | success    |
-| pi_high_vs_low_cc_primary                 | team_semester     | 14      | 21.0                     | 0.7103729603729605     | success    |
-| ai_high_vs_low_cc_primary                 | team_semester     | 7       | 6.0                      | 1.0                    | success    |
-| context_ie_high_vs_low_rework_primary     | cut_context       | 3       | null                     | null                   | unavailable |
+| analysis_id                              | unit_of_analysis | n_valid | coefficient_or_statistic | p_value | status     |
+|------------------------------------------|------------------|---------|--------------------------|---------|------------|
+| pi_vs_cc_primary                         | team_semester    | 14      | -0.1556329390637204      | 0.5952  | success    |
+| pi_vs_delta_dt_primary                   | team_semester    | 14      | -0.0147096475119091      | 0.9602  | success    |
+| ai_vs_cc_primary                         | team_semester    | 7       | -0.1071428571428571      | 0.8192  | success    |
+| context_ie_temporal_primary              | cut_context      | 3       | 1.0                      | 0.0     | success    |
+| pi_high_vs_low_cc_primary                | team_semester    | 14      | 29.0                     | 0.6200  | success    |
+| ai_high_vs_low_cc_primary                | team_semester    | 7       | 7.0                      | 0.8571  | success    |
+| context_ie_high_vs_low_rework_primary    | cut_context      | 3       | null                     | null    | unavailable |
 
 ## Verdict
 conditional-go  
 significant_result_but_small_sample  
 
-The verdict is a conditional-go because there is 1 supporting result out of 6 tested, and the team_semester_n is 14, which indicates a small sample size despite having significant results.
+The verdict is a conditional-go because there is 1 supporting result out of 6 tested, and the team_semester_n is 14, which is below the configured sufficiency threshold.
 
 ## Remediation options if not a clean go
 - Collect additional semesters/teams to raise team_semester n toward the configured sufficiency threshold.

@@ -6,23 +6,21 @@
 - **Contract Version**: cross-evidence-figure-data-v1  
 
 ## How it was built
-The artifact was constructed using a script that processes data related to ranked teams over semesters, resulting in a dataset with 18 rows and 15 columns. The data includes various metrics such as Jaccard indices and overlap rates, which are derived from the analysis of extreme cases in the context of secondary exploratory evidence.
+The artifact was constructed using a script that processes data related to ranked teams over semesters, resulting in a dataset with 18 rows and 15 columns. The data includes various metrics such as Jaccard indices and overlap rates, which were calculated to explore relationships between different variables.
 
 ## Narrative binding
-The narrative acts identified are 2 and 3. These acts are meant to support or qualify claims regarding the relationships and overlaps between different variables in the dataset.
+The narrative acts identified are 2 and 3. These acts are intended to support or qualify claims regarding the relationships and overlaps between the left and right variables in the dataset.
 
 ## What the current data actually shows
 - **Group Size Requested**: Mean = 4.0, n_valid = 18  
-- **Jaccard**: Mean = 0.216, n_valid = 18  
-- **Overlap N**: Mean = 1.222, n_valid = 18  
-- **Overlap Rate Left**: Mean = 0.306, n_valid = 18  
-- **Overlap Rate Right**: Mean = 0.306, n_valid = 18  
-- **Missingness**: None reported  
-- **Cross-evidence Labels**: Not specified  
+- **Jaccard**: Mean = 0.2138, n_valid = 18  
+- **Overlap n**: Mean = 1.2222, n_valid = 18  
+- **Overlap Rate Left**: Mean = 0.3056, n_valid = 18  
+- **Overlap Rate Right**: Mean = 0.3056, n_valid = 18  
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is that it provides secondary support for exploratory evidence. This is justified by the presence of valid metrics across all reported measures, indicating a consistent dataset.
+The verdict on the contribution of this artifact is that it provides secondary exploratory evidence. This is justified by the presence of valid metrics across all calculated fields, indicating a consistent dataset for analysis.
 
 ## Known limitations
-- No specific limitations were listed in the fact sheet.  
-- Exclusions summary: None provided.
+- No specific limitations were listed in the fact sheet.
+- There are no exclusions mentioned.

@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "327e8b8e804ddb6e2bf416cdd4be5325b97def6b5a1499bbc7d58d7ca24225c7",
+  "input_checksum": "fd928977fe242cb5ebbc485c46f3fb1fd7be51b9ceb4e26a500ab380c607d516",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -21,14 +21,14 @@
       "rows": [
         {
           "analysis_id": "pi_vs_cc_primary",
-          "coefficient": -0.0067666495245095,
+          "coefficient": -0.1556329390637204,
           "confidence_interval": null,
           "confidence_interval_method": "not_calculated_v1",
           "figure": "pi_vs_cc.png",
           "n_missing": 0,
           "n_total": 14,
           "n_valid": 14,
-          "p_value": 0.9816838660605892,
+          "p_value": 0.5952186358602511,
           "priority": "primary",
           "reason": null,
           "status": "success",
@@ -63,14 +63,14 @@
         },
         {
           "analysis_id": "ai_vs_cc_primary",
-          "coefficient": 0.2142857142857143,
+          "coefficient": -0.1071428571428571,
           "confidence_interval": null,
           "confidence_interval_method": "not_calculated_v1",
           "figure": "ai_before_t3.png",
           "n_missing": 7,
           "n_total": 14,
           "n_valid": 7,
-          "p_value": 0.6445115810207203,
+          "p_value": 0.8191508555699912,
           "priority": "primary",
           "reason": null,
           "status": "success",

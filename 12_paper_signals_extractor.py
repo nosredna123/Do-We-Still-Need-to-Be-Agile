@@ -12,6 +12,8 @@ from typing import Any
 
 import pandas as pd
 
+from pipeline_config import is_measurement_code_path
+
 PROJECT_ROOT = Path(__file__).resolve().parent
 PROMPT_DIR = PROJECT_ROOT / "paper_v4" / "advanced_metrics"
 if str(PROMPT_DIR) not in sys.path:
@@ -221,28 +223,8 @@ def call_cohort_llm_task(
 
 
 def _is_boilerplate_path(file_path: str) -> bool:
-    """Return True when a file path is boilerplate and should be excluded."""
-    path = file_path.lower()
-    excluded_tokens = (
-        "node_modules",
-        "venv",
-        ".venv",
-        "package-lock",
-        ".json",
-        ".svg",
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".gif",
-        ".ico",
-        "__pycache__",
-        ".lock",
-        ".min.js",
-        ".map",
-    )
-    if any(token in path for token in excluded_tokens):
-        return True
-    return False
+    """Return True when a path is outside the shared code-measurement policy."""
+    return not is_measurement_code_path(file_path)
 
 
 def _team_semester_key(row: dict[str, Any]) -> tuple[str, str]:

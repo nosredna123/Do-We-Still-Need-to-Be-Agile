@@ -1,10 +1,11 @@
 {
-  "contract_version": "code-churn-metrics-v1",
-  "input_checksum": "beec2bb7f43ba270c023a5bfa24b81a53b26170a1acf0c812c6fe618c8289ab8",
+  "contract_version": "code-churn-metrics-v2",
+  "input_checksum": "ef1ab4e17e1ea62c6bf00c756538c354830c8c897a542dcdc5330bb7f620ca74",
   "options": {
-    "cc_binary_policy": "excluded_from_line_churn_counted_as_events",
-    "cc_definition_version": "cc-v1",
-    "contract_version": "code-churn-metrics-v1",
+    "cc_binary_policy": "outside_code_measurement_policy",
+    "cc_definition_version": "cc-v2-clean-paths",
+    "code_measurement_policy": "pipeline_config.is_measurement_code_path",
+    "contract_version": "code-churn-metrics-v2",
     "rolling_window_bounds": "[timestamp, timestamp+7d)",
     "rolling_window_days": 7,
     "stage": "code_churn_metrics"

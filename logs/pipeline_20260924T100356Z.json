@@ -1,0 +1,17 @@
+{
+  "dry_run": true,
+  "force": true,
+  "log_path": "logs/pipeline_20260924T100356Z.txt",
+  "nlp_backend": "openai",
+  "stage_results": [],
+  "stages": [
+    "repo-snapshots",
+    "contracts",
+    "metrics",
+    "stats",
+    "narrative-audit",
+    "cross-evidence",
+    "cross-evidence-report"
+  ],
+  "status": "dry_run"
+}

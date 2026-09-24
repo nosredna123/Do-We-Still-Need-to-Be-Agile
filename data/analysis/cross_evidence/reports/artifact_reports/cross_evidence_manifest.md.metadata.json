@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "dedf316724ea4d26ee58cea5e31c5970af21eee6ece6d63d26aedcdfbfe6483b",
+  "input_checksum": "6f0ef912f09ddeefbc3ecab8bca6ada3e9a9c7d377b04439567b36652d2fb3e4",
   "options": {
     "artifact_id": "cross_evidence_manifest",
     "backend": "openai",

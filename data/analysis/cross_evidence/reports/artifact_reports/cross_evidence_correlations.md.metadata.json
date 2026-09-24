@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "40a9706427121e18debf77ec96f55dbb127eee05a798b6eded6dddc119384cde",
+  "input_checksum": "5075676f7a7e8175350527902fbb4ba6ce1cc39c29e22f99da9049af4b509f98",
   "options": {
     "artifact_id": "cross_evidence_correlations",
     "backend": "openai",
@@ -41,9 +41,9 @@
       ],
       "numeric_summary": {
         "coefficient": {
-          "max": -0.2647382010005621,
-          "mean": -0.5207027851032128,
-          "median": -0.5207396621025063,
+          "max": -0.3805611639383081,
+          "mean": -0.5692339157349859,
+          "median": -0.5831555764121896,
           "min": -0.7284815485795703,
           "n_total": 7,
           "n_valid": 7
@@ -73,9 +73,9 @@
           "n_valid": 7
         },
         "p_value": {
-          "max": 0.3603606340812801,
-          "mean": 0.10340406311635783,
-          "median": 0.056231526062027,
+          "max": 0.1794831502826139,
+          "mean": 0.05416747082904968,
+          "median": 0.0286037847926583,
           "min": 0.0031279384351483,
           "n_total": 7,
           "n_valid": 7

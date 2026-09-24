@@ -6,14 +6,14 @@
 - **Contract Version**: cross-evidence-manifest-v1  
 
 ## How it was built
-The artifact was constructed using the script "08_cross_evidence_engine.py" and is categorized under the "cross-evidence-manifest-v1" contract version. It focuses on secondary exploratory evidence and serves as a methodological warning. The specific details regarding the row count are not provided.
+The artifact was constructed using the script "08_cross_evidence_engine.py" and is categorized under the "cross-evidence-manifest-v1" contract version. It focuses on secondary exploratory evidence and serves as a methodological warning, indicating potential issues or limitations in the evidence presented.
 
 ## Narrative binding
 The narrative acts include:  
-1. Act 1: Supports the need for caution in interpreting exploratory evidence.  
-2. Act 2: Qualifies the reliability of the findings presented.  
-3. Act 3: Highlights potential methodological issues.  
-4. Act 4: Emphasizes the importance of considering exclusions in the analysis.  
+1. Act 1: Supports the claim regarding the need for caution in interpreting exploratory evidence.  
+2. Act 2: Qualifies the claim about the reliability of secondary evidence.  
+3. Act 3: Supports the caution regarding methodological limitations.  
+4. Act 4: Qualifies the claim about the applicability of findings across different contexts.  
 
 ## What the current data actually shows
 - **Effect Sizes**: Not specified  

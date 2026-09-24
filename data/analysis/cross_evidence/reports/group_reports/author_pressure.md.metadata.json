@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "8def4177b987b9e50731f70487f4281ecc03ceee557b6f82af80334238c4794d",
+  "input_checksum": "ce40f3e0edfc459f37a6709c183a00bda5080f17daf2d0c810e4aad4af7b73e6",
   "options": {
     "backend": "openai",
     "group_name": "author_pressure",

@@ -1,0 +1,36 @@
+2026-09-24 07:04:58,850 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260924T100458Z.txt
+2026-09-24 07:04:58,850 - __main__ - INFO - Running stage metrics: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/05_metric_engine.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --contract-report /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/planning_metrics.parquet --code-churn-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/code_churn_metrics.parquet --technical-degradation-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/technical_degradation_metrics.parquet --integration-friction-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/integration_friction_metrics.parquet --cut-context-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet --team-metrics-output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet --force
+INFO:__main__:Wrote 14 planning metrics team-semester observations
+INFO:__main__:Wrote 14 Code Churn team-semester observations
+INFO:__main__:Wrote 14 technical degradation team-semester observations
+INFO:__main__:Wrote 14 integration friction team-semester observations
+INFO:__main__:Wrote 6 cut context observations
+INFO:__main__:Wrote team metrics artifact: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet
+2026-09-24 07:05:00,740 - __main__ - INFO - Finished stage metrics status=success duration_seconds=1.9
+2026-09-24 07:05:00,740 - __main__ - INFO - Running stage stats: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/06_statistical_analyzer.py --force
+Statistical manifest: success (4 datasets); correlations: 4; hypotheses: 3; figures: 12
+2026-09-24 07:05:04,676 - __main__ - INFO - Finished stage stats status=success duration_seconds=3.9
+2026-09-24 07:05:04,676 - __main__ - INFO - Running stage cross-evidence: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/08_cross_evidence_engine.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis --force
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/lib/python3.11/site-packages/scipy/stats/_morestats.py:4088: UserWarning: Exact p-value calculation does not work if there are zeros. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+2026-09-24 07:05:09,251 - __main__ - INFO - Finished stage cross-evidence status=success duration_seconds=4.6

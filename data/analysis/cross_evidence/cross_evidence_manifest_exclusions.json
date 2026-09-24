@@ -187,7 +187,7 @@
       "affected_keys_sample_limit": 50,
       "dataset": "file_category_churn_metrics",
       "description": "File events classified as unknown by the versioned taxonomy.",
-      "n_affected_events": 1436,
+      "n_affected_events": 322,
       "n_affected_rows": 30,
       "reason": "unknown_file_category",
       "unit_of_analysis": "team_semester_cut_category"
@@ -499,7 +499,7 @@
       "dataset": "file_category_churn_metrics",
       "description": "File events whose line counts were missing and treated as zero for churn aggregation.",
       "n_affected_events": 14287,
-      "n_affected_rows": 67,
+      "n_affected_rows": 66,
       "reason": "missing_line_counts",
       "unit_of_analysis": "team_semester_cut_category"
     },
@@ -622,8 +622,20 @@
         {
           "ID_Equipe": "TEAM_05",
           "Semestre": "2026.1",
+          "file_category": "generated",
+          "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1",
           "file_category": "unknown",
           "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1",
+          "file_category": "generated",
+          "temporal_marker": "T3"
         },
         {
           "ID_Equipe": "TEAM_05",
@@ -670,6 +682,12 @@
         {
           "ID_Equipe": "TEAM_09",
           "Semestre": "2025.2",
+          "file_category": "generated",
+          "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2",
           "file_category": "planning",
           "temporal_marker": "T2"
         },
@@ -678,6 +696,12 @@
           "Semestre": "2025.2",
           "file_category": "unknown",
           "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2",
+          "file_category": "generated",
+          "temporal_marker": "T3"
         },
         {
           "ID_Equipe": "TEAM_09",
@@ -707,8 +731,8 @@
       "affected_keys_sample_limit": 50,
       "dataset": "file_category_churn_metrics",
       "description": "File events classified with a taxonomy warning.",
-      "n_affected_events": 10564,
-      "n_affected_rows": 33,
+      "n_affected_events": 24018,
+      "n_affected_rows": 37,
       "reason": "category_warnings",
       "unit_of_analysis": "team_semester_cut_category"
     },
@@ -837,8 +861,20 @@
         {
           "ID_Equipe": "TEAM_05",
           "Semestre": "2026.1",
+          "file_category": "generated",
+          "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1",
           "file_category": "unknown",
           "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_05",
+          "Semestre": "2026.1",
+          "file_category": "generated",
+          "temporal_marker": "T3"
         },
         {
           "ID_Equipe": "TEAM_05",
@@ -885,6 +921,12 @@
         {
           "ID_Equipe": "TEAM_09",
           "Semestre": "2025.2",
+          "file_category": "generated",
+          "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2",
           "file_category": "planning",
           "temporal_marker": "T2"
         },
@@ -893,6 +935,12 @@
           "Semestre": "2025.2",
           "file_category": "unknown",
           "temporal_marker": "T2"
+        },
+        {
+          "ID_Equipe": "TEAM_09",
+          "Semestre": "2025.2",
+          "file_category": "generated",
+          "temporal_marker": "T3"
         },
         {
           "ID_Equipe": "TEAM_09",
@@ -928,14 +976,14 @@
       "affected_keys_sample_limit": 50,
       "dataset": "file_category_churn_metrics",
       "description": "Aggregate categories whose mean classification confidence is below 1.0.",
-      "n_affected_events": 26567,
-      "n_affected_rows": 35,
+      "n_affected_events": 45262,
+      "n_affected_rows": 39,
       "reason": "low_confidence_categories",
       "unit_of_analysis": "team_semester_cut_category"
     }
   ],
-  "file_category_definition_version": "file-category-rules-v1",
-  "input_checksum": "42415c63090be64dd51d7e5cb1231649c9155310fcc060fb0b5083f8e2287528",
+  "file_category_definition_version": "file-category-rules-v4",
+  "input_checksum": "ab1bc154678ad5fcf1d53922314336fe782c73780fc926f34e77589bda4804c1",
   "options": {
     "affected_key_sample_limit": 50,
     "raw_text_policy": "no_raw_text_fields_read_or_persisted",
@@ -949,89 +997,81 @@
     "file_category_churn_metrics": {
       "categories": [
         {
-          "churn_lines": 3527.0,
-          "events": 681,
+          "churn_lines": 869.0,
+          "events": 436,
           "file_category": "asset",
-          "line_count_missing_events": 382,
-          "rows": 24,
+          "line_count_missing_events": 224,
+          "rows": 23,
           "warning_events": 0
         },
         {
-          "churn_lines": 7684888.0,
-          "events": 2850,
+          "churn_lines": 215869.0,
+          "events": 466,
           "file_category": "config",
           "line_count_missing_events": 36,
           "rows": 29,
           "warning_events": 0
         },
         {
-          "churn_lines": 1450436.0,
-          "events": 25254,
+          "churn_lines": 13246174.0,
+          "events": 45125,
           "file_category": "generated",
-          "line_count_missing_events": 13712,
-          "rows": 7,
-          "warning_events": 9359
+          "line_count_missing_events": 13903,
+          "rows": 11,
+          "warning_events": 23865
         },
         {
-          "churn_lines": 1072734.0,
-          "events": 3678,
-          "file_category": "localization",
-          "line_count_missing_events": 0,
-          "rows": 1,
-          "warning_events": 0
-        },
-        {
-          "churn_lines": 101015.0,
-          "events": 1634,
+          "churn_lines": 84386.0,
+          "events": 1404,
           "file_category": "planning",
           "line_count_missing_events": 80,
           "rows": 33,
-          "warning_events": 65
+          "warning_events": 7
         },
         {
-          "churn_lines": 3251171.0,
-          "events": 15405,
+          "churn_lines": 204059.0,
+          "events": 3275,
           "file_category": "source",
           "line_count_missing_events": 0,
           "rows": 31,
           "warning_events": 0
         },
         {
-          "churn_lines": 43857.0,
-          "events": 103,
+          "churn_lines": 1314.0,
+          "events": 13,
           "file_category": "test",
           "line_count_missing_events": 0,
-          "rows": 3,
+          "rows": 2,
           "warning_events": 0
         },
         {
-          "churn_lines": 187516.0,
-          "events": 1436,
+          "churn_lines": 42473.0,
+          "events": 322,
           "file_category": "unknown",
-          "line_count_missing_events": 77,
+          "line_count_missing_events": 44,
           "rows": 30,
-          "warning_events": 1140
+          "warning_events": 146
         }
       ],
-      "category_warning_event_n": 10564,
+      "category_warning_event_n": 24018,
       "event_n": 51041,
       "line_count_missing_event_n": 14287,
-      "rows": 158,
-      "unknown_event_n": 1436
+      "rows": 159,
+      "unknown_event_n": 322
     }
   },
   "status": "success",
   "summary": {
-    "category_warning_event_n": 10564,
+    "category_warning_event_n": 24018,
     "event_n": 51041,
     "exclusion_reasons": {
-      "category_warnings": 10564,
-      "low_confidence_categories": 26567,
+      "category_warnings": 24018,
+      "low_confidence_categories": 45262,
       "missing_line_counts": 14287,
-      "unknown_file_category": 1436
+      "unknown_file_category": 322
     },
     "line_count_missing_event_n": 14287,
-    "rows": 158,
-    "unknown_event_n": 1436
+    "rows": 159,
+    "unknown_event_n": 322
   }
 }

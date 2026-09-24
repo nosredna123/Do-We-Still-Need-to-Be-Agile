@@ -8,7 +8,7 @@ Act 3, titled "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)", tests
 - **scope_vs_planning_artifact_activity_t3**: supports
 - **scope_vs_planning_rework_t2_t3**: inconclusive
 - **scope_vs_commits_per_author_t3**: supports
-- **scope_vs_late_instability_index**: inconclusive
+- **scope_vs_late_instability_index**: supports
 - **scope_applicability_mean_t3__planning_rework_signal_t2_t3__top_bottom_4**: inconclusive
 - **scope_applicability_mean_t3__planning_artifact_activity_t3__top_bottom_4**: inconclusive
 - **scope_applicability_mean_t3__pi_line_delta_t3__top_bottom_4**: inconclusive
@@ -39,8 +39,8 @@ Act 3, titled "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)", tests
 - **scope_vs_planning_artifact_activity_t3**: supports
 - **scope_vs_planning_rework_t2_t3**: inconclusive
 - **scope_vs_commits_per_author_t3**: supports
-- **scope_vs_late_instability_index**: inconclusive
-- **planning_rework_signal_t2_t3__top__source_churn_t3__top**: supports
+- **scope_vs_late_instability_index**: supports
+- **planning_rework_signal_t2_t3__top__source_churn_t3__top**: inconclusive
 - **planning_rework_signal_t2_t3__top__source_churn_t3__bottom**: inconclusive
 - **planning_rework_signal_t2_t3__bottom__source_churn_t3__bottom**: supports
 - **planning_rework_signal_t2_t3__top__commits_per_author_t3__top**: supports
@@ -76,12 +76,12 @@ Act 3, titled "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)", tests
 - **scope_vs_commits_per_author_t3**: supports
 - **scope_vs_commits_per_author_t3**: supports
 - **scope_vs_commits_per_author_t3**: inconclusive
-- **scope_vs_late_instability_index**: inconclusive
+- **scope_vs_late_instability_index**: supports
 - **scope_vs_late_instability_index**: inconclusive
 - **scope_vs_late_instability_index**: inconclusive
 
 ## Empirical status
-The aggregate status is "supports". This is justified by the presence of 28 supporting artifacts compared to 49 inconclusive artifacts, indicating a stronger basis for support despite the significant number of inconclusive findings.
+The aggregate status is "supports". This is justified by the presence of 30 supporting artifacts compared to 47 inconclusive artifacts, indicating a stronger basis for support despite the significant number of inconclusive findings.
 
 ## Narrative interpretation
-The act is supported, as evidenced by the number of artifacts that provide support for the narrative claims related to coordination pressure, late instability, and author concentration.
+The act is supported, as evidenced by the majority of artifacts providing support for the narrative claims related to coordination pressure, late instability, and author concentration.

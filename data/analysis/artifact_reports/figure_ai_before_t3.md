@@ -2,7 +2,7 @@
 The analytical artifact is a figure with a granularity/unit of analysis at the team_semester level. It contains a total of 7 rows, produced by the script `06_statistical_analyzer.py`, and is based on contract version 1.0.
 
 ## How it was built
-The figure was constructed using data from the `team_metrics.parquet` source. It involved transformations such as complete case pair analysis and size by commit count to ensure that the data was appropriately processed for analysis. The resulting visual representation aims to illustrate the relationship between AI metrics and team performance over specified semesters.
+The figure was constructed using data from the `team_metrics.parquet` source file. It involved transformations such as complete case pair analysis and size calculations based on commit counts. The resulting visual representation aims to illustrate the relationship between AI metrics and team performance over specified semesters.
 
 ## Narrative binding
 The narrative act number is 3, which supports the claim related to "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)."

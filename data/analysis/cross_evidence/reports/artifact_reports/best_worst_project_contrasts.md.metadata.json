@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "860a28f072f037ff9caada24df168997f4e0caa8b92376717872b2dd974bf0e6",
+  "input_checksum": "8d5744bfcb02f10441137e797f0368ef21b82214eb8c138d50daf193555e54f4",
   "options": {
     "artifact_id": "best_worst_project_contrasts",
     "backend": "openai",
@@ -61,17 +61,17 @@
         },
         "high_score_max": {
           "max": 4.0,
-          "mean": 2.2755102040816326,
+          "mean": 2.2789115646258504,
           "median": 2.0,
-          "min": 0.8265306122448981,
+          "min": 0.8367346938775511,
           "n_total": 24,
           "n_valid": 24
         },
         "high_score_min": {
           "max": 4.0,
-          "mean": 2.239795918367347,
+          "mean": 2.241496598639456,
           "median": 2.0,
-          "min": 0.7193877551020408,
+          "min": 0.7244897959183675,
           "n_total": 24,
           "n_valid": 24
         },
@@ -84,8 +84,8 @@
           "n_valid": 24
         },
         "low_mean": {
-          "max": 33595.5,
-          "mean": 5495.8804776077095,
+          "max": 30843.75,
+          "mean": 4274.840086451247,
           "median": 92.9625,
           "min": 0.2780612244897959,
           "n_total": 24,

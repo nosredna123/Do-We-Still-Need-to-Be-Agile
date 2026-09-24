@@ -6,15 +6,15 @@
 - **Contract Version**: cross-evidence-figure-data-v1  
 
 ## How it was built
-The artifact was constructed using a script that processes data related to various metrics over time, specifically focusing on a family of metrics. The data is aggregated and includes raw values, baseline comparisons, and semester indicators, resulting in a structured dataset with 54 rows and 13 columns.
+The artifact was constructed using data from a CSV file located at `data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv`. It includes 54 rows and 13 columns, focusing on various metrics related to temporal escalation. The data was processed through a script designed to aggregate and analyze the metrics over specified temporal markers.
 
 ## Narrative binding
-The narrative acts identified are 2 and 3. These acts are intended to support or qualify claims regarding the temporal escalation of metrics and their relative values over time.
+The narrative acts identified are 2 and 3. These acts are intended to support or qualify claims regarding the exploratory evidence of temporal escalation metrics.
 
 ## What the current data actually shows
 - **Baseline T1**:  
-  - Max: 6360.0  
-  - Mean: 684.30  
+  - Max: 3547.6  
+  - Mean: 321.82  
   - Median: 3.62  
   - Min: 1.58  
   - n_valid: 54  
@@ -31,21 +31,22 @@ The narrative acts identified are 2 and 3. These acts are intended to support or
   - Min: 2025.2  
   - n_valid: 36  
 - **Value Raw**:  
-  - Max: 1485854.33  
-  - Mean: 47606.23  
+  - Max: 10572.89  
+  - Mean: 1464.01  
   - Median: 16.88  
   - Min: 1.53  
   - n_valid: 54  
 - **Value Relative T1**:  
-  - Max: 710.78  
-  - Mean: 35.21  
+  - Max: 306.08  
+  - Mean: 17.53  
   - Median: 1.13  
-  - Min: 0.85  
+  - Min: 0.80  
   - n_valid: 54  
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is that it provides a structured dataset for analyzing temporal metrics. The data includes comprehensive statistics on baseline values, raw values, and semester indicators, which can be useful for exploratory analysis.
+The contribution assessment is inconclusive due to the exploratory nature of the evidence and the lack of definitive claims supported by the data. The evidence scope is categorized as secondary exploratory evidence, which suggests that further validation is needed.
 
 ## Known limitations
-- The evidence scope is classified as secondary exploratory evidence.
-- The dataset has a missingness issue, as only 36 out of 54 rows are valid for the semester column.
+- The evidence is classified as secondary exploratory evidence.
+- The dataset may have limitations in terms of generalizability due to its exploratory nature.
+- There is a missingness of data in the semester column, with only 36 valid entries out of 54 total.

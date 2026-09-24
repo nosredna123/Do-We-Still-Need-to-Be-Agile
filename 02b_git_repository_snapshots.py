@@ -4,13 +4,12 @@
 from __future__ import annotations
 
 import argparse
-import fnmatch
 import hashlib
 import json
 import logging
 import subprocess
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import pandas as pd
 
@@ -21,6 +20,7 @@ from pipeline_config import (
     SOURCE_CODE_EXCLUDED_PATH_PATTERNS,
     SOURCE_CODE_EXTENSION_ALLOWLIST,
     SOURCE_LOC_DEFINITION_VERSION,
+    is_measurement_code_path,
 )
 from pipeline_core import artifact_metadata_path, input_checksum, is_current_artifact, load_project_environment
 
@@ -105,22 +105,9 @@ def _tree_entries(repo_path: Path, commit_hash: str) -> list[dict[str, Any]]:
     return rows
 
 
-def _excluded_by_pattern(path: str, patterns: Iterable[str]) -> bool:
-    """Return whether a repository path matches a versioned exclusion pattern."""
-    normalized = path.replace("\\", "/")
-    for pattern in patterns:
-        if pattern.endswith("/") and normalized.startswith(pattern):
-            return True
-        if fnmatch.fnmatch(normalized, pattern):
-            return True
-    return False
-
-
 def _is_source_path(path: str) -> bool:
     """Return whether a path is source code according to versioned definitions."""
-    if _excluded_by_pattern(path, SOURCE_CODE_EXCLUDED_PATH_PATTERNS):
-        return False
-    return Path(path).suffix.lower() in SOURCE_CODE_EXTENSION_ALLOWLIST
+    return is_measurement_code_path(path)
 
 
 def _blob_bytes(repo_path: Path, commit_hash: str, file_path: str) -> bytes:

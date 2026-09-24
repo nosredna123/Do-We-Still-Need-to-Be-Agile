@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "359b1361db1582460259bff1597454d87cfff8a9d611b5828d78b9bbd258f4d7",
+  "input_checksum": "c654f50c1aa76cdc8a3ad5c59075c4e6f6ff8046fb502c41035f6c1fa43d4acb",
   "options": {
     "artifact_id": "pareto_extreme_cases_data",
     "backend": "openai",
@@ -44,7 +44,7 @@
         },
         "jaccard": {
           "max": 0.6,
-          "mean": 0.2164021164021164,
+          "mean": 0.21375661375661373,
           "median": 0.1428571428571428,
           "min": 0.0,
           "n_total": 18,

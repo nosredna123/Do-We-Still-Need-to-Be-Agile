@@ -8,75 +8,75 @@ The 'evaluator_crossing' group measures the relationships between various softwa
 
 2. **scope_vs_commits_per_author_t3**
    - **Status**: Supports
-   - **Contribution**: Demonstrates a strong negative correlation between commits per author and scope, reinforcing the narrative.
+   - **Contribution**: Demonstrates a strong negative correlation between commits per author and scope, suggesting that higher commit activity may relate to reduced scope.
 
 3. **scope_vs_late_instability_index**
-   - **Status**: Inconclusive
-   - **Contribution**: Indicates a fragile correlation that does not clearly support the expected direction.
+   - **Status**: Supports
+   - **Contribution**: Shows a significant negative correlation between late instability and scope, indicating that increased instability may correlate with reduced scope.
 
 4. **scope_applicability_mean_t3__planning_artifact_activity_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Provides exploratory insights but lacks statistical support.
+   - **Contribution**: Provides exploratory insights but lacks statistical support for generalization.
 
 5. **scope_applicability_mean_t3__commits_per_author_t3__top_bottom_4**
    - **Status**: Supports
-   - **Contribution**: Offers exploratory group-level support for the relationship between commits per author and scope.
+   - **Contribution**: Offers exploratory group-level support for the relationship between commits per author and scope applicability.
 
 6. **scope_applicability_mean_t3__late_instability_index__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Lacks statistical support for the best/worst contrast.
+   - **Contribution**: Exploratory in nature with no statistical backing.
 
 7. **scope_applicability_mean_t3__scope_applicability_mean_t3__top_bottom_4**
    - **Status**: Supports
-   - **Contribution**: Provides exploratory support for the relationship within scope applicability.
+   - **Contribution**: Provides exploratory support for the relationship between scope applicability and itself.
 
 8. **project_progress_mean_t3__planning_artifact_activity_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Exploratory insights without statistical backing.
+   - **Contribution**: Exploratory findings without statistical support.
 
 9. **project_progress_mean_t3__commits_per_author_t3__top_bottom_4**
    - **Status**: Inconclusive
-   - **Contribution**: Exploratory insights without statistical backing.
+   - **Contribution**: Exploratory findings without statistical support.
 
 10. **project_progress_mean_t3__late_instability_index__top_bottom_4**
     - **Status**: Inconclusive
-    - **Contribution**: Exploratory insights without statistical backing.
+    - **Contribution**: Exploratory findings without statistical support.
 
 11. **project_progress_mean_t3__scope_applicability_mean_t3__top_bottom_4**
     - **Status**: Supports
-    - **Contribution**: Provides exploratory support for the relationship between project progress and scope applicability.
+    - **Contribution**: Provides exploratory group-level support for the relationship between project progress and scope applicability.
 
 12. **late_instability_index__scope_applicability_mean_t3__top_bottom_4**
     - **Status**: Inconclusive
-    - **Contribution**: Lacks statistical support for the best/worst contrast.
+    - **Contribution**: Exploratory findings without statistical support.
 
 13. **scope_vs_planning_artifact_activity_t3** (duplicate)
     - **Status**: Supports
-    - **Contribution**: Confirms stability in the correlation with scope.
+    - **Contribution**: Confirms stability through leave-one-out analysis.
 
 14. **scope_vs_commits_per_author_t3** (duplicate)
     - **Status**: Supports
-    - **Contribution**: Confirms stability in the correlation with scope.
+    - **Contribution**: Confirms stability through leave-one-out analysis.
 
 15. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Indicates fragile or unsupported evidence.
+    - **Status**: Supports
+    - **Contribution**: Confirms stability through leave-one-out analysis.
 
 16. **commits_per_author_t3__top__scope_applicability_mean_t3__top**
     - **Status**: Inconclusive
-    - **Contribution**: Weak evidence for extreme-case overlap.
+    - **Contribution**: Weak overlap that should remain descriptive.
 
 17. **commits_per_author_t3__top__scope_applicability_mean_t3__bottom**
     - **Status**: Supports
-    - **Contribution**: Supports convergence of tails in the data.
+    - **Contribution**: Indicates convergence of tails in extreme cases.
 
 18. **commits_per_author_t3__bottom__scope_applicability_mean_t3__bottom**
     - **Status**: Inconclusive
-    - **Contribution**: Weak evidence for extreme-case overlap.
+    - **Contribution**: Weak overlap that should remain descriptive.
 
 19. **scope_vs_planning_artifact_activity_t3** (duplicate)
     - **Status**: Supports
-    - **Contribution**: Provides contextual evidence for the relationship with scope.
+    - **Contribution**: Provides contextual evidence through global/semester comparison.
 
 20. **scope_vs_planning_artifact_activity_t3** (duplicate)
     - **Status**: Inconclusive
@@ -88,7 +88,7 @@ The 'evaluator_crossing' group measures the relationships between various softwa
 
 22. **scope_vs_commits_per_author_t3** (duplicate)
     - **Status**: Supports
-    - **Contribution**: Provides contextual evidence for the relationship with scope.
+    - **Contribution**: Provides contextual evidence through global/semester comparison.
 
 23. **scope_vs_commits_per_author_t3** (duplicate)
     - **Status**: Supports
@@ -99,8 +99,8 @@ The 'evaluator_crossing' group measures the relationships between various softwa
     - **Contribution**: Requires contextualized interpretation.
 
 25. **scope_vs_late_instability_index** (duplicate)
-    - **Status**: Inconclusive
-    - **Contribution**: Provides contextual evidence but lacks clarity.
+    - **Status**: Supports
+    - **Contribution**: Provides contextual evidence through global/semester comparison.
 
 26. **scope_vs_late_instability_index** (duplicate)
     - **Status**: Inconclusive
@@ -111,7 +111,7 @@ The 'evaluator_crossing' group measures the relationships between various softwa
     - **Contribution**: Requires contextualized interpretation.
 
 ## Evidence status
-The group mainly supports the narrative, with 11 artifacts providing supportive evidence and 16 artifacts being inconclusive. The significant number of supportive artifacts indicates a stronger alignment with the narrative's claims.
+The group mainly supports the narrative, with 14 artifacts classified as supports and 13 as inconclusive. The majority of the evidence indicates significant correlations that reinforce the narrative's claims.
 
 ## Role in the narrative
-The evidence from this group strengthens the act-level argument by providing robust correlations that highlight the relationships between scope, planning activities, and commits per author. The supportive findings enhance the overall understanding of how these factors interact in software engineering contexts.
+The evidence from this group strengthens the act-level argument by providing robust correlations between key metrics in software engineering, thereby validating the relationships proposed in the thesis.

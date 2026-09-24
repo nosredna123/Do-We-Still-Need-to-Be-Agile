@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-consolidated-report-v1",
-  "input_checksum": "e69431486c382d95049ba06ec2acf5752ba961723459fa48d0ac82e815a51e2d",
+  "input_checksum": "9d25f451e394bd963c52deb7a923d03e04dc4606ab870a4298eb96fe6038ec14",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",
@@ -9,9 +9,9 @@
       "aggregate_status": "supports",
       "artifact_reports_dir": "data/analysis/cross_evidence/reports/artifact_reports",
       "counts": {
-        "contextualizes": 49,
+        "contextualizes": 47,
         "limits": 0,
-        "supports": 28
+        "supports": 30
       },
       "evidence_matrix": [
         {
@@ -66,8 +66,8 @@
           "artifact_id": "cross_evidence_correlations",
           "group_name": "evaluator_crossing",
           "n_valid": null,
-          "principal_result": "Global correlation is inconclusive or does not support the expected direction.",
-          "status": "inconclusive",
+          "principal_result": "Supported global correlation with leave-one-out robustness.",
+          "status": "supports",
           "unit_of_analysis": "global"
         },
         {
@@ -314,16 +314,16 @@
           "artifact_id": "leave_one_out_sensitivity",
           "group_name": "evaluator_crossing",
           "n_valid": null,
-          "principal_result": "Leave-one-out analysis indicates fragile or unsupported evidence.",
-          "status": "inconclusive",
+          "principal_result": "Leave-one-out analysis confirms stability.",
+          "status": "supports",
           "unit_of_analysis": "leave_one_out"
         },
         {
           "artifact_id": "extreme_case_overlap",
           "group_name": "temporal_escalation",
           "n_valid": null,
-          "principal_result": "Extreme-case overlap supports convergence of tails.",
-          "status": "supports",
+          "principal_result": "Extreme-case overlap is weak and should remain descriptive.",
+          "status": "inconclusive",
           "unit_of_analysis": "top_top"
         },
         {
@@ -611,7 +611,7 @@
           "group_name": "evaluator_crossing",
           "n_valid": null,
           "principal_result": "Global/semester comparison provides contextual evidence.",
-          "status": "inconclusive",
+          "status": "supports",
           "unit_of_analysis": "global"
         },
         {
@@ -649,11 +649,6 @@
           "issue": "Global correlation is inconclusive or does not support the expected direction."
         },
         {
-          "artifact_id": "cross_evidence_correlations",
-          "group_name": "evaluator_crossing",
-          "issue": "Global correlation is inconclusive or does not support the expected direction."
-        },
-        {
           "artifact_id": "best_worst_project_contrasts",
           "group_name": "temporal_escalation",
           "issue": "Best/worst contrast is exploratory and not statistically supported."
@@ -739,9 +734,9 @@
           "issue": "Leave-one-out analysis indicates fragile or unsupported evidence."
         },
         {
-          "artifact_id": "leave_one_out_sensitivity",
-          "group_name": "evaluator_crossing",
-          "issue": "Leave-one-out analysis indicates fragile or unsupported evidence."
+          "artifact_id": "extreme_case_overlap",
+          "group_name": "temporal_escalation",
+          "issue": "Extreme-case overlap is weak and should remain descriptive."
         },
         {
           "artifact_id": "extreme_case_overlap",

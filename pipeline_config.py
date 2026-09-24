@@ -8,6 +8,7 @@ or raw data values.
 from __future__ import annotations
 
 from datetime import date
+from pathlib import PurePosixPath
 
 
 # Models and request parameters are version-controlled protocol decisions.
@@ -50,7 +51,7 @@ LLM_MAX_RETRIES = 0
 
 REPOSITORY_SNAPSHOT_CONTRACT_VERSION = "git-repository-snapshots-v1"
 SOURCE_LOC_DEFINITION_VERSION = "source-loc-v1"
-EXCLUDED_PATH_PATTERNS_VERSION = "source-exclusions-v1"
+EXCLUDED_PATH_PATTERNS_VERSION = "source-exclusions-v4"
 SOURCE_CODE_EXTENSION_ALLOWLIST = {
     ".c",
     ".cc",
@@ -80,15 +81,44 @@ SOURCE_CODE_EXTENSION_ALLOWLIST = {
 }
 SOURCE_CODE_EXCLUDED_PATH_PATTERNS = {
     ".git/",
+    ".history/",
     ".next/",
+    ".env/",
+    ".tox/",
     ".venv/",
+    "backup/",
+    "backups/",
     "build/",
     "coverage/",
     "dist/",
+    "env/",
     "node_modules/",
+    "site-packages/",
     "target/",
+    "venv/",
     "vendor/",
 }
+
+
+def is_measurement_code_path(file_path: str | None) -> bool:
+    """Return whether a repository path is eligible for code-change measurement.
+
+    The predicate is the shared whitelist/blacklist contract for LOC, clean
+    churn, and file-provenance rework. A directory exclusion matches at any
+    path segment, so nested editor history or dependencies cannot enter a
+    measurement merely because their filename has a source extension.
+    """
+    normalized = str(file_path or "").replace("\\", "/").strip().lower()
+    while normalized.startswith("./"):
+        normalized = normalized[2:]
+    if not normalized:
+        return False
+    for pattern in SOURCE_CODE_EXCLUDED_PATH_PATTERNS:
+        if pattern.endswith("/") and (
+            normalized.startswith(pattern) or f"/{pattern}" in normalized
+        ):
+            return False
+    return PurePosixPath(normalized).suffix.lower() in SOURCE_CODE_EXTENSION_ALLOWLIST
 
 NLP_SCORE_SCALES = {
     "sentiment_score": {"version": "v1", "minimum": -2, "maximum": 2, "integer": True},
@@ -191,7 +221,7 @@ STUDENT_TEXT_QUESTION_REGISTRY = {
 PLANNING_FILE_EXTENSIONS = {".md", ".txt", ".rst", ".adoc", ".pdf", ".doc", ".docx", ".odt", ".yaml", ".yml", ".json", ".toml", ".drawio", ".puml", ".mmd", ".mermaid", ".uml", ".bpmn"}
 PLANNING_PATH_PATTERNS = {"docs/", "doc/", "documentation/", "requirements/", "spec/", "specs/", "architecture/", "design/", "planning/", "planejamento/", "requisitos/", "arquitetura/", "prototipo/", "prototype/"}
 PLANNING_DEFINITION_VERSION = "pi-v1"
-FILE_CATEGORY_DEFINITION_VERSION = "file-category-rules-v1"
+FILE_CATEGORY_DEFINITION_VERSION = "file-category-rules-v4"
 FILE_CATEGORY_RULES: dict[str, object] = {
     "version": FILE_CATEGORY_DEFINITION_VERSION,
     "default_category": "unknown",
@@ -207,10 +237,7 @@ FILE_CATEGORY_RULES: dict[str, object] = {
         "unknown",
     ],
     "path_patterns": {
-        "generated": {
-            ".next/", "__pycache__/", "build/", "coverage/", "dist/",
-            "node_modules/", "target/", "vendor/",
-        },
+        "generated": SOURCE_CODE_EXCLUDED_PATH_PATTERNS | {"__pycache__/"},
         "planning": PLANNING_PATH_PATTERNS,
         "test": {
             "__tests__/", "test/", "tests/", "spec/", "specs/",

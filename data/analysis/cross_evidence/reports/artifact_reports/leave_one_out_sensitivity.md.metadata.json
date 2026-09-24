@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "0f48df43ae0e804e3321fd7f6ff511af6ba4a96a4cd37e436693d884956bdb9c",
+  "input_checksum": "fbb5315393b195e21ce0b913d0c27df7511de3a03ed7a25b2e64eaa17472a572",
   "options": {
     "artifact_id": "leave_one_out_sensitivity",
     "backend": "openai",
@@ -44,25 +44,25 @@
       ],
       "numeric_summary": {
         "coefficient_min": {
-          "max": -0.5699124492412846,
-          "mean": -0.6725534806053813,
-          "median": -0.6795816917193728,
+          "max": -0.6795816917193728,
+          "mean": -0.7236397367688436,
+          "median": -0.7263590039349707,
           "min": -0.7810117949610702,
           "n_total": 7,
           "n_valid": 7
         },
         "loo_support_share": {
           "max": 1.0,
-          "mean": 0.4795918367346938,
-          "median": 0.1428571428571428,
+          "mean": 0.5918367346938774,
+          "median": 0.9285714285714286,
           "min": 0.0714285714285714,
           "n_total": 7,
           "n_valid": 7
         },
         "loo_supports_n": {
           "max": 14.0,
-          "mean": 6.714285714285714,
-          "median": 2.0,
+          "mean": 8.285714285714286,
+          "median": 13.0,
           "min": 1.0,
           "n_total": 7,
           "n_valid": 7
@@ -92,17 +92,17 @@
           "n_valid": 7
         },
         "original_coefficient": {
-          "max": -0.2647382010005621,
-          "mean": -0.5207027851032128,
-          "median": -0.5207396621025063,
+          "max": -0.3805611639383081,
+          "mean": -0.5692339157349859,
+          "median": -0.5831555764121896,
           "min": -0.7284815485795703,
           "n_total": 7,
           "n_valid": 7
         },
         "original_p_value": {
-          "max": 0.3603606340812801,
-          "mean": 0.10340406311635783,
-          "median": 0.056231526062027,
+          "max": 0.1794831502826139,
+          "mean": 0.05416747082904968,
+          "median": 0.0286037847926583,
           "min": 0.0031279384351483,
           "n_total": 7,
           "n_valid": 7

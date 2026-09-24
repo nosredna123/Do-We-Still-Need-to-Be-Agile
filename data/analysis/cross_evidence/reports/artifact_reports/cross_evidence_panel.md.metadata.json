@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "2046fd3645f72e4799ef8f7ee4230d868945178cc53835d5f77875face53b793",
+  "input_checksum": "6cf46a2daf40414031e544909099422dbb862a83e6a1bba8f9b9e6cb656a1201",
   "options": {
     "artifact_id": "cross_evidence_panel",
     "backend": "openai",
@@ -68,18 +68,18 @@
       ],
       "numeric_summary": {
         "cc_per_source_loc_t3": {
-          "max": 1001.6288001362514,
-          "mean": 75.03158660127124,
-          "median": 1.614747722763192,
-          "min": 0.13312866313145408,
+          "max": 4.409897879025923,
+          "mean": 1.2634294459377384,
+          "median": 0.8760390054932012,
+          "min": 0.05470276304772537,
           "n_total": 14,
           "n_valid": 14
         },
         "cc_total_t3": {
-          "max": 11762127.0,
-          "mean": 964437.9285714285,
-          "median": 22869.0,
-          "min": 304.0,
+          "max": 28069.0,
+          "mean": 9737.5,
+          "median": 6975.5,
+          "min": 172.0,
           "n_total": 14,
           "n_valid": 14
         },
@@ -116,16 +116,16 @@
           "n_valid": 14
         },
         "source_churn_t3": {
-          "max": 2935876.0,
-          "mean": 223099.85714285713,
-          "median": 7135.0,
+          "max": 27949.0,
+          "mean": 9630.92857142857,
+          "median": 6392.5,
           "min": 172.0,
           "n_total": 14,
           "n_valid": 14
         },
         "source_events_t3": {
-          "max": 11147.0,
-          "mean": 960.9285714285714,
+          "max": 406.0,
+          "mean": 135.14285714285714,
           "median": 117.5,
           "min": 1.0,
           "n_total": 14,

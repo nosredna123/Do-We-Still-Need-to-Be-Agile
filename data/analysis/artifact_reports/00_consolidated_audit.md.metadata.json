@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "1e57da6e2bb5d0cf2fae57673044bc897989a094d6020fd2a1d0455b48f95923",
+  "input_checksum": "43414171d1efc9e45caebe7cb79fa7a3ac4113f0f730032ffda9ac94d2882c10",
   "options": {
     "backend": "openai",
     "model": "gpt-4o-mini",
@@ -10,9 +10,9 @@
       "evidence_rows": [
         {
           "analysis_id": "pi_vs_cc_primary",
-          "coefficient_or_statistic": -0.0067666495245095,
+          "coefficient_or_statistic": -0.1556329390637204,
           "n_valid": 14,
-          "p_value": 0.9816838660605892,
+          "p_value": 0.5952186358602511,
           "status": "success",
           "unit_of_analysis": "team_semester"
         },
@@ -26,9 +26,9 @@
         },
         {
           "analysis_id": "ai_vs_cc_primary",
-          "coefficient_or_statistic": 0.2142857142857143,
+          "coefficient_or_statistic": -0.1071428571428571,
           "n_valid": 7,
-          "p_value": 0.6445115810207203,
+          "p_value": 0.8191508555699912,
           "status": "success",
           "unit_of_analysis": "team_semester"
         },
@@ -42,17 +42,17 @@
         },
         {
           "analysis_id": "pi_high_vs_low_cc_primary",
-          "coefficient_or_statistic": 21.0,
+          "coefficient_or_statistic": 29.0,
           "n_valid": 14,
-          "p_value": 0.7103729603729605,
+          "p_value": 0.6200466200466201,
           "status": "success",
           "unit_of_analysis": "team_semester"
         },
         {
           "analysis_id": "ai_high_vs_low_cc_primary",
-          "coefficient_or_statistic": 6.0,
+          "coefficient_or_statistic": 7.0,
           "n_valid": 7,
-          "p_value": 1.0,
+          "p_value": 0.8571428571428571,
           "status": "success",
           "unit_of_analysis": "team_semester"
         },

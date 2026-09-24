@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "2f13cb1a90373eed1404d6d367e1926a282be7e265f813754e4a7735a8e4a7f4",
+  "input_checksum": "797afe11c635b28a9f95bb7f4eca16e0187e1f727b9085770a9126ebe9da89cd",
   "options": {
     "backend": "openai",
     "group_name": "temporal_escalation",
@@ -134,12 +134,12 @@
           "coefficient": NaN,
           "p_value": NaN,
           "priority": NaN,
-          "publication_readiness": "candidate_secondary",
-          "recommended_use": "describe_tail_convergence",
+          "publication_readiness": "exploratory_only",
+          "recommended_use": "do_not_generalize",
           "robustness_class": NaN,
           "source_artifact": "extreme_case_overlap",
-          "summary": "Extreme-case overlap supports convergence of tails.",
-          "verdict": "supports"
+          "summary": "Extreme-case overlap is weak and should remain descriptive.",
+          "verdict": "inconclusive"
         },
         {
           "analysis_id": "planning_rework_signal_t2_t3__top__source_churn_t3__bottom",
@@ -312,8 +312,8 @@
       ],
       "status": "supports",
       "verdict_counts": {
-        "inconclusive": 16,
-        "supports": 9
+        "inconclusive": 17,
+        "supports": 8
       }
     },
     "prompt_version": "cross-evidence-group-report-v1"

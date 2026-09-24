@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-best-worst-contrasts-v1",
-  "input_checksum": "7ff79700cd236e83252253e9c3b29813890fdb485cafe97b0ab0591f8e448332",
+  "input_checksum": "39ce450a52ddf0ed23e67f620642cb55bc0c6693d899eb3094f351ed33615e2e",
   "options": {
     "contract_version": "cross-evidence-best-worst-contrasts-v1",
     "effect_size": "cliffs_delta_high_vs_low",

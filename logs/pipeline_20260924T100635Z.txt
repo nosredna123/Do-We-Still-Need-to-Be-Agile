@@ -1,0 +1,7 @@
+2026-09-24 07:06:35,192 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260924T100635Z.txt
+2026-09-24 07:06:35,193 - __main__ - INFO - Running stage narrative-audit: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/07_artifact_narrative_reporter.py --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis --backend openai --force
+Narrative audit: written=23 skipped=0 verdict=conditional-go reason=significant_result_but_small_sample
+2026-09-24 07:08:21,381 - __main__ - INFO - Finished stage narrative-audit status=success duration_seconds=106.2
+2026-09-24 07:08:21,381 - __main__ - INFO - Running stage cross-evidence-report: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/09_cross_evidence_narrative_reporter.py --analysis-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis --backend openai --force
+Cross-evidence narrative reports: written=32 skipped=0
+2026-09-24 07:11:40,605 - __main__ - INFO - Finished stage cross-evidence-report status=success duration_seconds=199.2

@@ -2,11 +2,11 @@
   "anonymization_policy": "public_visual_ranked_or_aggregate",
   "category": "prioritarias",
   "checksums": {
-    "data": "eb8830a1ff51e8b389b22ace3ea72d23a12687cd348bbeaeed2f62f184a18799",
-    "pdf": "bab0512165ec0e9cbd971f5cc0e2c621998f1cde7e1284ea580715f208c4a247",
-    "plotly_json": "04b80895cd21b5ad667d21634848bb4c53bfcc8d7edd7f3950d65c2526177086",
-    "png": "5f67782ca2b9fd6f601ef4e3f158b7629ed19b7b414c53c65186f7fd43c88b0c",
-    "svg": "f2ac11491691abcfdfeeac6753d3509a1cdc0c709bf8753d5358dfbc3a531e2e"
+    "data": "fc4a5e8bbd034d7e2c4b609e5d989ce302e9e9345f93ce05f9a74d46056b4dcc",
+    "pdf": "98f4ce71e6645933fce999284c743818c0573f04f1825450f821eed1745458bd",
+    "plotly_json": "0e52d6a03188a0b0a1ec61cf41570f10ba938fbf33111b3d8e1d2eaf921ab251",
+    "png": "83f16ab1bb6e97f6027180b1a60c0f8cacf03b4f971254cdcc7a4248801a11bd",
+    "svg": "457211616893c637691bf68adb4b746c10676c0e8f3888abec1952895eba0053"
   },
   "data_metadata_path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv.metadata.json",
   "data_path": "data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv",

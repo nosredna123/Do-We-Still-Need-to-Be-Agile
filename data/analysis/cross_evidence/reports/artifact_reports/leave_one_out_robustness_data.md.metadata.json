@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "d99abea7cd1009476980b597a880cb2d5bb752b3bdcd7f5da5d447f01340950d",
+  "input_checksum": "5af01cbf13e6ba581df2aa9fd30173af77a8d4d618f2742b65d3672ba83a7246",
   "options": {
     "artifact_id": "leave_one_out_robustness_data",
     "backend": "openai",
@@ -29,40 +29,40 @@
       ],
       "numeric_summary": {
         "coefficient_max": {
-          "max": -0.174630713288139,
-          "mean": -0.43426754742467366,
+          "max": -0.263803843477827,
+          "mean": -0.47255839545972805,
           "median": -0.448223234903528,
           "min": -0.6725037594933305,
           "n_total": 7,
           "n_valid": 7
         },
         "coefficient_min": {
-          "max": -0.5699124492412846,
-          "mean": -0.6725534806053813,
-          "median": -0.6795816917193728,
+          "max": -0.6795816917193728,
+          "mean": -0.7236397367688436,
+          "median": -0.7263590039349707,
           "min": -0.7810117949610702,
           "n_total": 7,
           "n_valid": 7
         },
         "loo_support_share": {
           "max": 1.0,
-          "mean": 0.4795918367346938,
-          "median": 0.1428571428571428,
+          "mean": 0.5918367346938777,
+          "median": 0.9285714285714286,
           "min": 0.0714285714285714,
           "n_total": 7,
           "n_valid": 7
         },
         "original_coefficient": {
-          "max": -0.2647382010005621,
-          "mean": -0.5207027851032128,
-          "median": -0.5207396621025063,
+          "max": -0.3805611639383081,
+          "mean": -0.5692339157349859,
+          "median": -0.5831555764121896,
           "min": -0.7284815485795703,
           "n_total": 7,
           "n_valid": 7
         },
         "p_value_max": {
-          "max": 0.5682629857514974,
-          "mean": 0.19260818765647383,
+          "max": 0.3838101411210045,
+          "mean": 0.13780752691559844,
           "median": 0.1245124600803049,
           "min": 0.0117870367777658,
           "n_total": 7,

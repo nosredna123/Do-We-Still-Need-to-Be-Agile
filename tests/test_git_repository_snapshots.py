@@ -90,6 +90,16 @@ def write_git_inputs(tmp_path: Path, repository: str, commits: list[dict[str, ob
     return git_commits, git_files
 
 
+def test_source_path_policy_excludes_virtual_environments() -> None:
+    snapshots = load_snapshots_module()
+
+    assert snapshots._is_source_path("src/app.py")
+    assert not snapshots._is_source_path(".history/src/app_20251113000000.py")
+    assert not snapshots._is_source_path("backend/testes/backups/llm_service.py")
+    assert not snapshots._is_source_path("venv/lib/python3.11/site-packages/pkg/module.py")
+    assert not snapshots._is_source_path(".venv/lib/python3.11/site-packages/pkg/module.py")
+
+
 def test_build_repository_snapshots_selects_last_commit_per_cut_without_head_fallback(tmp_path: Path) -> None:
     snapshots = load_snapshots_module()
     repos_list = tmp_path / "repos_list.csv"

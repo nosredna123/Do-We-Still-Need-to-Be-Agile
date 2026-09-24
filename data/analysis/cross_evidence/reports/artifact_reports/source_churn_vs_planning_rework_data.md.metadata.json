@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "635b5b4a99a62e33522620bbf5aa84ec18c3f42ebc2a131b8a08ee14817a9a7c",
+  "input_checksum": "87e10b008532d228802ff2429a0b3a0a62106f3916e5b98beeb0dee1401403f3",
   "options": {
     "artifact_id": "source_churn_vs_planning_rework_data",
     "backend": "openai",
@@ -45,9 +45,9 @@
           "n_valid": 14
         },
         "y_value": {
-          "max": 2935876.0,
-          "mean": 223099.85714285713,
-          "median": 7135.0,
+          "max": 27949.0,
+          "mean": 9630.92857142857,
+          "median": 6392.5,
           "min": 172.0,
           "n_total": 14,
           "n_valid": 14

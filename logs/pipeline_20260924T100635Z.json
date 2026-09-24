@@ -1,0 +1,41 @@
+{
+  "dry_run": false,
+  "force": true,
+  "log_path": "logs/pipeline_20260924T100635Z.txt",
+  "nlp_backend": "openai",
+  "stage_results": [
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/07_artifact_narrative_reporter.py",
+        "--analysis-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis",
+        "--backend",
+        "openai",
+        "--force"
+      ],
+      "duration_seconds": 106.2,
+      "stage": "narrative-audit",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/09_cross_evidence_narrative_reporter.py",
+        "--analysis-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis",
+        "--backend",
+        "openai",
+        "--force"
+      ],
+      "duration_seconds": 199.2,
+      "stage": "cross-evidence-report",
+      "status": "success"
+    }
+  ],
+  "stages": [
+    "narrative-audit",
+    "cross-evidence-report"
+  ],
+  "status": "success"
+}

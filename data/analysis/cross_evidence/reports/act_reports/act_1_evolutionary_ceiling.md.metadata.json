@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-act-report-v1",
-  "input_checksum": "5eb4be096e379790e0f168d7da496e1592f5a8aa9ed802c2c685df385bf3b815",
+  "input_checksum": "57e8ef09e033053b09f59aeea88968c78b9b71dd480b687cfee371f54de99b5b",
   "options": {
     "act_number": 1,
     "backend": "openai",

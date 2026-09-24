@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "ba094bd7c51ed71fe7b36fe9e06685451e945be2c837d3415e2f851aa3a5662b",
+  "input_checksum": "a13f00aa0a49e0faf88faa330543c4f2df9648f3d7220240eb52512fb8e5a60c",
   "options": {
     "artifact_id": "file_category_churn_metrics",
     "backend": "openai",
@@ -36,7 +36,7 @@
       "evidence_type": "primary_candidate",
       "kind": "dataset",
       "n_columns": 23,
-      "n_rows": 158,
+      "n_rows": 159,
       "narrative_acts": [
         2,
         3,
@@ -45,67 +45,67 @@
       "numeric_summary": {
         "category_confidence_mean": {
           "max": 1.0,
-          "mean": 0.9013093496662515,
+          "mean": 0.8976095031679783,
           "median": 1.0,
           "min": 0.5,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "category_event_share": {
           "max": 1.0,
-          "mean": 0.2088607594936709,
-          "median": 0.08382936507936509,
+          "mean": 0.20754716981132076,
+          "median": 0.0821917808219178,
           "min": 0.00016911889058007779,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "category_warning_event_n": {
-          "max": 9055.0,
-          "mean": 66.86075949367088,
+          "max": 13523.0,
+          "mean": 151.0566037735849,
           "median": 0.0,
           "min": 0.0,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "churn_lines": {
-          "max": 7476092.0,
-          "mean": 87311.03797468354,
-          "median": 329.0,
+          "max": 11739465.0,
+          "mean": 86761.91194968553,
+          "median": 321.0,
           "min": 0.0,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "event_n": {
-          "max": 13245.0,
-          "mean": 323.04430379746833,
+          "max": 31885.0,
+          "mean": 321.0125786163522,
           "median": 12.0,
           "min": 1.0,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "line_count_missing_event_n": {
-          "max": 12987.0,
-          "mean": 90.42405063291139,
+          "max": 13178.0,
+          "mean": 89.85534591194968,
           "median": 0.0,
           "min": 0.0,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "total_churn_lines": {
           "max": 11762127.0,
-          "mean": 668754.8734177215,
+          "mean": 444392.0125786163,
           "median": 12429.0,
           "min": 2.0,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         },
         "total_event_n": {
           "max": 32094.0,
-          "mean": 2298.721518987342,
-          "median": 151.5,
+          "mean": 1694.314465408805,
+          "median": 155.0,
           "min": 1.0,
-          "n_total": 158,
-          "n_valid": 158
+          "n_total": 159,
+          "n_valid": 159
         }
       },
       "path": "data/analysis/cross_evidence/datasets/file_category_churn_metrics.parquet",

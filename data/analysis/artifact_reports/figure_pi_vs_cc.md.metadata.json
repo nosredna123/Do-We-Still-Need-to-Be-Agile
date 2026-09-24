@@ -1,6 +1,6 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "cc106fcd61e84a7a2e53533c788822f9e0f426c87d7811af8b3a364057d65ac0",
+  "input_checksum": "d432d610b3a5402a392c3f3c9137b30e12ee02c7dd407552282769c9b9d79090",
   "options": {
     "backend": "openai",
     "fact_sheet": {
@@ -22,7 +22,7 @@
       "producer_script": "06_statistical_analyzer.py",
       "relative_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/assets/figures/prioritarias/pi_vs_cc.html",
       "scale_notes": [
-        "logarithmic display due to observed dynamic range"
+        "linear normalized churn"
       ],
       "source": "team_metrics.parquet",
       "transformations": [

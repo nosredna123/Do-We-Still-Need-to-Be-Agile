@@ -50,7 +50,7 @@ def test_consolidate_team_metrics_persists_contract_and_excludes_ie(tmp_path: Pa
     engine = load_engine()
     specs = {
         "planning": ("pi_observation_unit", "planning-metrics-v1"),
-        "code_churn": ("cc_observation_unit", "code-churn-metrics-v1"),
+        "code_churn": ("cc_observation_unit", "code-churn-metrics-v2"),
         "technical_degradation": ("dt_observation_unit", "technical-degradation-metrics-v1"),
         "integration_friction": ("ai_observation_unit", "integration-friction-metrics-v1"),
     }

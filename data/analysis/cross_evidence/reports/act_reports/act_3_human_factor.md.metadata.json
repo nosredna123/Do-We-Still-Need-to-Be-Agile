@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-act-report-v1",
-  "input_checksum": "db1be1d7ff3af85a1b8e7f409640e6a027648f9c00c043fecf19e91fdf6afdf5",
+  "input_checksum": "6c7cc7dc440e47b096f4b853b31aa6470974450516c40510762a9134dc9a9d57",
   "options": {
     "act_number": 3,
     "backend": "openai",
@@ -55,10 +55,10 @@
         },
         {
           "analysis_id": "scope_vs_late_instability_index",
-          "publication_readiness": "exploratory_only",
-          "recommended_use": "do_not_generalize",
+          "publication_readiness": "candidate_primary",
+          "recommended_use": "anchor_narrative_claim",
           "source_artifact": "cross_evidence_correlations",
-          "verdict": "inconclusive"
+          "verdict": "supports"
         },
         {
           "analysis_id": "scope_applicability_mean_t3__planning_rework_signal_t2_t3__top_bottom_4",
@@ -272,17 +272,17 @@
         },
         {
           "analysis_id": "scope_vs_late_instability_index",
-          "publication_readiness": "exploratory_only",
-          "recommended_use": "report_methodological_limitation",
+          "publication_readiness": "candidate_secondary",
+          "recommended_use": "guide_refactoring",
           "source_artifact": "leave_one_out_sensitivity",
-          "verdict": "inconclusive"
+          "verdict": "supports"
         },
         {
           "analysis_id": "planning_rework_signal_t2_t3__top__source_churn_t3__top",
-          "publication_readiness": "candidate_secondary",
-          "recommended_use": "describe_tail_convergence",
+          "publication_readiness": "exploratory_only",
+          "recommended_use": "do_not_generalize",
           "source_artifact": "extreme_case_overlap",
-          "verdict": "supports"
+          "verdict": "inconclusive"
         },
         {
           "analysis_id": "planning_rework_signal_t2_t3__top__source_churn_t3__bottom",
@@ -532,9 +532,9 @@
         {
           "analysis_id": "scope_vs_late_instability_index",
           "publication_readiness": "exploratory_only",
-          "recommended_use": "do_not_generalize",
+          "recommended_use": "support_narrative_claim",
           "source_artifact": "semester_stratified_results",
-          "verdict": "inconclusive"
+          "verdict": "supports"
         },
         {
           "analysis_id": "scope_vs_late_instability_index",
@@ -553,8 +553,8 @@
       ],
       "status": "supports",
       "verdict_counts": {
-        "inconclusive": 49,
-        "supports": 28
+        "inconclusive": 47,
+        "supports": 30
       }
     },
     "prompt_version": "cross-evidence-act-report-v1"

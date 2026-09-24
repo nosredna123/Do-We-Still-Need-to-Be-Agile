@@ -1676,7 +1676,10 @@ def build_leave_one_out_robustness_figure(
 
 def _normalize_path(value: str | None) -> str:
     """Normalize repository paths for deterministic category matching."""
-    return str(value or "").replace("\\", "/").strip().lower().lstrip("./")
+    normalized = str(value or "").replace("\\", "/").strip().lower()
+    while normalized.startswith("./"):
+        normalized = normalized[2:]
+    return normalized
 
 
 def _normalize_extension(file_path: str, file_extension: str | None) -> str:
@@ -1691,7 +1694,9 @@ def _normalize_extension(file_path: str, file_extension: str | None) -> str:
 
 def _matches_path_pattern(file_path: str, pattern: str) -> bool:
     """Return whether a normalized path matches a configured path pattern."""
-    normalized_pattern = pattern.replace("\\", "/").strip().lower().lstrip("./")
+    normalized_pattern = pattern.replace("\\", "/").strip().lower()
+    while normalized_pattern.startswith("./"):
+        normalized_pattern = normalized_pattern[2:]
     if not normalized_pattern:
         return False
     if normalized_pattern.endswith("/"):
@@ -1743,7 +1748,10 @@ def classify_file_category(
     contextual = taxonomy["contextual_extensions"]
     warnings = taxonomy["warnings"]
 
-    for pattern in path_patterns.get("generated", set()):
+    for pattern in sorted(
+        path_patterns.get("generated", set()),
+        key=lambda value: (-len(str(value)), str(value)),
+    ):
         if _matches_path_pattern(selected_path, pattern):
             warning = None
             confidence = NORMAL_CONFIDENCE

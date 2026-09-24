@@ -2,11 +2,11 @@
   "anonymization_policy": "public_visual_ranked_or_aggregate",
   "category": "prioritarias",
   "checksums": {
-    "data": "a8d38098949b5f54ade88936b3092ee16a119f5b5a67219fe35db0e41cb79423",
-    "pdf": "b47ebc0641f2ef4234cfd85ca3ea0f149374bdcaf6fc0e63177cc032103e2dd6",
-    "plotly_json": "52d1d889a7c2f528a833618a8e2bbefc94174a499ca8cac0a9df91c748f3c005",
-    "png": "58059a0059313c03169942f44ab4be68903a1c85992976a1c51d5ea66db70083",
-    "svg": "c5231d122e4c039d48d31aa6b774c2d8935a7d619806a16a4c95ae4a9d6637bf"
+    "data": "11efe4b9532c736ed854e4600a0313132d5714a13693c2c99f4cd76f64ff69dc",
+    "pdf": "df071abb035ffd4835c52a242e5705eab4afefa4083ba84ddc9c7b7f8eddf7aa",
+    "plotly_json": "32870f1429487be0253c8cd00a0be93c7a52650cb455ac5a0b215c9145f1f0ef",
+    "png": "1ed584848f1a206080f89248ef19fddd7ed42b4cc3964d8c8c3e6795728784ef",
+    "svg": "1fcb70cf47b6c880d8211d88959d62184d4121e6662af2eac4b1e9078e4c3bb8"
   },
   "data_metadata_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv.metadata.json",
   "data_path": "data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv",

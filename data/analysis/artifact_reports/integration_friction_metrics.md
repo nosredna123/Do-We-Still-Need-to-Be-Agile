@@ -1,8 +1,8 @@
 ## What it is
-The analytical artifact is a dataset with a granularity/unit of analysis of 14 rows. It was produced using the script `05_metric_engine.py` and is in contract version `integration-friction-metrics-v1`. The dataset contains 61 columns.
+The granularity/unit of analysis for this artifact is at the level of individual metrics. The dataset contains 14 rows. The producer script used to generate this artifact is `05_metric_engine.py`, and the contract version is `integration-friction-metrics-v1`.
 
 ## How it was built
-The dataset was constructed by executing a script that processes various metrics related to integration friction. It aggregates data points from multiple sources to provide insights into the performance and behavior of AI authors over specified time windows.
+This analytical artifact was constructed using a script that processes various metrics related to integration friction. The script aggregates data from multiple sources, calculating key performance indicators such as author contributions and churn rates over specified time windows. The resulting dataset is stored in a parquet format, allowing for efficient querying and analysis.
 
 ## Narrative binding
 The narrative act number is 3, which is meant to support the claim titled "Ato 3 - O Fator Humano e a Ilusao do Progresso (Evidence)."
@@ -19,9 +19,9 @@ The narrative act number is 3, which is meant to support the claim titled "Ato 3
 - ai_gini_t3: mean = 0.2473397745718178, n_valid = 14
 
 ## Contribution assessment
-The deterministic verdict is "descriptive_infrastructure." This is justified as all metrics are based on a valid sample size of 14, providing descriptive statistics without any tests indicating significant relationships or effects.
+The deterministic verdict is "descriptive_infrastructure." This is justified as all key metrics have valid counts (n_valid = 14) and provide descriptive statistics without any significant tests or results to indicate a different conclusion.
 
 ## Known limitations
-- No tests were conducted to assess significance.
-- All metrics are based on a small sample size of 14.
-- There is no missing data, but the lack of variability in some metrics may limit insights.
+- No significant tests were conducted.
+- All metrics are based on a small sample size (n = 14).
+- There is no indication of variability or significance in the results.

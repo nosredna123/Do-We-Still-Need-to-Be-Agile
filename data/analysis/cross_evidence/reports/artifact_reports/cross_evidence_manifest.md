@@ -6,10 +6,10 @@
 - **Contract Version**: cross-evidence-manifest-v1  
 
 ## How it was built
-The cross-evidence manifest was constructed using the producer script "08_cross_evidence_engine.py" and is categorized under the contract version "cross-evidence-manifest-v1". It serves as a secondary exploratory evidence source, providing a descriptive context for the artifacts included in the inventory.
+The cross-evidence manifest was constructed using the producer script "08_cross_evidence_engine.py" to compile secondary exploratory evidence into a descriptive context. The process involved aggregating various artifacts and ensuring the integrity of the data through checksums and versioning.
 
 ## Narrative binding
-The narrative acts identified are 1, 2, 3, and 4. These acts are intended to support or qualify various claims or cautions related to the evidence scope and context of the artifacts.
+The narrative acts identified are 1, 2, 3, and 4. These acts are intended to support or qualify claims regarding the nature and reliability of the evidence presented in the artifact.
 
 ## What the current data actually shows
 - **Effect Sizes**: Not specified  
@@ -19,8 +19,8 @@ The narrative acts identified are 1, 2, 3, and 4. These acts are intended to sup
 - **Cross-evidence Labels**: Not specified  
 
 ## Contribution assessment
-The verdict on the contribution of this artifact is not determinable due to the absence of specific quantitative data such as effect sizes, p-values, and valid sample sizes.
+The verdict on the contribution of this artifact is inconclusive due to the lack of specific quantitative data such as effect sizes, p-values, and valid sample sizes.
 
 ## Known limitations
-- Limitations are not specified.  
-- Exclusions summary is not provided.
+- No specific limitations are listed.  
+- Exclusions summary: Not provided.

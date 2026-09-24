@@ -59,11 +59,11 @@
   },
   "rq2": {
     "m4_pooled_cc_total_mean_by_cut": {
-      "T1": 3615.3,
-      "T2": 17314.2,
-      "T3": 964437.9
+      "T1": 1551.3,
+      "T2": 3396.1,
+      "T3": 9737.5
     },
-    "m4_activity_density_fold_increase_t1_to_t3": 266.8,
+    "m4_activity_density_fold_increase_t1_to_t3": 6.3,
     "m5_coordination_friction_by_cut": {
       "T1": 8,
       "T2": 8,
@@ -95,17 +95,17 @@
       }
     },
     "m8_max_rework_team": "TEAM_09|2025.2",
-    "m8_max_rework_churn_t3": 100629.0,
+    "m8_max_rework_churn_t3": 15518.0,
     "m9_correlations": {
       "rework_churn_t3": {
         "n": 9,
-        "spearman_rho": -0.308,
-        "spearman_p": 0.42
+        "spearman_rho": -0.128,
+        "spearman_p": 0.742
       },
       "rework_ratio_t3": {
         "n": 9,
-        "spearman_rho": -0.256,
-        "spearman_p": 0.505
+        "spearman_rho": -0.12,
+        "spearman_p": 0.759
       },
       "project_progress_mean_t3": {
         "n": 9,
@@ -129,34 +129,34 @@
       }
     },
     "m9_group_contrast_rework_churn_t3_mean": {
-      "low": 21257.8,
-      "high": 2731.8,
-      "low_over_high_ratio": 7.78
+      "low": 3869.8,
+      "high": 2610.8,
+      "low_over_high_ratio": 1.48
     },
     "m9_group_contrast_rework_churn_t3_median": {
-      "low": 1249.0,
-      "high": 2786.0
+      "low": 860.0,
+      "high": 2582.5
     },
     "m9_omitted_rework_churn_t3": {
       "n": 5,
-      "mean": 1633.0,
+      "mean": 1503.2,
       "median": 172.0
     },
     "m9_low_group_without_max_rework_case": {
       "n": 4,
-      "mean_rework_churn_t3": 1415.0,
-      "median_rework_churn_t3": 1201.5
+      "mean_rework_churn_t3": 957.8,
+      "median_rework_churn_t3": 561.0
     },
     "m9_floor_sensitivity_correlations": {
       "rework_churn_t3": {
         "n": 14,
-        "spearman_rho": 0.061,
-        "spearman_p": 0.836
+        "spearman_rho": 0.064,
+        "spearman_p": 0.829
       },
       "rework_ratio_t3": {
         "n": 14,
-        "spearman_rho": 0.061,
-        "spearman_p": 0.835
+        "spearman_rho": 0.052,
+        "spearman_p": 0.861
       },
       "project_progress_mean_t3": {
         "n": 14,
@@ -182,10 +182,10 @@
     "m9_floor_sensitivity_rework_group_contrast": {
       "low_n": 8,
       "high_n": 6,
-      "low_mean": 14102.9,
-      "high_mean": 2093.0,
-      "low_median": 1145.0,
-      "high_median": 1133.5
+      "low_mean": 3300.9,
+      "high_mean": 1816.8,
+      "low_median": 842.5,
+      "high_median": 562.5
     },
     "m9_group_contrast_project_progress_mean_t3": {
       "low": 3.542,

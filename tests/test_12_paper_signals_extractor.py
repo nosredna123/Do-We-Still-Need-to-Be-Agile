@@ -18,6 +18,15 @@ def load_module():
     return module
 
 
+def test_rework_policy_uses_shared_code_measurement_rules() -> None:
+    module = load_module()
+
+    assert not module._is_boilerplate_path("src/app.py")
+    assert module._is_boilerplate_path(".history/src/app_20251113000000.py")
+    assert module._is_boilerplate_path("backend/testes/backups/llm_service.py")
+    assert module._is_boilerplate_path("node_modules/react/index.js")
+
+
 def test_team_level_signal_builder_and_cohort_output(tmp_path: Path, monkeypatch) -> None:
     module = load_module()
 
@@ -108,7 +117,7 @@ def test_team_level_signal_builder_and_cohort_output(tmp_path: Path, monkeypatch
     ]
     assert result.loc[0, "t1_planning_score"] == 7
     assert result.loc[result["ID_Equipe"] == "TEAM_01", "rework_churn_t3"].iloc[0] == 8
-    assert result.loc[result["ID_Equipe"] == "TEAM_01", "deferred_churn_t3"].iloc[0] == 5
+    assert result.loc[result["ID_Equipe"] == "TEAM_01", "deferred_churn_t3"].iloc[0] == 0
 
     friction = module.build_cohort_friction_dataset(
         transcript_sessions=transcript,

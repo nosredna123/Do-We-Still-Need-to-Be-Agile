@@ -22,6 +22,7 @@ from pipeline_config import (
     PLANNING_DEFINITION_VERSION,
     PLANNING_FILE_EXTENSIONS,
     PLANNING_PATH_PATTERNS,
+    is_measurement_code_path,
 )
 from phase2_contracts import load_phase2_inputs, validate_phase1_contracts
 from pipeline_core import (
@@ -310,9 +311,10 @@ def main() -> None:
         logger.info("Wrote %s planning metrics team-semester observations", len(results))
     churn_options = {
         "stage": "code_churn_metrics",
-        "contract_version": "code-churn-metrics-v1",
-        "cc_definition_version": "cc-v1",
-        "cc_binary_policy": "excluded_from_line_churn_counted_as_events",
+        "contract_version": "code-churn-metrics-v2",
+        "cc_definition_version": "cc-v2-clean-paths",
+        "cc_binary_policy": "outside_code_measurement_policy",
+        "code_measurement_policy": "pipeline_config.is_measurement_code_path",
         "rolling_window_days": 7,
         "rolling_window_bounds": "[timestamp, timestamp+7d)",
     }
@@ -509,7 +511,7 @@ def write_code_churn_metrics(
     write_artifact_metadata(
         output_path,
         source_checksum,
-        contract_version="code-churn-metrics-v1",
+        contract_version="code-churn-metrics-v2",
         options=options,
     )
 
@@ -619,7 +621,10 @@ def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd
     required_commit = set(KEYS) | {
         "temporal_marker", "commit_hash", "timestamp", "lines_added", "lines_deleted"
     }
-    required_file = set(KEYS) | {"temporal_marker", "file_path", "is_binary"}
+    required_file = set(KEYS) | {
+        "temporal_marker", "commit_hash", "timestamp", "file_path",
+        "file_extension", "is_binary", "lines_added", "lines_deleted",
+    }
     required_snapshot = set(KEYS) | {"temporal_marker", "repo_source_loc"}
     for frame, required, name in (
         (commits, required_commit, "git_commits"),
@@ -637,7 +642,17 @@ def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd
         raise ValueError(f"Code Churn has invalid temporal markers: {sorted(invalid_cuts)}")
 
     commits = commits.copy()
-    commits["commit_churn"] = commits["lines_added"] + commits["lines_deleted"]
+    files = files.copy()
+    files["included_in_code_measurement"] = files["file_path"].map(is_measurement_code_path)
+    files["file_churn"] = files["lines_added"].fillna(0) + files["lines_deleted"].fillna(0)
+    clean_files = files.loc[files["included_in_code_measurement"]].copy()
+    commit_keys = KEYS + ["temporal_marker", "commit_hash"]
+    clean_commit_churn = (
+        clean_files.groupby(commit_keys, as_index=False)["file_churn"].sum()
+        .rename(columns={"file_churn": "commit_churn"})
+    )
+    commits = commits.merge(clean_commit_churn, on=commit_keys, how="left", validate="one_to_one")
+    commits["commit_churn"] = commits["commit_churn"].fillna(0.0)
     snapshot_rows = snapshots.copy()
     if "snapshot_available" in snapshot_rows.columns:
         snapshot_rows["snapshot_available"] = snapshot_rows["snapshot_available"].fillna(False).astype(bool)
@@ -671,7 +686,7 @@ def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd
     for team, semester in universe.itertuples(index=False, name=None):
         row: dict[str, Any] = {"ID_Equipe": team, "Semestre": semester}
         team_commits = commits[(commits["ID_Equipe"] == team) & (commits["Semestre"] == semester)]
-        team_files = files[(files["ID_Equipe"] == team) & (files["Semestre"] == semester)]
+        team_files = clean_files[(clean_files["ID_Equipe"] == team) & (clean_files["Semestre"] == semester)]
         team_snapshots = snapshot_summary[(snapshot_summary["ID_Equipe"] == team) & (snapshot_summary["Semestre"] == semester)]
         all_peak_windows: list[tuple[pd.Timestamp, float, str]] = []
         for cut in CUTS:
@@ -727,7 +742,7 @@ def compute_code_churn(commits: pd.DataFrame, files: pd.DataFrame, snapshots: pd
         row["cc_binary_policy"] = "excluded_from_line_churn_counted_as_events"
         row["repo_size_definition_version"] = "source-loc-v1"
         row["cc_observation_unit"] = "team_semester"
-        row["cc_definition_version"] = "cc-v1"
+        row["cc_definition_version"] = "cc-v2-clean-paths"
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -1055,7 +1070,7 @@ def consolidate_team_metrics(
     metadata_by_source: dict[str, dict[str, Any]] = {}
     contract_specs = {
         "planning": ("planning-metrics-v1", "pi_observation_unit"),
-        "code_churn": ("code-churn-metrics-v1", "cc_observation_unit"),
+        "code_churn": ("code-churn-metrics-v2", "cc_observation_unit"),
         "technical_degradation": ("technical-degradation-metrics-v1", "dt_observation_unit"),
         "integration_friction": ("integration-friction-metrics-v1", "ai_observation_unit"),
     }

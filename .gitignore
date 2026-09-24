@@ -3,4 +3,5 @@ __pycache__/
 .venv/
 .env
 data/repos_cache/
+data/raw/repos_parent_cache/
 data/raw/audio/

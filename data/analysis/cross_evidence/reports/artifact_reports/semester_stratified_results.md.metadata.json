@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "f0f9a29c5a813b21b8dd1822438b5e3164b8cce453c7a938a4a9dcc7eb6e1567",
+  "input_checksum": "b8714b7e79a5592661e7775aabd9ac55110fb4ff9e1b81ac207ad57b25c20e55",
   "options": {
     "artifact_id": "semester_stratified_results",
     "backend": "openai",
@@ -41,9 +41,9 @@
       ],
       "numeric_summary": {
         "coefficient": {
-          "max": -0.0594088525786004,
-          "mean": -0.5471827699998997,
-          "median": -0.5831555764121896,
+          "max": -0.2376354103144018,
+          "mean": -0.5878777527032465,
+          "median": -0.6232378481888233,
           "min": -0.7854963073359155,
           "n_total": 21,
           "n_valid": 21
@@ -73,8 +73,8 @@
           "n_valid": 21
         },
         "p_value": {
-          "max": 0.8793286751743332,
-          "mean": 0.20724640062553665,
+          "max": 0.5380996131614764,
+          "mean": 0.1521146274509843,
           "median": 0.1816901138162092,
           "min": 0.0031279384351483,
           "n_total": 21,

@@ -1,0 +1,64 @@
+{
+  "dry_run": false,
+  "force": true,
+  "log_path": "logs/pipeline_20260924T100458Z.txt",
+  "nlp_backend": "openai",
+  "stage_results": [
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/05_metric_engine.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--contract-report",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json",
+        "--output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/planning_metrics.parquet",
+        "--code-churn-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/code_churn_metrics.parquet",
+        "--technical-degradation-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/technical_degradation_metrics.parquet",
+        "--integration-friction-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/integration_friction_metrics.parquet",
+        "--cut-context-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cut_context_metrics.parquet",
+        "--team-metrics-output",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/team_metrics.parquet",
+        "--force"
+      ],
+      "duration_seconds": 1.9,
+      "stage": "metrics",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/06_statistical_analyzer.py",
+        "--force"
+      ],
+      "duration_seconds": 3.9,
+      "stage": "stats",
+      "status": "success"
+    },
+    {
+      "command": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/08_cross_evidence_engine.py",
+        "--lake-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake",
+        "--analysis-dir",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis",
+        "--force"
+      ],
+      "duration_seconds": 4.6,
+      "stage": "cross-evidence",
+      "status": "success"
+    }
+  ],
+  "stages": [
+    "metrics",
+    "stats",
+    "cross-evidence"
+  ],
+  "status": "success"
+}

@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "1199cd2d251656eb0d54075c9cd59005fbe4c59a75b6d070cca1217fd4548ac7",
+  "input_checksum": "25b9a29bc12aca39868e0cfc0b5d230a71fb62893e04ba709cede51a8ab52c0c",
   "options": {
     "artifact_id": "file_category_churn_by_cut_data",
     "backend": "openai",
@@ -32,49 +32,49 @@
       ],
       "numeric_summary": {
         "absolute_value": {
-          "max": 7584223.0,
+          "max": 13163948.0,
           "mean": 574797.6666666666,
-          "median": 20028.5,
+          "median": 7651.0,
           "min": 0.0,
           "n_total": 24,
           "n_valid": 24
         },
         "category_churn_share": {
-          "max": 0.5617056300224017,
-          "mean": 0.12499999999999999,
-          "median": 0.0204390089698502,
+          "max": 0.9749533610657458,
+          "mean": 0.12499999999999996,
+          "median": 0.0076780751597597995,
           "min": 0.0,
           "n_total": 24,
           "n_valid": 24
         },
         "category_event_share": {
-          "max": 0.5682137834036568,
-          "mean": 0.12499999999999996,
-          "median": 0.05332308505272255,
+          "max": 0.9344296858528358,
+          "mean": 0.12499999999999999,
+          "median": 0.03994518237402485,
           "min": 0.0,
           "n_total": 24,
           "n_valid": 24
         },
         "churn_lines": {
-          "max": 7584223.0,
+          "max": 13163948.0,
           "mean": 574797.6666666666,
-          "median": 20028.5,
+          "median": 7651.0,
           "min": 0.0,
           "n_total": 24,
           "n_valid": 24
         },
         "event_n": {
-          "max": 25066.0,
+          "max": 44320.0,
           "mean": 2126.7083333333335,
-          "median": 112.0,
+          "median": 108.5,
           "min": 0.0,
           "n_total": 24,
           "n_valid": 24
         },
         "relative_value": {
-          "max": 0.5617056300224017,
-          "mean": 0.12499999999999999,
-          "median": 0.0204390089698502,
+          "max": 0.9749533610657458,
+          "mean": 0.12499999999999996,
+          "median": 0.0076780751597597995,
           "min": 0.0,
           "n_total": 24,
           "n_valid": 24

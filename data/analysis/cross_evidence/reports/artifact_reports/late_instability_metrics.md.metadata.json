@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-artifact-report-v1",
-  "input_checksum": "be3e00c6432427268a6e4b29cc1e2df48d65f2f85f21701fe9b85a93dd164cd2",
+  "input_checksum": "fa20334635e0eda80ec0e9e5b35acd502ae32b4b40c214d0b6dd8b96f8ece1cd",
   "options": {
     "artifact_id": "late_instability_metrics",
     "backend": "openai",
@@ -105,8 +105,8 @@
         },
         "source_events_t3_rank_pct": {
           "max": 1.0,
-          "mean": 0.5357142857142858,
-          "median": 0.5357142857142857,
+          "mean": 0.5357142857142857,
+          "median": 0.5535714285714286,
           "min": 0.07142857142857142,
           "n_total": 14,
           "n_valid": 14

@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-group-report-v1",
-  "input_checksum": "d337124b53de5c6024d55e4c20c014c8f4f59b90de1b3720bbe02bfd1768673f",
+  "input_checksum": "48c74a1df2636fd2b115a315eb8a000a8d4f09b48b167d33ca53ca08fe96893d",
   "options": {
     "backend": "openai",
     "group_name": "source_churn",
@@ -11,8 +11,8 @@
       "member_artifacts": [
         {
           "analysis_id": "scope_vs_source_churn_t3",
-          "coefficient": -0.2647382010005621,
-          "p_value": 0.3603606340812801,
+          "coefficient": -0.3805611639383081,
+          "p_value": 0.1794831502826139,
           "priority": "primary_candidate",
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -23,8 +23,8 @@
         },
         {
           "analysis_id": "scope_vs_source_events_t3",
-          "coefficient": -0.3584996471882611,
-          "p_value": 0.2081470186216417,
+          "coefficient": -0.4748447045164489,
+          "p_value": 0.0862066101479181,
           "priority": "primary_candidate",
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -36,7 +36,7 @@
         {
           "analysis_id": "scope_applicability_mean_t3__source_churn_t3__top_bottom_4",
           "coefficient": NaN,
-          "p_value": 0.6857142857142857,
+          "p_value": 0.2,
           "priority": NaN,
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -48,7 +48,7 @@
         {
           "analysis_id": "scope_applicability_mean_t3__source_events_t3__top_bottom_4",
           "coefficient": NaN,
-          "p_value": 0.4857142857142857,
+          "p_value": 0.1142857142857142,
           "priority": NaN,
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -60,7 +60,7 @@
         {
           "analysis_id": "project_progress_mean_t3__source_churn_t3__top_bottom_4",
           "coefficient": NaN,
-          "p_value": 0.8857142857142857,
+          "p_value": 0.3428571428571428,
           "priority": NaN,
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -72,7 +72,7 @@
         {
           "analysis_id": "project_progress_mean_t3__source_events_t3__top_bottom_4",
           "coefficient": NaN,
-          "p_value": 0.6857142857142857,
+          "p_value": 0.2,
           "priority": NaN,
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -107,8 +107,8 @@
         },
         {
           "analysis_id": "scope_vs_source_churn_t3",
-          "coefficient": -0.2647382010005621,
-          "p_value": 0.3603606340812801,
+          "coefficient": -0.3805611639383081,
+          "p_value": 0.1794831502826139,
           "priority": NaN,
           "publication_readiness": "exploratory_only",
           "recommended_use": "report_methodological_limitation",
@@ -119,8 +119,8 @@
         },
         {
           "analysis_id": "scope_vs_source_events_t3",
-          "coefficient": -0.3584996471882611,
-          "p_value": 0.2081470186216417,
+          "coefficient": -0.4748447045164489,
+          "p_value": 0.0862066101479181,
           "priority": NaN,
           "publication_readiness": "exploratory_only",
           "recommended_use": "report_methodological_limitation",
@@ -203,8 +203,8 @@
         },
         {
           "analysis_id": "scope_vs_source_churn_t3",
-          "coefficient": -0.2647382010005621,
-          "p_value": 0.3603606340812801,
+          "coefficient": -0.3805611639383081,
+          "p_value": 0.1794831502826139,
           "priority": "primary_candidate",
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -215,8 +215,8 @@
         },
         {
           "analysis_id": "scope_vs_source_churn_t3",
-          "coefficient": -0.0594088525786004,
-          "p_value": 0.8793286751743332,
+          "coefficient": -0.2376354103144018,
+          "p_value": 0.5380996131614764,
           "priority": "primary_candidate",
           "publication_readiness": "exploratory_only",
           "recommended_use": "report_methodological_limitation",
@@ -239,8 +239,8 @@
         },
         {
           "analysis_id": "scope_vs_source_events_t3",
-          "coefficient": -0.3584996471882611,
-          "p_value": 0.2081470186216417,
+          "coefficient": -0.4748447045164489,
+          "p_value": 0.0862066101479181,
           "priority": "primary_candidate",
           "publication_readiness": "exploratory_only",
           "recommended_use": "do_not_generalize",
@@ -251,8 +251,8 @@
         },
         {
           "analysis_id": "scope_vs_source_events_t3",
-          "coefficient": -0.2772413120334688,
-          "p_value": 0.4701450823117139,
+          "coefficient": -0.4554678697692702,
+          "p_value": 0.2179382855390245,
           "priority": "primary_candidate",
           "publication_readiness": "exploratory_only",
           "recommended_use": "report_methodological_limitation",

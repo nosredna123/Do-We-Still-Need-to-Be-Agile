@@ -17,15 +17,15 @@ temporal_escalation_panel,pi_line_delta,Planning artifact line delta,temporal_es
 temporal_escalation_panel,pi_line_delta,Planning artifact line delta,temporal_escalation_metrics,T1,semester,2026.1,semester_mean,107.0,107.0,1.0,5,relative_to_t1_baseline
 temporal_escalation_panel,pi_line_delta,Planning artifact line delta,temporal_escalation_metrics,T2,semester,2026.1,semester_mean,423.4,107.0,3.9570093457943925,5,relative_to_t1_baseline
 temporal_escalation_panel,pi_line_delta,Planning artifact line delta,temporal_escalation_metrics,T3,semester,2026.1,semester_mean,9667.2,107.0,90.34766355140188,5,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T1,global,,source_mean,3615.285714285714,3615.285714285714,1.0,14,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T2,global,,source_mean,17314.214285714286,3615.285714285714,4.789169004623227,14,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T3,global,,source_mean,964437.9285714285,3615.285714285714,266.7667246216462,14,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T1,semester,2025.2,semester_mean,2090.4444444444443,2090.4444444444443,1.0,9,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T2,semester,2025.2,semester_mean,22920.333333333332,2090.4444444444443,10.964335069629,9,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T3,semester,2025.2,semester_mean,1485854.3333333333,2090.4444444444443,710.783937493356,9,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T1,semester,2026.1,semester_mean,6360.0,6360.0,1.0,5,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T2,semester,2026.1,semester_mean,7223.2,6360.0,1.1357232704402516,5,relative_to_t1_baseline
-temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T3,semester,2026.1,semester_mean,25888.4,6360.0,4.070503144654088,5,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T1,global,,source_mean,1551.2857142857142,1551.2857142857142,1.0,14,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T2,global,,source_mean,3396.0714285714284,1551.2857142857142,2.189197900359149,14,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T3,global,,source_mean,9737.5,1551.2857142857142,6.27705129385763,14,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T1,semester,2025.2,semester_mean,442.22222222222223,442.22222222222223,1.0,9,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T2,semester,2025.2,semester_mean,3707.5555555555557,442.22222222222223,8.38391959798995,9,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T3,semester,2025.2,semester_mean,10572.888888888889,442.22222222222223,23.90854271356784,9,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T1,semester,2026.1,semester_mean,3547.6,3547.6,1.0,5,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T2,semester,2026.1,semester_mean,2835.4,3547.6,0.799244559702334,5,relative_to_t1_baseline
+temporal_escalation_panel,cc_total,Total churn,temporal_escalation_metrics,T3,semester,2026.1,semester_mean,8233.8,3547.6,2.3209493742248277,5,relative_to_t1_baseline
 temporal_escalation_panel,cc_commit_n,Commit count,temporal_escalation_metrics,T1,global,,source_mean,7.928571428571429,7.928571428571429,1.0,14,relative_to_t1_baseline
 temporal_escalation_panel,cc_commit_n,Commit count,temporal_escalation_metrics,T2,global,,source_mean,16.357142857142858,7.928571428571429,2.063063063063063,14,relative_to_t1_baseline
 temporal_escalation_panel,cc_commit_n,Commit count,temporal_escalation_metrics,T3,global,,source_mean,33.714285714285715,7.928571428571429,4.252252252252252,14,relative_to_t1_baseline

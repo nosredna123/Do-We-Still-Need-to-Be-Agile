@@ -1,17 +1,17 @@
 {
   "contract_version": "artifact-narrative-report-v1",
-  "input_checksum": "6affb253be5313247cbda9252518d363ad29ede44544bcccb7a2941ef1f9f52a",
+  "input_checksum": "7ca0911008a2e98ec6c9b6db031cacc037aecf598ec2075227bd4e208064703a",
   "options": {
     "backend": "openai",
     "fact_sheet": {
       "artifact_id": "code_churn_metrics",
       "column_count": 73,
-      "contract_version": "code-churn-metrics-v1",
+      "contract_version": "code-churn-metrics-v2",
       "key_numeric_columns": {
         "cc_binary_file_events_t2": {
-          "max": 21.0,
-          "mean": 5.714285714285714,
-          "median": 4.5,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
           "min": 0.0,
           "n_total": 14,
           "n_valid": 14
@@ -49,18 +49,18 @@
           "n_valid": 14
         },
         "cc_total_t1": {
-          "max": 17111.0,
-          "mean": 3615.285714285714,
-          "median": 305.5,
+          "max": 11124.0,
+          "mean": 1551.2857142857142,
+          "median": 66.5,
           "min": 0.0,
           "n_total": 14,
           "n_valid": 14
         },
         "cc_total_t3": {
-          "max": 11762127.0,
-          "mean": 964437.9285714285,
-          "median": 22869.0,
-          "min": 304.0,
+          "max": 28069.0,
+          "mean": 9737.5,
+          "median": 6975.5,
+          "min": 172.0,
           "n_total": 14,
           "n_valid": 14
         },

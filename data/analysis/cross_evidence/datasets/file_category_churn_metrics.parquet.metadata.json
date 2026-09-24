@@ -1,9 +1,9 @@
 {
   "contract_version": "cross-evidence-v1",
-  "input_checksum": "013378d5255c796bb71edba622357659c4046b428b0c93ec48b57776d515ab4a",
+  "input_checksum": "67f813036ba144a5e96735e00171147667a5b52ab50ed94828728c4ec410d96c",
   "options": {
     "contract_version": "cross-evidence-v1",
-    "file_category_definition_version": "file-category-rules-v1",
+    "file_category_definition_version": "file-category-rules-v4",
     "line_count_missing_policy": "fill_zero_and_count_missing_events",
     "materialize_unobserved_categories": false,
     "share_denominator": "team_semester_cut",

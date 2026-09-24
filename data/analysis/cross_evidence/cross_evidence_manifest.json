@@ -16,7 +16,7 @@
     },
     "author_pressure_vs_churn_data": {
       "artifact_id": "author_pressure_vs_churn_data",
-      "checksum": "d35699ed6bc59cf77346a074086dbead7ef536828b3a40db07725bd326d84d54",
+      "checksum": "8090283cb4d61b20a4d3cb53b079e938dbc5727e58398d80ce84819dd704e2ce",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -31,11 +31,11 @@
     "author_pressure_vs_churn_figure": {
       "artifact_id": "author_pressure_vs_churn_figure",
       "checksums": {
-        "data": "d35699ed6bc59cf77346a074086dbead7ef536828b3a40db07725bd326d84d54",
-        "pdf": "97da86bea695d45fef60b46ac6bab6d1933cfb3977972b5c1461441468933cc2",
-        "plotly_json": "2ca1fb410060c8b298dcca142b8994a15ed8224c2b73663c81e31346edbb57d7",
-        "png": "e9bf09954d0899479fde24e3efc8d87576dee9128d58c3dfed1ad823e71b5ed2",
-        "svg": "0683e7b88c43c11d60330ea84e983e8e5f42851480d9ffdb205f0adcc24ab2bb"
+        "data": "8090283cb4d61b20a4d3cb53b079e938dbc5727e58398d80ce84819dd704e2ce",
+        "pdf": "a3b9958bc368f74ac0cb3a27713cc326ae13e7aae85c3416858e5c306d03ebc7",
+        "plotly_json": "5780b7dbd9e5e4d332c9288741da62b7390021bf077ee341774658e31a586d83",
+        "png": "79e3a1401453cd7d9c2bd64ac0a81b915558a348f19887e76e552715155c946e",
+        "svg": "d142e9c51b111ce6cad46c116de8115b5eb3d9626154f670a1e0173ccd493e18"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/author_pressure_vs_churn.csv.metadata.json",
@@ -70,7 +70,7 @@
     },
     "best_worst_project_contrasts": {
       "artifact_id": "best_worst_project_contrasts",
-      "checksum": "1b8b1e19ca38eb66b2a96f454cd532007964db5b7e5a69e19c17c88737f7dc72",
+      "checksum": "a55068f0c90e7eeb89ff77e33912101bcca25c15d61639a53eb915a8cffc1eb7",
       "contract_version": "cross-evidence-best-worst-contrasts-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "secondary_support",
@@ -84,7 +84,7 @@
     },
     "cross_evidence_correlations": {
       "artifact_id": "cross_evidence_correlations",
-      "checksum": "13ca93b3c3b69bd222d28e605c116f4d6195a54d5575f7ddc1fd48cd9d612881",
+      "checksum": "c179d867b0e4730508c0dd7e5a2406bd7212bf3283c09141755d765b0185a11b",
       "contract_version": "cross-evidence-correlations-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -98,7 +98,7 @@
     },
     "cross_evidence_manifest_exclusions": {
       "artifact_id": "cross_evidence_manifest_exclusions",
-      "checksum": "6a014a74db8d4ba80812da1a3eb6b21640b22f0d316110c0d189919348590f8a",
+      "checksum": "da48c957f606d4468d575e87bd4bf02442e821970c7a08a689f48bb8748ccd8f",
       "contract_version": "cross-evidence-manifest-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "methodological_warning",
@@ -112,7 +112,7 @@
     },
     "cross_evidence_panel": {
       "artifact_id": "cross_evidence_panel",
-      "checksum": "d85f180a87d37b5f172640b1cff4cee26580e4c992ccd8e3f49e4b6811464555",
+      "checksum": "4f5e1f7c00156735746473bb8f233eaad97ddeeb84a7d1e0073c460c13ace292",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "descriptive_context",
@@ -140,7 +140,7 @@
     },
     "evidence_priority_matrix": {
       "artifact_id": "evidence_priority_matrix",
-      "checksum": "f1a93b90b6181eeb3d4c35544be28fee113fef7067dff47dfc7b4778261a2ae3",
+      "checksum": "e7661595ee8d015b3dd9be44016902ed0d6f47a0a1b656c11a9f94a2e53ba1de",
       "contract_version": "cross-evidence-priority-matrix-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "descriptive_context",
@@ -154,7 +154,7 @@
     },
     "extreme_case_overlap": {
       "artifact_id": "extreme_case_overlap",
-      "checksum": "98be10a59272cd0d7ba339f91c111a46e2312f82b77f2fd73d3059e5996778a0",
+      "checksum": "18da2fe1acd28e784b211ae2a59b971068c7718ac43f31eb06ad4020da4a1aae",
       "contract_version": "cross-evidence-extreme-overlap-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "secondary_support",
@@ -168,7 +168,7 @@
     },
     "file_category_churn_by_cut_data": {
       "artifact_id": "file_category_churn_by_cut_data",
-      "checksum": "fd02467ad321a174b99c23bd384ec4191d2396e0af20e3e7f799cb8ef7ebe432",
+      "checksum": "30f9dce1b02c5bbe10df92b7e802a8504cc3334e9440f5fd6061f54bd1aba094",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "methodological_warning",
@@ -183,11 +183,11 @@
     "file_category_churn_by_cut_figure": {
       "artifact_id": "file_category_churn_by_cut_figure",
       "checksums": {
-        "data": "fd02467ad321a174b99c23bd384ec4191d2396e0af20e3e7f799cb8ef7ebe432",
-        "pdf": "a8bb49b8ff3737d32b08aa0476a64596afa9418203a536bdad0990e9ea53aa9b",
-        "plotly_json": "e62f22dff61b6b5382a4efed45222dd56799cc7f11389b7b0b356f5e91fca2ad",
-        "png": "4562e6ab70d0a3c9e2249fd5d5e038002731d88ea6963900f5eba91ae8239fd3",
-        "svg": "e3d79aa921d14ce401e2d45af735c52b681ef111a49b0430fd9616510f4fb61f"
+        "data": "30f9dce1b02c5bbe10df92b7e802a8504cc3334e9440f5fd6061f54bd1aba094",
+        "pdf": "fde534d63ddc6c393bd74d805ed7c2e8797f6ddda817b3aa6b73f458fa85cf5b",
+        "plotly_json": "aae7b9e4e4df8ca611aabe4cf7358bbcf6a29edc76073f4781695b20bd94f0ac",
+        "png": "523a0c8ff821276235dc87e52996b3ff3b8acecd26398a2c59467a3b16b047ae",
+        "svg": "95865321c939c497f9d081f0895ee11136fc9859c1eee6e6dad82aec1fbe93b0"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv.metadata.json",
@@ -222,7 +222,7 @@
     },
     "file_category_churn_metrics": {
       "artifact_id": "file_category_churn_metrics",
-      "checksum": "5ae587331a312bd0795352637c07b9459be96d2c60c05715f2df1947e4ebb480",
+      "checksum": "5653164edc9923a1a8877bcc95ec21f13021b5330d0f514cd605c20fce6bf957",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -236,7 +236,7 @@
     },
     "late_instability_metrics": {
       "artifact_id": "late_instability_metrics",
-      "checksum": "88b76462bf42f52f877f7b13bdf4918fb23e8970e1ed841a8bf5cd19ce496b04",
+      "checksum": "c12a46bce3ec2e65a6543f349fd0f38adc5a6c9c43546f49ca50ebeac359d819",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -250,7 +250,7 @@
     },
     "leave_one_out_robustness_data": {
       "artifact_id": "leave_one_out_robustness_data",
-      "checksum": "a8d38098949b5f54ade88936b3092ee16a119f5b5a67219fe35db0e41cb79423",
+      "checksum": "11efe4b9532c736ed854e4600a0313132d5714a13693c2c99f4cd76f64ff69dc",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -265,11 +265,11 @@
     "leave_one_out_robustness_figure": {
       "artifact_id": "leave_one_out_robustness_figure",
       "checksums": {
-        "data": "a8d38098949b5f54ade88936b3092ee16a119f5b5a67219fe35db0e41cb79423",
-        "pdf": "b47ebc0641f2ef4234cfd85ca3ea0f149374bdcaf6fc0e63177cc032103e2dd6",
-        "plotly_json": "52d1d889a7c2f528a833618a8e2bbefc94174a499ca8cac0a9df91c748f3c005",
-        "png": "58059a0059313c03169942f44ab4be68903a1c85992976a1c51d5ea66db70083",
-        "svg": "c5231d122e4c039d48d31aa6b774c2d8935a7d619806a16a4c95ae4a9d6637bf"
+        "data": "11efe4b9532c736ed854e4600a0313132d5714a13693c2c99f4cd76f64ff69dc",
+        "pdf": "df071abb035ffd4835c52a242e5705eab4afefa4083ba84ddc9c7b7f8eddf7aa",
+        "plotly_json": "32870f1429487be0253c8cd00a0be93c7a52650cb455ac5a0b215c9145f1f0ef",
+        "png": "1ed584848f1a206080f89248ef19fddd7ed42b4cc3964d8c8c3e6795728784ef",
+        "svg": "1fcb70cf47b6c880d8211d88959d62184d4121e6662af2eac4b1e9078e4c3bb8"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/leave_one_out_robustness.csv.metadata.json",
@@ -304,7 +304,7 @@
     },
     "leave_one_out_sensitivity": {
       "artifact_id": "leave_one_out_sensitivity",
-      "checksum": "19310000a28edd67091d16fd9e31632ac1f66c367dd3817fa1aa01d940d67f2f",
+      "checksum": "97a6b2e9b8d5a0a6c449705b617f50b47cdc269a6a01c7bca4c44690c774fc1a",
       "contract_version": "cross-evidence-leave-one-out-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -318,7 +318,7 @@
     },
     "pareto_extreme_cases_data": {
       "artifact_id": "pareto_extreme_cases_data",
-      "checksum": "eb8830a1ff51e8b389b22ace3ea72d23a12687cd348bbeaeed2f62f184a18799",
+      "checksum": "fc4a5e8bbd034d7e2c4b609e5d989ce302e9e9345f93ce05f9a74d46056b4dcc",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "secondary_support",
@@ -333,11 +333,11 @@
     "pareto_extreme_cases_figure": {
       "artifact_id": "pareto_extreme_cases_figure",
       "checksums": {
-        "data": "eb8830a1ff51e8b389b22ace3ea72d23a12687cd348bbeaeed2f62f184a18799",
-        "pdf": "bab0512165ec0e9cbd971f5cc0e2c621998f1cde7e1284ea580715f208c4a247",
-        "plotly_json": "04b80895cd21b5ad667d21634848bb4c53bfcc8d7edd7f3950d65c2526177086",
-        "png": "5f67782ca2b9fd6f601ef4e3f158b7629ed19b7b414c53c65186f7fd43c88b0c",
-        "svg": "f2ac11491691abcfdfeeac6753d3509a1cdc0c709bf8753d5358dfbc3a531e2e"
+        "data": "fc4a5e8bbd034d7e2c4b609e5d989ce302e9e9345f93ce05f9a74d46056b4dcc",
+        "pdf": "98f4ce71e6645933fce999284c743818c0573f04f1825450f821eed1745458bd",
+        "plotly_json": "0e52d6a03188a0b0a1ec61cf41570f10ba938fbf33111b3d8e1d2eaf921ab251",
+        "png": "83f16ab1bb6e97f6027180b1a60c0f8cacf03b4f971254cdcc7a4248801a11bd",
+        "svg": "457211616893c637691bf68adb4b746c10676c0e8f3888abec1952895eba0053"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/pareto_extreme_cases.csv.metadata.json",
@@ -372,7 +372,7 @@
     },
     "scope_vs_late_instability_data": {
       "artifact_id": "scope_vs_late_instability_data",
-      "checksum": "98702c1d21826e7f5e1fe6d49e00504695b475bc1abda52c27346f3db5e7ab18",
+      "checksum": "369a23f2c8e1caa70d0fe8eee0924b2109d503c960961d591463dc9f9b4d0723",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -387,11 +387,11 @@
     "scope_vs_late_instability_figure": {
       "artifact_id": "scope_vs_late_instability_figure",
       "checksums": {
-        "data": "98702c1d21826e7f5e1fe6d49e00504695b475bc1abda52c27346f3db5e7ab18",
-        "pdf": "4b9ffd517a73d655d0cfae13deb630c6fd9d908a79b2abee28da912531a290e4",
-        "plotly_json": "d37ecfe7db2a540207015ee8835f34cfc0ad2a2bd072538d7460f42f570c6730",
-        "png": "cf7fac6db34e14464f7740176aabbea0a16003bd663d24c932770ddc1a5b8e16",
-        "svg": "57022ef7dabbd3dcfd170e6b3780e542f7c97f33adb3a3bae4f04b30ca352b67"
+        "data": "369a23f2c8e1caa70d0fe8eee0924b2109d503c960961d591463dc9f9b4d0723",
+        "pdf": "5be583b76670c579bf24faf5fc639bd4fe341e8f4fd190794078c82302d9a741",
+        "plotly_json": "4e86c2a62a1557713190ce2655f6f25b6b77e607639cfbedc51bb4f83e527b19",
+        "png": "0883b7789e89090599aae71f3d1652e90f632fa05b6e0278fb0d5d462cabb48a",
+        "svg": "20eac54136b2f30da29e1023cdf688fb0d9df34bd9ec2d399f3b0d03abb6aade"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/scope_vs_late_instability.csv.metadata.json",
@@ -426,7 +426,7 @@
     },
     "semester_stratified_results": {
       "artifact_id": "semester_stratified_results",
-      "checksum": "2db0fdd8f8c6e17efc370bc5e7d5cfaa103ffdf120675938fa47b7e765152fc8",
+      "checksum": "b8fad53c8b8ab51de592dd8fa69ce11ae614fa61409d5cc467a5e9776e11dc58",
       "contract_version": "cross-evidence-semester-stratified-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "methodological_warning",
@@ -440,7 +440,7 @@
     },
     "source_churn_vs_planning_rework_data": {
       "artifact_id": "source_churn_vs_planning_rework_data",
-      "checksum": "808aee8482f7883d7eff21e3b6d541ee77a38e43919ba80b5521e8d8644ffc20",
+      "checksum": "543f233d7449aa5f933db5e369f29f306e79c277b834629869c9800efb75d2ff",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -455,11 +455,11 @@
     "source_churn_vs_planning_rework_figure": {
       "artifact_id": "source_churn_vs_planning_rework_figure",
       "checksums": {
-        "data": "808aee8482f7883d7eff21e3b6d541ee77a38e43919ba80b5521e8d8644ffc20",
-        "pdf": "dd7d6fe014047190fef2c1d4263510d37d59d212ba62e610ee171073e3d5cbed",
-        "plotly_json": "4a7dc64cdfa44d926a236e72f5e1b6f4586c8637233b2d53a939e305b632fd88",
-        "png": "6fe6eba5a6e11ce2d0547469555a04714e40930f0813164d752c2b47219174d9",
-        "svg": "ff2087a7ec93f8debb30e693f0b6bddb6fb45664fef8cdcd78a5867dcdac3a86"
+        "data": "543f233d7449aa5f933db5e369f29f306e79c277b834629869c9800efb75d2ff",
+        "pdf": "5ac44d7cbb22f265b386f35d1a2b0e019d6249625e8cba9bd3279f15ab7b4761",
+        "plotly_json": "902658e82891f82310fef162b3b30e789970f888f3d0ddcd15a7bb1c47b7b6e8",
+        "png": "0bcaf4c1f121798dfbfc59fdaa89ddc053cd4e4e5fa16b87a04658ce192c4d0a",
+        "svg": "15ad1a696b46fbb44ef6f6df6083e5dd25781aa6e979bf66e0dea3bc40b6fdd9"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/source_churn_vs_planning_rework.csv.metadata.json",
@@ -494,7 +494,7 @@
     },
     "temporal_escalation_metrics": {
       "artifact_id": "temporal_escalation_metrics",
-      "checksum": "b0bc10ff0ba76c418e09bbfe6e9212ed5cfba8bcc24b5819f882fa64539a8483",
+      "checksum": "5ae4e563d8f93eb4da0707ee40e2386b0b0dcd643c2d71bb9da9a9acfd30cb6e",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -508,7 +508,7 @@
     },
     "temporal_escalation_panel_data": {
       "artifact_id": "temporal_escalation_panel_data",
-      "checksum": "9e8336ad5289ad2bb7b42eff17f7915382fc0bb65725fa69ab66518e3d59cd60",
+      "checksum": "52289cb9a907459dc2c383457afa0f62e94f4f220f89f7818d5e3ea5601c757a",
       "contract_version": "cross-evidence-v1",
       "evidence_scope": "secondary_exploratory_evidence",
       "evidence_type": "primary_candidate",
@@ -523,11 +523,11 @@
     "temporal_escalation_panel_figure": {
       "artifact_id": "temporal_escalation_panel_figure",
       "checksums": {
-        "data": "9e8336ad5289ad2bb7b42eff17f7915382fc0bb65725fa69ab66518e3d59cd60",
-        "pdf": "b240708484d745cf3fa7038a9666fe12ee321448e5be6aab2885541a1761238c",
-        "plotly_json": "709044a10d1098f5e52e9c69ef25ab73796e2d190295904c80b8b7dafbd8cdc0",
-        "png": "6884db73b4834a7592753be7a7c3b568aa597152426fb591c6959673e78a5da9",
-        "svg": "ea26283d175aeea8a4a6851880052492628014b0e5a39f1a8c91c68f1ac49eee"
+        "data": "52289cb9a907459dc2c383457afa0f62e94f4f220f89f7818d5e3ea5601c757a",
+        "pdf": "0f99811404bcb19f14b1d67d080a9c340c4d819fb3506a5225e2d5ca1cd368f7",
+        "plotly_json": "fcfa907ed9110709f6ac4e8d44c8921537b8ef665909dbf5a8439a8cd644f2f4",
+        "png": "0ff813496cff255db704f65435edce7747ffb9d2dda6d579b63a8be04ee6986c",
+        "svg": "6a2a1caddda6fc2fb58818131fa2d6f143c686f058f650158323a04462c8d0ad"
       },
       "contract_version": "cross-evidence-v1",
       "data_metadata_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/cross_evidence/figure_data/temporal_escalation_panel.csv.metadata.json",
@@ -562,7 +562,7 @@
     }
   },
   "contract_version": "cross-evidence-manifest-v1",
-  "input_checksum": "0a71dd9272b1b36a987999cc667019cc7eea78a70642311e84f51f45b268a413",
+  "input_checksum": "f45ffe6c99e4d8c10e4ce62c89f6154cc5393b5779d06152d73bb0d34638ff3f",
   "manifest_version": "cross-evidence-manifest-v1",
   "missing_artifacts": [],
   "producer_script": "08_cross_evidence_engine.py",

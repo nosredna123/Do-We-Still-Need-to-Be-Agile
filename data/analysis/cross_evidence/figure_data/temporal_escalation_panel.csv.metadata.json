@@ -1,6 +1,6 @@
 {
   "contract_version": "cross-evidence-figure-data-v1",
-  "input_checksum": "3195a3726a2ea32cf38c711fcd7e2044128a98cc0b12a27fe0acfd5376027557",
+  "input_checksum": "24b7fd1dc1192e183ee027ac469b97e24fd0ed18be344b1ddb161fc254800328",
   "options": {
     "export_formats": [
       "html",

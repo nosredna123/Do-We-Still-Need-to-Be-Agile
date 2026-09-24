@@ -2,11 +2,11 @@
   "anonymization_policy": "public_visual_ranked_or_aggregate",
   "category": "prioritarias",
   "checksums": {
-    "data": "fd02467ad321a174b99c23bd384ec4191d2396e0af20e3e7f799cb8ef7ebe432",
-    "pdf": "a8bb49b8ff3737d32b08aa0476a64596afa9418203a536bdad0990e9ea53aa9b",
-    "plotly_json": "e62f22dff61b6b5382a4efed45222dd56799cc7f11389b7b0b356f5e91fca2ad",
-    "png": "4562e6ab70d0a3c9e2249fd5d5e038002731d88ea6963900f5eba91ae8239fd3",
-    "svg": "e3d79aa921d14ce401e2d45af735c52b681ef111a49b0430fd9616510f4fb61f"
+    "data": "30f9dce1b02c5bbe10df92b7e802a8504cc3334e9440f5fd6061f54bd1aba094",
+    "pdf": "fde534d63ddc6c393bd74d805ed7c2e8797f6ddda817b3aa6b73f458fa85cf5b",
+    "plotly_json": "aae7b9e4e4df8ca611aabe4cf7358bbcf6a29edc76073f4781695b20bd94f0ac",
+    "png": "523a0c8ff821276235dc87e52996b3ff3b8acecd26398a2c59467a3b16b047ae",
+    "svg": "95865321c939c497f9d081f0895ee11136fc9859c1eee6e6dad82aec1fbe93b0"
   },
   "data_metadata_path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv.metadata.json",
   "data_path": "data/analysis/cross_evidence/figure_data/file_category_churn_by_cut.csv",

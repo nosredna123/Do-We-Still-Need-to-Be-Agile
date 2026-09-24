@@ -1,0 +1,9 @@
+2026-09-24 07:04:07,960 - __main__ - INFO - Pipeline execution log: logs/pipeline_20260924T100407Z.txt
+2026-09-24 07:04:07,960 - __main__ - INFO - Running stage repo-snapshots: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/02b_git_repository_snapshots.py --force
+2026-09-24 07:04:44,248 - __main__ - INFO - Repository snapshots written: rows=42
+2026-09-24 07:04:44,248 - __main__ - INFO - Repository snapshots written to data/lake/git_repository_snapshots.parquet
+2026-09-24 07:04:44,362 - __main__ - INFO - Finished stage repo-snapshots status=success duration_seconds=36.4
+2026-09-24 07:04:44,362 - __main__ - INFO - Running stage contracts: /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/phase2_contracts.py --lake-dir /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/lake --output /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/data/analysis/phase2_contract_report.json --force
+usage: phase2_contracts.py [-h] [--lake-dir LAKE_DIR] [--output OUTPUT]
+phase2_contracts.py: error: unrecognized arguments: --force
+2026-09-24 07:04:44,973 - __main__ - ERROR - Finished stage contracts status=failed exit_code=2 duration_seconds=0.6
