@@ -221,7 +221,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [x] 4.6 - Implementar e validar M9 (Associações Estratificadas) — aprovado em 2026-09-24 para escopo exploratório descritivo
 
 ### Fase 5: Resultados e Visualizações
-- [ ] 5.1 - Gerar catálogo de artefatos de resultados
+- [x] 5.1 - Gerar catálogo de artefatos de resultados — validado em 2026-09-24; 54 artefatos M1–M9 resolvidos e catálogo idempotente
 - [ ] 5.2 - Gerar candidatos de visualização e realizar oficina de escolha
 
 ### Fase 6: Preparação LaTeX
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 17/28 tarefas concluídas (61%)
-**Próxima tarefa:** 5.1 - Gerar Catálogo de Artefatos de Resultados
+**Progresso Total:** 18/28 tarefas concluídas (64%)
+**Próxima tarefa:** 5.2 - Gerar candidatos de visualização e realizar oficina de escolha
 
 ## 1. Objetivo e limites
 
@@ -1144,11 +1144,12 @@ Consolidar M1–M9 em JSON único `results_summary.json` com números aprovados 
 - `paper_v9/data/results/results_summary.json` (~5–10 KB, validado)
 - `paper_v9/scripts/results/build_results_summary.py` (testado)
 - Relatório de validação (`paper_v9/RESULTS_VALIDATION.txt`)
+- Catálogo com 54 referências de artefatos M1–M9, hashes SHA-256 e schemas
 
 #### Validação
-- [ ] JSON bem-formado e completo
-- [ ] Todas as referências resolvidas
-- [ ] Segunda execução produce JSON idêntico
+- [x] JSON bem-formado e completo
+- [x] Todas as referências resolvidas
+- [x] Segunda execução produz JSON idêntico
 
 #### Gate
 **Status ao completar:** ✓ APROVADO para Tarefa 5.2

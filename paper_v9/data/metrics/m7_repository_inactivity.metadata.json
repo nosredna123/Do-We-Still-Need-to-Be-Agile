@@ -14,7 +14,7 @@
     "pattern_rows": 14,
     "team_semesters": 14
   },
-  "gate_status": "approved",
+  "gate_status": "pending",
   "inference": "descriptive_only",
   "input_sha256": "ad6567fb7927813e1a5423b9d6bbd5b7f0fe4f7fde94cab34bfbcabf1a4a7834",
   "limitations": [

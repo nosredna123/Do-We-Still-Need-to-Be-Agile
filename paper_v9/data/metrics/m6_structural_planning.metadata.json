@@ -12,7 +12,7 @@
     "team_semester_n": 14,
     "unavailable_not_measured_n": 0
   },
-  "gate_status": "approved",
+  "gate_status": "pending",
   "inference": "exploratory_descriptive",
   "input_sha256": "293b61a655dfdb40a8f48ebef9d350ed6f34cf48c415a1375428ffa9591d65fd",
   "limitations": [
