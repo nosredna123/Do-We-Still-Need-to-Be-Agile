@@ -135,6 +135,9 @@ Validação do ambiente LaTeX: pdfTeX, BibTeX, IEEEtran.cls instalados. PDF de t
 ✓ **Tarefa 0.2 CONCLUÍDA** (2026-09-24)  
 Congelamento de baseline v8: título e RQs registrados como invariantes, todos 9 métricas (M1–M9) hashadas, LaTeX e figuras congeladas em SHA256.
 
+✓ **Tarefa 1.1 CONCLUÍDA** (2026-09-24)  
+Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `statistics.py`, `artifact_policy.py` (todos reaproveitando `pipeline_core`/`pipeline_config`, sem duplicar lógica), orquestrador `orchestrate_v9.py` com stages `metrics/results/figures/latex-check/all`, e suite `test_contracts.py` com 13 testes (100% passando). Suite completa do repositório (273 passed, 6 skipped) permanece verde. Documentado em `INFRASTRUCTURE.md`.
+
 ---
 
 ## Checklist de Execução do Plano V9
@@ -144,7 +147,7 @@ Congelamento de baseline v8: título e RQs registrados como invariantes, todos 9
 - [x] 0.2 - Congelar baseline v8 e registrar inventário
 
 ### Fase 1: Infraestrutura Técnica e Governança
-- [ ] 1.1 - Criar contrato e utilitários comuns v9
+- [x] 1.1 - Criar contrato e utilitários comuns v9
 - [ ] 1.2 - Implementar resume, manifestos e inventário de entradas
 
 ### Fase 2: RQ1 - Percepção e Adoção de IA
@@ -185,8 +188,8 @@ Congelamento de baseline v8: título e RQs registrados como invariantes, todos 9
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 2/28 tarefas concluídas (7%)  
-**Próxima tarefa:** 1.1 - Criar contrato e utilitários comuns v9
+**Progresso Total:** 3/28 tarefas concluídas (11%)  
+**Próxima tarefa:** 1.2 - Implementar resume, manifestos e inventário de entradas
 
 ## 1. Objetivo e limites
 
