@@ -21,13 +21,6 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{lewis2020retrieval}
-P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
-  H.~K{\"{u}}ttler, M.~Lewis, W.~Yih, T.~Rockt{\"{a}}schel, S.~Riedel, and
-  D.~Kiela, ``Retrieval-augmented generation for knowledge-intensive {NLP}
-  tasks,'' in \emph{Advances in Neural Information Processing Systems},
-  vol.~33, 2020, pp. 9459--9474.
-
 \bibitem{github2025spec}
 \BIBentryALTinterwordspacing
 {GitHub Blog}, ``Spec-driven development with ai: Get started with a new open
@@ -40,6 +33,13 @@ P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
 {Thoughtworks}, ``Spec-driven development,'' 2025. [Online]. Available:
   \url{https://www.thoughtworks.com/en-br/insights/decoder/s/spec-driven-development}
 \BIBentrySTDinterwordspacing
+
+\bibitem{lewis2020retrieval}
+P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
+  H.~K{\"{u}}ttler, M.~Lewis, W.~Yih, T.~Rockt{\"{a}}schel, S.~Riedel, and
+  D.~Kiela, ``Retrieval-augmented generation for knowledge-intensive {NLP}
+  tasks,'' in \emph{Advances in Neural Information Processing Systems},
+  vol.~33, 2020, pp. 9459--9474.
 
 \bibitem{nguyenduc2026systematic}
 \BIBentryALTinterwordspacing
