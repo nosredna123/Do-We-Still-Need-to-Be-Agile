@@ -209,7 +209,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 
 ### Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
 - [x] 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade) — aprovado em 2026-09-24 para escopo descritivo M3a-M3c
-- [ ] 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal)
+- [x] 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal) — aprovado em 2026-09-24 para escopo descritivo M4a-M4d
 - [ ] 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
 
 ### Fase 4: RQ3 - Planejamento, Retrabalho e Associações
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 7/28 tarefas concluídas (25%)
-**Próxima tarefa:** 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal)
+**Progresso Total:** 8/28 tarefas concluídas (29%)
+**Tarefa em execução:** 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
 
 ## 1. Objetivo e limites
 
@@ -809,17 +809,24 @@ Reconstruir corpus global por marco a partir de chunks técnicos, medir densidad
 - `paper_v9/data/metrics/m5_evidence_audit_trail.csv` (trechos exemplo para revisão)
 - `paper_v9/data/metrics/m5_lexicon.json` (versão do léxico)
 - `paper_v9/data/metrics/m5_coordination_evidence.metadata.json`
-- `paper_v9/scripts/metrics/m5_coordination_evidence.py` (testado)
+- `paper_v9/scripts/metrics/m5_coordination_evidence.py`
+- `paper_v9/tests/test_m5.py`
+- `paper_v9/verification_notebooks/verify_m5.ipynb`
+- `paper_v9/metricas_v8-analysis/analyze_m5.md`
+- `paper_v9/figures/m5_marker_density.{pdf,svg,png}`
+- `paper_v9/figures/m5_marker_composition.{pdf,svg,png}`
+- `paper_v9/data/metrics/m5_marker_density.html`
+- `paper_v9/data/metrics/m5_marker_composition.html`
 
 #### Validação
-- [ ] Léxico versionado e documentado
-- [ ] Fila auditável de trechos acessível
-- [ ] Nenhuma correlação implícita com M3/M4
-- [ ] Cobertura de corpus clara (qual % de sessões, qual % de tokens)
-- [ ] Segunda execução reutiliza (checksum match)
+- [x] Léxico versionado e documentado
+- [x] Fila auditável de trechos acessível
+- [x] Nenhuma correlação implícita com M3/M4
+- [x] Cobertura de corpus clara (qual % de sessões, qual % de tokens)
+- [x] Segunda execução reutiliza (checksum match)
 
 #### Gate
-**Status ao completar:** ✓ APROVADO para Fase 4 (M6–M9)
+**Status ao completar:** APROVAÇÃO MANUAL PENDENTE antes da Fase 4 (M6–M9)
 
 ---
 

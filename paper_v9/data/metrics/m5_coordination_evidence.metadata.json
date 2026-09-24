@@ -1,0 +1,43 @@
+{
+  "artifacts": [
+    "m5_marker_density.csv",
+    "m5_marker_composition.csv",
+    "m5_corpus_coverage.csv",
+    "m5_evidence_audit_trail.csv",
+    "m5_lexicon.json",
+    "m5_coordination_evidence.metadata.json"
+  ],
+  "config_sha256": "474925bb4f100c8df1b7559bf10a9cb8c70521bfdfc7fb07cc85c477673d2a02",
+  "contract_version": "m5-coordination-evidence-v1",
+  "coverage": {
+    "audit_rows": 52,
+    "source_sessions": 6,
+    "tokens": 102088,
+    "transcript_chunks": 100
+  },
+  "gate_status": "pending",
+  "inference": "descriptive_only",
+  "input_sha256": "f5d976a184c385090eb24f084ca46f2d66dbef04a22b3c49aa02715b42b3ee87",
+  "legacy_source": "paper_v8/data/m5_coordination_friction_trajectory.csv",
+  "lexicon_version": "m5-friction-lexicon-pt-v1",
+  "limitations": [
+    "lexical markers are candidate textual evidence, not diagnoses of coordination failure",
+    "transcript data has no team identifier",
+    "chunks and source sessions are not independent replicates",
+    "no hypothesis tests, confidence intervals, correlations, or causal claims are produced"
+  ],
+  "llm_calls_required": false,
+  "metric_definition_version": "m5-coordination-evidence-v1",
+  "observed_semesters": [
+    "2025.2"
+  ],
+  "observed_temporal_markers": [
+    "T1",
+    "T2",
+    "T3"
+  ],
+  "rq": "RQ2",
+  "source_contract": "data/lake/transcript_sessions.parquet",
+  "status": "success",
+  "unit_of_analysis": "global transcript corpus by temporal marker"
+}
