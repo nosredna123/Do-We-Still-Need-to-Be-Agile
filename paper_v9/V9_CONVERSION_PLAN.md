@@ -91,11 +91,15 @@ Antes de executar, esclarecer:
    - Entender **exatamente** como a métrica foi calculada em v8 (fórmula, tratamento de casos extremos, exclusões)
    - Identificar casos reais nos dados v8 que exemplifiquem a métrica
    - Documentar quaisquer ambiguidades ou suposições em v8 que v9 deve resolver
+   - Se a análise v8, os dados ou o código não permitirem determinar com segurança uma regra, unidade, mapeamento temporal, rubrica ou tratamento de ausência, interromper a implementação desse ponto e registrar perguntas de esclarecimento antes de escolher uma convenção
 
 2. **Esclarecer gaps antes de implementar**
    - Se o código v8 ou documentação estiverem incompletos ou ambíguos, registrar questões de esclarecimento
    - Pedir aprovação explícita de como v9 diferirá de v8 (se aplicável)
    - Confirmar que a unidade de análise (equipe-semestre vs. corpus global) está clara
+   - Criar uma matriz de rastreabilidade para cada métrica: recomendação da análise v8, decisão v9, artefato/célula que a evidencia, estado (`applied`, `partially_applied`, `not_applied`, `not_applicable`) e justificativa
+   - Nenhuma recomendação da análise v8 pode desaparecer por omissão silenciosa; pendências devem bloquear o gate ou ter decisão explícita aprovada
+   - A seção `Questões de Esclarecimento` deve ser preenchida para cada ambiguidade material; a tarefa só pode prosseguir nesse ponto após resposta/aprovação explícita ou decisão documentada de escopo
 
 3. **Gerar notebook de verificação v9**
    - Para cada métrica M1–M9, criar notebook em `paper_v9/verification_notebooks/verify_m{N}.ipynb`
@@ -107,6 +111,10 @@ Antes de executar, esclarecer:
      - Executar testes de sanidade: nenhum valor impossível, cobertura declarada, sem NaN silencioso
      - Apontar outliers, gaps e exceções com justificativas
      - **Falhar explicitamente** se os dados não forem válidos
+   - Demonstrar os artefatos produzidos: exibir amostras das tabelas/CSV e as figuras geradas no próprio notebook
+   - Exportar e exibir figuras em formatos exploratórios e article-ready quando o backend permitir (HTML interativo e PDF/SVG/PNG)
+   - Produzir uma análise preliminar, descritiva e explicitamente não causal de como a métrica contribui para o RQ vinculado
+   - Separar claramente validação, demonstração de artefatos e interpretação exploratória; não transformar a análise preliminar em conclusão do artigo
    - Notebook deve ser executável end-to-end (sem interrupções, sem passos manuais)
 
 4. **Validar contra dados reais antes de usar em artigo**
@@ -123,7 +131,49 @@ Para cada métrica M1–M9, criar 3 artefatos **antes** de usar dados em artigo:
 |----------|-----------|-----------------|
 | Análise V8 | `paper_v9/metricas_v8-analysis/analyze_m{N}.md` ou notebook v8 | Ler, resumir, identificar ambiguidades |
 | Script de Métrica | `paper_v9/scripts/metrics/m{N}_*.py` | Implementar conforme v8, com correções aprovadas |
-| Notebook de Verificação | `paper_v9/verification_notebooks/verify_m{N}.ipynb` | Validar outputs, comparar com v8, apontar desvios |
+| Notebook de Verificação e Análise Preliminar | `paper_v9/verification_notebooks/verify_m{N}.ipynb` | Validar outputs, comparar com v8, demonstrar tabelas/figuras, analisar preliminarmente o RQ e apontar desvios |
+
+### Auditoria obrigatória de transformação V8--V9
+
+Antes de aprovar qualquer tarefa de métrica, o notebook e a análise da métrica
+devem apresentar uma tabela de rastreabilidade com, no mínimo:
+
+| Campo | Conteúdo obrigatório |
+|---|---|
+| `v8_recommendation` | Formulação literal ou paráfrase verificável da recomendação v8 |
+| `v9_decision` | Como a recomendação foi implementada, alterada ou rejeitada |
+| `status` | `applied`, `partially_applied`, `not_applied` ou `not_applicable` |
+| `evidence` | Arquivo, coluna, teste ou célula que demonstra o estado |
+| `limitation_or_approval` | Pendência, justificativa e aprovação necessária quando não aplicada |
+
+O gate da métrica só pode ser `APPROVED` quando todas as recomendações
+obrigatórias estiverem `applied` ou quando cada exceção tiver uma decisão
+explícita registrada e aprovada. Reutilizar um artefato v8 sem executar a
+transformação recomendada deve ser marcado como `not_applied`, mesmo que o
+artefato seja aritmeticamente correto.
+
+### Padrão obrigatório dos notebooks de verificação
+
+Embora o nome `verify_m{N}.ipynb` seja preservado para estabilidade do contrato,
+cada notebook deve cumprir três papéis em células claramente separadas:
+
+1. **Verification:** carregar os artefatos produzidos, validar schemas, tipos,
+   ranges, ausências, cobertura, invariantes e comparação com v8 quando
+   aplicável; qualquer inconsistência deve interromper a execução com `assert`
+   ou exceção explícita.
+2. **Artifact demo:** exibir amostras de tabelas e figuras geradas, incluindo
+   links ou renderização dos formatos interativos e versões article-ready. A
+   demonstração deve consumir os artefatos oficiais, sem recalcular a métrica
+   em uma implementação paralela.
+3. **Preliminary RQ analysis:** produzir resumos e diferenças descritivas que
+   mostrem como a métrica pode informar o RQ vinculado. A célula deve declarar
+   unidade de análise, limitações, ausência de causalidade e estados
+   `unavailable_not_measured`; não deve introduzir afirmações novas sem fonte.
+
+Cada notebook novo deve ser executado integralmente no ambiente do projeto
+antes de a tarefa ser considerada concluída. A validação deve registrar que
+todas as células executaram, que as figuras foram efetivamente materializadas
+e que os artefatos demonstrados existem e não estão vazios.
 
 ---
 
@@ -154,7 +204,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [x] 1.2 - Implementar resume, manifestos e inventário de entradas
 
 ### Fase 2: RQ1 - Percepção e Adoção de IA
-- [ ] 2.1 - Implementar e validar M1 (Painel de Percepções)
+- [x] 2.1 - Implementar e validar M1 (Painel de Percepções) — aprovado em 2026-09-24 para escopo descritivo M1 v2
 - [ ] 2.2 - Implementar e validar M2 (Percepção de Risco por Papel)
 
 ### Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
@@ -191,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 4/28 tarefas concluídas (14%)  
-**Próxima tarefa:** 2.1 - Implementar e validar M1 (Painel de Percepções)
+**Progresso Total:** 5/28 tarefas concluídas (18%)  
+**Próxima tarefa:** 2.2 - Implementar e validar M2 (Percepção de Risco por Papel)
 
 ## 1. Objetivo e limites
 
@@ -541,19 +591,32 @@ Produzir indicadores separados de percepção (não compostos) por semestre e ma
 6. Gerar CSV longo e CSV largo (wide format para tabelas)
 7. Criar manifesto `m1_rq1_perception_panel.metadata.json`
 8. **Validar contra dados v8: comparar resumos estatísticos, distribuições, coberturas**
+9. Extrair os campos brutos de uso autorreportado por `Semestre × temporal_marker`: frequência geral, frequência em projetos, tarefas, ferramentas e experiência prévia
+10. Produzir uma distribuição separada para equilíbrio autonomia/ferramentas
+11. Produzir codificação exploratória auditável dos temas de impacto de carreira, bloqueada para uso confirmatório até validação humana
 
 #### Saída (Output)
 - `paper_v9/metricas_v8-analysis/analyze_m1.md` (~2–3 KB, resumo de v8)
 - `paper_v9/data/metrics/m1_rq1_perception_panel_long.csv` (structure: team_semester, checkpoint, perception_family, mean, std, n, coverage)
 - `paper_v9/data/metrics/m1_rq1_perception_panel_wide.csv`
+- `paper_v9/data/metrics/m1_rq1_usage_frequency.csv`
+- `paper_v9/data/metrics/m1_rq1_usage_tasks.csv`
+- `paper_v9/data/metrics/m1_rq1_usage_tools.csv`
+- `paper_v9/data/metrics/m1_rq1_prior_ai_project_experience.csv`
+- `paper_v9/data/metrics/m1_rq1_autonomy_tool_balance.csv`
+- `paper_v9/data/metrics/m1_rq1_career_impact_topics_exploratory.csv`
+- `paper_v9/data/metrics/m1_rq1_perception_distribution.csv`
 - `paper_v9/data/metrics/m1_rq1_perception_panel.metadata.json` (checksum, coverage summary)
 - `paper_v9/scripts/metrics/m1_rq1_perception_panel.py` (testado)
 - **`paper_v9/verification_notebooks/verify_m1.ipynb`** (validação de dados, comparação com v8)
 
 #### Validação
 - [ ] Análise v8 completa e registrada em `analyze_m1.md`
+- [ ] Matriz de rastreabilidade de todas as recomendações da análise v8 preenchida, com nenhuma pendência omitida
 - [ ] M1 CSV válidos e bem-formados
 - [ ] Nenhuma média de famílias heterogêneas
+- [ ] Uso autorreportado extraído separadamente de percepções e com proveniência temporal
+- [ ] Codificação de carreira marcada como exploratória até validação humana
 - [ ] `unavailable_not_measured` declarado onde apropriado
 - [ ] Notebook `verify_m1.ipynb` executa end-to-end sem erros
 - [ ] Notebook valida tipos, ranges, distribuições
@@ -1162,7 +1225,10 @@ por semestre e marco temporal a partir das familias de perguntas existentes.
 - Nao chamar a media de familias heterogeneas de dependencia real de IA.
 - Relatar cobertura por pergunta, distribuicao, ausencias e mudanca descritiva
   T1--T3 sem inventar painel individual quando o pareamento nao existir.
-- Incluir um estado explicito para uso real de IA: `unavailable_not_measured`.
+- Distinguir uso real de IA `available_but_not_included_in_m1_v1` quando houver
+   campos brutos de frequência, tarefas, ferramentas ou experiência, de
+   `unavailable_not_measured` quando faltarem unidade temporal, linkage ou
+   cobertura válida para a análise pretendida.
 
 Saidas: painel longo e largo, cobertura, resumo temporal e manifesto M1.
 

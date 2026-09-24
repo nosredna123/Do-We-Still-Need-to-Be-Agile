@@ -1,0 +1,63 @@
+Semestre,temporal_marker,measure,category,count,respondent_n,share
+2025.2,T1,real_ai_use_tools,ChatGPT,46,46,1.0
+2025.2,T1,real_ai_use_tools,Claude,7,46,0.15217391304347827
+2025.2,T1,real_ai_use_tools,Cursor,3,46,0.06521739130434782
+2025.2,T1,real_ai_use_tools,DeepSeek,31,46,0.6739130434782609
+2025.2,T1,real_ai_use_tools,Gemini,34,46,0.7391304347826086
+2025.2,T1,real_ai_use_tools,GitHub Copilot,18,46,0.391304347826087
+2025.2,T1,real_ai_use_tools,Lovable,1,46,0.021739130434782608
+2025.2,T1,real_ai_use_tools,Microsoft copilot,1,46,0.021739130434782608
+2025.2,T1,real_ai_use_tools,Perplexity,1,46,0.021739130434782608
+2025.2,T1,real_ai_use_tools,n8n,2,46,0.043478260869565216
+2025.2,T1,real_ai_use_tools,v0,1,46,0.021739130434782608
+2025.2,T2,real_ai_use_tools,Amazon Q,1,41,0.024390243902439025
+2025.2,T2,real_ai_use_tools,Base44,1,41,0.024390243902439025
+2025.2,T2,real_ai_use_tools,ChatGPT,40,41,0.975609756097561
+2025.2,T2,real_ai_use_tools,Claude,6,41,0.14634146341463414
+2025.2,T2,real_ai_use_tools,Cursor,4,41,0.0975609756097561
+2025.2,T2,real_ai_use_tools,DeepSeek,29,41,0.7073170731707317
+2025.2,T2,real_ai_use_tools,Gemini,32,41,0.7804878048780488
+2025.2,T2,real_ai_use_tools,GitHub Copilot,18,41,0.43902439024390244
+2025.2,T2,real_ai_use_tools,Manus AI,1,41,0.024390243902439025
+2025.2,T2,real_ai_use_tools,Perplexity,2,41,0.04878048780487805
+2025.2,T2,real_ai_use_tools,lovable,1,41,0.024390243902439025
+2025.2,T2,real_ai_use_tools,n8n,3,41,0.07317073170731707
+2025.2,T2,real_ai_use_tools,qwen,1,41,0.024390243902439025
+2025.2,T2,real_ai_use_tools,stich,1,41,0.024390243902439025
+2025.2,T2,real_ai_use_tools,v0,1,41,0.024390243902439025
+2025.2,T3,real_ai_use_tools,Base44,1,40,0.025
+2025.2,T3,real_ai_use_tools,ChatGPT,40,40,1.0
+2025.2,T3,real_ai_use_tools,Claude,9,40,0.225
+2025.2,T3,real_ai_use_tools,Cursor,3,40,0.075
+2025.2,T3,real_ai_use_tools,DeepSeek,26,40,0.65
+2025.2,T3,real_ai_use_tools,Gemini,31,40,0.775
+2025.2,T3,real_ai_use_tools,GitHub Copilot,13,40,0.325
+2025.2,T3,real_ai_use_tools,Perplexity,4,40,0.1
+2025.2,T3,real_ai_use_tools,Windsurf,1,40,0.025
+2025.2,T3,real_ai_use_tools,lovable,1,40,0.025
+2025.2,T3,real_ai_use_tools,n8n,3,40,0.075
+2025.2,T3,real_ai_use_tools,stich,1,40,0.025
+2025.2,T3,real_ai_use_tools,v0,1,40,0.025
+2026.1,T1,real_ai_use_tools,ChatGPT,19,22,0.8636363636363636
+2026.1,T1,real_ai_use_tools,Claude,8,22,0.36363636363636365
+2026.1,T1,real_ai_use_tools,Cursor,2,22,0.09090909090909091
+2026.1,T1,real_ai_use_tools,DeepSeek,6,22,0.2727272727272727
+2026.1,T1,real_ai_use_tools,Gemini,19,22,0.8636363636363636
+2026.1,T1,real_ai_use_tools,GitHub Copilot,12,22,0.5454545454545454
+2026.1,T1,real_ai_use_tools,Perplexity,2,22,0.09090909090909091
+2026.1,T1,real_ai_use_tools,n8n,3,22,0.13636363636363635
+2026.1,T2,real_ai_use_tools,ChatGPT,17,20,0.85
+2026.1,T2,real_ai_use_tools,Claude,14,20,0.7
+2026.1,T2,real_ai_use_tools,Cursor,3,20,0.15
+2026.1,T2,real_ai_use_tools,DeepSeek,3,20,0.15
+2026.1,T2,real_ai_use_tools,Gemini,18,20,0.9
+2026.1,T2,real_ai_use_tools,GitHub Copilot,6,20,0.3
+2026.1,T2,real_ai_use_tools,n8n,2,20,0.1
+2026.1,T3,real_ai_use_tools,ChatGPT,15,18,0.8333333333333334
+2026.1,T3,real_ai_use_tools,Claude,15,18,0.8333333333333334
+2026.1,T3,real_ai_use_tools,Cursor,4,18,0.2222222222222222
+2026.1,T3,real_ai_use_tools,DeepSeek,4,18,0.2222222222222222
+2026.1,T3,real_ai_use_tools,Gemini,14,18,0.7777777777777778
+2026.1,T3,real_ai_use_tools,GitHub Copilot,8,18,0.4444444444444444
+2026.1,T3,real_ai_use_tools,Perplexity,1,18,0.05555555555555555
+2026.1,T3,real_ai_use_tools,n8n,2,18,0.1111111111111111
