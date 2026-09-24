@@ -208,7 +208,7 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [x] 2.2 - Implementar e validar M2 (Percepção de Risco por Papel) — aprovado em 2026-09-24 para escopo descritivo
 
 ### Fase 3: RQ2 - Dinâmica de Repositório e Fricção de Coordenação
-- [ ] 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade)
+- [x] 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade) — aprovado em 2026-09-24 para escopo descritivo M3a-M3c
 - [ ] 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal)
 - [ ] 3.3 - Implementar e validar M5 (Evidência Textual de Fricção)
 
@@ -241,8 +241,8 @@ Infraestrutura comum v9 criada: `paths.py`, `provenance.py`, `resume.py`, `stati
 - [ ] 8.1 - Executar preflight de reproducibilidade e compilação final
 - [ ] 8.2 - Executar revisão final de submissão e changelog v8–v9
 
-**Progresso Total:** 6/28 tarefas concluídas (21%)
-**Próxima tarefa:** 3.1 - Implementar e validar M3 (Dinâmica de Autoria e Atividade)
+**Progresso Total:** 7/28 tarefas concluídas (25%)
+**Próxima tarefa:** 3.2 - Implementar e validar M4 (Mudança Limpa e Trajetória Temporal)
 
 ## 1. Objetivo e limites
 
@@ -708,6 +708,7 @@ Capturar dinâmica de autoria e atividade usando parent mirrors read-only, data 
 - `paper_v9/data/metrics/m3_author_activity_participation.csv`
 - `paper_v9/data/metrics/m3_author_concentration.csv`
 - `paper_v9/data/metrics/m3_activity_rolling_7day.csv`
+- `paper_v9/data/metrics/m3_activity_rolling_7day_pooled.csv`
 - `paper_v9/data/metrics/m3_author_activity_dynamics.metadata.json`
 - `paper_v9/scripts/metrics/m3_author_activity_dynamics.py` (testado)
 
