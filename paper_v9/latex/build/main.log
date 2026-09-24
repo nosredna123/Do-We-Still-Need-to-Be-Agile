@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 18:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 18:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -497,9 +497,38 @@ Overfull \hbox (22.24588pt too wide) in paragraph at lines 197--198
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 227--234
-\OT1/ptm/m/n/10 cor-re-la-tion iden-ti-fiers, op-er-a-tion/model, prompts and r
-e-
+Overfull \hbox (1.85385pt too wide) in paragraph at lines 230--230
+[]|\OT1/ptm/b/n/9 Feeds| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+[]|\OT1/ptm/m/n/9 Planning
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+\OT1/ptm/m/n/9 ev-i-dence
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+[]|\OT1/ptm/m/n/9 Goals, ar-chi-tec-ture/design,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+\OT1/ptm/m/n/9 task de-com-po-si-tion,
+ []
+
+
+Underfull \hbox (badness 5316) in paragraph at lines 232--233
+\OT1/ptm/m/n/9 risk/dependency, and lit-eral
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+\OT1/ptm/m/n/9 ev-i-dence quotes from $\OML/cmm/m/it/9 T[]$
  []
 
 ) (./sections/results.tex) (./sections/discussion.tex
@@ -561,28 +590,30 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 1A1027A70F6D224A722405AAEEAB8223;3599.
  ) 
 Here is how much of TeX's memory you used:
- 10337 strings out of 476182
- 164589 string characters out of 5795595
- 1952975 words of memory out of 5000000
- 32146 multiletter control sequences out of 15000+600000
+ 10339 strings out of 476182
+ 164620 string characters out of 5795595
+ 1953975 words of memory out of 5000000
+ 32147 multiletter control sequences out of 15000+600000
  596889 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1077b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,1077b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
-/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier
+/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmri8a.pfb>
 Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (5 pages, 150012 bytes).
+/latex/build/main.pdf (5 pages, 165091 bytes).
 PDF statistics:
- 202 PDF objects out of 1000 (max. 8388607)
- 171 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
+ 214 PDF objects out of 1000 (max. 8388607)
+ 179 compressed objects within 2 object streams
+ 46 named destinations out of 1000 (max. 500000)
  129 words of extra memory for PDF output out of 10000 (max. 10000000)
 

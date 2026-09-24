@@ -210,27 +210,42 @@ M9 & Stratified associations and influence diagnostics & Team-semester/stratum \
 % analyze_m9.md and in the corresponding verification notebooks.
 
 \subsection{LLM Usage in Data Extraction, Processing, and Metrics}
-All LLM calls route through one centralized gateway and are persisted in the
-internal structured ledger. Text tasks use \texttt{gpt-4o-mini} at temperature zero;
-audio transcription uses \texttt{whisper-1}. The paper-facing methodology reports
-only the role of these processes, while full prompts, payload hashes, raw
-responses, costs, and cache keys remain in the internal provenance artifacts.
+Language-model assistance is used selectively for data extraction and is kept
+separate from deterministic metric construction. M1 uses coded survey responses,
+and M5 uses deterministic lexical coding of the transcript corpus; neither
+metric receives a new language-model score. M6b uses structured extraction from
+$T_1$ commit subjects for nine observed team-semesters; five team-semesters have
+no $T_1$ subjects and remain unavailable rather than being imputed.
 
-M1 uses coded survey responses. M5 uses deterministic lexical coding
-of the transcript corpus and issues no new LLM calls. M6b uses structured
-extraction from T1 commit subjects for nine observed team-semesters; five
-team-semesters have no T1 subjects and remain \texttt{unavailable\_not\_measured}.
-Human review approved M6b for exploratory use, with literal evidence quotes and
-separate categories for goals, architecture/design, task decomposition, and
-risk/dependency. M6b is not an architectural-quality score.
+Table~\ref{tab:llm_prompt_catalog} summarizes the metric-bound language-model
+task and the metric component it supports.
 
-\textbf{Persistence and auditability.} The internal ledger records correlation
-identifiers, operation/model, prompts and responses, hashes, token usage,
-duration, estimated cost, and status. This supports internal tracing without
-exposing the internal development history in the article narrative.
+\begin{table}[t]
+\caption{Metric-Bound Language-Model Task}
+\label{tab:llm_prompt_catalog}
+\centering
+\small
+\begin{tabular}{@{}p{2.1cm}p{0.7cm}p{3.9cm}@{}}
+\toprule
+\textbf{Task} & \textbf{Feeds} & \textbf{Structured output} \\
+\midrule
+Planning evidence extraction & M6b & Goals, architecture/design, task decomposition, risk/dependency, and literal evidence quotes from $T_1$ commit subjects. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+M6b outputs were reviewed by the research team and retained for exploratory
+analysis as separate categories. They are not reduced to a composite
+planning-quality or architectural-quality score.
+
+\textbf{Persistence and auditability.} Model-assisted outputs are retained with
+their associated prompts, responses, hashes, usage metadata, and status so that
+each reported value can be traced to its source evidence. These records support
+reproducibility while remaining outside the paper-facing narrative.
 % PROVENANCE: LLM evidence is indexed by
 % paper_v9/data/metrics/m6_llm_planning_content.metadata.json and the restricted
-% data/analysis/.private/llm_call_ledger.parquet.
+% data/analysis/.private/llm_call_ledger.parquet. The extraction uses the
+% approved m6b-structured-planning-v1.1 contract.
 
 \textbf{Inference boundary.} All reported metric families and components are
 descriptive or exploratory. Missing evidence remains distinct from zero or
