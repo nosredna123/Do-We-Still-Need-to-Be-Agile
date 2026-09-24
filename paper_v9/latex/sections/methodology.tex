@@ -60,37 +60,41 @@ The resulting software systems spanned diverse domains, ranging from healthcare 
 % design; team-semester coverage is validated by the V9 input inventory.
 
 \subsection{Data Sources and Collection Framework}
-Our framework triangulates four evidentiary channels.
+Our data collection framework triangulates four distinct evidentiary channels to capture both technical artifacts and human behavioral dynamics.
 
-\textbf{1. Git repositories:} read-only parent mirrors and the canonical lake
-contracts provide commit, file-change, timestamp, author-hash, and path-
-provenance observations. Git activity is treated as repository evidence, not
-as telemetry of AI-tool use or a complete record of work outside the repository.
+\textbf{1. Git Repositories:} Complete historical commit logs, branch structures, line change counts, and file-level provenance were extracted from all team repositories across the entire semester lifecycle. To mitigate the threat of unobserved out-of-band collaboration, students were explicitly instructed to centralize all project artifacts---including requirements, architectural specifications, documentation, and source code---directly within their Git repositories. This directive ensured the repository served as a comprehensive, single source of truth for the team's entire production effort. The analysis used read-only repository histories and standardized event tables; Git remains repository evidence, not AI-use telemetry.
 
-\textbf{2. Independent evaluator scorecards:} teams presented at $T_1$, $T_2$,
-and $T_3$. Independent evaluators submitted private scores for project
-progress, scope applicability, technical complexity, and engagement/
-participation. The canonical evaluator contract is team-semester by checkpoint.
+\textbf{2. Independent Evaluator Scorecards:} At each checkpoint ($T_1$, $T_2$, $T_3$), teams delivered formal status presentations. These were assessed by a panel of independent supervisors (4 evaluators in the 2025.2 cohort, and 3 in the 2026.1 cohort). To prevent groupthink and ensure scoring validity, an independent blind-scoring protocol was enforced: following the presentation and open feedback, each supervisor submitted their scores via a private electronic form. Evaluators remained blind to their peers' scores throughout the semester. The final project score was calculated as an unweighted average of these independent assessments. Projects were assessed across four structured criteria on explicit bounded scales: \emph{Project Evolution} (0 to 4.0 points), \emph{Scope and Applicability} (0 to 2.0 points), \emph{Technical Complexity} (0 to 2.0 points), and \emph{Engagement and Participation} (0 to 2.0 points). These observations were organized by team-semester and checkpoint for analysis.
 
-\textbf{3. Multi-checkpoint student surveys:} students completed survey
-instruments at all three checkpoints. They covered demographics, professional
-experience, Generative AI adoption, perceived role impact, and project
-expectations. Survey responses are cohort-by-semester/checkpoint data and do
-not carry team identifiers; M1 and M2 therefore remain at that grain.
+\textbf{3. Multi-Checkpoint Student Surveys:} Students completed identical survey instruments at $T_1$, $T_2$, and $T_3$ (totaling six instrument cycles). These surveys systematically captured data across five core constructs: Demographics, Professional Experience, GenAI Adoption, Perceptions of AI Impact on SE Roles, and Project Expectations. To ensure replicability, the core dimensions and sample variables tracked across these checkpoints are detailed in Table~\ref{tab:survey_instrument}. Survey responses are cohort-by-semester/checkpoint data and carry no team identifier; M1 and M2 therefore remain at that grain.
 
-\textbf{4. Qualitative transcripts:} anonymized recordings and supervisory
-discussions were segmented into 100 technical transcript chunks for 2025.2
-(35 at $T_1$, 37 at $T_2$, and 28 at $T_3$). M5 reconstructs one global corpus
-per checkpoint; chunks and source sessions are provenance units, not independent
-observations. Transcript coverage for 2026.1 is unavailable and is never
-imputed.
+\begin{table*}[t]
+\caption{Structure of the Multi-Checkpoint Survey Instrument}
+\label{tab:survey_instrument}
+\centering
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.5cm}@{}}
+\toprule
+\textbf{Construct} & \textbf{Evaluated Variables \& Inquiries} & \textbf{Data Type} \\
+\midrule
+\textbf{Demographics \& Academic Background} & Age, Gender, Current academic semester, Previous degrees, High school educational background. & Categorical \\
+\addlinespace
+\textbf{Professional SE Experience} & Years of software development experience, Current employment status, Preferred engineering role (e.g., Backend, QA, ML), Largest past team size. & Categorical \\
+\addlinespace
+\textbf{Generative AI Adoption \& Tooling} & Frequency of AI usage, Specific tools adopted (e.g., ChatGPT, Gemini, GitHub Copilot, Claude), Primary use cases (e.g., Code generation, Debugging, Documentation). & Categorical \& Multiple Choice \\
+\addlinespace
+\textbf{Perceived AI Impact on SE Roles} & Perceived risk of extinction or severe disruption for specific roles: Backend, Frontend, QA, Project Manager, Product Manager, Scrum Master. & 5-point Likert \\
+\addlinespace
+\textbf{Expectations \& Motivation} & Confidence levels prior to project initiation, Motivation to learn new techniques, Expected 5-year impact of AI on the industry. & 5-point Likert \& Open-ended \\
+\bottomrule
+\end{tabularx}
+\end{table*}
 
-\textbf{Data anonymization and privacy:} raw streams were sanitized before
-analysis using deterministic masking and LLM-assisted redaction. Finalized
-analytical artifacts exclude direct personal identifiers. LLM ledger and raw
-payload provenance remain restricted to the internal reproducibility record.
+\textbf{4. Qualitative Meeting Transcripts:} To capture coordination dynamics and evaluative feedback, audio recordings were collected from the three formal status presentation checkpoints. This dataset comprises the full audio records of the student presentations alongside the subsequent deliberative discussions among the supervisors in a private chat group. Crucially, these supervisory discussions were free-form qualitative reflections, completely decoupled from the numeric scorecasting process. To make the transcription data computationally feasible for analysis, the raw text was segmented into analytical chunks, yielding 100 distinct fragments for the 2025.2 cohort (35 at $T_1$, 37 at $T_2$, and 28 at $T_3$). M5 reconstructs one global corpus per checkpoint; chunks and source sessions are provenance units, not independent observations. Transcript coverage for 2026.1 is unavailable and is never imputed.
+
+\textbf{Data Anonymization and Privacy:} To ensure strict ethical compliance and protect participant confidentiality, all raw data streams were subjected to a rigorous anonymization pipeline, combining deterministic heuristics with LLM-assisted redaction to scrub unstructured text across commit messages, survey free-text responses, and audio transcripts. Finalized analytical artifacts exclude direct personal identifiers. Detailed call records and raw payload provenance remain restricted to the internal reproducibility record.
 % PROVENANCE: Canonical inputs and checksums are listed in
-% paper_v9/data/manifests/input_inventory.json.
+% paper_v9/data/manifests/input_inventory.json; survey and evaluator schemas
+% are validated by paper_v9/tests/test_input_contracts.py.
 
 \subsection{Advanced Metrics Operationalization}
 \label{sec:advanced-metrics}
@@ -136,7 +140,7 @@ audio transcription uses \texttt{whisper-1}. The paper-facing methodology report
 only the role of these processes, while full prompts, payload hashes, raw
 responses, costs, and cache keys remain in the internal provenance artifacts.
 
-M1 uses already-produced survey coding. M5 V9 uses deterministic lexical coding
+M1 uses coded survey responses. M5 uses deterministic lexical coding
 of the transcript corpus and issues no new LLM calls. M6b uses structured
 extraction from T1 commit subjects for nine observed team-semesters; five
 team-semesters have no T1 subjects and remain \texttt{unavailable\_not\_measured}.
@@ -147,7 +151,7 @@ risk/dependency. M6b is not an architectural-quality score.
 \textbf{Persistence and auditability.} The internal ledger records correlation
 identifiers, operation/model, prompts and responses, hashes, token usage,
 duration, estimated cost, and status. This supports internal tracing without
-exposing pipeline history in the article narrative.
+exposing the internal development history in the article narrative.
 % PROVENANCE: LLM evidence is indexed by
 % paper_v9/data/metrics/m6_llm_planning_content.metadata.json and the restricted
 % data/analysis/.private/llm_call_ledger.parquet.
