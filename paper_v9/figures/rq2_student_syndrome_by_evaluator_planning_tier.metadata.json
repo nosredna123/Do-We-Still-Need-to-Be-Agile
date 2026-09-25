@@ -1,0 +1,60 @@
+{
+  "activity_normalization": "Each team-semester sums to 100% across the displayed D-6..D0 trailing-window points before tier aggregation.",
+  "artifacts": [
+    "figures/rq2_student_syndrome_by_evaluator_planning_tier.pdf",
+    "figures/rq2_student_syndrome_by_evaluator_planning_tier.svg",
+    "figures/rq2_student_syndrome_by_evaluator_planning_tier.png",
+    "figures/rq2_student_syndrome_by_evaluator_planning_tier_data.csv",
+    "figures/rq2_student_syndrome_by_evaluator_planning_tier_summary.csv",
+    "figures/rq2_student_syndrome_by_evaluator_planning_tier.metadata.json"
+  ],
+  "config": {
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 20260925,
+    "contract_version": "rq2-student-syndrome-tier-plot-v1",
+    "evaluator_score_columns": [
+      "project_progress_mean",
+      "scope_applicability_mean",
+      "technical_complexity_mean",
+      "engagement_participation_mean"
+    ],
+    "tier_rule": "High tier requires T3 evaluator composite >= sample median, T1 planning scope >= sample median, and an observed T1 planning artifact; all other team-semesters are assigned to the lower/weaker-planning tier.",
+    "window_end_days": [
+      -6,
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0
+    ]
+  },
+  "config_sha256": "91e31013049703bf155952551b9711d7d98dfd475629b1f93b0f99424784dd19",
+  "contract_version": "rq2-student-syndrome-tier-plot-v1",
+  "coverage": {
+    "high_evaluator_good_planning_n": 4,
+    "lower_or_weaker_planning_n": 10,
+    "team_semesters": 14,
+    "window_count": 7
+  },
+  "inference": "descriptive_non_causal",
+  "input_sha256": "aa3bff87cf1fb557eee06941ffc2a6adf742190d9e8be52801d16e01e7abfd3c",
+  "inputs": {
+    "activity": "paper_v9/data/metrics/m3_activity_rolling_7day.csv",
+    "clean_churn": "paper_v9/data/metrics/m4_rolling_7day_trajectory.csv",
+    "evaluator": "data/lake/evaluator_team_cuts.parquet",
+    "planning": "paper_v9/data/metrics/m6a_structural_planning.csv"
+  },
+  "limitations": [
+    "The figure compares observed repository activity patterns and does not causally identify student syndrome.",
+    "The high tier combines evaluator outcomes with repository-visible T1 planning artifacts; off-repository planning remains unobserved.",
+    "Rolling seven-day windows overlap and should be read as a trajectory visualization rather than independent observations."
+  ],
+  "rq": "RQ2",
+  "status": "success",
+  "thresholds": {
+    "evaluator_score_t3_median": 2.4114583333333335,
+    "planning_scope_log1p_t1_median": 1.791759469228055
+  },
+  "unit_of_analysis": "team_semester_trailing_7_day_window"
+}

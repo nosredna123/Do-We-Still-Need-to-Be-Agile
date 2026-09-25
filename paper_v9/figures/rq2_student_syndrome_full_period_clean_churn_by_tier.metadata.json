@@ -1,0 +1,80 @@
+{
+  "activity_metric": "clean_source_or_test_changed_lines",
+  "artifacts": [
+    "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.pdf",
+    "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.svg",
+    "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.png",
+    "figures/rq2_student_syndrome_full_period_clean_churn_by_tier_data.csv",
+    "figures/rq2_student_syndrome_full_period_clean_churn_by_tier_summary.csv",
+    "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.metadata.json"
+  ],
+  "checkpoint_stats": [
+    {
+      "checkpoint": "T1",
+      "max_day_relative_to_t3": -48.96445601851852,
+      "median_day_relative_to_t3": -48.99625,
+      "min_day_relative_to_t3": -56.01925925925926
+    },
+    {
+      "checkpoint": "T2",
+      "max_day_relative_to_t3": -13.983333333333333,
+      "median_day_relative_to_t3": -20.996990740740742,
+      "min_day_relative_to_t3": -28.002824074074073
+    },
+    {
+      "checkpoint": "T3",
+      "max_day_relative_to_t3": 0.0,
+      "median_day_relative_to_t3": 0.0,
+      "min_day_relative_to_t3": 0.0
+    }
+  ],
+  "config": {
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 20260925,
+    "checkpoint_markers": "median T1/T2/T3 relative positions with T1/T2 min-max bands",
+    "contract_version": "rq2-student-syndrome-full-period-v1",
+    "evaluator_score_columns": [
+      "project_progress_mean",
+      "scope_applicability_mean",
+      "technical_complexity_mean",
+      "engagement_participation_mean"
+    ],
+    "rolling_normalization": "Each team-semester's rolling series is scaled so its maximum pre-T3 rolling value equals 100%.",
+    "rolling_window_days": 7,
+    "tier_rule": "High tier requires T3 evaluator composite >= sample median, T1 planning scope >= sample median, and an observed T1 planning artifact; all other team-semesters are assigned to the lower/weaker-planning tier.",
+    "timeline": "days_relative_to_team_specific_t3_anchor"
+  },
+  "config_sha256": "9efcc620c2297769ebc200e409519e9e99b951840773c27ea38f6caa06eb45e4",
+  "contract_version": "rq2-student-syndrome-full-period-v1",
+  "coverage": {
+    "clean_churn_windows": 111,
+    "commit_windows": 111,
+    "high_evaluator_good_planning_n": 4,
+    "lower_or_weaker_planning_n": 10,
+    "team_semesters": 14
+  },
+  "inference": "descriptive_non_causal",
+  "input_sha256": "e221b15c3386a3a3f8d288db0287f246591e4f2cefcda95b858d9a3151a8a23a",
+  "inputs": {
+    "commits": "data/lake/git_commits.parquet",
+    "evaluator": "data/lake/evaluator_team_cuts.parquet",
+    "evaluator_forms_2025_2": "data/processed/forms/2025.2/avaliadores.csv",
+    "evaluator_forms_2026_1": "data/processed/forms/2026.1/avaliadores.csv",
+    "files": "data/lake/git_files.parquet",
+    "planning": "paper_v9/data/metrics/m6a_structural_planning.csv"
+  },
+  "limitations": [
+    "The full-period trajectories compare observed repository activity patterns and do not causally identify student syndrome.",
+    "Rolling seven-day windows overlap and should be read as trajectory visualization rather than independent observations.",
+    "Checkpoint markers are team-specific evaluator anchors summarized as median relative positions; the T1/T2 bands show their observed ranges.",
+    "The high tier combines evaluator outcomes with repository-visible T1 planning artifacts; off-repository planning remains unobserved.",
+    "Clean changed lines use path-based source/test provenance and are not semantic defect validation."
+  ],
+  "rq": "RQ2",
+  "status": "success",
+  "thresholds": {
+    "evaluator_score_t3_median": 2.4114583333333335,
+    "planning_scope_log1p_t1_median": 1.791759469228055
+  },
+  "unit_of_analysis": "team_semester_trailing_7_day_window"
+}
