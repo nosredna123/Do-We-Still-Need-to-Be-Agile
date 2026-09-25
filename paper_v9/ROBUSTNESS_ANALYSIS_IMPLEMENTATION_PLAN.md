@@ -1698,11 +1698,16 @@ citações indefinidas ou floats pendentes.
 
 **Checklist**
 
-- [ ] Conectar achados à narrativa de coordenação/especificação.
-- [ ] Manter SDD como hipótese/intervenção futura.
-- [ ] Não afirmar que os dados testam SDD.
-- [ ] Usar as interpretações curtas e as respostas aos insights esperados do
+- [x] Conectar achados à narrativa de coordenação/especificação.
+- [x] Manter SDD como hipótese/intervenção futura.
+- [x] Não afirmar que os dados testam SDD.
+- [x] Usar as interpretações curtas e as respostas aos insights esperados do
   catálogo como ponto de partida, não como substituto da análise textual.
+
+Validação: Discussion atualizada com distinção entre execução tardia
+compensatória/produtiva, concentração tardia sem ganho avaliativo, execução
+distribuída e complexidade técnica como explicação concorrente; SDD permanece
+como intervenção futura plausível, não como tratamento testado.
 
 ## Tarefa 10.4 — Atualizar Threats to Validity
 

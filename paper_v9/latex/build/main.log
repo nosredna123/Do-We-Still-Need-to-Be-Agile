@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -604,7 +604,7 @@ anning_rework_complexity_overlay.png>] [22 <../figures/rq3_association_sensitiv
 ity.png> <../figures/rq3_influence_map.png>]) (./sections/discussion.tex
 [23
 
-]) (./sections/threats_to_validity.tex [24]) (./sections/conclusion.tex
+] [24]) (./sections/threats_to_validity.tex) (./sections/conclusion.tex
 [25]
 
 LaTeX Warning: Citation `prism_replication_package' on page 26 undefined on inp
@@ -614,7 +614,7 @@ ut line 32.
 LaTeX Warning: Citation `prism_explorer' on page 26 undefined on input line 45.
 
 
-) (build/main.bbl)
+) (build/main.bbl [26])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -626,7 +626,9 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[26] (build/main.aux)
+[27
+
+] (build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -639,13 +641,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 71630681C650BAC5897C1AA5E85C2BCA;11752.
  ) 
 Here is how much of TeX's memory you used:
- 10574 strings out of 476182
- 172380 string characters out of 5795595
+ 10575 strings out of 476182
+ 172387 string characters out of 5795595
  1961975 words of memory out of 5000000
  32312 multiletter control sequences out of 15000+600000
  599637 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1260b,570s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,1260b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
@@ -662,10 +664,10 @@ texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on build/main.pdf (26 pages, 2161550 bytes).
+Output written on build/main.pdf (27 pages, 2163265 bytes).
 PDF statistics:
- 507 PDF objects out of 1000 (max. 8388607)
- 404 compressed objects within 5 object streams
- 114 named destinations out of 1000 (max. 500000)
+ 512 PDF objects out of 1000 (max. 8388607)
+ 408 compressed objects within 5 object streams
+ 115 named destinations out of 1000 (max. 500000)
  339 words of extra memory for PDF output out of 10000 (max. 10000000)
 

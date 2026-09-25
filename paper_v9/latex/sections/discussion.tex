@@ -40,6 +40,19 @@ coordination-related language is already
 present in the shared record. This is a process interpretation, not a causal
 estimate.
 
+The robustness analyses refine that interpretation by showing that the late
+peak should not be collapsed into a single ``student syndrome'' explanation.
+Some team-semesters combine high final-seven-day concentration with a positive
+T3--T1 score delta, which is consistent with compensatory late execution or
+productive recovery under deadline pressure. Others combine similarly high
+late concentration with no evaluator-score gain, which is more consistent
+with delayed integration that did not translate into assessed improvement.
+Still others improve with lower final concentration, indicating that
+distributed execution remains a plausible path to strong outcomes. The point
+is not that one profile is the true mechanism, but that repository timing,
+planning visibility, and evaluator trajectories separate several mechanisms
+that a simple procrastination narrative would conflate.
+
 \subsection{Architectural artifacts: necessary evidence, not a quality score}
 
 RQ3 provides an important qualification to strong planning narratives.
@@ -68,6 +81,15 @@ change the observed coefficient. The result is not evidence against planning;
 it is evidence against treating repository-visible artifact volume as a
 validated measure of planning quality.
 
+The complexity profiles add a second qualification. Late clean-path rework can
+reflect technical difficulty and project structure as well as planning gaps or
+AI-assisted implementation dynamics. The stratified summaries show that some
+associations change direction across lower- and higher-complexity strata, so
+complexity is best treated as a concurrent explanation that bounds the
+planning interpretation. This does not make complexity a causal adjustment in
+the present design; it makes explicit why rework should not be attributed to a
+single source.
+
 The distinction also matters for interpretation of the tail cases. A team with
 no observed T1 artifact and a team with an artifact that is incomplete,
 misaligned, or unused are not equivalent cases. Conversely, a high rework ratio
@@ -81,10 +103,11 @@ single planning-quality scale.
 The results provide a strong rationale for discussing Spec-Driven Development
 (SDD). The argument is not that this study tested SDD, nor that SDD is proven
 to reduce rework. Rather, the observed combination of rapid local generation,
-late integration concentration, repeated architectural reformulation in the
-project records, and persistent coordination demands identifies precisely the
-class of problem that SDD is designed to address: keeping intent, constraints,
-architecture, and tasks explicit before and during implementation.
+multiple late-execution profiles, repeated architectural reformulation in the
+project records, technical-complexity sensitivity, and persistent coordination
+demands identifies precisely the class of problem that SDD is designed to
+address: keeping intent, constraints, architecture, and tasks explicit before
+and during implementation.
 
 Current SDD guidance describes a workflow in which a specification is carried
 through technical planning, task decomposition, implementation, and explicit
@@ -114,6 +137,9 @@ shared architectural decisions, executable acceptance conditions, interface
 contracts, and explicit dependency boundaries, rather than treating working
 code as the only visible progress signal. This interpretation is compatible
 with Agile values while challenging a purely code-first implementation rhythm.
+It also separates adaptive iteration from unexamined delay: late work can be
+compensatory, neutral, or harmful depending on whether it is connected to
+shared intent, integration checks, and assessed improvement.
 Granting teams autonomy to use Scrum, Kanban, other Agile variants, or an
 unguided approach was a deliberate feature of the naturalistic course design,
 preserving the process choices students ordinarily make rather than imposing a
