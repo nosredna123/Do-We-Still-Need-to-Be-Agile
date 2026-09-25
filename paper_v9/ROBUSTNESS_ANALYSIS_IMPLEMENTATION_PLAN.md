@@ -1779,10 +1779,15 @@ paper_v9/FIGURES_CANDIDATES_WORKSHOP.md
 
 **Checklist**
 
-- [ ] Adicionar novas famílias de figuras.
-- [ ] Indicar força e limitação de cada uma.
-- [ ] Marcar quais são candidatas ao texto principal.
-- [ ] Sincronizar com `ARTIFACT_USAGE_CATALOG.md`.
+- [x] Adicionar novas famílias de figuras.
+- [x] Indicar força e limitação de cada uma.
+- [x] Marcar quais são candidatas ao texto principal.
+- [x] Sincronizar com `ARTIFACT_USAGE_CATALOG.md`.
+
+Validação: `FIGURES_CANDIDATES_WORKSHOP.md` atualizado como inventário
+editorial sincronizado com `ARTIFACT_USAGE_CATALOG.md`. Foram verificados 18
+stems de figuras em formatos `{pdf,svg,png}`, sem arquivos ausentes, além do
+CSV suplementar `team_semester_evidence_panel.csv`.
 
 ## Tarefa 11.2 — Atualizar reproducibilidade
 
