@@ -1819,10 +1819,23 @@ controle editorial.
 
 **Checklist**
 
-- [ ] Decidir se os novos artefatos entram no catálogo oficial.
-- [ ] Se sim, incluir em `METRIC_FILES` ou em nova seção de robustness artifacts.
-- [ ] Regenerar summary.
-- [ ] Testar `paper_v9/tests/test_results_summary.py`.
+- [x] Decidir se os novos artefatos entram no catálogo oficial.
+- [x] Se sim, incluir em `METRIC_FILES` ou em nova seção de robustness artifacts.
+- [x] Regenerar summary.
+- [x] Testar `paper_v9/tests/test_results_summary.py`.
+
+Decisão: manter `METRIC_FILES` restrito às métricas oficiais M1--M9 e adicionar
+uma seção separada `robustness_artifacts`, governada por
+`ARTIFACT_USAGE_CATALOG.md`, para registrar figuras, dados e metadados de
+robustez/editoriais sem tratá-los como novas métricas causais.
+
+Validação:
+
+```bash
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python -m py_compile paper_v9/scripts/results/build_results_summary.py paper_v9/tests/test_results_summary.py
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python paper_v9/scripts/results/build_results_summary.py
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python -m pytest paper_v9/tests/test_results_summary.py
+```
 
 ---
 

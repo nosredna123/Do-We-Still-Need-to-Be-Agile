@@ -53,7 +53,8 @@
     "M6b structured fields are exploratory and non-composite",
     "M7 repository inactivity is not planning omission",
     "M8 path provenance is not semantic defect validation",
-    "M9 associations are descriptive and non-causal"
+    "M9 associations are descriptive and non-causal",
+    "Robustness artifacts are editorial/diagnostic views governed by ARTIFACT_USAGE_CATALOG.md, not additional causal estimators"
   ],
   "metrics": {
     "M1": {
@@ -953,10 +954,10 @@
           "sha256": "1243243c74936dc5f9f9d5b58f81d8de0ffd5ed8c895a49ca484ac3e884c3b2d"
         },
         {
-          "bytes": 1449,
+          "bytes": 1448,
           "format": "json",
           "path": "data/metrics/m5_coordination_evidence.metadata.json",
-          "sha256": "291c848cd0b7f4c952938872a2fa89d7271af5796b2f85c820f66419223ca1b1"
+          "sha256": "6f7e750c39c9745a4cc22274d60c81c1b7c2f9bfbec8a72c8e5aacdfc2b1ff7d"
         }
       ],
       "metadata": {
@@ -977,7 +978,7 @@
             "tokens": 102088,
             "transcript_chunks": 100
           },
-          "gate_status": "approved",
+          "gate_status": "pending",
           "inference": "descriptive_only",
           "input_sha256": "f5d976a184c385090eb24f084ca46f2d66dbef04a22b3c49aa02715b42b3ee87",
           "legacy_source": "paper_v8/data/m5_coordination_friction_trajectory.csv",
@@ -1033,10 +1034,10 @@
           "sha256": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01"
         },
         {
-          "bytes": 1144,
+          "bytes": 1143,
           "format": "json",
           "path": "data/metrics/m6_structural_planning.metadata.json",
-          "sha256": "d60d04bf8444f87b29287a93d01bab2de660a7db7d671c2386b4e31afe783438"
+          "sha256": "e2f0de2f579f23801049243897cd17027c8c2f1330210d45b288cae0462c9b36"
         },
         {
           "bytes": 59803,
@@ -1106,7 +1107,7 @@
             "team_semester_n": 14,
             "unavailable_not_measured_n": 0
           },
-          "gate_status": "approved",
+          "gate_status": "pending",
           "inference": "exploratory_descriptive",
           "input_sha256": "293b61a655dfdb40a8f48ebef9d350ed6f34cf48c415a1375428ffa9591d65fd",
           "limitations": [
@@ -1180,10 +1181,10 @@
           "sha256": "e63a9523615843a3d5d93f5856887a1b2c593dc36809d18126afdd2821fb3d58"
         },
         {
-          "bytes": 1941,
+          "bytes": 1940,
           "format": "json",
           "path": "data/metrics/m7_repository_inactivity.metadata.json",
-          "sha256": "addcf2dea0c69995b0dbad024e1b2329043b9e82356ecdb3258d35d41af9579c"
+          "sha256": "61d80ad68743d1dba0fdeffb994f1137a67b8ce25edc6a851dae95708ecc603e"
         }
       ],
       "metadata": {
@@ -1203,7 +1204,7 @@
             "pattern_rows": 14,
             "team_semesters": 14
           },
-          "gate_status": "approved",
+          "gate_status": "pending",
           "inference": "descriptive_only",
           "input_sha256": "ad6567fb7927813e1a5423b9d6bbd5b7f0fe4f7fde94cab34bfbcabf1a4a7834",
           "limitations": [
@@ -1366,10 +1367,10 @@
           "sha256": "0b3a3bc7e585f2ed4c7643895cb94f7320a0694484331b5f25c74f15805b5e51"
         },
         {
-          "bytes": 1420,
+          "bytes": 1419,
           "format": "json",
           "path": "data/metrics/m8_clean_rework.metadata.json",
-          "sha256": "40e790bb810913bd5aad9038d8304d6278b793fad6191fb9df0aa452410c2db5"
+          "sha256": "bb9e314d052491d1583182693acb8efe06ab2420444973525c2c37b2de9a5bf5"
         }
       ],
       "metadata": {
@@ -1390,7 +1391,7 @@
             "team_semesters": 14,
             "trajectory_rows": 406
           },
-          "gate_status": "approved",
+          "gate_status": "pending",
           "inference": "exploratory_descriptive",
           "input_sha256": "743869c0170c2f3c1acc4add221c82c646d69d5bba21915a9107cad7d62e177b",
           "limitations": [
@@ -1518,10 +1519,10 @@
           "sha256": "3a1c5972381b29c058b2d9b1ba451818b4f78caa24bbb71f6c48ce23da8fd8de"
         },
         {
-          "bytes": 1582,
+          "bytes": 1581,
           "format": "json",
           "path": "data/metrics/m9_structured_associations.metadata.json",
-          "sha256": "31b4035487949deeed0c3886cb19cba427cdd1ed9c529c9edecfda11e7feb0e6"
+          "sha256": "afb2a94e0684173479e6bbfc4a06a376b0c152eab64358ad75cc24078fbc31dc"
         }
       ],
       "metadata": {
@@ -1542,7 +1543,7 @@
             "m6b_observed": 9,
             "team_semesters": 14
           },
-          "gate_status": "approved",
+          "gate_status": "pending",
           "inference": "exploratory_descriptive",
           "input_sha256": "db787f14543e4bd7f9b75f420aae73d3d0222161d0d3cb448c9129d3f858ce60",
           "limitations": [
@@ -1573,6 +1574,1570 @@
         }
       }
     }
+  },
+  "robustness_artifacts": {
+    "families": {
+      "candidate_figure_inventory": {
+        "artifacts": [
+          {
+            "bytes": 21006,
+            "format": "pdf",
+            "path": "figures/candidate_rq1_perception_panel.pdf",
+            "sha256": "d6454b76727e3abc0c0f3ca08a955fa8237d6c512be63f0ce9acf426d505e20b"
+          },
+          {
+            "bytes": 140859,
+            "format": "png",
+            "path": "figures/candidate_rq1_perception_panel.png",
+            "sha256": "fbaa72f5fe51df1c960296c8b0ad7e021ed49d1a77d67c6f3a0c05967433b1c3"
+          },
+          {
+            "bytes": 30327,
+            "format": "svg",
+            "path": "figures/candidate_rq1_perception_panel.svg",
+            "sha256": "db01827564d0a04ca1d02ad58680676346c0dce9530811408194b99b0df50746"
+          },
+          {
+            "bytes": 1548,
+            "columns": [
+              "Semestre",
+              "temporal_marker",
+              "perception_family",
+              "mean"
+            ],
+            "format": "csv",
+            "path": "figures/candidate_rq1_perception_panel_data.csv",
+            "rows": 36,
+            "sha256": "dcd25ba0e87f15f20c86945ec1c3630c5c4ea2c4d22df96ec36a39a345a4a8fe"
+          },
+          {
+            "bytes": 22576,
+            "format": "pdf",
+            "path": "figures/candidate_rq2_temporal_dynamics.pdf",
+            "sha256": "d424cfd2be66430bb105d7f3fc5438133e32e6ecb078170b1f01f678eb286eaf"
+          },
+          {
+            "bytes": 138929,
+            "format": "png",
+            "path": "figures/candidate_rq2_temporal_dynamics.png",
+            "sha256": "1b6d9ae37195c8aff2e17353196e973675f45349d3cee407dbf1e17a651073d9"
+          },
+          {
+            "bytes": 40462,
+            "format": "svg",
+            "path": "figures/candidate_rq2_temporal_dynamics.svg",
+            "sha256": "8d53aaa8d7a7eef887a8777393ace9dfa298fda5f8ea6df2b83ad25e6b7fb0ff"
+          },
+          {
+            "bytes": 5147,
+            "columns": [
+              "temporal_position",
+              "value",
+              "metric",
+              "unit"
+            ],
+            "format": "csv",
+            "path": "figures/candidate_rq2_temporal_dynamics_data.csv",
+            "rows": 103,
+            "sha256": "f0a3e6291aeb9086f09648cb10b20a601ded8ccd46bc5af6e18343c24bebc3c7"
+          },
+          {
+            "bytes": 11008,
+            "format": "pdf",
+            "path": "figures/candidate_rq3_associations_leave_one_out.pdf",
+            "sha256": "f11ee63073dda922518ed0d7bb7a67e09924a6244f2a8a0c283d8a6fe2ce8be5"
+          },
+          {
+            "bytes": 89836,
+            "format": "png",
+            "path": "figures/candidate_rq3_associations_leave_one_out.png",
+            "sha256": "0df9dd79cc2bcc99302d2ef1fe0271424cbd3d1393d4ead7cc8d32ff5bfb1fd0"
+          },
+          {
+            "bytes": 11828,
+            "format": "svg",
+            "path": "figures/candidate_rq3_associations_leave_one_out.svg",
+            "sha256": "a11fd8b78eef611c9d87070025ae807016b9e4f4912145716dd4315d675802c2"
+          },
+          {
+            "bytes": 6323,
+            "columns": [
+              "analysis_id",
+              "predictor",
+              "outcome",
+              "removed_ID_Equipe",
+              "removed_Semestre",
+              "n_remaining",
+              "spearman_rho",
+              "spearman_p_exploratory"
+            ],
+            "format": "csv",
+            "path": "figures/candidate_rq3_associations_leave_one_out_data.csv",
+            "rows": 52,
+            "sha256": "b1318b53abdbc2f8509b887856704a74b01bd9de89d9f1be77579ccd2ddbbc48"
+          },
+          {
+            "bytes": 19835,
+            "format": "pdf",
+            "path": "figures/candidate_rq3_planning_rework_profile.pdf",
+            "sha256": "71c528347dbffbfaea3240cb615d2ad7029482d730c5df1a34bf71a1f1a61a0f"
+          },
+          {
+            "bytes": 103418,
+            "format": "png",
+            "path": "figures/candidate_rq3_planning_rework_profile.png",
+            "sha256": "691ca3f7d4e4b4f5922d1f1ba8d7d3ea42e82e5fb56712c8ac1b756f8b331efa"
+          },
+          {
+            "bytes": 14136,
+            "format": "svg",
+            "path": "figures/candidate_rq3_planning_rework_profile.svg",
+            "sha256": "64a81d7bd8972f2bffb30733e7d71361dab2a911b53d7ab13dd44d939a84dd58"
+          },
+          {
+            "bytes": 2108,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "pi_available",
+              "pi_unavailable_reason",
+              "pi_file_count_t1",
+              "pi_line_delta_t1",
+              "pi_renamed_count_t1",
+              "pi_deleted_count_t1",
+              "pi_binary_event_count_t1",
+              "planning_artifact_activity_t1",
+              "pi_observation_unit",
+              "pi_definition_version",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "measurement_status",
+              "analysis_level",
+              "clean_rework_churn_t3",
+              "clean_rework_ratio_t3",
+              "baseline_eligible_for_rework_t3"
+            ],
+            "format": "csv",
+            "path": "figures/candidate_rq3_planning_rework_profile_data.csv",
+            "rows": 14,
+            "sha256": "1eb7ff6119c69065dc335290efcc9f48e311d1f6c09cf32e1a5ac617c8dd2ab5"
+          }
+        ],
+        "section_target": "Internal diagnostic inventory",
+        "status": "diagnostic_only"
+      },
+      "rq2_m5_2025_triangulation": {
+        "artifacts": [
+          {
+            "bytes": 4195,
+            "format": "json",
+            "path": "figures/rq2_m5_2025_triangulation.metadata.json",
+            "sha256": "032ce9336f074d92bfdf214f4f2b17f053c38ee792523e427084358feb4e2e83"
+          },
+          {
+            "bytes": 13129,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "temporal_marker",
+              "m5_semester_coverage_status",
+              "m5_observed_semester",
+              "m5_unavailable_semesters",
+              "m5_analysis_scope_note",
+              "friction_marker_density_per_1k_tokens",
+              "friction_marker_n",
+              "token_n",
+              "transcript_chunk_n",
+              "source_session_n",
+              "alignment",
+              "handoff",
+              "integration",
+              "blocker",
+              "rework",
+              "clean_churn",
+              "all_churn",
+              "clean_unique_file_n",
+              "clean_touching_commit_n",
+              "evaluator_score_composite",
+              "project_progress_mean",
+              "scope_applicability_mean",
+              "technical_complexity_mean",
+              "engagement_participation_mean",
+              "clean_rework_churn_t3",
+              "clean_deferred_churn_t3",
+              "clean_total_churn_t3",
+              "baseline_eligible_for_rework_t3",
+              "clean_rework_ratio_t3",
+              "prior_clean_path_n",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "evaluator_git_match_status",
+              "m4_measurement_status",
+              "m8_measurement_status",
+              "m6a_measurement_status",
+              "m5_measurement_status",
+              "m5_analysis_level"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_m5_2025_triangulation_data.csv",
+            "rows": 27,
+            "sha256": "982e6d07753363e68b1c950e52ab1ddbaa02005d7652b284d33b743c546cf049"
+          },
+          {
+            "bytes": 24045,
+            "format": "pdf",
+            "path": "figures/rq2_m5_2025_triangulation_panel.pdf",
+            "sha256": "0e2c9c336487ae487506daa98d3a28295928118cb4f9a1dee1beb9ce14c7814d"
+          },
+          {
+            "bytes": 288785,
+            "format": "png",
+            "path": "figures/rq2_m5_2025_triangulation_panel.png",
+            "sha256": "12b268b29c0c025ef3dfcdf9ab31d25c278442a3989d0fd26193dc073a837beb"
+          },
+          {
+            "bytes": 41853,
+            "format": "svg",
+            "path": "figures/rq2_m5_2025_triangulation_panel.svg",
+            "sha256": "35fde23c10429f98ba2f0d52e1e1450a8980bfc31804fbedd757b4fd85bdd2fe"
+          },
+          {
+            "bytes": 634,
+            "columns": [
+              "temporal_marker",
+              "team_n",
+              "m5_friction_marker_density_per_1k_tokens",
+              "m5_friction_marker_n",
+              "m5_token_n",
+              "median_clean_churn",
+              "mean_clean_churn",
+              "median_evaluator_score_composite",
+              "mean_evaluator_score_composite",
+              "baseline_eligible_rework_team_n",
+              "median_clean_rework_churn_t3",
+              "median_clean_rework_ratio_t3_baseline_eligible"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_m5_2025_triangulation_summary.csv",
+            "rows": 3,
+            "sha256": "ce3679883f78d4c0615b9a3b30f6e7ad43cf23eb3dc3f358b442e799e2b1ff90"
+          }
+        ],
+        "section_target": "Results/RQ2 or Threats",
+        "status": "main_text"
+      },
+      "rq2_nonoverlapping_phase_activity": {
+        "artifacts": [
+          {
+            "bytes": 7453,
+            "format": "json",
+            "path": "figures/rq2_nonoverlapping_phase_activity.metadata.json",
+            "sha256": "e6e22c4e43ea0d055fb324a53fe71a7626b308d6255a8572f61caedfaafc176c"
+          },
+          {
+            "bytes": 24686,
+            "format": "pdf",
+            "path": "figures/rq2_nonoverlapping_weekly_activity_overview.pdf",
+            "sha256": "7343b563c726544c43e69813c96ad6b7c06a3592c118a98b8c29bd74c887eda5"
+          },
+          {
+            "bytes": 282613,
+            "format": "png",
+            "path": "figures/rq2_nonoverlapping_weekly_activity_overview.png",
+            "sha256": "73abb4b8b384486ef8d84fdb1a6d62332af418e334d84d651f2b3b772715027c"
+          },
+          {
+            "bytes": 39312,
+            "format": "svg",
+            "path": "figures/rq2_nonoverlapping_weekly_activity_overview.svg",
+            "sha256": "7d07a8ca6cf79c326a2b9181d04edc50cb14741df1869c4396a25c386145d866"
+          },
+          {
+            "bytes": 11415,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "phase",
+              "phase_order",
+              "period_start",
+              "period_end",
+              "commit_n",
+              "clean_churn",
+              "active_day_n",
+              "active_author_n",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "evaluator_score_t3",
+              "delta_score_t3_minus_t1",
+              "team_total_commit_n",
+              "team_total_clean_churn",
+              "commit_share_pct",
+              "clean_churn_share_pct"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_phase_activity_share_data.csv",
+            "rows": 56,
+            "sha256": "94586d648d29b79d6ad2c2dbc27fce776f118560eb61c4f88e60d8df55071c8b"
+          },
+          {
+            "bytes": 21632,
+            "format": "pdf",
+            "path": "figures/rq2_phase_activity_share_overview.pdf",
+            "sha256": "acfe477e7ce9600419ffef0a2b873f0d9b86d902eeb5dbcc4dea4f24a33edee4"
+          },
+          {
+            "bytes": 190189,
+            "format": "png",
+            "path": "figures/rq2_phase_activity_share_overview.png",
+            "sha256": "12d3b8782734d341310e6b1a7c4a90011d91ecde03919fce9fbd9f4fc508d447"
+          },
+          {
+            "bytes": 22098,
+            "format": "svg",
+            "path": "figures/rq2_phase_activity_share_overview.svg",
+            "sha256": "7640366aa14a3ae412f3ba788e4a90e9ce89cac24ddfdddc24febe9c0c1cdae1"
+          },
+          {
+            "bytes": 1468,
+            "columns": [
+              "score_trajectory_group",
+              "phase",
+              "phase_order",
+              "team_semester_n",
+              "mean_commit_share_pct",
+              "median_commit_share_pct",
+              "mean_clean_churn_share_pct",
+              "median_clean_churn_share_pct",
+              "mean_active_day_n",
+              "mean_active_author_n"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_phase_activity_share_summary.csv",
+            "rows": 12,
+            "sha256": "a384df34dc3cf67a60211be9338b58fd76d61db283d5b4ee177f8fee70bffbde"
+          },
+          {
+            "bytes": 13697,
+            "format": "pdf",
+            "path": "figures/rq2_phase_clean_churn_share_by_score_trajectory.pdf",
+            "sha256": "1ed8aececf0f2936f13294ddcb53429782f46d2b7a5845a151a0bcc4f55123c2"
+          },
+          {
+            "bytes": 175903,
+            "format": "png",
+            "path": "figures/rq2_phase_clean_churn_share_by_score_trajectory.png",
+            "sha256": "351d4f32ecd56ef0a17b35ec729b916f9a4745c87229dbec3bfef1813cd34129"
+          },
+          {
+            "bytes": 13878,
+            "format": "svg",
+            "path": "figures/rq2_phase_clean_churn_share_by_score_trajectory.svg",
+            "sha256": "5d5ee2b7d34976dee27f91156b48a8fa6c8c1db13b88288cbddd07e87db907de"
+          },
+          {
+            "bytes": 13885,
+            "format": "pdf",
+            "path": "figures/rq2_phase_commit_share_by_score_trajectory.pdf",
+            "sha256": "751877601013a8adf731d6e024e1cbcbae25516fa1fee149cbbe754fa2852570"
+          },
+          {
+            "bytes": 171634,
+            "format": "png",
+            "path": "figures/rq2_phase_commit_share_by_score_trajectory.png",
+            "sha256": "1c47d188cfd149cfe4d851618b0c827699880d0f164a3624fa006788ef35c097"
+          },
+          {
+            "bytes": 13872,
+            "format": "svg",
+            "path": "figures/rq2_phase_commit_share_by_score_trajectory.svg",
+            "sha256": "cc202d17bc8d610ff60fa6cfc76cb985ddde172c6cb270a76b1a9233af2233c5"
+          }
+        ],
+        "section_target": "Results/RQ2 or Threats",
+        "status": "main_text"
+      },
+      "rq2_operational_regularity": {
+        "artifacts": [
+          {
+            "bytes": 5747,
+            "format": "json",
+            "path": "figures/rq2_operational_regularity.metadata.json",
+            "sha256": "f54d20790c36eb008cd312493e30c8021ad91948517870140c64cb3d38e9541f"
+          },
+          {
+            "bytes": 6461,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "delta_score_t3_minus_t1",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct",
+              "active_day_count",
+              "project_span_days",
+              "active_day_share",
+              "max_inactivity_gap_days",
+              "median_inactivity_gap_days",
+              "commit_weekly_cv",
+              "clean_churn_weekly_cv",
+              "temporal_entropy_commits",
+              "temporal_entropy_clean_churn",
+              "author_count",
+              "max_author_share",
+              "author_gini",
+              "m7_window_count",
+              "m7_inactive_window_share",
+              "regularity_active_day_share_component",
+              "regularity_commit_entropy_component",
+              "regularity_clean_churn_entropy_component",
+              "regularity_commit_weekly_cv_component",
+              "regularity_clean_churn_weekly_cv_component",
+              "regularity_m7_activity_component",
+              "regularity_commit_distribution_component",
+              "regularity_clean_churn_distribution_component",
+              "regularity_index"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_operational_regularity_data.csv",
+            "rows": 14,
+            "sha256": "699d35322857d85200ef0d08b9a3f1c0814d2eeacd67acd8ed0df4d934493177"
+          },
+          {
+            "bytes": 16819,
+            "format": "pdf",
+            "path": "figures/rq2_regularity_profile_heatmap.pdf",
+            "sha256": "ee242d4b3f3846b5f9ea3fcb29f33367ccf1fa5602a3f2f59309a8fa91813b96"
+          },
+          {
+            "bytes": 385087,
+            "format": "png",
+            "path": "figures/rq2_regularity_profile_heatmap.png",
+            "sha256": "15f5404cfd461eed50ef132e3990dee0596f1e9a0e8c954da13b559bac9f35d9"
+          },
+          {
+            "bytes": 18669,
+            "format": "svg",
+            "path": "figures/rq2_regularity_profile_heatmap.svg",
+            "sha256": "06d4904ae735f91822a594b15562e233433c8baa09ef1fab483131da0b57272b"
+          },
+          {
+            "bytes": 6150,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "planning_scope_tier",
+              "score_trajectory_group",
+              "active_day_share",
+              "temporal_entropy_commits",
+              "temporal_entropy_clean_churn",
+              "commit_weekly_cv",
+              "clean_churn_weekly_cv",
+              "m7_inactive_window_share",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct",
+              "author_gini",
+              "team_semester",
+              "active_day_share_z",
+              "temporal_entropy_commits_z",
+              "temporal_entropy_clean_churn_z",
+              "commit_weekly_cv_z",
+              "clean_churn_weekly_cv_z",
+              "m7_inactive_window_share_z",
+              "final7_commit_share_pct_z",
+              "final7_clean_churn_share_pct_z",
+              "author_gini_z"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_regularity_profile_heatmap_data.csv",
+            "rows": 14,
+            "sha256": "3637061d8637117d980481207da2bc4d56c704d127a768101473468e0f698124"
+          },
+          {
+            "bytes": 23685,
+            "format": "pdf",
+            "path": "figures/rq2_regularity_vs_final_concentration.pdf",
+            "sha256": "f74b71af2933bb7b0108014fdcd86558d2b78abbec868827f8807920314efff0"
+          },
+          {
+            "bytes": 198081,
+            "format": "png",
+            "path": "figures/rq2_regularity_vs_final_concentration.png",
+            "sha256": "b4794eef6ca7f5f956bd13c240b48bdc1149b103dbb95dddba9a9fdcb2799e4a"
+          },
+          {
+            "bytes": 26984,
+            "format": "svg",
+            "path": "figures/rq2_regularity_vs_final_concentration.svg",
+            "sha256": "54023f247bf635f4371d4e8c432ea0fea7252f6914c048342d460b9c68e8c462"
+          },
+          {
+            "bytes": 3618,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "regularity_index",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "delta_score_t3_minus_t1",
+              "final7_share_pct",
+              "activity_metric"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_regularity_vs_final_concentration_data.csv",
+            "rows": 28,
+            "sha256": "5c0f72214fed97586852ff48307d12c3b50512d2a430901ef28090d13ee99ee9"
+          },
+          {
+            "bytes": 22963,
+            "format": "pdf",
+            "path": "figures/rq2_regularity_vs_score_delta.pdf",
+            "sha256": "2981198d3ccb3ca94a2b62a7126b26915c068a62f4a587b104a050a4cac228a7"
+          },
+          {
+            "bytes": 191777,
+            "format": "png",
+            "path": "figures/rq2_regularity_vs_score_delta.png",
+            "sha256": "fc6828ee91765586155f874f209886087b308ef4a3194fb1d7fb051c6d928736"
+          },
+          {
+            "bytes": 17891,
+            "format": "svg",
+            "path": "figures/rq2_regularity_vs_score_delta.svg",
+            "sha256": "c302c091fc6e45054da5b30d13fadbbf89ac4e52a4bae7404dd9862815eb9ec9"
+          },
+          {
+            "bytes": 6461,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "delta_score_t3_minus_t1",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct",
+              "active_day_count",
+              "project_span_days",
+              "active_day_share",
+              "max_inactivity_gap_days",
+              "median_inactivity_gap_days",
+              "commit_weekly_cv",
+              "clean_churn_weekly_cv",
+              "temporal_entropy_commits",
+              "temporal_entropy_clean_churn",
+              "author_count",
+              "max_author_share",
+              "author_gini",
+              "m7_window_count",
+              "m7_inactive_window_share",
+              "regularity_active_day_share_component",
+              "regularity_commit_entropy_component",
+              "regularity_clean_churn_entropy_component",
+              "regularity_commit_weekly_cv_component",
+              "regularity_clean_churn_weekly_cv_component",
+              "regularity_m7_activity_component",
+              "regularity_commit_distribution_component",
+              "regularity_clean_churn_distribution_component",
+              "regularity_index"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_regularity_vs_score_delta_data.csv",
+            "rows": 14,
+            "sha256": "699d35322857d85200ef0d08b9a3f1c0814d2eeacd67acd8ed0df4d934493177"
+          }
+        ],
+        "section_target": "Results/RQ2, Discussion, or Threats",
+        "status": "main_text_or_appendix"
+      },
+      "rq2_planning_concentration_quadrants": {
+        "artifacts": [
+          {
+            "bytes": 2376,
+            "columns": [
+              "activity_metric",
+              "quadrant",
+              "team_semester_n",
+              "team_semester_denominator",
+              "mean_t3_score",
+              "median_t3_score",
+              "mean_delta_score",
+              "median_delta_score",
+              "mean_clean_rework_churn_t3",
+              "small_n_flag",
+              "interpretation",
+              "team_semesters"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_planning_concentration_quadrant_summary.csv",
+            "rows": 8,
+            "sha256": "9ebdcbbd720c3080acda847183121a8eb62360646b88e2f7dba4b125f059e873"
+          },
+          {
+            "bytes": 4742,
+            "format": "json",
+            "path": "figures/rq2_planning_concentration_quadrants.metadata.json",
+            "sha256": "2ff80fbc9913519a7e83ee1cf28973a29d13d7443a6b8366204d56ea06552dd0"
+          },
+          {
+            "bytes": 34833,
+            "format": "pdf",
+            "path": "figures/rq2_planning_vs_final7_clean_churn_concentration.pdf",
+            "sha256": "fc1a255959a09aa051474b00007a7a8df050d803b8dfedb3503d47bb924f55eb"
+          },
+          {
+            "bytes": 210364,
+            "format": "png",
+            "path": "figures/rq2_planning_vs_final7_clean_churn_concentration.png",
+            "sha256": "72430cea3bb9e956128860ec28c4469158a642c97070a61d0d327d63e83475ad"
+          },
+          {
+            "bytes": 21079,
+            "format": "svg",
+            "path": "figures/rq2_planning_vs_final7_clean_churn_concentration.svg",
+            "sha256": "3e72fdcd967c1e405571eef05e125be3ee438ab388fdd0fc6110eb338345c9b1"
+          },
+          {
+            "bytes": 3969,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "planning_scope_log1p_t1",
+              "planning_scope_tier",
+              "evaluator_score_t3",
+              "delta_score_t3_minus_t1",
+              "clean_rework_churn_t3",
+              "final7_share_pct",
+              "activity_metric",
+              "final7_concentration_tier",
+              "planning_concentration_quadrant",
+              "abs_delta_score_t3_minus_t1",
+              "marker_size"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_planning_vs_final7_clean_churn_concentration_data.csv",
+            "rows": 14,
+            "sha256": "5ad2ba6645629cfbb694e09f7a51e5a800760554a6deb432651f4138c3f3e37f"
+          },
+          {
+            "bytes": 34819,
+            "format": "pdf",
+            "path": "figures/rq2_planning_vs_final7_commit_concentration.pdf",
+            "sha256": "b220035a5b56c6525b5959f04df638de5bb9983c3940d929c44955f2b98eda98"
+          },
+          {
+            "bytes": 206129,
+            "format": "png",
+            "path": "figures/rq2_planning_vs_final7_commit_concentration.png",
+            "sha256": "9c65a0d4855edebdce2d0b0ee18938ba88898b8546db08621c09fb6d1b0c7d2f"
+          },
+          {
+            "bytes": 21062,
+            "format": "svg",
+            "path": "figures/rq2_planning_vs_final7_commit_concentration.svg",
+            "sha256": "2f00669a41e8f2276a756608592865c3722f871380f0c4202891a4df78225b9d"
+          },
+          {
+            "bytes": 3611,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "planning_scope_log1p_t1",
+              "planning_scope_tier",
+              "evaluator_score_t3",
+              "delta_score_t3_minus_t1",
+              "clean_rework_churn_t3",
+              "final7_share_pct",
+              "activity_metric",
+              "final7_concentration_tier",
+              "planning_concentration_quadrant",
+              "abs_delta_score_t3_minus_t1",
+              "marker_size"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_planning_vs_final7_commit_concentration_data.csv",
+            "rows": 14,
+            "sha256": "e5d65ae9bb8c4f529535ad2869762b0937e29317306964422d64003eb7e22149"
+          }
+        ],
+        "section_target": "Results/RQ2",
+        "status": "main_text"
+      },
+      "rq2_score_delta_vs_final7_concentration": {
+        "artifacts": [
+          {
+            "bytes": 3998,
+            "columns": [
+              "activity_metric",
+              "quadrant",
+              "final7_concentration_cut",
+              "final7_concentration_median_pct",
+              "delta_threshold",
+              "planning_scope_tier",
+              "team_semester_n",
+              "median_final7_share_pct",
+              "median_delta_score_t3_minus_t1",
+              "interpretation",
+              "team_semesters"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_score_delta_final7_quadrants.csv",
+            "rows": 16,
+            "sha256": "eb2da76b9c6e4bda9620ff273dd908156a1571d4f7c7de1496064b7ac4ea92fd"
+          },
+          {
+            "bytes": 23604,
+            "format": "pdf",
+            "path": "figures/rq2_score_delta_vs_final7_clean_churn_concentration.pdf",
+            "sha256": "b6e41f6c8168a0aeaaca47d88f5d4c8a2ef79f58c011b6c60297460ebc6c6b4f"
+          },
+          {
+            "bytes": 200846,
+            "format": "png",
+            "path": "figures/rq2_score_delta_vs_final7_clean_churn_concentration.png",
+            "sha256": "c624fe9e74a49f91af58f6015ee5d9d007834c7c432514801a589ead758e2628"
+          },
+          {
+            "bytes": 19269,
+            "format": "svg",
+            "path": "figures/rq2_score_delta_vs_final7_clean_churn_concentration.svg",
+            "sha256": "26357358c7a8d0c4293395effd80805e5a3e3a4932a7e015c43ca3e051537491"
+          },
+          {
+            "bytes": 3539,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "evaluator_score_t1",
+              "evaluator_score_t3",
+              "delta_score_t3_minus_t1",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "final7_share_pct",
+              "activity_metric",
+              "final7_concentration_tier",
+              "delta_direction",
+              "quadrant"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv",
+            "rows": 14,
+            "sha256": "d36b029f80856e293fd0796256692ef0340173be88cfc569868ca0271064abaf"
+          },
+          {
+            "bytes": 23587,
+            "format": "pdf",
+            "path": "figures/rq2_score_delta_vs_final7_commit_concentration.pdf",
+            "sha256": "3481e17bedfa72e87eb9237d15c654c39d689a9763b6bfce8e0d654ad3c7ba68"
+          },
+          {
+            "bytes": 198161,
+            "format": "png",
+            "path": "figures/rq2_score_delta_vs_final7_commit_concentration.png",
+            "sha256": "7c3a0ca14f072e27ef627faa90ec36f38371c93f207537cb331a277a2b68dd22"
+          },
+          {
+            "bytes": 19247,
+            "format": "svg",
+            "path": "figures/rq2_score_delta_vs_final7_commit_concentration.svg",
+            "sha256": "f47835234d2f44bcab3a97d72bc965f82b044984746cbd0078d12e11ba9e9c77"
+          },
+          {
+            "bytes": 3181,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "evaluator_score_t1",
+              "evaluator_score_t3",
+              "delta_score_t3_minus_t1",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "final7_share_pct",
+              "activity_metric",
+              "final7_concentration_tier",
+              "delta_direction",
+              "quadrant"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_score_delta_vs_final7_commit_concentration_data.csv",
+            "rows": 14,
+            "sha256": "743a7046c59154bfe388fda47393552deba392e1c5d373658cfb40935ff5735b"
+          },
+          {
+            "bytes": 6957,
+            "format": "json",
+            "path": "figures/rq2_score_delta_vs_final7_concentration.metadata.json",
+            "sha256": "8871bf854026e7fb550924f40367fab2296e8821bf3e72b5afb9dc836d30a09f"
+          }
+        ],
+        "section_target": "Results/RQ2",
+        "status": "main_text"
+      },
+      "rq2_student_syndrome_reviewer_response": {
+        "artifacts": [
+          {
+            "bytes": 2583,
+            "format": "json",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier.metadata.json",
+            "sha256": "406d210bd093e2bec6f073774449ddfb810dd4e18dd66b100d1f68b8c6767ff5"
+          },
+          {
+            "bytes": 24741,
+            "format": "pdf",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier.pdf",
+            "sha256": "83829c93b02674d95e1aeeddf2570dd9db774abc50ead4cfcae188d3ee4e85dc"
+          },
+          {
+            "bytes": 333403,
+            "format": "png",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier.png",
+            "sha256": "75dfdc1d718fe8dbd95487cc8103ebc96a8f953b045b676577b55a154a58b6e7"
+          },
+          {
+            "bytes": 30134,
+            "format": "svg",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier.svg",
+            "sha256": "85d21680b8276b41aae9679d98b02da93e0793e53f7f9a2a77e619ccb92ad29c"
+          },
+          {
+            "bytes": 3095,
+            "format": "json",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn.metadata.json",
+            "sha256": "4878bfaf44cbe53c256204b24aebd95368f2751cb59698ea4645fe3435f13db8"
+          },
+          {
+            "bytes": 24666,
+            "format": "pdf",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn.pdf",
+            "sha256": "0abcfdb280762beddc39441bed23e4ad5edd82781504bdfba585a3ba859c9ec7"
+          },
+          {
+            "bytes": 321835,
+            "format": "png",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn.png",
+            "sha256": "1d8ddc9a707552a908a5420ad99909510f5aec37b617bd67ebc276fb2a1b6147"
+          },
+          {
+            "bytes": 29656,
+            "format": "svg",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn.svg",
+            "sha256": "cdb291a68e6ee9f3acfbb7569608d1f82a6378851f13ec671629513afa17ef6e"
+          },
+          {
+            "bytes": 12414,
+            "columns": [
+              "Semestre",
+              "ID_Equipe",
+              "window_end_day",
+              "clean_churn_7d",
+              "unique_clean_file_n_7d",
+              "clean_file_event_n_7d",
+              "measurement_status",
+              "tier",
+              "evaluator_score_t3",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "team_window_clean_churn_total",
+              "team_window_clean_churn_share_pct"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn_data.csv",
+            "rows": 91,
+            "sha256": "25795f20778afed4f714b36ed174d6a752ab41aae4231326f2d63ad4bd1f85ea"
+          },
+          {
+            "bytes": 1627,
+            "columns": [
+              "tier",
+              "window_end_day",
+              "team_semester_n",
+              "mean_team_window_clean_churn_share_pct",
+              "median_team_window_clean_churn_share_pct",
+              "ci95_lower",
+              "ci95_upper"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn_summary.csv",
+            "rows": 14,
+            "sha256": "fdafd39601011b4910714c777898e1679aa90d6fc8b9b977a3461d2d28ba3b7a"
+          },
+          {
+            "bytes": 19441,
+            "columns": [
+              "Semestre",
+              "ID_Equipe",
+              "window_end_day",
+              "window_start",
+              "window_end",
+              "phase",
+              "commit_n",
+              "active_days",
+              "author_n",
+              "max_author_share",
+              "author_gini",
+              "measurement_status",
+              "tier",
+              "evaluator_score_t3",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "team_window_commit_total",
+              "team_window_commit_share_pct"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_data.csv",
+            "rows": 98,
+            "sha256": "c568e962794c64c2deb25e4d180d61b0eeeb6ffdc2d028488e804e553cb044d2"
+          },
+          {
+            "bytes": 1627,
+            "columns": [
+              "tier",
+              "window_end_day",
+              "team_semester_n",
+              "mean_team_window_commit_share_pct",
+              "median_team_window_commit_share_pct",
+              "ci95_lower",
+              "ci95_upper"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_by_evaluator_planning_tier_summary.csv",
+            "rows": 14,
+            "sha256": "e127ae023e5c0790cd43e28868bd554c8d45e999b082fe1af236e0897dd64322"
+          },
+          {
+            "bytes": 3616,
+            "format": "json",
+            "path": "figures/rq2_student_syndrome_final7_concentration_by_tier.metadata.json",
+            "sha256": "f4e4ee290ef00f9d48e910cd73b94dcc36ad81c2a5af2ba8d7de3b268cdfff72"
+          },
+          {
+            "bytes": 15205,
+            "format": "pdf",
+            "path": "figures/rq2_student_syndrome_final7_concentration_by_tier.pdf",
+            "sha256": "50c0b7c5bda4302431713f329c0d8559395908766a06a7184c96165b90912709"
+          },
+          {
+            "bytes": 155110,
+            "format": "png",
+            "path": "figures/rq2_student_syndrome_final7_concentration_by_tier.png",
+            "sha256": "91331c9e83153d28a7291e85d619defcc2c708dd114e55a5aae8728504a065b9"
+          },
+          {
+            "bytes": 20555,
+            "format": "svg",
+            "path": "figures/rq2_student_syndrome_final7_concentration_by_tier.svg",
+            "sha256": "9e8b8f8adce310824f77e337d534ffdeff3535e4ac31be3c8171ea22cfacbaa2"
+          },
+          {
+            "bytes": 3353,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "activity_metric",
+              "project_total",
+              "final7_total",
+              "final7_share_pct",
+              "tier",
+              "evaluator_score_t3"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_final7_concentration_by_tier_data.csv",
+            "rows": 28,
+            "sha256": "f06b3b07685d06bab6fe8b789252ac4ca0e877c006a66ad40795297dd23a2040"
+          },
+          {
+            "bytes": 3712,
+            "format": "json",
+            "path": "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.metadata.json",
+            "sha256": "412ff8c8c9f9e6db5efe864702f23b450200d4d1d3c37b7ddcc3ae5464f77bb7"
+          },
+          {
+            "bytes": 27569,
+            "format": "pdf",
+            "path": "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.pdf",
+            "sha256": "0fc69a060bdaad06b33f40112201b4aeff12000bf84f37d017c01c9e11d6dd6b"
+          },
+          {
+            "bytes": 672620,
+            "format": "png",
+            "path": "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.png",
+            "sha256": "f616fd6e1d8b0b130645a9f7c719ffd16b77e65bf743640f3c97a189412f174f"
+          },
+          {
+            "bytes": 91196,
+            "format": "svg",
+            "path": "figures/rq2_student_syndrome_full_period_clean_churn_by_tier.svg",
+            "sha256": "995c208648e24cdff0f1a4459623d7fe839d628cad6e12135ed608a655f8f70a"
+          },
+          {
+            "bytes": 223750,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "window_end_day",
+              "rolling_7d_value",
+              "tier",
+              "evaluator_score_t3",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "team_full_period_rolling_max",
+              "team_full_period_rolling_intensity_pct",
+              "activity_metric"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_full_period_clean_churn_by_tier_data.csv",
+            "rows": 1554,
+            "sha256": "c87cbc181edbc4f89e265e92ed0be8530bcba644352fc1aa3c2ed391013603ca"
+          },
+          {
+            "bytes": 21321,
+            "columns": [
+              "tier",
+              "window_end_day",
+              "team_semester_n",
+              "mean_team_full_period_rolling_intensity_pct",
+              "median_team_full_period_rolling_intensity_pct",
+              "ci95_lower",
+              "ci95_upper"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_full_period_clean_churn_by_tier_summary.csv",
+            "rows": 222,
+            "sha256": "d927fefd841d3cf7e11bc01874300b0cfbf3eb0e7ca581a529d39f239be39029"
+          },
+          {
+            "bytes": 3556,
+            "format": "json",
+            "path": "figures/rq2_student_syndrome_full_period_commits_by_tier.metadata.json",
+            "sha256": "d6a994a442a111f777498817f83a07ab97a617edfc5cbe4b4e046a8c36227de9"
+          },
+          {
+            "bytes": 27943,
+            "format": "pdf",
+            "path": "figures/rq2_student_syndrome_full_period_commits_by_tier.pdf",
+            "sha256": "35ee2646478be39b8506781a17c4d9687ab2c6cecc618f14812f7516eaeb02f7"
+          },
+          {
+            "bytes": 715970,
+            "format": "png",
+            "path": "figures/rq2_student_syndrome_full_period_commits_by_tier.png",
+            "sha256": "3750021ebd3650b3d944a427e83767efd30719622f94a51eeb11f27a44974726"
+          },
+          {
+            "bytes": 92641,
+            "format": "svg",
+            "path": "figures/rq2_student_syndrome_full_period_commits_by_tier.svg",
+            "sha256": "693d774f16a3e7527f03800a2c5a20dfa66f9c5357966048d9134c7e77fa4d19"
+          },
+          {
+            "bytes": 175673,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "window_end_day",
+              "rolling_7d_value",
+              "tier",
+              "evaluator_score_t3",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "team_full_period_rolling_max",
+              "team_full_period_rolling_intensity_pct",
+              "activity_metric"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_full_period_commits_by_tier_data.csv",
+            "rows": 1554,
+            "sha256": "4cba542847d50690018922c93b88380a36b6a6fb86a9835a67d6821c96c103cb"
+          },
+          {
+            "bytes": 20718,
+            "columns": [
+              "tier",
+              "window_end_day",
+              "team_semester_n",
+              "mean_team_full_period_rolling_intensity_pct",
+              "median_team_full_period_rolling_intensity_pct",
+              "ci95_lower",
+              "ci95_upper"
+            ],
+            "format": "csv",
+            "path": "figures/rq2_student_syndrome_full_period_commits_by_tier_summary.csv",
+            "rows": 222,
+            "sha256": "0104fcce67cc7bbdfd1db7435345327429652ab8fa38ab6706ae35d51e13dbc9"
+          }
+        ],
+        "section_target": "Response letter",
+        "status": "response_letter"
+      },
+      "rq3_complexity_profile": {
+        "artifacts": [
+          {
+            "bytes": 3712,
+            "columns": [
+              "relationship",
+              "rho_without_complexity_stratification",
+              "rho_within_low_complexity",
+              "rho_within_high_complexity",
+              "interpretation_note",
+              "relationship_label",
+              "predictor",
+              "outcome",
+              "complexity_stratification_variable",
+              "complexity_median",
+              "low_complexity_rule",
+              "high_complexity_rule",
+              "n_without_complexity_stratification",
+              "n_within_low_complexity",
+              "n_within_high_complexity",
+              "filter_column",
+              "method",
+              "minimum_n_for_rho"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_complexity_confounding_summary.csv",
+            "rows": 6,
+            "sha256": "cf11b6609a485639d350cc841e544d092aa9b6d1d3bfea2c28451cabff4ef6c6"
+          },
+          {
+            "bytes": 3374,
+            "columns": [
+              "metric",
+              "construct_family",
+              "plan_requirement",
+              "source",
+              "definition",
+              "heuristic_or_policy",
+              "manual_genai_architecture_classification"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_complexity_metrics_contract.csv",
+            "rows": 13,
+            "sha256": "553d3f8723fa7576090ca9c64a16a25669ef8bc6e40ca0af9fe97e1d89409a90"
+          },
+          {
+            "bytes": 7750,
+            "format": "json",
+            "path": "figures/rq3_complexity_profile.metadata.json",
+            "sha256": "5f85d821514e77ea851643dbe90fa96cdc72943a6be519a491c19d4785e60d3a"
+          },
+          {
+            "bytes": 4952,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "technical_complexity_mean_t1",
+              "technical_complexity_mean_t2",
+              "technical_complexity_mean_t3",
+              "delta_technical_complexity_t3_minus_t1",
+              "clean_distinct_file_n",
+              "clean_distinct_directory_n",
+              "clean_max_path_depth",
+              "clean_extension_n",
+              "clean_touching_commit_n_inferred",
+              "clean_total_churn_inferred",
+              "frontend_clean_file_event_n",
+              "backend_clean_file_event_n",
+              "mixed_clean_file_event_n",
+              "unclassified_clean_file_event_n",
+              "mean_clean_files_per_commit",
+              "frontend_clean_file_event_share",
+              "backend_clean_file_event_share",
+              "clean_churn_t3",
+              "all_churn_t3",
+              "m4_clean_unique_file_n_t3",
+              "m4_clean_touching_commit_n_t3",
+              "clean_rework_churn_t3",
+              "clean_rework_ratio_t3",
+              "baseline_eligible_for_rework_t3",
+              "measurement_status",
+              "planning_artifact_present_t1",
+              "planning_scope_log1p_t1",
+              "pi_file_count_t1",
+              "pi_line_delta_t1",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_complexity_profile_data.csv",
+            "rows": 14,
+            "sha256": "99e0836e4e487b239be47a27af2748ce988f7d759b44b2cb0b05474892ff5e7e"
+          },
+          {
+            "bytes": 23937,
+            "format": "pdf",
+            "path": "figures/rq3_complexity_vs_final_concentration.pdf",
+            "sha256": "c56f0d77a3ef8233cab9948473b0e029acec4327fbc9cd60703d6b6aa6895100"
+          },
+          {
+            "bytes": 210306,
+            "format": "png",
+            "path": "figures/rq3_complexity_vs_final_concentration.png",
+            "sha256": "fb27adad970ae976a27907d4259a19c98c1c2acca65cb5051cdc4af187e14d46"
+          },
+          {
+            "bytes": 27694,
+            "format": "svg",
+            "path": "figures/rq3_complexity_vs_final_concentration.svg",
+            "sha256": "6532e6b16aeed6c35d81b5106bc1b6101c7e9cef2e0bf7a7c50706ccd72bf1df"
+          },
+          {
+            "bytes": 3685,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "technical_complexity_mean_t3",
+              "final7_share_pct",
+              "score_trajectory_group",
+              "planning_scope_tier",
+              "clean_rework_churn_t3",
+              "baseline_eligibility_label",
+              "activity_metric"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_complexity_vs_final_concentration_data.csv",
+            "rows": 28,
+            "sha256": "7bcc9ee616c932cf18f26503f85a8d6d11535a24027949b55ed1dc8c6e485d3f"
+          },
+          {
+            "bytes": 4250,
+            "columns": [
+              "relationship",
+              "relationship_id",
+              "task_4_2_requirement",
+              "full_sample_rho",
+              "loo_min_rho",
+              "loo_max_rho",
+              "sign_preservation_share",
+              "most_influential_team_semester",
+              "max_abs_rho_delta_from_full",
+              "available_leave_one_out_rows",
+              "total_leave_one_out_rows",
+              "unstable_sensitivity_flag",
+              "interpretation_note"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_directional_robustness_summary.csv",
+            "rows": 13,
+            "sha256": "783c83a997ce1dd148419e4286ab9a731a7f27caa085ed1f922f54f433294795"
+          },
+          {
+            "bytes": 16501,
+            "format": "pdf",
+            "path": "figures/rq3_planning_rework_complexity_overlay.pdf",
+            "sha256": "7d17d6a3a03602e8885d209a56f60f59f48a304f4b29274a6bfe9fbcf17c78a0"
+          },
+          {
+            "bytes": 217551,
+            "format": "png",
+            "path": "figures/rq3_planning_rework_complexity_overlay.png",
+            "sha256": "93b7c3344af1ff1590dda7527671865f94de8e775244de52c5d3e2f74af9bc1f"
+          },
+          {
+            "bytes": 24382,
+            "format": "svg",
+            "path": "figures/rq3_planning_rework_complexity_overlay.svg",
+            "sha256": "b3c2c3547fab2f87b6107b978021f83ed3b12d19c8bda21f56094553fc273f15"
+          },
+          {
+            "bytes": 2341,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "planning_scope_log1p_t1",
+              "clean_rework_churn_t3",
+              "clean_rework_ratio_t3",
+              "technical_complexity_mean_t3",
+              "baseline_eligibility_label",
+              "planning_scope_tier",
+              "score_trajectory_group",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_planning_rework_complexity_overlay_data.csv",
+            "rows": 14,
+            "sha256": "8639a2f66514f41a785e8f5109b0d5ece8c1f353e9b6f137b471a956749983cd"
+          },
+          {
+            "bytes": 23240,
+            "format": "pdf",
+            "path": "figures/rq3_technical_complexity_vs_rework.pdf",
+            "sha256": "223bd29faf454c62e5c0240034458ca4e75041232ce0e9f02bb01c1a1f50fc67"
+          },
+          {
+            "bytes": 198725,
+            "format": "png",
+            "path": "figures/rq3_technical_complexity_vs_rework.png",
+            "sha256": "45471f91cc0c6b25b922502ce8f75e71c281f39a4b56e49b63d17cc963ba3e54"
+          },
+          {
+            "bytes": 21874,
+            "format": "svg",
+            "path": "figures/rq3_technical_complexity_vs_rework.svg",
+            "sha256": "580071a0a7987b434de835753b8e9776cef1d533d3a3b0fb64b5d4eeaeab7897"
+          },
+          {
+            "bytes": 2341,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "technical_complexity_mean_t3",
+              "clean_rework_churn_t3",
+              "clean_rework_ratio_t3",
+              "baseline_eligibility_label",
+              "planning_scope_tier",
+              "planning_scope_log1p_t1",
+              "score_trajectory_group",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_technical_complexity_vs_rework_data.csv",
+            "rows": 14,
+            "sha256": "77596c580421e0c21a171aec0e61ee8204d21ab17c7f4d7473ffdcf965f322aa"
+          }
+        ],
+        "section_target": "Discussion/Threats",
+        "status": "main_text"
+      },
+      "rq3_influence_map": {
+        "artifacts": [
+          {
+            "bytes": 4436,
+            "columns": [
+              "removed_team_semester",
+              "Planning scope → T3 score",
+              "Planning scope → score delta",
+              "Planning scope → final-7 commits",
+              "Planning scope → final-7 clean churn",
+              "Final-7 commits → T3 score",
+              "Final-7 clean churn → T3 score",
+              "Final-7 commits → score delta",
+              "Final-7 clean churn → score delta",
+              "Regularity index → score delta",
+              "Technical complexity → rework churn",
+              "Technical complexity → rework ratio",
+              "Planning scope → rework churn",
+              "Planning scope → rework ratio"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_influence_heatmap_matrix.csv",
+            "rows": 14,
+            "sha256": "38e696a1fefcc1a46c5b114adfe363a1f6e1dd44393c0cb4f4d504b41ef50adf"
+          },
+          {
+            "bytes": 7836,
+            "format": "json",
+            "path": "figures/rq3_influence_map.metadata.json",
+            "sha256": "cda0439776e7808124140a483e05da6369a9bcb65ae151da8660517a1d60d952"
+          },
+          {
+            "bytes": 25397,
+            "format": "pdf",
+            "path": "figures/rq3_influence_map.pdf",
+            "sha256": "56de0335a7ca34bc2a95f8c33c36f839081f4991a0cfbde21efa4338e0290a7f"
+          },
+          {
+            "bytes": 382051,
+            "format": "png",
+            "path": "figures/rq3_influence_map.png",
+            "sha256": "551b5cf2b6fca962679667fc84d149eebf34eca31febd5ae55d78aae5f751543"
+          },
+          {
+            "bytes": 22715,
+            "format": "svg",
+            "path": "figures/rq3_influence_map.svg",
+            "sha256": "2e50f69cded5809ecda72d04f7e8ad58d35aedf0ffe09896094abade4681f999"
+          },
+          {
+            "bytes": 62356,
+            "columns": [
+              "relationship_id",
+              "task_4_2_requirement",
+              "relationship_label",
+              "predictor",
+              "outcome",
+              "filter_column",
+              "removed_ID_Equipe",
+              "removed_Semestre",
+              "full_sample_n",
+              "loo_n",
+              "full_sample_rho",
+              "loo_rho",
+              "rho_delta_from_full",
+              "abs_rho_delta_from_full",
+              "full_sample_sign",
+              "loo_sign",
+              "sign_changed",
+              "availability_status",
+              "inference_note"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_influence_map_data.csv",
+            "rows": 182,
+            "sha256": "23a1b847424d927425d511e244dc52d7fd00c46b89ecf5761a195e74caf1ad99"
+          },
+          {
+            "bytes": 4291,
+            "columns": [
+              "task_4_2_requirement",
+              "relationship_id",
+              "relationship_label",
+              "predictor",
+              "outcome",
+              "filter_column",
+              "full_sample_n",
+              "leave_one_out_rows",
+              "available_leave_one_out_rows",
+              "full_sample_rho",
+              "full_sample_sign",
+              "loo_min_rho",
+              "loo_max_rho",
+              "max_abs_rho_delta_from_full",
+              "sign_preservation_share",
+              "availability_status",
+              "inference_note"
+            ],
+            "format": "csv",
+            "path": "figures/rq3_influence_relationship_contract.csv",
+            "rows": 13,
+            "sha256": "9679ae5be2f30d8bac01cea8630dec91e30023b86f242f532f718d75aecd7d47"
+          }
+        ],
+        "section_target": "Threats or Results/RQ3",
+        "status": "main_text"
+      },
+      "team_semester_evidence_panel": {
+        "artifacts": [
+          {
+            "bytes": 20029,
+            "columns": [
+              "ID_Equipe",
+              "Semestre",
+              "evaluator_score_t1",
+              "evaluator_score_t2",
+              "evaluator_score_t3",
+              "delta_score_t3_minus_t1",
+              "delta_score_t2_minus_t1",
+              "delta_score_t3_minus_t2",
+              "score_trajectory_group",
+              "planning_present_t1",
+              "planning_scope_log1p_t1",
+              "planning_scope_tier",
+              "final7_commit_share_pct",
+              "final7_clean_churn_share_pct",
+              "active_day_count",
+              "project_span_days",
+              "active_day_share",
+              "max_inactivity_gap_days",
+              "median_inactivity_gap_days",
+              "commit_weekly_cv",
+              "clean_churn_weekly_cv",
+              "temporal_entropy_commits",
+              "temporal_entropy_clean_churn",
+              "author_count",
+              "max_author_share",
+              "author_gini",
+              "m7_window_count",
+              "m7_inactive_window_share",
+              "regularity_index",
+              "technical_complexity_mean_t1",
+              "technical_complexity_mean_t2",
+              "technical_complexity_mean_t3",
+              "delta_technical_complexity_t3_minus_t1",
+              "clean_distinct_file_n",
+              "clean_distinct_directory_n",
+              "clean_max_path_depth",
+              "clean_extension_n",
+              "clean_touching_commit_n_inferred",
+              "clean_total_churn_inferred",
+              "mean_clean_files_per_commit",
+              "frontend_clean_file_event_share",
+              "backend_clean_file_event_share",
+              "clean_churn_t3",
+              "all_churn_t3",
+              "clean_rework_churn_t3",
+              "clean_rework_ratio_t3",
+              "baseline_eligible_for_rework_t3",
+              "m8_rework_measurement_status",
+              "pi_file_count_t1",
+              "pi_line_delta_t1",
+              "team_total_commit_n",
+              "team_total_clean_churn",
+              "final7_pre_t3_commit_share_pct",
+              "pre_t1_commit_share_pct",
+              "t1_to_t2_commit_share_pct",
+              "t2_to_t3_excluding_final7_commit_share_pct",
+              "final7_pre_t3_clean_churn_share_pct",
+              "pre_t1_clean_churn_share_pct",
+              "t1_to_t2_clean_churn_share_pct",
+              "t2_to_t3_excluding_final7_clean_churn_share_pct",
+              "m1_aggregation_level",
+              "m1_ai_benefit_mean_t1",
+              "m1_ai_benefit_mean_t3",
+              "m1_ai_benefit_mean_delta_t3_minus_t1",
+              "m1_autonomy_tool_dependency_mean_t1",
+              "m1_autonomy_tool_dependency_mean_t3",
+              "m1_autonomy_tool_dependency_mean_delta_t3_minus_t1",
+              "m1_ai_career_impact_5y_mean_t1",
+              "m1_ai_career_impact_5y_mean_t3",
+              "m1_ai_career_impact_5y_mean_delta_t3_minus_t1",
+              "m1_project_feeling_mean_t1",
+              "m1_project_feeling_mean_t3",
+              "m1_project_feeling_mean_delta_t3_minus_t1",
+              "m2_t3_role_mean_backend",
+              "m2_t3_role_mean_frontend",
+              "m2_t3_role_mean_project_manager",
+              "m2_t3_role_mean_qa",
+              "m2_t3_role_mean_scrum_master",
+              "m2_t3_role_agreement_share_backend",
+              "m2_t3_role_agreement_share_frontend",
+              "m2_t3_role_agreement_share_project_manager",
+              "m2_t3_role_agreement_share_qa",
+              "m2_t3_role_agreement_share_scrum_master",
+              "m2_aggregation_level",
+              "m6b_status",
+              "m6b_planning_evidence_present",
+              "m6b_input_subject_n",
+              "m6b_evidence_quote_n",
+              "m6b_insufficient_evidence_n",
+              "m6b_unavailable_reason",
+              "m5_global_friction_marker_density_per_1k_tokens_t1",
+              "m5_global_friction_marker_n_t1",
+              "m5_global_token_n_t1",
+              "m5_global_friction_marker_density_per_1k_tokens_t2",
+              "m5_global_friction_marker_n_t2",
+              "m5_global_token_n_t2",
+              "m5_global_friction_marker_density_per_1k_tokens_t3",
+              "m5_global_friction_marker_n_t3",
+              "m5_global_token_n_t3",
+              "m5_global_m5_delta_density_t3_minus_t1",
+              "m5_coverage_status",
+              "m5_analysis_level",
+              "m5_team_level_measure",
+              "m5_zero_filled_unavailable_semesters",
+              "panel_row_completeness_status",
+              "coverage_fields_present"
+            ],
+            "format": "csv",
+            "path": "figures/team_semester_evidence_panel.csv",
+            "rows": 14,
+            "sha256": "fc754cafd91a1f5285300685322a05653115e5b73cc2e8ada563e64e19eeccb8"
+          },
+          {
+            "bytes": 3055,
+            "format": "json",
+            "path": "figures/team_semester_evidence_panel.metadata.json",
+            "sha256": "0292e45c1f17518b75e23d0ec294fdf8c85e744d65641f944926da76e3b20cd3"
+          }
+        ],
+        "section_target": "Appendix/Supplement",
+        "status": "appendix"
+      }
+    },
+    "inventory": "paper_v9/FIGURES_CANDIDATES_WORKSHOP.md",
+    "source_of_truth": "paper_v9/ARTIFACT_USAGE_CATALOG.md"
   },
   "source_of_truth": "paper_v9/data/metrics",
   "status": "success"

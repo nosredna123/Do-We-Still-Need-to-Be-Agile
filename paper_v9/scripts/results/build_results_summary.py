@@ -14,7 +14,12 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from paper_v9.scripts.common.paths import resolve_metrics_dir, resolve_paper_v9_dir, resolve_results_dir
+from paper_v9.scripts.common.paths import (
+    resolve_figures_dir,
+    resolve_metrics_dir,
+    resolve_paper_v9_dir,
+    resolve_results_dir,
+)
 from paper_v9.scripts.common.provenance import compute_sha256
 
 CONTRACT_VERSION = "results-summary-v1"
@@ -29,6 +34,59 @@ METRIC_FILES: dict[str, list[str]] = {
     "M7": ["m7_inactivity_trajectory.csv", "m7_inactivity_pattern.csv", "m7_checkpoint_inactivity.csv", "m7_repository_inactivity.metadata.json"],
     "M8": ["m8_rework_magnitude.csv", "m8_rework_participation.csv", "m8_rework_trajectory.csv", "m8_baseline_eligibility.csv", "m8_clean_rework.metadata.json"],
     "M9": ["m9_planning_vs_rework_m6a_m8a.csv", "m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv", "m9_planning_vs_outcomes_m6a_t3.csv", "m9_planning_vs_outcomes_m6b_t3_if_approved.csv", "m9_leave_one_out_intervals.csv", "m9_structured_associations.metadata.json"],
+}
+
+ROBUSTNESS_ARTIFACT_FAMILIES: dict[str, dict[str, Any]] = {
+    "rq2_score_delta_vs_final7_concentration": {
+        "status": "main_text",
+        "section_target": "Results/RQ2",
+        "patterns": ["rq2_score_delta_vs_final7_*", "rq2_score_delta_final7_quadrants.csv"],
+    },
+    "rq2_planning_concentration_quadrants": {
+        "status": "main_text",
+        "section_target": "Results/RQ2",
+        "patterns": ["rq2_planning_*"],
+    },
+    "rq2_nonoverlapping_phase_activity": {
+        "status": "main_text",
+        "section_target": "Results/RQ2 or Threats",
+        "patterns": ["rq2_phase_*", "rq2_nonoverlapping_phase_activity.metadata.json", "rq2_nonoverlapping_weekly_activity_overview.*"],
+    },
+    "rq2_m5_2025_triangulation": {
+        "status": "main_text",
+        "section_target": "Results/RQ2 or Threats",
+        "patterns": ["rq2_m5_2025_triangulation*"],
+    },
+    "rq2_operational_regularity": {
+        "status": "main_text_or_appendix",
+        "section_target": "Results/RQ2, Discussion, or Threats",
+        "patterns": ["rq2_operational_regularity*", "rq2_regularity_*"],
+    },
+    "rq3_complexity_profile": {
+        "status": "main_text",
+        "section_target": "Discussion/Threats",
+        "patterns": ["rq3_complexity*", "rq3_technical_complexity*", "rq3_planning_rework_complexity_overlay*", "rq3_directional_robustness_summary.csv"],
+    },
+    "rq3_influence_map": {
+        "status": "main_text",
+        "section_target": "Threats or Results/RQ3",
+        "patterns": ["rq3_influence*"],
+    },
+    "team_semester_evidence_panel": {
+        "status": "appendix",
+        "section_target": "Appendix/Supplement",
+        "patterns": ["team_semester_evidence_panel*"],
+    },
+    "rq2_student_syndrome_reviewer_response": {
+        "status": "response_letter",
+        "section_target": "Response letter",
+        "patterns": ["rq2_student_syndrome*"],
+    },
+    "candidate_figure_inventory": {
+        "status": "diagnostic_only",
+        "section_target": "Internal diagnostic inventory",
+        "patterns": ["candidate_*"],
+    },
 }
 
 
@@ -56,6 +114,17 @@ def _artifact_record(path: Path, root: Path) -> dict[str, Any]:
     elif path.suffix == ".json":
         json.loads(path.read_text(encoding="utf-8"))
     return record
+
+
+def _artifact_records_for_patterns(directory: Path, patterns: list[str], root: Path) -> list[dict[str, Any]]:
+    paths: dict[Path, None] = {}
+    for pattern in patterns:
+        for path in sorted(directory.glob(pattern)):
+            if path.is_file():
+                paths[path] = None
+    if not paths:
+        raise FileNotFoundError(f"No robustness artifacts matched patterns {patterns} in {directory}")
+    return [_artifact_record(path, root) for path in sorted(paths)]
 
 
 def _metadata(metric: str, metrics_dir: Path) -> dict[str, Any]:
@@ -88,6 +157,22 @@ def _key_summaries(metrics_dir: Path) -> dict[str, Any]:
     }
 
 
+def _robustness_artifacts(root: Path) -> dict[str, Any]:
+    figures_dir = resolve_figures_dir()
+    families: dict[str, Any] = {}
+    for family, config in ROBUSTNESS_ARTIFACT_FAMILIES.items():
+        families[family] = {
+            "status": config["status"],
+            "section_target": config["section_target"],
+            "artifacts": _artifact_records_for_patterns(figures_dir, config["patterns"], root),
+        }
+    return {
+        "source_of_truth": "paper_v9/ARTIFACT_USAGE_CATALOG.md",
+        "inventory": "paper_v9/FIGURES_CANDIDATES_WORKSHOP.md",
+        "families": families,
+    }
+
+
 def build_summary() -> dict[str, Any]:
     root = resolve_paper_v9_dir()
     metrics_dir = resolve_metrics_dir()
@@ -102,8 +187,9 @@ def build_summary() -> dict[str, Any]:
         "inference": "descriptive_or_exploratory_only",
         "source_of_truth": "paper_v9/data/metrics",
         "metrics": {metric: {"artifacts": artifacts[metric], "metadata": metadata[metric]} for metric in METRIC_FILES},
+        "robustness_artifacts": _robustness_artifacts(root),
         "key_summaries": _key_summaries(metrics_dir),
-        "limitations": ["Metric grains differ across RQ1-RQ3 and must not be pooled implicitly", "M6b structured fields are exploratory and non-composite", "M7 repository inactivity is not planning omission", "M8 path provenance is not semantic defect validation", "M9 associations are descriptive and non-causal"],
+        "limitations": ["Metric grains differ across RQ1-RQ3 and must not be pooled implicitly", "M6b structured fields are exploratory and non-composite", "M7 repository inactivity is not planning omission", "M8 path provenance is not semantic defect validation", "M9 associations are descriptive and non-causal", "Robustness artifacts are editorial/diagnostic views governed by ARTIFACT_USAGE_CATALOG.md, not additional causal estimators"],
     }
 
 
