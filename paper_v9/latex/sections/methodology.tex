@@ -138,6 +138,14 @@ team's evaluator presentation dates, not single calendar days. This distinction
 is retained throughout the repository-derived families and is made explicit in
 the corresponding artifacts and provenance comments.
 
+In addition to the primary M1--M9 metric families, we compute robustness and
+sensitivity views that preserve the same source data and analytical grains:
+non-overlapping phase bins for repository activity and clean churn,
+final-seven-day concentration contrasts by evaluator-score change and planning
+scope, operational-regularity proxies, technical-complexity profiles, and
+leave-one-out influence diagnostics. These views qualify interpretation and
+validity threats; they do not introduce new causal estimators.
+
 \subsubsection{RQ1: How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?}
 
 RQ1 is operationalized at cohort-by-semester/checkpoint grain because the
@@ -165,13 +173,17 @@ exposing identities.
 \textbf{Repository Activity (M3).} This family separates phase activity, author
 concentration, and rolling seven-day activity. A secondary pooled relative-window
 view removes the semester dimension only for visualization; it does not replace
-semester-stratified observations.
+semester-stratified observations. A mutually exclusive phase-bin view and
+final-seven-day phase shares provide a robustness check against interpreting
+overlapping rolling windows as independent observations.
 
 \textbf{Clean-Change Dynamics (M4).} This family separates clean-change magnitude,
 touching-commit intensity, artifact composition, and rolling clean churn. The
 consistent path-classification rule defines the included source and test paths;
 commit counts remain contextual rather than the primary Clean-Change Dynamics
-(M4) outcome.
+(M4) outcome. Clean source/test churn is also summarized in the same
+non-overlapping phase structure used for Repository Activity (M3), allowing the
+late-stage concentration pattern to be inspected under a clean-path policy.
 % Implementation provenance: code-churn-metrics-v2 and
 % is_measurement_code_path define the path-classification rule.
 
@@ -181,9 +193,10 @@ alignment, handoff, integration, blockers, and rework. It reports density,
 composition, corpus coverage, and an auditable chunk queue.
 Coordination-Language Evidence (M5) is not joined or correlated with
 team-semester Repository Activity (M3) or Clean-Change Dynamics (M4)
-observations.
+observations. Transcript-derived M5 evidence is available only for 2025.2;
+2026.1 is treated as unavailable coverage, not as zero marker evidence.
 
-\subsubsection{RQ3: How does the quality of upfront architectural artifacts (evaluated at baseline \texorpdfstring{$T_1$}{T1}) associate with late-stage destructive rework and independent, blind-scored project outcomes?}
+\subsubsection{RQ3: How does the observable scope and content evidence of upfront architectural artifacts at baseline \texorpdfstring{$T_1$}{T1} associate with late-stage clean-path rework and independent, blind-scored project outcomes?}
 
 \textbf{Upfront Architecture Evidence (M6).} Architectural Artifact Scope (M6a)
 reports T1 artifact presence and repository-visible scope. Approved Planning
@@ -199,7 +212,10 @@ to a composite planning-quality score.
 inactivity around evaluator checkpoints and in T3-relative rolling windows. It
 describes repository timing and coverage only; it does not identify planning
 omission and is not an independent predictor in Artifact--Rework--Outcome
-Associations (M9).
+Associations (M9). Operational-regularity summaries extend this timing view by
+combining observable temporal and author-activity dispersion in Git. They are
+descriptive process proxies, not validated measures of agile adherence,
+productivity, or process quality.
 
 \textbf{Clean-Path Rework (M8).} This family separates clean
 rework magnitude, the clean rework ratio, the late-stage rolling trajectory,
@@ -217,7 +233,11 @@ evaluator outcomes, restricting
 ratio analyses to the baseline-eligible stratum. Approved
 Planning Content Evidence (M6b) fields enter a separate non-composite
 association output for observed cases.
-Leave-one-out diagnostics expose influence. No Repository Inactivity (M7)
+Leave-one-out diagnostics expose influence. Technical-complexity profiles use
+evaluator technical-complexity scores and repository-structural heuristics as
+contextual variables for sensitivity summaries. They are not causal
+adjustments, but they help assess whether rework and concentration patterns may
+be partly explained by project difficulty. No Repository Inactivity (M7)
 predictor or floor-imputation analysis is used.
 
 Table~\ref{tab:metrics_summary} summarizes the nine metric families, their
