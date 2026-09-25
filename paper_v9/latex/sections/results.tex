@@ -202,6 +202,116 @@ for no-activity cases.
 % paper_v9/data/metrics/m3_author_activity_participation.csv and
 % m3_author_concentration.csv. No author identity is exposed in these outputs.
 
+The same final-stage pattern remains visible when the 91 days before $T_3$
+are re-expressed as mutually exclusive phases rather than overlapping rolling
+windows. In the score-trajectory stratification, the eight improved
+team-semesters assign a mean of $56.7\%$ of commits and $59.0\%$ of clean
+source/test churn to the final seven days, while the four stable
+team-semesters assign $24.6\%$ and $18.2\%$, respectively. The two declined
+team-semesters are too few for a stable contrast, but their final-seven-day
+shares are $32.9\%$ for commits and $45.0\%$ for clean churn. These
+phase-share summaries are descriptive checks against the overlap structure of
+the rolling M3 view, not independent causal tests. Figures~\ref{fig:rq2-phase-commit}
+and~\ref{fig:rq2-phase-clean} show the commit and clean-churn variants.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_phase_commit_share_by_score_trajectory.png}
+\caption{RQ2 non-overlapping phase shares for commits by evaluator-score
+trajectory. Each team-semester contributes phase shares that sum to 100\%;
+the final phase is the seven-day pre-$T_3$ window.}
+\label{fig:rq2-phase-commit}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_phase_clean_churn_share_by_score_trajectory.png}
+\caption{RQ2 non-overlapping phase shares for clean source/test churn by
+evaluator-score trajectory. The panel tests whether late concentration remains
+visible under mutually exclusive phases and the clean-path policy.}
+\label{fig:rq2-phase-clean}
+\end{figure*}
+% PROVENANCE: Non-overlapping phase shares are from
+% paper_v9/figures/rq2_phase_activity_share_summary.csv and
+% rq2_nonoverlapping_phase_activity.metadata.json.
+
+To address whether the final peak is simply ``student syndrome,'' we also
+compare final-seven-day concentration with evaluator-score change and
+repository-visible planning scope at team-semester grain ($n=14$). The median
+final-seven-day concentration cut is $43.7\%$ for commits and $35.0\%$ for
+clean churn; the descriptive score-change threshold is $0.125$ on the
+composite evaluator-score scale. Higher final concentration appears in both
+positive-delta and non-positive-delta cases. For example, among commit
+concentration quadrants, five team-semesters combine higher final
+concentration with positive score change, while two combine higher final
+concentration with no score gain. Planning-scope quadrants similarly separate
+late concentration from outcomes: lower-planning/higher-final-concentration
+cases have lower mean T3 score than lower-planning/lower-concentration cases
+in the commit view ($2.16$ versus $2.45$), but the same summaries are small-n
+descriptions and not an estimator of planning quality or procrastination.
+Figures~\ref{fig:rq2-score-delta-commit}--\ref{fig:rq2-planning-clean}
+make these contrasts explicit for commits and clean churn.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_score_delta_vs_final7_commit_concentration.png}
+\caption{Evaluator-score change versus final-seven-day commit concentration
+($n=14$ team-semesters). Color encodes repository-visible planning tier; the
+figure separates late activity with score gain from late activity without
+score gain.}
+\label{fig:rq2-score-delta-commit}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_score_delta_vs_final7_clean_churn_concentration.png}
+\caption{Evaluator-score change versus final-seven-day clean source/test
+churn concentration ($n=14$ team-semesters). Clean churn narrows the activity
+view to source/test paths retained by the clean-path policy.}
+\label{fig:rq2-score-delta-clean}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_planning_vs_final7_commit_concentration.png}
+\caption{Repository-visible planning scope versus final-seven-day commit
+concentration. Marker color reports T3 evaluator score and marker size reports
+absolute score change; quadrants are descriptive median splits.}
+\label{fig:rq2-planning-commit}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_planning_vs_final7_clean_churn_concentration.png}
+\caption{Repository-visible planning scope versus final-seven-day clean
+source/test churn concentration. Planning scope is structural and
+repository-visible, not a semantic planning-quality score.}
+\label{fig:rq2-planning-clean}
+\end{figure*}
+% PROVENANCE: Score-delta and planning concentration summaries are from
+% paper_v9/figures/rq2_score_delta_final7_quadrants.csv,
+% rq2_planning_concentration_quadrant_summary.csv, and their metadata files.
+
+Operational regularity provides a final repository-visible process check. The
+regularity index is descriptive, with larger values indicating activity more
+distributed across the observed Git timeline; it is not a validated agile
+process scale. Figure~\ref{fig:rq2-regularity-final} shows that both low and
+high final concentration appear across the observed regularity range, so the
+late-activity interpretation should remain bounded to Git evidence rather than
+treated as a direct measure of team process maturity.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_regularity_vs_final_concentration.png}
+\caption{Operational regularity versus final-seven-day concentration. The
+index summarizes repository-visible temporal and author regularity and should
+not be read as a validated agile-process or productivity metric.}
+\label{fig:rq2-regularity-final}
+\end{figure*}
+% PROVENANCE: Regularity data and the index contract are from
+% paper_v9/figures/rq2_operational_regularity_data.csv and
+% rq2_operational_regularity.metadata.json.
+
 Clean-Change Dynamics (M4) reproduces the temporal increase using a narrower
 clean-change definition.
 Pooled clean churn rises from $21{,}718$ lines across 7 observed team-semesters
@@ -239,6 +349,28 @@ retaining their distinct units and analytical grains. Figure~\ref{fig:rq2-m4-m5}
 shows the Clean-Change Dynamics (M4) and Coordination-Language Evidence (M5)
 checkpoint trajectories in separate panels.
 
+Because M5 is available only for 2025.2, Figure~\ref{fig:rq2-m5-triangulation}
+reports the triangulation as a coverage-aware 2025.2 panel rather than
+zero-filling the unavailable 2026.1 semester. Within the nine 2025.2
+team-semesters, median clean churn rises from zero at $T_1$ to $2{,}803$ at
+$T_2$ and $5{,}837$ at $T_3$, while the median composite evaluator score rises
+from $2.00$ to $2.22$ and $2.41$. The M5 density line remains global to the
+transcript corpus, so this panel is a contextual triangulation rather than a
+team-level M5 association.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq2_m5_2025_triangulation_panel.png}
+\caption{Coverage-aware M5 triangulation for 2025.2. M5 coordination-marker
+density is measured in the global transcript corpus, while clean churn and
+evaluator scores are summarized across the nine 2025.2 team-semesters; 2026.1
+is unavailable, not zero-filled.}
+\label{fig:rq2-m5-triangulation}
+\end{figure*}
+% PROVENANCE: The coverage-aware panel is from
+% paper_v9/figures/rq2_m5_2025_triangulation_summary.csv and
+% rq2_m5_2025_triangulation.metadata.json.
+
 \begin{table*}[t]
 \caption{RQ2 Temporal Summary with Explicit Units}
 \label{tab:rq2-summary}
@@ -274,6 +406,8 @@ Coordination-Language Evidence (M5) shows an increase in candidate
 coordination-language density across the
 observed 2025.2 transcript corpus. The three patterns are compatible with the
 RQ2 descriptive contrast within the observed evidence streams.
+
+\clearpage
 
 \subsection{RQ3: How does the quality of upfront architectural artifacts (evaluated at baseline \texorpdfstring{$T_1$}{T1}) associate with late-stage destructive rework and independent, blind-scored project outcomes?}
 
@@ -365,6 +499,42 @@ rework is a file-provenance proxy, not semantic defect validation.}
 % m8_rework_participation.csv, and m8_baseline_eligibility.csv. The clean-path
 % policy and proxy limitation are declared in m8_clean_rework.metadata.json.
 
+Technical complexity is a concurrent descriptive explanation for rework and
+late concentration. The median T3 technical-complexity evaluator score is
+$1.875$ in the 14 team-semesters. When associations are stratified by this
+median, planning scope retains a positive association with clean-rework
+magnitude in both strata ($\rho=0.45$ in the lower-complexity stratum and
+$\rho=0.26$ in the higher-complexity stratum), but several other directions
+change after stratification. For example, final-seven-day clean-churn
+concentration versus clean-rework magnitude changes from $\rho=-0.03$ in the
+unstratified summary to $\rho=-0.47$ in lower-complexity cases and
+$\rho=0.54$ in higher-complexity cases. These splits are descriptive small-n
+sensitivity checks, not regression adjustment. Figures~\ref{fig:rq3-complexity-rework}
+and~\ref{fig:rq3-planning-rework-complexity} visualize the complexity
+profiles used for this alternative explanation.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq3_technical_complexity_vs_rework.png}
+\caption{T3 technical complexity versus clean rework. Technical complexity is
+an evaluator dimension and clean rework is a clean-path provenance proxy; the
+figure is descriptive and does not adjust causally for complexity.}
+\label{fig:rq3-complexity-rework}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq3_planning_rework_complexity_overlay.png}
+\caption{Planning scope, clean rework, and T3 technical complexity in the RQ3
+team-semester panel. The overlay contextualizes rework against technical
+complexity rather than attributing it solely to planning scope.}
+\label{fig:rq3-planning-rework-complexity}
+\end{figure*}
+% PROVENANCE: Complexity profiles and stratified summaries are from
+% paper_v9/figures/rq3_complexity_profile_data.csv,
+% rq3_complexity_confounding_summary.csv, and
+% rq3_complexity_profile.metadata.json.
+
 The primary Artifact--Rework--Outcome Associations (M9) are based on only 14
 team-semesters, which sharply limits statistical power and the stability of
 correlation estimates. We therefore use the coefficients and their p-values
@@ -452,6 +622,32 @@ descriptive diagnostics, not confidence intervals.}
 % PROVENANCE: M6b associations and leave-one-out diagnostics are from
 % paper_v9/data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv and
 % m9_leave_one_out_intervals.csv. M7 is explicitly excluded from M9.
+
+Figure~\ref{fig:rq3-influence-map} extends the leave-one-out view beyond the
+primary M9 planning-scope rows to the registered RQ2/RQ3 robustness
+relationships. Direction is preserved in the full leave-one-out set for
+several relationships, including planning scope versus final-seven-day
+concentration, final-seven-day concentration versus T3 score, regularity
+index versus score delta, and technical complexity versus clean-rework churn.
+The baseline-eligible technical-complexity--rework-ratio relation is less
+stable, with sign preservation in 10 of 14 leave-one-out rows. These values
+are robustness diagnostics for a 14 team-semester panel, not confidence
+intervals or confirmatory significance tests.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/rq3_influence_map.png}
+\caption{Influence map for registered RQ2/RQ3 relationships. Cells summarize
+leave-one-out Spearman changes by removed team-semester; the map is a
+small-sample sensitivity diagnostic rather than a confirmatory test.}
+\label{fig:rq3-influence-map}
+\end{figure*}
+% PROVENANCE: Influence-map values and relationship definitions are from
+% paper_v9/figures/rq3_influence_map_data.csv,
+% rq3_influence_heatmap_matrix.csv, rq3_influence_relationship_contract.csv,
+% and rq3_influence_map.metadata.json.
+
+\clearpage
 
 Overall, the RQ3 evidence provides a descriptive comparison of observable T1
 artifact scope, late clean-path changes, and independent evaluator outcomes,

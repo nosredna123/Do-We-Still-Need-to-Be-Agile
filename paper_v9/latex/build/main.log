@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  24 SEP 2026 21:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -396,28 +396,27 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count297
 \l__pdf_internal_box=\box57
 )
-(/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.aux)
+(build/main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -442,134 +441,180 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 13.
+Package hyperref Info: Link coloring OFF on input line 14.
 
-(/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.out)
-(/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.out)
+(build/main.out) (build/main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
+ (./sections/abstract.tex)
+(./sections/introduction.tex) (./sections/background_related_work.tex [1{/var/l
+ib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/font
+s/enc/dvips/base/8r.enc}
 
 
-LaTeX Warning: No \author given.
-
-
-LaTeX Warning: No \author given.
-
-
-LaTeX Warning: No \author given.
-
-(./sections/abstract.tex) (./sections/introduction.tex)
-(./sections/background_related_work.tex [1{/var/lib/texmf/fonts/map/pdftex/updm
-ap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
-
-
-])
-(./sections/methodology.tex [2]
-Underfull \vbox (badness 3701) has occurred while \output is active []
-
- [3]
-[4]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 177.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 177.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 177.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5])
+]) (./sections/methodology.tex [2] [3] [4] [5])
 (./sections/results.tex
-<../figures/rq1_m1_perception_with_sd.png, id=200, 1806.75pt x 1043.9pt>
-File: ../figures/rq1_m1_perception_with_sd.png Graphic file (type png)
-<use ../figures/rq1_m1_perception_with_sd.png>
-Package pdftex.def Info: ../figures/rq1_m1_perception_with_sd.png  used on inpu
-t line 45.
+<figures/rq1_m1_perception_with_sd.png, id=206, 1806.75pt x 1043.9pt>
+File: figures/rq1_m1_perception_with_sd.png Graphic file (type png)
+<use figures/rq1_m1_perception_with_sd.png>
+Package pdftex.def Info: figures/rq1_m1_perception_with_sd.png  used on input l
+ine 47.
 (pdftex.def)             Requested size: 516.0pt x 298.1358pt.
  [6]
-<../figures/rq1_m2_role_perception_heatmap.png, id=212, 1806.75pt x 863.225pt>
-File: ../figures/rq1_m2_role_perception_heatmap.png Graphic file (type png)
-<use ../figures/rq1_m2_role_perception_heatmap.png>
-Package pdftex.def Info: ../figures/rq1_m2_role_perception_heatmap.png  used on
- input line 127.
+<figures/rq1_m2_role_perception_heatmap.png, id=217, 1806.75pt x 863.225pt>
+File: figures/rq1_m2_role_perception_heatmap.png Graphic file (type png)
+<use figures/rq1_m2_role_perception_heatmap.png>
+Package pdftex.def Info: figures/rq1_m2_role_perception_heatmap.png  used on in
+put line 130.
 (pdftex.def)             Requested size: 516.0pt x 246.53539pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [7 <../figures/rq1_m1_perception_with_sd.png>]
-<../figures/rq2_m3_activity_pooled.png, id=225, 2409.0pt x 1124.2pt>
-File: ../figures/rq2_m3_activity_pooled.png Graphic file (type png)
-<use ../figures/rq2_m3_activity_pooled.png>
-Package pdftex.def Info: ../figures/rq2_m3_activity_pooled.png  used on input l
-ine 178.
+<figures/rq2_m3_activity_pooled.png, id=230, 2409.0pt x 1124.2pt>
+File: figures/rq2_m3_activity_pooled.png Graphic file (type png)
+<use figures/rq2_m3_activity_pooled.png>
+Package pdftex.def Info: figures/rq2_m3_activity_pooled.png  used on input line
+ 182.
 (pdftex.def)             Requested size: 516.0pt x 240.78914pt.
-<../figures/rq2_m4_m5_checkpoint_panels.png, id=228, 2409.0pt x 1003.75pt>
-File: ../figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
-<use ../figures/rq2_m4_m5_checkpoint_panels.png>
-Package pdftex.def Info: ../figures/rq2_m4_m5_checkpoint_panels.png  used on in
-put line 256.
-(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
+<figures/rq2_phase_commit_share_by_score_trajectory.png, id=233, 2208.25pt x 13
+24.95pt>
+File: figures/rq2_phase_commit_share_by_score_trajectory.png Graphic file (type
+ png)
+<use figures/rq2_phase_commit_share_by_score_trajectory.png>
+Package pdftex.def Info: figures/rq2_phase_commit_share_by_score_trajectory.png
+  used on input line 219.
+(pdftex.def)             Requested size: 516.0pt x 309.6044pt.
+<figures/rq2_phase_clean_churn_share_by_score_trajectory.png, id=234, 2208.25pt
+ x 1324.95pt>
+File: figures/rq2_phase_clean_churn_share_by_score_trajectory.png Graphic file 
+(type png)
+<use figures/rq2_phase_clean_churn_share_by_score_trajectory.png>
+Package pdftex.def Info: figures/rq2_phase_clean_churn_share_by_score_trajector
+y.png  used on input line 228.
+(pdftex.def)             Requested size: 516.0pt x 309.6044pt.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 268.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 268.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 268.
-
-<../figures/rq3_architectural_artifact_presence.png, id=230, 2409.0pt x 1003.75
-pt>
-File: ../figures/rq3_architectural_artifact_presence.png Graphic file (type png
-)
-<use ../figures/rq3_architectural_artifact_presence.png>
-Package pdftex.def Info: ../figures/rq3_architectural_artifact_presence.png  us
-ed on input line 291.
-(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
 [8 <../figures/rq1_m2_role_perception_heatmap.png>]
-<../figures/rq3_architecture_rework_profile.png, id=241, 2409.0pt x 1124.2pt>
-File: ../figures/rq3_architecture_rework_profile.png Graphic file (type png)
-<use ../figures/rq3_architecture_rework_profile.png>
-Package pdftex.def Info: ../figures/rq3_architecture_rework_profile.png  used o
-n input line 337.
+<figures/rq2_score_delta_vs_final7_commit_concentration.png, id=246, 2208.25pt 
+x 1365.1pt>
+File: figures/rq2_score_delta_vs_final7_commit_concentration.png Graphic file (
+type png)
+<use figures/rq2_score_delta_vs_final7_commit_concentration.png>
+Package pdftex.def Info: figures/rq2_score_delta_vs_final7_commit_concentration
+.png  used on input line 257.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_score_delta_vs_final7_clean_churn_concentration.png, id=247, 2208.
+25pt x 1365.1pt>
+File: figures/rq2_score_delta_vs_final7_clean_churn_concentration.png Graphic f
+ile (type png)
+<use figures/rq2_score_delta_vs_final7_clean_churn_concentration.png>
+Package pdftex.def Info: figures/rq2_score_delta_vs_final7_clean_churn_concentr
+ation.png  used on input line 267.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_planning_vs_final7_commit_concentration.png, id=248, 2208.25pt x 1
+365.1pt>
+File: figures/rq2_planning_vs_final7_commit_concentration.png Graphic file (typ
+e png)
+<use figures/rq2_planning_vs_final7_commit_concentration.png>
+Package pdftex.def Info: figures/rq2_planning_vs_final7_commit_concentration.pn
+g  used on input line 276.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_planning_vs_final7_clean_churn_concentration.png, id=249, 2208.25p
+t x 1365.1pt>
+File: figures/rq2_planning_vs_final7_clean_churn_concentration.png Graphic file
+ (type png)
+<use figures/rq2_planning_vs_final7_clean_churn_concentration.png>
+Package pdftex.def Info: figures/rq2_planning_vs_final7_clean_churn_concentrati
+on.png  used on input line 285.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_regularity_vs_final_concentration.png, id=251, 2409.0pt x 1365.1pt
+>
+File: figures/rq2_regularity_vs_final_concentration.png Graphic file (type png)
+
+<use figures/rq2_regularity_vs_final_concentration.png>
+Package pdftex.def Info: figures/rq2_regularity_vs_final_concentration.png  use
+d on input line 305.
+(pdftex.def)             Requested size: 516.0pt x 292.38681pt.
+<figures/rq2_m5_2025_triangulation_panel.png, id=255, 2409.0pt x 1646.15pt>
+File: figures/rq2_m5_2025_triangulation_panel.png Graphic file (type png)
+<use figures/rq2_m5_2025_triangulation_panel.png>
+Package pdftex.def Info: figures/rq2_m5_2025_triangulation_panel.png  used on i
+nput line 363.
+(pdftex.def)             Requested size: 516.0pt x 352.58409pt.
+<figures/rq2_m4_m5_checkpoint_panels.png, id=256, 2409.0pt x 1003.75pt>
+File: figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
+<use figures/rq2_m4_m5_checkpoint_panels.png>
+Package pdftex.def Info: figures/rq2_m4_m5_checkpoint_panels.png  used on input
+ line 396.
+(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
+ [9 <../figures/rq2_m3_activity_pooled.png>] [10 <../figures/rq2_phase_commit_s
+hare_by_score_trajectory.png>] [11 <../figures/rq2_phase_clean_churn_share_by_s
+core_trajectory.png>]
+[12 <../figures/rq2_score_delta_vs_final7_commit_concentration.png>] [13 <../fi
+gures/rq2_score_delta_vs_final7_clean_churn_concentration.png>] [14 <../figures
+/rq2_planning_vs_final7_commit_concentration.png>] [15 <../figures/rq2_planning
+_vs_final7_clean_churn_concentration.png>] [16 <../figures/rq2_regularity_vs_fi
+nal_concentration.png>] [17 <../figures/rq2_m5_2025_triangulation_panel.png> <.
+./figures/rq2_m4_m5_checkpoint_panels.png>]
+<figures/rq3_architectural_artifact_presence.png, id=313, 2409.0pt x 1003.75pt>
+
+File: figures/rq3_architectural_artifact_presence.png Graphic file (type png)
+<use figures/rq3_architectural_artifact_presence.png>
+Package pdftex.def Info: figures/rq3_architectural_artifact_presence.png  used 
+on input line 443.
+(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
+<figures/rq3_architecture_rework_profile.png, id=315, 2409.0pt x 1124.2pt>
+File: figures/rq3_architecture_rework_profile.png Graphic file (type png)
+<use figures/rq3_architecture_rework_profile.png>
+Package pdftex.def Info: figures/rq3_architecture_rework_profile.png  used on i
+nput line 491.
 (pdftex.def)             Requested size: 516.0pt x 240.78914pt.
- [9 <../figures/rq2_m3_activity_pooled.png>]
-Underfull \vbox (badness 4378) has occurred while \output is active []
+ [18
 
-<../figures/rq3_association_sensitivity.png, id=251, 2409.0pt x 1043.9pt>
-File: ../figures/rq3_association_sensitivity.png Graphic file (type png)
-<use ../figures/rq3_association_sensitivity.png>
-Package pdftex.def Info: ../figures/rq3_association_sensitivity.png  used on in
-put line 415.
-(pdftex.def)             Requested size: 516.0pt x 223.5899pt.
+]
+<figures/rq3_technical_complexity_vs_rework.png, id=324, 2208.25pt x 1365.1pt>
+File: figures/rq3_technical_complexity_vs_rework.png Graphic file (type png)
+<use figures/rq3_technical_complexity_vs_rework.png>
+Package pdftex.def Info: figures/rq3_technical_complexity_vs_rework.png  used o
+n input line 518.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq3_planning_rework_complexity_overlay.png, id=325, 2208.25pt x 1365.1
+pt>
+File: figures/rq3_planning_rework_complexity_overlay.png Graphic file (type png
 )
-(./sections/discussion.tex
-Underfull \vbox (badness 4378) has occurred while \output is active []
+<use figures/rq3_planning_rework_complexity_overlay.png>
+Package pdftex.def Info: figures/rq3_planning_rework_complexity_overlay.png  us
+ed on input line 527.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+ [19 <../figures/rq3_architectural_artifact_presence.png> <../figures/rq3_archi
+tecture_rework_profile.png>]
+<figures/rq3_association_sensitivity.png, id=338, 2409.0pt x 1043.9pt>
+File: figures/rq3_association_sensitivity.png Graphic file (type png)
+<use figures/rq3_association_sensitivity.png>
+Package pdftex.def Info: figures/rq3_association_sensitivity.png  used on input
+ line 616.
+(pdftex.def)             Requested size: 516.0pt x 223.5899pt.
+<figures/rq3_influence_map.png, id=340, 2910.875pt x 1726.45pt>
+File: figures/rq3_influence_map.png Graphic file (type png)
+<use figures/rq3_influence_map.png>
+Package pdftex.def Info: figures/rq3_influence_map.png  used on input line 639.
 
- [10 <../figures/rq2_m4_m5_checkpoint_panels.png> <../figures/rq3_architectural
-_artifact_presence.png>] [11 <../figures/rq3_architecture_rework_profile.png>] 
-[12 <../figures/rq3_association_sensitivity.png>]) (./sections/threats_to_valid
-ity.tex
-Underfull \hbox (badness 1406) in paragraph at lines 2--13
-\OT1/ptm/m/n/10 im-per-fect prox-ies. M1 and M2 are self-reported sur-vey
- []
+(pdftex.def)             Requested size: 516.0pt x 306.0321pt.
 
-) (./sections/conclusion.tex)
-(/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.bbl [13])
+[20 <../figures/rq3_technical_complexity_vs_rework.png>] [21 <../figures/rq3_pl
+anning_rework_complexity_overlay.png>] [22 <../figures/rq3_association_sensitiv
+ity.png> <../figures/rq3_influence_map.png>]) (./sections/discussion.tex
+[23
+
+]) (./sections/threats_to_validity.tex [24]) (./sections/conclusion.tex
+[25]
+
+LaTeX Warning: Citation `prism_replication_package' on page 26 undefined on inp
+ut line 32.
+
+
+LaTeX Warning: Citation `prism_explorer' on page 26 undefined on input line 45.
+
+
+) (build/main.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -581,24 +626,26 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[14]
-(/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.aux)
+[26] (build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1CB0EC5F3BD46580FCDD2A13367A6400;11620.
+(rerunfilecheck)             Checksum: 71630681C650BAC5897C1AA5E85C2BCA;11752.
  ) 
 Here is how much of TeX's memory you used:
- 10458 strings out of 476182
- 168376 string characters out of 5795595
- 1957975 words of memory out of 5000000
- 32221 multiletter control sequences out of 15000+600000
- 598559 words of font info for 105 fonts, out of 8000000 for 9000
+ 10574 strings out of 476182
+ 172380 string characters out of 5795595
+ 1961975 words of memory out of 5000000
+ 32312 multiletter control sequences out of 15000+600000
+ 599637 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1089b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,14n,79p,1260b,570s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
@@ -615,11 +662,10 @@ texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (14 pages, 798843 bytes).
+Output written on build/main.pdf (26 pages, 2161550 bytes).
 PDF statistics:
- 403 PDF objects out of 1000 (max. 8388607)
- 335 compressed objects within 4 object streams
- 90 named destinations out of 1000 (max. 500000)
- 276 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 507 PDF objects out of 1000 (max. 8388607)
+ 404 compressed objects within 5 object streams
+ 114 named destinations out of 1000 (max. 500000)
+ 339 words of extra memory for PDF output out of 10000 (max. 10000000)
 

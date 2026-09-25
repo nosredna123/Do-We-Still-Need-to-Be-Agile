@@ -1,10 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 11:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:04
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex
-(/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex
+**main.tex
+(./main.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
 (/usr/share/texlive/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
@@ -18,7 +17,8 @@ Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
 \@IEEEtrantmpcountB=\count188
 \@IEEEtrantmpcountC=\count189
 \@IEEEtrantmptoksA=\toks17
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 503.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5
+03.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
@@ -33,42 +33,52 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
 \IEEEquantizedlength=\dimen147
 \IEEEquantizedlengthdiff=\dimen148
 \IEEEquantizedtextheightdiff=\dimen149
@@ -107,7 +117,8 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
 LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 332.
 Package: cite 2015/02/27  v 5.5
-) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen164
 \lightrulewidth=\dimen165
@@ -126,9 +137,11 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count270
 \@lastruleclass=\count271
 \@thisrulewidth=\dimen176
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 2023/07/08 v2.11c `tabularx' package (DPC)
- (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \col@sep=\dimen177
 \ar@mcellbox=\box53
@@ -145,44 +158,56 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \TX@delta=\dimen183
 \TX@cols=\count272
 \TX@ftn=\toks19
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks20
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen184
 \Gin@req@width=\dimen185
-) (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2023/05/13 v2.17o AMS math features
 \@mathmargin=\skip53
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
- (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks21
 \ex@=\dimen186
-)) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen187
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count273
@@ -232,56 +257,75 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \mathdisplay@stack=\toks25
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
- (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
-) (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-)) (/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
- (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
 \c@section@level=\count285
-) (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count286
 )
 \@linkdim=\dimen195
 \Hy@linkcounter=\count287
 \Hy@pagecounter=\count288
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-01-20 v7.01h Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count289
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -296,10 +340,13 @@ Package hyperref Info: Bookmarks ON on input line 4446.
 \c@Hy@tempcnt=\count290
 LaTeX Info: Redefining \url on input line 4784.
 \XeTeXLinkMargin=\dimen196
- (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
 ))
 \Fld@menulength=\count291
 \Field@Width=\dimen197
@@ -311,7 +358,8 @@ Package hyperref Info: backreferencing OFF on input line 6078.
 Package hyperref Info: Link coloring OFF on input line 6083.
 Package hyperref Info: Link coloring with OCG OFF on input line 6088.
 Package hyperref Info: PDF/A mode OFF on input line 6093.
- (/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
@@ -320,27 +368,35 @@ package with kernel methods
 \c@Hfootnote=\count294
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2024-01-20 v7.01h Hyperref driver for pdfTeX
- (/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
 with kernel methods
 )
 \Fld@listcount=\count295
 \c@bookmark@seq@number=\count296
- (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
 )
 \Hy@SectionHShift=\skip56
-) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count297
 \l__pdf_internal_box=\box57
-) (./main.aux)
+)
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -378,259 +434,178 @@ LaTeX Font Info:    ... okay on input line 14.
 \everyMPtoPDFconversion=\toks27
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
 Package hyperref Info: Link coloring OFF on input line 14.
+
+(./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
- (./sections/abstract.tex) (./sections/introduction.tex
+ (./sections/abstract.tex)
+(./sections/introduction.tex) (./sections/background_related_work.tex [1{/var/l
+ib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/font
+s/enc/dvips/base/8r.enc}
 
-LaTeX Warning: Citation `github2025spec' on page 1 undefined on input line 51.
 
+]) (./sections/methodology.tex [2] [3] [4] [5])
+(./sections/results.tex
+<figures/rq1_m1_perception_with_sd.png, id=206, 1806.75pt x 1043.9pt>
+File: figures/rq1_m1_perception_with_sd.png Graphic file (type png)
+<use figures/rq1_m1_perception_with_sd.png>
+Package pdftex.def Info: figures/rq1_m1_perception_with_sd.png  used on input l
+ine 47.
+(pdftex.def)             Requested size: 516.0pt x 298.1358pt.
+ [6]
+<figures/rq1_m2_role_perception_heatmap.png, id=217, 1806.75pt x 863.225pt>
+File: figures/rq1_m2_role_perception_heatmap.png Graphic file (type png)
+<use figures/rq1_m2_role_perception_heatmap.png>
+Package pdftex.def Info: figures/rq1_m2_role_perception_heatmap.png  used on in
+put line 130.
+(pdftex.def)             Requested size: 516.0pt x 246.53539pt.
+ [7 <../figures/rq1_m1_perception_with_sd.png>]
+<figures/rq2_m3_activity_pooled.png, id=230, 2409.0pt x 1124.2pt>
+File: figures/rq2_m3_activity_pooled.png Graphic file (type png)
+<use figures/rq2_m3_activity_pooled.png>
+Package pdftex.def Info: figures/rq2_m3_activity_pooled.png  used on input line
+ 182.
+(pdftex.def)             Requested size: 516.0pt x 240.78914pt.
+<figures/rq2_phase_commit_share_by_score_trajectory.png, id=233, 2208.25pt x 13
+24.95pt>
+File: figures/rq2_phase_commit_share_by_score_trajectory.png Graphic file (type
+ png)
+<use figures/rq2_phase_commit_share_by_score_trajectory.png>
+Package pdftex.def Info: figures/rq2_phase_commit_share_by_score_trajectory.png
+  used on input line 219.
+(pdftex.def)             Requested size: 516.0pt x 309.6044pt.
+<figures/rq2_phase_clean_churn_share_by_score_trajectory.png, id=234, 2208.25pt
+ x 1324.95pt>
+File: figures/rq2_phase_clean_churn_share_by_score_trajectory.png Graphic file 
+(type png)
+<use figures/rq2_phase_clean_churn_share_by_score_trajectory.png>
+Package pdftex.def Info: figures/rq2_phase_clean_churn_share_by_score_trajector
+y.png  used on input line 228.
+(pdftex.def)             Requested size: 516.0pt x 309.6044pt.
 
-LaTeX Warning: Citation `thoughtworks202Xspec' on page 1 undefined on input line 51.
+[8 <../figures/rq1_m2_role_perception_heatmap.png>]
+<figures/rq2_score_delta_vs_final7_commit_concentration.png, id=246, 2208.25pt 
+x 1365.1pt>
+File: figures/rq2_score_delta_vs_final7_commit_concentration.png Graphic file (
+type png)
+<use figures/rq2_score_delta_vs_final7_commit_concentration.png>
+Package pdftex.def Info: figures/rq2_score_delta_vs_final7_commit_concentration
+.png  used on input line 257.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_score_delta_vs_final7_clean_churn_concentration.png, id=247, 2208.
+25pt x 1365.1pt>
+File: figures/rq2_score_delta_vs_final7_clean_churn_concentration.png Graphic f
+ile (type png)
+<use figures/rq2_score_delta_vs_final7_clean_churn_concentration.png>
+Package pdftex.def Info: figures/rq2_score_delta_vs_final7_clean_churn_concentr
+ation.png  used on input line 267.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_planning_vs_final7_commit_concentration.png, id=248, 2208.25pt x 1
+365.1pt>
+File: figures/rq2_planning_vs_final7_commit_concentration.png Graphic file (typ
+e png)
+<use figures/rq2_planning_vs_final7_commit_concentration.png>
+Package pdftex.def Info: figures/rq2_planning_vs_final7_commit_concentration.pn
+g  used on input line 276.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_planning_vs_final7_clean_churn_concentration.png, id=249, 2208.25p
+t x 1365.1pt>
+File: figures/rq2_planning_vs_final7_clean_churn_concentration.png Graphic file
+ (type png)
+<use figures/rq2_planning_vs_final7_clean_churn_concentration.png>
+Package pdftex.def Info: figures/rq2_planning_vs_final7_clean_churn_concentrati
+on.png  used on input line 285.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq2_regularity_vs_final_concentration.png, id=251, 2409.0pt x 1365.1pt
+>
+File: figures/rq2_regularity_vs_final_concentration.png Graphic file (type png)
 
-) (./sections/background_related_work.tex [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
+<use figures/rq2_regularity_vs_final_concentration.png>
+Package pdftex.def Info: figures/rq2_regularity_vs_final_concentration.png  use
+d on input line 305.
+(pdftex.def)             Requested size: 516.0pt x 292.38681pt.
+<figures/rq2_m5_2025_triangulation_panel.png, id=255, 2409.0pt x 1646.15pt>
+File: figures/rq2_m5_2025_triangulation_panel.png Graphic file (type png)
+<use figures/rq2_m5_2025_triangulation_panel.png>
+Package pdftex.def Info: figures/rq2_m5_2025_triangulation_panel.png  used on i
+nput line 363.
+(pdftex.def)             Requested size: 516.0pt x 352.58409pt.
+<figures/rq2_m4_m5_checkpoint_panels.png, id=256, 2409.0pt x 1003.75pt>
+File: figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
+<use figures/rq2_m4_m5_checkpoint_panels.png>
+Package pdftex.def Info: figures/rq2_m4_m5_checkpoint_panels.png  used on input
+ line 396.
+(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
+ [9 <../figures/rq2_m3_activity_pooled.png>] [10 <../figures/rq2_phase_commit_s
+hare_by_score_trajectory.png>] [11 <../figures/rq2_phase_clean_churn_share_by_s
+core_trajectory.png>]
+[12 <../figures/rq2_score_delta_vs_final7_commit_concentration.png>] [13 <../fi
+gures/rq2_score_delta_vs_final7_clean_churn_concentration.png>] [14 <../figures
+/rq2_planning_vs_final7_commit_concentration.png>] [15 <../figures/rq2_planning
+_vs_final7_clean_churn_concentration.png>] [16 <../figures/rq2_regularity_vs_fi
+nal_concentration.png>] [17 <../figures/rq2_m5_2025_triangulation_panel.png> <.
+./figures/rq2_m4_m5_checkpoint_panels.png>]
+<figures/rq3_architectural_artifact_presence.png, id=313, 2409.0pt x 1003.75pt>
 
+File: figures/rq3_architectural_artifact_presence.png Graphic file (type png)
+<use figures/rq3_architectural_artifact_presence.png>
+Package pdftex.def Info: figures/rq3_architectural_artifact_presence.png  used 
+on input line 443.
+(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
+<figures/rq3_architecture_rework_profile.png, id=315, 2409.0pt x 1124.2pt>
+File: figures/rq3_architecture_rework_profile.png Graphic file (type png)
+<use figures/rq3_architecture_rework_profile.png>
+Package pdftex.def Info: figures/rq3_architecture_rework_profile.png  used on i
+nput line 491.
+(pdftex.def)             Requested size: 516.0pt x 240.78914pt.
+ [18
 
 ]
-
-LaTeX Warning: Citation `agile_manifesto_2001' on page 2 undefined on input line 6.
-
-
-LaTeX Warning: Citation `brooks_1975_mythical_man_month' on page 2 undefined on input line 10.
-
-
-LaTeX Warning: Citation `demarco_lister_1987_peopleware' on page 2 undefined on input line 10.
-
-
-LaTeX Warning: Citation `carleton2024generative' on page 2 undefined on input line 19.
-
-
-LaTeX Warning: Citation `banh2025copiloting' on page 2 undefined on input line 19.
-
-
-LaTeX Warning: Citation `russo2024navigating' on page 2 undefined on input line 19.
-
-
-LaTeX Warning: Citation `barke2023grounded' on page 2 undefined on input line 22.
-
-
-LaTeX Warning: Citation `yabaku2024usage' on page 2 undefined on input line 27.
-
-
-LaTeX Warning: Citation `verdecchia2018architectural' on page 2 undefined on input line 35.
-
-
-LaTeX Warning: Citation `nayebi2019longitudinal' on page 2 undefined on input line 35.
-
-
-LaTeX Warning: Citation `github2025spec' on page 2 undefined on input line 43.
-
-
-LaTeX Warning: Citation `thoughtworks202Xspec' on page 2 undefined on input line 43.
-
-
-LaTeX Warning: Citation `cunningham_1992_technical_debt' on page 2 undefined on input line 53.
-
-
-LaTeX Warning: Citation `fowler2009technicaldebt' on page 2 undefined on input line 53.
-
-
-LaTeX Warning: Citation `kruchten2012technicaldebt' on page 2 undefined on input line 53.
-
-) (./sections/methodology.tex
-
-LaTeX Warning: Citation `lewis2020retrieval' on page 2 undefined on input line 15.
-
-
-LaTeX Warning: Reference `tab:projects' on page 2 undefined on input line 15.
-
-[2]
-
-LaTeX Warning: Reference `tab:projects' on page 3 undefined on input line 31.
-
-
-LaTeX Warning: Reference `tab:survey_instrument' on page 3 undefined on input line 70.
-
-[3]
-
-LaTeX Warning: Citation `spearman1904proof' on page 4 undefined on input line 111.
-
-
-LaTeX Warning: Reference `sec:method' on page 4 undefined on input line 125.
-
-[4]
-
-LaTeX Warning: Reference `tab:metrics_summary' on page 5 undefined on input line 223.
-
-[5]
-
-LaTeX Warning: Reference `tab:llm_prompt_catalog' on page 6 undefined on input line 262.
-
-) (./sections/results.tex
-
-LaTeX Warning: Reference `fig:rq1-m1' on page 6 undefined on input line 41.
-
-
-LaTeX Warning: Reference `tab:rq1-m1-endpoints' on page 6 undefined on input line 42.
-
-
-LaTeX Warning: File `figures/rq1_m1_perception_with_sd.png' not found on input line 47.
-
-
-./sections/results.tex:47: Package pdftex.def Error: File `figures/rq1_m1_perception_with_sd.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.47 ...th]{figures/rq1_m1_perception_with_sd.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 47.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [6]
-
-LaTeX Warning: Reference `fig:rq1-m2' on page 7 undefined on input line 124.
-
-
-LaTeX Warning: File `figures/rq1_m2_role_perception_heatmap.png' not found on input line 130.
-
-
-./sections/results.tex:130: Package pdftex.def Error: File `figures/rq1_m2_role_perception_heatmap.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.130 ...gures/rq1_m2_role_perception_heatmap.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `fig:rq2-m3' on page 7 undefined on input line 177.
-
-
-LaTeX Warning: File `figures/rq2_m3_activity_pooled.png' not found on input line 182.
-
-
-./sections/results.tex:182: Package pdftex.def Error: File `figures/rq2_m3_activity_pooled.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.182 ...idth]{figures/rq2_m3_activity_pooled.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[7]
-
-LaTeX Warning: Reference `tab:rq2-summary' on page 8 undefined on input line 237.
-
-
-LaTeX Warning: Reference `fig:rq2-m4-m5' on page 8 undefined on input line 238.
-
-
-LaTeX Warning: File `figures/rq2_m4_m5_checkpoint_panels.png' not found on input line 264.
-
-
-./sections/results.tex:264: Package pdftex.def Error: File `figures/rq2_m4_m5_checkpoint_panels.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.264 ...{figures/rq2_m4_m5_checkpoint_panels.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `fig:rq3-presence' on page 8 undefined on input line 305.
-
-
-LaTeX Warning: File `figures/rq3_architectural_artifact_presence.png' not found on input line 309.
-
-
-./sections/results.tex:309: Package pdftex.def Error: File `figures/rq3_architectural_artifact_presence.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.309 .../rq3_architectural_artifact_presence.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `fig:rq3-profile' on page 8 undefined on input line 352.
-
-
-LaTeX Warning: File `figures/rq3_architecture_rework_profile.png' not found on input line 357.
-
-
-./sections/results.tex:357: Package pdftex.def Error: File `figures/rq3_architecture_rework_profile.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.357 ...ures/rq3_architecture_rework_profile.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `tab:rq3-associations' on page 8 undefined on input line 412.
-
-
-LaTeX Warning: Reference `fig:rq3-sensitivity' on page 8 undefined on input line 414.
-
-[8]
-
-LaTeX Warning: File `figures/rq3_association_sensitivity.png' not found on input line 446.
-
-
-./sections/results.tex:446: Package pdftex.def Error: File `figures/rq3_association_sensitivity.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.446 ...{figures/rq3_association_sensitivity.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-) (./sections/discussion.tex [9]
-
-LaTeX Warning: Citation `github2025spec' on page 10 undefined on input line 91.
-
-
-LaTeX Warning: Citation `thoughtworks202Xspec' on page 10 undefined on input line 91.
-
-[10]) (./sections/threats_to_validity.tex) (./sections/conclusion.tex [11]
-
-LaTeX Warning: Citation `prism_replication_package' on page 12 undefined on input line 32.
-
-
-LaTeX Warning: Reference `sec:data-sources' on page 12 undefined on input line 36.
-
-
-LaTeX Warning: Citation `prism_explorer' on page 12 undefined on input line 45.
-
-) (./main.bbl [12])
+<figures/rq3_technical_complexity_vs_rework.png, id=324, 2208.25pt x 1365.1pt>
+File: figures/rq3_technical_complexity_vs_rework.png Graphic file (type png)
+<use figures/rq3_technical_complexity_vs_rework.png>
+Package pdftex.def Info: figures/rq3_technical_complexity_vs_rework.png  used o
+n input line 518.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+<figures/rq3_planning_rework_complexity_overlay.png, id=325, 2208.25pt x 1365.1
+pt>
+File: figures/rq3_planning_rework_complexity_overlay.png Graphic file (type png
+)
+<use figures/rq3_planning_rework_complexity_overlay.png>
+Package pdftex.def Info: figures/rq3_planning_rework_complexity_overlay.png  us
+ed on input line 527.
+(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
+ [19 <../figures/rq3_architectural_artifact_presence.png> <../figures/rq3_archi
+tecture_rework_profile.png>]
+<figures/rq3_association_sensitivity.png, id=338, 2409.0pt x 1043.9pt>
+File: figures/rq3_association_sensitivity.png Graphic file (type png)
+<use figures/rq3_association_sensitivity.png>
+Package pdftex.def Info: figures/rq3_association_sensitivity.png  used on input
+ line 616.
+(pdftex.def)             Requested size: 516.0pt x 223.5899pt.
+<figures/rq3_influence_map.png, id=340, 2910.875pt x 1726.45pt>
+File: figures/rq3_influence_map.png Graphic file (type png)
+<use figures/rq3_influence_map.png>
+Package pdftex.def Info: figures/rq3_influence_map.png  used on input line 639.
+
+(pdftex.def)             Requested size: 516.0pt x 306.0321pt.
+
+[20 <../figures/rq3_technical_complexity_vs_rework.png>] [21 <../figures/rq3_pl
+anning_rework_complexity_overlay.png>] [22 <../figures/rq3_association_sensitiv
+ity.png> <../figures/rq3_influence_map.png>]) (./sections/discussion.tex
+[23
+
+]) (./sections/threats_to_validity.tex [24]) (./sections/conclusion.tex
+[25]) (./main.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -642,42 +617,42 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[13
-
-] [14] [15] [16] [17] [18] [19] [20] (./main.aux)
+[26] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  71630681C650BAC5897C1AA5E85C2BCA;11752.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 71630681C650BAC5897C1AA5E85C2BCA;11752.
  ) 
 Here is how much of TeX's memory you used:
- 10633 strings out of 476182
- 175929 string characters out of 5795595
- 1968975 words of memory out of 5000000
- 32385 multiletter control sequences out of 15000+600000
- 600152 words of font info for 108 fonts, out of 8000000 for 9000
+ 10575 strings out of 476182
+ 172361 string characters out of 5795595
+ 1963975 words of memory out of 5000000
+ 32312 multiletter control sequences out of 15000+600000
+ 599637 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1328b,589s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (20 pages, 264329 bytes).
+ 75i,14n,79p,1260b,570s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
+ri8a.pfb>
+Output written on main.pdf (26 pages, 2161763 bytes).
 PDF statistics:
- 299 PDF objects out of 1000 (max. 8388607)
- 238 compressed objects within 3 object streams
- 99 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 514 PDF objects out of 1000 (max. 8388607)
+ 411 compressed objects within 5 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 339 words of extra memory for PDF output out of 10000 (max. 10000000)
 

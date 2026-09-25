@@ -99,6 +99,26 @@ artefatos.
 | `rq2_student_syndrome_reviewer_response` | Para responder ao revisor e explicitar a alternativa de student syndrome. | Não usar para afirmar que IA causou picos tardios; não há telemetria timestamped de IA. |
 | `candidate_figure_inventory` | Para recuperar candidatos exploratórios iniciais durante seleção editorial. | Não promover sem comparar com artefatos mais recentes das Fases 1–8. |
 
+## Seleção editorial — Fase 10.1
+
+Decisão registrada em 2026-09-25. A seleção prioriza mitigação de
+**Threats to Validity** e clareza narrativa, não economia de páginas.
+Figuras densas devem ser integradas em largura total (`figure*`,
+`width=\textwidth`) para preservar legibilidade no PDF.
+
+| Decisão | Artefato/figura | Seção-alvo | Largura recomendada | Justificativa editorial | Substituição/remoção proposta |
+|---|---|---|---|---|---|
+| Promover ao texto principal | `rq2_score_delta_vs_final7_concentration`: `rq2_score_delta_vs_final7_commit_concentration` e `rq2_score_delta_vs_final7_clean_churn_concentration` | Results/RQ2 | `figure*`, `width=\textwidth` | Separa recuperação tardia de corrida final sem ganho avaliativo; mitiga leitura simplista de student syndrome. | Complementa a figura rolling atual `fig:rq2-m3`; não substituir automaticamente porque a rolling figure ainda mostra o pico bruto. |
+| Promover ao texto principal | `rq2_planning_concentration_quadrants`: commit e clean-churn variants | Results/RQ2 | `figure*`, `width=\textwidth` | Conecta planejamento repositório-visível, concentração final e resultado avaliativo, respondendo diretamente à narrativa planejamento→atividade→resultado. | Pode reduzir necessidade de longa prosa/tabela sobre quadrantes; não remover tabela RQ2 antes da integração textual. |
+| Promover ao texto principal | `rq2_nonoverlapping_phase_activity`: `rq2_phase_commit_share_by_score_trajectory` e `rq2_phase_clean_churn_share_by_score_trajectory` | Results/RQ2 ou Threats | `figure*`, `width=\textwidth` | Mitiga ameaça de rolling windows sobrepostos e testa se o pico final permanece em fases mutuamente exclusivas. | Se o texto ficar redundante, mover `fig:rq2-m3` para apêndice, mas apenas depois de preservar a evidência de pico temporal bruto. |
+| Promover ao texto principal | `rq2_m5_2025_triangulation_panel` | Results/RQ2 ou Threats | `figure*`, `width=\textwidth` | Torna explícita a cobertura restrita de M5, evitando zero-fill de 2026.1 e mostrando M5 junto de churn/score/rework. | Pode substituir ou resumir `fig:rq2-m4-m5` se a integração textual preferir o painel coverage-aware. |
+| Promover ao texto principal | Uma figura de `rq2_operational_regularity`, preferencialmente `rq2_regularity_vs_final_concentration` para Threats ou `rq2_regularity_vs_score_delta` para Results | Discussion/Threats ou Results/RQ2 | `figure*`, `width=\textwidth` | Mitiga ameaça de processos heterogêneos não medidos usando regularidade Git como proxy descritivo. | `rq2_regularity_profile_heatmap` deve ficar no apêndice por densidade. |
+| Promover ao texto principal | `rq3_complexity_profile`: `rq3_technical_complexity_vs_rework` e/ou `rq3_planning_rework_complexity_overlay` | Discussion/Threats | `figure*`, `width=\textwidth` | Mitiga complexidade técnica como confundidor de rework/churn e evita atribuir rework apenas a planejamento fraco ou IA. | Pode substituir parte da interpretação atual de `fig:rq3-profile`, mantendo a figura antiga se ela ainda for necessária para M6a/M8 básico. |
+| Promover ao texto principal | `rq3_influence_map` | Threats ou Results/RQ3 | `figure*`, `width=\textwidth` | Mitiga amostra pequena e dependência de casos influentes com leave-one-out por relação/caso. | Candidato a substituir `fig:rq3-sensitivity`, pois é mais abrangente; confirmar na integração textual. |
+| Usar em apêndice/suplemento | `team_semester_evidence_panel` | Appendix/Supplement | Tabela larga ou CSV suplementar | Consolida cobertura e grãos para auditoria; útil para transparência, não como figura narrativa. | Não inserir como tabela compacta no corpo principal; ficaria ilegível. |
+| Manter como resposta/referência | `rq2_student_syndrome_reviewer_response` | Response letter; Discussion se necessário | `figure*` para full-period plots se promovidos | Responde diretamente ao revisor e informa a nuance sobre student syndrome. | Não promover integralmente ao texto principal sem condensar para evitar repetição com Fases 1/2/6. |
+| Manter diagnóstico | `candidate_figure_inventory` | Interno/diagnóstico | — | Inventário inicial foi superado por artefatos mais específicos das Fases 1–8. | Não promover sem justificativa nova. |
+
 ## Sincronização catálogo-metadados
 
 Revisão executada em 2026-09-25. Todos os links relativos registrados neste
@@ -155,7 +175,7 @@ catalogada.
 | `key_reading` | Artefato base, contratual e visual: cria 13 bins semanais não sobrepostos relativos ao T3 (`week_-12` a `week_-1` e `final_7_days`) e quatro fases não sobrepostas (`pre_t1`, `t1_to_t2`, `t2_to_t3_excluding_final7`, `final7_pre_t3`). As métricas incluem commits distintos, clean changed lines, dias ativos e autores ativos, com zeros preservados para bins vazios. O contrato semanal registra períodos `[start,end)`, ausência de rolling windows e auditoria de atribuição única de eventos. Os shares de fase somam 100% por equipe-semestre para commits e clean churn. As figuras finais da Tarefa 6.3 mostram shares médios por fase e grupo de trajetória de score para testar se o pico final permanece sob agregação não sobreposta. |
 | `utility_score` | Alta |
 | `limitations` | Atividade Git não observa trabalho fora do repositório; `pre_t1` tem duração variável porque começa no primeiro evento repositório-visível observado antes de T3; os bins semanais cobrem os 91 dias finais antes de T3 e excluem atividade anterior; clean churn depende da política de clean paths vigente. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
@@ -173,7 +193,7 @@ catalogada.
 | `key_reading` | Artefato coverage-aware: integra M5 marker density global por T1/T2/T3 com M4 clean churn, score avaliativo composto, M8 T3 rework e M6a planejamento para 9 equipes de 2025.2. O painel mostra aumento de M5 density, clean churn mediano e score mediano entre T1 e T3, preservando a ressalva de que M5 não é team-level e que 2026.1 é `unavailable_not_measured`. |
 | `utility_score` | Média |
 | `limitations` | M5 é global/transcript-level por checkpoint, não equipe-semestre; não há cobertura de 2026.1; rework M8 aparece apenas em T3; associações são descritivas e não causais. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
@@ -209,7 +229,7 @@ catalogada.
 | `key_reading` | Artefato visual e contratual: calcula métricas temporais/autorais de regularidade operacional observável no Git e define, com autorização explícita, um índice composto descritivo em que maior indica atividade mais distribuída. As figuras cruzam esse índice com delta de score, concentração final de commits/clean churn e um heatmap z-scored do perfil operacional. |
 | `utility_score` | Alta |
 | `limitations` | Regularidade de Git não mede aderência a Scrum/Kanban nem produtividade; semanas/dias sem atividade são zeros apenas dentro do período observado entre primeiro commit e âncora T3; clean churn usa política de paths limpos; o índice composto é descritivo e não uma escala latente validada de processo. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
@@ -227,7 +247,7 @@ catalogada.
 | `key_reading` | Artefato de sensibilidade: calcula Spearman rho completo e leave-one-out para relações entre planejamento, score, concentração final, regularidade, complexidade técnica e rework. A figura mostra a variação em rho quando cada equipe-semestre é removida; a matriz do heatmap materializa explicitamente as células usadas pela visualização. O contrato de relações mapeia as 8 categorias da Fase 4.2 para 13 relações operacionais, separando concentração final em commits/clean churn e rework em magnitude/ratio. O resumo de robustez direcional ordena relações pela preservação de sinal e identifica a equipe-semestre mais influente. |
 | `utility_score` | Alta |
 | `limitations` | Diagnóstico small-n; não é teste confirmatório; mudanças de sinal devem ser descritas como robustez direcional; relações com rework ratio usam apenas casos baseline-eligible; associações observacionais não estabelecem causalidade. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
@@ -245,7 +265,7 @@ catalogada.
 | `key_reading` | Artefato contratual, visual e tabular: reúne complexidade técnica avaliada em T1/T2/T3, delta T3-T1, métricas estruturais inferidas de clean paths, churn/rework T3, planejamento T1 e variáveis de trajetória/concentração final. O contrato de métricas separa `evaluated_complexity` de `repository_structural_complexity`, documenta heurísticas de path e registra ausência de classificação manual de arquitetura GenAI. As figuras da Tarefa 5.3 cruzam complexidade técnica T3 com rework, concentração final e planejamento. O sumário da Tarefa 5.4 recalcula associações descritivas com estratificação por mediana de complexidade técnica, registrando `n` por estrato e indisponibilidade quando aplicável. |
 | `utility_score` | Alta |
 | `limitations` | Complexidade técnica avaliada é dimensão humana do avaliador, não estrutura inferida; métricas estruturais usam heurísticas Git/path e não classificam arquitetura semântica; frontend/backend por path pode subdetectar layouts não convencionais; as figuras são small-n e descritivas; não é modelo causal de ajuste. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
@@ -263,7 +283,7 @@ catalogada.
 | `key_reading` | Artefato visual candidato: cruza concentração final de atividade com `delta_score_t3_minus_t1`, colorindo por planejamento repositório-visível e separando semestres por símbolo. A tabela de quadrantes consolida contagens por métrica e tier de planejamento usando mediana de concentração final e threshold de delta da Fase 0. |
 | `utility_score` | Alta |
 | `limitations` | Associação descritiva com n=14; concentração final não identifica causalidade; delta score usa score composto descritivo; quadrantes usam mediana de concentração e threshold de delta registrado na Fase 0. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
@@ -281,7 +301,7 @@ catalogada.
 | `key_reading` | Artefato visual candidato: cruza escopo de planejamento repositório-visível com concentração final de commits/clean churn, usando cor para score T3 e tamanho para magnitude absoluta do delta avaliativo. O sumário registra contagens e scores por quadrante. |
 | `utility_score` | Alta |
 | `limitations` | Planejamento é escopo estrutural observado no repositório, não qualidade semântica; concentração final é proxy temporal; quadrantes são bins descritivos small-n; M8 clean rework entra apenas como proxy de churn por proveniência. |
-| `status` | `candidate` |
+| `status` | `main_text` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 

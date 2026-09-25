@@ -1595,27 +1595,54 @@ Alto. Sem integração textual, as novas análises não fortalecem o artigo.
 
 Critério:
 
-- manter poucas figuras no corpo principal;
-- mover diagnósticos densos para suplemento/apêndice;
-- priorizar figuras que conectem diretamente planejamento, atividade e resultado.
+- priorizar mitigação explícita das ameaças à validade discutidas pelo artigo e
+  pelos revisores, sem usar economia de páginas como restrição nesta etapa;
+- integrar em largura total (`figure*`, `width=\textwidth`) figuras complexas
+  ou com muitos detalhes, para preservar legibilidade no PDF;
+- mover apenas diagnósticos densos ou artefatos de auditoria para
+  suplemento/apêndice;
+- priorizar figuras que conectem diretamente planejamento, atividade, resultado,
+  complexidade técnica e limitações de cobertura.
 
-Figuras candidatas para texto principal:
+Figuras selecionadas para texto principal ou integração principal:
 
 1. `rq2_score_delta_vs_final7_commit_concentration`
 2. `rq2_score_delta_vs_final7_clean_churn_concentration`
 3. `rq2_planning_vs_final7_commit_concentration`
 4. `rq2_planning_vs_final7_clean_churn_concentration`
-5. Uma figura de regularidade operacional, se visualmente clara.
+5. `rq2_phase_commit_share_by_score_trajectory`
+6. `rq2_phase_clean_churn_share_by_score_trajectory`
+7. `rq2_m5_2025_triangulation_panel`
+8. Uma figura de regularidade operacional visualmente clara, preferencialmente
+   `rq2_regularity_vs_final_concentration` para Threats ou
+   `rq2_regularity_vs_score_delta` para Results.
+9. `rq3_technical_complexity_vs_rework` e/ou
+   `rq3_planning_rework_complexity_overlay`
+10. `rq3_influence_map`
+
+Figuras/tabelas propostas para apêndice, suplemento ou substituição:
+
+- `team_semester_evidence_panel`: apêndice/suplemento, não tabela compacta no
+  corpo principal.
+- `rq2_regularity_profile_heatmap`: apêndice, por densidade visual.
+- `fig:rq2-m3`: manter como evidência de pico bruto ou mover para apêndice
+  somente se a integração com fases não sobrepostas preservar a leitura temporal.
+- `fig:rq2-m4-m5`: candidato a substituição pelo painel M5 coverage-aware, se o
+  texto preferir destacar cobertura e ausência de zero-fill.
+- `fig:rq3-sensitivity`: candidato a substituição por `rq3_influence_map`, que
+  cobre mais relações e casos influentes.
 
 **Checklist**
 
-- [ ] Consultar `ARTIFACT_USAGE_CATALOG.md` como um todo, incluindo status de
+- [x] Consultar `ARTIFACT_USAGE_CATALOG.md` como um todo, incluindo status de
   artefatos, limitações e respostas aos insights esperados, antes de selecionar
   figuras.
-- [ ] Escolher no máximo 2 novas figuras principais.
-- [ ] Escolher 2-4 figuras suplementares.
-- [ ] Atualizar lista de figuras candidatas se necessário.
-- [ ] Atualizar status no catálogo para `main_text`, `appendix` ou `diagnostic_only`.
+- [x] Escolher figuras principais priorizando Threats to Validity; a restrição
+  original de no máximo 2 novas figuras foi substituída por legibilidade e
+  mitigação substantiva das ameaças.
+- [x] Escolher figuras/tabelas suplementares.
+- [x] Atualizar lista de figuras candidatas se necessário.
+- [x] Atualizar status no catálogo para `main_text`, `appendix` ou `diagnostic_only`.
 
 ## Tarefa 10.2 — Atualizar Results
 
@@ -1637,13 +1664,18 @@ Figuras candidatas para texto principal:
 
 **Checklist**
 
-- [ ] Reportar denominadores.
-- [ ] Reportar `n` por estrato.
-- [ ] Evitar linguagem causal.
-- [ ] Não repetir toda a seção de Threats.
-- [ ] Referenciar artefatos cuja utilidade esteja registrada no catálogo.
-- [ ] Usar as respostas registradas para os insights esperados como guia de
+- [x] Reportar denominadores.
+- [x] Reportar `n` por estrato.
+- [x] Evitar linguagem causal.
+- [x] Não repetir toda a seção de Threats.
+- [x] Referenciar artefatos cuja utilidade esteja registrada no catálogo.
+- [x] Usar as respostas registradas para os insights esperados como guia de
   síntese, preservando números principais e ressalvas.
+
+Validação: PDF recompilado com `TEXINPUTS=.:../:` a partir de
+`paper_v9/latex`; as figuras densas foram renderizadas em largura total. O log
+final de `latex/main.pdf` não registra erros de imagem, labels indefinidos,
+citações indefinidas ou floats pendentes.
 
 ## Tarefa 10.3 — Atualizar Discussion
 
