@@ -1754,10 +1754,16 @@ Usar o comando já estabelecido no projeto para compilar o paper.
 
 **Checklist**
 
-- [ ] Compilar sem erros.
-- [ ] Verificar referências de figuras.
-- [ ] Verificar captions.
-- [ ] Verificar se figuras em PDF/SVG/PNG estão disponíveis no caminho esperado.
+- [x] Compilar sem erros.
+- [x] Verificar referências de figuras.
+- [x] Verificar captions.
+- [x] Verificar se figuras em PDF/SVG/PNG estão disponíveis no caminho esperado.
+
+Validação: `paper_v9/latex/main.pdf` e `paper_v9/latex/build/main.pdf`
+gerados com 27 páginas após sequência `pdflatex`/`bibtex`/`pdflatex`. Os logs
+finais não registram citações indefinidas, referências indefinidas, erros de
+imagem, overfull hboxes ou floats pendentes. Verificação automática encontrou
+18 chamadas `includegraphics`, 25 captions e nenhum arquivo de figura ausente.
 
 ---
 
