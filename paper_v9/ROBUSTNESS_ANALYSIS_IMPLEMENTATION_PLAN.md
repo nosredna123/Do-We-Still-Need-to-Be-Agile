@@ -965,7 +965,7 @@ paper_v9/scripts/results/generate_influence_maps.py
 - [x] Script reprodutível criado.
 - [x] Relações candidatas materializadas no metadata para revisão sistemática na Tarefa 4.2.
 - [x] Figura inicial gerada como mapa de influência leave-one-out.
-- [ ] Revisão/validação editorial das relações permanece na Tarefa 4.2.
+- [x] Relações revisadas/operacionalizadas na Tarefa 4.2.
 
 ## Tarefa 4.2 — Relações a avaliar
 
@@ -987,11 +987,22 @@ Calcular leave-one-out para:
 - Sinal leave-one-out.
 - Variação absoluta em rho ao remover cada equipe.
 
+**Output produzido**
+
+- [x] `rq3_influence_relationship_contract.csv`
+
+**Operacionalização**
+
+- [x] As 8 categorias da Tarefa 4.2 foram mapeadas para 13 relações operacionais:
+  - concentração final separada em commits e clean churn;
+  - rework separado em magnitude de churn e ratio baseline-eligible.
+- [x] Cada relação registra `full_sample_rho`, `full_sample_sign`, `loo_min_rho`, `loo_max_rho`, `max_abs_rho_delta_from_full` e `sign_preservation_share`.
+
 **Checklist**
 
-- [ ] Não reportar como teste confirmatório.
-- [ ] Usar linguagem de “directional robustness”.
-- [ ] Registrar relações com `n < 4` como indisponíveis.
+- [x] Não reportar como teste confirmatório.
+- [x] Usar linguagem de “directional robustness”.
+- [x] Registrar relações com `n < 4` como indisponíveis.
 
 ## Tarefa 4.3 — Heatmap
 

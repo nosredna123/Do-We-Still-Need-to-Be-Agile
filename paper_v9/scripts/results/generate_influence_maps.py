@@ -20,71 +20,83 @@ from paper_v9.scripts.common.provenance import compute_sha256
 
 CONTRACT_VERSION = "rq3-influence-map-v1"
 STEM = "rq3_influence_map"
+RELATIONSHIP_CONTRACT_STEM = "rq3_influence_relationship_contract"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 MIN_N = 4
 RELATIONSHIPS = [
     {
         "relationship_id": "planning_scope_to_t3_score",
+        "task_4_2_requirement": "planning_t1_to_t3_score",
         "label": "Planning scope → T3 score",
         "predictor": "planning_scope_log1p_t1",
         "outcome": "evaluator_score_t3",
     },
     {
         "relationship_id": "planning_scope_to_score_delta",
+        "task_4_2_requirement": "planning_t1_to_delta_score_t3_minus_t1",
         "label": "Planning scope → score delta",
         "predictor": "planning_scope_log1p_t1",
         "outcome": "delta_score_t3_minus_t1",
     },
     {
         "relationship_id": "planning_scope_to_final7_commits",
+        "task_4_2_requirement": "planning_t1_to_final7_concentration",
         "label": "Planning scope → final-7 commits",
         "predictor": "planning_scope_log1p_t1",
         "outcome": "final7_commit_share_pct",
     },
     {
         "relationship_id": "planning_scope_to_final7_clean_churn",
+        "task_4_2_requirement": "planning_t1_to_final7_concentration",
         "label": "Planning scope → final-7 clean churn",
         "predictor": "planning_scope_log1p_t1",
         "outcome": "final7_clean_churn_share_pct",
     },
     {
         "relationship_id": "final7_commits_to_t3_score",
+        "task_4_2_requirement": "final7_concentration_to_t3_score",
         "label": "Final-7 commits → T3 score",
         "predictor": "final7_commit_share_pct",
         "outcome": "evaluator_score_t3",
     },
     {
         "relationship_id": "final7_clean_churn_to_t3_score",
+        "task_4_2_requirement": "final7_concentration_to_t3_score",
         "label": "Final-7 clean churn → T3 score",
         "predictor": "final7_clean_churn_share_pct",
         "outcome": "evaluator_score_t3",
     },
     {
         "relationship_id": "final7_commits_to_score_delta",
+        "task_4_2_requirement": "final7_concentration_to_delta_score",
         "label": "Final-7 commits → score delta",
         "predictor": "final7_commit_share_pct",
         "outcome": "delta_score_t3_minus_t1",
     },
     {
         "relationship_id": "final7_clean_churn_to_score_delta",
+        "task_4_2_requirement": "final7_concentration_to_delta_score",
         "label": "Final-7 clean churn → score delta",
         "predictor": "final7_clean_churn_share_pct",
         "outcome": "delta_score_t3_minus_t1",
     },
     {
         "relationship_id": "regularity_to_score_delta",
+        "task_4_2_requirement": "regularity_index_to_delta_score",
         "label": "Regularity index → score delta",
         "predictor": "regularity_index",
         "outcome": "delta_score_t3_minus_t1",
     },
     {
         "relationship_id": "technical_complexity_to_rework_churn",
+        "task_4_2_requirement": "technical_complexity_t3_to_clean_churn_or_rework",
         "label": "Technical complexity → rework churn",
         "predictor": "technical_complexity_mean_t3",
         "outcome": "clean_rework_churn_t3",
     },
     {
         "relationship_id": "technical_complexity_to_rework_ratio",
+        "task_4_2_requirement": "technical_complexity_t3_to_clean_churn_or_rework",
         "label": "Technical complexity → rework ratio",
         "predictor": "technical_complexity_mean_t3",
         "outcome": "clean_rework_ratio_t3",
@@ -92,12 +104,14 @@ RELATIONSHIPS = [
     },
     {
         "relationship_id": "planning_scope_to_rework_churn",
+        "task_4_2_requirement": "planning_t1_to_rework_t3",
         "label": "Planning scope → rework churn",
         "predictor": "planning_scope_log1p_t1",
         "outcome": "clean_rework_churn_t3",
     },
     {
         "relationship_id": "planning_scope_to_rework_ratio",
+        "task_4_2_requirement": "planning_t1_to_rework_t3",
         "label": "Planning scope → rework ratio",
         "predictor": "planning_scope_log1p_t1",
         "outcome": "clean_rework_ratio_t3",
@@ -242,6 +256,7 @@ def _influence_rows(analysis: pd.DataFrame) -> pd.DataFrame:
             rows.append(
                 {
                     "relationship_id": relation["relationship_id"],
+                    "task_4_2_requirement": relation["task_4_2_requirement"],
                     "relationship_label": relation["label"],
                     "predictor": relation["predictor"],
                     "outcome": relation["outcome"],
@@ -261,6 +276,42 @@ def _influence_rows(analysis: pd.DataFrame) -> pd.DataFrame:
                     "inference_note": "descriptive_directional_robustness_not_confirmatory",
                 }
             )
+    return pd.DataFrame(rows)
+
+
+def _relationship_contract(influence: pd.DataFrame) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for relation in RELATIONSHIPS:
+        subset = influence.loc[influence["relationship_id"].eq(relation["relationship_id"])]
+        available = subset.loc[subset["availability_status"].eq("available")]
+        full_rho = subset["full_sample_rho"].dropna()
+        full_sign = subset["full_sample_sign"].dropna()
+        sign_preservation_share = None
+        if not available.empty:
+            sign_preservation_share = float((available["full_sample_sign"] == available["loo_sign"]).mean())
+        rows.append(
+            {
+                "task_4_2_requirement": relation["task_4_2_requirement"],
+                "relationship_id": relation["relationship_id"],
+                "relationship_label": relation["label"],
+                "predictor": relation["predictor"],
+                "outcome": relation["outcome"],
+                "filter_column": relation.get("filter_column", ""),
+                "full_sample_n": int(subset["full_sample_n"].max()),
+                "leave_one_out_rows": int(len(subset)),
+                "available_leave_one_out_rows": int(len(available)),
+                "full_sample_rho": float(full_rho.iloc[0]) if not full_rho.empty else None,
+                "full_sample_sign": full_sign.iloc[0] if not full_sign.empty else "unavailable",
+                "loo_min_rho": float(available["loo_rho"].min()) if not available.empty else None,
+                "loo_max_rho": float(available["loo_rho"].max()) if not available.empty else None,
+                "max_abs_rho_delta_from_full": (
+                    float(available["abs_rho_delta_from_full"].max()) if not available.empty else None
+                ),
+                "sign_preservation_share": sign_preservation_share,
+                "availability_status": "available" if len(available) == len(subset) else "partially_or_fully_unavailable",
+                "inference_note": "directional_robustness_not_confirmatory",
+            }
+        )
     return pd.DataFrame(rows)
 
 
@@ -383,16 +434,22 @@ def generate() -> dict[str, Any]:
         raise ValueError("Influence map must cover 14 removed team-semesters")
 
     data_path = figures_dir / f"{STEM}_data.csv"
+    relationship_contract_path = figures_dir / f"{RELATIONSHIP_CONTRACT_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
     _atomic_csv(influence, data_path)
+    relationship_contract = _relationship_contract(influence)
+    _atomic_csv(relationship_contract, relationship_contract_path)
     _write_figure(_build_influence_map(influence), STEM, figures_dir)
 
+    task_4_2_requirements = sorted(relationship_contract["task_4_2_requirement"].unique().tolist())
     metadata: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
         "artifact_id": STEM,
         "generated_at_utc": datetime.now(UTC).isoformat(),
         "data_path": str(data_path.relative_to(repo_root)),
         "data_sha256": compute_sha256(data_path),
+        "relationship_contract_path": str(relationship_contract_path.relative_to(repo_root)),
+        "relationship_contract_sha256": compute_sha256(relationship_contract_path),
         "figure_artifacts": [
             str((figures_dir / f"{STEM}.{extension}").relative_to(repo_root))
             for extension in ("pdf", "svg", "png")
@@ -405,9 +462,15 @@ def generate() -> dict[str, Any]:
                 influence[["removed_ID_Equipe", "removed_Semestre"]].drop_duplicates().shape[0]
             ),
             "relationships": int(influence["relationship_id"].nunique()),
+            "task_4_2_requirements": len(task_4_2_requirements),
             "rows": int(len(influence)),
         },
         "metric": "Descriptive Spearman rho; influence is leave-one-out rho minus full-sample rho.",
+        "task_4_2_relationship_requirements": task_4_2_requirements,
+        "task_4_2_relationship_contract": (
+            "Each planned Fase 4.2 relationship category is represented by one or more operationalized "
+            "relationships in rq3_influence_relationship_contract.csv."
+        ),
         "unavailable_rule": f"Relationships or leave-one-out slices with n < {MIN_N} or constant values are marked unavailable.",
         "relationships": RELATIONSHIPS,
         "inference": "descriptive_directional_robustness_not_confirmatory",
@@ -422,6 +485,7 @@ def generate() -> dict[str, Any]:
     return {
         "status": "generated",
         "data_path": str(data_path),
+        "relationship_contract_path": str(relationship_contract_path),
         "metadata_path": str(metadata_path),
         "coverage": metadata["coverage"],
     }

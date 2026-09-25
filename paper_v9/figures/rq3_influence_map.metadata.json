@@ -4,16 +4,17 @@
   "coverage": {
     "relationships": 13,
     "removed_team_semesters": 14,
-    "rows": 182
+    "rows": 182,
+    "task_4_2_requirements": 8
   },
   "data_path": "paper_v9/figures/rq3_influence_map_data.csv",
-  "data_sha256": "356a5e068306a05e35e38a67be0fa76eb7413a9006d96d7d7e3a4a4f38def313",
+  "data_sha256": "23a1b847424d927425d511e244dc52d7fd00c46b89ecf5761a195e74caf1ad99",
   "figure_artifacts": [
     "paper_v9/figures/rq3_influence_map.pdf",
     "paper_v9/figures/rq3_influence_map.svg",
     "paper_v9/figures/rq3_influence_map.png"
   ],
-  "generated_at_utc": "2026-09-25T18:03:42.160185+00:00",
+  "generated_at_utc": "2026-09-25T18:06:18.648174+00:00",
   "inference": "descriptive_directional_robustness_not_confirmatory",
   "input_sha256": {
     "base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
@@ -44,87 +45,113 @@
     "Repository and evaluator measures remain observational proxies and do not establish causality."
   ],
   "metric": "Descriptive Spearman rho; influence is leave-one-out rho minus full-sample rho.",
+  "relationship_contract_path": "paper_v9/figures/rq3_influence_relationship_contract.csv",
+  "relationship_contract_sha256": "9679ae5be2f30d8bac01cea8630dec91e30023b86f242f532f718d75aecd7d47",
   "relationships": [
     {
       "label": "Planning scope \u2192 T3 score",
       "outcome": "evaluator_score_t3",
       "predictor": "planning_scope_log1p_t1",
-      "relationship_id": "planning_scope_to_t3_score"
+      "relationship_id": "planning_scope_to_t3_score",
+      "task_4_2_requirement": "planning_t1_to_t3_score"
     },
     {
       "label": "Planning scope \u2192 score delta",
       "outcome": "delta_score_t3_minus_t1",
       "predictor": "planning_scope_log1p_t1",
-      "relationship_id": "planning_scope_to_score_delta"
+      "relationship_id": "planning_scope_to_score_delta",
+      "task_4_2_requirement": "planning_t1_to_delta_score_t3_minus_t1"
     },
     {
       "label": "Planning scope \u2192 final-7 commits",
       "outcome": "final7_commit_share_pct",
       "predictor": "planning_scope_log1p_t1",
-      "relationship_id": "planning_scope_to_final7_commits"
+      "relationship_id": "planning_scope_to_final7_commits",
+      "task_4_2_requirement": "planning_t1_to_final7_concentration"
     },
     {
       "label": "Planning scope \u2192 final-7 clean churn",
       "outcome": "final7_clean_churn_share_pct",
       "predictor": "planning_scope_log1p_t1",
-      "relationship_id": "planning_scope_to_final7_clean_churn"
+      "relationship_id": "planning_scope_to_final7_clean_churn",
+      "task_4_2_requirement": "planning_t1_to_final7_concentration"
     },
     {
       "label": "Final-7 commits \u2192 T3 score",
       "outcome": "evaluator_score_t3",
       "predictor": "final7_commit_share_pct",
-      "relationship_id": "final7_commits_to_t3_score"
+      "relationship_id": "final7_commits_to_t3_score",
+      "task_4_2_requirement": "final7_concentration_to_t3_score"
     },
     {
       "label": "Final-7 clean churn \u2192 T3 score",
       "outcome": "evaluator_score_t3",
       "predictor": "final7_clean_churn_share_pct",
-      "relationship_id": "final7_clean_churn_to_t3_score"
+      "relationship_id": "final7_clean_churn_to_t3_score",
+      "task_4_2_requirement": "final7_concentration_to_t3_score"
     },
     {
       "label": "Final-7 commits \u2192 score delta",
       "outcome": "delta_score_t3_minus_t1",
       "predictor": "final7_commit_share_pct",
-      "relationship_id": "final7_commits_to_score_delta"
+      "relationship_id": "final7_commits_to_score_delta",
+      "task_4_2_requirement": "final7_concentration_to_delta_score"
     },
     {
       "label": "Final-7 clean churn \u2192 score delta",
       "outcome": "delta_score_t3_minus_t1",
       "predictor": "final7_clean_churn_share_pct",
-      "relationship_id": "final7_clean_churn_to_score_delta"
+      "relationship_id": "final7_clean_churn_to_score_delta",
+      "task_4_2_requirement": "final7_concentration_to_delta_score"
     },
     {
       "label": "Regularity index \u2192 score delta",
       "outcome": "delta_score_t3_minus_t1",
       "predictor": "regularity_index",
-      "relationship_id": "regularity_to_score_delta"
+      "relationship_id": "regularity_to_score_delta",
+      "task_4_2_requirement": "regularity_index_to_delta_score"
     },
     {
       "label": "Technical complexity \u2192 rework churn",
       "outcome": "clean_rework_churn_t3",
       "predictor": "technical_complexity_mean_t3",
-      "relationship_id": "technical_complexity_to_rework_churn"
+      "relationship_id": "technical_complexity_to_rework_churn",
+      "task_4_2_requirement": "technical_complexity_t3_to_clean_churn_or_rework"
     },
     {
       "filter_column": "baseline_eligible_for_rework_t3",
       "label": "Technical complexity \u2192 rework ratio",
       "outcome": "clean_rework_ratio_t3",
       "predictor": "technical_complexity_mean_t3",
-      "relationship_id": "technical_complexity_to_rework_ratio"
+      "relationship_id": "technical_complexity_to_rework_ratio",
+      "task_4_2_requirement": "technical_complexity_t3_to_clean_churn_or_rework"
     },
     {
       "label": "Planning scope \u2192 rework churn",
       "outcome": "clean_rework_churn_t3",
       "predictor": "planning_scope_log1p_t1",
-      "relationship_id": "planning_scope_to_rework_churn"
+      "relationship_id": "planning_scope_to_rework_churn",
+      "task_4_2_requirement": "planning_t1_to_rework_t3"
     },
     {
       "filter_column": "baseline_eligible_for_rework_t3",
       "label": "Planning scope \u2192 rework ratio",
       "outcome": "clean_rework_ratio_t3",
       "predictor": "planning_scope_log1p_t1",
-      "relationship_id": "planning_scope_to_rework_ratio"
+      "relationship_id": "planning_scope_to_rework_ratio",
+      "task_4_2_requirement": "planning_t1_to_rework_t3"
     }
+  ],
+  "task_4_2_relationship_contract": "Each planned Fase 4.2 relationship category is represented by one or more operationalized relationships in rq3_influence_relationship_contract.csv.",
+  "task_4_2_relationship_requirements": [
+    "final7_concentration_to_delta_score",
+    "final7_concentration_to_t3_score",
+    "planning_t1_to_delta_score_t3_minus_t1",
+    "planning_t1_to_final7_concentration",
+    "planning_t1_to_rework_t3",
+    "planning_t1_to_t3_score",
+    "regularity_index_to_delta_score",
+    "technical_complexity_t3_to_clean_churn_or_rework"
   ],
   "unavailable_rule": "Relationships or leave-one-out slices with n < 4 or constant values are marked unavailable."
 }
