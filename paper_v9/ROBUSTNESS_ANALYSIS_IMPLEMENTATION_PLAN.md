@@ -1165,7 +1165,7 @@ Figuras sugeridas:
 
 **Output esperado**
 
-- `rq3_complexity_confounding_summary.csv`
+- [x] `rq3_complexity_confounding_summary.csv`
 
 **Colunas**
 
@@ -1177,8 +1177,15 @@ Figuras sugeridas:
 
 **Checklist**
 
-- [ ] Usar estratificação por mediana, não regressão pesada, por causa de `n=14`.
-- [ ] Registrar quando estratos têm `n` muito baixo.
+- [x] Usar estratificação por mediana, não regressão pesada, por causa de `n=14`.
+- [x] Registrar quando estratos têm `n` muito baixo.
+
+**Operacionalização**
+
+- [x] Sumário calcula Spearman rho descritivo sem estratificação e dentro de estratos `technical_complexity_mean_t3 <= mediana` e `> mediana`.
+- [x] Relações com `clean_rework_ratio_t3` são restritas a casos `baseline_eligible_for_rework_t3=True`.
+- [x] Cada linha registra `n` total, `n` por estrato, variável de estratificação, regra de corte e nota interpretativa.
+- [x] Associações indisponíveis são registradas quando `n<4` ou quando preditor/desfecho é constante; nenhuma regressão é usada.
 
 ---
 

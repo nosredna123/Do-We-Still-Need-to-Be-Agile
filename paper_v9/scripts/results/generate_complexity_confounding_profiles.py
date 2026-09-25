@@ -25,7 +25,9 @@ METRICS_CONTRACT_STEM = "rq3_complexity_metrics_contract"
 TECH_REWORK_STEM = "rq3_technical_complexity_vs_rework"
 FINAL_CONCENTRATION_STEM = "rq3_complexity_vs_final_concentration"
 PLANNING_REWORK_OVERLAY_STEM = "rq3_planning_rework_complexity_overlay"
+CONFOUNDING_SUMMARY_STEM = "rq3_complexity_confounding_summary"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
+MIN_STRATUM_N = 4
 TECHNICAL_COMPLEXITY_COLUMN = "technical_complexity_mean"
 REQUIRED_EVALUATOR_COLUMNS = [
     *TEAM_KEY,
@@ -122,6 +124,45 @@ BASELINE_ELIGIBILITY_SYMBOLS = {
     "Baseline eligible": "circle",
     "Baseline not observed": "x",
 }
+CONFOUNDING_RELATIONSHIPS = [
+    {
+        "relationship": "planning_scope_to_clean_rework_churn",
+        "predictor": "planning_scope_log1p_t1",
+        "outcome": "clean_rework_churn_t3",
+        "label": "Planning scope T1 -> clean rework churn T3",
+    },
+    {
+        "relationship": "planning_scope_to_clean_rework_ratio",
+        "predictor": "planning_scope_log1p_t1",
+        "outcome": "clean_rework_ratio_t3",
+        "label": "Planning scope T1 -> clean rework ratio T3",
+        "filter_column": "baseline_eligible_for_rework_t3",
+    },
+    {
+        "relationship": "planning_scope_to_final7_commit_concentration",
+        "predictor": "planning_scope_log1p_t1",
+        "outcome": "final7_commit_share_pct",
+        "label": "Planning scope T1 -> final-7 commit concentration",
+    },
+    {
+        "relationship": "planning_scope_to_final7_clean_churn_concentration",
+        "predictor": "planning_scope_log1p_t1",
+        "outcome": "final7_clean_churn_share_pct",
+        "label": "Planning scope T1 -> final-7 clean churn concentration",
+    },
+    {
+        "relationship": "final7_commit_concentration_to_clean_rework_churn",
+        "predictor": "final7_commit_share_pct",
+        "outcome": "clean_rework_churn_t3",
+        "label": "Final-7 commit concentration -> clean rework churn T3",
+    },
+    {
+        "relationship": "final7_clean_churn_concentration_to_clean_rework_churn",
+        "predictor": "final7_clean_churn_share_pct",
+        "outcome": "clean_rework_churn_t3",
+        "label": "Final-7 clean churn concentration -> clean rework churn T3",
+    },
+]
 
 
 EVALUATED_COMPLEXITY_COLUMNS = [
@@ -485,6 +526,132 @@ def _planning_rework_overlay_data(profile: pd.DataFrame) -> pd.DataFrame:
             "final7_clean_churn_share_pct",
         ]
     ].copy()
+
+
+def _spearman(frame: pd.DataFrame, predictor: str, outcome: str) -> tuple[float | None, int, str | None]:
+    subset = frame[[predictor, outcome]].dropna()
+    n = int(len(subset))
+    if n < MIN_STRATUM_N:
+        return None, n, f"n<{MIN_STRATUM_N}"
+    if subset[predictor].nunique(dropna=True) < 2:
+        return None, n, "constant predictor"
+    if subset[outcome].nunique(dropna=True) < 2:
+        return None, n, "constant outcome"
+    rho = subset[predictor].corr(subset[outcome], method="spearman")
+    if pd.isna(rho):
+        return None, n, "undefined rho"
+    return float(rho), n, None
+
+
+def _format_rho(rho: float | None) -> str:
+    if rho is None:
+        return "unavailable"
+    return f"{rho:+.2f}"
+
+
+def _direction(rho: float | None) -> str:
+    if rho is None:
+        return "unavailable"
+    if rho > 0:
+        return "positive"
+    if rho < 0:
+        return "negative"
+    return "zero"
+
+
+def _confounding_note(
+    *,
+    low_rho: float | None,
+    high_rho: float | None,
+    low_issue: str | None,
+    high_issue: str | None,
+    filter_note: str | None,
+) -> str:
+    notes: list[str] = []
+    if filter_note:
+        notes.append(filter_note)
+    if low_issue:
+        notes.append(f"Low-complexity stratum unavailable ({low_issue}).")
+    if high_issue:
+        notes.append(f"High-complexity stratum unavailable ({high_issue}).")
+    if low_rho is not None and high_rho is not None:
+        low_direction = _direction(low_rho)
+        high_direction = _direction(high_rho)
+        if low_direction != high_direction:
+            notes.append(
+                "Direction differs after median technical-complexity stratification "
+                f"(low={_format_rho(low_rho)}, high={_format_rho(high_rho)})."
+            )
+        else:
+            delta = abs(low_rho - high_rho)
+            notes.append(
+                "Direction is preserved across median technical-complexity strata "
+                f"(low={_format_rho(low_rho)}, high={_format_rho(high_rho)}, |delta|={delta:.2f})."
+            )
+    notes.append("Descriptive small-n sensitivity summary; no regression or causal adjustment.")
+    return " ".join(notes)
+
+
+def _confounding_summary(profile: pd.DataFrame) -> pd.DataFrame:
+    complexity_median = float(profile["technical_complexity_mean_t3"].median())
+    profile = profile.copy()
+    profile["technical_complexity_stratum"] = "low_or_median_complexity"
+    profile.loc[profile["technical_complexity_mean_t3"].gt(complexity_median), "technical_complexity_stratum"] = (
+        "high_complexity"
+    )
+
+    rows: list[dict[str, Any]] = []
+    for relationship in CONFOUNDING_RELATIONSHIPS:
+        relationship_frame = profile.copy()
+        filter_note = None
+        filter_column = relationship.get("filter_column")
+        if filter_column:
+            relationship_frame = relationship_frame.loc[relationship_frame[filter_column].fillna(False)].copy()
+            filter_note = f"Restricted to {filter_column}=True cases."
+
+        predictor = relationship["predictor"]
+        outcome = relationship["outcome"]
+        full_rho, full_n, full_issue = _spearman(relationship_frame, predictor, outcome)
+        low_frame = relationship_frame.loc[
+            relationship_frame["technical_complexity_stratum"].eq("low_or_median_complexity")
+        ]
+        high_frame = relationship_frame.loc[relationship_frame["technical_complexity_stratum"].eq("high_complexity")]
+        low_rho, low_n, low_issue = _spearman(low_frame, predictor, outcome)
+        high_rho, high_n, high_issue = _spearman(high_frame, predictor, outcome)
+        issue_notes = [issue for issue in [full_issue] if issue]
+        interpretation_note = _confounding_note(
+            low_rho=low_rho,
+            high_rho=high_rho,
+            low_issue=low_issue,
+            high_issue=high_issue,
+            filter_note=filter_note,
+        )
+        if issue_notes:
+            interpretation_note = f"Overall association unavailable ({'; '.join(issue_notes)}). {interpretation_note}"
+
+        rows.append(
+            {
+                "relationship": relationship["relationship"],
+                "rho_without_complexity_stratification": full_rho,
+                "rho_within_low_complexity": low_rho,
+                "rho_within_high_complexity": high_rho,
+                "interpretation_note": interpretation_note,
+                "relationship_label": relationship["label"],
+                "predictor": predictor,
+                "outcome": outcome,
+                "complexity_stratification_variable": "technical_complexity_mean_t3",
+                "complexity_median": complexity_median,
+                "low_complexity_rule": "technical_complexity_mean_t3 <= median",
+                "high_complexity_rule": "technical_complexity_mean_t3 > median",
+                "n_without_complexity_stratification": full_n,
+                "n_within_low_complexity": low_n,
+                "n_within_high_complexity": high_n,
+                "filter_column": filter_column or "",
+                "method": "spearman_rho_with_median_stratification",
+                "minimum_n_for_rho": MIN_STRATUM_N,
+            }
+        )
+    return pd.DataFrame(rows)
 
 
 def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
@@ -901,6 +1068,7 @@ def generate() -> dict[str, Any]:
     data_path = figures_dir / f"{STEM}_data.csv"
     metrics_contract_path = figures_dir / f"{METRICS_CONTRACT_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
+    confounding_summary_path = figures_dir / f"{CONFOUNDING_SUMMARY_STEM}.csv"
     figure_stems = [
         TECH_REWORK_STEM,
         FINAL_CONCENTRATION_STEM,
@@ -914,6 +1082,8 @@ def generate() -> dict[str, Any]:
     _atomic_csv(profile, data_path)
     metrics_contract = _metrics_contract()
     _atomic_csv(metrics_contract, metrics_contract_path)
+    confounding_summary = _confounding_summary(profile)
+    _atomic_csv(confounding_summary, confounding_summary_path)
     technical_rework_data = _technical_complexity_rework_data(profile)
     final_concentration_data = _final_concentration_data(profile)
     planning_overlay_data = _planning_rework_overlay_data(profile)
@@ -946,6 +1116,8 @@ def generate() -> dict[str, Any]:
         "data_sha256": compute_sha256(data_path),
         "metrics_contract_path": str(metrics_contract_path.relative_to(repo_root)),
         "metrics_contract_sha256": compute_sha256(metrics_contract_path),
+        "confounding_summary_path": str(confounding_summary_path.relative_to(repo_root)),
+        "confounding_summary_sha256": compute_sha256(confounding_summary_path),
         "figure_data_paths": {
             stem: str(path.relative_to(repo_root)) for stem, path in figure_data_paths.items()
         },
@@ -1010,6 +1182,22 @@ def generate() -> dict[str, Any]:
                 "purpose": "Overlay planning, rework and complexity to support descriptive confounding discussion.",
             },
         },
+        "confounding_summary_contract": {
+            "output": str(confounding_summary_path.relative_to(repo_root)),
+            "stratification_variable": "technical_complexity_mean_t3",
+            "stratification_policy": "median split with low_or_median <= median and high > median",
+            "method": "Spearman rho within full sample and median technical-complexity strata",
+            "minimum_n_for_rho": MIN_STRATUM_N,
+            "relationship_count": int(len(confounding_summary)),
+            "low_complexity_n_range": [
+                int(confounding_summary["n_within_low_complexity"].min()),
+                int(confounding_summary["n_within_low_complexity"].max()),
+            ],
+            "high_complexity_n_range": [
+                int(confounding_summary["n_within_high_complexity"].min()),
+                int(confounding_summary["n_within_high_complexity"].max()),
+            ],
+        },
         "path_heuristics": {
             "clean_path_policy": CURRENT_POLICY_VERSION,
             "frontend_markers": sorted(FRONTEND_PATH_MARKERS),
@@ -1032,6 +1220,7 @@ def generate() -> dict[str, Any]:
         "status": "generated",
         "data_path": str(data_path),
         "metrics_contract_path": str(metrics_contract_path),
+        "confounding_summary_path": str(confounding_summary_path),
         "figure_data_paths": {stem: str(path) for stem, path in figure_data_paths.items()},
         "figure_outputs": {
             stem: {extension: str(path) for extension, path in extension_paths.items()}

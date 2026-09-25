@@ -1,5 +1,23 @@
 {
   "artifact_id": "rq3_complexity_profile",
+  "confounding_summary_contract": {
+    "high_complexity_n_range": [
+      6,
+      6
+    ],
+    "low_complexity_n_range": [
+      6,
+      8
+    ],
+    "method": "Spearman rho within full sample and median technical-complexity strata",
+    "minimum_n_for_rho": 4,
+    "output": "paper_v9/figures/rq3_complexity_confounding_summary.csv",
+    "relationship_count": 6,
+    "stratification_policy": "median split with low_or_median <= median and high > median",
+    "stratification_variable": "technical_complexity_mean_t3"
+  },
+  "confounding_summary_path": "paper_v9/figures/rq3_complexity_confounding_summary.csv",
+  "confounding_summary_sha256": "cf11b6609a485639d350cc841e544d092aa9b6d1d3bfea2c28451cabff4ef6c6",
   "construct_separation": {
     "evaluated_complexity": [
       "technical_complexity_mean_t1",
@@ -38,19 +56,19 @@
   },
   "figure_output_sha256": {
     "rq3_complexity_vs_final_concentration": {
-      "pdf": "be881d732b56c09e1b1279f6c9bcd2dabd31c07d867642ccf3780d1749499d26",
+      "pdf": "c56f0d77a3ef8233cab9948473b0e029acec4327fbc9cd60703d6b6aa6895100",
       "png": "fb27adad970ae976a27907d4259a19c98c1c2acca65cb5051cdc4af187e14d46",
-      "svg": "6e3a7e91601d2422f89edf79244352fda16f5eedb71839fda09c79f203bb20ac"
+      "svg": "6532e6b16aeed6c35d81b5106bc1b6101c7e9cef2e0bf7a7c50706ccd72bf1df"
     },
     "rq3_planning_rework_complexity_overlay": {
-      "pdf": "d119b56d68b80643beee42de289e21dedce25d6e1d0f5963a3404625209d44e7",
+      "pdf": "7d17d6a3a03602e8885d209a56f60f59f48a304f4b29274a6bfe9fbcf17c78a0",
       "png": "93b7c3344af1ff1590dda7527671865f94de8e775244de52c5d3e2f74af9bc1f",
-      "svg": "c803fc0db80c8ae0775f4e4a698086f4a253d734e3e9f6f637dd8fc136607b28"
+      "svg": "b3c2c3547fab2f87b6107b978021f83ed3b12d19c8bda21f56094553fc273f15"
     },
     "rq3_technical_complexity_vs_rework": {
-      "pdf": "bc33ad05b80af05a1aab5833482f521f8635df95e66e1dcbba9c4f39423e4e18",
+      "pdf": "223bd29faf454c62e5c0240034458ca4e75041232ce0e9f02bb01c1a1f50fc67",
       "png": "45471f91cc0c6b25b922502ce8f75e71c281f39a4b56e49b63d17cc963ba3e54",
-      "svg": "db535308d6d977539287e2051c9f136ccfd5393991777fbe490efa6db1970a46"
+      "svg": "580071a0a7987b434de835753b8e9776cef1d533d3a3b0fb64b5d4eeaeab7897"
     }
   },
   "figure_outputs": {
@@ -70,7 +88,7 @@
       "svg": "paper_v9/figures/rq3_technical_complexity_vs_rework.svg"
     }
   },
-  "generated_at_utc": "2026-09-25T18:19:36.785216+00:00",
+  "generated_at_utc": "2026-09-25T18:22:24.775194+00:00",
   "inference": "descriptive_confounding_profile_not_causal",
   "input_sha256": {
     "evaluator": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
