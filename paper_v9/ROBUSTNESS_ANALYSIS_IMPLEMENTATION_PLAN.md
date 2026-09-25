@@ -1980,8 +1980,8 @@ git --no-pager status --short
 
 ## Scripts
 
-- [ ] `generate_score_trajectory_concentration.py`
-- [ ] `generate_planning_concentration_quadrants.py`
+- [x] `generate_score_trajectory_concentration.py`
+- [x] `generate_planning_concentration_quadrants.py`
 - [x] `generate_operational_regularity.py`
 - [x] `generate_influence_maps.py`
 - [x] `generate_complexity_confounding_profiles.py`
@@ -1991,40 +1991,48 @@ git --no-pager status --short
 
 ## Testes
 
-- [ ] `test_score_trajectory_concentration.py`
-- [ ] `test_planning_concentration_quadrants.py`
+- [x] `test_score_trajectory_concentration.py`
+- [x] `test_planning_concentration_quadrants.py`
 - [x] `test_operational_regularity.py`
-- [ ] `test_influence_maps.py`
-- [ ] `test_complexity_confounding_profiles.py`
-- [ ] `test_nonoverlapping_phase_activity.py`
+- [x] `test_influence_maps.py`
+- [x] `test_complexity_confounding_profiles.py`
+- [x] `test_nonoverlapping_phase_activity.py`
 - [x] `test_m5_2025_triangulation.py`
 - [x] `test_team_semester_evidence_panel.py`
 
 ## Figuras principais candidatas
 
-- [ ] Score delta vs final concentration.
-- [ ] Planning scope vs final concentration colored by T3 score.
+- [x] Score delta vs final concentration.
+- [x] Planning scope vs final concentration colored by T3 score.
 - [x] Regularity vs score delta.
 - [x] Influence heatmap.
-- [ ] Complexity vs rework/concentration.
+- [x] Complexity vs rework/concentration.
 
 ## Controle versionado de uso dos artefatos
 
-- [ ] `ARTIFACT_USAGE_CATALOG.md`
-- [ ] Status editorial de cada artefato.
-- [ ] Breve descrição da utilidade de cada artefato.
-- [ ] Limitação principal de cada artefato.
-- [ ] Relação com seção do artigo ou ameaça de validade.
-- [ ] Registro de artefatos substituídos/descartados.
+- [x] `ARTIFACT_USAGE_CATALOG.md`
+- [x] Status editorial de cada artefato.
+- [x] Breve descrição da utilidade de cada artefato.
+- [x] Limitação principal de cada artefato.
+- [x] Relação com seção do artigo ou ameaça de validade.
+- [x] Registro de artefatos substituídos/descartados.
 
 ## Integração editorial
 
-- [ ] Atualizar `results.tex`.
-- [ ] Atualizar `discussion.tex`.
-- [ ] Atualizar `threats_to_validity.tex`.
-- [ ] Atualizar documentação de figuras.
-- [ ] Atualizar reprodutibilidade.
-- [ ] Compilar LaTeX.
+- [x] Atualizar `results.tex`.
+- [x] Atualizar `discussion.tex`.
+- [x] Atualizar `threats_to_validity.tex`.
+- [x] Atualizar documentação de figuras.
+- [x] Atualizar reprodutibilidade.
+- [x] Compilar LaTeX.
+
+Validação final de sprint:
+
+```bash
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python -m pytest paper_v9/tests
+```
+
+Resultado final em 2026-09-25: `58 passed, 2 warnings`.
 
 ---
 
@@ -2032,17 +2040,17 @@ git --no-pager status --short
 
 O plano será considerado implementado com sucesso quando:
 
-- [ ] As novas análises produzirem artefatos reprodutíveis com metadados.
-- [ ] Cada família analítica tiver teste focado.
-- [ ] Cada família analítica estiver registrada no catálogo versionado de uso
+- [x] As novas análises produzirem artefatos reprodutíveis com metadados.
+- [x] Cada família analítica tiver teste focado.
+- [x] Cada família analítica estiver registrada no catálogo versionado de uso
   com utilidade, limitação, status e melhor contexto editorial.
-- [ ] As figuras selecionadas para o texto principal tiverem interpretação
+- [x] As figuras selecionadas para o texto principal tiverem interpretação
   clara e denominadores explícitos.
-- [ ] Nenhuma figura for promovida ao texto principal sem status atualizado no
+- [x] Nenhuma figura for promovida ao texto principal sem status atualizado no
   catálogo.
-- [ ] A seção `Threats to Validity` for atualizada para refletir as mitigações
+- [x] A seção `Threats to Validity` for atualizada para refletir as mitigações
   sem remover limitações estruturais.
-- [ ] A narrativa do artigo distinguir melhor:
+- [x] A narrativa do artigo distinguir melhor:
   - atividade tardia;
   - planejamento visível;
   - regularidade operacional;
