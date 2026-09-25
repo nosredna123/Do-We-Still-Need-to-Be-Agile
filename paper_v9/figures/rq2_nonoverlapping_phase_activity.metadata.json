@@ -1,0 +1,105 @@
+{
+  "artifact_id": "rq2_nonoverlapping_phase_activity",
+  "contract_version": "rq2-nonoverlapping-phase-activity-v1",
+  "coverage": {
+    "phase_empty_rows": 16,
+    "phase_rows": 56,
+    "team_semesters": 14,
+    "weekly_empty_bin_rows": 106,
+    "weekly_rows": 182
+  },
+  "figure_output_sha256": {
+    "rq2_nonoverlapping_weekly_activity_overview": {
+      "pdf": "01e46e494ee47c089187657b6df241937dd565200fa8a647f14668d860fcb668",
+      "png": "73abb4b8b384486ef8d84fdb1a6d62332af418e334d84d651f2b3b772715027c",
+      "svg": "f60e9c6584b46ffa9978194fd166239ba466f259062fafd7dc18282ac26ba8a7"
+    },
+    "rq2_phase_activity_share_overview": {
+      "pdf": "eb0ed98db4ac12fad9c4379a098dd22faa2999c0d42834159256ac004471cbe2",
+      "png": "12d3b8782734d341310e6b1a7c4a90011d91ecde03919fce9fbd9f4fc508d447",
+      "svg": "661cc43f7671a4c9848d87c51dd7ee2cefc8c90d937444c92611bafbc6b5304f"
+    }
+  },
+  "figure_outputs": {
+    "rq2_nonoverlapping_weekly_activity_overview": {
+      "pdf": "paper_v9/figures/rq2_nonoverlapping_weekly_activity_overview.pdf",
+      "png": "paper_v9/figures/rq2_nonoverlapping_weekly_activity_overview.png",
+      "svg": "paper_v9/figures/rq2_nonoverlapping_weekly_activity_overview.svg"
+    },
+    "rq2_phase_activity_share_overview": {
+      "pdf": "paper_v9/figures/rq2_phase_activity_share_overview.pdf",
+      "png": "paper_v9/figures/rq2_phase_activity_share_overview.png",
+      "svg": "paper_v9/figures/rq2_phase_activity_share_overview.svg"
+    }
+  },
+  "generated_at_utc": "2026-09-25T18:26:16.519853+00:00",
+  "inference": "descriptive_nonoverlapping_activity_bins_not_causal",
+  "input_sha256": {
+    "commits": "e5d3d2035ee0879324902a16061608390e8e3132e2d4c0629c4de112a1f8566c",
+    "evaluator_forms_2025_2": "e135324c3ffbd9a2ed780bd654d5f797cab6065ac79212d5d5972f7ef5361d3f",
+    "evaluator_forms_2026_1": "03aa0e6eb1cc039b6a955fea51bc775b32c17b95d21431b8166c872a6cbddf54",
+    "files": "c13269b33fcef0db61856678fc4ca8a9c86e2e8155d80f170de93f9274c1d1fa",
+    "score_base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52"
+  },
+  "inputs": {
+    "commits": "data/lake/git_commits.parquet",
+    "evaluator_forms_2025_2": "data/processed/forms/2025.2/avaliadores.csv",
+    "evaluator_forms_2026_1": "data/processed/forms/2026.1/avaliadores.csv",
+    "files": "data/lake/git_files.parquet",
+    "score_base": "paper_v9/figures/rq2_score_trajectory_base_data.csv"
+  },
+  "limitations": [
+    "Repository activity does not observe off-repository work.",
+    "pre_t1 has variable duration because it starts at each team-semester's first observed pre-T3 repository event.",
+    "Weekly bins cover the final 91 days before T3 and intentionally exclude earlier activity.",
+    "Clean churn depends on the current clean-path artifact policy."
+  ],
+  "metrics": {
+    "active_author_n": "Distinct local commit authors in the bin or phase.",
+    "active_day_n": "Distinct UTC commit days in the bin or phase.",
+    "clean_churn": "lines_added + lines_deleted over clean paths using code-churn-metrics-v2.",
+    "commit_n": "Distinct commits from git_commits.parquet."
+  },
+  "output_sha256": {
+    "phase_data": "94586d648d29b79d6ad2c2dbc27fce776f118560eb61c4f88e60d8df55071c8b",
+    "phase_summary": "a384df34dc3cf67a60211be9338b58fd76d61db283d5b4ee177f8fee70bffbde",
+    "weekly_data": "4ea38b3108a98dd1599711216eba3341b00b4c24ed40ea0bfd29180add6ebe99",
+    "weekly_summary": "52d82d05202deb538a1643b6dbe4eb555ef1595002c969598461212fc9de3c63"
+  },
+  "outputs": {
+    "phase_data": "paper_v9/figures/rq2_phase_activity_share_data.csv",
+    "phase_summary": "paper_v9/figures/rq2_phase_activity_share_summary.csv",
+    "weekly_data": "paper_v9/figures/rq2_nonoverlapping_weekly_activity_data.csv",
+    "weekly_summary": "paper_v9/figures/rq2_nonoverlapping_weekly_activity_summary.csv"
+  },
+  "phase_contract": {
+    "event_assignment": "Each observed pre-T3 event belongs to exactly one phase.",
+    "phase_labels": [
+      "pre_t1",
+      "t1_to_t2",
+      "t2_to_t3_excluding_final7",
+      "final7_pre_t3"
+    ],
+    "policy": "pre_t1 uses the observed pre-T3 repository start; t1_to_t2 is [T1,T2); t2_to_t3_excluding_final7 is [T2,T3-7d); final7_pre_t3 is [T3-7d,T3)."
+  },
+  "weekly_bin_contract": {
+    "bin_labels": [
+      "week_-12",
+      "week_-11",
+      "week_-10",
+      "week_-9",
+      "week_-8",
+      "week_-7",
+      "week_-6",
+      "week_-5",
+      "week_-4",
+      "week_-3",
+      "week_-2",
+      "week_-1",
+      "final_7_days"
+    ],
+    "empty_bins": "Retained as zero rows for every team-semester/bin combination.",
+    "event_assignment": "Each pre-T3 event inside the covered 91-day weekly window belongs to exactly one bin.",
+    "policy": "Non-overlapping bins relative to team-specific T3 anchors. week_-12 covers [-91,-84), week_-1 covers [-14,-7), and final_7_days covers [-7,0)."
+  }
+}

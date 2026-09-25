@@ -36,6 +36,24 @@ editoriais.
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
+### rq2_nonoverlapping_phase_activity
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `rq2_nonoverlapping_phase_activity` |
+| `artifact_family` | `nonoverlapping_activity_bins` |
+| `files` | [`figures/rq2_nonoverlapping_weekly_activity_data.csv`](figures/rq2_nonoverlapping_weekly_activity_data.csv), [`figures/rq2_nonoverlapping_weekly_activity_summary.csv`](figures/rq2_nonoverlapping_weekly_activity_summary.csv), [`figures/rq2_nonoverlapping_weekly_activity_overview.png`](figures/rq2_nonoverlapping_weekly_activity_overview.png), [`figures/rq2_nonoverlapping_weekly_activity_overview.svg`](figures/rq2_nonoverlapping_weekly_activity_overview.svg), [`figures/rq2_nonoverlapping_weekly_activity_overview.pdf`](figures/rq2_nonoverlapping_weekly_activity_overview.pdf), [`figures/rq2_phase_activity_share_data.csv`](figures/rq2_phase_activity_share_data.csv), [`figures/rq2_phase_activity_share_summary.csv`](figures/rq2_phase_activity_share_summary.csv), [`figures/rq2_phase_activity_share_overview.png`](figures/rq2_phase_activity_share_overview.png), [`figures/rq2_phase_activity_share_overview.svg`](figures/rq2_phase_activity_share_overview.svg), [`figures/rq2_phase_activity_share_overview.pdf`](figures/rq2_phase_activity_share_overview.pdf), [`figures/rq2_nonoverlapping_phase_activity.metadata.json`](figures/rq2_nonoverlapping_phase_activity.metadata.json) |
+| `data_inputs` | `data/lake/git_commits.parquet`; `data/lake/git_files.parquet`; `data/processed/forms/2025.2/avaliadores.csv`; `data/processed/forms/2026.1/avaliadores.csv`; `paper_v9/figures/rq2_score_trajectory_base_data.csv` |
+| `unit_of_analysis` | equipe-semestre × bin semanal; equipe-semestre × fase |
+| `main_question` | O padrão de concentração final permanece quando a atividade é reagrupada em bins semanais e fases mutuamente exclusivas, em vez de janelas rolling sobrepostas? |
+| `best_use` | Base para Fase 6; Results/Threats como mitigação da ameaça de janelas rolling sobrepostas após validação das Tarefas 6.2 e 6.3 |
+| `key_reading` | Artefato base: cria 13 bins semanais não sobrepostos relativos ao T3 (`week_-12` a `week_-1` e `final_7_days`) e quatro fases não sobrepostas (`pre_t1`, `t1_to_t2`, `t2_to_t3_excluding_final7`, `final7_pre_t3`). As métricas incluem commits distintos, clean changed lines, dias ativos e autores ativos, com zeros preservados para bins vazios. Os shares de fase somam 100% por equipe-semestre para commits e clean churn. |
+| `utility_score` | Alta |
+| `limitations` | Atividade Git não observa trabalho fora do repositório; `pre_t1` tem duração variável porque começa no primeiro evento repositório-visível observado antes de T3; os bins semanais cobrem os 91 dias finais antes de T3 e excluem atividade anterior; clean churn depende da política de clean paths vigente. |
+| `status` | `candidate` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
+
 ### rq2_operational_regularity
 
 | Campo | Valor |

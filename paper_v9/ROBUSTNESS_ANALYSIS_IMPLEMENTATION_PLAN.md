@@ -1212,9 +1212,19 @@ paper_v9/scripts/results/generate_nonoverlapping_phase_activity.py
 
 **Output esperado**
 
-- `rq2_nonoverlapping_weekly_activity_data.csv`
-- `rq2_phase_activity_share_data.csv`
-- Metadados e figuras.
+- [x] `rq2_nonoverlapping_weekly_activity_data.csv`
+- [x] `rq2_phase_activity_share_data.csv`
+- [x] `rq2_nonoverlapping_phase_activity.metadata.json`
+- [x] Figuras exploratórias `rq2_nonoverlapping_weekly_activity_overview.{png,svg,pdf}` e `rq2_phase_activity_share_overview.{png,svg,pdf}`.
+
+**Status de implementação**
+
+- [x] Script reprodutível criado.
+- [x] Anchors T1/T2/T3 derivados dos timestamps dos formulários de avaliadores.
+- [x] Dados de planejamento/score incorporados a partir de `rq2_score_trajectory_base_data.csv`.
+- [x] Artefatos base gerados para `n=14` equipe-semestres.
+- [ ] Validação focada de contrato dos bins semanais permanece na Tarefa 6.2.
+- [ ] Figuras finais nomeadas por fase permanecem na Tarefa 6.3.
 
 ## Tarefa 6.2 — Weekly bins não sobrepostos
 
@@ -1839,7 +1849,7 @@ git --no-pager status --short
 - [x] `generate_operational_regularity.py`
 - [x] `generate_influence_maps.py`
 - [x] `generate_complexity_confounding_profiles.py`
-- [ ] `generate_nonoverlapping_phase_activity.py`
+- [x] `generate_nonoverlapping_phase_activity.py`
 - [ ] `generate_m5_2025_triangulation.py`
 - [ ] `build_team_semester_evidence_panel.py`
 
