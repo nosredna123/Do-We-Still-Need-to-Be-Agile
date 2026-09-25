@@ -31,6 +31,9 @@ Escopo acordado:
 - [ ] Registrar cada novo artefato analítico/visual em um catálogo versionado
   de uso editorial, com utilidade, limitações, melhor contexto de uso e status
   de adoção no artigo.
+- [ ] Tratar o catálogo como fonte editorial integrada: decisões de revisão
+  textual devem considerar tanto as entradas de artefatos quanto o
+  `Registro de respostas aos insights esperados`.
 - [ ] Atualizar o catálogo de uso sempre que uma figura/dado for promovido ao
   texto principal, movido ao apêndice, substituído, descartado ou usado para
   responder a uma crítica específica.
@@ -90,7 +93,8 @@ paper_v9/ARTIFACT_USAGE_CATALOG.md
 O catálogo deve funcionar como índice editorial e analítico. Seu objetivo é
 evitar que cada nova decisão de escrita exija reabrir e reavaliar todos os
 artefatos gerados. Ele deve resumir, em linguagem curta, para que cada artefato
-serve, onde ele é forte, onde ele é fraco e qual é seu status no paper.
+serve, onde ele é forte, onde ele é fraco, qual é seu status no paper e quais
+insights esperados já foram empiricamente respondidos.
 
 Campos mínimos por artefato ou família de artefatos:
 
@@ -111,7 +115,11 @@ Campos mínimos por artefato ou família de artefatos:
 | `last_reviewed` | Data da última avaliação editorial |
 
 Esse catálogo deve ser atualizado junto com cada fase e revisado antes da
-integração no LaTeX.
+integração no LaTeX. Em fases ou tarefas de revisão editorial, o catálogo deve
+ser lido como um todo: entradas de artefatos, status, limitações, artefatos
+substituídos/descartados e o `Registro de respostas aos insights esperados`
+devem informar conjuntamente a decisão de inserir, mover, condensar ou omitir
+material no artigo.
 
 ## Protocolo operacional obrigatório por demanda/artefato
 
@@ -284,6 +292,21 @@ Cada novo artefato deve registrar:
 - [ ] artefato substituído, se houver;
 - [ ] `last_reviewed`.
 
+Quando a tarefa/fase tiver um bloco **Insight esperado**, a atualização do
+catálogo também deve incluir ou atualizar uma linha na seção
+`Registro de respostas aos insights esperados`, com:
+
+- [ ] texto do insight/pergunta em forma curta;
+- [ ] tarefa(s) que produziram a evidência;
+- [ ] artefatos de evidência usados para responder;
+- [ ] resposta empírica curta, com números principais quando disponíveis;
+- [ ] uso editorial sugerido;
+- [ ] ressalvas para evitar leitura causal ou extrapolação indevida.
+
+Essa resposta ao insight é parte do critério de conclusão da tarefa: não basta
+gerar figura/CSV/metadados se o insight esperado já puder ser respondido pelos
+artefatos gerados.
+
 ### Gate de autorização C — Promoção editorial
 
 Pedir confirmação do usuário antes de:
@@ -342,6 +365,8 @@ contradições, lacunas de transição ou claims mais fortes que os dados permit
 
 Checklist obrigatório:
 
+- [ ] consultar o catálogo completo, incluindo o `Registro de respostas aos
+  insights esperados`, antes de propor alterações textuais;
 - [ ] verificar se a introdução/motivação precisa antecipar a nova distinção;
 - [ ] verificar se a pergunta de pesquisa relacionada precisa de ajuste de
   escopo ou wording;
@@ -1412,7 +1437,8 @@ Colunas sugeridas:
 Alto, com baixo custo. Esta fase cria um controle editorial persistente para
 evitar reanalisar todos os artefatos sempre que surgir uma pergunta narrativa,
 uma revisão de seção ou uma crítica de avaliador. O catálogo deve registrar a
-utilidade prática de cada figura/dado e seu status de uso no artigo.
+utilidade prática de cada figura/dado, seu status de uso no artigo e a resposta
+empírica curta para cada insight esperado já executado.
 
 ## Tarefa 9.1 — Criar catálogo inicial de uso
 
@@ -1537,7 +1563,10 @@ Para cada artefato, registrar:
 
 Antes de editar `results.tex`, `discussion.tex` ou `threats_to_validity.tex`:
 
-- [ ] Consultar o catálogo.
+- [ ] Consultar o catálogo completo, não apenas a lista de artefatos.
+- [ ] Revisar o `Registro de respostas aos insights esperados` para identificar
+  quais achados já têm resposta empírica curta, quais ressalvas devem ser
+  preservadas e quais insights ainda não devem ser promovidos ao texto.
 - [ ] Selecionar artefatos com status `candidate`, `main_text` ou `appendix`.
 - [ ] Evitar reabrir todos os CSVs/figuras sem necessidade.
 - [ ] Atualizar status dos artefatos escolhidos.
@@ -1569,7 +1598,9 @@ Figuras candidatas para texto principal:
 
 **Checklist**
 
-- [ ] Consultar `ARTIFACT_USAGE_CATALOG.md` antes de selecionar figuras.
+- [ ] Consultar `ARTIFACT_USAGE_CATALOG.md` como um todo, incluindo status de
+  artefatos, limitações e respostas aos insights esperados, antes de selecionar
+  figuras.
 - [ ] Escolher no máximo 2 novas figuras principais.
 - [ ] Escolher 2-4 figuras suplementares.
 - [ ] Atualizar lista de figuras candidatas se necessário.
@@ -1600,6 +1631,8 @@ Figuras candidatas para texto principal:
 - [ ] Evitar linguagem causal.
 - [ ] Não repetir toda a seção de Threats.
 - [ ] Referenciar artefatos cuja utilidade esteja registrada no catálogo.
+- [ ] Usar as respostas registradas para os insights esperados como guia de
+  síntese, preservando números principais e ressalvas.
 
 ## Tarefa 10.3 — Atualizar Discussion
 
@@ -1625,7 +1658,8 @@ Figuras candidatas para texto principal:
 - [ ] Conectar achados à narrativa de coordenação/especificação.
 - [ ] Manter SDD como hipótese/intervenção futura.
 - [ ] Não afirmar que os dados testam SDD.
-- [ ] Usar as interpretações curtas do catálogo como ponto de partida, não como substituto da análise textual.
+- [ ] Usar as interpretações curtas e as respostas aos insights esperados do
+  catálogo como ponto de partida, não como substituto da análise textual.
 
 ## Tarefa 10.4 — Atualizar Threats to Validity
 
