@@ -51,12 +51,15 @@
     "team_semesters": 14
   },
   "data_path": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
-  "data_sha256": "405c7f64da0cf2312b96e933b398209d447edc0df46ca6db20025faf1ee21f62",
-  "generated_at_utc": "2026-09-25T17:32:59.061663+00:00",
+  "data_sha256": "5357d121ce68694baf3ec46c2366eb12667a96cca4942b19e615ac2b30bed72a",
+  "generated_at_utc": "2026-09-25T17:36:15.599215+00:00",
+  "group_counts_path": "paper_v9/figures/rq2_score_trajectory_group_counts.csv",
+  "group_counts_sha256": "12cdb1fba994b634ba8944c1e828f4f00530b28e8645e467458a6298219363d6",
   "inference": "descriptive_non_causal",
   "limitations": [
     "Descriptive evaluator construct; not an official project quality score.",
-    "Scores summarize evaluator form dimensions and do not measure objective GenAI usage."
+    "Scores summarize evaluator form dimensions and do not measure objective GenAI usage.",
+    "Trajectory groups are descriptive bins over a 14 team-semester sample and should not be over-interpreted."
   ],
   "output_columns": [
     "ID_Equipe",
@@ -66,8 +69,28 @@
     "evaluator_score_t3",
     "delta_score_t3_minus_t1",
     "delta_score_t2_minus_t1",
-    "delta_score_t3_minus_t2"
+    "delta_score_t3_minus_t2",
+    "score_trajectory_group"
   ],
+  "score_trajectory_grouping": {
+    "fallback_applied": true,
+    "final_group_counts": {
+      "declined": 2,
+      "improved": 8,
+      "stable": 4
+    },
+    "initial_four_group_counts": {
+      "declined": 0,
+      "improved": 6,
+      "stable_high": 4,
+      "stable_low": 4
+    },
+    "initial_threshold": 0.25,
+    "interpretation": "The initial four-group rule with a 0.25 threshold produced an undersized declined group. The registered fallback collapses stable_high/stable_low into stable and selects the largest signed threshold that preserves at least two team-semesters per observed trajectory group.",
+    "minimum_group_size": 2,
+    "strategy": "three_group_adaptive_signed_threshold",
+    "threshold": 0.125
+  },
   "source_path": "data/lake/evaluator_team_cuts.parquet",
   "source_sha256": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
   "team_key": [

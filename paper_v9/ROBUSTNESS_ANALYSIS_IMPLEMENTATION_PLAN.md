@@ -540,15 +540,16 @@ Threshold inicial recomendado:
 
 - Coluna `score_trajectory_group`
 - Tabela de contagem por grupo.
+- `paper_v9/figures/rq2_score_trajectory_group_counts.csv`
 
 **Checklist**
 
-- [ ] Verificar se os grupos não ficam excessivamente pequenos.
-- [ ] Se algum grupo tiver `n < 2`, registrar fallback para 3 grupos:
+- [x] Verificar se os grupos não ficam excessivamente pequenos.
+- [x] Se algum grupo tiver `n < 2`, registrar fallback para 3 grupos:
   - `improved`
   - `stable`
   - `declined`
-- [ ] Registrar thresholds em metadata.
+- [x] Registrar thresholds em metadata.
 
 ## Tarefa 0.3 — Definir planejamento alto/baixo
 
