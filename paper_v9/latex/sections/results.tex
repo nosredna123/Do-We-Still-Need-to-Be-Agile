@@ -1,15 +1,17 @@
 \section{Results}
 This section reports the descriptive and exploratory results produced by the
-validated V9 metric artifacts. Results are organized by research question and
+validated metric artifacts. Results are organized by research question and
 retain the analytical grain of each metric; no claim combines incompatible
 grains or treats self-reported evidence as behavioral telemetry.
 
 \subsection{RQ1: How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?}
 
-RQ1 is supported by two distinct evidence streams: the M1 survey panel,
+RQ1 is supported by two distinct evidence streams: Self-Reported AI Usage and
+Perceptions (M1),
 which summarizes six perception families and separately reports self-reported
-AI use, and M2, which summarizes perceived disruption agreement for six
-software-engineering roles. All six cohort-by-semester/checkpoint cells in M1
+AI use, and Perceived Role Disruption (M2), which summarizes perceived
+disruption agreement for six software-engineering roles. All six
+cohort-by-semester/checkpoint cells in the M1 family
 have complete item coverage, with 46, 41, and 40 respondents in 2025.2 and
 22, 20, and 18 respondents in 2026.1 at $T_1$, $T_2$, and $T_3$, respectively.
 These are repeated cohort summaries, not an identified individual longitudinal
@@ -42,15 +44,15 @@ corresponding endpoint values in compact form.
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq1_m1_perception_with_sd.png}
-\caption{M1 perception families by cohort and checkpoint. Points show means
+\includegraphics[width=\textwidth]{figures/rq1_m1_perception_with_sd.png}
+\caption{Self-Reported AI Usage and Perceptions (M1) by cohort and checkpoint. Points show means
 and bars show one standard deviation; family scales are retained from the
 underlying instruments.}
 \label{fig:rq1-m1}
 \end{figure*}
 
 \begin{table*}[t]
-\caption{M1 Endpoint Summaries: Mean $\pm SD$}
+\caption{Self-Reported AI Usage and Perceptions (M1): Endpoint Means $\pm SD$}
 \label{tab:rq1-m1-endpoints}
 \centering
 \scriptsize
@@ -108,7 +110,8 @@ proportions are presented as exploratory descriptions only.
 % paper_v9/data/metrics/m1_rq1_career_impact_topics_exploratory.csv and are
 % excluded from confirmatory interpretation by the M1 metadata gate.
 
-M2 shows a role-specific pattern rather than a uniform increase in perceived
+Perceived Role Disruption (M2) shows a role-specific pattern rather than a
+uniform increase in perceived
 disruption. The values below are means on the $1$--$5$ Likert agreement scale;
 each parenthetical value is the corresponding $SD$. In 2025.2, Frontend has
 the highest mean agreement at all three checkpoints: $2.74 \pm 1.10$,
@@ -124,8 +127,8 @@ to the $1$--$5$ response range.
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq1_m2_role_perception_heatmap.png}
-\caption{M2 perceived role-disruption agreement by cohort and checkpoint.
+\includegraphics[width=\textwidth]{figures/rq1_m2_role_perception_heatmap.png}
+\caption{Perceived Role Disruption (M2) by cohort and checkpoint.
 Cells show mean agreement on the $1$--$5$ Likert scale.}
 \label{fig:rq1-m2}
 \end{figure*}
@@ -150,9 +153,10 @@ by $-0.31$. These paired values are sensitivity summaries.
 \subsection{RQ2: How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?}
 
 RQ2 contrasts three descriptive evidence streams that operate at different
-grains. M3 measures repository activity timing, author participation, and
-concentration for 14 team-semesters. M4 measures clean source/test change at
-team-semester and checkpoint grain. M5 counts candidate coordination markers
+grains. Repository Activity (M3) measures activity timing, author participation,
+and concentration for 14 team-semesters. Clean-Change Dynamics (M4) measures
+clean source/test change at team-semester and checkpoint grain.
+Coordination-Language Evidence (M5) counts candidate coordination markers
 within a global transcript corpus by checkpoint. The measures are therefore
 reported side by side as complementary descriptions, not as a common-scale
 effect or a statistical correlation.
@@ -161,7 +165,7 @@ effect or a statistical correlation.
 % m4_clean_change_dynamics.metadata.json, and
 % m5_coordination_evidence.metadata.json.
 
-M3 shows a pronounced concentration of repository activity around the final
+Repository Activity (M3) shows a pronounced concentration around the final
 evaluator anchor. In the semester-pooled rolling view, total commits increase
 from $95$ at 21 days before the anchor to $159$ one day before, peak at $302$
 one day after, and fall to $28$ at seven days after. At the anchor itself,
@@ -175,8 +179,8 @@ marks the final evaluator anchor.
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq2_m3_activity_pooled.png}
-\caption{M3 pooled rolling repository activity. The vertical marker identifies
+\includegraphics[width=\textwidth]{figures/rq2_m3_activity_pooled.png}
+\caption{Repository Activity (M3) in pooled rolling windows. The vertical marker identifies
 the $T_3$ evaluator anchor; the annotation identifies the pooled peak.}
 \label{fig:rq2-m3}
 \end{figure*}
@@ -198,7 +202,8 @@ for no-activity cases.
 % paper_v9/data/metrics/m3_author_activity_participation.csv and
 % m3_author_concentration.csv. No author identity is exposed in these outputs.
 
-M4 reproduces the temporal increase using a narrower clean-change definition.
+Clean-Change Dynamics (M4) reproduces the temporal increase using a narrower
+clean-change definition.
 Pooled clean churn rises from $21{,}718$ lines across 7 observed team-semesters
 at $T_1$, to $47{,}545$ lines across 10 at $T_2$, and $136{,}325$ lines across
 all 14 at $T_3$. The median clean churn per team-semester rises from $66.5$
@@ -206,13 +211,15 @@ lines at $T_1$ to $3{,}232.5$ at $T_2$ and $6{,}975.5$ at $T_3$. Clean change
 accounts for $42.9\%$, $19.6\%$, and $1.0\%$ of all recorded churn at the
 three checkpoints, respectively, because excluded or non-measurement paths
 dominate the raw line-change total in the final checkpoint. This distinction is
-why M4 is not interchangeable with total repository activity.
+why Clean-Change Dynamics (M4) is not interchangeable with total repository
+activity.
 % PROVENANCE: M4 pooled endpoint values are from
 % paper_v9/data/metrics/m4_churn_magnitude_pooled.csv and
 % m4_artifact_composition_pooled.csv. The clean-path definition and its
 % limitation are declared in m4_clean_change_dynamics.metadata.json.
 
-M5 provides a separate textual axis for the 2025.2 transcript corpus. The
+Coordination-Language Evidence (M5) provides a separate textual axis for the
+2025.2 transcript corpus. The
 corpus contains 35, 37, and 28 transcript chunks at $T_1$, $T_2$, and $T_3$,
 respectively, with two source sessions at each checkpoint. Candidate marker
 density increases from $0.515$ to $1.132$ and $1.287$ markers per 1,000
@@ -229,7 +236,8 @@ coordination failure; transcript coverage is unavailable for 2026.1.
 
 Table~\ref{tab:rq2-summary} consolidates the principal RQ2 values while
 retaining their distinct units and analytical grains. Figure~\ref{fig:rq2-m4-m5}
-shows the M4 and M5 checkpoint trajectories in separate panels.
+shows the Clean-Change Dynamics (M4) and Coordination-Language Evidence (M5)
+checkpoint trajectories in separate panels.
 
 \begin{table*}[t]
 \caption{RQ2 Temporal Summary with Explicit Units}
@@ -241,9 +249,9 @@ shows the M4 and M5 checkpoint trajectories in separate panels.
 \toprule
 \textbf{Metric} & \textbf{Unit / grain} & \textbf{$T_1$ or $-7$} & \textbf{$T_2$ or $-1$} & \textbf{$T_3$ or $0$} & \textbf{Post-anchor} & \textbf{Coverage} \\
 \midrule
-M3 activity & Pooled commits / rolling window & 52 ($-7$) & 159 ($-1$) & 294 ($0$) & 302 ($+1$); 28 ($+7$) & 14 team-semesters \\
-M4 clean change & Clean churn lines / checkpoint & 21,718 & 47,545 & 136,325 & -- & 7 / 10 / 14 observed \\
-M5 lexical evidence & Markers per 1,000 tokens / global corpus & 0.515 & 1.132 & 1.287 & -- & 2025.2 only \\
+Repository Activity (M3) & Pooled commits / rolling window & 52 ($-7$) & 159 ($-1$) & 294 ($0$) & 302 ($+1$); 28 ($+7$) & 14 team-semesters \\
+Clean-Change Dynamics (M4) & Clean churn lines / checkpoint & 21,718 & 47,545 & 136,325 & -- & 7 / 10 / 14 observed \\
+Coordination-Language Evidence (M5) & Markers per 1,000 tokens / global corpus & 0.515 & 1.132 & 1.287 & -- & 2025.2 only \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -253,30 +261,40 @@ M5 lexical evidence & Markers per 1,000 tokens / global corpus & 0.515 & 1.132 &
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq2_m4_m5_checkpoint_panels.png}
-\caption{RQ2 checkpoint summaries with explicit units. M4 clean source/test
-churn and M5 lexical marker density use separate panels and scales.}
+\includegraphics[width=\textwidth]{figures/rq2_m4_m5_checkpoint_panels.png}
+\caption{RQ2 checkpoint summaries with explicit units. Clean-Change Dynamics
+(M4) and Coordination-Language Evidence (M5) use separate panels and scales.}
 \label{fig:rq2-m4-m5}
 \end{figure*}
 
-Taken together, M3 and M4 show that repository-visible activity and clean
+Taken together, Repository Activity (M3) and Clean-Change Dynamics (M4) show
+that repository-visible activity and clean
 source/test change become most concentrated near the final checkpoint, while
-M5 shows an increase in candidate coordination-language density across the
+Coordination-Language Evidence (M5) shows an increase in candidate
+coordination-language density across the
 observed 2025.2 transcript corpus. The three patterns are compatible with the
 RQ2 descriptive contrast within the observed evidence streams.
 
-\subsection{RQ3: How does the quality of upfront architectural artifacts (evaluated at baseline $T_1$) associate with late-stage destructive rework and independent, blind-scored project outcomes?}
+\subsection{RQ3: How does the quality of upfront architectural artifacts (evaluated at baseline \texorpdfstring{$T_1$}{T1}) associate with late-stage destructive rework and independent, blind-scored project outcomes?}
 
-RQ3 is evaluated at team-semester grain across 14 observations. The analysis
-separates observable upfront architectural artifacts from their semantic
-interpretation, separates rework magnitude from a baseline-conditioned ratio,
-and treats evaluator outcomes as independent T3 scorecard summaries. All
-associations are reported as descriptive and exploratory.
+RQ3 is evaluated at team-semester grain across only 14 observations. This
+small sample substantially limits statistical power and the stability of any
+correlation estimate; accordingly, the reported Spearman coefficients are
+strictly exploratory diagnostics of structural variation, not confirmatory
+tests. This narrower analysis complements the broader descriptive evidence for
+RQ1 and RQ2, which is situated in a cohort of approximately 70 participating
+students and draws on repeated surveys, repositories from all 14 projects, and
+the available transcript corpus. These evidence streams retain their distinct
+analytical grains and are not treated as 70 independent observations. The RQ3
+analysis separates observable upfront architectural artifacts from their
+semantic interpretation, separates rework magnitude from a
+baseline-conditioned ratio, and treats evaluator outcomes as independent T3
+scorecard summaries.
 % PROVENANCE: RQ3 coverage and grains are declared in the M6a, M6b, M7, M8,
 % and M9 metadata files under paper_v9/data/metrics/. The executed verification
 % notebooks are verify_m6.ipynb through verify_m9.ipynb.
 
-M6a (T1 architectural-artifact evidence) records whether a T1 architectural
+Architectural Artifact Scope (M6a) records whether a T1 architectural
 artifact was observed and its
 repository-visible structural scope. An artifact is present in 4 of 9
 team-semesters in 2025.2 and in all 5 team-semesters in 2026.1. Among the
@@ -288,7 +306,7 @@ architectural quality or planning intent. Figure~\ref{fig:rq3-presence}
 summarizes the cohort-level presence pattern.
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq3_architectural_artifact_presence.png}
+\includegraphics[width=\textwidth]{figures/rq3_architectural_artifact_presence.png}
 \caption{T1 architectural-artifact presence by cohort. ``No repository
 artifact observed'' is an observation state, not evidence that planning did
 not occur elsewhere.}
@@ -299,7 +317,7 @@ not occur elsewhere.}
 % m6_structural_planning.metadata.json. The official output retains all 14
 % team-semesters and does not publish the legacy numeric planning score.
 
-M6b (structured T1 planning-content evidence) adds structured evidence from T1
+Planning Content Evidence (M6b) adds structured evidence from T1
 commit subjects for 9 of the 14
 team-semesters; 5 cases have no T1 subjects and were not measured. The reviewed fields cover planning
 evidence, goals, architecture/design, task decomposition, risk/dependency,
@@ -310,17 +328,18 @@ with no composite planning or architectural-quality score.
 % m6_llm_planning_content.metadata.json. Human review approval and exact-quote
 % validation are recorded in m6b_llm_planning_sample_for_review.md.
 
-M7 shows that repository inactivity is not equivalent to architectural-artifact
+Repository Inactivity (M7) shows that repository inactivity is not equivalent
+to architectural-artifact
 absence. At $T_1$, 7 of 9 team-semesters are inactive in the 2025.2 seven-day
 window and 3 of 5 are inactive in 2026.1; by $T_3$, no team-semester is
-inactive in either cohort. M7 is therefore used as a repository timing and
-coverage diagnostic, not as a planning-omission measure and not as an M9
-predictor.
+inactive in either cohort. Repository Inactivity (M7) is therefore used as a
+repository timing and coverage diagnostic, not as a planning-omission measure
+and not as a predictor in Artifact--Rework--Outcome Associations (M9).
 % PROVENANCE: M7 checkpoint values are from
 % paper_v9/data/metrics/m7_checkpoint_inactivity.csv and
 % m7_repository_inactivity.metadata.json.
 
-M8 reports late-stage changes to previously observed clean paths as a
+Clean-Path Rework (M8) reports late-stage changes to previously observed clean paths as a
 file-provenance proxy for destructive rework. Among the 14 team-semesters,
 12 are baseline-eligible. The T3 clean-rework ratio ranges from $0.000$ to
 $1.000$ among the reported observations, while clean rework magnitude ranges
@@ -329,12 +348,13 @@ from zero to $15{,}518$ lines. For example, the largest magnitude occurs in
 $1.000$ but very different absolute magnitudes ($172$ and $196$ lines).
 Baseline-ineligible cases remain separate and are not interpreted as stable or
 low-rework cases. Because path provenance does not establish semantic defects,
-M8 is not a direct defect measure. Figure~\ref{fig:rq3-profile} displays the
+Clean-Path Rework (M8) is not a direct defect measure.
+Figure~\ref{fig:rq3-profile} displays the
 artifact-scope/rework profile on a logarithmic rework axis, preserving baseline
 eligibility.
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq3_architecture_rework_profile.png}
+\includegraphics[width=\textwidth]{figures/rq3_architecture_rework_profile.png}
 \caption{T1 architectural-artifact scope versus T3 clean-rework magnitude.
 Points represent team-semesters; the vertical scale is logarithmic. Clean
 rework is a file-provenance proxy, not semantic defect validation.}
@@ -345,14 +365,22 @@ rework is a file-provenance proxy, not semantic defect validation.}
 % m8_rework_participation.csv, and m8_baseline_eligibility.csv. The clean-path
 % policy and proxy limitation are declared in m8_clean_rework.metadata.json.
 
-The primary M9 associations do not support a general monotonic relationship
-between T1 artifact scope and later rework. Across all 14 team-semesters,
+The primary Artifact--Rework--Outcome Associations (M9) are based on only 14
+team-semesters, which sharply limits statistical power and the stability of
+correlation estimates. We therefore use the coefficients and their p-values
+strictly as exploratory diagnostics of structural variation, not as
+confirmatory tests. This narrow inferential base should be distinguished from
+the broader descriptive evidence used for RQ1 and RQ2, which was collected
+from the approximately 70 participating students through surveys and their
+team activity, while retaining the stated grain and coverage limits of each
+evidence stream. Within these constraints, M9 does not support a general
+monotonic relationship between T1 artifact scope and later rework. Across all
+14 team-semesters,
 Spearman's $\rho$ is $0.206$ for T1 file count versus T3 clean-rework
 magnitude and $0.301$ for log-transformed T1 line scope versus that magnitude.
 Within the 12 baseline-eligible cases, the corresponding associations with the
 T3 clean-rework ratio are $-0.032$ and $-0.060$. Their exploratory p-values
-range from $0.296$ to $0.922$, and the small sample does not support
-confirmatory inference.
+range from $0.296$ to $0.922$.
 % PROVENANCE: M9 magnitude and ratio associations are from
 % paper_v9/data/metrics/m9_planning_vs_rework_m6a_m8a.csv and
 % m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv.
@@ -369,17 +397,20 @@ on their respective scorecard scales.
 % paper_v9/data/metrics/m9_planning_vs_outcomes_m6a_t3.csv; outcome
 % distributions are computed from data/lake/evaluator_team_cuts.parquet.
 
-The approved M6b structured planning-content fields produce a separate, smaller exploratory view with
+The approved Planning Content Evidence (M6b) fields produce a separate, smaller
+exploratory view with
 $n=9$. Its largest absolute association with clean-rework magnitude is
 $\rho=-0.408$ for task-decomposition evidence; its largest positive
 association with an evaluator outcome is $\rho=0.479$ for task-decomposition
-evidence versus scope applicability. Leave-one-out diagnostics for the M6a
+evidence versus scope applicability. Leave-one-out diagnostics for
+Architectural Artifact Scope (M6a)
 rework analyses produce ranges of $0.078$--$0.377$ for T1 file count and
 $0.194$--$0.494$ for T1 line scope when predicting rework magnitude. For the
 eligible-stratum rework ratio, the corresponding ranges are
 $-0.222$--$0.165$ and $-0.221$--$0.137$. These diagnostics expose sensitivity
 to individual team-semesters rather than confidence intervals.
-Table~\ref{tab:rq3-associations} reports the primary M9 association values;
+Table~\ref{tab:rq3-associations} reports the primary
+Artifact--Rework--Outcome Associations (M9) values;
 Figure~\ref{fig:rq3-sensitivity} visualizes the leave-one-out ranges.
 
 \begin{table*}[t]
@@ -412,7 +443,7 @@ T1 artifact line scope & Engagement/participation & All team-semesters & 14 & $-
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{../figures/rq3_association_sensitivity.png}
+\includegraphics[width=\textwidth]{figures/rq3_association_sensitivity.png}
 \caption{RQ3 association sensitivity. Points show full-analysis Spearman
 values; horizontal segments show leave-one-out ranges. These ranges are
 descriptive diagnostics, not confidence intervals.}
@@ -422,9 +453,10 @@ descriptive diagnostics, not confidence intervals.}
 % paper_v9/data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv and
 % m9_leave_one_out_intervals.csv. M7 is explicitly excluded from M9.
 
-Overall, the RQ3 evidence establishes a measurable contrast between observable
-T1 artifact scope, late clean-path changes, and independent evaluator outcomes,
-but it does not establish that artifact quality causes less destructive rework
-or better project outcomes. The principal result is therefore a bounded,
-exploratory association profile with explicit missingness and influence
-diagnostics, not a causal planning-effect estimate.
+Overall, the RQ3 evidence provides a descriptive comparison of observable T1
+artifact scope, late clean-path changes, and independent evaluator outcomes,
+but the 14-team-semester sample cannot support stable confirmatory correlation
+or establish that artifact quality causes less destructive rework or better
+project outcomes. The principal result is therefore a bounded, exploratory
+association profile with explicit missingness and influence diagnostics, not a
+causal planning-effect estimate.

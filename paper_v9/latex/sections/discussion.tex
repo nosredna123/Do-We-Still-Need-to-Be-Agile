@@ -17,8 +17,10 @@ to identify with small observational samples.
 
 RQ1 and RQ2 describe two sides of AI-assisted development. Survey responses
 show that students use Generative AI for concrete development activities, while
-M3 and M4 show that repository-visible activity intensifies around final
-integration. M5 adds textual evidence that candidate coordination markers are
+Repository Activity (M3) and Clean-Change Dynamics (M4) show that
+repository-visible activity intensifies around final integration.
+Coordination-Language Evidence (M5) adds textual evidence that candidate
+coordination markers are
 more dense at later checkpoints in the observed 2025.2 corpus. These results do
 not establish that AI use caused coordination friction; the relevant
 measurement boundaries are consolidated in Threats to Validity. They do,
@@ -30,24 +32,34 @@ can reduce the effort required to produce local implementation fragments, but
 it does not remove the need to agree on architecture, interfaces, task
 boundaries, dependencies, or acceptance conditions. In a multi-person project,
 those agreements remain coordination objects even when code is produced more
-quickly. The late concentration observed in M3/M4 is consistent with a process
+quickly. The late concentration observed in Repository Activity (M3) and
+Clean-Change Dynamics (M4) is consistent with a process
 in which integration pressure accumulates until the system must be assembled
-under deadline, while M5 suggests that coordination-related language is already
+under deadline, while Coordination-Language Evidence (M5) suggests that
+coordination-related language is already
 present in the shared record. This is a process interpretation, not a causal
 estimate.
 
 \subsection{Architectural artifacts: necessary evidence, not a quality score}
 
-RQ3 provides an important qualification to strong planning narratives. M6a
+RQ3 provides an important qualification to strong planning narratives.
+Architectural Artifact Scope (M6a)
 measures whether an architectural artifact was observed in the repository and
-how much structural scope it occupied; M6b extracts literal, structured
-planning-content evidence from T1 commit subjects. Neither metric directly
+how much structural scope it occupied; Planning Content Evidence (M6b) extracts
+literal, structured planning-content evidence from T1 commit subjects. Neither
+metric directly
 measures architectural quality. Repository absence cannot establish that a team
 did not plan elsewhere, and a larger artifact cannot establish that its design
 was coherent or useful.
 
-This distinction explains why the M9 associations are modest and unstable
-rather than uniformly directional. T1 artifact scope has small positive
+The M9 associations are therefore modest and unstable
+rather than uniformly directional. With only 14 team-semesters, RQ3 has low
+power for confirmatory correlation, and its coefficients serve only as
+exploratory diagnostics of structural variation. The paper's stronger
+empirical contribution lies in the descriptive and triangulated RQ1--RQ2
+evidence collected across the approximately 70 participating students, while
+the survey, repository, and transcript streams retain their distinct grains
+and coverage. T1 artifact scope has small positive
 associations with T3 rework magnitude in the complete team-semester set, while
 the baseline-eligible rework-ratio associations are near zero and slightly
 negative. Associations with blind-scored outcomes are likewise mixed and small.
@@ -59,7 +71,7 @@ validated measure of planning quality.
 The distinction also matters for interpretation of the tail cases. A team with
 no observed T1 artifact and a team with an artifact that is incomplete,
 misaligned, or unused are not equivalent cases. Conversely, a high rework ratio
-does not by itself identify a defect: M8 follows clean-path provenance and
+does not by itself identify a defect: Clean-Path Rework (M8) follows clean-path provenance and
 cannot determine whether a change was semantically destructive. The empirical
 chain is consequently useful as an auditable observation system, but not as a
 single planning-quality scale.
@@ -102,13 +114,38 @@ shared architectural decisions, executable acceptance conditions, interface
 contracts, and explicit dependency boundaries, rather than treating working
 code as the only visible progress signal. This interpretation is compatible
 with Agile values while challenging a purely code-first implementation rhythm.
+Granting teams autonomy to use Scrum, Kanban, other Agile variants, or an
+unguided approach was a deliberate feature of the naturalistic course design,
+preserving the process choices students ordinarily make rather than imposing a
+common treatment. This choice prevents us from attributing the observed T3
+friction specifically to Generative AI or to any one process model; instead, it
+motivates controlled tests of explicit architectural checkpoints, including
+SDD-inspired rubrics, within otherwise iterative workflows.
+
+From a pedagogical perspective, the observed coordination bottleneck is
+ambiguous rather than automatically beneficial. Integration friction may
+create productive opportunities for students to reason about architecture,
+interfaces, and dependencies, but it may also reveal only near the deadline
+that rapid AI-assisted implementation had concealed gaps in that
+understanding. The present instruments measure activity, perceptions,
+coordination-language evidence, artifacts, rework proxies, and project
+outcomes; they do not directly measure individual architectural learning.
+Accordingly, future classroom studies should pair these process measures with
+pre/post concept assessments and structured student reflections that can
+distinguish productive struggle from delayed recognition of foundational
+gaps.
 
 The practical implication is a stronger planning layer, not a return to a
 fixed plan that cannot change. Specifications should remain revisable, but
 their revisions should be explicit, reviewable, and connected to the tasks and
-implementation they govern. That is the specific space in which SDD deserves
-to be tested: as a way to preserve adaptability while making the intent behind
-AI-assisted change inspectable.
+implementation they govern. For educators evaluating early SDD artifacts,
+simple heuristics such as file scope (M6a) are insufficient. Instead, rubrics
+should assess both shared architectural intent and students' reasoning through
+explicit API contracts, defined cross-component dependencies, justification
+of design revisions, and verifiable acceptance criteria before GenAI-assisted
+implementation begins. That is the specific space in which SDD deserves to be
+tested: as a way to preserve adaptability while making the intent behind
+AI-assisted change inspectable and the associated learning visible.
 
 \subsection{Scope of the interpretation}
 

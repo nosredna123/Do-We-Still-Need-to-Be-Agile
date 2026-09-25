@@ -79,6 +79,12 @@ P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal, H.~K{\"{u}}tt
 \bibitem{spearman1904proof}
 C.~Spearman, ``The proof and measurement of association between two things,'' \emph{The American Journal of Psychology}, vol.~15, no.~1, pp. 72--101, 1904.
 
+\bibitem{prism_replication_package}
+``{PRISM} replication package,'' \url{https://example.org/prism-replication}, 2026, accessed: Sep. 25, 2026.
+
+\bibitem{prism_explorer}
+``{PRISM} interactive data explorer,'' \url{https://example.org/prism-explorer}, 2026, accessed: Sep. 25, 2026.
+
 \bibitem{nguyenduc2026systematic}
 \BIBentryALTinterwordspacing
 A.~Nguyen-Duc \emph{et~al.}, ``A systematic literature review on generative ai in software engineering,'' \emph{Preprints}, May 2026. [Online]. Available: \url{https://www.preprints.org/manuscript/202605.1638}
