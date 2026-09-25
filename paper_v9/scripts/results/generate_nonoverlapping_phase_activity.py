@@ -27,6 +27,8 @@ WEEKLY_BIN_CONTRACT_STEM = "rq2_nonoverlapping_weekly_bin_contract"
 WEEKLY_ASSIGNMENT_AUDIT_STEM = "rq2_nonoverlapping_weekly_assignment_audit"
 WEEKLY_OVERVIEW_STEM = "rq2_nonoverlapping_weekly_activity_overview"
 PHASE_OVERVIEW_STEM = "rq2_phase_activity_share_overview"
+PHASE_COMMIT_SHARE_STEM = "rq2_phase_commit_share_by_score_trajectory"
+PHASE_CLEAN_CHURN_SHARE_STEM = "rq2_phase_clean_churn_share_by_score_trajectory"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 CHECKPOINTS = ("T1", "T2", "T3")
 WEEK_BIN_LABELS = [f"week_{index}" for index in range(-12, 0)] + ["final_7_days"]
@@ -637,6 +639,86 @@ def _build_phase_overview(summary: pd.DataFrame) -> go.Figure:
     return figure
 
 
+def _build_phase_share_figure(
+    summary: pd.DataFrame,
+    *,
+    value_column: str,
+    median_column: str,
+    title: str,
+    yaxis_title: str,
+    note: str,
+) -> go.Figure:
+    plot_data = summary.copy()
+    plot_data["phase_display"] = plot_data["phase"].map(PHASE_DISPLAY_LABELS)
+    figure = go.Figure()
+    for score_group in ["improved", "stable", "declined"]:
+        subset = plot_data.loc[plot_data["score_trajectory_group"].eq(score_group)]
+        if subset.empty:
+            continue
+        figure.add_trace(
+            go.Bar(
+                x=subset["phase_display"],
+                y=subset[value_column],
+                name=score_group,
+                marker={"color": SCORE_GROUP_COLORS.get(score_group, "#64748b")},
+                customdata=subset[["phase", "team_semester_n", median_column, "mean_active_day_n", "mean_active_author_n"]],
+                hovertemplate=(
+                    "Phase=%{customdata[0]}<br>"
+                    "Mean share=%{y:.1f}%<br>"
+                    "Median share=%{customdata[2]:.1f}%<br>"
+                    "Mean active days=%{customdata[3]:.2f}<br>"
+                    "Mean active authors=%{customdata[4]:.2f}<br>"
+                    "n=%{customdata[1]}<extra></extra>"
+                ),
+            )
+        )
+    figure.update_layout(
+        template="simple_white",
+        width=1100,
+        height=660,
+        barmode="group",
+        margin={"l": 85, "r": 35, "t": 110, "b": 165},
+        title={"text": title, "font": {"size": 22}},
+        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        legend={
+            "title": "Score trajectory",
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.02,
+            "xanchor": "left",
+            "x": 0,
+        },
+        xaxis={
+            "title": "Non-overlapping project phase",
+            "categoryorder": "array",
+            "categoryarray": [PHASE_DISPLAY_LABELS[label] for label in PHASE_LABELS],
+            "gridcolor": "#e5e7eb",
+        },
+        yaxis={
+            "title": yaxis_title,
+            "ticksuffix": "%",
+            "range": [0, 104],
+            "gridcolor": "#e5e7eb",
+            "zeroline": True,
+            "zerolinecolor": "#cbd5e1",
+        },
+        annotations=[
+            {
+                "text": note,
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.22,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            }
+        ],
+    )
+    return figure
+
+
 def generate() -> dict[str, Any]:
     paper_v9 = resolve_paper_v9_dir()
     repo_root = paper_v9.parent
@@ -683,10 +765,42 @@ def generate() -> dict[str, Any]:
     _atomic_csv(phase_summary, output_paths["phase_summary"])
     _write_figure(_build_weekly_overview(weekly_summary), WEEKLY_OVERVIEW_STEM, figures_dir)
     _write_figure(_build_phase_overview(phase_summary), PHASE_OVERVIEW_STEM, figures_dir)
+    _write_figure(
+        _build_phase_share_figure(
+            phase_summary,
+            value_column="mean_commit_share_pct",
+            median_column="median_commit_share_pct",
+            title="Commit share by non-overlapping project phase",
+            yaxis_title="Mean team-semester commit share",
+            note=(
+                "Bars average team-semester shares within each score-trajectory group. "
+                "Phases are mutually exclusive and final7_pre_t3 is excluded from t2_to_t3_excluding_final7."
+            ),
+        ),
+        PHASE_COMMIT_SHARE_STEM,
+        figures_dir,
+    )
+    _write_figure(
+        _build_phase_share_figure(
+            phase_summary,
+            value_column="mean_clean_churn_share_pct",
+            median_column="median_clean_churn_share_pct",
+            title="Clean changed-line share by non-overlapping project phase",
+            yaxis_title="Mean team-semester clean changed-line share",
+            note=(
+                "Bars average team-semester clean-churn shares within each score-trajectory group. "
+                f"Clean churn uses the {CURRENT_POLICY_VERSION} clean-path policy."
+            ),
+        ),
+        PHASE_CLEAN_CHURN_SHARE_STEM,
+        figures_dir,
+    )
 
     figure_paths = {
         WEEKLY_OVERVIEW_STEM: {extension: figures_dir / f"{WEEKLY_OVERVIEW_STEM}.{extension}" for extension in ("png", "svg", "pdf")},
         PHASE_OVERVIEW_STEM: {extension: figures_dir / f"{PHASE_OVERVIEW_STEM}.{extension}" for extension in ("png", "svg", "pdf")},
+        PHASE_COMMIT_SHARE_STEM: {extension: figures_dir / f"{PHASE_COMMIT_SHARE_STEM}.{extension}" for extension in ("png", "svg", "pdf")},
+        PHASE_CLEAN_CHURN_SHARE_STEM: {extension: figures_dir / f"{PHASE_CLEAN_CHURN_SHARE_STEM}.{extension}" for extension in ("png", "svg", "pdf")},
     }
     metadata: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
@@ -740,6 +854,22 @@ def generate() -> dict[str, Any]:
                 "t2_to_t3_excluding_final7 is [T2,T3-7d); final7_pre_t3 is [T3-7d,T3)."
             ),
             "event_assignment": "Each observed pre-T3 event belongs to exactly one phase.",
+        },
+        "phase_visualization_contract": {
+            PHASE_COMMIT_SHARE_STEM: {
+                "source": str(output_paths["phase_summary"].relative_to(repo_root)),
+                "x": "phase",
+                "y": "mean_commit_share_pct",
+                "color": "score_trajectory_group",
+                "unit": "mean team-semester share within score-trajectory group",
+            },
+            PHASE_CLEAN_CHURN_SHARE_STEM: {
+                "source": str(output_paths["phase_summary"].relative_to(repo_root)),
+                "x": "phase",
+                "y": "mean_clean_churn_share_pct",
+                "color": "score_trajectory_group",
+                "unit": "mean team-semester share within score-trajectory group",
+            },
         },
         "metrics": {
             "commit_n": "Distinct commits from git_commits.parquet.",

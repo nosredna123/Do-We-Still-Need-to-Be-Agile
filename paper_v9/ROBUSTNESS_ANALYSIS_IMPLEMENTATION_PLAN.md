@@ -1270,12 +1270,19 @@ Fases:
 
 **Output esperado**
 
-- Share de atividade por fase e equipe-semestre.
+- [x] Share de atividade por fase e equipe-semestre.
 
 **Visualizações**
 
-- `rq2_phase_commit_share_by_score_trajectory.{png,svg,pdf}`
-- `rq2_phase_clean_churn_share_by_score_trajectory.{png,svg,pdf}`
+- [x] `rq2_phase_commit_share_by_score_trajectory.{png,svg,pdf}`
+- [x] `rq2_phase_clean_churn_share_by_score_trajectory.{png,svg,pdf}`
+
+**Operacionalização**
+
+- [x] Fases `pre_t1`, `t1_to_t2`, `t2_to_t3_excluding_final7` e `final7_pre_t3` são mutuamente exclusivas por equipe-semestre.
+- [x] Shares de commits e clean churn somam 100% por equipe-semestre quando há atividade observada.
+- [x] Figuras finais usam `phase_summary` e agrupam por `score_trajectory_group`.
+- [x] Metadata registra contrato visual das duas figuras finais.
 
 **Insight esperado**
 

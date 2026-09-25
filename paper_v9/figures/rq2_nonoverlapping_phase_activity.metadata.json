@@ -14,14 +14,24 @@
   },
   "figure_output_sha256": {
     "rq2_nonoverlapping_weekly_activity_overview": {
-      "pdf": "8b3897440c37157164c7767faeaefffb46d7d9633218d0b88f54e536df52cd3c",
+      "pdf": "7343b563c726544c43e69813c96ad6b7c06a3592c118a98b8c29bd74c887eda5",
       "png": "73abb4b8b384486ef8d84fdb1a6d62332af418e334d84d651f2b3b772715027c",
-      "svg": "6c352e45eaf253311a13eebd618f953376774584ffbd58169114bc698e3b1428"
+      "svg": "7d07a8ca6cf79c326a2b9181d04edc50cb14741df1869c4396a25c386145d866"
     },
     "rq2_phase_activity_share_overview": {
-      "pdf": "36a82a9dc451e3e58aeec7b04acc201fecda90903f3bf338357997f8b0af2172",
+      "pdf": "acfe477e7ce9600419ffef0a2b873f0d9b86d902eeb5dbcc4dea4f24a33edee4",
       "png": "12d3b8782734d341310e6b1a7c4a90011d91ecde03919fce9fbd9f4fc508d447",
-      "svg": "54f36d7eb732d4032a466d5dc1f0fb26a503b55d3902e1f6001ea79b804a5b66"
+      "svg": "7640366aa14a3ae412f3ba788e4a90e9ce89cac24ddfdddc24febe9c0c1cdae1"
+    },
+    "rq2_phase_clean_churn_share_by_score_trajectory": {
+      "pdf": "1ed8aececf0f2936f13294ddcb53429782f46d2b7a5845a151a0bcc4f55123c2",
+      "png": "351d4f32ecd56ef0a17b35ec729b916f9a4745c87229dbec3bfef1813cd34129",
+      "svg": "5d5ee2b7d34976dee27f91156b48a8fa6c8c1db13b88288cbddd07e87db907de"
+    },
+    "rq2_phase_commit_share_by_score_trajectory": {
+      "pdf": "751877601013a8adf731d6e024e1cbcbae25516fa1fee149cbbe754fa2852570",
+      "png": "1c47d188cfd149cfe4d851618b0c827699880d0f164a3624fa006788ef35c097",
+      "svg": "cc202d17bc8d610ff60fa6cfc76cb985ddde172c6cb270a76b1a9233af2233c5"
     }
   },
   "figure_outputs": {
@@ -34,9 +44,19 @@
       "pdf": "paper_v9/figures/rq2_phase_activity_share_overview.pdf",
       "png": "paper_v9/figures/rq2_phase_activity_share_overview.png",
       "svg": "paper_v9/figures/rq2_phase_activity_share_overview.svg"
+    },
+    "rq2_phase_clean_churn_share_by_score_trajectory": {
+      "pdf": "paper_v9/figures/rq2_phase_clean_churn_share_by_score_trajectory.pdf",
+      "png": "paper_v9/figures/rq2_phase_clean_churn_share_by_score_trajectory.png",
+      "svg": "paper_v9/figures/rq2_phase_clean_churn_share_by_score_trajectory.svg"
+    },
+    "rq2_phase_commit_share_by_score_trajectory": {
+      "pdf": "paper_v9/figures/rq2_phase_commit_share_by_score_trajectory.pdf",
+      "png": "paper_v9/figures/rq2_phase_commit_share_by_score_trajectory.png",
+      "svg": "paper_v9/figures/rq2_phase_commit_share_by_score_trajectory.svg"
     }
   },
-  "generated_at_utc": "2026-09-25T18:28:39.805277+00:00",
+  "generated_at_utc": "2026-09-25T18:30:40.541815+00:00",
   "inference": "descriptive_nonoverlapping_activity_bins_not_causal",
   "input_sha256": {
     "commits": "e5d3d2035ee0879324902a16061608390e8e3132e2d4c0629c4de112a1f8566c",
@@ -89,6 +109,22 @@
       "final7_pre_t3"
     ],
     "policy": "pre_t1 uses the observed pre-T3 repository start; t1_to_t2 is [T1,T2); t2_to_t3_excluding_final7 is [T2,T3-7d); final7_pre_t3 is [T3-7d,T3)."
+  },
+  "phase_visualization_contract": {
+    "rq2_phase_clean_churn_share_by_score_trajectory": {
+      "color": "score_trajectory_group",
+      "source": "paper_v9/figures/rq2_phase_activity_share_summary.csv",
+      "unit": "mean team-semester share within score-trajectory group",
+      "x": "phase",
+      "y": "mean_clean_churn_share_pct"
+    },
+    "rq2_phase_commit_share_by_score_trajectory": {
+      "color": "score_trajectory_group",
+      "source": "paper_v9/figures/rq2_phase_activity_share_summary.csv",
+      "unit": "mean team-semester share within score-trajectory group",
+      "x": "phase",
+      "y": "mean_commit_share_pct"
+    }
   },
   "weekly_bin_contract": {
     "assignment_audit_status": "pass",
