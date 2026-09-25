@@ -15,16 +15,21 @@ resposta empírica breve, o uso editorial sugerido e as ressalvas. Se a tarefa
 ainda produzir apenas infraestrutura sem evidência suficiente para responder ao
 insight, isso deve ser declarado no catálogo ou no plano como pendência.
 
-## Status possíveis
+## Taxonomia de status editorial
 
-- `candidate`: artefato tecnicamente válido, ainda sem decisão editorial final.
-- `main_text`: artefato selecionado para o corpo principal.
-- `appendix`: artefato adequado para apêndice/suplemento.
-- `response_letter`: artefato usado principalmente para responder revisão.
-- `diagnostic_only`: artefato útil para decisão interna, mas não recomendado
-  como figura/tabela do artigo.
-- `superseded`: artefato substituído por outro.
-- `discarded`: artefato descartado após revisão.
+| Status | Uso | Exigência adicional |
+|---|---|---|
+| `candidate` | Artefato tecnicamente válido, ainda sem decisão editorial final. | Registrar melhor uso provável e limitação principal. |
+| `main_text` | Artefato selecionado para o corpo principal. | Registrar seção/subseção de uso antes da integração LaTeX. |
+| `appendix` | Artefato adequado para apêndice/suplemento. | Registrar por que não precisa estar no corpo principal. |
+| `response_letter` | Artefato usado principalmente para responder revisão. | Registrar crítica ou pergunta de revisor que o artefato endereça. |
+| `diagnostic_only` | Artefato útil para decisão interna/metodológica, mas não recomendado como figura/tabela do artigo. | Registrar risco de má interpretação se promovido. |
+| `superseded` | Artefato substituído por versão melhor. | Obrigatório preencher `superseded_by` e explicar em `key_reading` ou `limitations` por que foi substituído. |
+| `discarded` | Artefato descartado após revisão. | Obrigatório manter `superseded_by` como `—` e explicar em `limitations` a justificativa curta do descarte. |
+
+Para `superseded` e `discarded`, a justificativa deve ser suficiente para que
+uma revisão editorial futura não precise reabrir todos os CSVs/figuras apenas
+para entender por que o artefato não deve ser promovido.
 
 ## Registro de respostas aos insights esperados
 

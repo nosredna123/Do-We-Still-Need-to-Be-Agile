@@ -1518,9 +1518,9 @@ paper_v9/ARTIFACT_USAGE_CATALOG.md
 
 **Checklist**
 
-- [ ] Incluir a taxonomia no topo do catálogo.
-- [ ] Exigir justificativa curta para `superseded` e `discarded`.
-- [ ] Exigir campo `superseded_by` quando aplicável.
+- [x] Incluir a taxonomia no topo do catálogo.
+- [x] Exigir justificativa curta para `superseded` e `discarded`.
+- [x] Exigir campo `superseded_by` quando aplicável.
 
 ## Tarefa 9.3 — Registrar utilidade e interpretação curta
 
