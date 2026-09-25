@@ -69,6 +69,30 @@ artefatos.
 | `rq2_student_syndrome_reviewer_response` | Para responder ao revisor e explicitar a alternativa de student syndrome. | Não usar para afirmar que IA causou picos tardios; não há telemetria timestamped de IA. |
 | `candidate_figure_inventory` | Para recuperar candidatos exploratórios iniciais durante seleção editorial. | Não promover sem comparar com artefatos mais recentes das Fases 1–8. |
 
+## Sincronização catálogo-metadados
+
+Revisão executada em 2026-09-25. Todos os links relativos registrados neste
+catálogo foram verificados como existentes. Quando um metadata legado não
+inclui `artifact_id`, a sincronização usa o stem do arquivo e a família
+catalogada.
+
+| Metadata | Artifact catalogado | Contrato | Status de sincronização |
+|---|---|---|---|
+| [`figures/rq2_score_trajectory_base.metadata.json`](figures/rq2_score_trajectory_base.metadata.json) | `rq2_score_trajectory_base` | `rq2-score-trajectory-base-v3` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/rq2_score_delta_vs_final7_concentration.metadata.json`](figures/rq2_score_delta_vs_final7_concentration.metadata.json) | `rq2_score_delta_vs_final7_concentration` | `rq2-score-trajectory-concentration-v1` | Metadata legado sem `artifact_id`; stem e inputs conferem com o catálogo. |
+| [`figures/rq2_planning_concentration_quadrants.metadata.json`](figures/rq2_planning_concentration_quadrants.metadata.json) | `rq2_planning_concentration_quadrants` | `rq2-planning-concentration-quadrants-v1` | Metadata legado sem `artifact_id`; stem e inputs conferem com o catálogo. |
+| [`figures/rq2_operational_regularity.metadata.json`](figures/rq2_operational_regularity.metadata.json) | `rq2_operational_regularity` | `rq2-operational-regularity-v1` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/rq3_influence_map.metadata.json`](figures/rq3_influence_map.metadata.json) | `rq3_influence_map` | `rq3-influence-map-v1` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/rq3_complexity_profile.metadata.json`](figures/rq3_complexity_profile.metadata.json) | `rq3_complexity_profile` | `rq3-complexity-profile-v1` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/rq2_nonoverlapping_phase_activity.metadata.json`](figures/rq2_nonoverlapping_phase_activity.metadata.json) | `rq2_nonoverlapping_phase_activity` | `rq2-nonoverlapping-phase-activity-v1` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/rq2_m5_2025_triangulation.metadata.json`](figures/rq2_m5_2025_triangulation.metadata.json) | `rq2_m5_2025_triangulation` | `rq2-m5-2025-triangulation-v1` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/team_semester_evidence_panel.metadata.json`](figures/team_semester_evidence_panel.metadata.json) | `team_semester_evidence_panel` | `team-semester-evidence-panel-v1` | `artifact_id` confere; inputs principais registrados. |
+| [`figures/rq2_student_syndrome_by_evaluator_planning_tier.metadata.json`](figures/rq2_student_syndrome_by_evaluator_planning_tier.metadata.json) | `rq2_student_syndrome_reviewer_response` | `rq2-student-syndrome-tier-plot-v1` | Metadata legado sem `artifact_id`; registrado sob família `student_syndrome`. |
+| [`figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn.metadata.json`](figures/rq2_student_syndrome_by_evaluator_planning_tier_clean_churn.metadata.json) | `rq2_student_syndrome_reviewer_response` | `rq2-student-syndrome-tier-plot-v1` | Metadata legado sem `artifact_id`; registrado sob família `student_syndrome`. |
+| [`figures/rq2_student_syndrome_full_period_commits_by_tier.metadata.json`](figures/rq2_student_syndrome_full_period_commits_by_tier.metadata.json) | `rq2_student_syndrome_reviewer_response` | `rq2-student-syndrome-full-period-v1` | Metadata legado sem `artifact_id`; registrado sob família `student_syndrome`. |
+| [`figures/rq2_student_syndrome_full_period_clean_churn_by_tier.metadata.json`](figures/rq2_student_syndrome_full_period_clean_churn_by_tier.metadata.json) | `rq2_student_syndrome_reviewer_response` | `rq2-student-syndrome-full-period-v1` | Metadata legado sem `artifact_id`; registrado sob família `student_syndrome`. |
+| [`figures/rq2_student_syndrome_final7_concentration_by_tier.metadata.json`](figures/rq2_student_syndrome_final7_concentration_by_tier.metadata.json) | `rq2_student_syndrome_reviewer_response` | `rq2-student-syndrome-full-period-v1` | Metadata legado sem `artifact_id`; registrado sob família `student_syndrome`. |
+
 ### rq2_score_trajectory_base
 
 | Campo | Valor |

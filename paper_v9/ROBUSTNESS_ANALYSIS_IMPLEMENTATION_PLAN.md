@@ -1563,10 +1563,10 @@ Para cada artefato, registrar:
 
 **Checklist**
 
-- [ ] Conferir se todos os arquivos listados existem.
-- [ ] Conferir se o stem do artefato no catálogo corresponde ao metadata.
-- [ ] Conferir se inputs principais estão coerentes com os metadados.
-- [ ] Atualizar `last_reviewed` quando houver revisão editorial.
+- [x] Conferir se todos os arquivos listados existem.
+- [x] Conferir se o stem do artefato no catálogo corresponde ao metadata.
+- [x] Conferir se inputs principais estão coerentes com os metadados.
+- [x] Atualizar `last_reviewed` quando houver revisão editorial.
 
 ## Tarefa 9.5 — Usar o catálogo como gate editorial
 
