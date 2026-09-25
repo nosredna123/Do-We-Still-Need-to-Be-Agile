@@ -1733,12 +1733,18 @@ para:
 
 **Checklist**
 
-- [ ] Não remover limitações estruturais.
-- [ ] Atualizar student syndrome com as análises realizadas.
-- [ ] Atualizar rolling windows se bins não sobrepostos forem implementados.
-- [ ] Atualizar small sample se influence maps forem implementados.
-- [ ] Atualizar process heterogeneity se regularity proxies forem implementados.
-- [ ] Atualizar complexity confounding se fase 5 for implementada.
+- [x] Não remover limitações estruturais.
+- [x] Atualizar student syndrome com as análises realizadas.
+- [x] Atualizar rolling windows se bins não sobrepostos forem implementados.
+- [x] Atualizar small sample se influence maps forem implementados.
+- [x] Atualizar process heterogeneity se regularity proxies forem implementados.
+- [x] Atualizar complexity confounding se fase 5 for implementada.
+
+Validação: Threats to Validity atualizada para preservar limites causais e
+externos, mas registrar mitigações por contrastes internos de student syndrome,
+bins/fases não sobrepostas, mapas de influência leave-one-out, proxies de
+regularidade operacional, perfis de complexidade técnica e cobertura explícita
+de M5.
 
 ## Tarefa 10.5 — Compilar LaTeX
 

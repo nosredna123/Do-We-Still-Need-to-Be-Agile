@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -604,8 +604,12 @@ anning_rework_complexity_overlay.png>] [22 <../figures/rq3_association_sensitiv
 ity.png> <../figures/rq3_influence_map.png>]) (./sections/discussion.tex
 [23
 
-] [24]) (./sections/threats_to_validity.tex) (./sections/conclusion.tex
-[25]) (./main.bbl [26])
+] [24]) (./sections/threats_to_validity.tex
+Underfull \hbox (badness 5288) in paragraph at lines 55--66
+[]\OT1/ptm/m/n/10 Artifact--Rework--Outcome As-so-ci-a-tions (M9) are ex-
+ []
+
+[25]) (./sections/conclusion.tex) (./main.bbl [26])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -630,7 +634,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  10576 strings out of 476182
  172368 string characters out of 5795595
- 1963975 words of memory out of 5000000
+ 1952975 words of memory out of 5000000
  32312 multiletter control sequences out of 15000+600000
  599637 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -651,7 +655,7 @@ texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on main.pdf (27 pages, 2163412 bytes).
+Output written on main.pdf (27 pages, 2164429 bytes).
 PDF statistics:
  518 PDF objects out of 1000 (max. 8388607)
  414 compressed objects within 5 object streams

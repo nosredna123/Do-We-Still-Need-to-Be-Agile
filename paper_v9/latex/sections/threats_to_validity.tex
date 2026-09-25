@@ -27,35 +27,57 @@ productivity.
 
 The observational design and small sample constrain causal and external
 validity. In particular, the late-stage concentration of Repository Activity
-(M3) and Clean-Change Dynamics (M4) cannot be disentangled from ordinary
-student procrastination (the ``student syndrome''). Without a non-AI control
-group, we cannot determine whether these delays reflect GenAI-related
-architectural debt or conventional late-stage integration pressure.
+(M3) and Clean-Change Dynamics (M4) remains compatible with ordinary student
+procrastination (the ``student syndrome''). We mitigate this threat by reporting
+internal contrasts that split final-seven-day concentration by evaluator-score
+change and repository-visible planning scope. Those contrasts separate cases
+consistent with compensatory late recovery from cases of late concentration
+without evaluator-score gain and from cases of more distributed progress.
+However, without a non-AI control group or timestamped AI-use telemetry, we
+cannot determine whether the timing patterns reflect GenAI-related
+architectural debt, conventional deadline pressure, or some combination of
+both.
+
+Windowing and process heterogeneity are also bounded rather than eliminated.
+Rolling windows overlap, so adjacent M3 values are not independent
+observations; we mitigate this by adding mutually exclusive phase bins and
+final-seven-day phase shares, but the bins still derive from repository-visible
+events and cannot observe work outside Git. Teams had complete autonomy over
+their process models, including Scrum, Kanban, other Agile variants, and
+unguided approaches; the study neither standardized these processes nor
+measured adherence to them. Operational-regularity proxies partially
+contextualize this heterogeneity by summarizing observable temporal and author
+regularity in Git, but they are not validated measures of agile-process
+quality, productivity, or methodological adherence. We therefore cannot rule
+out that some integration friction arose from process choice or poor
+methodological adherence rather than AI-tool use.
+
 Artifact--Rework--Outcome Associations (M9) are exploratory, not causal or
-confirmatory, and
-leave-one-out ranges show sensitivity to individual team-semesters. Analytical
+confirmatory. The study covers 14 team-semesters in one educational setting,
+and influence maps show that some relationships are sensitive to individual
+team-semesters. We report leave-one-out ranges and direction-preservation
+diagnostics to make this sensitivity visible, but those diagnostics are not
+confidence intervals and do not solve the small-sample problem. Analytical
 grains differ across student responses, team-semesters, rolling windows, and a
-global transcript corpus, so denominators cannot be pooled implicitly. Rolling
-windows overlap, so adjacent values are not independent observations. The
-study covers 14 team-semesters in one educational setting; transcript evidence
-is available only for 2025.2, which restricts cross-cohort comparability for
-the lexical findings. Moreover, teams had complete autonomy over their process
-models, including Scrum, Kanban, other Agile variants, and unguided approaches;
-the study neither standardized these processes nor measured adherence to them.
-We therefore cannot rule out that some integration friction arose from process
-choice or poor methodological adherence rather than AI-tool use. Git cannot
-observe planning or collaboration outside the repositories. Five Planning
-Content Evidence (M6b) cases lacked T1
-commit subjects and were
-not measured; missing evidence was not converted into a low score. The
-course required an integrated GenAI component but did not mandate
-retrieval-augmented generation (RAG) or another common architecture; none of
-the 14 projects implemented a full RAG pipeline. This removes mandatory RAG
-complexity as a shared explanation for the observed integration friction.
-Nevertheless, the teams' heterogeneous, self-selected AI integrations differed
-in technical complexity, so architectural complexity remains a potential
-project-level confound that this observational study cannot isolate. The
-external SDD literature therefore motivates a testable intervention hypothesis,
-but this study neither implements nor evaluates SDD. Its results support the
-need to test more explicit specification and coordination practices under
-Generative AI, not a claim that SDD has already improved outcomes.
+global transcript corpus, so denominators cannot be pooled implicitly.
+Transcript evidence is available only for 2025.2, which restricts cross-cohort
+comparability for the lexical findings; the M5 triangulation therefore treats
+2026.1 as unavailable rather than as zero evidence.
+
+Git cannot observe planning or collaboration outside the repositories. Five
+Planning Content Evidence (M6b) cases lacked T1 commit subjects and were not
+measured; missing evidence was not converted into a low score. The course
+required an integrated GenAI component but did not mandate retrieval-augmented
+generation (RAG) or another common architecture; none of the 14 projects
+implemented a full RAG pipeline. This removes mandatory RAG complexity as a
+shared explanation for the observed integration friction. Nevertheless, the
+teams' heterogeneous, self-selected AI integrations differed in technical
+complexity. We mitigate this threat by reporting complexity profiles and
+median-stratified sensitivity summaries, but architectural and implementation
+complexity remain potential project-level confounds that this observational
+study cannot isolate.
+
+The external SDD literature therefore motivates a testable intervention
+hypothesis, but this study neither implements nor evaluates SDD. Its results
+support the need to test more explicit specification and coordination practices
+under Generative AI, not a claim that SDD has already improved outcomes.

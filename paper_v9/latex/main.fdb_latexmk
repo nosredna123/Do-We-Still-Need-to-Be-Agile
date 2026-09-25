@@ -2,12 +2,12 @@
 ["bibtex main"] 0 "main.aux" "main.bbl" "main" 0 -1
   "./references.bib" 1790346801.27218 9616 43979585c29561e6db1543444a7deec0 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "main.aux" 1790363631.67033 19464 7eac474f9242dca31be72f3d2fdb65b2 "pdflatex"
+  "main.aux" 1790363847.94381 19464 c08d1aaa74faab5dd15bbd847d6728cc "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1790363631.20741 "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" "main.pdf" "main" 1790363631.77528 2
+["pdflatex"] 1790363847.47651 "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" "main.pdf" "main" 1790363848.04878 2
   "/etc/texmf/web2c/texmf.cnf" 1758825120.26148 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" 1790346763.24731 1009 367d2dcec47eb30525cb8ab03a024489 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -132,9 +132,9 @@
   "figures/rq3_influence_map.png" 0 -1 0 ""
   "figures/rq3_planning_rework_complexity_overlay.png" 0 -1 0 ""
   "figures/rq3_technical_complexity_vs_rework.png" 0 -1 0 ""
-  "main.aux" 1790363631.67033 19464 7eac474f9242dca31be72f3d2fdb65b2 "pdflatex"
-  "main.bbl" 1790363630.45333 8608 e34b20e5e7cc31a29341c1d6f0a6fed6 "bibtex main"
-  "main.out" 1790363631.67033 11752 71630681c650bac5897c1aa5e85c2bca "pdflatex"
+  "main.aux" 1790363847.94381 19464 c08d1aaa74faab5dd15bbd847d6728cc "pdflatex"
+  "main.bbl" 1790363846.73482 8608 e34b20e5e7cc31a29341c1d6f0a6fed6 "bibtex main"
+  "main.out" 1790363847.94481 11752 71630681c650bac5897c1aa5e85c2bca "pdflatex"
   "main.tex" 1790346763.24731 1009 367d2dcec47eb30525cb8ab03a024489 ""
   "sections/abstract.tex" 1790346816.07612 1555 f99a76153ba6d13dd79a48dc93835bb2 ""
   "sections/background_related_work.tex" 1790346828.10608 4511 47759d0cc43629c089888e0b59717182 ""
@@ -143,7 +143,7 @@
   "sections/introduction.tex" 1790346864.27595 3923 148ca7c0f64f66f860c410da03af9ca3 ""
   "sections/methodology.tex" 1790346874.08591 23788 24d28569fda99f1c37f039744bee9f5e ""
   "sections/results.tex" 1790362996.91965 36782 b5351a1386e9bf90b70239921155e171 ""
-  "sections/threats_to_validity.tex" 1790346896.26283 4157 676789c8477fe0082c461a7a84b745b2 ""
+  "sections/threats_to_validity.tex" 1790363846.52482 5488 98728d037f02dfa13758f80b3265c595 ""
   (generated)
   "main.aux"
   "main.log"
