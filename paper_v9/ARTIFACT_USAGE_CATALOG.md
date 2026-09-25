@@ -49,6 +49,26 @@ devem ser lidas como sínteses descritivas small-n, não como inferências causa
 
 ## Artefatos registrados
 
+## Matriz rápida de uso editorial
+
+Esta matriz complementa as entradas detalhadas abaixo. Ela serve como consulta
+rápida para decidir quando usar ou evitar cada família sem reler todos os
+artefatos.
+
+| Artefato | Quando usar | Quando não usar / risco de má interpretação |
+|---|---|---|
+| `rq2_score_trajectory_base` | Para recuperar score T1/T2/T3, deltas, grupo de trajetória, planejamento T1 e concentração final em uma base comum. | Não usar como métrica oficial de qualidade global; o score composto é descritivo. |
+| `rq2_nonoverlapping_phase_activity` | Para discutir robustez contra janelas rolling sobrepostas e comparar shares por fases mutuamente exclusivas. | Não usar para inferir produtividade fora do Git ou comparar durações absolutas de `pre_t1`. |
+| `rq2_m5_2025_triangulation` | Para triangulação coverage-aware entre M5, churn, score e rework no semestre com transcritos. | Não usar como evidência team-level de M5 nem preencher 2026.1 como zero. |
+| `team_semester_evidence_panel` | Para apêndice, auditoria editorial e seleção de evidências por equipe-semestre. | Não usar como modelo estatístico ou como prova causal; contém grãos repetidos explicitamente marcados. |
+| `rq2_operational_regularity` | Para contextualizar planejamento/concentração com regularidade operacional observável no Git. | Não usar como medida validada de processo ágil, produtividade ou aderência Scrum/Kanban. |
+| `rq3_influence_map` | Para Threats/Discussion sobre sensibilidade small-n e dependência de casos específicos. | Não ler intervalos leave-one-out como intervalos de confiança ou significância confirmatória. |
+| `rq3_complexity_profile` | Para contextualizar churn/rework e concentração final por complexidade técnica/estrutural. | Não usar como ajuste causal; métricas estruturais são heurísticas Git/path. |
+| `rq2_score_delta_vs_final7_concentration` | Para separar recuperação tardia de concentração final sem ganho avaliativo. | Não interpretar concentração final como causa de melhora/piora no score. |
+| `rq2_planning_concentration_quadrants` | Para sintetizar perfis planejamento × concentração final × resultado. | Não tratar quadrantes por mediana como classificação substantiva forte. |
+| `rq2_student_syndrome_reviewer_response` | Para responder ao revisor e explicitar a alternativa de student syndrome. | Não usar para afirmar que IA causou picos tardios; não há telemetria timestamped de IA. |
+| `candidate_figure_inventory` | Para recuperar candidatos exploratórios iniciais durante seleção editorial. | Não promover sem comparar com artefatos mais recentes das Fases 1–8. |
+
 ### rq2_score_trajectory_base
 
 | Campo | Valor |

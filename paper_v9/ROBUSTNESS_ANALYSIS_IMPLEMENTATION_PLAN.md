@@ -1547,9 +1547,9 @@ Para cada artefato, registrar:
 
 **Checklist**
 
-- [ ] Manter descrições curtas o suficiente para consulta rápida.
-- [ ] Evitar reinterpretar causalmente artefatos exploratórios.
-- [ ] Incluir “quando usar” e “quando não usar”.
+- [x] Manter descrições curtas o suficiente para consulta rápida.
+- [x] Evitar reinterpretar causalmente artefatos exploratórios.
+- [x] Incluir “quando usar” e “quando não usar”.
 
 ## Tarefa 9.4 — Sincronizar catálogo com scripts/metadados
 
