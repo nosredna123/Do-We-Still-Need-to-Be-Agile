@@ -20,6 +20,11 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
     assert result["status"] == "generated"
     assert result["coverage"]["team_semesters"] == 14
     assert result["coverage"]["checkpoint_rows"] == {"T1": 14, "T2": 14, "T3": 14}
+    assert result["coverage"]["final7_concentration"]["commit_team_semesters"] == 14
+    assert result["coverage"]["final7_concentration"]["clean_churn_team_semesters"] == 14
+    assert result["coverage"]["final7_concentration"]["zero_final7_clean_churn_team_semesters"] == [
+        {"ID_Equipe": "TEAM_08", "Semestre": "2025.2"}
+    ]
     assert result["score_trajectory_group_counts"] == [
         {"score_trajectory_group": "declined", "team_semester_n": 2, "team_semester_pct": 100 / 7},
         {"score_trajectory_group": "improved", "team_semester_n": 8, "team_semester_pct": 400 / 7},
@@ -38,7 +43,7 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
     group_counts = pd.read_csv(group_counts_path)
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
 
-    assert data.shape == (14, 12)
+    assert data.shape == (14, 14)
     assert data[["ID_Equipe", "Semestre"]].drop_duplicates().shape[0] == 14
     assert list(data.columns) == [
         "ID_Equipe",
@@ -53,6 +58,8 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
         "planning_present_t1",
         "planning_scope_log1p_t1",
         "planning_scope_tier",
+        "final7_commit_share_pct",
+        "final7_clean_churn_share_pct",
     ]
     assert data.filter(like="evaluator_score_").notna().all().all()
     assert data.filter(like="delta_score_").notna().all().all()
@@ -65,9 +72,13 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
         "high_repository_visible_planning": 7,
         "lower_repository_visible_planning": 7,
     }
+    assert data["final7_commit_share_pct"].between(0, 100).all()
+    assert data["final7_clean_churn_share_pct"].between(0, 100).all()
+    zero_clean = data.loc[data["final7_clean_churn_share_pct"].eq(0), ["ID_Equipe", "Semestre"]]
+    assert zero_clean.to_dict("records") == [{"ID_Equipe": "TEAM_08", "Semestre": "2025.2"}]
     assert group_counts["team_semester_n"].sum() == 14
 
-    assert metadata["contract_version"] == "rq2-score-trajectory-base-v2"
+    assert metadata["contract_version"] == "rq2-score-trajectory-base-v3"
     assert metadata["checkpoints"] == list(CHECKPOINTS)
     assert metadata["composite_score"]["columns"] == EVALUATOR_SCORE_COLUMNS
     assert metadata["composite_score"]["aggregation"] == "unweighted_mean"
@@ -85,4 +96,9 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
         "lower_repository_visible_planning",
     ]
     assert "not a semantic planning quality rating" in metadata["repository_visible_planning"]["interpretation"]
+    assert metadata["final7_concentration"]["commit_column"] == "final7_commit_share_pct"
+    assert metadata["final7_concentration"]["clean_churn_column"] == "final7_clean_churn_share_pct"
+    assert metadata["final7_concentration"]["zero_final7_clean_churn_team_semesters"] == [
+        {"ID_Equipe": "TEAM_08", "Semestre": "2025.2"}
+    ]
     assert metadata["inference"] == "descriptive_non_causal"

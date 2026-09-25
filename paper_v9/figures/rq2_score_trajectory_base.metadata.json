@@ -15,7 +15,7 @@
     ],
     "interpretation": "The composite evaluator score is the unweighted mean of four evaluator dimensions. It is a descriptive analysis construct, not an official global quality metric."
   },
-  "contract_version": "rq2-score-trajectory-base-v2",
+  "contract_version": "rq2-score-trajectory-base-v3",
   "coverage": {
     "checkpoint_rows": {
       "T1": 14,
@@ -48,11 +48,35 @@
         "team_semesters": 14
       }
     },
+    "final7_concentration": {
+      "clean_churn_team_semesters": 14,
+      "commit_team_semesters": 14,
+      "zero_final7_clean_churn_team_semesters": [
+        {
+          "ID_Equipe": "TEAM_08",
+          "Semestre": "2025.2"
+        }
+      ]
+    },
     "team_semesters": 14
   },
   "data_path": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
-  "data_sha256": "f56fdbf947ad2e4dc19e18d0a94edf6fcd1c1b24bac420ab178554f26c4c9eae",
-  "generated_at_utc": "2026-09-25T17:37:59.466134+00:00",
+  "data_sha256": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
+  "final7_concentration": {
+    "clean_churn_column": "final7_clean_churn_share_pct",
+    "commit_column": "final7_commit_share_pct",
+    "definition": "Share of each team-semester's pre-T3 project activity occurring in the final seven days before T3.",
+    "source_artifact": "rq2_student_syndrome_final7_concentration_by_tier",
+    "zero_final7_clean_churn_team_semesters": [
+      {
+        "ID_Equipe": "TEAM_08",
+        "Semestre": "2025.2"
+      }
+    ]
+  },
+  "final7_concentration_path": "paper_v9/figures/rq2_student_syndrome_final7_concentration_by_tier_data.csv",
+  "final7_concentration_sha256": "f06b3b07685d06bab6fe8b789252ac4ca0e877c006a66ad40795297dd23a2040",
+  "generated_at_utc": "2026-09-25T17:39:42.437141+00:00",
   "group_counts_path": "paper_v9/figures/rq2_score_trajectory_group_counts.csv",
   "group_counts_sha256": "12cdb1fba994b634ba8944c1e828f4f00530b28e8645e467458a6298219363d6",
   "inference": "descriptive_non_causal",
@@ -60,7 +84,8 @@
     "Descriptive evaluator construct; not an official project quality score.",
     "Scores summarize evaluator form dimensions and do not measure objective GenAI usage.",
     "Trajectory groups are descriptive bins over a 14 team-semester sample and should not be over-interpreted.",
-    "Repository-visible planning measures structural presence and scope, not planning quality."
+    "Repository-visible planning measures structural presence and scope, not planning quality.",
+    "Final-seven-day concentration is an activity concentration proxy, not evidence of causality."
   ],
   "output_columns": [
     "ID_Equipe",
@@ -74,7 +99,9 @@
     "score_trajectory_group",
     "planning_present_t1",
     "planning_scope_log1p_t1",
-    "planning_scope_tier"
+    "planning_scope_tier",
+    "final7_commit_share_pct",
+    "final7_clean_churn_share_pct"
   ],
   "planning_path": "paper_v9/data/metrics/m6a_structural_planning.csv",
   "planning_sha256": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01",

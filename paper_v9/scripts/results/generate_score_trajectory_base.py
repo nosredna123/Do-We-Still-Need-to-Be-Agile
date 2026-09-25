@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from paper_v9.scripts.common.paths import resolve_figures_dir, resolve_paper_v9_dir
 from paper_v9.scripts.common.provenance import compute_sha256
 
-CONTRACT_VERSION = "rq2-score-trajectory-base-v2"
+CONTRACT_VERSION = "rq2-score-trajectory-base-v3"
 STEM = "rq2_score_trajectory_base"
 GROUP_COUNTS_STEM = "rq2_score_trajectory_group_counts"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
@@ -35,6 +35,13 @@ PLANNING_REQUIRED_COLUMNS = [
     *TEAM_KEY,
     "planning_artifact_present_t1",
     "planning_scope_log1p_t1",
+]
+CONCENTRATION_REQUIRED_COLUMNS = [
+    *TEAM_KEY,
+    "activity_metric",
+    "project_total",
+    "final7_total",
+    "final7_share_pct",
 ]
 DESCRIPTIVE_SCORE_NOTE = (
     "The composite evaluator score is the unweighted mean of four evaluator "
@@ -149,7 +156,62 @@ def _merge_repository_visible_planning(base: pd.DataFrame, planning: pd.DataFram
     merged["planning_scope_tier"] = "lower_repository_visible_planning"
     high_mask = merged["planning_present_t1"].astype(bool) & merged["planning_scope_log1p_t1"].ge(planning_scope_median)
     merged.loc[high_mask, "planning_scope_tier"] = "high_repository_visible_planning"
-    return merged[_output_columns()], planning_scope_median
+    return merged, planning_scope_median
+
+
+def _load_final7_concentration(path: Path) -> tuple[pd.DataFrame, dict[str, Any]]:
+    frame = pd.read_csv(path, dtype={"Semestre": str})
+    _require_columns(frame, CONCENTRATION_REQUIRED_COLUMNS, path)
+
+    metric_to_column = {
+        "commits": "final7_commit_share_pct",
+        "clean_source_or_test_changed_lines": "final7_clean_churn_share_pct",
+    }
+    unexpected_metrics = sorted(set(frame["activity_metric"]) - set(metric_to_column))
+    if unexpected_metrics:
+        raise ValueError(f"Unexpected final7 concentration metrics: {unexpected_metrics}")
+
+    duplicate_keys = frame.duplicated([*TEAM_KEY, "activity_metric"], keep=False)
+    if duplicate_keys.any():
+        duplicates = frame.loc[duplicate_keys, [*TEAM_KEY, "activity_metric"]].to_dict("records")
+        raise ValueError(f"Duplicate final7 concentration rows found: {duplicates}")
+
+    frame = frame.copy()
+    frame["final7_share_pct"] = pd.to_numeric(frame["final7_share_pct"], errors="raise")
+    frame["project_total"] = pd.to_numeric(frame["project_total"], errors="raise")
+    frame["final7_total"] = pd.to_numeric(frame["final7_total"], errors="raise")
+
+    pivot = (
+        frame.pivot(index=TEAM_KEY, columns="activity_metric", values="final7_share_pct")
+        .rename(columns=metric_to_column)
+        .reset_index()
+    )
+    _require_columns(pivot, [*TEAM_KEY, *metric_to_column.values()], Path("final7_concentration_wide"))
+
+    clean = frame.loc[frame["activity_metric"].eq("clean_source_or_test_changed_lines")]
+    zero_clean = clean.loc[clean["final7_total"].eq(0), TEAM_KEY].sort_values(TEAM_KEY).to_dict("records")
+    coverage = {
+        "commit_team_semesters": int(frame.loc[frame["activity_metric"].eq("commits"), TEAM_KEY].drop_duplicates().shape[0]),
+        "clean_churn_team_semesters": int(clean[TEAM_KEY].drop_duplicates().shape[0]),
+        "zero_final7_clean_churn_team_semesters": zero_clean,
+    }
+    return pivot[[*TEAM_KEY, "final7_commit_share_pct", "final7_clean_churn_share_pct"]], coverage
+
+
+def _merge_final7_concentration(base: pd.DataFrame, concentration: pd.DataFrame) -> pd.DataFrame:
+    merged = base.merge(concentration, on=TEAM_KEY, how="left", validate="one_to_one")
+    missing = merged.loc[
+        merged[["final7_commit_share_pct", "final7_clean_churn_share_pct"]].isna().any(axis=1),
+        TEAM_KEY,
+    ]
+    if not missing.empty:
+        raise ValueError(f"Missing final7 concentration rows for score base: {missing.to_dict('records')}")
+
+    for column in ("final7_commit_share_pct", "final7_clean_churn_share_pct"):
+        if not merged[column].between(0, 100).all():
+            invalid = merged.loc[~merged[column].between(0, 100), [*TEAM_KEY, column]].to_dict("records")
+            raise ValueError(f"{column} values must be within [0, 100]: {invalid}")
+    return merged[_output_columns()]
 
 
 def _assign_four_group_labels(frame: pd.DataFrame, threshold: float) -> pd.Series:
@@ -260,6 +322,8 @@ def _output_columns() -> list[str]:
         "planning_present_t1",
         "planning_scope_log1p_t1",
         "planning_scope_tier",
+        "final7_commit_share_pct",
+        "final7_clean_churn_share_pct",
     ]
 
 
@@ -269,6 +333,7 @@ def generate() -> dict[str, Any]:
     figures_dir = resolve_figures_dir()
     source_path = repo_root / "data" / "lake" / "evaluator_team_cuts.parquet"
     planning_path = paper_dir / "data" / "metrics" / "m6a_structural_planning.csv"
+    concentration_path = figures_dir / "rq2_student_syndrome_final7_concentration_by_tier_data.csv"
     data_path = figures_dir / f"{STEM}_data.csv"
     group_counts_path = figures_dir / f"{GROUP_COUNTS_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
@@ -277,6 +342,8 @@ def generate() -> dict[str, Any]:
     base = _build_score_trajectory_base(evaluator)
     planning = _load_planning(planning_path)
     base, planning_scope_median = _merge_repository_visible_planning(base, planning)
+    concentration, concentration_coverage = _load_final7_concentration(concentration_path)
+    base = _merge_final7_concentration(base, concentration)
     _atomic_csv(base, data_path)
     group_counts = _score_group_counts(base)
     _atomic_csv(group_counts, group_counts_path)
@@ -298,8 +365,10 @@ def generate() -> dict[str, Any]:
         "group_counts_path": str(group_counts_path.relative_to(repo_root)),
         "source_path": str(source_path.relative_to(repo_root)),
         "planning_path": str(planning_path.relative_to(repo_root)),
+        "final7_concentration_path": str(concentration_path.relative_to(repo_root)),
         "source_sha256": compute_sha256(source_path),
         "planning_sha256": compute_sha256(planning_path),
+        "final7_concentration_sha256": compute_sha256(concentration_path),
         "data_sha256": compute_sha256(data_path),
         "group_counts_sha256": compute_sha256(group_counts_path),
         "team_key": TEAM_KEY,
@@ -308,6 +377,7 @@ def generate() -> dict[str, Any]:
             "team_semesters": int(len(base)),
             "checkpoint_rows": {key: int(value) for key, value in checkpoint_rows.items()},
             "coverage_by_checkpoint": coverage_by_checkpoint,
+            "final7_concentration": concentration_coverage,
         },
         "composite_score": {
             "columns": EVALUATOR_SCORE_COLUMNS,
@@ -333,12 +403,25 @@ def generate() -> dict[str, Any]:
                 "measure, not a semantic planning quality rating."
             ),
         },
+        "final7_concentration": {
+            "source_artifact": "rq2_student_syndrome_final7_concentration_by_tier",
+            "commit_column": "final7_commit_share_pct",
+            "clean_churn_column": "final7_clean_churn_share_pct",
+            "definition": (
+                "Share of each team-semester's pre-T3 project activity occurring "
+                "in the final seven days before T3."
+            ),
+            "zero_final7_clean_churn_team_semesters": concentration_coverage[
+                "zero_final7_clean_churn_team_semesters"
+            ],
+        },
         "output_columns": _output_columns(),
         "limitations": [
             "Descriptive evaluator construct; not an official project quality score.",
             "Scores summarize evaluator form dimensions and do not measure objective GenAI usage.",
             "Trajectory groups are descriptive bins over a 14 team-semester sample and should not be over-interpreted.",
             "Repository-visible planning measures structural presence and scope, not planning quality.",
+            "Final-seven-day concentration is an activity concentration proxy, not evidence of causality.",
         ],
         "inference": "descriptive_non_causal",
     }

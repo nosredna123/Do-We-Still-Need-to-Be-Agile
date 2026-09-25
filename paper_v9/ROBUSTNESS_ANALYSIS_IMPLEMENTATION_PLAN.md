@@ -595,9 +595,9 @@ Criar variáveis:
 
 **Checklist**
 
-- [ ] Validar que commits cobrem 14 equipe-semestres.
-- [ ] Validar cobertura de clean churn.
-- [ ] Registrar casos com zero clean churn, se aplicável.
+- [x] Validar que commits cobrem 14 equipe-semestres.
+- [x] Validar cobertura de clean churn.
+- [x] Registrar casos com zero clean churn, se aplicável.
 
 ---
 
