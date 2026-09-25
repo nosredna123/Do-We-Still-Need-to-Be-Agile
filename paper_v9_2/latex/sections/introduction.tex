@@ -1,0 +1,64 @@
+\section{Introduction}
+The Agile Manifesto revolutionized software engineering by prioritizing
+working software, individual interactions, and responding to change over
+comprehensive documentation and strict upfront planning. For over two decades,
+this empirical paradigm was the gold standard for navigating requirements
+uncertainty, and for good reason: in a world where local implementation effort
+and changing requirements made heavyweight plans costly, minimizing unnecessary
+upfront documentation helped reduce waste.
+
+That world is changing. Generative AI assistants now produce substantial
+amounts of code in seconds, shifting scarce software-engineering effort toward
+architectural alignment, integration, and cognitive coordination. Under this
+new cost equation, the Agile bet---that planning can remain deliberately light
+as understanding develops---deserves to be tested rather than assumed.
+
+If deferring design in an AI-assisted environment merely relocates effort, late
+project activity may reflect several mechanisms: compensatory recovery, delayed
+integration without assessed improvement, distributed progress, or
+technical-complexity pressure. This paper examines how such mechanisms become
+visible through repository metadata, multi-checkpoint student surveys,
+independent evaluator scorecards, and qualitative meeting transcripts across
+two cohorts of software-engineering projects. The resulting evidence connects
+what students report, what repositories reveal, what evaluators score, and what
+coordination language appears in the project record.
+
+We structure the investigation around three questions:
+
+\begin{itemize}
+	\item \textbf{RQ1 (Descriptive):} How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?
+	\item \textbf{RQ2 (Descriptive):} How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?
+	\item \textbf{RQ3 (Primary):} How does the observable scope and content evidence of upfront architectural artifacts at baseline $T_1$ associate with late-stage clean-path rework and independent, blind-scored project outcomes?
+\end{itemize}
+
+The study makes three contributions. First, it provides a longitudinal,
+multi-method account of AI-assisted student development that keeps perceived
+AI impact, self-reported adoption, repository activity, and qualitative
+coordination evidence analytically distinct. Second, it makes the temporal
+contrast between repository activity and integration pressure observable and
+qualifies that contrast using non-overlapping phase bins, timing/outcome
+contrasts, operational regularity, and coverage-aware transcript evidence while
+preserving the different grains and coverage of the underlying evidence.
+Third, it examines upfront architectural-artifact evidence, late clean-path
+rework, and independent outcomes without collapsing structural observations
+into an unsupported quality score. The resulting picture is deliberately more
+useful than a simple success/failure verdict: rather than eliminating threats
+such as ordinary deadline pressure, process heterogeneity, small-sample
+sensitivity, and technical complexity, it makes them explicit and inspectable.
+It shows where implementation speed meets the harder problem of shared system
+intent.
+
+The findings motivate a practical proposition. Generative AI does not remove
+the need for Agile practice; it increases the importance of making architectural
+intent, interfaces, dependencies, and acceptance conditions explicit while
+remaining open to revision. These observations motivate Spec-Driven
+Development (SDD) as a theoretically grounded, testable hypothesis: carrying a
+specification through technical planning, task decomposition, implementation,
+and convergence checks may help teams address the coordination bottlenecks
+exposed by the combined timing, planning, rework, complexity, and influence
+diagnostics \cite{github2025spec,thoughtworks202Xspec}. This observational
+study neither implemented SDD nor compared it with another development
+approach; therefore, it does not establish SDD's effectiveness. Instead, the
+hypothesis invites future intervention research into how teams can preserve
+adaptability while ensuring that people and AI systems act on the same
+inspectable account of what the system is meant to become.

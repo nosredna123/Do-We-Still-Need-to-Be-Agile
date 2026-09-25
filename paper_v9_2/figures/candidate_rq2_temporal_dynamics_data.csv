@@ -1,0 +1,104 @@
+temporal_position,value,metric,unit
+-21,95.0,M3 pooled activity,commit events
+-20,81.0,M3 pooled activity,commit events
+-19,84.0,M3 pooled activity,commit events
+-18,89.0,M3 pooled activity,commit events
+-17,93.0,M3 pooled activity,commit events
+-16,115.0,M3 pooled activity,commit events
+-15,107.0,M3 pooled activity,commit events
+-14,78.0,M3 pooled activity,commit events
+-13,84.0,M3 pooled activity,commit events
+-12,77.0,M3 pooled activity,commit events
+-11,67.0,M3 pooled activity,commit events
+-10,58.0,M3 pooled activity,commit events
+-9,40.0,M3 pooled activity,commit events
+-8,43.0,M3 pooled activity,commit events
+-7,52.0,M3 pooled activity,commit events
+-6,56.0,M3 pooled activity,commit events
+-5,59.0,M3 pooled activity,commit events
+-4,73.0,M3 pooled activity,commit events
+-3,95.0,M3 pooled activity,commit events
+-2,100.0,M3 pooled activity,commit events
+-1,159.0,M3 pooled activity,commit events
+0,294.0,M3 pooled activity,commit events
+1,302.0,M3 pooled activity,commit events
+2,298.0,M3 pooled activity,commit events
+3,284.0,M3 pooled activity,commit events
+4,262.0,M3 pooled activity,commit events
+5,246.0,M3 pooled activity,commit events
+6,178.0,M3 pooled activity,commit events
+7,28.0,M3 pooled activity,commit events
+-63,12702.0,M4 pooled clean churn,clean churn lines
+-62,12360.0,M4 pooled clean churn,clean churn lines
+-61,10619.0,M4 pooled clean churn,clean churn lines
+-60,10890.0,M4 pooled clean churn,clean churn lines
+-59,11769.0,M4 pooled clean churn,clean churn lines
+-58,13224.0,M4 pooled clean churn,clean churn lines
+-57,12640.0,M4 pooled clean churn,clean churn lines
+-56,3545.0,M4 pooled clean churn,clean churn lines
+-55,3723.0,M4 pooled clean churn,clean churn lines
+-54,3723.0,M4 pooled clean churn,clean churn lines
+-53,3452.0,M4 pooled clean churn,clean churn lines
+-52,3923.0,M4 pooled clean churn,clean churn lines
+-51,11138.0,M4 pooled clean churn,clean churn lines
+-50,11138.0,M4 pooled clean churn,clean churn lines
+-49,11421.0,M4 pooled clean churn,clean churn lines
+-48,11661.0,M4 pooled clean churn,clean churn lines
+-47,12134.0,M4 pooled clean churn,clean churn lines
+-46,13407.0,M4 pooled clean churn,clean churn lines
+-45,12262.0,M4 pooled clean churn,clean churn lines
+-44,3091.0,M4 pooled clean churn,clean churn lines
+-43,3091.0,M4 pooled clean churn,clean churn lines
+-42,3898.0,M4 pooled clean churn,clean churn lines
+-41,4060.0,M4 pooled clean churn,clean churn lines
+-40,3756.0,M4 pooled clean churn,clean churn lines
+-39,2506.0,M4 pooled clean churn,clean churn lines
+-38,2563.0,M4 pooled clean churn,clean churn lines
+-37,2563.0,M4 pooled clean churn,clean churn lines
+-36,2904.0,M4 pooled clean churn,clean churn lines
+-35,1428.0,M4 pooled clean churn,clean churn lines
+-34,2370.0,M4 pooled clean churn,clean churn lines
+-33,2778.0,M4 pooled clean churn,clean churn lines
+-32,4812.0,M4 pooled clean churn,clean churn lines
+-31,5669.0,M4 pooled clean churn,clean churn lines
+-30,8212.0,M4 pooled clean churn,clean churn lines
+-29,10041.0,M4 pooled clean churn,clean churn lines
+-28,17493.0,M4 pooled clean churn,clean churn lines
+-27,16767.0,M4 pooled clean churn,clean churn lines
+-26,17531.0,M4 pooled clean churn,clean churn lines
+-25,18712.0,M4 pooled clean churn,clean churn lines
+-24,18928.0,M4 pooled clean churn,clean churn lines
+-23,19351.0,M4 pooled clean churn,clean churn lines
+-22,26096.0,M4 pooled clean churn,clean churn lines
+-21,23411.0,M4 pooled clean churn,clean churn lines
+-20,22691.0,M4 pooled clean churn,clean churn lines
+-19,25171.0,M4 pooled clean churn,clean churn lines
+-18,23651.0,M4 pooled clean churn,clean churn lines
+-17,22663.0,M4 pooled clean churn,clean churn lines
+-16,37804.0,M4 pooled clean churn,clean churn lines
+-15,29589.0,M4 pooled clean churn,clean churn lines
+-14,25082.0,M4 pooled clean churn,clean churn lines
+-13,25659.0,M4 pooled clean churn,clean churn lines
+-12,21957.0,M4 pooled clean churn,clean churn lines
+-11,20239.0,M4 pooled clean churn,clean churn lines
+-10,19892.0,M4 pooled clean churn,clean churn lines
+-9,2762.0,M4 pooled clean churn,clean churn lines
+-8,2266.0,M4 pooled clean churn,clean churn lines
+-7,2598.0,M4 pooled clean churn,clean churn lines
+-6,3742.0,M4 pooled clean churn,clean churn lines
+-5,4971.0,M4 pooled clean churn,clean churn lines
+-4,11566.0,M4 pooled clean churn,clean churn lines
+-3,15291.0,M4 pooled clean churn,clean churn lines
+-2,15868.0,M4 pooled clean churn,clean churn lines
+-1,41331.0,M4 pooled clean churn,clean churn lines
+0,98632.0,M4 pooled clean churn,clean churn lines
+1,96835.0,M4 pooled clean churn,clean churn lines
+2,95487.0,M4 pooled clean churn,clean churn lines
+3,88892.0,M4 pooled clean churn,clean churn lines
+4,85169.0,M4 pooled clean churn,clean churn lines
+5,83615.0,M4 pooled clean churn,clean churn lines
+6,57986.0,M4 pooled clean churn,clean churn lines
+7,40.0,M4 pooled clean churn,clean churn lines
+-1,0.5151098901098901,M5 transcript evidence density,"candidate markers per 1,000 tokens"
+0,1.1319568179436117,M5 transcript evidence density,"candidate markers per 1,000 tokens"
+1,1.2867114871168013,M5 transcript evidence density,"candidate markers per 1,000 tokens"

@@ -1,0 +1,81 @@
+\section{Background and Related Work}
+
+\subsection{The Agile value hierarchy and coordination risk}
+
+The Agile Manifesto prioritizes working software, interaction, and response to
+change over comprehensive documentation~\cite{agile_manifesto_2001}. This
+emphasis remains valuable when requirements evolve, but it does not imply that
+shared architectural intent is unnecessary. Classic accounts of software
+coordination emphasize that communication costs grow with system size and team
+interaction, especially when structure remains tacit~\cite{brooks_1975_mythical_man_month,demarco_lister_1987_peopleware}.
+The relevant question for AI-assisted development is therefore not whether
+teams should return to immutable upfront design, but which forms of intent must
+remain explicit while implementation continues iteratively.
+
+\subsection{Generative AI in software engineering: From local generation to systems}
+
+Recent work presents Generative AI as a major change in software-engineering
+practice while emphasizing that its effects vary across tasks, users, and
+organizational contexts~\cite{carleton2024generative,banh2025copiloting,russo2024navigating}.
+Empirical studies of code-generating tools show that programmers work through
+iterative interaction, verification, and contextual steering rather than
+simply accepting generated code~\cite{barke2023grounded}. This distinction is
+central to the present study: local code generation may accelerate an activity
+without resolving cross-file dependencies, architectural boundaries, or team
+coordination. This makes the relevant bottleneck not code production alone,
+but the convergence of generated local changes into a shared system design.
+Software-engineering education is already confronting this change, including
+questions about how students use and assess Generative AI in project
+work~\cite{yabaku2024usage}.
+
+\subsection{Upfront planning, architecture, and Spec-Driven Development}
+
+Architecture and technical-debt research treats design decisions as evolving
+constraints whose consequences may accumulate over time. Architectural debt
+research has developed concepts and tools for identifying architectural debt,
+following its accumulation, and relating it to later remediation
+effort~\cite{verdecchia2018architectural,nayebi2019longitudinal}.
+These traditions motivate measuring early architectural artifacts separately
+from semantic quality: an observed artifact is evidence of an observable
+practice, not proof that its design was adequate.
+
+Spec-Driven Development (SDD) extends this concern into AI-assisted workflows.
+Current practitioner descriptions frame SDD as carrying a specification through
+planning, task decomposition, implementation, and convergence checks
+\cite{github2025spec,thoughtworks202Xspec}. In this paper, SDD is treated as a
+testable process proposition: making intent and constraints inspectable may
+reduce ambiguity when AI tools generate implementation across multiple files
+and contributors. Existing SDD guidance is used to define the proposition, not
+as evidence that SDD improves outcomes.
+
+\subsection{Technical debt, rework, and empirical measurement}
+
+Technical debt describes the future cost of expedient decisions, but its
+measurement is difficult because productive iteration can resemble rework in
+volume-based repository data~\cite{cunningham_1992_technical_debt,fowler2009technicaldebt,kruchten2012technicaldebt}.
+Architecture-debt studies likewise distinguish observable signals from claims
+about design quality or defect causation. The present work follows that
+measurement discipline by separating activity volume, clean-path provenance,
+baseline eligibility, and evaluator outcomes rather than collapsing them into a
+single score. Similarly, late repository concentration can reflect compensatory
+recovery, ordinary deadline pressure, delayed integration without quality gain,
+or project complexity; distinguishing these possibilities requires internal
+contrasts rather than volume measures alone.
+
+\subsection{Research gap and contribution}
+
+The related literature provides strong accounts of Agile coordination, GenAI
+adoption and interaction, architectural debt, and evolving software practice.
+What remains less visible is how these perspectives meet in student projects
+that use Generative AI while being observed across synchronized checkpoints.
+This study addresses that gap through a bounded mixed-method design combining
+survey reports, repository activity and path provenance, independent evaluator
+scorecards, and transcript-based coordination evidence. Its contribution is
+not a causal estimate of AI productivity or a validation of SDD. It is an
+evidence-preserving account of how local AI-assisted implementation, temporal
+integration pressure, explicit architectural artifacts, rework proxies, and
+independent outcomes can be examined together without silently merging their
+analytical grains. It also treats ordinary deadline pressure, process
+heterogeneity, small-sample influence, transcript coverage, and technical
+complexity as validity threats to be made explicit rather than silently
+absorbed into the main interpretation.

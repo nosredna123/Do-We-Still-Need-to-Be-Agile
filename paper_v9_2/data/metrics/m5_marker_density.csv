@@ -1,0 +1,4 @@
+temporal_marker,transcript_chunk_n,source_session_n,character_n,token_n,friction_marker_n,alignment,handoff,integration,blocker,rework,friction_marker_density_per_1k_tokens,analysis_level,measurement_status
+T1,35,2,131572,23296,12,5,2,2,2,1,0.5151098901098901,global_transcript_corpus_by_temporal_marker,available
+T2,37,2,262712,47705,54,19,3,20,6,6,1.1319568179436117,global_transcript_corpus_by_temporal_marker,available
+T3,28,2,172869,31087,40,10,5,14,7,4,1.2867114871168013,global_transcript_corpus_by_temporal_marker,available

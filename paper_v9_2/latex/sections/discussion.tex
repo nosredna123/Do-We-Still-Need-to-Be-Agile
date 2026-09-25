@@ -1,0 +1,187 @@
+\section{Discussion}
+The results support a qualified answer to the three research questions. Student
+developers report frequent use of Generative AI across research, code
+generation, debugging, documentation, and related activities, but the
+perception families do not form a single longitudinal trajectory. Repository
+activity and clean source/test change concentrate near the final evaluation
+anchor, while candidate coordination-language density increases in the
+observed transcript corpus. Finally, the study finds observable variation in
+upfront architectural-artifact scope, but no robust monotonic association with
+late clean-path rework or independent blind-scored outcomes. The central
+implication is therefore not that a larger artifact necessarily produces a
+better project, but that AI-assisted development makes the quality and
+visibility of shared intent consequential while leaving its effects difficult
+to identify with small observational samples.
+
+\subsection{From local acceleration to system-level coordination}
+
+RQ1 and RQ2 describe two sides of AI-assisted development. Survey responses
+show that students use Generative AI for concrete development activities, while
+Repository Activity (M3) and Clean-Change Dynamics (M4) show that
+repository-visible activity intensifies around final integration.
+Coordination-Language Evidence (M5) adds textual evidence that candidate
+coordination markers are
+more dense at later checkpoints in the observed 2025.2 corpus. These results do
+not establish that AI use caused coordination friction; the relevant
+measurement boundaries are consolidated in Threats to Validity. They do,
+however, weaken a simple productivity story in which faster local code
+production automatically yields smoother system integration.
+
+The more defensible interpretation is a shift in the bottleneck. Generative AI
+can reduce the effort required to produce local implementation fragments, but
+it does not remove the need to agree on architecture, interfaces, task
+boundaries, dependencies, or acceptance conditions. In a multi-person project,
+those agreements remain coordination objects even when code is produced more
+quickly. The late concentration observed in Repository Activity (M3) and
+Clean-Change Dynamics (M4) is consistent with a process
+in which integration pressure accumulates until the system must be assembled
+under deadline, while Coordination-Language Evidence (M5) suggests that
+coordination-related language is already
+present in the shared record. This is a process interpretation, not a causal
+estimate.
+
+The robustness analyses refine that interpretation by showing that the late
+peak should not be collapsed into a single ``student syndrome'' explanation.
+Some team-semesters combine high final-seven-day concentration with a positive
+T3--T1 score delta, which is consistent with compensatory late execution or
+productive recovery under deadline pressure. Others combine similarly high
+late concentration with no evaluator-score gain, which is more consistent
+with delayed integration that did not translate into assessed improvement.
+Still others improve with lower final concentration, indicating that
+distributed execution remains a plausible path to strong outcomes. The point
+is not that one profile is the true mechanism, but that repository timing,
+planning visibility, and evaluator trajectories separate several mechanisms
+that a simple procrastination narrative would conflate.
+
+\subsection{Architectural artifacts: necessary evidence, not a quality score}
+
+RQ3 provides an important qualification to strong planning narratives.
+Architectural Artifact Scope (M6a)
+measures whether an architectural artifact was observed in the repository and
+how much structural scope it occupied; Planning Content Evidence (M6b) extracts
+literal, structured planning-content evidence from T1 commit subjects. Neither
+metric directly
+measures architectural quality. Repository absence cannot establish that a team
+did not plan elsewhere, and a larger artifact cannot establish that its design
+was coherent or useful.
+
+The M9 associations are therefore modest and unstable
+rather than uniformly directional. With only 14 team-semesters, RQ3 has low
+power for confirmatory correlation, and its coefficients serve only as
+exploratory diagnostics of structural variation. The paper's stronger
+empirical contribution lies in the descriptive and triangulated RQ1--RQ2
+evidence collected across the approximately 70 participating students, while
+the survey, repository, and transcript streams retain their distinct grains
+and coverage. T1 artifact scope has small positive
+associations with T3 rework magnitude in the complete team-semester set, while
+the baseline-eligible rework-ratio associations are near zero and slightly
+negative. Associations with blind-scored outcomes are likewise mixed and small.
+The leave-one-out ranges show that individual team-semesters can materially
+change the observed coefficient. The result is not evidence against planning;
+it is evidence against treating repository-visible artifact volume as a
+validated measure of planning quality.
+
+The complexity profiles add a second qualification. Late clean-path rework can
+reflect technical difficulty and project structure as well as planning gaps or
+AI-assisted implementation dynamics. The stratified summaries show that some
+associations change direction across lower- and higher-complexity strata, so
+complexity is best treated as a concurrent explanation that bounds the
+planning interpretation. This does not make complexity a causal adjustment in
+the present design; it makes explicit why rework should not be attributed to a
+single source.
+
+The distinction also matters for interpretation of the tail cases. A team with
+no observed T1 artifact and a team with an artifact that is incomplete,
+misaligned, or unused are not equivalent cases. Conversely, a high rework ratio
+does not by itself identify a defect: Clean-Path Rework (M8) follows clean-path provenance and
+cannot determine whether a change was semantically destructive. The empirical
+chain is consequently useful as an auditable observation system, but not as a
+single planning-quality scale.
+
+\subsection{Why Spec-Driven Development is a plausible response}
+
+The results provide a strong rationale for discussing Spec-Driven Development
+(SDD). The argument is not that this study tested SDD, nor that SDD is proven
+to reduce rework. Rather, the observed combination of rapid local generation,
+multiple late-execution profiles, repeated architectural reformulation in the
+project records, technical-complexity sensitivity, and persistent coordination
+demands identifies precisely the class of problem that SDD is designed to
+address: keeping intent, constraints, architecture, and tasks explicit before
+and during implementation.
+
+Current SDD guidance describes a workflow in which a specification is carried
+through technical planning, task decomposition, implementation, and explicit
+convergence checks~\cite{github2025spec,thoughtworks202Xspec}. This is aligned
+with the mechanism suggested by the present evidence. If Generative AI makes
+implementation cheap while leaving system-level decisions underspecified, a
+process that externalizes those decisions can reduce ambiguity before it is
+multiplied across generated code and parallel contributors. The potential
+benefit is not documentation for its own sake; it is a shared, inspectable
+context for coordinating people and AI tools.
+
+The claim must remain conditional. The current data do not compare SDD with
+another process, do not randomize teams or interventions, and do not measure
+specification adoption as a treatment. SDD is therefore a theoretically
+grounded intervention proposal for future evaluation, not a causal conclusion
+of this study. A suitable follow-up would compare teams using an explicit
+specification-to-plan-to-task workflow with teams using their usual process,
+while measuring architectural change, integration timing, rework provenance,
+coordination evidence, and independently scored outcomes.
+
+\subsection{Implications for Agile practice}
+
+These findings do not imply that iterative development should be abandoned.
+They suggest that Agile iteration under Generative AI requires a clearer object
+of iteration. When code can be generated rapidly, iteration should include
+shared architectural decisions, executable acceptance conditions, interface
+contracts, and explicit dependency boundaries, rather than treating working
+code as the only visible progress signal. This interpretation is compatible
+with Agile values while challenging a purely code-first implementation rhythm.
+It also separates adaptive iteration from unexamined delay: late work can be
+compensatory, neutral, or harmful depending on whether it is connected to
+shared intent, integration checks, and assessed improvement.
+Granting teams autonomy to use Scrum, Kanban, other Agile variants, or an
+unguided approach was a deliberate feature of the naturalistic course design,
+preserving the process choices students ordinarily make rather than imposing a
+common treatment. This choice prevents us from attributing the observed T3
+friction specifically to Generative AI or to any one process model; instead, it
+motivates controlled tests of explicit architectural checkpoints, including
+SDD-inspired rubrics, within otherwise iterative workflows.
+
+From a pedagogical perspective, the observed coordination bottleneck is
+ambiguous rather than automatically beneficial. Integration friction may
+create productive opportunities for students to reason about architecture,
+interfaces, and dependencies, but it may also reveal only near the deadline
+that rapid AI-assisted implementation had concealed gaps in that
+understanding. The present instruments measure activity, perceptions,
+coordination-language evidence, artifacts, rework proxies, and project
+outcomes; they do not directly measure individual architectural learning.
+Accordingly, future classroom studies should pair these process measures with
+pre/post concept assessments and structured student reflections that can
+distinguish productive struggle from delayed recognition of foundational
+gaps.
+
+The practical implication is a stronger planning layer, not a return to a
+fixed plan that cannot change. Specifications should remain revisable, but
+their revisions should be explicit, reviewable, and connected to the tasks and
+implementation they govern. For educators evaluating early SDD artifacts,
+simple heuristics such as file scope (M6a) are insufficient. Instead, rubrics
+should assess both shared architectural intent and students' reasoning through
+explicit API contracts, defined cross-component dependencies, justification
+of design revisions, and verifiable acceptance criteria before GenAI-assisted
+implementation begins. That is the specific space in which SDD deserves to be
+tested: as a way to preserve adaptability while making the intent behind
+AI-assisted change inspectable and the associated learning visible.
+
+\subsection{Scope of the interpretation}
+
+The Discussion is intentionally bounded by the evidence design. RQ1 uses
+repeated cohort summaries rather than a stable individual panel; the remaining
+coverage, window, proxy, sample, and exploratory-association boundaries are
+consolidated in Threats to Validity. These limits make the findings useful for
+mechanism-oriented hypothesis generation, but not for estimating the causal
+effect of Generative AI, architectural planning, or SDD on project outcomes.
+The strongest conclusion is narrower: under
+AI-assisted development, local generation speed does not eliminate the need for
+explicit system-level coordination, and SDD is a plausible, testable response
+to that coordination problem.

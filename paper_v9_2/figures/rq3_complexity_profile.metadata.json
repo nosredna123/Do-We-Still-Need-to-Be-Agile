@@ -1,0 +1,174 @@
+{
+  "artifact_id": "rq3_complexity_profile",
+  "confounding_summary_contract": {
+    "high_complexity_n_range": [
+      6,
+      6
+    ],
+    "low_complexity_n_range": [
+      6,
+      8
+    ],
+    "method": "Spearman rho within full sample and median technical-complexity strata",
+    "minimum_n_for_rho": 4,
+    "output": "paper_v9/figures/rq3_complexity_confounding_summary.csv",
+    "relationship_count": 6,
+    "stratification_policy": "median split with low_or_median <= median and high > median",
+    "stratification_variable": "technical_complexity_mean_t3"
+  },
+  "confounding_summary_path": "paper_v9/figures/rq3_complexity_confounding_summary.csv",
+  "confounding_summary_sha256": "cf11b6609a485639d350cc841e544d092aa9b6d1d3bfea2c28451cabff4ef6c6",
+  "construct_separation": {
+    "evaluated_complexity": [
+      "technical_complexity_mean_t1",
+      "technical_complexity_mean_t2",
+      "technical_complexity_mean_t3",
+      "delta_technical_complexity_t3_minus_t1"
+    ],
+    "repository_structural_complexity": [
+      "clean_distinct_file_n",
+      "clean_distinct_directory_n",
+      "clean_max_path_depth",
+      "clean_extension_n",
+      "clean_touching_commit_n_inferred",
+      "mean_clean_files_per_commit",
+      "clean_total_churn_inferred",
+      "frontend_clean_file_event_share",
+      "backend_clean_file_event_share"
+    ]
+  },
+  "contract_version": "rq3-complexity-profile-v1",
+  "coverage": {
+    "baseline_eligible_for_rework_t3": 12,
+    "team_semesters": 14
+  },
+  "data_path": "paper_v9/figures/rq3_complexity_profile_data.csv",
+  "data_sha256": "99e0836e4e487b239be47a27af2748ce988f7d759b44b2cb0b05474892ff5e7e",
+  "figure_data_paths": {
+    "rq3_complexity_vs_final_concentration": "paper_v9/figures/rq3_complexity_vs_final_concentration_data.csv",
+    "rq3_planning_rework_complexity_overlay": "paper_v9/figures/rq3_planning_rework_complexity_overlay_data.csv",
+    "rq3_technical_complexity_vs_rework": "paper_v9/figures/rq3_technical_complexity_vs_rework_data.csv"
+  },
+  "figure_data_sha256": {
+    "rq3_complexity_vs_final_concentration": "7bcc9ee616c932cf18f26503f85a8d6d11535a24027949b55ed1dc8c6e485d3f",
+    "rq3_planning_rework_complexity_overlay": "8639a2f66514f41a785e8f5109b0d5ece8c1f353e9b6f137b471a956749983cd",
+    "rq3_technical_complexity_vs_rework": "77596c580421e0c21a171aec0e61ee8204d21ab17c7f4d7473ffdcf965f322aa"
+  },
+  "figure_output_sha256": {
+    "rq3_complexity_vs_final_concentration": {
+      "pdf": "c56f0d77a3ef8233cab9948473b0e029acec4327fbc9cd60703d6b6aa6895100",
+      "png": "fb27adad970ae976a27907d4259a19c98c1c2acca65cb5051cdc4af187e14d46",
+      "svg": "6532e6b16aeed6c35d81b5106bc1b6101c7e9cef2e0bf7a7c50706ccd72bf1df"
+    },
+    "rq3_planning_rework_complexity_overlay": {
+      "pdf": "7d17d6a3a03602e8885d209a56f60f59f48a304f4b29274a6bfe9fbcf17c78a0",
+      "png": "93b7c3344af1ff1590dda7527671865f94de8e775244de52c5d3e2f74af9bc1f",
+      "svg": "b3c2c3547fab2f87b6107b978021f83ed3b12d19c8bda21f56094553fc273f15"
+    },
+    "rq3_technical_complexity_vs_rework": {
+      "pdf": "223bd29faf454c62e5c0240034458ca4e75041232ce0e9f02bb01c1a1f50fc67",
+      "png": "45471f91cc0c6b25b922502ce8f75e71c281f39a4b56e49b63d17cc963ba3e54",
+      "svg": "580071a0a7987b434de835753b8e9776cef1d533d3a3b0fb64b5d4eeaeab7897"
+    }
+  },
+  "figure_outputs": {
+    "rq3_complexity_vs_final_concentration": {
+      "pdf": "paper_v9/figures/rq3_complexity_vs_final_concentration.pdf",
+      "png": "paper_v9/figures/rq3_complexity_vs_final_concentration.png",
+      "svg": "paper_v9/figures/rq3_complexity_vs_final_concentration.svg"
+    },
+    "rq3_planning_rework_complexity_overlay": {
+      "pdf": "paper_v9/figures/rq3_planning_rework_complexity_overlay.pdf",
+      "png": "paper_v9/figures/rq3_planning_rework_complexity_overlay.png",
+      "svg": "paper_v9/figures/rq3_planning_rework_complexity_overlay.svg"
+    },
+    "rq3_technical_complexity_vs_rework": {
+      "pdf": "paper_v9/figures/rq3_technical_complexity_vs_rework.pdf",
+      "png": "paper_v9/figures/rq3_technical_complexity_vs_rework.png",
+      "svg": "paper_v9/figures/rq3_technical_complexity_vs_rework.svg"
+    }
+  },
+  "generated_at_utc": "2026-09-25T18:22:24.775194+00:00",
+  "inference": "descriptive_confounding_profile_not_causal",
+  "input_sha256": {
+    "evaluator": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
+    "git_files": "c13269b33fcef0db61856678fc4ca8a9c86e2e8155d80f170de93f9274c1d1fa",
+    "m4_churn": "64fbb113302d8780f6d560debb9d35689c57d2852964d705b03f4367c6c7a4b0",
+    "m6a_planning": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01",
+    "m8_rework": "d583853b901da39813ea3bbb641d8cf4a1a0b9930a3df3270256ae0e79c1e623",
+    "score_base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52"
+  },
+  "inputs": {
+    "evaluator": "data/lake/evaluator_team_cuts.parquet",
+    "git_files": "data/lake/git_files.parquet",
+    "m4_churn": "paper_v9/data/metrics/m4_churn_magnitude.csv",
+    "m6a_planning": "paper_v9/data/metrics/m6a_structural_planning.csv",
+    "m8_rework": "paper_v9/data/metrics/m8_rework_magnitude.csv",
+    "score_base": "paper_v9/figures/rq2_score_trajectory_base_data.csv"
+  },
+  "limitations": [
+    "Evaluator technical complexity is a human assessment dimension, not inferred repository structure.",
+    "Structural complexity metrics are Git/path heuristics over clean paths and do not classify architecture semantics.",
+    "Frontend/backend shares depend on path names and can under-detect unconventional project layouts.",
+    "The profile supports confounding/sensitivity discussion and is not a causal adjustment model."
+  ],
+  "metric_contract_summary": {
+    "evaluated_complexity_metrics": 4,
+    "manual_genai_architecture_classification_used": false,
+    "repository_structural_complexity_metrics": 9
+  },
+  "metrics_contract_path": "paper_v9/figures/rq3_complexity_metrics_contract.csv",
+  "metrics_contract_sha256": "553d3f8723fa7576090ca9c64a16a25669ef8bc6e40ca0af9fe97e1d89409a90",
+  "path_heuristics": {
+    "architecture_layer_rule": "Path segment markers classify clean file events as frontend, backend, mixed, or other_or_unclassified; this is a coarse repository-structure heuristic, not manual GenAI architecture classification.",
+    "backend_markers": [
+      "api",
+      "apis",
+      "back-end",
+      "backend",
+      "controllers",
+      "models",
+      "repositories",
+      "routes",
+      "server",
+      "services"
+    ],
+    "clean_path_policy": "code-churn-metrics-v2",
+    "frontend_markers": [
+      "client",
+      "components",
+      "front-end",
+      "frontend",
+      "pages",
+      "ui",
+      "views",
+      "web"
+    ]
+  },
+  "visualization_contract": {
+    "rq3_complexity_vs_final_concentration": {
+      "color": "score_trajectory_group",
+      "panels": [
+        "final7_commit_share_pct",
+        "final7_clean_churn_share_pct"
+      ],
+      "purpose": "Inspect whether final-week concentration patterns are separable from project technical complexity.",
+      "x": "technical_complexity_mean_t3",
+      "y": "final7_share_pct"
+    },
+    "rq3_planning_rework_complexity_overlay": {
+      "color": "technical_complexity_mean_t3",
+      "purpose": "Overlay planning, rework and complexity to support descriptive confounding discussion.",
+      "shape": "baseline_eligibility_label",
+      "x": "planning_scope_log1p_t1",
+      "y": "clean_rework_churn_t3"
+    },
+    "rq3_technical_complexity_vs_rework": {
+      "color": "planning_scope_tier",
+      "purpose": "Assess whether T3 rework magnitude may co-vary with evaluator-rated technical complexity.",
+      "shape": "Semestre",
+      "x": "technical_complexity_mean_t3",
+      "y": "clean_rework_churn_t3"
+    }
+  }
+}

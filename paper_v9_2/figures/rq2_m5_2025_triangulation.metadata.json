@@ -1,0 +1,85 @@
+{
+  "artifact_id": "rq2_m5_2025_triangulation",
+  "contract_version": "rq2-m5-2025-triangulation-v1",
+  "coverage": {
+    "m5_analysis_level": "global_transcript_corpus_by_temporal_marker",
+    "m5_team_level_measure": false,
+    "m5_zero_filled_unavailable_semesters": false,
+    "observed_semester": "2025.2",
+    "team_checkpoint_rows": 27,
+    "team_semesters": 9,
+    "temporal_markers": [
+      "T1",
+      "T2",
+      "T3"
+    ],
+    "unavailable_semesters": {
+      "2026.1": "unavailable_not_measured"
+    }
+  },
+  "figure_output_sha256": {
+    "rq2_m5_2025_triangulation_panel": {
+      "pdf": "0e2c9c336487ae487506daa98d3a28295928118cb4f9a1dee1beb9ce14c7814d",
+      "png": "12b268b29c0c025ef3dfcdf9ab31d25c278442a3989d0fd26193dc073a837beb",
+      "svg": "35fde23c10429f98ba2f0d52e1e1450a8980bfc31804fbedd757b4fd85bdd2fe"
+    }
+  },
+  "figure_outputs": {
+    "rq2_m5_2025_triangulation_panel": {
+      "pdf": "paper_v9/figures/rq2_m5_2025_triangulation_panel.pdf",
+      "png": "paper_v9/figures/rq2_m5_2025_triangulation_panel.png",
+      "svg": "paper_v9/figures/rq2_m5_2025_triangulation_panel.svg"
+    }
+  },
+  "generated_at_utc": "2026-09-25T18:39:56.546247+00:00",
+  "inference": "descriptive_coverage_aware_triangulation_not_causal",
+  "input_sha256": {
+    "evaluator_team_cuts": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
+    "m4_churn_magnitude": "64fbb113302d8780f6d560debb9d35689c57d2852964d705b03f4367c6c7a4b0",
+    "m5_corpus_coverage": "91fbe7b2da0cffb5c1f259e4e66a0f5418ecac6ea44d1fb838292e0fac8d484c",
+    "m5_marker_density": "0d9cfd39437e5920fe13c7ed46ac38004f52852e0561214be91c07348a9f18b5",
+    "m6a_structural_planning": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01",
+    "m8_rework_magnitude": "d583853b901da39813ea3bbb641d8cf4a1a0b9930a3df3270256ae0e79c1e623"
+  },
+  "inputs": {
+    "evaluator_team_cuts": "data/lake/evaluator_team_cuts.parquet",
+    "m4_churn_magnitude": "paper_v9/data/metrics/m4_churn_magnitude.csv",
+    "m5_corpus_coverage": "paper_v9/data/metrics/m5_corpus_coverage.csv",
+    "m5_marker_density": "paper_v9/data/metrics/m5_marker_density.csv",
+    "m6a_structural_planning": "paper_v9/data/metrics/m6a_structural_planning.csv",
+    "m8_rework_magnitude": "paper_v9/data/metrics/m8_rework_magnitude.csv"
+  },
+  "limitations": [
+    "M5 is a global transcript-corpus measure by temporal marker, not a team-level measurement.",
+    "The triangulation is restricted to 2025.2; 2026.1 is unavailable/not measured and is not zero-filled.",
+    "M8 rework is observed at T3 only and should not be interpreted as semantic defect validation.",
+    "Evaluator score is a descriptive unweighted composite used for triangulation consistency."
+  ],
+  "metrics": {
+    "clean_churn": "M4 clean changed lines by team-semester/checkpoint.",
+    "clean_rework_churn_t3": "M8 T3 clean changed lines touching paths observed before T3.",
+    "evaluator_score_composite": "Unweighted mean of project_progress, scope_applicability, technical_complexity and engagement_participation evaluator dimensions.",
+    "m5_friction_marker_density_per_1k_tokens": "Global transcript-corpus friction markers per 1k tokens by temporal marker."
+  },
+  "output_sha256": {
+    "data": "982e6d07753363e68b1c950e52ab1ddbaa02005d7652b284d33b743c546cf049",
+    "summary": "ce3679883f78d4c0615b9a3b30f6e7ad43cf23eb3dc3f358b442e799e2b1ff90"
+  },
+  "outputs": {
+    "data": "paper_v9/figures/rq2_m5_2025_triangulation_data.csv",
+    "summary": "paper_v9/figures/rq2_m5_2025_triangulation_summary.csv"
+  },
+  "visualization_contract": {
+    "rq2_m5_2025_triangulation_panel": {
+      "coverage_note": "Panel is intentionally restricted to 2025.2 because M5 transcript evidence is not measured for 2026.1.",
+      "panels": [
+        "M5 global friction-marker density by temporal marker",
+        "M4 clean churn distribution by team/checkpoint",
+        "Evaluator composite score distribution by team/checkpoint",
+        "M8 T3 clean rework churn by team"
+      ],
+      "source_data": "paper_v9/figures/rq2_m5_2025_triangulation_data.csv",
+      "source_summary": "paper_v9/figures/rq2_m5_2025_triangulation_summary.csv"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "metric": "M6b",
+  "task": "4.2 protocol presentation",
+  "status": "not_executed_pending_approval",
+  "actual_calls": 0,
+  "actual_input_tokens": 0,
+  "actual_output_tokens": 0,
+  "model": "gpt-4o-mini",
+  "temperature": 0.0,
+  "prompt_version": "m6b-structured-planning-v1",
+  "pilot_cases": [
+    {
+      "ID_Equipe": "TEAM_01",
+      "Semestre": "2025.2",
+      "case": "mixed_evidence",
+      "source_contract": "data/raw/repos_parent_cache",
+      "t1_subject_n": 7,
+      "input_subjects": [
+        {"commit_hash": "6ab0cf920f1d5a0ab8a09a5a78d0cd265ce8688a", "timestamp": "2025-09-13T22:33:22-03:00", "subject": "First commit"},
+        {"commit_hash": "5b4622d31fdff2f0c59566d65218eec9947ac7b1", "timestamp": "2025-09-13T22:37:46-03:00", "subject": "Add empty frontend and backend folders with .gitkeep"},
+        {"commit_hash": "7566a7106942da5cae37597e47722a2d6ce3fef2", "timestamp": "2025-09-13T23:02:25-03:00", "subject": "Update README.md"},
+        {"commit_hash": "515a7366a25e0be246ce93b0caabb5fed49020ac", "timestamp": "2025-09-14T21:56:07-03:00", "subject": "Atualização do backend: descreva o que foi alterado"},
+        {"commit_hash": "8b601b3bedd491b8887eea95c2aab3261873d3cf", "timestamp": "2025-09-15T16:18:52-03:00", "subject": "Primeiro commit"},
+        {"commit_hash": "6808d82211c257379b6933445b7533ade1439881", "timestamp": "2025-09-15T16:18:52-03:00", "subject": "Primeiro commit"},
+        {"commit_hash": "490f2d95005ad433e8db2da68849848bbf7d4cf1", "timestamp": "2025-09-15T16:25:35-03:00", "subject": "Adiciona .gitignore e remove arquivos grandes/desnecessários"}
+      ],
+      "expected_validation_checks": ["all evidence quotes must be exact subject substrings", "no numeric score", "empty unsupported categories must include a reason"]
+    },
+    {
+      "ID_Equipe": "TEAM_09",
+      "Semestre": "2025.2",
+      "case": "sparse_evidence",
+      "source_contract": "data/raw/repos_parent_cache",
+      "t1_subject_n": 1,
+      "input_subjects": [
+        {"commit_hash": "167e8eb02d7db62dc8d1f38420751a2c402357fa", "timestamp": "2025-09-25T15:02:24-03:00", "subject": "Initial commit"}
+      ],
+      "expected_validation_checks": ["planning_evidence_present must be false or narrowly justified", "insufficient_evidence must be explicit", "one generic subject must not be treated as architectural evidence"]
+    },
+    {
+      "ID_Equipe": "TEAM_02",
+      "Semestre": "2025.2",
+      "case": "unavailable",
+      "source_contract": "data/lake/git_commits.parquet",
+      "t1_subject_n": 0,
+      "input_subjects": [],
+      "expected_record": {"planning_evidence_present": false, "insufficient_evidence": [{"category": "all", "reason": "no_t1_commit_subjects"}]},
+      "expected_validation_checks": ["no LLM call", "preserve unavailable_not_measured", "do not assign a low planning score"]
+    }
+  ],
+  "post_approval_execution": {
+    "required": true,
+    "approval_gate": "M6B_LLM_PROTOCOL.md plus M6B_COST_ESTIMATE.txt",
+    "human_review_required_before_m9": true
+  }
+}

@@ -1,0 +1,3 @@
+analysis_id,predictor,outcome,n,spearman_rho,spearman_p_exploratory
+all_team_semesters,pi_file_count_t1,clean_rework_churn_t3,14,0.20616324813441814,0.4794878996701675
+all_team_semesters,planning_scope_log1p_t1,clean_rework_churn_t3,14,0.3006204394157542,0.2963204273875562

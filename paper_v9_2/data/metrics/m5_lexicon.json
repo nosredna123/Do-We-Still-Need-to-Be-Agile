@@ -1,0 +1,12 @@
+{
+  "counting_rule": "regex match count per transcript chunk; chunks are provenance units, not independent observations",
+  "language": "Portuguese",
+  "patterns": {
+    "alignment": "coordena[çc][aã]o|comunica[çc][aã]o|alinh|sincron|divis[aã]o de taref|distribui[çc][aã]o de taref|depend[eê]ncia",
+    "blocker": "bloque|imped|trava|gargalo",
+    "handoff": "repasse|handoff|deleg[aã]|passar.{0,30}para",
+    "integration": "integra[çc][aã]o|merge|conflit|incompatibil|acopl",
+    "rework": "retrabalh|refaz|refazer|revis[aã]o"
+  },
+  "version": "m5-friction-lexicon-pt-v1"
+}

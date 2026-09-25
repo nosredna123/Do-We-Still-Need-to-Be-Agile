@@ -1,0 +1,7 @@
+temporal_marker,file_category,included_in_m4,team_semester_n,file_event_n,unique_file_n,churn_lines,churn_share,aggregation_grain
+T1,clean_source_or_test,True,6,405,256,21718.0,0.4290907654008772,temporal_marker_across_semesters
+T1,excluded_or_non_measurement,False,7,306,251,28896.0,0.5709092345991228,temporal_marker_across_semesters
+T2,clean_source_or_test,True,9,981,644,47545.0,0.19614354844698204,temporal_marker_across_semesters
+T2,excluded_or_non_measurement,False,9,1919,1750,194854.0,0.803856451553018,temporal_marker_across_semesters
+T3,clean_source_or_test,True,9,1916,1074,136325.0,0.010096554388340626,temporal_marker_across_semesters
+T3,excluded_or_non_measurement,False,9,45514,23832,13365806.0,0.9899034456116593,temporal_marker_across_semesters

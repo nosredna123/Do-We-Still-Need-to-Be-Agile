@@ -1,0 +1,59 @@
+Semestre,temporal_marker,measure,category,count,respondent_n,share
+2025.2,T1,real_ai_use_tasks,Análise de requisitos,11,46,0.2391304347826087
+2025.2,T1,real_ai_use_tasks,Brainstorming de ideias,26,46,0.5652173913043478
+2025.2,T1,real_ai_use_tasks,Depuração / debug,27,46,0.5869565217391305
+2025.2,T1,real_ai_use_tasks,Documentação,20,46,0.43478260869565216
+2025.2,T1,real_ai_use_tasks,Escrita de testes,12,46,0.2608695652173913
+2025.2,T1,real_ai_use_tasks,Geração de código,30,46,0.6521739130434783
+2025.2,T1,real_ai_use_tasks,Organização de trabalhos acadêmicos.,1,46,0.021739130434782608
+2025.2,T1,real_ai_use_tasks,Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c,42,46,0.9130434782608695
+2025.2,T1,real_ai_use_tasks,Prototipação,10,46,0.21739130434782608
+2025.2,T1,real_ai_use_tasks,Refatoração,14,46,0.30434782608695654
+2025.2,T1,real_ai_use_tasks,Tirar algum tipo de dúvida,1,46,0.021739130434782608
+2025.2,T1,real_ai_use_tasks,entender alguma coisa,1,46,0.021739130434782608
+2025.2,T1,real_ai_use_tasks,ter ideias,1,46,0.021739130434782608
+2025.2,T2,real_ai_use_tasks,Análise de requisitos,11,41,0.2682926829268293
+2025.2,T2,real_ai_use_tasks,Brainstorming de ideias,23,41,0.5609756097560976
+2025.2,T2,real_ai_use_tasks,Depuração / debug,23,41,0.5609756097560976
+2025.2,T2,real_ai_use_tasks,Documentação,23,41,0.5609756097560976
+2025.2,T2,real_ai_use_tasks,Escrita de testes,9,41,0.21951219512195122
+2025.2,T2,real_ai_use_tasks,Geração de código,29,41,0.7073170731707317
+2025.2,T2,real_ai_use_tasks,Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c,28,41,0.6829268292682927
+2025.2,T2,real_ai_use_tasks,Prototipação,9,41,0.21951219512195122
+2025.2,T2,real_ai_use_tasks,Refatoração,13,41,0.3170731707317073
+2025.2,T3,real_ai_use_tasks,Análise de requisitos,13,40,0.325
+2025.2,T3,real_ai_use_tasks,Brainstorming de ideias,25,40,0.625
+2025.2,T3,real_ai_use_tasks,Depuração / debug,22,40,0.55
+2025.2,T3,real_ai_use_tasks,Documentação,22,40,0.55
+2025.2,T3,real_ai_use_tasks,Escrita de testes,11,40,0.275
+2025.2,T3,real_ai_use_tasks,Geração de código,31,40,0.775
+2025.2,T3,real_ai_use_tasks,Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c,29,40,0.725
+2025.2,T3,real_ai_use_tasks,Prototipação,9,40,0.225
+2025.2,T3,real_ai_use_tasks,Refatoração,13,40,0.325
+2026.1,T1,real_ai_use_tasks,Análise de requisitos,8,22,0.36363636363636365
+2026.1,T1,real_ai_use_tasks,Brainstorming de ideias,14,22,0.6363636363636364
+2026.1,T1,real_ai_use_tasks,Depuração / debug,7,22,0.3181818181818182
+2026.1,T1,real_ai_use_tasks,Documentação,16,22,0.7272727272727273
+2026.1,T1,real_ai_use_tasks,Escrita de testes,7,22,0.3181818181818182
+2026.1,T1,real_ai_use_tasks,Geração de código,15,22,0.6818181818181818
+2026.1,T1,real_ai_use_tasks,Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c,16,22,0.7272727272727273
+2026.1,T1,real_ai_use_tasks,Prototipação,4,22,0.18181818181818182
+2026.1,T1,real_ai_use_tasks,Refatoração,12,22,0.5454545454545454
+2026.1,T2,real_ai_use_tasks,Análise de requisitos,6,20,0.3
+2026.1,T2,real_ai_use_tasks,Brainstorming de ideias,10,20,0.5
+2026.1,T2,real_ai_use_tasks,Depuração / debug,13,20,0.65
+2026.1,T2,real_ai_use_tasks,Documentação,14,20,0.7
+2026.1,T2,real_ai_use_tasks,Escrita de testes,8,20,0.4
+2026.1,T2,real_ai_use_tasks,Geração de código,15,20,0.75
+2026.1,T2,real_ai_use_tasks,Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c,13,20,0.65
+2026.1,T2,real_ai_use_tasks,Prototipação,6,20,0.3
+2026.1,T2,real_ai_use_tasks,Refatoração,8,20,0.4
+2026.1,T3,real_ai_use_tasks,Análise de requisitos,5,18,0.2777777777777778
+2026.1,T3,real_ai_use_tasks,Brainstorming de ideias,7,18,0.3888888888888889
+2026.1,T3,real_ai_use_tasks,Depuração / debug,12,18,0.6666666666666666
+2026.1,T3,real_ai_use_tasks,Documentação,12,18,0.6666666666666666
+2026.1,T3,real_ai_use_tasks,Escrita de testes,6,18,0.3333333333333333
+2026.1,T3,real_ai_use_tasks,Geração de código,11,18,0.6111111111111112
+2026.1,T3,real_ai_use_tasks,Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c,12,18,0.6666666666666666
+2026.1,T3,real_ai_use_tasks,Prototipação,7,18,0.3888888888888889
+2026.1,T3,real_ai_use_tasks,Refatoração,8,18,0.4444444444444444

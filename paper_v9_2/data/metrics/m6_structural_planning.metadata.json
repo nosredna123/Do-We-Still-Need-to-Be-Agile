@@ -1,0 +1,30 @@
+{
+  "absence_policy": "report_separately_not_as_score_floor",
+  "artifacts": [
+    "m6a_structural_planning.csv",
+    "m6_structural_planning.metadata.json"
+  ],
+  "checkpoint": "T1",
+  "config_sha256": "4a3296ed2256d9acf16ec0538712d85104e4f5d6da041832a72ac8d59b9805eb",
+  "contract_version": "m6a-structural-planning-v1",
+  "coverage": {
+    "available_n": 14,
+    "team_semester_n": 14,
+    "unavailable_not_measured_n": 0
+  },
+  "gate_status": "pending",
+  "inference": "exploratory_descriptive",
+  "input_sha256": "293b61a655dfdb40a8f48ebef9d350ed6f34cf48c415a1375428ffa9591d65fd",
+  "limitations": [
+    "file presence and line scope are observable structural signals, not semantic planning quality",
+    "absence of a repository artifact does not prove absence of planning outside the repository",
+    "M6b textual content extraction is a separate gated task"
+  ],
+  "llm_calls_required": false,
+  "metric_definition_version": "m6a-structural-planning-v1",
+  "rq": "RQ3",
+  "source_contract": "data/analysis/planning_metrics.parquet",
+  "source_definition_version": "pi-v1",
+  "status": "success",
+  "unit_of_analysis": "team_semester"
+}

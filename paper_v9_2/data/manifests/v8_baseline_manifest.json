@@ -1,0 +1,224 @@
+{
+  "baseline_date": "2026-09-24",
+  "baseline_task": "Task 0.2: Freeze V8 Baseline and Register Inventory",
+  "baseline_purpose": "Make all V8-V9 differences traceable. Establish immutable baseline of LaTeX, scripts, data, and metrics.",
+  "v8_invariants": {
+    "title": "Do We Still Need to Be Agile? What Two Cohorts of Student Projects Reveal About Planning Discipline in the GenAI-Era",
+    "research_questions": [
+      {
+        "id": "RQ1",
+        "type": "Descriptive",
+        "text": "How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?"
+      },
+      {
+        "id": "RQ2",
+        "type": "Descriptive",
+        "text": "How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?"
+      },
+      {
+        "id": "RQ3",
+        "type": "Primary",
+        "text": "How does the quality of upfront architectural artifacts (evaluated at baseline T_1) associate with late-stage destructive rework and independent, blind-scored project outcomes?"
+      }
+    ],
+    "paper_sections": [
+      "Introduction",
+      "Background and Related Work",
+      "Methodology",
+      "Results",
+      "Discussion",
+      "Threats to Validity",
+      "Conclusion"
+    ],
+    "study_design": {
+      "cohorts": 2,
+      "semesters": ["2025.2", "2026.1"],
+      "teams_2025_2": 9,
+      "teams_2026_1": 5,
+      "total_team_semesters": 14,
+      "approximate_students": 70,
+      "temporal_checkpoints": ["T_1 (Baseline)", "T_2 (Mid-Semester)", "T_3 (Final Integration)"],
+      "ai_requirement": "Advanced architectural patterns (RAG, LLM-driven pipelines)",
+      "project_constraint": "Real-world community/educational/business problems (no toy applications)"
+    }
+  },
+  "v8_file_hashes": {
+    "latex_main_tex": {
+      "file": "paper_v8/latex_code/main.tex",
+      "sha256": "68bb2bbe3bd74611d7a2517844e943ca615845af21b8ec55433cb47f1d09fa5f",
+      "purpose": "Main LaTeX document (IMMUTABLE BASELINE)"
+    },
+    "latex_directory": {
+      "path": "paper_v8/latex_code/",
+      "aggregate_sha256": "5d0d619346b08d73c3312c6ff58e2c88ea07a1cba3ca41681d3b73e063b3942b",
+      "purpose": "All LaTeX source files (read-only baseline)"
+    },
+    "figures_directory": {
+      "path": "paper_v8/figures/",
+      "aggregate_sha256": "97d9e511b88780bc119381043eed00f510c49c0e92d480023aa467cf64d3dcdf",
+      "purpose": "All figures used in v8 paper (read-only baseline)"
+    }
+  },
+  "v8_metrics_inventory": {
+    "total_metrics": 9,
+    "metric_families": [
+      {
+        "metric": "M1",
+        "name": "AI Dependency Trajectory",
+        "script": "m1_ai_dependency_trajectory.py",
+        "script_hash": "e8da2d2382cb61b7e875c43951b3cea8780103b157fc1d8664c57f88470b6034",
+        "data_file": "m1_ai_dependency_trajectory.csv",
+        "data_hash": "7349a5e89fdc1b82d5628d3e7d668797e0831d94b06d709c355dac299e6f3fcd",
+        "rq": "RQ1",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M2",
+        "name": "Role Disruption Risk",
+        "script": "m2_role_disruption_risk.py",
+        "script_hash": "c02b534fe3823c731665c0fec25b4c216628d7784ade7c90b9ac2bc8feff56ac",
+        "data_file": "m2_role_disruption_risk.csv",
+        "data_hash": "c438f91996a146f5522cdfbd393e145c2db56473c48eeadb44c25968603cbb2c",
+        "rq": "RQ1",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M3",
+        "name": "Author Concentration Density",
+        "script": "m3_author_concentration_density.py",
+        "script_hash": "986768d451675063bcd77f2d8c30490f39fb5716a1ebe33037eee918edcf0141",
+        "data_file": "m3_author_concentration_density.csv",
+        "data_hash": "7d2f4926dfd9fb4914b3bf0647c640a42f7c3b28377e9baed730e33c6b1f86f7",
+        "rq": "RQ2",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M4",
+        "name": "Repository Activity Density",
+        "script": "m4_repo_activity_density.py",
+        "script_hash": "f3c371c5e472f878ed8caa1eab76cdcee48309e0c11855cccd8ea82dd02c5eab",
+        "data_file": "m4_repo_activity_density.csv",
+        "data_hash": "d3436daa9e7a3eb95b3625c1755a5e32d5b2e9bc984799712aafe87c17db2177",
+        "rq": "RQ2",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M5",
+        "name": "Coordination Friction Trajectory",
+        "script": "m5_coordination_friction_trajectory.py",
+        "script_hash": "7e0d012243c56d0d9e13fc66580b72d26ab73e2b36fc60b1daa5a154e8f494ff",
+        "data_file": "m5_coordination_friction_trajectory.csv",
+        "data_hash": "102852cd3c883be59f1ad89cb00158da96f6e16c2aaa89cf3f867737b92a0591",
+        "rq": "RQ2",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M6",
+        "name": "T1 Planning Quality",
+        "script": "m6_t1_planning_quality.py",
+        "script_hash": "1fa9026e98dbe796ce8392d482c625d61d7415e71187ea4b0b9a4abd046e4693",
+        "data_file": "m6_t1_planning_quality.csv",
+        "data_hash": "0c7fdbd4ffc902b66f9ba104ef65a7492a1cafcc99f12361e5c2ed5aada78352",
+        "rq": "RQ3",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M7",
+        "name": "Planning Omission Rate",
+        "script": "m7_planning_omission_rate.py",
+        "script_hash": "680afa00702ce353a21985f174ec5e353067a564e58bb95c458c0d8098d04ad0",
+        "data_file": "m7_planning_omission_rate.csv",
+        "data_hash": "676f29778c70cfbf949b23bff152185394241c5070dee7d352f0cf0a951ba720",
+        "rq": "RQ3",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M8",
+        "name": "Rework Severity Ratio",
+        "script": "m8_rework_severity_ratio.py",
+        "script_hash": "b39747fb8cb6b4974d66bd30c58955c68b13919bbfc0b86043506c0ea5406ab6",
+        "data_file": "m8_rework_severity_ratio.csv",
+        "data_hash": "683577d5f5d9e55eab0f012978ee73ce0e4e0dde9c330be225a80e9b3101d21b",
+        "rq": "RQ3",
+        "status": "Baseline frozen"
+      },
+      {
+        "metric": "M9",
+        "name": "Planning vs. Rework Association",
+        "script": "m9_planning_vs_rework_association.py",
+        "script_hash": "9fe408bcac0e05d853cdadf395eae8bb26a4f958612f8725cad8e97d6344185c",
+        "data_files": [
+          {
+            "name": "m9_planning_vs_rework_association.csv",
+            "hash": "362b70f1d4934b2df43cdb56a17a656b6e01b036cc1a5f30eaab40205ee05e9c"
+          },
+          {
+            "name": "m9_planning_vs_rework_association_group_contrast.csv",
+            "hash": "817a0298209ab3e367c781884173debfd0f95a87af0a4be58d4d5cf5a9659d7d"
+          },
+          {
+            "name": "m9_planning_vs_rework_association_floor_sensitivity.csv",
+            "hash": "628e629f14b0566a3a3cf2fc060a274363b7e5f07e132dde96ad59267d9e96a4"
+          },
+          {
+            "name": "m9_planning_vs_rework_association_floor_sensitivity_group_contrast.csv",
+            "hash": "798d6a1f26a9dbf73cf8860e276ba0c654c4b1aae6f894a4d18a8bf59b4c31b6"
+          }
+        ],
+        "rq": "RQ3",
+        "status": "Baseline frozen (4 data variants)"
+      }
+    ]
+  },
+  "v8_supporting_documentation": {
+    "METRICS_PLAN.md": {
+      "path": "paper_v8/METRICS_PLAN.md",
+      "purpose": "Specification of M1--M9 operationalizations"
+    },
+    "LLM_USAGE_PLAN.md": {
+      "path": "paper_v8/LLM_USAGE_PLAN.md",
+      "purpose": "LLM usage policy for data extraction and metric generation"
+    }
+  },
+  "metricas_v8_analysis_status": {
+    "directory": "metricas_v8-analysis/",
+    "status": "DOES NOT EXIST (as of 2026-09-24)",
+    "planned_purpose": "Reorganization space for notebook-based M1--M9 analysis (per V9 conversion plan, Section 2: Target Structure)",
+    "note": "This directory will be created in subsequent tasks if exploratory notebook validation is required before v9 script conversion"
+  },
+  "v8_baseline_lock": {
+    "status": "LOCKED (read-only)",
+    "invariant_properties": [
+      "Title: MUST remain identical across v8 → v9",
+      "RQ1, RQ2, RQ3: MUST remain literally unchanged",
+      "Paper sections (abstract, intro, background, methodology, results, discussion, threats, conclusion): MUST NOT be modified in v8",
+      "M1--M9 definitions: MUST NOT be reinterpreted; v9 implementations MUST preserve operationalizations",
+      "Directory paper_v8/: ALL files are baseline references ONLY"
+    ],
+    "permitted_actions": [
+      "Read any file in paper_v8/",
+      "Calculate hashes to verify integrity",
+      "Copy templates to v9 for adaptation",
+      "Reference in manifests and documentation"
+    ],
+    "forbidden_actions": [
+      "Modify any file in paper_v8/",
+      "Rename or move files in paper_v8/",
+      "Delete or archive paper_v8/ during v9 work"
+    ]
+  },
+  "v9_conversion_readiness": {
+    "task_0_2_status": "COMPLETE",
+    "gate_decision": "APPROVED",
+    "next_task": "Task 1.1 - Create common contract and utilities v9",
+    "baseline_manifest_location": "paper_v9/data/manifests/v8_baseline_manifest.json",
+    "validation_checklist": [
+      "✓ Title and RQs extracted and recorded",
+      "✓ All 9 notebook/metric definitions registered",
+      "✓ LaTeX, figures, and scripts hashes frozen",
+      "✓ Supporting documentation (METRICS_PLAN, LLM_USAGE_PLAN) inventoried",
+      "✓ V8 directory protected against modification",
+      "✓ V9 directory structure ready for metrics, results, and LaTeX generation"
+    ]
+  }
+}

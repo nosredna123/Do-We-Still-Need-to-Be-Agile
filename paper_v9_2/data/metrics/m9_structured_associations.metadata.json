@@ -1,0 +1,46 @@
+{
+  "artifacts": [
+    "m9_planning_vs_rework_m6a_m8a.csv",
+    "m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv",
+    "m9_planning_vs_outcomes_m6a_t3.csv",
+    "m9_planning_vs_outcomes_m6b_t3_if_approved.csv",
+    "m9_leave_one_out_intervals.csv",
+    "m9_structured_associations.metadata.json"
+  ],
+  "config_sha256": "6c919a07ddd79576dda84c8cc1c1eda97aa63c9e4c3f90ee1c2407992f6d0ee3",
+  "contract_version": "m9-structured-associations-v1",
+  "coverage": {
+    "baseline_eligible": 12,
+    "leave_one_out_rows": 52,
+    "m6b_observed": 9,
+    "team_semesters": 14
+  },
+  "gate_status": "pending",
+  "inference": "exploratory_descriptive",
+  "input_sha256": "db787f14543e4bd7f9b75f420aae73d3d0222161d0d3cb448c9129d3f858ce60",
+  "limitations": [
+    "Spearman values are descriptive and not causal",
+    "small denominators and influential cases require leave-one-out review",
+    "M6b predictors are separate structured evidence counts, not a composite score",
+    "M6b unavailable cases remain excluded from pairwise associations",
+    "M7 is excluded as a predictor"
+  ],
+  "m6b_predictors": [
+    "m6b_planning_evidence_present",
+    "m6b_goals_n",
+    "m6b_architecture_or_design_n",
+    "m6b_task_decomposition_n",
+    "m6b_risk_or_dependency_n",
+    "m6b_evidence_quotes_n"
+  ],
+  "m6b_status": "approved_human_review",
+  "m7_used_as_predictor": false,
+  "metric_definition_version": "m9-structured-associations-v1",
+  "predictors": [
+    "pi_file_count_t1",
+    "planning_scope_log1p_t1"
+  ],
+  "rq": "RQ3",
+  "status": "success",
+  "unit_of_analysis": "team_semester"
+}
