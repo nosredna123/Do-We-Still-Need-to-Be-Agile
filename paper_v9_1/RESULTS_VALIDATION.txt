@@ -1,0 +1,24 @@
+Paper V9 Task 5.1 Results Catalog Validation
+Date: 2026-09-24
+
+Command:
+  .venv/bin/python paper_v9/scripts/results/build_results_summary.py
+
+Output:
+  paper_v9/data/results/results_summary.json
+
+Checks:
+- JSON parsed successfully.
+- All metric families M1-M9 are present.
+- 54 official metric artifacts were resolved and hashed.
+- All referenced artifacts existed and were non-empty.
+- Metric metadata and schemas were loaded during catalog construction.
+- Key summaries were derived from official v9 artifacts only.
+- The catalog was generated twice with identical SHA-256:
+  e273483f505f34b285bf636bc00f728faa3ddfc6bcc74004d4c44371b69b96c1
+- Focused tests: 2 passed.
+
+Interpretation boundary:
+The catalog consolidates descriptive and exploratory evidence. It does not
+combine incompatible analytical grains, add causal claims, or replace the
+manual visualization-selection gate in Task 5.2.

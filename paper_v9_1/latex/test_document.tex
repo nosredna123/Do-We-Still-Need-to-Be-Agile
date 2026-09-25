@@ -1,0 +1,75 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\title{Test Document for V9 LaTeX Environment}
+
+\author{V9 Validation\\
+        University of Test}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+This is a test document to validate the LaTeX environment setup for paper v9.
+As shown in \cite{key1}, the environment is working correctly.
+
+\section{Test Components}
+
+\subsection{Citations}
+The citation system is tested with a reference \cite{key2}.
+
+\subsection{Tables}
+Table~\ref{tab:test} demonstrates table functionality with booktabs.
+
+\begin{table}[h]
+\centering
+\caption{Test Table with booktabs}
+\label{tab:test}
+\begin{tabularx}{0.5\textwidth}{Xcc}
+\toprule
+\textbf{Metric} & \textbf{Value} & \textbf{Unit} \\
+\midrule
+Performance & 95.5 & \% \\
+Quality & 87.3 & score \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Figures}
+Figure~\ref{fig:test} shows a test image (if available).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4\textwidth]{example-image-a}
+\caption{Test figure using graphicx package}
+\label{fig:test}
+\end{figure}
+
+\section{Validation Results}
+
+The following components have been validated:
+\begin{itemize}
+\item IEEEtran document class
+\item Citation management (cite package)
+\item Table formatting (booktabs and tabularx)
+\item Figure inclusion (graphicx)
+\item Mathematical notation (amsmath, amssymb)
+\end{itemize}
+
+\begin{thebibliography}{1}
+
+\bibitem{key1}
+A.~Author and B.~Writer, ``A sample paper title,'' in \textit{Proceedings of Conference}, 2024, pp.~1--8.
+
+\bibitem{key2}
+C.~Researcher, ``Another important work,'' \textit{Journal Name}, vol.~12, no.~3, pp.~45--52, 2023.
+
+\end{thebibliography}
+
+\end{document}

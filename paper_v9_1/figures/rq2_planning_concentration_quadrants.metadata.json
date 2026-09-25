@@ -1,0 +1,72 @@
+{
+  "artifact_family": "planning_concentration_quadrants",
+  "base_path": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
+  "base_sha256": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
+  "contract_version": "rq2-planning-concentration-quadrants-v1",
+  "generated_at_utc": "2026-09-25T17:47:14.667824+00:00",
+  "inference": "descriptive_non_causal",
+  "limitations": [
+    "Planning scope is repository-visible structural evidence, not semantic planning quality.",
+    "Final-seven-day concentration is a temporal activity proxy, not causal evidence.",
+    "Quadrants are descriptive small-n bins and are not statistical significance tests.",
+    "M8 clean rework is included only as a provenance-based churn proxy when summarized."
+  ],
+  "metadata_path": "paper_v9/figures/rq2_planning_concentration_quadrants.metadata.json",
+  "outputs": {
+    "rq2_planning_vs_final7_clean_churn_concentration": {
+      "activity_metric": "clean_source_or_test_changed_lines",
+      "artifacts": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_clean_churn_concentration.pdf",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_clean_churn_concentration.svg",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_clean_churn_concentration.png",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_clean_churn_concentration_data.csv"
+      ],
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_clean_churn_concentration_data.csv",
+      "data_sha256": "5ad2ba6645629cfbb694e09f7a51e5a800760554a6deb432651f4138c3f3e37f",
+      "final7_share_pct_median": 34.99461573513386,
+      "planning_scope_log1p_t1_median": 1.791759469228055,
+      "quadrant_counts": {
+        "high_repository_visible_planning__higher_final7_concentration": 3,
+        "high_repository_visible_planning__lower_final7_concentration": 4,
+        "lower_repository_visible_planning__higher_final7_concentration": 4,
+        "lower_repository_visible_planning__lower_final7_concentration": 3
+      },
+      "team_semesters": 14
+    },
+    "rq2_planning_vs_final7_commit_concentration": {
+      "activity_metric": "commits",
+      "artifacts": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_commit_concentration.pdf",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_commit_concentration.svg",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_commit_concentration.png",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_commit_concentration_data.csv"
+      ],
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_planning_vs_final7_commit_concentration_data.csv",
+      "data_sha256": "e5d65ae9bb8c4f529535ad2869762b0937e29317306964422d64003eb7e22149",
+      "final7_share_pct_median": 43.743509865005194,
+      "planning_scope_log1p_t1_median": 1.791759469228055,
+      "quadrant_counts": {
+        "high_repository_visible_planning__higher_final7_concentration": 3,
+        "high_repository_visible_planning__lower_final7_concentration": 4,
+        "lower_repository_visible_planning__higher_final7_concentration": 4,
+        "lower_repository_visible_planning__lower_final7_concentration": 3
+      },
+      "team_semesters": 14
+    }
+  },
+  "quadrant_definition": {
+    "final7_cut": "metric-specific median final7_share_pct",
+    "interpretations": {
+      "high_repository_visible_planning__higher_final7_concentration": "High planning scope with late concentration",
+      "high_repository_visible_planning__lower_final7_concentration": "High planning scope with distributed activity",
+      "lower_repository_visible_planning__higher_final7_concentration": "Lower planning scope with late concentration",
+      "lower_repository_visible_planning__lower_final7_concentration": "Lower planning scope with distributed or low final concentration"
+    },
+    "planning_cut": "planning_scope_tier from phase 0, based on repository-visible T1 planning scope median"
+  },
+  "rework_path": "paper_v9/data/metrics/m8_rework_magnitude.csv",
+  "rework_sha256": "d583853b901da39813ea3bbb641d8cf4a1a0b9930a3df3270256ae0e79c1e623",
+  "summary_path": "paper_v9/figures/rq2_planning_concentration_quadrant_summary.csv",
+  "summary_sha256": "9ebdcbbd720c3080acda847183121a8eb62360646b88e2f7dba4b125f059e873",
+  "unit_of_analysis": "team_semester"
+}

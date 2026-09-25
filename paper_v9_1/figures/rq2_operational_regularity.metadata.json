@@ -1,0 +1,95 @@
+{
+  "artifact_id": "rq2_operational_regularity",
+  "contract_version": "rq2-operational-regularity-v1",
+  "coverage": {
+    "m7_windows_per_team_semester": [
+      71
+    ],
+    "team_semesters": 14
+  },
+  "data_path": "paper_v9/figures/rq2_operational_regularity_data.csv",
+  "data_sha256": "699d35322857d85200ef0d08b9a3f1c0814d2eeacd67acd8ed0df4d934493177",
+  "figure_outputs": {
+    "rq2_regularity_profile_heatmap": {
+      "artifacts": [
+        "paper_v9/figures/rq2_regularity_profile_heatmap.pdf",
+        "paper_v9/figures/rq2_regularity_profile_heatmap.svg",
+        "paper_v9/figures/rq2_regularity_profile_heatmap.png",
+        "paper_v9/figures/rq2_regularity_profile_heatmap_data.csv"
+      ],
+      "data_path": "paper_v9/figures/rq2_regularity_profile_heatmap_data.csv",
+      "data_sha256": "3637061d8637117d980481207da2bc4d56c704d127a768101473468e0f698124"
+    },
+    "rq2_regularity_vs_final_concentration": {
+      "artifacts": [
+        "paper_v9/figures/rq2_regularity_vs_final_concentration.pdf",
+        "paper_v9/figures/rq2_regularity_vs_final_concentration.svg",
+        "paper_v9/figures/rq2_regularity_vs_final_concentration.png",
+        "paper_v9/figures/rq2_regularity_vs_final_concentration_data.csv"
+      ],
+      "data_path": "paper_v9/figures/rq2_regularity_vs_final_concentration_data.csv",
+      "data_sha256": "5c0f72214fed97586852ff48307d12c3b50512d2a430901ef28090d13ee99ee9"
+    },
+    "rq2_regularity_vs_score_delta": {
+      "artifacts": [
+        "paper_v9/figures/rq2_regularity_vs_score_delta.pdf",
+        "paper_v9/figures/rq2_regularity_vs_score_delta.svg",
+        "paper_v9/figures/rq2_regularity_vs_score_delta.png",
+        "paper_v9/figures/rq2_regularity_vs_score_delta_data.csv"
+      ],
+      "data_path": "paper_v9/figures/rq2_regularity_vs_score_delta_data.csv",
+      "data_sha256": "699d35322857d85200ef0d08b9a3f1c0814d2eeacd67acd8ed0df4d934493177"
+    }
+  },
+  "formulas": {
+    "active_day_count": "Count of days with at least one commit in the observed period.",
+    "active_day_share": "active_day_count / project_span_days.",
+    "author_count": "M3 pre-T3 author count.",
+    "author_gini": "M3 pre-T3 local-author commit Gini coefficient.",
+    "clean_churn_weekly_cv": "Population coefficient of variation of weekly clean source/test churn, including zero weeks in the observed period.",
+    "commit_weekly_cv": "Population coefficient of variation of weekly commit counts, including zero weeks in the observed period.",
+    "max_author_share": "M3 pre-T3 maximum local-author commit share.",
+    "max_inactivity_gap_days": "Longest run of zero-commit days inside the observed daily series.",
+    "median_inactivity_gap_days": "Median run length of zero-commit days inside the observed daily series.",
+    "project_span_days": "Calendar days from first pre-T3 commit day through T3 anchor day, inclusive.",
+    "regularity_index": "Mean of eight normalized components where higher values indicate more distributed observed repository activity: active-day share, commit entropy, clean-churn entropy, inverted min-max commit weekly CV, inverted min-max clean-churn weekly CV, inverted M7 inactive-window share, inverted final-7 commit share, and inverted final-7 clean-churn share.",
+    "temporal_entropy_clean_churn": "Shannon entropy of daily clean churn normalized by log(project_span_days).",
+    "temporal_entropy_commits": "Shannon entropy of daily commit counts normalized by log(project_span_days)."
+  },
+  "generated_at_utc": "2026-09-25T17:59:35.492054+00:00",
+  "inference": "descriptive_non_causal",
+  "input_sha256": {
+    "author_concentration": "bef70e1bbea337838b519ebb0ec77a3d0c922b8c8e9cd0e5c5649e03dd45e522",
+    "base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
+    "commits": "e5d3d2035ee0879324902a16061608390e8e3132e2d4c0629c4de112a1f8566c",
+    "files": "c13269b33fcef0db61856678fc4ca8a9c86e2e8155d80f170de93f9274c1d1fa",
+    "m7": "10330489ddf7792cdee9df233477a20e387ecc6ae0f69069406d1b613c26a9c2",
+    "participation": "1e731991f97d00d7033eb594a335bf5368ff63959c107d9dd960349cf61814ce"
+  },
+  "inputs": {
+    "author_concentration": "paper_v9/data/metrics/m3_author_concentration.csv",
+    "base": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
+    "commits": "data/lake/git_commits.parquet",
+    "files": "data/lake/git_files.parquet",
+    "m7": "paper_v9/data/metrics/m7_inactivity_trajectory.csv",
+    "participation": "paper_v9/data/metrics/m3_author_activity_participation.csv"
+  },
+  "limitations": [
+    "Repository regularity is an observable Git proxy, not a direct measurement of Scrum, Kanban, or coordination process.",
+    "Weekly zero bins are included only after first observed commit and before the T3 anchor.",
+    "Clean churn uses the repository code-path policy and is not semantic quality evidence.",
+    "The regularity index is a descriptive composite approved for visualization, not a validated latent process scale."
+  ],
+  "regularity_index_components": [
+    "regularity_active_day_share_component",
+    "regularity_commit_entropy_component",
+    "regularity_clean_churn_entropy_component",
+    "regularity_commit_weekly_cv_component",
+    "regularity_clean_churn_weekly_cv_component",
+    "regularity_m7_activity_component",
+    "regularity_commit_distribution_component",
+    "regularity_clean_churn_distribution_component"
+  ],
+  "regularity_period": "First observed commit day through the team-semester T3 presentation anchor; weekly and daily zero-activity bins are included only within this observed period.",
+  "separation_of_constructs": "Regularity metrics describe temporal distribution of observed repository activity, not productivity, process compliance, or semantic quality."
+}

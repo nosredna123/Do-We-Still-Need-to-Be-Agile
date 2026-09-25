@@ -1,0 +1,63 @@
+{
+  "anchor": "last T3 evaluator vote",
+  "artifacts": [
+    "m8_rework_magnitude.csv",
+    "m8_rework_participation.csv",
+    "m8_rework_trajectory.csv",
+    "m8_baseline_eligibility.csv",
+    "m8_clean_rework.metadata.json"
+  ],
+  "clean_definition": "pipeline_config.is_measurement_code_path",
+  "config_sha256": "9bea6f1aa4b8122f6f7c45ea74e947ef2584d4a60176c0d7d223c75eb5aa3409",
+  "contract_version": "m8-clean-rework-v1",
+  "coverage": {
+    "eligible_team_semesters": 12,
+    "team_semesters": 14,
+    "trajectory_rows": 406
+  },
+  "gate_status": "pending",
+  "inference": "exploratory_descriptive",
+  "input_sha256": "743869c0170c2f3c1acc4add221c82c646d69d5bba21915a9107cad7d62e177b",
+  "limitations": [
+    "path provenance is a proxy and not semantic destructive-rework validation",
+    "rolling windows overlap",
+    "ratio is not interpreted for baseline-ineligible teams or zero clean T3 churn",
+    "M8 does not measure defects or causality"
+  ],
+  "metric_definition_version": "m8-clean-rework-v1",
+  "policy_version": "code-churn-metrics-v2",
+  "rolling_offsets": [
+    -21,
+    -20,
+    -19,
+    -18,
+    -17,
+    -16,
+    -15,
+    -14,
+    -13,
+    -12,
+    -11,
+    -10,
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "rq": "RQ3",
+  "status": "success",
+  "unit_of_analysis": "team_semester_then_rolling_window"
+}

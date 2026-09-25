@@ -1,0 +1,4 @@
+temporal_marker,team_semester_n,touching_commit_n,median_clean_churn_per_touching_commit,max_clean_churn_per_touching_commit,total_clean_unique_file_n,aggregation_grain
+T1,14,66,134.0,1911.0,256,temporal_marker_across_semesters
+T2,14,137,129.25,8587.0,644,temporal_marker_across_semesters
+T3,14,303,121.25,14517.0,1074,temporal_marker_across_semesters

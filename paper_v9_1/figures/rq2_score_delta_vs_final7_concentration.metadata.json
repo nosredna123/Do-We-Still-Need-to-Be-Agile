@@ -1,0 +1,141 @@
+{
+  "artifact_family": "score_trajectory_concentration",
+  "base_path": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
+  "base_sha256": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
+  "contract_version": "rq2-score-trajectory-concentration-v1",
+  "delta_threshold": 0.125,
+  "generated_at_utc": "2026-09-25T17:43:29.337241+00:00",
+  "inference": "descriptive_non_causal",
+  "limitations": [
+    "Final-seven-day concentration is a temporal activity proxy, not causal evidence.",
+    "Evaluator-score deltas are descriptive and based on an unweighted composite score.",
+    "Quadrants are small-n descriptive bins and should be interpreted as pattern-finding aids."
+  ],
+  "metadata_path": "paper_v9/figures/rq2_score_delta_vs_final7_concentration.metadata.json",
+  "outputs": {
+    "rq2_score_delta_vs_final7_clean_churn_concentration": {
+      "activity_metric": "clean_source_or_test_changed_lines",
+      "artifacts": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration.pdf",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration.svg",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration.png",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv"
+      ],
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv",
+      "data_sha256": "d36b029f80856e293fd0796256692ef0340173be88cfc569868ca0271064abaf",
+      "median_final7_share_pct": 34.99461573513386,
+      "quadrant_counts_by_planning_tier": [
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__positive_delta",
+          "team_semester_n": 2
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__positive_delta",
+          "team_semester_n": 3
+        },
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 3
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__positive_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__positive_delta",
+          "team_semester_n": 2
+        }
+      ],
+      "team_semesters": 14
+    },
+    "rq2_score_delta_vs_final7_commit_concentration": {
+      "activity_metric": "commits",
+      "artifacts": [
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration.pdf",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration.svg",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration.png",
+        "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration_data.csv"
+      ],
+      "data_path": "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration_data.csv",
+      "data_sha256": "743a7046c59154bfe388fda47393552deba392e1c5d373658cfb40935ff5735b",
+      "median_final7_share_pct": 43.743509865005194,
+      "quadrant_counts_by_planning_tier": [
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__positive_delta",
+          "team_semester_n": 2
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "higher_final7_concentration__positive_delta",
+          "team_semester_n": 3
+        },
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 3
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "high_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__positive_delta",
+          "team_semester_n": 1
+        },
+        {
+          "planning_scope_tier": "lower_repository_visible_planning",
+          "quadrant": "lower_final7_concentration__positive_delta",
+          "team_semester_n": 2
+        }
+      ],
+      "team_semesters": 14
+    }
+  },
+  "quadrant_definition": {
+    "higher_final7_concentration": "final7_share_pct >= metric-specific sample median",
+    "interpretations": {
+      "higher_final7_concentration__negative_or_stable_delta": "Late concentration without evaluator-score gain",
+      "higher_final7_concentration__positive_delta": "Potential late recovery",
+      "lower_final7_concentration__negative_or_stable_delta": "Low final concentration without evaluator-score gain",
+      "lower_final7_concentration__positive_delta": "Distributed progress with evaluator-score gain"
+    },
+    "negative_or_stable_delta": "delta_score_t3_minus_t1 <= 0.125",
+    "positive_delta": "delta_score_t3_minus_t1 > 0.125"
+  },
+  "quadrant_summary_path": "paper_v9/figures/rq2_score_delta_final7_quadrants.csv",
+  "quadrant_summary_sha256": "eb2da76b9c6e4bda9620ff273dd908156a1571d4f7c7de1496064b7ac4ea92fd",
+  "unit_of_analysis": "team_semester"
+}

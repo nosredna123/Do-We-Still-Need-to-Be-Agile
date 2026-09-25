@@ -1,0 +1,29 @@
+ID_Equipe,Semestre,regularity_index,score_trajectory_group,planning_scope_tier,delta_score_t3_minus_t1,final7_share_pct,activity_metric
+TEAM_01,2025.2,0.2854717247674448,stable,high_repository_visible_planning,-0.03125,57.89473684210526,Final-7 commits
+TEAM_01,2026.1,0.21129910203556054,improved,lower_repository_visible_planning,0.5416666666666667,33.333333333333336,Final-7 commits
+TEAM_02,2025.2,0.5229185993639204,declined,lower_repository_visible_planning,-0.25,54.22885572139303,Final-7 commits
+TEAM_02,2026.1,0.6047675876419861,stable,high_repository_visible_planning,0.0416666666666669,28.571428571428573,Final-7 commits
+TEAM_03,2025.2,0.49886609963044004,improved,lower_repository_visible_planning,0.15625,100.0,Final-7 commits
+TEAM_03,2026.1,0.568958615114637,improved,high_repository_visible_planning,0.1666666666666669,21.428571428571427,Final-7 commits
+TEAM_04,2025.2,0.4726284070563059,improved,high_repository_visible_planning,0.3333333333333335,52.94117647058823,Final-7 commits
+TEAM_04,2026.1,0.1894163922595728,improved,high_repository_visible_planning,0.5416666666666665,58.333333333333336,Final-7 commits
+TEAM_05,2025.2,0.3873239436619718,improved,lower_repository_visible_planning,0.40625,100.0,Final-7 commits
+TEAM_05,2026.1,0.6559261621848707,declined,high_repository_visible_planning,-0.1249999999999995,11.570247933884298,Final-7 commits
+TEAM_07,2025.2,0.5474544110696926,stable,high_repository_visible_planning,0.09375,8.219178082191782,Final-7 commits
+TEAM_08,2025.2,0.4823640139679827,stable,lower_repository_visible_planning,0.0729166666666669,3.8461538461538463,Final-7 commits
+TEAM_09,2025.2,0.4844043447289269,improved,lower_repository_visible_planning,0.3333333333333335,48.598130841121495,Final-7 commits
+TEAM_10,2025.2,0.5078545865656507,improved,lower_repository_visible_planning,1.0625,38.888888888888886,Final-7 commits
+TEAM_01,2025.2,0.2854717247674448,stable,high_repository_visible_planning,-0.03125,42.40405962575325,Final-7 clean churn
+TEAM_01,2026.1,0.21129910203556054,improved,lower_repository_visible_planning,0.5416666666666667,61.836387681843945,Final-7 clean churn
+TEAM_02,2025.2,0.5229185993639204,declined,lower_repository_visible_planning,-0.25,79.86525006478362,Final-7 clean churn
+TEAM_02,2026.1,0.6047675876419861,stable,high_repository_visible_planning,0.0416666666666669,24.19753086419753,Final-7 clean churn
+TEAM_03,2025.2,0.49886609963044004,improved,lower_repository_visible_planning,0.15625,100.0,Final-7 clean churn
+TEAM_03,2026.1,0.568958615114637,improved,high_repository_visible_planning,0.1666666666666669,1.606864274570983,Final-7 clean churn
+TEAM_04,2025.2,0.4726284070563059,improved,high_repository_visible_planning,0.3333333333333335,62.16216216216216,Final-7 clean churn
+TEAM_04,2026.1,0.1894163922595728,improved,high_repository_visible_planning,0.5416666666666665,92.0085066162571,Final-7 clean churn
+TEAM_05,2025.2,0.3873239436619718,improved,lower_repository_visible_planning,0.40625,100.0,Final-7 clean churn
+TEAM_05,2026.1,0.6559261621848707,declined,high_repository_visible_planning,-0.1249999999999995,10.074643543556968,Final-7 clean churn
+TEAM_07,2025.2,0.5474544110696926,stable,high_repository_visible_planning,0.09375,6.368620835090679,Final-7 clean churn
+TEAM_08,2025.2,0.4823640139679827,stable,lower_repository_visible_planning,0.0729166666666669,0.0,Final-7 clean churn
+TEAM_09,2025.2,0.4844043447289269,improved,lower_repository_visible_planning,0.3333333333333335,26.70546756953383,Final-7 clean churn
+TEAM_10,2025.2,0.5078545865656507,improved,lower_repository_visible_planning,1.0625,27.585171844514484,Final-7 clean churn

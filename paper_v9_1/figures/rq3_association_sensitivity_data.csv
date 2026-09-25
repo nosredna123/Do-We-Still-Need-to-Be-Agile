@@ -1,0 +1,5 @@
+analysis_id,predictor,outcome,rho_min,rho_max,spearman_rho,n,label
+all_team_semesters,pi_file_count_t1,clean_rework_churn_t3,0.0784424519914465,0.3769640977478092,0.2061632481344181,14,T1 artifact file count / T3 rework magnitude
+baseline_eligible_only,pi_file_count_t1,clean_rework_ratio_t3,-0.2217379842850023,0.1651445647689541,-0.0319166997285428,12,T1 artifact file count / T3 rework ratio
+all_team_semesters,planning_scope_log1p_t1,clean_rework_churn_t3,0.1941530151294483,0.4937124337756901,0.3006204394157542,14,T1 artifact line scope / T3 rework magnitude
+baseline_eligible_only,planning_scope_log1p_t1,clean_rework_ratio_t3,-0.2207042351384174,0.1369877294931669,-0.0600721715322108,12,T1 artifact line scope / T3 rework ratio

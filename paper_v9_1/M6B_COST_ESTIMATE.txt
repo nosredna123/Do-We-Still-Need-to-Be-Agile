@@ -1,0 +1,50 @@
+M6b structured planning-content extraction: protocol-stage estimate
+Date: 2026-09-24
+Status: estimate only; no LLM calls executed
+
+Scope
+-----
+The canonical git_commits lake contract contains 111 T1 commit hashes across
+the 9 team-semesters with observed T1 activity. The corresponding read-only
+parent mirrors contain approximately 4,400 subject characters. Six of the 14
+team-semesters have no T1 subjects and will be represented as
+unavailable_not_measured without an LLM call.
+
+Proposed execution
+------------------
+- Model: gpt-4o-mini
+- Temperature: 0.0
+- Requests: 9 eligible team-semesters; one request per team-semester
+- Prompt and JSON wrapper allowance: 350 input tokens per request
+- Input-token approximation: subject characters / 4 plus wrapper allowance
+- Estimated input tokens: approximately 4,250
+- Estimated output allowance: 500 tokens per eligible response, approximately 4,500 tokens
+- Retries: none included in the base estimate; invalid responses must be persisted and surfaced
+
+Pricing assumption
+------------------
+The estimate uses the historical gpt-4o-mini list-price assumption of
+$0.15 per 1M input tokens and $0.60 per 1M output tokens. The exact provider
+price must be confirmed immediately before execution because prices can change.
+
+Estimated base cost
+-------------------
+- Input: 4,250 / 1,000,000 * $0.15 = $0.00064
+- Output: 4,500 / 1,000,000 * $0.60 = $0.00270
+- Base total: approximately $0.00334
+- Planning allowance with 2x retry/validation reserve: approximately $0.010
+
+Pilot cost
+----------
+The proposed three-case pilot contains two eligible cases and one unavailable
+case. Estimated pilot input is below 1,000 tokens and estimated output below
+1,000 tokens, for a base cost below $0.001 under the assumption above.
+The pilot has not been executed. Actual token usage and cost must be recorded
+from the gateway ledger after explicit protocol approval.
+
+Cost limitations
+----------------
+Token counts are estimates, not provider billing records. The estimate excludes
+human review time, storage, retries beyond the reserve, and any future model or
+pricing change. No response may enter M9 until structured validation and human
+review are complete.

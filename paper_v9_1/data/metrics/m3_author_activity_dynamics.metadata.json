@@ -1,0 +1,48 @@
+{
+  "anchor": "last T3 evaluator vote",
+  "artifacts": [
+    "m3_author_activity_participation.csv",
+    "m3_author_concentration.csv",
+    "m3_activity_rolling_7day.csv",
+    "m3_activity_rolling_7day_pooled.csv",
+    "m3_author_activity_dynamics.metadata.json"
+  ],
+  "config_sha256": "b142582a52ead4fad75368c9b4a702b509f56561a1b369f9eab923d1f87ab119",
+  "contract_version": "m3-author-activity-dynamics-v1",
+  "coverage": {
+    "post_active_team_semesters": 7,
+    "team_semesters": 14
+  },
+  "gate_approved_on": "2026-09-24",
+  "gate_scope": "descriptive M3a-M3c RQ2 outputs approved, including semester-independent pooled M3c view",
+  "gate_status": "approved",
+  "input_sha256": "d2eb6cef82b3d54d97ae6fe6d39db16b2ef2b987eacd1ebb43f6a7b161c03472",
+  "keys": [
+    "Semestre",
+    "ID_Equipe",
+    "phase"
+  ],
+  "limitations": [
+    "repository activity is not coordination friction",
+    "no activity means concentration is unobserved",
+    "self-contained Git mirror history does not identify push actors"
+  ],
+  "metric_definition_version": "m3-author-activity-dynamics-v1",
+  "pooled_rolling": {
+    "artifact": "m3_activity_rolling_7day_pooled.csv",
+    "grain": "window_end_day across all semesters",
+    "semester_dimension": "excluded from pooled output"
+  },
+  "roles": [
+    "temporal activity",
+    "author concentration",
+    "rolling activity"
+  ],
+  "rq": "RQ2",
+  "status": "success",
+  "unit_of_analysis": "team-semester and phase/rolling window",
+  "window_days": {
+    "after": 7,
+    "before": 7
+  }
+}

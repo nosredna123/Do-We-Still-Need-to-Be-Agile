@@ -1,0 +1,83 @@
+{
+  "artifacts": [
+    "m2_role_perception_distributions.csv",
+    "m2_role_perception_by_team_semester.csv",
+    "m2_role_perception_paired_t1_t3.csv"
+  ],
+  "config_sha256": "ed7a7cfb5b8af1dc9c3f48729defcf8b3950fd31387ebe139dba678ccd7215c7",
+  "contract_version": "m2-role-perception-v1",
+  "coverage": [
+    {
+      "Semestre": "2025.2",
+      "roles": 6,
+      "students_per_role": 46,
+      "temporal_marker": "T1"
+    },
+    {
+      "Semestre": "2025.2",
+      "roles": 6,
+      "students_per_role": 41,
+      "temporal_marker": "T2"
+    },
+    {
+      "Semestre": "2025.2",
+      "roles": 6,
+      "students_per_role": 40,
+      "temporal_marker": "T3"
+    },
+    {
+      "Semestre": "2026.1",
+      "roles": 6,
+      "students_per_role": 22,
+      "temporal_marker": "T1"
+    },
+    {
+      "Semestre": "2026.1",
+      "roles": 6,
+      "students_per_role": 20,
+      "temporal_marker": "T2"
+    },
+    {
+      "Semestre": "2026.1",
+      "roles": 6,
+      "students_per_role": 18,
+      "temporal_marker": "T3"
+    }
+  ],
+  "gate_approved_on": "2026-09-24",
+  "gate_scope": "descriptive perceived-disruption agreement by role, including privacy-preserving paired sensitivity analysis",
+  "gate_status": "approved",
+  "input_path": "data/lake/student_responses.parquet",
+  "input_sha256": "0fdca4311fdd05e87b09e96315ba386189d688b4b70741bccc2a03a08ddd58d8",
+  "interpretation": "perceived role disruption agreement, not objective extinction risk",
+  "keys": [
+    "Semestre",
+    "temporal_marker",
+    "role"
+  ],
+  "limitations": [
+    "the prompt combines extinction and severe transformation",
+    "self-report is not telemetry",
+    "paired analysis requires observed respondent identifiers"
+  ],
+  "metric_definition_version": "m2-role-perception-v1",
+  "paired_t1_t3": {
+    "pairing_key": "hashed anonymized respondent identifier",
+    "pairs": 324
+  },
+  "roles": [
+    "Backend",
+    "Frontend",
+    "QA",
+    "Project Manager",
+    "Product Manager",
+    "Scrum Master"
+  ],
+  "scale": {
+    "max": 5,
+    "min": 1,
+    "type": "Likert agreement"
+  },
+  "status": "success",
+  "unit_of_analysis": "cohort by semester, temporal checkpoint, and role"
+}

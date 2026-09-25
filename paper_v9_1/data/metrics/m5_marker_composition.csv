@@ -1,0 +1,16 @@
+temporal_marker,friction_marker_n,friction_subtype,marker_n,marker_share,analysis_level
+T1,12,alignment,5,0.4166666666666667,global_transcript_corpus_by_temporal_marker
+T2,54,alignment,19,0.35185185185185186,global_transcript_corpus_by_temporal_marker
+T3,40,alignment,10,0.25,global_transcript_corpus_by_temporal_marker
+T1,12,handoff,2,0.16666666666666666,global_transcript_corpus_by_temporal_marker
+T2,54,handoff,3,0.05555555555555555,global_transcript_corpus_by_temporal_marker
+T3,40,handoff,5,0.125,global_transcript_corpus_by_temporal_marker
+T1,12,integration,2,0.16666666666666666,global_transcript_corpus_by_temporal_marker
+T2,54,integration,20,0.37037037037037035,global_transcript_corpus_by_temporal_marker
+T3,40,integration,14,0.35,global_transcript_corpus_by_temporal_marker
+T1,12,blocker,2,0.16666666666666666,global_transcript_corpus_by_temporal_marker
+T2,54,blocker,6,0.1111111111111111,global_transcript_corpus_by_temporal_marker
+T3,40,blocker,7,0.175,global_transcript_corpus_by_temporal_marker
+T1,12,rework,1,0.08333333333333333,global_transcript_corpus_by_temporal_marker
+T2,54,rework,6,0.1111111111111111,global_transcript_corpus_by_temporal_marker
+T3,40,rework,4,0.1,global_transcript_corpus_by_temporal_marker

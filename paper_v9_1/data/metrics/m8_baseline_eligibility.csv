@@ -1,0 +1,15 @@
+Semestre,ID_Equipe,prior_clean_path_n,baseline_eligible_for_rework_t3,measurement_status
+2025.2,TEAM_01,30,True,baseline_eligible
+2025.2,TEAM_02,33,True,baseline_eligible
+2025.2,TEAM_03,0,False,baseline_not_observed
+2025.2,TEAM_04,47,True,baseline_eligible
+2025.2,TEAM_05,0,False,baseline_not_observed
+2025.2,TEAM_07,129,True,baseline_eligible
+2025.2,TEAM_08,32,True,baseline_eligible
+2025.2,TEAM_09,161,True,baseline_eligible
+2025.2,TEAM_10,26,True,baseline_eligible
+2026.1,TEAM_01,106,True,baseline_eligible
+2026.1,TEAM_02,43,True,baseline_eligible
+2026.1,TEAM_03,65,True,baseline_eligible
+2026.1,TEAM_04,25,True,baseline_eligible
+2026.1,TEAM_05,130,True,baseline_eligible

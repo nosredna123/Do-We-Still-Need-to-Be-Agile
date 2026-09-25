@@ -1,0 +1,61 @@
+\section{Threats to Validity}
+The constructs rely on complementary but imperfect proxies. Self-Reported AI
+Usage and Perceptions (M1) and Perceived Role Disruption (M2) rely exclusively
+on self-reported survey measures rather than objective behavioral telemetry.
+Consequently, we cannot verify exact AI utilization rates, such as API-call
+volume or Copilot snippet-acceptance rates, limiting our claims to perceived
+frequency and reported task orientation rather than technical dependency.
+Consistent telemetry was not available across the proprietary IDE extensions,
+hosted services, and student-owned development environments used in this
+naturalistic bring-your-own-device setting. Multi-checkpoint self-reports were
+therefore the only common measure of adoption that could be collected without
+requiring access to vendor-controlled logs or intrusive monitoring of students'
+devices.
+Architectural Artifact Scope (M6a)
+captures repository-visible T1 architectural artifacts, whereas Planning
+Content Evidence (M6b) extracts structured evidence from commit subjects. The
+Planning Content Evidence (M6b) remains exploratory and its categories were
+subject to human review; neither measure establishes architectural quality or
+planning intent. Clean-Path Rework (M8) uses file-path provenance to identify
+changes to previously observed clean paths, not semantic defects or destructive
+intent. Coordination-Language Evidence (M5) uses deterministic lexical markers
+in transcript text; its counts are candidate
+textual evidence, not direct diagnoses of coordination friction. These
+distinctions constrain every metric's interpretation and prevent the metrics
+from being treated as interchangeable measures of quality, effort, or
+productivity.
+
+The observational design and small sample constrain causal and external
+validity. In particular, the late-stage concentration of Repository Activity
+(M3) and Clean-Change Dynamics (M4) cannot be disentangled from ordinary
+student procrastination (the ``student syndrome''). Without a non-AI control
+group, we cannot determine whether these delays reflect GenAI-related
+architectural debt or conventional late-stage integration pressure.
+Artifact--Rework--Outcome Associations (M9) are exploratory, not causal or
+confirmatory, and
+leave-one-out ranges show sensitivity to individual team-semesters. Analytical
+grains differ across student responses, team-semesters, rolling windows, and a
+global transcript corpus, so denominators cannot be pooled implicitly. Rolling
+windows overlap, so adjacent values are not independent observations. The
+study covers 14 team-semesters in one educational setting; transcript evidence
+is available only for 2025.2, which restricts cross-cohort comparability for
+the lexical findings. Moreover, teams had complete autonomy over their process
+models, including Scrum, Kanban, other Agile variants, and unguided approaches;
+the study neither standardized these processes nor measured adherence to them.
+We therefore cannot rule out that some integration friction arose from process
+choice or poor methodological adherence rather than AI-tool use. Git cannot
+observe planning or collaboration outside the repositories. Five Planning
+Content Evidence (M6b) cases lacked T1
+commit subjects and were
+not measured; missing evidence was not converted into a low score. The
+course required an integrated GenAI component but did not mandate
+retrieval-augmented generation (RAG) or another common architecture; none of
+the 14 projects implemented a full RAG pipeline. This removes mandatory RAG
+complexity as a shared explanation for the observed integration friction.
+Nevertheless, the teams' heterogeneous, self-selected AI integrations differed
+in technical complexity, so architectural complexity remains a potential
+project-level confound that this observational study cannot isolate. The
+external SDD literature therefore motivates a testable intervention hypothesis,
+but this study neither implements nor evaluates SDD. Its results support the
+need to test more explicit specification and coordination practices under
+Generative AI, not a claim that SDD has already improved outcomes.

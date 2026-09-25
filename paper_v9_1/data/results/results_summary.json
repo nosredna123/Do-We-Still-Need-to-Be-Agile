@@ -1,0 +1,1579 @@
+{
+  "contract_version": "results-summary-v1",
+  "inference": "descriptive_or_exploratory_only",
+  "key_summaries": {
+    "M1": {
+      "coverage_min": 1.0,
+      "families": [
+        "ai_benefit",
+        "ai_career_impact_5y",
+        "autonomy_tool_dependency",
+        "career_expectation",
+        "project_challenges",
+        "project_feeling"
+      ],
+      "rows": 36
+    },
+    "M3": {
+      "post_active_team_semesters": 7,
+      "team_semesters": 14
+    },
+    "M4": {
+      "pooled_clean_churn_by_marker": {
+        "T1": 21718.0,
+        "T2": 47545.0,
+        "T3": 136325.0
+      }
+    },
+    "M5": {
+      "density_per_1k_tokens": {
+        "T1": 0.51511,
+        "T2": 1.131957,
+        "T3": 1.286711
+      }
+    },
+    "M6": {
+      "planning_artifact_present_n": 9,
+      "team_semesters": 14
+    },
+    "M7": {
+      "daily_windows": 994,
+      "team_semesters": 14
+    },
+    "M8": {
+      "baseline_eligible_n": 12,
+      "team_semesters": 14
+    },
+    "M9": {
+      "evaluator_association_rows": 8
+    }
+  },
+  "limitations": [
+    "Metric grains differ across RQ1-RQ3 and must not be pooled implicitly",
+    "M6b structured fields are exploratory and non-composite",
+    "M7 repository inactivity is not planning omission",
+    "M8 path provenance is not semantic defect validation",
+    "M9 associations are descriptive and non-causal"
+  ],
+  "metrics": {
+    "M1": {
+      "artifacts": [
+        {
+          "bytes": 4283,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "perception_group",
+            "perception_family",
+            "mean",
+            "std",
+            "median",
+            "q1",
+            "q3",
+            "iqr",
+            "n",
+            "student_n",
+            "coverage",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_perception_panel_long.csv",
+          "rows": 36,
+          "sha256": "27b9b78c7cc10e7f76c828746e861e8f44b90e2745fda412d534f4b2677502ed"
+        },
+        {
+          "bytes": 4058,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "ai_benefit_mean",
+            "ai_benefit_std",
+            "ai_benefit_median",
+            "ai_benefit_q1",
+            "ai_benefit_q3",
+            "ai_benefit_iqr",
+            "ai_benefit_n",
+            "ai_benefit_student_n",
+            "ai_benefit_coverage",
+            "ai_benefit_measurement_status",
+            "autonomy_tool_dependency_mean",
+            "autonomy_tool_dependency_std",
+            "autonomy_tool_dependency_median",
+            "autonomy_tool_dependency_q1",
+            "autonomy_tool_dependency_q3",
+            "autonomy_tool_dependency_iqr",
+            "autonomy_tool_dependency_n",
+            "autonomy_tool_dependency_student_n",
+            "autonomy_tool_dependency_coverage",
+            "autonomy_tool_dependency_measurement_status",
+            "ai_career_impact_5y_mean",
+            "ai_career_impact_5y_std",
+            "ai_career_impact_5y_median",
+            "ai_career_impact_5y_q1",
+            "ai_career_impact_5y_q3",
+            "ai_career_impact_5y_iqr",
+            "ai_career_impact_5y_n",
+            "ai_career_impact_5y_student_n",
+            "ai_career_impact_5y_coverage",
+            "ai_career_impact_5y_measurement_status",
+            "career_expectation_mean",
+            "career_expectation_std",
+            "career_expectation_median",
+            "career_expectation_q1",
+            "career_expectation_q3",
+            "career_expectation_iqr",
+            "career_expectation_n",
+            "career_expectation_student_n",
+            "career_expectation_coverage",
+            "career_expectation_measurement_status",
+            "project_challenges_mean",
+            "project_challenges_std",
+            "project_challenges_median",
+            "project_challenges_q1",
+            "project_challenges_q3",
+            "project_challenges_iqr",
+            "project_challenges_n",
+            "project_challenges_student_n",
+            "project_challenges_coverage",
+            "project_challenges_measurement_status",
+            "project_feeling_mean",
+            "project_feeling_std",
+            "project_feeling_median",
+            "project_feeling_q1",
+            "project_feeling_q3",
+            "project_feeling_iqr",
+            "project_feeling_n",
+            "project_feeling_student_n",
+            "project_feeling_coverage",
+            "project_feeling_measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_perception_panel_wide.csv",
+          "rows": 6,
+          "sha256": "d9783d947736660b648d6f9e51aa510ece2dca521d83fc9844db50914d0586f4"
+        },
+        {
+          "bytes": 3590,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "measure",
+            "category",
+            "count",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_usage_frequency.csv",
+          "rows": 60,
+          "sha256": "7f703459b8895870027c7ec29d76833264863913c92c6b62c256ca3644ee08ed"
+        },
+        {
+          "bytes": 4198,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "measure",
+            "category",
+            "count",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_usage_tasks.csv",
+          "rows": 58,
+          "sha256": "3c481bb6f50ce7f3f7c0d3b0ff34d5a0e7cd559f2083056a577930fa800587d2"
+        },
+        {
+          "bytes": 3560,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "measure",
+            "category",
+            "count",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_usage_tools.csv",
+          "rows": 62,
+          "sha256": "b37466abdd7b4b7afaaac2d54fe43e89bc747a8410621347fb35413e59373cf4"
+        },
+        {
+          "bytes": 818,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "category",
+            "count",
+            "measure",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_prior_ai_project_experience.csv",
+          "rows": 12,
+          "sha256": "86d7a06017959c585c9a73037302c5db41beacf01b23deec0f9dd069d619c154"
+        },
+        {
+          "bytes": 1523,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "category",
+            "count",
+            "measure",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_autonomy_tool_balance.csv",
+          "rows": 26,
+          "sha256": "0a36ea18ff0c8eef06172c3aa062b5d4aeb44851f0f416d7f71227eb5350308a"
+        },
+        {
+          "bytes": 3380,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "topic",
+            "count",
+            "respondent_n",
+            "share_of_topic_assignments",
+            "coding_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_career_impact_topics_exploratory.csv",
+          "rows": 36,
+          "sha256": "d886b4e111a6dc5ea5fa3f21f0ecb62c1820fb5415c921d1f998505f26dcbad9"
+        },
+        {
+          "bytes": 6295,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "perception_family",
+            "category",
+            "count",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m1_rq1_perception_distribution.csv",
+          "rows": 125,
+          "sha256": "8b4dab42508ca047ccfb1eb24a0fa302fab49d9d0e1d6c6943437b8b6dff0faf"
+        },
+        {
+          "bytes": 3162,
+          "format": "json",
+          "path": "data/metrics/m1_rq1_perception_panel.metadata.json",
+          "sha256": "2342825e407dc9d6b73952e269da9f1a992d3696963b7f810cd0339c6daad9b8"
+        }
+      ],
+      "metadata": {
+        "m1_rq1_perception_panel.metadata.json": {
+          "artifacts": [
+            "m1_rq1_perception_panel_long.csv",
+            "m1_rq1_perception_panel_wide.csv",
+            "m1_rq1_usage_frequency.csv",
+            "m1_rq1_usage_tasks.csv",
+            "m1_rq1_usage_tools.csv",
+            "m1_rq1_prior_ai_project_experience.csv",
+            "m1_rq1_autonomy_tool_balance.csv",
+            "m1_rq1_career_impact_topics_exploratory.csv",
+            "m1_rq1_perception_distribution.csv"
+          ],
+          "available_and_extracted": [
+            "real_ai_use_frequency",
+            "real_ai_use_tasks",
+            "real_ai_use_tools",
+            "prior_ai_project_experience",
+            "autonomy_tool_balance"
+          ],
+          "config_sha256": "b353b4ada6fc34af43339457421760b9be7b0f330b954fe882b55567d3e57534",
+          "contract_version": "m1-rq1-perception-panel-v2",
+          "coverage": [
+            {
+              "Semestre": "2025.2",
+              "families": 6,
+              "max_coverage": 1.0,
+              "min_coverage": 1.0,
+              "students": 46,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "families": 6,
+              "max_coverage": 1.0,
+              "min_coverage": 1.0,
+              "students": 41,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "families": 6,
+              "max_coverage": 1.0,
+              "min_coverage": 1.0,
+              "students": 40,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "families": 6,
+              "max_coverage": 1.0,
+              "min_coverage": 1.0,
+              "students": 22,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "families": 6,
+              "max_coverage": 1.0,
+              "min_coverage": 1.0,
+              "students": 20,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "families": 6,
+              "max_coverage": 1.0,
+              "min_coverage": 1.0,
+              "students": 18,
+              "temporal_marker": "T3"
+            }
+          ],
+          "exploratory_unvalidated": [
+            "career_impact_topics"
+          ],
+          "gate_approved_on": "2026-09-24",
+          "gate_scope": "descriptive M1 v2 outputs approved; exploratory career topics and NLP rubric validity remain limitations",
+          "gate_status": "approved",
+          "input_path": "data/analysis/student_nlp.parquet",
+          "input_sha256": "4fd8f4f943af5ade13a0755762aa0917be6eb10032502a64411ce8b1804b3855",
+          "keys": [
+            "Semestre",
+            "temporal_marker",
+            "perception_family"
+          ],
+          "metric_definition_version": "m1-rq1-perception-panel-v2",
+          "question_groups": {
+            "ai_benefit": "ai_benefit",
+            "ai_career_impact_5y": "career_impact",
+            "autonomy_tool_dependency": "autonomy_tool_balance",
+            "career_expectation": "project_expectations",
+            "project_challenges": "project_expectations",
+            "project_feeling": "project_expectations"
+          },
+          "raw_input_path": "data/lake/student_responses.parquet",
+          "raw_input_sha256": "0fdca4311fdd05e87b09e96315ba386189d688b4b70741bccc2a03a08ddd58d8",
+          "raw_usage_contract": {
+            "career_topic_coding": "keyword rules; requires human validation before confirmatory use",
+            "respondent_rows": 187,
+            "temporal_keys": 6
+          },
+          "status": "success",
+          "unavailable_not_measured": [
+            "individual_T1_T3_panel",
+            "team_semester"
+          ],
+          "unit_of_analysis": "cohort by semester and temporal checkpoint",
+          "v8_comparison": {
+            "families": 6,
+            "max_absolute_difference": 2.220446049250313e-16
+          }
+        }
+      }
+    },
+    "M2": {
+      "artifacts": [
+        {
+          "bytes": 7456,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "role",
+            "score",
+            "count",
+            "respondent_n",
+            "share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m2_role_perception_distributions.csv",
+          "rows": 165,
+          "sha256": "1af359f65aa0a40b2fc5237b663425ade5e9f29187a19339793c354b73c2d169"
+        },
+        {
+          "bytes": 4251,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "role",
+            "n",
+            "mean",
+            "std",
+            "median",
+            "q1",
+            "q3",
+            "disagreement_share",
+            "neutral_share",
+            "agreement_share",
+            "iqr"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m2_role_perception_by_team_semester.csv",
+          "rows": 36,
+          "sha256": "e31693e800687b53b5af467472431a5f047e7f09379c612e55f499ce3313cfc6"
+        },
+        {
+          "bytes": 1279,
+          "columns": [
+            "Semestre",
+            "role",
+            "pairs",
+            "mean_T1",
+            "mean_T3",
+            "mean_change",
+            "median_change",
+            "increased_share",
+            "unchanged_share",
+            "decreased_share"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m2_role_perception_paired_t1_t3.csv",
+          "rows": 12,
+          "sha256": "27ef90e12a0e22b6c7805d5b85000a5e8048619f5a28508e8f607b359c5b9d75"
+        },
+        {
+          "bytes": 2168,
+          "format": "json",
+          "path": "data/metrics/m2_role_perception.metadata.json",
+          "sha256": "1d1c5e58dd920f4dcbda7d8ff588daea64dd4213e2ee9b6d49ad7d88b4d15c15"
+        }
+      ],
+      "metadata": {
+        "m2_role_perception.metadata.json": {
+          "artifacts": [
+            "m2_role_perception_distributions.csv",
+            "m2_role_perception_by_team_semester.csv",
+            "m2_role_perception_paired_t1_t3.csv"
+          ],
+          "config_sha256": "ed7a7cfb5b8af1dc9c3f48729defcf8b3950fd31387ebe139dba678ccd7215c7",
+          "contract_version": "m2-role-perception-v1",
+          "coverage": [
+            {
+              "Semestre": "2025.2",
+              "roles": 6,
+              "students_per_role": 46,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2025.2",
+              "roles": 6,
+              "students_per_role": 41,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2025.2",
+              "roles": 6,
+              "students_per_role": 40,
+              "temporal_marker": "T3"
+            },
+            {
+              "Semestre": "2026.1",
+              "roles": 6,
+              "students_per_role": 22,
+              "temporal_marker": "T1"
+            },
+            {
+              "Semestre": "2026.1",
+              "roles": 6,
+              "students_per_role": 20,
+              "temporal_marker": "T2"
+            },
+            {
+              "Semestre": "2026.1",
+              "roles": 6,
+              "students_per_role": 18,
+              "temporal_marker": "T3"
+            }
+          ],
+          "gate_approved_on": "2026-09-24",
+          "gate_scope": "descriptive perceived-disruption agreement by role, including privacy-preserving paired sensitivity analysis",
+          "gate_status": "approved",
+          "input_path": "data/lake/student_responses.parquet",
+          "input_sha256": "0fdca4311fdd05e87b09e96315ba386189d688b4b70741bccc2a03a08ddd58d8",
+          "interpretation": "perceived role disruption agreement, not objective extinction risk",
+          "keys": [
+            "Semestre",
+            "temporal_marker",
+            "role"
+          ],
+          "limitations": [
+            "the prompt combines extinction and severe transformation",
+            "self-report is not telemetry",
+            "paired analysis requires observed respondent identifiers"
+          ],
+          "metric_definition_version": "m2-role-perception-v1",
+          "paired_t1_t3": {
+            "pairing_key": "hashed anonymized respondent identifier",
+            "pairs": 324
+          },
+          "roles": [
+            "Backend",
+            "Frontend",
+            "QA",
+            "Project Manager",
+            "Product Manager",
+            "Scrum Master"
+          ],
+          "scale": {
+            "max": 5,
+            "min": 1,
+            "type": "Likert agreement"
+          },
+          "status": "success",
+          "unit_of_analysis": "cohort by semester, temporal checkpoint, and role"
+        }
+      }
+    },
+    "M3": {
+      "artifacts": [
+        {
+          "bytes": 2507,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "repository",
+            "presentation_anchor",
+            "total_commit_n",
+            "pre_commit_n",
+            "post_commit_n",
+            "final_window_commit_n",
+            "pre_share",
+            "post_share",
+            "final_window_share",
+            "small_denominator_lt_10",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m3_author_activity_participation.csv",
+          "rows": 14,
+          "sha256": "1e731991f97d00d7033eb594a335bf5368ff63959c107d9dd960349cf61814ce"
+        },
+        {
+          "bytes": 2456,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "presentation_anchor",
+            "phase",
+            "commit_n",
+            "active_days",
+            "author_n",
+            "max_author_share",
+            "author_gini",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m3_author_concentration.csv",
+          "rows": 28,
+          "sha256": "bef70e1bbea337838b519ebb0ec77a3d0c922b8c8e9cd0e5c5649e03dd45e522"
+        },
+        {
+          "bytes": 47051,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "window_end_day",
+            "window_start",
+            "window_end",
+            "phase",
+            "commit_n",
+            "active_days",
+            "author_n",
+            "max_author_share",
+            "author_gini",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m3_activity_rolling_7day.csv",
+          "rows": 406,
+          "sha256": "a805bdf4b2176a843fb703630943e96fdbf63bf6dda58233bde7add00a2d9832"
+        },
+        {
+          "bytes": 3766,
+          "columns": [
+            "window_end_day",
+            "team_semester_n",
+            "active_team_semester_n",
+            "total_commit_n",
+            "mean_commit_n",
+            "median_commit_n",
+            "max_commit_n",
+            "median_active_days",
+            "median_max_author_share",
+            "median_author_gini",
+            "active_team_semester_share",
+            "aggregation_grain"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m3_activity_rolling_7day_pooled.csv",
+          "rows": 29,
+          "sha256": "ea11739cd2a6899a6ad8618b0610b38a6ea1d5889a95cd4e89ab48422ce34551"
+        },
+        {
+          "bytes": 1525,
+          "format": "json",
+          "path": "data/metrics/m3_author_activity_dynamics.metadata.json",
+          "sha256": "ef571fdb45cff8dcc1946bd487e24dfa8f3fe5146fbbdd1c4ae013785fd354a6"
+        }
+      ],
+      "metadata": {
+        "m3_author_activity_dynamics.metadata.json": {
+          "anchor": "last T3 evaluator vote",
+          "artifacts": [
+            "m3_author_activity_participation.csv",
+            "m3_author_concentration.csv",
+            "m3_activity_rolling_7day.csv",
+            "m3_activity_rolling_7day_pooled.csv",
+            "m3_author_activity_dynamics.metadata.json"
+          ],
+          "config_sha256": "b142582a52ead4fad75368c9b4a702b509f56561a1b369f9eab923d1f87ab119",
+          "contract_version": "m3-author-activity-dynamics-v1",
+          "coverage": {
+            "post_active_team_semesters": 7,
+            "team_semesters": 14
+          },
+          "gate_approved_on": "2026-09-24",
+          "gate_scope": "descriptive M3a-M3c RQ2 outputs approved, including semester-independent pooled M3c view",
+          "gate_status": "approved",
+          "input_sha256": "d2eb6cef82b3d54d97ae6fe6d39db16b2ef2b987eacd1ebb43f6a7b161c03472",
+          "keys": [
+            "Semestre",
+            "ID_Equipe",
+            "phase"
+          ],
+          "limitations": [
+            "repository activity is not coordination friction",
+            "no activity means concentration is unobserved",
+            "self-contained Git mirror history does not identify push actors"
+          ],
+          "metric_definition_version": "m3-author-activity-dynamics-v1",
+          "pooled_rolling": {
+            "artifact": "m3_activity_rolling_7day_pooled.csv",
+            "grain": "window_end_day across all semesters",
+            "semester_dimension": "excluded from pooled output"
+          },
+          "roles": [
+            "temporal activity",
+            "author concentration",
+            "rolling activity"
+          ],
+          "rq": "RQ2",
+          "status": "success",
+          "unit_of_analysis": "team-semester and phase/rolling window",
+          "window_days": {
+            "after": 7,
+            "before": 7
+          }
+        }
+      }
+    },
+    "M4": {
+      "artifacts": [
+        {
+          "bytes": 3357,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "temporal_marker",
+            "clean_churn",
+            "all_churn",
+            "clean_unique_file_n",
+            "clean_touching_commit_n",
+            "median_clean_churn_per_touching_commit",
+            "max_clean_churn_per_touching_commit",
+            "clean_share_of_all_churn",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_churn_magnitude.csv",
+          "rows": 42,
+          "sha256": "64fbb113302d8780f6d560debb9d35689c57d2852964d705b03f4367c6c7a4b0"
+        },
+        {
+          "bytes": 2144,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "temporal_marker",
+            "clean_touching_commit_n",
+            "median_clean_churn_per_touching_commit",
+            "max_clean_churn_per_touching_commit",
+            "clean_unique_file_n",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_commit_intensity.csv",
+          "rows": 42,
+          "sha256": "4569c1f7e8394ffba330992ddebf47d67faf762cb891f9f9c52c2e452ec47a50"
+        },
+        {
+          "bytes": 5271,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "temporal_marker",
+            "file_category",
+            "file_event_n",
+            "unique_file_n",
+            "churn_lines",
+            "churn_share",
+            "included_in_m4"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_artifact_composition.csv",
+          "rows": 64,
+          "sha256": "41a91ed1fcebe499445b3c6432a1228d6e9d992692f622b446ae8d426d0569cd"
+        },
+        {
+          "bytes": 46729,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "window_end_day",
+            "clean_churn_7d",
+            "unique_clean_file_n_7d",
+            "clean_file_event_n_7d",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_rolling_7day_trajectory.csv",
+          "rows": 994,
+          "sha256": "61b5aedcd44513eb78deabe84b5117ffae8cddb67b2c87c30b90f3831c9d3a44"
+        },
+        {
+          "bytes": 457,
+          "columns": [
+            "temporal_marker",
+            "team_semester_n",
+            "observed_clean_team_semester_n",
+            "total_clean_churn",
+            "median_clean_churn",
+            "total_all_churn",
+            "median_clean_unique_file_n",
+            "clean_share_of_all_churn",
+            "aggregation_grain"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_churn_magnitude_pooled.csv",
+          "rows": 3,
+          "sha256": "e8c08170ca958ff228c98daa0c80411c2aa640479eff77ee245e81dca52f024b"
+        },
+        {
+          "bytes": 352,
+          "columns": [
+            "temporal_marker",
+            "team_semester_n",
+            "touching_commit_n",
+            "median_clean_churn_per_touching_commit",
+            "max_clean_churn_per_touching_commit",
+            "total_clean_unique_file_n",
+            "aggregation_grain"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_commit_intensity_pooled.csv",
+          "rows": 3,
+          "sha256": "60321da85cb5f7a990b3c871b458c8b37a22dc855c0a7dc34e19239f211abc24"
+        },
+        {
+          "bytes": 763,
+          "columns": [
+            "temporal_marker",
+            "file_category",
+            "included_in_m4",
+            "team_semester_n",
+            "file_event_n",
+            "unique_file_n",
+            "churn_lines",
+            "churn_share",
+            "aggregation_grain"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_artifact_composition_pooled.csv",
+          "rows": 6,
+          "sha256": "73b689deda251fc2f2485209ffe7d9f7034a4a46155b620fabb81637a38d90d7"
+        },
+        {
+          "bytes": 6376,
+          "columns": [
+            "window_end_day",
+            "team_semester_n",
+            "active_team_semester_n",
+            "total_clean_churn_7d",
+            "median_clean_churn_7d",
+            "max_clean_churn_7d",
+            "median_unique_clean_file_n_7d",
+            "active_team_semester_share",
+            "aggregation_grain"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m4_rolling_7day_trajectory_pooled.csv",
+          "rows": 71,
+          "sha256": "6e27cb4be7b63114ce385b2d45dc9086ca7f61357d7da65dbb152b077d5cb049"
+        },
+        {
+          "bytes": 1177,
+          "format": "json",
+          "path": "data/metrics/m4_clean_change_dynamics.metadata.json",
+          "sha256": "59e181eed716ce2707897a3ca4c9f6b632ec61e21969aafe405e554206e6a56b"
+        }
+      ],
+      "metadata": {
+        "m4_clean_change_dynamics.metadata.json": {
+          "anchor": "last T3 evaluator vote",
+          "artifacts": [
+            "m4_churn_magnitude.csv",
+            "m4_commit_intensity.csv",
+            "m4_artifact_composition.csv",
+            "m4_rolling_7day_trajectory.csv",
+            "m4_churn_magnitude_pooled.csv",
+            "m4_commit_intensity_pooled.csv",
+            "m4_artifact_composition_pooled.csv",
+            "m4_rolling_7day_trajectory_pooled.csv",
+            "m4_clean_change_dynamics.metadata.json"
+          ],
+          "clean_definition": "pipeline_config.is_measurement_code_path",
+          "config_sha256": "49c089172571f916670a4ea7c68d4ceb51345e0e2994601d4c6d66daf602e2ce",
+          "contract_version": "m4-clean-change-dynamics-v1",
+          "coverage": {
+            "rolling_rows": 994,
+            "team_semesters": 14
+          },
+          "gate_status": "approved",
+          "input_sha256": "743869c0170c2f3c1acc4add221c82c646d69d5bba21915a9107cad7d62e177b",
+          "limitations": [
+            "clean path provenance is not semantic defect validation",
+            "rolling windows overlap",
+            "M4 does not measure coordination friction"
+          ],
+          "metric_definition_version": "m4-clean-change-dynamics-v1",
+          "policy_version": "code-churn-metrics-v2",
+          "rq": "RQ2",
+          "status": "success",
+          "unit_of_analysis": "team-semester, checkpoint, and rolling window"
+        }
+      }
+    },
+    "M5": {
+      "artifacts": [
+        {
+          "bytes": 532,
+          "columns": [
+            "temporal_marker",
+            "transcript_chunk_n",
+            "source_session_n",
+            "character_n",
+            "token_n",
+            "friction_marker_n",
+            "alignment",
+            "handoff",
+            "integration",
+            "blocker",
+            "rework",
+            "friction_marker_density_per_1k_tokens",
+            "analysis_level",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m5_marker_density.csv",
+          "rows": 3,
+          "sha256": "0d9cfd39437e5920fe13c7ed46ac38004f52852e0561214be91c07348a9f18b5"
+        },
+        {
+          "bytes": 1230,
+          "columns": [
+            "temporal_marker",
+            "friction_marker_n",
+            "friction_subtype",
+            "marker_n",
+            "marker_share",
+            "analysis_level"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m5_marker_composition.csv",
+          "rows": 15,
+          "sha256": "6468d05f3ba1f4df8c9c6dacb2fc2c041e8c25558bab9096efa0edf748b96499"
+        },
+        {
+          "bytes": 375,
+          "columns": [
+            "temporal_marker",
+            "transcript_chunk_n",
+            "source_session_n",
+            "character_n",
+            "token_n",
+            "friction_marker_n",
+            "observed_semester_n",
+            "observed_semesters",
+            "analysis_level"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m5_corpus_coverage.csv",
+          "rows": 3,
+          "sha256": "91fbe7b2da0cffb5c1f259e4e66a0f5418ecac6ea44d1fb838292e0fac8d484c"
+        },
+        {
+          "bytes": 386096,
+          "columns": [
+            "Semestre",
+            "temporal_marker",
+            "session_id",
+            "transcript_file",
+            "token_n",
+            "friction_marker_n",
+            "alignment",
+            "handoff",
+            "integration",
+            "blocker",
+            "rework",
+            "transcript_text",
+            "lexicon_version"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m5_evidence_audit_trail.csv",
+          "rows": 52,
+          "sha256": "694353ce6ecc01014d64707a64a75c4e96ceabe22f321fc6a07f7b997338adcc"
+        },
+        {
+          "bytes": 588,
+          "format": "json",
+          "path": "data/metrics/m5_lexicon.json",
+          "sha256": "1243243c74936dc5f9f9d5b58f81d8de0ffd5ed8c895a49ca484ac3e884c3b2d"
+        },
+        {
+          "bytes": 1449,
+          "format": "json",
+          "path": "data/metrics/m5_coordination_evidence.metadata.json",
+          "sha256": "291c848cd0b7f4c952938872a2fa89d7271af5796b2f85c820f66419223ca1b1"
+        }
+      ],
+      "metadata": {
+        "m5_coordination_evidence.metadata.json": {
+          "artifacts": [
+            "m5_marker_density.csv",
+            "m5_marker_composition.csv",
+            "m5_corpus_coverage.csv",
+            "m5_evidence_audit_trail.csv",
+            "m5_lexicon.json",
+            "m5_coordination_evidence.metadata.json"
+          ],
+          "config_sha256": "474925bb4f100c8df1b7559bf10a9cb8c70521bfdfc7fb07cc85c477673d2a02",
+          "contract_version": "m5-coordination-evidence-v1",
+          "coverage": {
+            "audit_rows": 52,
+            "source_sessions": 6,
+            "tokens": 102088,
+            "transcript_chunks": 100
+          },
+          "gate_status": "approved",
+          "inference": "descriptive_only",
+          "input_sha256": "f5d976a184c385090eb24f084ca46f2d66dbef04a22b3c49aa02715b42b3ee87",
+          "legacy_source": "paper_v8/data/m5_coordination_friction_trajectory.csv",
+          "lexicon_version": "m5-friction-lexicon-pt-v1",
+          "limitations": [
+            "lexical markers are candidate textual evidence, not diagnoses of coordination failure",
+            "transcript data has no team identifier",
+            "chunks and source sessions are not independent replicates",
+            "no hypothesis tests, confidence intervals, correlations, or causal claims are produced"
+          ],
+          "llm_calls_required": false,
+          "metric_definition_version": "m5-coordination-evidence-v1",
+          "observed_semesters": [
+            "2025.2"
+          ],
+          "observed_temporal_markers": [
+            "T1",
+            "T2",
+            "T3"
+          ],
+          "rq": "RQ2",
+          "source_contract": "data/lake/transcript_sessions.parquet",
+          "status": "success",
+          "unit_of_analysis": "global transcript corpus by temporal marker"
+        }
+      }
+    },
+    "M6": {
+      "artifacts": [
+        {
+          "bytes": 1685,
+          "columns": [
+            "ID_Equipe",
+            "Semestre",
+            "pi_available",
+            "pi_unavailable_reason",
+            "pi_file_count_t1",
+            "pi_line_delta_t1",
+            "pi_renamed_count_t1",
+            "pi_deleted_count_t1",
+            "pi_binary_event_count_t1",
+            "planning_artifact_activity_t1",
+            "pi_observation_unit",
+            "pi_definition_version",
+            "planning_artifact_present_t1",
+            "planning_scope_log1p_t1",
+            "measurement_status",
+            "analysis_level"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m6a_structural_planning.csv",
+          "rows": 14,
+          "sha256": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01"
+        },
+        {
+          "bytes": 1144,
+          "format": "json",
+          "path": "data/metrics/m6_structural_planning.metadata.json",
+          "sha256": "d60d04bf8444f87b29287a93d01bab2de660a7db7d671c2386b4e31afe783438"
+        },
+        {
+          "bytes": 59803,
+          "format": "json",
+          "path": "data/metrics/m6b_llm_planning_content.json",
+          "sha256": "166c544281326efd354c8142130aecc6a73e36a13d43179d87c06802c4fe46ff"
+        },
+        {
+          "bytes": 1130,
+          "format": "json",
+          "path": "data/metrics/m6_llm_planning_content.metadata.json",
+          "sha256": "6029821c697d86a0991c592e9a944e062c89dece67509d0b02cabf0ab2f6042b"
+        },
+        {
+          "bytes": 2124,
+          "format": "md",
+          "path": "data/metrics/m6b_llm_planning_sample_for_review.md",
+          "sha256": "71019a57df5d7c48db4acb4d37d556c911ac66d4f78b2ebff766609a31b42fbf"
+        }
+      ],
+      "metadata": {
+        "m6_llm_planning_content.metadata.json": {
+          "artifacts": [
+            "m6b_llm_planning_content.json",
+            "m6_llm_planning_content.metadata.json"
+          ],
+          "config_sha256": "2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3",
+          "contract_version": "m6b-structured-planning-v1.1",
+          "coverage": {
+            "success_n": 9,
+            "team_semester_n": 14,
+            "unavailable_not_measured_n": 5
+          },
+          "gate_status": "approved_human_review",
+          "input_sha256": "e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f",
+          "ledger": {
+            "attempt_n": 14,
+            "estimated_cost_usd": 0.0058668,
+            "path": "data/analysis/.private/llm_call_ledger.parquet",
+            "success_n": 14,
+            "total_tokens": 20416
+          },
+          "limitations": [
+            "LLM extraction is exploratory and was approved after human review",
+            "literal quote validation does not establish semantic correctness",
+            "M6b structured fields feed M9 separately; no composite score is produced"
+          ],
+          "llm_calls_required": true,
+          "metric_definition_version": "m6b-structured-planning-v1.1",
+          "model": "gpt-4o-mini",
+          "rq": "RQ3",
+          "status": "success",
+          "temperature": 0.0,
+          "unit_of_analysis": "team_semester"
+        },
+        "m6_structural_planning.metadata.json": {
+          "absence_policy": "report_separately_not_as_score_floor",
+          "artifacts": [
+            "m6a_structural_planning.csv",
+            "m6_structural_planning.metadata.json"
+          ],
+          "checkpoint": "T1",
+          "config_sha256": "4a3296ed2256d9acf16ec0538712d85104e4f5d6da041832a72ac8d59b9805eb",
+          "contract_version": "m6a-structural-planning-v1",
+          "coverage": {
+            "available_n": 14,
+            "team_semester_n": 14,
+            "unavailable_not_measured_n": 0
+          },
+          "gate_status": "approved",
+          "inference": "exploratory_descriptive",
+          "input_sha256": "293b61a655dfdb40a8f48ebef9d350ed6f34cf48c415a1375428ffa9591d65fd",
+          "limitations": [
+            "file presence and line scope are observable structural signals, not semantic planning quality",
+            "absence of a repository artifact does not prove absence of planning outside the repository",
+            "M6b textual content extraction is a separate gated task"
+          ],
+          "llm_calls_required": false,
+          "metric_definition_version": "m6a-structural-planning-v1",
+          "rq": "RQ3",
+          "source_contract": "data/analysis/planning_metrics.parquet",
+          "source_definition_version": "pi-v1",
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        }
+      }
+    },
+    "M7": {
+      "artifacts": [
+        {
+          "bytes": 113774,
+          "columns": [
+            "ID_Equipe",
+            "Semestre",
+            "window_end_day_relative_to_t3",
+            "checkpoint_anchor",
+            "window_start",
+            "window_end",
+            "commit_n_7d",
+            "repository_inactive_7d",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m7_inactivity_trajectory.csv",
+          "rows": 994,
+          "sha256": "10330489ddf7792cdee9df233477a20e387ecc6ae0f69069406d1b613c26a9c2"
+        },
+        {
+          "bytes": 1178,
+          "columns": [
+            "ID_Equipe",
+            "Semestre",
+            "T1",
+            "T2",
+            "T3",
+            "inactive_checkpoint_n",
+            "inactivity_pattern",
+            "analysis_level"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m7_inactivity_pattern.csv",
+          "rows": 14,
+          "sha256": "84f46bbf5fe4748a59aa8f0f2b6f2dc57956fc42dc3dc613e6a32198b359bee5"
+        },
+        {
+          "bytes": 4923,
+          "columns": [
+            "ID_Equipe",
+            "Semestre",
+            "temporal_marker",
+            "checkpoint_anchor",
+            "window_start",
+            "window_end",
+            "commit_n_7d",
+            "repository_inactive_7d",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m7_checkpoint_inactivity.csv",
+          "rows": 42,
+          "sha256": "e63a9523615843a3d5d93f5856887a1b2c593dc36809d18126afdd2821fb3d58"
+        },
+        {
+          "bytes": 1941,
+          "format": "json",
+          "path": "data/metrics/m7_repository_inactivity.metadata.json",
+          "sha256": "addcf2dea0c69995b0dbad024e1b2329043b9e82356ecdb3258d35d41af9579c"
+        }
+      ],
+      "metadata": {
+        "m7_repository_inactivity.metadata.json": {
+          "anchor": "last evaluator vote per team and checkpoint",
+          "artifacts": [
+            "m7_inactivity_trajectory.csv",
+            "m7_inactivity_pattern.csv",
+            "m7_checkpoint_inactivity.csv",
+            "m7_repository_inactivity.metadata.json"
+          ],
+          "config_sha256": "284ae7cf5f243775a67398027022c6afbc29f92daf743b9921cc802f2fb30879",
+          "contract_version": "m7-repository-inactivity-v1",
+          "coverage": {
+            "checkpoint_rows": 42,
+            "daily_rows": 994,
+            "pattern_rows": 14,
+            "team_semesters": 14
+          },
+          "gate_status": "approved",
+          "inference": "descriptive_only",
+          "input_sha256": "ad6567fb7927813e1a5423b9d6bbd5b7f0fe4f7fde94cab34bfbcabf1a4a7834",
+          "limitations": [
+            "repository inactivity does not identify planning omission",
+            "seven-day windows overlap",
+            "Git does not observe off-repository work",
+            "M7 is not an independent planning predictor for M9"
+          ],
+          "metric_definition_version": "m7-repository-inactivity-v1",
+          "planning_claim": "not_identifiable_from_repository_inactivity",
+          "rolling_offsets": [
+            -63,
+            -62,
+            -61,
+            -60,
+            -59,
+            -58,
+            -57,
+            -56,
+            -55,
+            -54,
+            -53,
+            -52,
+            -51,
+            -50,
+            -49,
+            -48,
+            -47,
+            -46,
+            -45,
+            -44,
+            -43,
+            -42,
+            -41,
+            -40,
+            -39,
+            -38,
+            -37,
+            -36,
+            -35,
+            -34,
+            -33,
+            -32,
+            -31,
+            -30,
+            -29,
+            -28,
+            -27,
+            -26,
+            -25,
+            -24,
+            -23,
+            -22,
+            -21,
+            -20,
+            -19,
+            -18,
+            -17,
+            -16,
+            -15,
+            -14,
+            -13,
+            -12,
+            -11,
+            -10,
+            -9,
+            -8,
+            -7,
+            -6,
+            -5,
+            -4,
+            -3,
+            -2,
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "rq": "RQ3",
+          "source_contracts": [
+            "data/lake/git_commits.parquet",
+            "data/lake/evaluator_team_cuts.parquet",
+            "data/processed/forms/{semester}/avaliadores.csv"
+          ],
+          "status": "success",
+          "unit_of_analysis": "team_semester_rolling_window_then_checkpoint_pattern",
+          "window_days": 7
+        }
+      }
+    },
+    "M8": {
+      "artifacts": [
+        {
+          "bytes": 1242,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "clean_rework_churn_t3",
+            "clean_deferred_churn_t3",
+            "prior_clean_path_n",
+            "clean_total_churn_t3",
+            "baseline_eligible_for_rework_t3",
+            "clean_rework_ratio_t3",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m8_rework_magnitude.csv",
+          "rows": 14,
+          "sha256": "d583853b901da39813ea3bbb641d8cf4a1a0b9930a3df3270256ae0e79c1e623"
+        },
+        {
+          "bytes": 1179,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "clean_rework_churn_t3",
+            "clean_deferred_churn_t3",
+            "clean_total_churn_t3",
+            "clean_rework_ratio_t3",
+            "baseline_eligible_for_rework_t3",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m8_rework_participation.csv",
+          "rows": 14,
+          "sha256": "bad2542b83ac2535579c09e5b3a31796a41d7c03bbe43f6abbc78cc95285beba"
+        },
+        {
+          "bytes": 14535,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "window_end_day_relative_to_t3",
+            "clean_rework_churn_7d",
+            "reworked_clean_path_n_7d",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m8_rework_trajectory.csv",
+          "rows": 406,
+          "sha256": "8baff5cbe21b57d86331474ab4fc4c164017cb869b0e52fd4f2866b15868463d"
+        },
+        {
+          "bytes": 675,
+          "columns": [
+            "Semestre",
+            "ID_Equipe",
+            "prior_clean_path_n",
+            "baseline_eligible_for_rework_t3",
+            "measurement_status"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m8_baseline_eligibility.csv",
+          "rows": 14,
+          "sha256": "0b3a3bc7e585f2ed4c7643895cb94f7320a0694484331b5f25c74f15805b5e51"
+        },
+        {
+          "bytes": 1420,
+          "format": "json",
+          "path": "data/metrics/m8_clean_rework.metadata.json",
+          "sha256": "40e790bb810913bd5aad9038d8304d6278b793fad6191fb9df0aa452410c2db5"
+        }
+      ],
+      "metadata": {
+        "m8_clean_rework.metadata.json": {
+          "anchor": "last T3 evaluator vote",
+          "artifacts": [
+            "m8_rework_magnitude.csv",
+            "m8_rework_participation.csv",
+            "m8_rework_trajectory.csv",
+            "m8_baseline_eligibility.csv",
+            "m8_clean_rework.metadata.json"
+          ],
+          "clean_definition": "pipeline_config.is_measurement_code_path",
+          "config_sha256": "9bea6f1aa4b8122f6f7c45ea74e947ef2584d4a60176c0d7d223c75eb5aa3409",
+          "contract_version": "m8-clean-rework-v1",
+          "coverage": {
+            "eligible_team_semesters": 12,
+            "team_semesters": 14,
+            "trajectory_rows": 406
+          },
+          "gate_status": "approved",
+          "inference": "exploratory_descriptive",
+          "input_sha256": "743869c0170c2f3c1acc4add221c82c646d69d5bba21915a9107cad7d62e177b",
+          "limitations": [
+            "path provenance is a proxy and not semantic destructive-rework validation",
+            "rolling windows overlap",
+            "ratio is not interpreted for baseline-ineligible teams or zero clean T3 churn",
+            "M8 does not measure defects or causality"
+          ],
+          "metric_definition_version": "m8-clean-rework-v1",
+          "policy_version": "code-churn-metrics-v2",
+          "rolling_offsets": [
+            -21,
+            -20,
+            -19,
+            -18,
+            -17,
+            -16,
+            -15,
+            -14,
+            -13,
+            -12,
+            -11,
+            -10,
+            -9,
+            -8,
+            -7,
+            -6,
+            -5,
+            -4,
+            -3,
+            -2,
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "rq": "RQ3",
+          "status": "success",
+          "unit_of_analysis": "team_semester_then_rolling_window"
+        }
+      }
+    },
+    "M9": {
+      "artifacts": [
+        {
+          "bytes": 274,
+          "columns": [
+            "analysis_id",
+            "predictor",
+            "outcome",
+            "n",
+            "spearman_rho",
+            "spearman_p_exploratory"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m9_planning_vs_rework_m6a_m8a.csv",
+          "rows": 2,
+          "sha256": "5a21f015a7b6fb74f1eb79838d9fa2b2794c04c7228c0b20e347e3cba35f3d57"
+        },
+        {
+          "bytes": 285,
+          "columns": [
+            "analysis_id",
+            "predictor",
+            "outcome",
+            "n",
+            "spearman_rho",
+            "spearman_p_exploratory"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv",
+          "rows": 2,
+          "sha256": "e0679866b7c948588b1fad4eefc24a2a7c5fe3eb89b0c60b2380f2dc762c7da8"
+        },
+        {
+          "bytes": 952,
+          "columns": [
+            "analysis_id",
+            "predictor",
+            "outcome",
+            "n",
+            "spearman_rho",
+            "spearman_p_exploratory"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m9_planning_vs_outcomes_m6a_t3.csv",
+          "rows": 8,
+          "sha256": "3b49b7d6a23e9abaf6d20c1a284d1dbbbcc55691e2387cbb885937229c2ae75a"
+        },
+        {
+          "bytes": 3434,
+          "columns": [
+            "analysis_id",
+            "predictor",
+            "outcome",
+            "n",
+            "spearman_rho",
+            "spearman_p_exploratory"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv",
+          "rows": 30,
+          "sha256": "807a4e520f78c7bedf6d30b31c7b591977292e7d2309c1317dfd87286d4a8368"
+        },
+        {
+          "bytes": 6386,
+          "columns": [
+            "analysis_id",
+            "predictor",
+            "outcome",
+            "removed_ID_Equipe",
+            "removed_Semestre",
+            "n_remaining",
+            "spearman_rho",
+            "spearman_p_exploratory"
+          ],
+          "format": "csv",
+          "path": "data/metrics/m9_leave_one_out_intervals.csv",
+          "rows": 52,
+          "sha256": "3a1c5972381b29c058b2d9b1ba451818b4f78caa24bbb71f6c48ce23da8fd8de"
+        },
+        {
+          "bytes": 1582,
+          "format": "json",
+          "path": "data/metrics/m9_structured_associations.metadata.json",
+          "sha256": "31b4035487949deeed0c3886cb19cba427cdd1ed9c529c9edecfda11e7feb0e6"
+        }
+      ],
+      "metadata": {
+        "m9_structured_associations.metadata.json": {
+          "artifacts": [
+            "m9_planning_vs_rework_m6a_m8a.csv",
+            "m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv",
+            "m9_planning_vs_outcomes_m6a_t3.csv",
+            "m9_planning_vs_outcomes_m6b_t3_if_approved.csv",
+            "m9_leave_one_out_intervals.csv",
+            "m9_structured_associations.metadata.json"
+          ],
+          "config_sha256": "6c919a07ddd79576dda84c8cc1c1eda97aa63c9e4c3f90ee1c2407992f6d0ee3",
+          "contract_version": "m9-structured-associations-v1",
+          "coverage": {
+            "baseline_eligible": 12,
+            "leave_one_out_rows": 52,
+            "m6b_observed": 9,
+            "team_semesters": 14
+          },
+          "gate_status": "approved",
+          "inference": "exploratory_descriptive",
+          "input_sha256": "db787f14543e4bd7f9b75f420aae73d3d0222161d0d3cb448c9129d3f858ce60",
+          "limitations": [
+            "Spearman values are descriptive and not causal",
+            "small denominators and influential cases require leave-one-out review",
+            "M6b predictors are separate structured evidence counts, not a composite score",
+            "M6b unavailable cases remain excluded from pairwise associations",
+            "M7 is excluded as a predictor"
+          ],
+          "m6b_predictors": [
+            "m6b_planning_evidence_present",
+            "m6b_goals_n",
+            "m6b_architecture_or_design_n",
+            "m6b_task_decomposition_n",
+            "m6b_risk_or_dependency_n",
+            "m6b_evidence_quotes_n"
+          ],
+          "m6b_status": "approved_human_review",
+          "m7_used_as_predictor": false,
+          "metric_definition_version": "m9-structured-associations-v1",
+          "predictors": [
+            "pi_file_count_t1",
+            "planning_scope_log1p_t1"
+          ],
+          "rq": "RQ3",
+          "status": "success",
+          "unit_of_analysis": "team_semester"
+        }
+      }
+    }
+  },
+  "source_of_truth": "paper_v9/data/metrics",
+  "status": "success"
+}

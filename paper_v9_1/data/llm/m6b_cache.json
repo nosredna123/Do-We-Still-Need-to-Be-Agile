@@ -1,0 +1,1379 @@
+{
+  "m6b:TEAM_01:2025.2:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_01",
+    "Semestre": "2025.2",
+    "completed_at": "2026-09-24T19:20:05.174467+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "6ab0cf920f1d5a0ab8a09a5a78d0cd265ce8688a",
+        "subject": "First commit",
+        "timestamp": "2025-09-13T22:33:22-03:00"
+      },
+      {
+        "commit_hash": "5b4622d31fdff2f0c59566d65218eec9947ac7b1",
+        "subject": "Add empty frontend and backend folders with .gitkeep",
+        "timestamp": "2025-09-13T22:37:46-03:00"
+      },
+      {
+        "commit_hash": "515a7366a25e0be246ce93b0caabb5fed49020ac",
+        "subject": "Atualização do backend: descreva o que foi alterado",
+        "timestamp": "2025-09-14T21:56:07-03:00"
+      },
+      {
+        "commit_hash": "f5aeb3f857f7d0928f36bf2583d264ebe2b7f82a",
+        "subject": "Update README.md",
+        "timestamp": "2025-09-15T16:29:33-03:00"
+      },
+      {
+        "commit_hash": "10be80b9c698723818a94265c7e86908e33a23fe",
+        "subject": "Initial frontend",
+        "timestamp": "2025-09-23T16:46:15-03:00"
+      },
+      {
+        "commit_hash": "e192954c26273e4299e4da017c09a34776b8b83e",
+        "subject": "Home",
+        "timestamp": "2025-09-23T17:22:24-03:00"
+      },
+      {
+        "commit_hash": "e5f67df97fb90387068176abbf626aad01674960",
+        "subject": "login",
+        "timestamp": "2025-09-23T17:34:29-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [],
+      "goals": [],
+      "insufficient_evidence": [
+        {
+          "category": "goals",
+          "reason": "No explicit goals are mentioned in the commit subjects."
+        },
+        {
+          "category": "architecture_or_design",
+          "reason": "No references to architecture or design decisions are present in the commit subjects."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No breakdown of tasks is provided in the commit subjects."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No risks or dependencies are identified in the commit subjects."
+        }
+      ],
+      "planning_evidence_present": false,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "d29251e20d46338fd3f82c544b55e5a1fc2049e0b51879655b6464f3239801db",
+    "raw_response": "{\n  \"planning_evidence_present\": false,\n  \"goals\": [],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"goals\",\n      \"reason\": \"No explicit goals are mentioned in the commit subjects.\"\n    },\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No references to architecture or design decisions are present in the commit subjects.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No breakdown of tasks is provided in the commit subjects.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No risks or dependencies are identified in the commit subjects.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_01:2025.2:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:8d357f6b211f199a579cb3361e71c669d984c38a16fecf1c7f9bc72b457dd3f7": {
+    "ID_Equipe": "TEAM_01",
+    "Semestre": "2025.2",
+    "completed_at": "2026-09-24T19:19:22.051707+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "6ab0cf920f1d5a0ab8a09a5a78d0cd265ce8688a",
+        "subject": "First commit",
+        "timestamp": "2025-09-13T22:33:22-03:00"
+      },
+      {
+        "commit_hash": "5b4622d31fdff2f0c59566d65218eec9947ac7b1",
+        "subject": "Add empty frontend and backend folders with .gitkeep",
+        "timestamp": "2025-09-13T22:37:46-03:00"
+      },
+      {
+        "commit_hash": "515a7366a25e0be246ce93b0caabb5fed49020ac",
+        "subject": "Atualização do backend: descreva o que foi alterado",
+        "timestamp": "2025-09-14T21:56:07-03:00"
+      },
+      {
+        "commit_hash": "f5aeb3f857f7d0928f36bf2583d264ebe2b7f82a",
+        "subject": "Update README.md",
+        "timestamp": "2025-09-15T16:29:33-03:00"
+      },
+      {
+        "commit_hash": "10be80b9c698723818a94265c7e86908e33a23fe",
+        "subject": "Initial frontend",
+        "timestamp": "2025-09-23T16:46:15-03:00"
+      },
+      {
+        "commit_hash": "e192954c26273e4299e4da017c09a34776b8b83e",
+        "subject": "Home",
+        "timestamp": "2025-09-23T17:22:24-03:00"
+      },
+      {
+        "commit_hash": "e5f67df97fb90387068176abbf626aad01674960",
+        "subject": "login",
+        "timestamp": "2025-09-23T17:34:29-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [],
+      "goals": [],
+      "insufficient_evidence": [
+        {
+          "category": "goals",
+          "reason": "No commit subjects indicate specific goals."
+        },
+        {
+          "category": "architecture_or_design",
+          "reason": "No commit subjects provide evidence of architectural or design considerations."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No commit subjects break down tasks into smaller components."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No commit subjects mention risks or dependencies."
+        }
+      ],
+      "planning_evidence_present": false,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "962a03f79fa2cbf407c779138683efaffbad4405eca86fd8d5565df91aac8c24",
+    "raw_response": "{\n  \"planning_evidence_present\": false,\n  \"goals\": [],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"goals\",\n      \"reason\": \"No commit subjects indicate specific goals.\"\n    },\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No commit subjects provide evidence of architectural or design considerations.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No commit subjects break down tasks into smaller components.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No commit subjects mention risks or dependencies.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_01:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_01",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:20:07.333918+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "894b328156e3fbcabbd04deec45012080bf694d8",
+        "subject": "first commit",
+        "timestamp": "2026-03-06T18:55:54-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [],
+      "goals": [],
+      "insufficient_evidence": [
+        {
+          "category": "goals",
+          "reason": "No specific goals are mentioned in the commit subject."
+        },
+        {
+          "category": "architecture_or_design",
+          "reason": "No architectural or design elements are referenced in the commit subject."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No task decomposition is indicated in the commit subject."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No risks or dependencies are identified in the commit subject."
+        }
+      ],
+      "planning_evidence_present": false,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "62c9171678cb94d869857d4a76e1334f6d9acfad60d6a1c56fdbb6b89d6056de",
+    "raw_response": "{\n  \"planning_evidence_present\": false,\n  \"goals\": [],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"goals\",\n      \"reason\": \"No specific goals are mentioned in the commit subject.\"\n    },\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No architectural or design elements are referenced in the commit subject.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No task decomposition is indicated in the commit subject.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No risks or dependencies are identified in the commit subject.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_01:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:8d357f6b211f199a579cb3361e71c669d984c38a16fecf1c7f9bc72b457dd3f7": {
+    "ID_Equipe": "TEAM_01",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:19:25.077381+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "894b328156e3fbcabbd04deec45012080bf694d8",
+        "subject": "first commit",
+        "timestamp": "2026-03-06T18:55:54-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [],
+      "goals": [],
+      "insufficient_evidence": [
+        {
+          "category": "goals",
+          "reason": "No specific goals are mentioned in the commit subject."
+        },
+        {
+          "category": "architecture_or_design",
+          "reason": "No architectural or design elements are referenced in the commit subject."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No task decomposition is indicated in the commit subject."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No risks or dependencies are identified in the commit subject."
+        }
+      ],
+      "planning_evidence_present": false,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "25665f83b23655297e9e71b8cec06a0d3422f8cffe736a282ee701dd36cff8bd",
+    "raw_response": "{\n  \"planning_evidence_present\": false,\n  \"goals\": [],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"goals\",\n      \"reason\": \"No specific goals are mentioned in the commit subject.\"\n    },\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No architectural or design elements are referenced in the commit subject.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No task decomposition is indicated in the commit subject.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No risks or dependencies are identified in the commit subject.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_02:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_02",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:20:11.744863+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "42c29f8b31b278c72ef4bd34027a75ec8c7e02c5",
+        "subject": "first commit",
+        "timestamp": "2026-03-26T23:32:51-03:00"
+      },
+      {
+        "commit_hash": "f963a77dcc2e5737dc0848505f9d7a0d289794d0",
+        "subject": "Criação da tela de Login e do chat principal. obs:está tudo mockado",
+        "timestamp": "2026-04-08T22:16:59-03:00"
+      },
+      {
+        "commit_hash": "5ca10010449c196be512b02aad3fefeb595704f8",
+        "subject": "Merge pull request #1 from Kayquemts/feature/criacao-das-paginas-principais",
+        "timestamp": "2026-04-10T09:58:06-03:00"
+      },
+      {
+        "commit_hash": "f52078650b205b53d4319684ae8c48dbfaed6c75",
+        "subject": "Edição do readme",
+        "timestamp": "2026-04-23T21:34:22-03:00"
+      },
+      {
+        "commit_hash": "b6bca555433de392a59030900d7304484cefe925",
+        "subject": "Revert \"Edição do readme\"",
+        "timestamp": "2026-04-23T21:35:58-03:00"
+      },
+      {
+        "commit_hash": "e314d7b0f9d1f08bfbbcd48f69b49de33eeef5d2",
+        "subject": "Edição do readme",
+        "timestamp": "2026-04-23T21:39:48-03:00"
+      },
+      {
+        "commit_hash": "dc774b1c6fe6579a72f4c8e8f88df2506a2d34e5",
+        "subject": "Imagens para o readme",
+        "timestamp": "2026-04-23T21:41:07-03:00"
+      },
+      {
+        "commit_hash": "a352d1c6106759c6030d3174ed75e14088b7e2d8",
+        "subject": "add: documentação",
+        "timestamp": "2026-04-23T21:54:52-03:00"
+      },
+      {
+        "commit_hash": "4dc21ba3941a61909dd736caa6a39fe65b6f241d",
+        "subject": "Merge pull request #2 from Kayquemts/feature/criacao-das-paginas-principais",
+        "timestamp": "2026-04-23T21:55:46-03:00"
+      },
+      {
+        "commit_hash": "1e273ce6421e266fa8b5f3949b223fc7a2361622",
+        "subject": "Merge pull request #3 from Kayquemts/dev",
+        "timestamp": "2026-04-23T21:56:21-03:00"
+      },
+      {
+        "commit_hash": "4466d3813a2913104a4269527d1c55dc55418625",
+        "subject": "Merge pull request #4 from Kayquemts/homologacao",
+        "timestamp": "2026-04-23T22:28:42-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [
+        {
+          "category": "goals",
+          "commit_hash": "f963a77dcc2e5737dc0848505f9d7a0d289794d0",
+          "quote": "Criação da tela de Login e do chat principal. obs:está tudo mockado",
+          "quote_id": "f963a77dcc2e5737dc0848505f9d7a0d289794d0"
+        }
+      ],
+      "goals": [
+        {
+          "evidence_quote_ids": [
+            "f963a77dcc2e5737dc0848505f9d7a0d289794d0"
+          ],
+          "text": "Criação da tela de Login e do chat principal."
+        }
+      ],
+      "insufficient_evidence": [
+        {
+          "category": "architecture_or_design",
+          "reason": "No evidence of architecture or design was found in the commit subjects."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No evidence of task decomposition was found in the commit subjects."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No evidence of risk or dependency was found in the commit subjects."
+        }
+      ],
+      "planning_evidence_present": true,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "ffe894ce66dc4a86ffea851913d3f8d616b9183b54f281e9ec00fc6062d60132",
+    "raw_response": "{\n  \"planning_evidence_present\": true,\n  \"goals\": [\n    {\n      \"text\": \"Criação da tela de Login e do chat principal.\",\n      \"evidence_quote_ids\": [\"f963a77dcc2e5737dc0848505f9d7a0d289794d0\"]\n    }\n  ],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [\n    {\n      \"quote_id\": \"f963a77dcc2e5737dc0848505f9d7a0d289794d0\",\n      \"quote\": \"Criação da tela de Login e do chat principal. obs:está tudo mockado\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"f963a77dcc2e5737dc0848505f9d7a0d289794d0\"\n    }\n  ],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No evidence of architecture or design was found in the commit subjects.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No evidence of task decomposition was found in the commit subjects.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No evidence of risk or dependency was found in the commit subjects.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_02:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:8d357f6b211f199a579cb3361e71c669d984c38a16fecf1c7f9bc72b457dd3f7": {
+    "ID_Equipe": "TEAM_02",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:19:28.619838+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "42c29f8b31b278c72ef4bd34027a75ec8c7e02c5",
+        "subject": "first commit",
+        "timestamp": "2026-03-26T23:32:51-03:00"
+      },
+      {
+        "commit_hash": "f963a77dcc2e5737dc0848505f9d7a0d289794d0",
+        "subject": "Criação da tela de Login e do chat principal. obs:está tudo mockado",
+        "timestamp": "2026-04-08T22:16:59-03:00"
+      },
+      {
+        "commit_hash": "5ca10010449c196be512b02aad3fefeb595704f8",
+        "subject": "Merge pull request #1 from Kayquemts/feature/criacao-das-paginas-principais",
+        "timestamp": "2026-04-10T09:58:06-03:00"
+      },
+      {
+        "commit_hash": "f52078650b205b53d4319684ae8c48dbfaed6c75",
+        "subject": "Edição do readme",
+        "timestamp": "2026-04-23T21:34:22-03:00"
+      },
+      {
+        "commit_hash": "b6bca555433de392a59030900d7304484cefe925",
+        "subject": "Revert \"Edição do readme\"",
+        "timestamp": "2026-04-23T21:35:58-03:00"
+      },
+      {
+        "commit_hash": "e314d7b0f9d1f08bfbbcd48f69b49de33eeef5d2",
+        "subject": "Edição do readme",
+        "timestamp": "2026-04-23T21:39:48-03:00"
+      },
+      {
+        "commit_hash": "dc774b1c6fe6579a72f4c8e8f88df2506a2d34e5",
+        "subject": "Imagens para o readme",
+        "timestamp": "2026-04-23T21:41:07-03:00"
+      },
+      {
+        "commit_hash": "a352d1c6106759c6030d3174ed75e14088b7e2d8",
+        "subject": "add: documentação",
+        "timestamp": "2026-04-23T21:54:52-03:00"
+      },
+      {
+        "commit_hash": "4dc21ba3941a61909dd736caa6a39fe65b6f241d",
+        "subject": "Merge pull request #2 from Kayquemts/feature/criacao-das-paginas-principais",
+        "timestamp": "2026-04-23T21:55:46-03:00"
+      },
+      {
+        "commit_hash": "1e273ce6421e266fa8b5f3949b223fc7a2361622",
+        "subject": "Merge pull request #3 from Kayquemts/dev",
+        "timestamp": "2026-04-23T21:56:21-03:00"
+      },
+      {
+        "commit_hash": "4466d3813a2913104a4269527d1c55dc55418625",
+        "subject": "Merge pull request #4 from Kayquemts/homologacao",
+        "timestamp": "2026-04-23T22:28:42-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [
+        {
+          "category": "goals",
+          "commit_hash": "f963a77dcc2e5737dc0848505f9d7a0d289794d0",
+          "quote": "Criação da tela de Login e do chat principal. obs:está tudo mockado",
+          "quote_id": "f963a77dcc2e5737dc0848505f9d7a0d289794d0"
+        }
+      ],
+      "goals": [
+        {
+          "evidence_quote_ids": [
+            "f963a77dcc2e5737dc0848505f9d7a0d289794d0"
+          ],
+          "text": "Criação da tela de Login e do chat principal."
+        }
+      ],
+      "insufficient_evidence": [
+        {
+          "category": "architecture_or_design",
+          "reason": "No evidence of architectural or design decisions in the provided commit subjects."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No evidence of task decomposition in the provided commit subjects."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No evidence of risks or dependencies in the provided commit subjects."
+        }
+      ],
+      "planning_evidence_present": true,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "8b0520417373b8ed467c55840628d1ddcb8635b6f9952fc280bf9b569773c51e",
+    "raw_response": "{\n  \"planning_evidence_present\": true,\n  \"goals\": [\n    {\n      \"text\": \"Criação da tela de Login e do chat principal.\",\n      \"evidence_quote_ids\": [\"f963a77dcc2e5737dc0848505f9d7a0d289794d0\"]\n    }\n  ],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [\n    {\n      \"quote_id\": \"f963a77dcc2e5737dc0848505f9d7a0d289794d0\",\n      \"quote\": \"Criação da tela de Login e do chat principal. obs:está tudo mockado\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"f963a77dcc2e5737dc0848505f9d7a0d289794d0\"\n    }\n  ],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No evidence of architectural or design decisions in the provided commit subjects.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No evidence of task decomposition in the provided commit subjects.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No evidence of risks or dependencies in the provided commit subjects.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_03:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_03",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:20:18.636646+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "54b7476340c5c30be4279c816380ed09375946c0",
+        "subject": "firts",
+        "timestamp": "2026-03-24T16:58:37-03:00"
+      },
+      {
+        "commit_hash": "47a5dbe2e173251b75bfb92c4523a730434a3bf5",
+        "subject": "atualização das pastas do projeto",
+        "timestamp": "2026-04-08T22:23:07-03:00"
+      },
+      {
+        "commit_hash": "12cfe2144d216dfc07d3bd24dbba978c2c7acd21",
+        "subject": "criacao do endpoint e do servico que recebe os arquivos de vaga e curriculo e gera uma resposta do ollama",
+        "timestamp": "2026-04-09T21:17:37-03:00"
+      },
+      {
+        "commit_hash": "1c2ee853d22876d35c38665109de80e7324167ab",
+        "subject": "feat: adiciona os arquivos iniciais do meu projeto",
+        "timestamp": "2026-04-10T21:14:19-03:00"
+      },
+      {
+        "commit_hash": "793ef1f17c45c4332463acf253007e3d2e9268fc",
+        "subject": "Merge remote-tracking branch 'origin/leleo' into Manel",
+        "timestamp": "2026-04-11T10:55:26-03:00"
+      },
+      {
+        "commit_hash": "f918d05362ee2f135b799d6b7765520fab6a8eee",
+        "subject": "ajuste no frontend",
+        "timestamp": "2026-04-11T13:25:22-03:00"
+      },
+      {
+        "commit_hash": "1448b359d94a0bafdfe4870391937441c1d7659c",
+        "subject": "ajuste",
+        "timestamp": "2026-04-11T13:31:09-03:00"
+      },
+      {
+        "commit_hash": "911aac09c1bc301f8aabfc24097292355a388b0f",
+        "subject": "adcionando requerimentos",
+        "timestamp": "2026-04-12T11:22:16-03:00"
+      },
+      {
+        "commit_hash": "9bfa9b41d70aa7a29449ed72e3d4192c1532d9ed",
+        "subject": "adcionando requerimentos",
+        "timestamp": "2026-04-12T11:43:56-03:00"
+      },
+      {
+        "commit_hash": "2f5ac0d79159b9514381b02f11738044ec3faf4c",
+        "subject": "Merge remote-tracking branch 'origin/melquidev' into Manel",
+        "timestamp": "2026-04-14T14:42:49-03:00"
+      },
+      {
+        "commit_hash": "ae647b9300f75229d1e40e4a6b87d4287359b899",
+        "subject": "ajuste",
+        "timestamp": "2026-04-14T14:49:52-03:00"
+      },
+      {
+        "commit_hash": "a1b1627ea839b0542a6aac8c76ff9279bec5fa8e",
+        "subject": "correção na modelagem da llm",
+        "timestamp": "2026-04-14T20:27:30-03:00"
+      },
+      {
+        "commit_hash": "43f7a9e42c61403d2d98b14505f1b3ebfd44c48d",
+        "subject": "ajuste",
+        "timestamp": "2026-04-14T20:27:36-03:00"
+      },
+      {
+        "commit_hash": "703e619df9d27ff61553eed227b712a36035c560",
+        "subject": "Merge remote-tracking branch 'origin/melquidev' into Manel",
+        "timestamp": "2026-04-14T20:30:42-03:00"
+      },
+      {
+        "commit_hash": "f1ff24b471a67f241f857ea9f8c3ab33e0148745",
+        "subject": "vendo comportamento do agente.",
+        "timestamp": "2026-04-19T22:58:14-03:00"
+      },
+      {
+        "commit_hash": "f0b99785e501a1dc62c0fb40c85603bc54e3326d",
+        "subject": "requerimentos",
+        "timestamp": "2026-04-19T23:12:21-03:00"
+      },
+      {
+        "commit_hash": "810724d858086840858f556c2b37bdf4e818799c",
+        "subject": "Merge branch 'agente' of https://github.com/Emanoel-de-Moura-Silva/Extens-o-III into melquidev",
+        "timestamp": "2026-04-20T09:36:06-03:00"
+      },
+      {
+        "commit_hash": "bbd14fdf3665255fe55c3154af34e3aadd581668",
+        "subject": "adição do endpoint para simular entrevista com perguntas",
+        "timestamp": "2026-04-20T10:01:27-03:00"
+      },
+      {
+        "commit_hash": "f992e3b9d91253ff1a0b5a717ca3fcb109f85a83",
+        "subject": "ajuste",
+        "timestamp": "2026-04-20T13:44:55-03:00"
+      },
+      {
+        "commit_hash": "c05dc1e9fc88d7024c8fe4c3bf7db68f488e3307",
+        "subject": "ajuste",
+        "timestamp": "2026-04-20T20:46:28-03:00"
+      },
+      {
+        "commit_hash": "99e394989045c23f079144401fab5f5049b02e69",
+        "subject": "improve endpoint",
+        "timestamp": "2026-04-23T13:42:32-03:00"
+      },
+      {
+        "commit_hash": "d41f6b2f8dc3652d79126b27d3922f2ef46cc23b",
+        "subject": "fix:aumentando o tempo de timeout para problemas de conexao",
+        "timestamp": "2026-04-23T17:28:28-03:00"
+      },
+      {
+        "commit_hash": "c2f55ee0bfe1130b6b03211b645d8c99c959cdfe",
+        "subject": "fix: aumento no timeout da llm",
+        "timestamp": "2026-04-23T17:35:12-03:00"
+      },
+      {
+        "commit_hash": "08a624bb1b00c15e5124181f2ad34f0de0bcf423",
+        "subject": "Merge remote-tracking branch 'origin/melquidev' into Manel",
+        "timestamp": "2026-04-23T19:32:25-03:00"
+      },
+      {
+        "commit_hash": "55ddad0583327431aaa039558c205877d3f6a427",
+        "subject": "ajuste",
+        "timestamp": "2026-04-23T20:58:30-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [
+        {
+          "evidence_quote_ids": [
+            "a1b1627ea839b0542a6aac8c76ff9279bec5fa8e"
+          ],
+          "text": "correção na modelagem da llm"
+        }
+      ],
+      "evidence_quotes": [
+        {
+          "category": "goals",
+          "commit_hash": "bbd14fdf3665255fe55c3154af34e3aadd581668",
+          "quote": "adição do endpoint para simular entrevista com perguntas",
+          "quote_id": "bbd14fdf3665255fe55c3154af34e3aadd581668"
+        },
+        {
+          "category": "architecture_or_design",
+          "commit_hash": "a1b1627ea839b0542a6aac8c76ff9279bec5fa8e",
+          "quote": "correção na modelagem da llm",
+          "quote_id": "a1b1627ea839b0542a6aac8c76ff9279bec5fa8e"
+        },
+        {
+          "category": "task_decomposition",
+          "commit_hash": "12cfe2144d216dfc07d3bd24dbba978c2c7acd21",
+          "quote": "criacao do endpoint e do servico que recebe os arquivos de vaga e curriculo e gera uma resposta do ollama",
+          "quote_id": "12cfe2144d216dfc07d3bd24dbba978c2c7acd21"
+        },
+        {
+          "category": "risk_or_dependency",
+          "commit_hash": "d41f6b2f8dc3652d79126b27d3922f2ef46cc23b",
+          "quote": "fix:aumentando o tempo de timeout para problemas de conexao",
+          "quote_id": "d41f6b2f8dc3652d79126b27d3922f2ef46cc23b"
+        }
+      ],
+      "goals": [
+        {
+          "evidence_quote_ids": [
+            "bbd14fdf3665255fe55c3154af34e3aadd581668"
+          ],
+          "text": "adição do endpoint para simular entrevista com perguntas"
+        }
+      ],
+      "insufficient_evidence": [],
+      "planning_evidence_present": true,
+      "risk_or_dependency": [
+        {
+          "evidence_quote_ids": [
+            "d41f6b2f8dc3652d79126b27d3922f2ef46cc23b"
+          ],
+          "text": "aumentando o tempo de timeout para problemas de conexao"
+        }
+      ],
+      "task_decomposition": [
+        {
+          "evidence_quote_ids": [
+            "12cfe2144d216dfc07d3bd24dbba978c2c7acd21"
+          ],
+          "text": "criacao do endpoint e do servico que recebe os arquivos de vaga e curriculo e gera uma resposta do ollama"
+        }
+      ]
+    },
+    "prompt_sha256": "024be3faf38579be3a96b8ce69699f2e579a856a221bde7b06f8440f7ba5d925",
+    "raw_response": "{\n  \"planning_evidence_present\": true,\n  \"goals\": [\n    {\n      \"text\": \"adição do endpoint para simular entrevista com perguntas\",\n      \"evidence_quote_ids\": [\"bbd14fdf3665255fe55c3154af34e3aadd581668\"]\n    }\n  ],\n  \"architecture_or_design\": [\n    {\n      \"text\": \"correção na modelagem da llm\",\n      \"evidence_quote_ids\": [\"a1b1627ea839b0542a6aac8c76ff9279bec5fa8e\"]\n    }\n  ],\n  \"task_decomposition\": [\n    {\n      \"text\": \"criacao do endpoint e do servico que recebe os arquivos de vaga e curriculo e gera uma resposta do ollama\",\n      \"evidence_quote_ids\": [\"12cfe2144d216dfc07d3bd24dbba978c2c7acd21\"]\n    }\n  ],\n  \"risk_or_dependency\": [\n    {\n      \"text\": \"aumentando o tempo de timeout para problemas de conexao\",\n      \"evidence_quote_ids\": [\"d41f6b2f8dc3652d79126b27d3922f2ef46cc23b\"]\n    }\n  ],\n  \"evidence_quotes\": [\n    {\n      \"quote_id\": \"bbd14fdf3665255fe55c3154af34e3aadd581668\",\n      \"quote\": \"adição do endpoint para simular entrevista com perguntas\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"bbd14fdf3665255fe55c3154af34e3aadd581668\"\n    },\n    {\n      \"quote_id\": \"a1b1627ea839b0542a6aac8c76ff9279bec5fa8e\",\n      \"quote\": \"correção na modelagem da llm\",\n      \"category\": \"architecture_or_design\",\n      \"commit_hash\": \"a1b1627ea839b0542a6aac8c76ff9279bec5fa8e\"\n    },\n    {\n      \"quote_id\": \"12cfe2144d216dfc07d3bd24dbba978c2c7acd21\",\n      \"quote\": \"criacao do endpoint e do servico que recebe os arquivos de vaga e curriculo e gera uma resposta do ollama\",\n      \"category\": \"task_decomposition\",\n      \"commit_hash\": \"12cfe2144d216dfc07d3bd24dbba978c2c7acd21\"\n    },\n    {\n      \"quote_id\": \"d41f6b2f8dc3652d79126b27d3922f2ef46cc23b\",\n      \"quote\": \"fix:aumentando o tempo de timeout para problemas de conexao\",\n      \"category\": \"risk_or_dependency\",\n      \"commit_hash\": \"d41f6b2f8dc3652d79126b27d3922f2ef46cc23b\"\n    }\n  ],\n  \"insufficient_evidence\": []\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_04:2025.2:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_04",
+    "Semestre": "2025.2",
+    "completed_at": "2026-09-24T19:20:20.696069+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "ad8e072e97c7d9f66a0d4d26c3db125c1e3c1470",
+        "subject": "Initial commit",
+        "timestamp": "2025-10-14T16:34:04-03:00"
+      },
+      {
+        "commit_hash": "dcd1b0aa8c02c5749568adc0523f9d6a03ffea76",
+        "subject": "Initial commit",
+        "timestamp": "2025-10-14T17:07:48-03:00"
+      },
+      {
+        "commit_hash": "f52a4a5cb9feca62bef18f5cca9f9bf719063046",
+        "subject": "att",
+        "timestamp": "2025-10-16T17:27:31-03:00"
+      },
+      {
+        "commit_hash": "44a9e18d09ddf0f2adca0c96ecec0387ea832b32",
+        "subject": ".",
+        "timestamp": "2025-10-16T17:28:13-03:00"
+      },
+      {
+        "commit_hash": "4da33225fcac60d00b60acf5ac03fc83eff60fc5",
+        "subject": ".",
+        "timestamp": "2025-10-16T17:29:39-03:00"
+      },
+      {
+        "commit_hash": "8f461baee14d6bc96c2b3877cb92de518327bd15",
+        "subject": ".",
+        "timestamp": "2025-10-16T17:31:51-03:00"
+      },
+      {
+        "commit_hash": "8e386bca58e5631163842632e4827734f5860281",
+        "subject": "Update .env file",
+        "timestamp": "2025-10-16T17:36:45-03:00"
+      },
+      {
+        "commit_hash": "b9e1105a58b8c3c394b95df3302a30b292627624",
+        "subject": "att",
+        "timestamp": "2025-10-16T17:38:26-03:00"
+      },
+      {
+        "commit_hash": "7a3ece481cc6d91d2062a1f4f3def45a682da283",
+        "subject": "Merge branch 'feature/poc_chromadb' of https://github.com/SilvioGoncalvesXJr/Extensao-3 into feature/poc_chromadb",
+        "timestamp": "2025-10-16T17:38:34-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [],
+      "goals": [],
+      "insufficient_evidence": [
+        {
+          "category": "goals",
+          "reason": "No commit subjects indicate specific goals."
+        },
+        {
+          "category": "architecture_or_design",
+          "reason": "No commit subjects provide evidence of architectural or design considerations."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "No commit subjects break down tasks into smaller components."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No commit subjects mention risks or dependencies."
+        }
+      ],
+      "planning_evidence_present": false,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "8752b5a3c5e19e9aa52d60edef52cde3160f0582f4a181376ccdef35139d136d",
+    "raw_response": "{\n  \"planning_evidence_present\": false,\n  \"goals\": [],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"goals\",\n      \"reason\": \"No commit subjects indicate specific goals.\"\n    },\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"No commit subjects provide evidence of architectural or design considerations.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No commit subjects break down tasks into smaller components.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No commit subjects mention risks or dependencies.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_04:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_04",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:20:30.926058+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "9873222640e80e7460fa79b4067345e676cff8f3",
+        "subject": "Initial commit",
+        "timestamp": "2026-02-28T13:02:40-03:00"
+      },
+      {
+        "commit_hash": "590f393954d1c509db8d7da32bc06f1482956f12",
+        "subject": "feat: configuring schema and database models using SQLAlchemy",
+        "timestamp": "2026-02-28T23:34:10-03:00"
+      },
+      {
+        "commit_hash": "318c51863480308fbe65f8e8ade3e6f46db1d02f",
+        "subject": "feat: project structure with folders and FastAPI setup",
+        "timestamp": "2026-03-01T00:35:33-03:00"
+      },
+      {
+        "commit_hash": "68e349cb8d0b277c1b131fdea7a149b083f04d3c",
+        "subject": "feat: implement data encryption module using Fernet",
+        "timestamp": "2026-03-06T13:12:10-03:00"
+      },
+      {
+        "commit_hash": "12b03f9bed50215d0af568374ecc4b1ab0e120fa",
+        "subject": "feat: creation of the visual interface to manage AIs",
+        "timestamp": "2026-03-07T00:28:38-03:00"
+      },
+      {
+        "commit_hash": "ca541f9d62c3e368537763805a00d79d5c0314cb",
+        "subject": "fix: update visual interface and button hover effects",
+        "timestamp": "2026-03-07T22:05:43-03:00"
+      },
+      {
+        "commit_hash": "9221b30205b9f6ab8d89f35a10b39a8f970e743b",
+        "subject": "feat: extract lead information and process webhook messages",
+        "timestamp": "2026-03-07T23:37:02-03:00"
+      },
+      {
+        "commit_hash": "9e524ab327eda582848b4aa45bc05dc0ba5749f5",
+        "subject": "feat: add waiting queue logic to humanize bot responses",
+        "timestamp": "2026-03-08T00:28:37-03:00"
+      },
+      {
+        "commit_hash": "a27423cb8b98623a8bc4ebac393b671f8a7841c9",
+        "subject": "feat: implement lead database persistence logic",
+        "timestamp": "2026-03-08T19:51:12-03:00"
+      },
+      {
+        "commit_hash": "baac492918fe38a648bc90b686b7e8778b579649",
+        "subject": "feat: implement LLM response generation with LangChain and memory",
+        "timestamp": "2026-03-09T22:16:34-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [
+        {
+          "evidence_quote_ids": [
+            "318c51863480308fbe65f8e8ade3e6f46db1d02f"
+          ],
+          "text": "project structure with folders and FastAPI setup"
+        }
+      ],
+      "evidence_quotes": [
+        {
+          "category": "goals",
+          "commit_hash": "590f393954d1c509db8d7da32bc06f1482956f12",
+          "quote": "feat: configuring schema and database models using SQLAlchemy",
+          "quote_id": "590f393954d1c509db8d7da32bc06f1482956f12"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "12b03f9bed50215d0af568374ecc4b1ab0e120fa",
+          "quote": "feat: creation of the visual interface to manage AIs",
+          "quote_id": "12b03f9bed50215d0af568374ecc4b1ab0e120fa"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "9221b30205b9f6ab8d89f35a10b39a8f970e743b",
+          "quote": "feat: extract lead information and process webhook messages",
+          "quote_id": "9221b30205b9f6ab8d89f35a10b39a8f970e743b"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "9e524ab327eda582848b4aa45bc05dc0ba5749f5",
+          "quote": "feat: add waiting queue logic to humanize bot responses",
+          "quote_id": "9e524ab327eda582848b4aa45bc05dc0ba5749f5"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "a27423cb8b98623a8bc4ebac393b671f8a7841c9",
+          "quote": "feat: implement lead database persistence logic",
+          "quote_id": "a27423cb8b98623a8bc4ebac393b671f8a7841c9"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "baac492918fe38a648bc90b686b7e8778b579649",
+          "quote": "feat: implement LLM response generation with LangChain and memory",
+          "quote_id": "baac492918fe38a648bc90b686b7e8778b579649"
+        },
+        {
+          "category": "architecture_or_design",
+          "commit_hash": "318c51863480308fbe65f8e8ade3e6f46db1d02f",
+          "quote": "feat: project structure with folders and FastAPI setup",
+          "quote_id": "318c51863480308fbe65f8e8ade3e6f46db1d02f"
+        }
+      ],
+      "goals": [
+        {
+          "evidence_quote_ids": [
+            "590f393954d1c509db8d7da32bc06f1482956f12"
+          ],
+          "text": "configure schema and database models"
+        },
+        {
+          "evidence_quote_ids": [
+            "12b03f9bed50215d0af568374ecc4b1ab0e120fa"
+          ],
+          "text": "create visual interface to manage AIs"
+        },
+        {
+          "evidence_quote_ids": [
+            "9221b30205b9f6ab8d89f35a10b39a8f970e743b"
+          ],
+          "text": "extract lead information and process webhook messages"
+        },
+        {
+          "evidence_quote_ids": [
+            "9e524ab327eda582848b4aa45bc05dc0ba5749f5"
+          ],
+          "text": "add waiting queue logic to humanize bot responses"
+        },
+        {
+          "evidence_quote_ids": [
+            "a27423cb8b98623a8bc4ebac393b671f8a7841c9"
+          ],
+          "text": "implement lead database persistence logic"
+        },
+        {
+          "evidence_quote_ids": [
+            "baac492918fe38a648bc90b686b7e8778b579649"
+          ],
+          "text": "implement LLM response generation with LangChain and memory"
+        }
+      ],
+      "insufficient_evidence": [
+        {
+          "category": "task_decomposition",
+          "reason": "No evidence of task decomposition found in the commit subjects."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "No evidence of risks or dependencies found in the commit subjects."
+        }
+      ],
+      "planning_evidence_present": true,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "6559d79b6706dc5aa273499b7690e0344abbdeb6c0dfdeffc1e3bd2ac3dcaa2f",
+    "raw_response": "{\n  \"planning_evidence_present\": true,\n  \"goals\": [\n    {\n      \"text\": \"configure schema and database models\",\n      \"evidence_quote_ids\": [\"590f393954d1c509db8d7da32bc06f1482956f12\"]\n    },\n    {\n      \"text\": \"create visual interface to manage AIs\",\n      \"evidence_quote_ids\": [\"12b03f9bed50215d0af568374ecc4b1ab0e120fa\"]\n    },\n    {\n      \"text\": \"extract lead information and process webhook messages\",\n      \"evidence_quote_ids\": [\"9221b30205b9f6ab8d89f35a10b39a8f970e743b\"]\n    },\n    {\n      \"text\": \"add waiting queue logic to humanize bot responses\",\n      \"evidence_quote_ids\": [\"9e524ab327eda582848b4aa45bc05dc0ba5749f5\"]\n    },\n    {\n      \"text\": \"implement lead database persistence logic\",\n      \"evidence_quote_ids\": [\"a27423cb8b98623a8bc4ebac393b671f8a7841c9\"]\n    },\n    {\n      \"text\": \"implement LLM response generation with LangChain and memory\",\n      \"evidence_quote_ids\": [\"baac492918fe38a648bc90b686b7e8778b579649\"]\n    }\n  ],\n  \"architecture_or_design\": [\n    {\n      \"text\": \"project structure with folders and FastAPI setup\",\n      \"evidence_quote_ids\": [\"318c51863480308fbe65f8e8ade3e6f46db1d02f\"]\n    }\n  ],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [\n    {\n      \"quote_id\": \"590f393954d1c509db8d7da32bc06f1482956f12\",\n      \"quote\": \"feat: configuring schema and database models using SQLAlchemy\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"590f393954d1c509db8d7da32bc06f1482956f12\"\n    },\n    {\n      \"quote_id\": \"12b03f9bed50215d0af568374ecc4b1ab0e120fa\",\n      \"quote\": \"feat: creation of the visual interface to manage AIs\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"12b03f9bed50215d0af568374ecc4b1ab0e120fa\"\n    },\n    {\n      \"quote_id\": \"9221b30205b9f6ab8d89f35a10b39a8f970e743b\",\n      \"quote\": \"feat: extract lead information and process webhook messages\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"9221b30205b9f6ab8d89f35a10b39a8f970e743b\"\n    },\n    {\n      \"quote_id\": \"9e524ab327eda582848b4aa45bc05dc0ba5749f5\",\n      \"quote\": \"feat: add waiting queue logic to humanize bot responses\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"9e524ab327eda582848b4aa45bc05dc0ba5749f5\"\n    },\n    {\n      \"quote_id\": \"a27423cb8b98623a8bc4ebac393b671f8a7841c9\",\n      \"quote\": \"feat: implement lead database persistence logic\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"a27423cb8b98623a8bc4ebac393b671f8a7841c9\"\n    },\n    {\n      \"quote_id\": \"baac492918fe38a648bc90b686b7e8778b579649\",\n      \"quote\": \"feat: implement LLM response generation with LangChain and memory\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"baac492918fe38a648bc90b686b7e8778b579649\"\n    },\n    {\n      \"quote_id\": \"318c51863480308fbe65f8e8ade3e6f46db1d02f\",\n      \"quote\": \"feat: project structure with folders and FastAPI setup\",\n      \"category\": \"architecture_or_design\",\n      \"commit_hash\": \"318c51863480308fbe65f8e8ade3e6f46db1d02f\"\n    }\n  ],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"No evidence of task decomposition found in the commit subjects.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No evidence of risks or dependencies found in the commit subjects.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_05:2026.1:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_05",
+    "Semestre": "2026.1",
+    "completed_at": "2026-09-24T19:20:42.868478+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "abb666e33b2ba1508b4a61d32fa121d089c3ea79",
+        "subject": "first commit",
+        "timestamp": "2026-03-16T14:14:29-03:00"
+      },
+      {
+        "commit_hash": "9992bb04ce7d0fabf05604a31eab9f654aac2f4b",
+        "subject": "add README.md",
+        "timestamp": "2026-03-16T14:18:07-03:00"
+      },
+      {
+        "commit_hash": "e48a6a83ed9d8273020901b564e73dc6f76083d0",
+        "subject": "testando_o_uv",
+        "timestamp": "2026-03-21T20:18:41-03:00"
+      },
+      {
+        "commit_hash": "57dc9a6a8be448b9098a672994befb0adf9f997d",
+        "subject": "testando gitignore",
+        "timestamp": "2026-03-27T16:34:50-03:00"
+      },
+      {
+        "commit_hash": "46fbb9bdd8217801dc7996925449ce385385030a",
+        "subject": "criando estrutura do backend",
+        "timestamp": "2026-03-27T16:37:08-03:00"
+      },
+      {
+        "commit_hash": "6c95738b3c38eddb3033d8ef3f723c535d69cbfc",
+        "subject": "Adicionando schemas",
+        "timestamp": "2026-03-27T17:13:12-03:00"
+      },
+      {
+        "commit_hash": "06b4ff56256ca8becc029ba25d604a7210ef302e",
+        "subject": "ajeitando schema Studente",
+        "timestamp": "2026-03-27T17:52:15-03:00"
+      },
+      {
+        "commit_hash": "bd9b7d123d2a5cd2c5325451a93eddc298d9b139",
+        "subject": "ajeitando schemas",
+        "timestamp": "2026-03-27T18:07:47-03:00"
+      },
+      {
+        "commit_hash": "3396a5950642a20fff85cceba72feebc657895d7",
+        "subject": "add API de comunicação com o front",
+        "timestamp": "2026-03-31T13:50:03-03:00"
+      },
+      {
+        "commit_hash": "29a1d5accd4c21393018ca9aabe0291dc761ce74",
+        "subject": "molhorada a organização de api",
+        "timestamp": "2026-04-01T21:23:15-03:00"
+      },
+      {
+        "commit_hash": "83992de18631e7cfcb0fe4eb6e4eb000f00f4377",
+        "subject": "remoção de redundâncias de api",
+        "timestamp": "2026-04-02T13:11:44+00:00"
+      },
+      {
+        "commit_hash": "7e814d00532c30d5373bf169a0b177487f311675",
+        "subject": "feat : dependencies for next.js",
+        "timestamp": "2026-04-03T18:03:18-03:00"
+      },
+      {
+        "commit_hash": "fd29718fc11edb9190fe41a0404267fb5e010811",
+        "subject": "Update README with frontend setup instructions",
+        "timestamp": "2026-04-03T18:08:32-03:00"
+      },
+      {
+        "commit_hash": "3025fac48f8f2f76229902c067dba1eabb17fc40",
+        "subject": "feat:service_estudante",
+        "timestamp": "2026-04-10T20:46:09-03:00"
+      },
+      {
+        "commit_hash": "d157aac439b186db9648e16a1b40465a790eeaef",
+        "subject": "feat:add models, repositories e insalando sqlalchemy",
+        "timestamp": "2026-04-11T10:23:27-03:00"
+      },
+      {
+        "commit_hash": "ed889ccb5d07b6c72f6994733b1f44e9d31cd229",
+        "subject": "feat:Criando conexao com bd e criando imports uv",
+        "timestamp": "2026-04-11T13:01:21-03:00"
+      },
+      {
+        "commit_hash": "deb1b5bb5c876a374f8ae877efcca3b377e331a5",
+        "subject": "feat: adicionando topico",
+        "timestamp": "2026-04-11T14:34:58-03:00"
+      },
+      {
+        "commit_hash": "b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae",
+        "subject": "feat: adicionando arquivos do student e funcao basica de login",
+        "timestamp": "2026-04-11T15:32:22-03:00"
+      },
+      {
+        "commit_hash": "f468e663d13483555c3365d300e5b853c11095c3",
+        "subject": "integração bd_1 + services_1",
+        "timestamp": "2026-04-11T17:07:06-03:00"
+      },
+      {
+        "commit_hash": "84ba26f2b20a51729b8d36dc2c3022c56a552551",
+        "subject": "Merge pull request #1 from RenannLimaa/Front/feat_dependencies_npm",
+        "timestamp": "2026-04-15T17:18:33-03:00"
+      },
+      {
+        "commit_hash": "aa1f793cd54fff5e6cd1d0709f334890cce8a72a",
+        "subject": "feat: homescreen enembot",
+        "timestamp": "2026-04-15T20:19:49-03:00"
+      },
+      {
+        "commit_hash": "2ac0adea007ae5422a8d149a4a676eaed75ce372",
+        "subject": "feat: services subject e images retornando dados utilizaveis",
+        "timestamp": "2026-04-16T17:28:17-03:00"
+      },
+      {
+        "commit_hash": "908cc7e9125b8d50c30896337b5fa8573e750b62",
+        "subject": "chore(frontend): integra homescreen da branch Front/feature-homescreen como baseline",
+        "timestamp": "2026-04-16T19:13:02-03:00"
+      },
+      {
+        "commit_hash": "242ee73d3b404fe33d2058d7e12255eebd7f3514",
+        "subject": "feat(db): scaffold supabase + migration inicial do schema enembot",
+        "timestamp": "2026-04-16T19:15:54-03:00"
+      },
+      {
+        "commit_hash": "44a994200540754599adf7eac322713e6fb6d1b2",
+        "subject": "feat(frontend): adiciona camada de dominio (types, catalogo, banco de questoes, client Supabase, LLM adapter mockado)",
+        "timestamp": "2026-04-16T19:18:49-03:00"
+      },
+      {
+        "commit_hash": "b02b4312355a8b47e79ceaf1b3eea1013a27592b",
+        "subject": "feat(frontend): fluxo end-to-end do chatbot ENEM (home gamificada + chat estilo Notion)",
+        "timestamp": "2026-04-16T19:24:22-03:00"
+      },
+      {
+        "commit_hash": "0b31272f69eeff5f46e1ee40b82853c12e7f2688",
+        "subject": "docs: guia do prototipo (arquitetura, como rodar, adaptacoes do schema)",
+        "timestamp": "2026-04-16T19:25:15-03:00"
+      },
+      {
+        "commit_hash": "e17caeaf5f2b1d107d7a3c024172fb872fec2920",
+        "subject": "Merge pull request #3 from RenannLimaa/Front/feature-homescreen",
+        "timestamp": "2026-04-16T19:40:45-03:00"
+      },
+      {
+        "commit_hash": "9ec5879cd6365f82cd99408cc40d474adcc155dc",
+        "subject": "chore(deps): framer-motion + cmdk + radix + markdown/katex para UI premium",
+        "timestamp": "2026-04-16T20:04:56-03:00"
+      },
+      {
+        "commit_hash": "4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1",
+        "subject": "feat(design): novo design system premium com dark mode e tipografia editorial",
+        "timestamp": "2026-04-16T20:05:06-03:00"
+      },
+      {
+        "commit_hash": "810ed19fc2f13cf6133237cc15465c48e4268703",
+        "subject": "feat(ai): expande LlmClient com highlight, plano de estudos, insights, revisao e comandos",
+        "timestamp": "2026-04-16T20:05:21-03:00"
+      },
+      {
+        "commit_hash": "9023b8bf2afc69887209550b603bbfb5e3d42b9c",
+        "subject": "feat(ui): workspace Notion-like para o chat (3 paineis, paleta, highlights, insights)",
+        "timestamp": "2026-04-16T20:05:43-03:00"
+      },
+      {
+        "commit_hash": "db057d729829435ccb41d72a1216678108a97462",
+        "subject": "feat(landing): substitui home utilitaria por landing premium estilo SaaS moderno",
+        "timestamp": "2026-04-16T20:06:07-03:00"
+      },
+      {
+        "commit_hash": "a1965683218dc44520b6d3c974ed21ea9850f7fe",
+        "subject": "Merge pull request #2 from RenannLimaa/Back/services_v1",
+        "timestamp": "2026-04-16T20:12:31-03:00"
+      },
+      {
+        "commit_hash": "b7c3c6e466c8481f9b29da5e0c44c3c6fb984317",
+        "subject": "versao_nova_services",
+        "timestamp": "2026-04-16T20:13:39-03:00"
+      },
+      {
+        "commit_hash": "7a8cbef83e87712cdd80ffb6db2d9292e7ad6618",
+        "subject": "Merge pull request #4 from RenannLimaa/Back/services_v1",
+        "timestamp": "2026-04-16T20:15:02-03:00"
+      },
+      {
+        "commit_hash": "22d74691e57ee58387ea434ddf91e38968dfeda2",
+        "subject": "ajustando tamanho de campos text",
+        "timestamp": "2026-04-16T21:29:57-03:00"
+      },
+      {
+        "commit_hash": "bd6c1657c5e958e08c3d978ca2b12f83a4d21d14",
+        "subject": "inserindo arquivo de essential imports",
+        "timestamp": "2026-04-17T04:54:30-03:00"
+      },
+      {
+        "commit_hash": "2555e7f50d08162fc3525f145a3e6cc0ecb69ca5",
+        "subject": "Merge pull request #5 from RenannLimaa/Back/services_v1",
+        "timestamp": "2026-04-17T04:56:36-03:00"
+      },
+      {
+        "commit_hash": "a42087c831bbdcef250adcf25798bdffe5c83991",
+        "subject": "Add database initialization commands section",
+        "timestamp": "2026-04-17T07:48:01-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [
+        {
+          "evidence_quote_ids": [
+            "0b31272f69eeff5f46e1ee40b82853c12e7f2688"
+          ],
+          "text": "guia do prototipo (arquitetura, como rodar, adaptacoes do schema)"
+        },
+        {
+          "evidence_quote_ids": [
+            "4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1"
+          ],
+          "text": "novo design system premium com dark mode e tipografia editorial"
+        }
+      ],
+      "evidence_quotes": [
+        {
+          "category": "goals",
+          "commit_hash": "b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae",
+          "quote": "feat: adicionando arquivos do student e funcao basica de login",
+          "quote_id": "b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "b02b4312355a8b47e79ceaf1b3eea1013a27592b",
+          "quote": "feat(frontend): fluxo end-to-end do chatbot ENEM (home gamificada + chat estilo Notion)",
+          "quote_id": "b02b4312355a8b47e79ceaf1b3eea1013a27592b"
+        },
+        {
+          "category": "architecture_or_design",
+          "commit_hash": "0b31272f69eeff5f46e1ee40b82853c12e7f2688",
+          "quote": "docs: guia do prototipo (arquitetura, como rodar, adaptacoes do schema)",
+          "quote_id": "0b31272f69eeff5f46e1ee40b82853c12e7f2688"
+        },
+        {
+          "category": "architecture_or_design",
+          "commit_hash": "4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1",
+          "quote": "feat(design): novo design system premium com dark mode e tipografia editorial",
+          "quote_id": "4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1"
+        },
+        {
+          "category": "task_decomposition",
+          "commit_hash": "6c95738b3c38eddb3033d8ef3f723c535d69cbfc",
+          "quote": "Adicionando schemas",
+          "quote_id": "6c95738b3c38eddb3033d8ef3f723c535d69cbfc"
+        },
+        {
+          "category": "task_decomposition",
+          "commit_hash": "46fbb9bdd8217801dc7996925449ce385385030a",
+          "quote": "criando estrutura do backend",
+          "quote_id": "46fbb9bdd8217801dc7996925449ce385385030a"
+        },
+        {
+          "category": "risk_or_dependency",
+          "commit_hash": "7e814d00532c30d5373bf169a0b177487f311675",
+          "quote": "feat : dependencies for next.js",
+          "quote_id": "7e814d00532c30d5373bf169a0b177487f311675"
+        }
+      ],
+      "goals": [
+        {
+          "evidence_quote_ids": [
+            "b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae"
+          ],
+          "text": "adicionando arquivos do student e funcao basica de login"
+        },
+        {
+          "evidence_quote_ids": [
+            "b02b4312355a8b47e79ceaf1b3eea1013a27592b"
+          ],
+          "text": "fluxo end-to-end do chatbot ENEM (home gamificada + chat estilo Notion)"
+        }
+      ],
+      "insufficient_evidence": [],
+      "planning_evidence_present": true,
+      "risk_or_dependency": [
+        {
+          "evidence_quote_ids": [
+            "7e814d00532c30d5373bf169a0b177487f311675"
+          ],
+          "text": "dependencies for next.js"
+        }
+      ],
+      "task_decomposition": [
+        {
+          "evidence_quote_ids": [
+            "6c95738b3c38eddb3033d8ef3f723c535d69cbfc"
+          ],
+          "text": "adicionando schemas"
+        },
+        {
+          "evidence_quote_ids": [
+            "46fbb9bdd8217801dc7996925449ce385385030a"
+          ],
+          "text": "criando estrutura do backend"
+        }
+      ]
+    },
+    "prompt_sha256": "1ae77b46b5734214358c2a4f3e689bc8f38d05479812b8a0c6e5ee20477dc8c0",
+    "raw_response": "{\n  \"planning_evidence_present\": true,\n  \"goals\": [\n    {\n      \"text\": \"adicionando arquivos do student e funcao basica de login\",\n      \"evidence_quote_ids\": [\"b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae\"]\n    },\n    {\n      \"text\": \"fluxo end-to-end do chatbot ENEM (home gamificada + chat estilo Notion)\",\n      \"evidence_quote_ids\": [\"b02b4312355a8b47e79ceaf1b3eea1013a27592b\"]\n    }\n  ],\n  \"architecture_or_design\": [\n    {\n      \"text\": \"guia do prototipo (arquitetura, como rodar, adaptacoes do schema)\",\n      \"evidence_quote_ids\": [\"0b31272f69eeff5f46e1ee40b82853c12e7f2688\"]\n    },\n    {\n      \"text\": \"novo design system premium com dark mode e tipografia editorial\",\n      \"evidence_quote_ids\": [\"4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1\"]\n    }\n  ],\n  \"task_decomposition\": [\n    {\n      \"text\": \"adicionando schemas\",\n      \"evidence_quote_ids\": [\"6c95738b3c38eddb3033d8ef3f723c535d69cbfc\"]\n    },\n    {\n      \"text\": \"criando estrutura do backend\",\n      \"evidence_quote_ids\": [\"46fbb9bdd8217801dc7996925449ce385385030a\"]\n    }\n  ],\n  \"risk_or_dependency\": [\n    {\n      \"text\": \"dependencies for next.js\",\n      \"evidence_quote_ids\": [\"7e814d00532c30d5373bf169a0b177487f311675\"]\n    }\n  ],\n  \"evidence_quotes\": [\n    {\n      \"quote_id\": \"b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae\",\n      \"quote\": \"feat: adicionando arquivos do student e funcao basica de login\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"b58f15d9eb9ff58dfdbec4cc12f5ce5ee30ac0ae\"\n    },\n    {\n      \"quote_id\": \"b02b4312355a8b47e79ceaf1b3eea1013a27592b\",\n      \"quote\": \"feat(frontend): fluxo end-to-end do chatbot ENEM (home gamificada + chat estilo Notion)\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"b02b4312355a8b47e79ceaf1b3eea1013a27592b\"\n    },\n    {\n      \"quote_id\": \"0b31272f69eeff5f46e1ee40b82853c12e7f2688\",\n      \"quote\": \"docs: guia do prototipo (arquitetura, como rodar, adaptacoes do schema)\",\n      \"category\": \"architecture_or_design\",\n      \"commit_hash\": \"0b31272f69eeff5f46e1ee40b82853c12e7f2688\"\n    },\n    {\n      \"quote_id\": \"4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1\",\n      \"quote\": \"feat(design): novo design system premium com dark mode e tipografia editorial\",\n      \"category\": \"architecture_or_design\",\n      \"commit_hash\": \"4fa4fa9ba4e0f00b2d2a1bd6ebcbbcc3c82381b1\"\n    },\n    {\n      \"quote_id\": \"6c95738b3c38eddb3033d8ef3f723c535d69cbfc\",\n      \"quote\": \"Adicionando schemas\",\n      \"category\": \"task_decomposition\",\n      \"commit_hash\": \"6c95738b3c38eddb3033d8ef3f723c535d69cbfc\"\n    },\n    {\n      \"quote_id\": \"46fbb9bdd8217801dc7996925449ce385385030a\",\n      \"quote\": \"criando estrutura do backend\",\n      \"category\": \"task_decomposition\",\n      \"commit_hash\": \"46fbb9bdd8217801dc7996925449ce385385030a\"\n    },\n    {\n      \"quote_id\": \"7e814d00532c30d5373bf169a0b177487f311675\",\n      \"quote\": \"feat : dependencies for next.js\",\n      \"category\": \"risk_or_dependency\",\n      \"commit_hash\": \"7e814d00532c30d5373bf169a0b177487f311675\"\n    }\n  ],\n  \"insufficient_evidence\": []\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_07:2025.2:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_07",
+    "Semestre": "2025.2",
+    "completed_at": "2026-09-24T19:20:52.745697+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216",
+        "subject": "Commit inicial do projeto e estrutura do Django",
+        "timestamp": "2025-10-01T14:45:44-03:00"
+      },
+      {
+        "commit_hash": "00b496c46ff715b97cbf36a61d6ed9a083d623e8",
+        "subject": "Criando a rota de pesquisa de artigos conectando com API do semancti Scholar",
+        "timestamp": "2025-10-13T15:43:22-03:00"
+      },
+      {
+        "commit_hash": "d7625a661a68f39c152b61941df43f460b0d3b3b",
+        "subject": "Inicio da funcionalidade de resumo de artigos",
+        "timestamp": "2025-10-14T16:55:44-03:00"
+      },
+      {
+        "commit_hash": "4a981ba86d506754ca5107bca5b56f17645cb3d1",
+        "subject": "Otimizando funcionalidade de resumo",
+        "timestamp": "2025-10-14T17:11:29-03:00"
+      },
+      {
+        "commit_hash": "82af224a8b93283b43b75ce568d7f8e652aef5ff",
+        "subject": "Passando a funcionalidade de resumo de artigos para o diretório Analyzer",
+        "timestamp": "2025-10-14T17:49:32-03:00"
+      },
+      {
+        "commit_hash": "aec857c9446049e8c7420e06e890258079bf3ad8",
+        "subject": " Implementa sistema de pesquisa de artigos usando a API do GEMINI",
+        "timestamp": "2025-10-14T18:03:53-03:00"
+      },
+      {
+        "commit_hash": "71d0850bb8ef6c37306c1da2e8942ee752258851",
+        "subject": "Merge pull request #1 from PedroMikhael/issue01",
+        "timestamp": "2025-10-14T18:04:59-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [
+        {
+          "evidence_quote_ids": [
+            "ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216"
+          ],
+          "text": "Commit inicial do projeto e estrutura do Django"
+        },
+        {
+          "evidence_quote_ids": [
+            "82af224a8b93283b43b75ce568d7f8e652aef5ff"
+          ],
+          "text": "Passando a funcionalidade de resumo de artigos para o diretório Analyzer"
+        }
+      ],
+      "evidence_quotes": [
+        {
+          "category": "architecture_or_design",
+          "commit_hash": "ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216",
+          "quote": "Commit inicial do projeto e estrutura do Django",
+          "quote_id": "ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "00b496c46ff715b97cbf36a61d6ed9a083d623e8",
+          "quote": "Criando a rota de pesquisa de artigos conectando com API do semancti Scholar",
+          "quote_id": "00b496c46ff715b97cbf36a61d6ed9a083d623e8"
+        },
+        {
+          "category": "task_decomposition",
+          "commit_hash": "d7625a661a68f39c152b61941df43f460b0d3b3b",
+          "quote": "Inicio da funcionalidade de resumo de artigos",
+          "quote_id": "d7625a661a68f39c152b61941df43f460b0d3b3b"
+        },
+        {
+          "category": "task_decomposition",
+          "commit_hash": "4a981ba86d506754ca5107bca5b56f17645cb3d1",
+          "quote": "Otimizando funcionalidade de resumo",
+          "quote_id": "4a981ba86d506754ca5107bca5b56f17645cb3d1"
+        },
+        {
+          "category": "architecture_or_design",
+          "commit_hash": "82af224a8b93283b43b75ce568d7f8e652aef5ff",
+          "quote": "Passando a funcionalidade de resumo de artigos para o diretório Analyzer",
+          "quote_id": "82af224a8b93283b43b75ce568d7f8e652aef5ff"
+        },
+        {
+          "category": "goals",
+          "commit_hash": "aec857c9446049e8c7420e06e890258079bf3ad8",
+          "quote": "Implementa sistema de pesquisa de artigos usando a API do GEMINI",
+          "quote_id": "aec857c9446049e8c7420e06e890258079bf3ad8"
+        }
+      ],
+      "goals": [
+        {
+          "evidence_quote_ids": [
+            "aec857c9446049e8c7420e06e890258079bf3ad8"
+          ],
+          "text": "Implementa sistema de pesquisa de artigos usando a API do GEMINI"
+        },
+        {
+          "evidence_quote_ids": [
+            "00b496c46ff715b97cbf36a61d6ed9a083d623e8"
+          ],
+          "text": "Criando a rota de pesquisa de artigos conectando com API do semancti Scholar"
+        }
+      ],
+      "insufficient_evidence": [
+        {
+          "category": "risk_or_dependency",
+          "reason": "No evidence of risks or dependencies was found in the supplied commit subjects."
+        }
+      ],
+      "planning_evidence_present": true,
+      "risk_or_dependency": [],
+      "task_decomposition": [
+        {
+          "evidence_quote_ids": [
+            "d7625a661a68f39c152b61941df43f460b0d3b3b"
+          ],
+          "text": "Inicio da funcionalidade de resumo de artigos"
+        },
+        {
+          "evidence_quote_ids": [
+            "4a981ba86d506754ca5107bca5b56f17645cb3d1"
+          ],
+          "text": "Otimizando funcionalidade de resumo"
+        }
+      ]
+    },
+    "prompt_sha256": "5fe6432ba5b5eef856bf8e64217ea5d722304c2e1493596ea11f066e84350f87",
+    "raw_response": "{\n  \"planning_evidence_present\": true,\n  \"goals\": [\n    {\n      \"text\": \"Implementa sistema de pesquisa de artigos usando a API do GEMINI\",\n      \"evidence_quote_ids\": [\"aec857c9446049e8c7420e06e890258079bf3ad8\"]\n    },\n    {\n      \"text\": \"Criando a rota de pesquisa de artigos conectando com API do semancti Scholar\",\n      \"evidence_quote_ids\": [\"00b496c46ff715b97cbf36a61d6ed9a083d623e8\"]\n    }\n  ],\n  \"architecture_or_design\": [\n    {\n      \"text\": \"Commit inicial do projeto e estrutura do Django\",\n      \"evidence_quote_ids\": [\"ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216\"]\n    },\n    {\n      \"text\": \"Passando a funcionalidade de resumo de artigos para o diretório Analyzer\",\n      \"evidence_quote_ids\": [\"82af224a8b93283b43b75ce568d7f8e652aef5ff\"]\n    }\n  ],\n  \"task_decomposition\": [\n    {\n      \"text\": \"Inicio da funcionalidade de resumo de artigos\",\n      \"evidence_quote_ids\": [\"d7625a661a68f39c152b61941df43f460b0d3b3b\"]\n    },\n    {\n      \"text\": \"Otimizando funcionalidade de resumo\",\n      \"evidence_quote_ids\": [\"4a981ba86d506754ca5107bca5b56f17645cb3d1\"]\n    }\n  ],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [\n    {\n      \"quote_id\": \"ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216\",\n      \"quote\": \"Commit inicial do projeto e estrutura do Django\",\n      \"category\": \"architecture_or_design\",\n      \"commit_hash\": \"ca97a9a1ed0f0ad3b3e6ed5e5508bffa65b91216\"\n    },\n    {\n      \"quote_id\": \"00b496c46ff715b97cbf36a61d6ed9a083d623e8\",\n      \"quote\": \"Criando a rota de pesquisa de artigos conectando com API do semancti Scholar\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"00b496c46ff715b97cbf36a61d6ed9a083d623e8\"\n    },\n    {\n      \"quote_id\": \"d7625a661a68f39c152b61941df43f460b0d3b3b\",\n      \"quote\": \"Inicio da funcionalidade de resumo de artigos\",\n      \"category\": \"task_decomposition\",\n      \"commit_hash\": \"d7625a661a68f39c152b61941df43f460b0d3b3b\"\n    },\n    {\n      \"quote_id\": \"4a981ba86d506754ca5107bca5b56f17645cb3d1\",\n      \"quote\": \"Otimizando funcionalidade de resumo\",\n      \"category\": \"task_decomposition\",\n      \"commit_hash\": \"4a981ba86d506754ca5107bca5b56f17645cb3d1\"\n    },\n    {\n      \"quote_id\": \"82af224a8b93283b43b75ce568d7f8e652aef5ff\",\n      \"quote\": \"Passando a funcionalidade de resumo de artigos para o diretório Analyzer\",\n      \"category\": \"architecture_or_design\",\n      \"commit_hash\": \"82af224a8b93283b43b75ce568d7f8e652aef5ff\"\n    },\n    {\n      \"quote_id\": \"aec857c9446049e8c7420e06e890258079bf3ad8\",\n      \"quote\": \"Implementa sistema de pesquisa de artigos usando a API do GEMINI\",\n      \"category\": \"goals\",\n      \"commit_hash\": \"aec857c9446049e8c7420e06e890258079bf3ad8\"\n    }\n  ],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"No evidence of risks or dependencies was found in the supplied commit subjects.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  },
+  "m6b:TEAM_09:2025.2:e0839a64429cdd9a6d470fa3b76fa68a0dfc9d40e42605b8baaca7223563087f:2908fedd2f2ff1c37d749b735801bbf408f42003103b99c79cf05f999c44f8f3": {
+    "ID_Equipe": "TEAM_09",
+    "Semestre": "2025.2",
+    "completed_at": "2026-09-24T19:20:55.029775+00:00",
+    "input_subjects": [
+      {
+        "commit_hash": "167e8eb02d7db62dc8d1f38420751a2c402357fa",
+        "subject": "Initial commit",
+        "timestamp": "2025-09-25T15:02:24-03:00"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "parsed_response": {
+      "architecture_or_design": [],
+      "evidence_quotes": [],
+      "goals": [],
+      "insufficient_evidence": [
+        {
+          "category": "goals",
+          "reason": "The commit subject does not specify any goals."
+        },
+        {
+          "category": "architecture_or_design",
+          "reason": "The commit subject does not provide any information about architecture or design."
+        },
+        {
+          "category": "task_decomposition",
+          "reason": "The commit subject does not indicate any task decomposition."
+        },
+        {
+          "category": "risk_or_dependency",
+          "reason": "The commit subject does not mention any risks or dependencies."
+        }
+      ],
+      "planning_evidence_present": false,
+      "risk_or_dependency": [],
+      "task_decomposition": []
+    },
+    "prompt_sha256": "c62c6a3c37ae6ba82103892ccb615ef37f280738fefb887596dee3460bc027f2",
+    "raw_response": "{\n  \"planning_evidence_present\": false,\n  \"goals\": [],\n  \"architecture_or_design\": [],\n  \"task_decomposition\": [],\n  \"risk_or_dependency\": [],\n  \"evidence_quotes\": [],\n  \"insufficient_evidence\": [\n    {\n      \"category\": \"goals\",\n      \"reason\": \"The commit subject does not specify any goals.\"\n    },\n    {\n      \"category\": \"architecture_or_design\",\n      \"reason\": \"The commit subject does not provide any information about architecture or design.\"\n    },\n    {\n      \"category\": \"task_decomposition\",\n      \"reason\": \"The commit subject does not indicate any task decomposition.\"\n    },\n    {\n      \"category\": \"risk_or_dependency\",\n      \"reason\": \"The commit subject does not mention any risks or dependencies.\"\n    }\n  ]\n}",
+    "status": "success",
+    "temperature": 0.0
+  }
+}

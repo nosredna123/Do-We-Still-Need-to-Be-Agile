@@ -1,0 +1,73 @@
+{
+  "artifact_id": "team_semester_evidence_panel",
+  "contract_version": "team-semester-evidence-panel-v1",
+  "coverage": {
+    "baseline_eligible_rework_team_semesters": 12,
+    "m5_available_team_semesters": 9,
+    "m5_unavailable_team_semesters": 5,
+    "m6b_success_team_semesters": 9,
+    "m6b_unavailable_team_semesters": 5,
+    "semesters": [
+      "2025.2",
+      "2026.1"
+    ],
+    "team_semesters": 14
+  },
+  "generated_at_utc": "2026-09-25T18:43:21.237163+00:00",
+  "grain_contract": {
+    "global_transcript_corpus_context_repeated_for_2025_2_only": [
+      "m5_marker_density"
+    ],
+    "not_zero_filled": [
+      "m5_2026_1_unavailable_not_measured"
+    ],
+    "row_unit": "team_semester",
+    "semester_checkpoint_aggregates_repeated_by_team_semester": [
+      "m1_perception",
+      "m2_role_perception"
+    ],
+    "team_semester_metrics": [
+      "planning",
+      "evaluator_scores",
+      "git_activity",
+      "regularity",
+      "rework",
+      "complexity",
+      "phase_shares",
+      "m6b_commit_subject_planning"
+    ]
+  },
+  "inference": "descriptive_integrated_evidence_panel_not_causal",
+  "input_sha256": {
+    "complexity": "99e0836e4e487b239be47a27af2748ce988f7d759b44b2cb0b05474892ff5e7e",
+    "m1_perception": "d9783d947736660b648d6f9e51aa510ece2dca521d83fc9844db50914d0586f4",
+    "m2_role": "e31693e800687b53b5af467472431a5f047e7f09379c612e55f499ce3313cfc6",
+    "m5_summary": "ce3679883f78d4c0615b9a3b30f6e7ad43cf23eb3dc3f358b442e799e2b1ff90",
+    "m6b": "166c544281326efd354c8142130aecc6a73e36a13d43179d87c06802c4fe46ff",
+    "phase_activity": "94586d648d29b79d6ad2c2dbc27fce776f118560eb61c4f88e60d8df55071c8b",
+    "regularity": "699d35322857d85200ef0d08b9a3f1c0814d2eeacd67acd8ed0df4d934493177",
+    "score_base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52"
+  },
+  "inputs": {
+    "complexity": "paper_v9/figures/rq3_complexity_profile_data.csv",
+    "m1_perception": "paper_v9/data/metrics/m1_rq1_perception_panel_wide.csv",
+    "m2_role": "paper_v9/data/metrics/m2_role_perception_by_team_semester.csv",
+    "m5_summary": "paper_v9/figures/rq2_m5_2025_triangulation_summary.csv",
+    "m6b": "paper_v9/data/metrics/m6b_llm_planning_content.json",
+    "phase_activity": "paper_v9/figures/rq2_phase_activity_share_data.csv",
+    "regularity": "paper_v9/figures/rq2_operational_regularity_data.csv",
+    "score_base": "paper_v9/figures/rq2_score_trajectory_base_data.csv"
+  },
+  "limitations": [
+    "The panel is an editorial/reproducibility index, not a statistical model.",
+    "M1 and M2 are semester/checkpoint aggregates repeated on team-semester rows with explicit aggregation-level fields.",
+    "M5 is global transcript-corpus evidence for 2025.2 only and is not a team-level metric.",
+    "M6b depends on T1 commit-subject availability and is marked unavailable when no subjects exist."
+  ],
+  "output_sha256": {
+    "panel": "fc754cafd91a1f5285300685322a05653115e5b73cc2e8ada563e64e19eeccb8"
+  },
+  "outputs": {
+    "panel": "paper_v9/figures/team_semester_evidence_panel.csv"
+  }
+}
