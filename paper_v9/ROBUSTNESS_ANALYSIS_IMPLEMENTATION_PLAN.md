@@ -613,6 +613,25 @@ Muito alto. Esta fase responde a uma pergunta central para novos achados:
 Ela fortalece a narrativa ao conectar atividade temporal de repositório com
 resultado avaliativo, sem afirmar causalidade.
 
+## Nota de reconciliação da implementação da Fase 1
+
+As tarefas 1.1, 1.2 e 1.4 foram implementadas em um mesmo incremento técnico,
+porque o script `paper_v9/scripts/results/generate_score_trajectory_concentration.py`
+materializa simultaneamente:
+
+- os dados derivados e figuras exigidos pela Tarefa 1.1;
+- os dois scatters previstos pela Tarefa 1.2;
+- as validações automatizadas previstas pela Tarefa 1.4 por meio de
+  `paper_v9/tests/test_score_trajectory_concentration.py`.
+
+A Tarefa 1.3 foi implementada em incremento posterior com a materialização de
+`paper_v9/figures/rq2_score_delta_final7_quadrants.csv`.
+
+Essa consolidação foi feita por coesão técnica dos outputs, mas deve ser tratada
+como exceção operacional. Nas próximas fases, a ordem granular das tarefas deve
+ser preservada de forma explícita, ou a consolidação de tarefas deve ser
+registrada antes do avanço para a fase seguinte.
+
 ## Tarefa 1.1 — Script de geração
 
 **Arquivo a criar**
@@ -711,6 +730,10 @@ paper_v9/tests/test_score_trajectory_concentration.py
 Muito alto e baixo custo. Esta fase produz uma visualização sintética para a
 narrativa central: planejamento inicial, padrão temporal de trabalho e resultado.
 
+**Status operacional atual:** implementada e validada após a Fase 1, mas ainda
+não commitada. O avanço para fases posteriores deve aguardar confirmação/commit
+explícito para preservar a sequência de controle do plano.
+
 ## Tarefa 2.1 — Script de geração
 
 **Arquivo a criar**
@@ -728,12 +751,12 @@ paper_v9/scripts/results/generate_planning_concentration_quadrants.py
 
 **Output esperado**
 
-- `rq2_planning_vs_final7_commit_concentration_data.csv`
-- `rq2_planning_vs_final7_clean_churn_concentration_data.csv`
-- `rq2_planning_concentration_quadrants.metadata.json`
+- [x] `rq2_planning_vs_final7_commit_concentration_data.csv`
+- [x] `rq2_planning_vs_final7_clean_churn_concentration_data.csv`
+- [x] `rq2_planning_concentration_quadrants.metadata.json`
 - Figuras:
-  - `rq2_planning_vs_final7_commit_concentration.{png,svg,pdf}`
-  - `rq2_planning_vs_final7_clean_churn_concentration.{png,svg,pdf}`
+  - [x] `rq2_planning_vs_final7_commit_concentration.{png,svg,pdf}`
+  - [x] `rq2_planning_vs_final7_clean_churn_concentration.{png,svg,pdf}`
 
 ## Tarefa 2.2 — Quadrant plot
 
@@ -761,17 +784,17 @@ Identificar perfis:
 
 **Checklist**
 
-- [ ] Criar versão commits.
-- [ ] Criar versão clean changed lines.
-- [ ] Incluir labels/hover por equipe.
-- [ ] Registrar contagem por quadrante.
-- [ ] Evitar chamar o eixo de planejamento de “qualidade”; usar “repository-visible T1 planning scope”.
+- [x] Criar versão commits.
+- [x] Criar versão clean changed lines.
+- [x] Incluir labels/hover por equipe.
+- [x] Registrar contagem por quadrante.
+- [x] Evitar chamar o eixo de planejamento de “qualidade”; usar “repository-visible T1 planning scope”.
 
 ## Tarefa 2.3 — Sumário narrativo por quadrante
 
 **Output esperado**
 
-- `rq2_planning_concentration_quadrant_summary.csv`
+- [x] `rq2_planning_concentration_quadrant_summary.csv`
 
 **Colunas**
 
@@ -786,9 +809,9 @@ Identificar perfis:
 
 **Checklist**
 
-- [ ] Incluir denominadores.
-- [ ] Registrar se algum quadrante tem `n=0` ou `n=1`.
-- [ ] Não inferir significância estatística.
+- [x] Incluir denominadores.
+- [x] Registrar se algum quadrante tem `n=0` ou `n=1`.
+- [x] Não inferir significância estatística.
 
 ---
 

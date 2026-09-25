@@ -53,3 +53,21 @@ editoriais.
 | `status` | `candidate` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
+
+### rq2_planning_concentration_quadrants
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `rq2_planning_concentration_quadrants` |
+| `artifact_family` | `planning_concentration` |
+| `files` | [`figures/rq2_planning_vs_final7_commit_concentration.png`](figures/rq2_planning_vs_final7_commit_concentration.png), [`figures/rq2_planning_vs_final7_commit_concentration.svg`](figures/rq2_planning_vs_final7_commit_concentration.svg), [`figures/rq2_planning_vs_final7_commit_concentration.pdf`](figures/rq2_planning_vs_final7_commit_concentration.pdf), [`figures/rq2_planning_vs_final7_commit_concentration_data.csv`](figures/rq2_planning_vs_final7_commit_concentration_data.csv), [`figures/rq2_planning_vs_final7_clean_churn_concentration.png`](figures/rq2_planning_vs_final7_clean_churn_concentration.png), [`figures/rq2_planning_vs_final7_clean_churn_concentration.svg`](figures/rq2_planning_vs_final7_clean_churn_concentration.svg), [`figures/rq2_planning_vs_final7_clean_churn_concentration.pdf`](figures/rq2_planning_vs_final7_clean_churn_concentration.pdf), [`figures/rq2_planning_vs_final7_clean_churn_concentration_data.csv`](figures/rq2_planning_vs_final7_clean_churn_concentration_data.csv), [`figures/rq2_planning_concentration_quadrant_summary.csv`](figures/rq2_planning_concentration_quadrant_summary.csv), [`figures/rq2_planning_concentration_quadrants.metadata.json`](figures/rq2_planning_concentration_quadrants.metadata.json) |
+| `data_inputs` | `paper_v9/figures/rq2_score_trajectory_base_data.csv`; `paper_v9/data/metrics/m8_rework_magnitude.csv` |
+| `unit_of_analysis` | equipe-semestre |
+| `main_question` | Como o escopo de planejamento repositório-visível em T1 se combina com concentração final de atividade e resultado avaliativo T3? |
+| `best_use` | Results/RQ2; figura sintética candidata para conectar planejamento inicial, padrão temporal de trabalho e resultado |
+| `key_reading` | Artefato visual candidato: cruza escopo de planejamento repositório-visível com concentração final de commits/clean churn, usando cor para score T3 e tamanho para magnitude absoluta do delta avaliativo. O sumário registra contagens e scores por quadrante. |
+| `utility_score` | Alta |
+| `limitations` | Planejamento é escopo estrutural observado no repositório, não qualidade semântica; concentração final é proxy temporal; quadrantes são bins descritivos small-n; M8 clean rework entra apenas como proxy de churn por proveniência. |
+| `status` | `candidate` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
