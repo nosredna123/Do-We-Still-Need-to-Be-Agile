@@ -511,10 +511,10 @@ final. Esta fase reduz duplicação e evita divergência entre scripts.
 
 **Checklist**
 
-- [ ] Validar 14 equipe-semestres.
-- [ ] Validar presença de T1/T2/T3 para evaluator scores.
-- [ ] Registrar colunas usadas no score composto.
-- [ ] Registrar que o score composto é descritivo e não uma métrica oficial de qualidade global.
+- [x] Validar 14 equipe-semestres.
+- [x] Validar presença de T1/T2/T3 para evaluator scores.
+- [x] Registrar colunas usadas no score composto.
+- [x] Registrar que o score composto é descritivo e não uma métrica oficial de qualidade global.
 
 ## Tarefa 0.2 — Definir grupos de trajetória avaliativa
 
