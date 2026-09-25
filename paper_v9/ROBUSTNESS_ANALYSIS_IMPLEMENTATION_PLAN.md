@@ -841,8 +841,8 @@ paper_v9/scripts/results/generate_operational_regularity.py
 
 **Output esperado**
 
-- `rq2_operational_regularity_data.csv`
-- `rq2_operational_regularity.metadata.json`
+- [x] `rq2_operational_regularity_data.csv`
+- [x] `rq2_operational_regularity.metadata.json`
 
 ## Tarefa 3.2 — Métricas de regularidade
 
@@ -869,10 +869,10 @@ Calcular por equipe-semestre:
 
 **Checklist**
 
-- [ ] Validar `n=14`.
-- [ ] Registrar fórmulas no metadata.
-- [ ] Tratar semanas sem atividade como zeros apenas quando o período de observação estiver definido.
-- [ ] Separar regularidade de produtividade.
+- [x] Validar `n=14`.
+- [x] Registrar fórmulas no metadata.
+- [x] Tratar semanas sem atividade como zeros apenas quando o período de observação estiver definido.
+- [x] Separar regularidade de produtividade.
 
 ## Tarefa 3.3 — Visualizações de regularidade
 

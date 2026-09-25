@@ -36,6 +36,24 @@ editoriais.
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
+### rq2_operational_regularity
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `rq2_operational_regularity` |
+| `artifact_family` | `operational_regularity` |
+| `files` | [`figures/rq2_operational_regularity_data.csv`](figures/rq2_operational_regularity_data.csv), [`figures/rq2_operational_regularity.metadata.json`](figures/rq2_operational_regularity.metadata.json) |
+| `data_inputs` | `data/lake/git_commits.parquet`; `data/lake/git_files.parquet`; `paper_v9/data/metrics/m3_author_activity_participation.csv`; `paper_v9/data/metrics/m3_author_concentration.csv`; `paper_v9/data/metrics/m7_inactivity_trajectory.csv`; `paper_v9/figures/rq2_score_trajectory_base_data.csv` |
+| `unit_of_analysis` | equipe-semestre |
+| `main_question` | Quão regular é a atividade observável no Git por equipe-semestre, e como esse proxy pode apoiar análises posteriores de heterogeneidade processual? |
+| `best_use` | Input para Fase 3; Discussion/Threats como mitigação parcial de heterogeneidade de processo |
+| `key_reading` | Artefato contratual: calcula métricas temporais e autorais de regularidade operacional observável no Git. A leitura substantiva deve ser feita nas visualizações derivadas da Fase 3. |
+| `utility_score` | Alta |
+| `limitations` | Regularidade de Git não mede aderência a Scrum/Kanban nem produtividade; semanas/dias sem atividade são zeros apenas dentro do período observado entre primeiro commit e âncora T3; clean churn usa política de paths limpos. |
+| `status` | `candidate` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
+
 ### rq2_score_delta_vs_final7_concentration
 
 | Campo | Valor |
