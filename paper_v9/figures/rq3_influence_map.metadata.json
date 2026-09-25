@@ -9,12 +9,18 @@
   },
   "data_path": "paper_v9/figures/rq3_influence_map_data.csv",
   "data_sha256": "23a1b847424d927425d511e244dc52d7fd00c46b89ecf5761a195e74caf1ad99",
+  "directional_robustness_summary": {
+    "sort_order": "ascending sign_preservation_share, then descending max_abs_rho_delta_from_full",
+    "unstable_sensitivity_flag": "True when any leave-one-out slice changes the full-sample sign; interpret as sensitivity, not failure."
+  },
+  "directional_robustness_summary_path": "paper_v9/figures/rq3_directional_robustness_summary.csv",
+  "directional_robustness_summary_sha256": "783c83a997ce1dd148419e4286ab9a731a7f27caa085ed1f922f54f433294795",
   "figure_artifacts": [
     "paper_v9/figures/rq3_influence_map.pdf",
     "paper_v9/figures/rq3_influence_map.svg",
     "paper_v9/figures/rq3_influence_map.png"
   ],
-  "generated_at_utc": "2026-09-25T18:08:12.805197+00:00",
+  "generated_at_utc": "2026-09-25T18:10:11.980975+00:00",
   "heatmap_encoding": {
     "color": "rho_delta_from_full = leave-one-out Spearman rho minus full-sample Spearman rho",
     "columns": "evaluated relationship",

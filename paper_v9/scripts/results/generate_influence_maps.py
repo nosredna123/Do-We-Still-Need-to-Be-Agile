@@ -22,6 +22,7 @@ CONTRACT_VERSION = "rq3-influence-map-v1"
 STEM = "rq3_influence_map"
 RELATIONSHIP_CONTRACT_STEM = "rq3_influence_relationship_contract"
 HEATMAP_MATRIX_STEM = "rq3_influence_heatmap_matrix"
+DIRECTIONAL_SUMMARY_STEM = "rq3_directional_robustness_summary"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 MIN_N = 4
 RELATIONSHIPS = [
@@ -331,6 +332,55 @@ def _heatmap_matrix(data: pd.DataFrame) -> pd.DataFrame:
     return pivot
 
 
+def _directional_robustness_summary(influence: pd.DataFrame) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for relation in RELATIONSHIPS:
+        subset = influence.loc[influence["relationship_id"].eq(relation["relationship_id"])].copy()
+        available = subset.loc[subset["availability_status"].eq("available")].copy()
+        full_rho_values = subset["full_sample_rho"].dropna()
+        if available.empty:
+            most_influential = ""
+            max_abs_delta = None
+            sign_preservation_share = None
+            unstable_sensitivity_flag = True
+        else:
+            most_influential_row = available.sort_values(
+                ["abs_rho_delta_from_full", "removed_ID_Equipe", "removed_Semestre"],
+                ascending=[False, True, True],
+            ).iloc[0]
+            most_influential = (
+                f"{most_influential_row['removed_ID_Equipe']} · {most_influential_row['removed_Semestre']}"
+            )
+            max_abs_delta = float(most_influential_row["abs_rho_delta_from_full"])
+            sign_preservation_share = float((available["full_sample_sign"] == available["loo_sign"]).mean())
+            unstable_sensitivity_flag = sign_preservation_share < 1.0
+        rows.append(
+            {
+                "relationship": relation["label"],
+                "relationship_id": relation["relationship_id"],
+                "task_4_2_requirement": relation["task_4_2_requirement"],
+                "full_sample_rho": float(full_rho_values.iloc[0]) if not full_rho_values.empty else None,
+                "loo_min_rho": float(available["loo_rho"].min()) if not available.empty else None,
+                "loo_max_rho": float(available["loo_rho"].max()) if not available.empty else None,
+                "sign_preservation_share": sign_preservation_share,
+                "most_influential_team_semester": most_influential,
+                "max_abs_rho_delta_from_full": max_abs_delta,
+                "available_leave_one_out_rows": int(len(available)),
+                "total_leave_one_out_rows": int(len(subset)),
+                "unstable_sensitivity_flag": unstable_sensitivity_flag,
+                "interpretation_note": (
+                    "Sensitivity diagnostic; instability indicates case dependence, not an analysis failure."
+                ),
+            }
+        )
+    summary = pd.DataFrame(rows)
+    return summary.sort_values(
+        ["sign_preservation_share", "max_abs_rho_delta_from_full", "relationship"],
+        ascending=[True, False, True],
+        na_position="first",
+    ).reset_index(drop=True)
+
+
 def _build_influence_map(data: pd.DataFrame) -> go.Figure:
     data = data.copy()
     data["removed_team_semester"] = data["removed_ID_Equipe"].astype(str) + " · " + data["removed_Semestre"].astype(str)
@@ -452,12 +502,15 @@ def generate() -> dict[str, Any]:
     data_path = figures_dir / f"{STEM}_data.csv"
     relationship_contract_path = figures_dir / f"{RELATIONSHIP_CONTRACT_STEM}.csv"
     heatmap_matrix_path = figures_dir / f"{HEATMAP_MATRIX_STEM}.csv"
+    directional_summary_path = figures_dir / f"{DIRECTIONAL_SUMMARY_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
     _atomic_csv(influence, data_path)
     relationship_contract = _relationship_contract(influence)
     _atomic_csv(relationship_contract, relationship_contract_path)
     heatmap_matrix = _heatmap_matrix(influence)
     _atomic_csv(heatmap_matrix, heatmap_matrix_path)
+    directional_summary = _directional_robustness_summary(influence)
+    _atomic_csv(directional_summary, directional_summary_path)
     _write_figure(_build_influence_map(influence), STEM, figures_dir)
 
     task_4_2_requirements = sorted(relationship_contract["task_4_2_requirement"].unique().tolist())
@@ -471,6 +524,8 @@ def generate() -> dict[str, Any]:
         "relationship_contract_sha256": compute_sha256(relationship_contract_path),
         "heatmap_matrix_path": str(heatmap_matrix_path.relative_to(repo_root)),
         "heatmap_matrix_sha256": compute_sha256(heatmap_matrix_path),
+        "directional_robustness_summary_path": str(directional_summary_path.relative_to(repo_root)),
+        "directional_robustness_summary_sha256": compute_sha256(directional_summary_path),
         "figure_artifacts": [
             str((figures_dir / f"{STEM}.{extension}").relative_to(repo_root))
             for extension in ("pdf", "svg", "png")
@@ -493,6 +548,10 @@ def generate() -> dict[str, Any]:
             "color": "rho_delta_from_full = leave-one-out Spearman rho minus full-sample Spearman rho",
             "hover": "full rho, leave-one-out rho, absolute delta, full sign, leave-one-out sign, and availability status",
         },
+        "directional_robustness_summary": {
+            "sort_order": "ascending sign_preservation_share, then descending max_abs_rho_delta_from_full",
+            "unstable_sensitivity_flag": "True when any leave-one-out slice changes the full-sample sign; interpret as sensitivity, not failure.",
+        },
         "task_4_2_relationship_requirements": task_4_2_requirements,
         "task_4_2_relationship_contract": (
             "Each planned Fase 4.2 relationship category is represented by one or more operationalized "
@@ -514,6 +573,7 @@ def generate() -> dict[str, Any]:
         "data_path": str(data_path),
         "relationship_contract_path": str(relationship_contract_path),
         "heatmap_matrix_path": str(heatmap_matrix_path),
+        "directional_summary_path": str(directional_summary_path),
         "metadata_path": str(metadata_path),
         "coverage": metadata["coverage"],
     }

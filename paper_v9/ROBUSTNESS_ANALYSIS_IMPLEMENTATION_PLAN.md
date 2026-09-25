@@ -1030,21 +1030,21 @@ Calcular leave-one-out para:
 
 **Output esperado**
 
-- `rq3_directional_robustness_summary.csv`
+- [x] `rq3_directional_robustness_summary.csv`
 
 **Colunas**
 
-- `relationship`
-- `full_sample_rho`
-- `loo_min_rho`
-- `loo_max_rho`
-- `sign_preservation_share`
-- `most_influential_team_semester`
+- [x] `relationship`
+- [x] `full_sample_rho`
+- [x] `loo_min_rho`
+- [x] `loo_max_rho`
+- [x] `sign_preservation_share`
+- [x] `most_influential_team_semester`
 
 **Checklist**
 
-- [ ] Ordenar por menor preservação de sinal.
-- [ ] Destacar relações instáveis como achados de sensibilidade, não falhas.
+- [x] Ordenar por menor preservação de sinal.
+- [x] Destacar relações instáveis como achados de sensibilidade, não falhas.
 
 ---
 
