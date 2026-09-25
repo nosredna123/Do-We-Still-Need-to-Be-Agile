@@ -1082,7 +1082,7 @@ paper_v9/scripts/results/generate_complexity_confounding_profiles.py
 - [x] Perfil base gerado com `n=14` equipe-semestres.
 - [x] Metadata registra separação entre complexidade avaliada e complexidade estrutural inferida.
 - [x] Metadata registra heurísticas de path usadas para camadas frontend/backend.
-- [ ] Revisão/validação editorial das métricas permanece na Tarefa 5.2.
+- [x] Revisão/validação editorial das métricas concluída na Tarefa 5.2.
 
 ## Tarefa 5.2 — Métricas de complexidade
 
@@ -1139,6 +1139,22 @@ Figuras sugeridas:
    - y: rework T3.
    - color: technical complexity T3.
    - shape: baseline eligibility.
+
+**Output produzido**
+
+- [x] `rq3_technical_complexity_vs_rework.{png,svg,pdf}`
+- [x] `rq3_technical_complexity_vs_rework_data.csv`
+- [x] `rq3_complexity_vs_final_concentration.{png,svg,pdf}`
+- [x] `rq3_complexity_vs_final_concentration_data.csv`
+- [x] `rq3_planning_rework_complexity_overlay.{png,svg,pdf}`
+- [x] `rq3_planning_rework_complexity_overlay_data.csv`
+
+**Operacionalização**
+
+- [x] Figura complexidade técnica × rework usa `technical_complexity_mean_t3` no eixo x, `clean_rework_churn_t3` no eixo y e `planning_scope_tier` como cor.
+- [x] Figura complexidade × concentração final usa `technical_complexity_mean_t3` no eixo x, concentração final no eixo y e `score_trajectory_group` como cor, com painéis para commits e clean churn.
+- [x] Overlay planejamento–rework–complexidade usa `planning_scope_log1p_t1`, `clean_rework_churn_t3`, cor por complexidade técnica T3 e forma por elegibilidade de baseline.
+- [x] Metadata registra paths, hashes e contrato visual das três figuras.
 
 **Insight esperado**
 

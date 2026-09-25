@@ -10,6 +10,8 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
@@ -20,6 +22,9 @@ from paper_v9.scripts.common.provenance import compute_sha256
 CONTRACT_VERSION = "rq3-complexity-profile-v1"
 STEM = "rq3_complexity_profile"
 METRICS_CONTRACT_STEM = "rq3_complexity_metrics_contract"
+TECH_REWORK_STEM = "rq3_technical_complexity_vs_rework"
+FINAL_CONCENTRATION_STEM = "rq3_complexity_vs_final_concentration"
+PLANNING_REWORK_OVERLAY_STEM = "rq3_planning_rework_complexity_overlay"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 TECHNICAL_COMPLEXITY_COLUMN = "technical_complexity_mean"
 REQUIRED_EVALUATOR_COLUMNS = [
@@ -91,6 +96,32 @@ BACKEND_PATH_MARKERS = frozenset(
         "repositories",
     }
 )
+PLANNING_TIER_COLORS = {
+    "high_repository_visible_planning": "#2563eb",
+    "lower_repository_visible_planning": "#f97316",
+}
+PLANNING_TIER_LABELS = {
+    "high_repository_visible_planning": "High repository-visible planning",
+    "lower_repository_visible_planning": "Lower repository-visible planning",
+}
+SCORE_GROUP_COLORS = {
+    "improved": "#16a34a",
+    "stable": "#64748b",
+    "declined": "#dc2626",
+}
+SCORE_GROUP_LABELS = {
+    "improved": "Improved",
+    "stable": "Stable",
+    "declined": "Declined",
+}
+SEMESTER_SYMBOLS = {
+    "2025.2": "circle",
+    "2026.1": "diamond",
+}
+BASELINE_ELIGIBILITY_SYMBOLS = {
+    "Baseline eligible": "circle",
+    "Baseline not observed": "x",
+}
 
 
 EVALUATED_COMPLEXITY_COLUMNS = [
@@ -131,6 +162,14 @@ def _require_columns(frame: pd.DataFrame, columns: list[str], source: Path) -> N
     missing = [column for column in columns if column not in frame.columns]
     if missing:
         raise ValueError(f"{source} is missing required columns: {missing}")
+
+
+def _write_figure(figure: go.Figure, stem: str, figures_dir: Path) -> None:
+    for extension in ("pdf", "svg", "png"):
+        figure.write_image(
+            figures_dir / f"{stem}.{extension}",
+            scale=2 if extension == "png" else 1,
+        )
 
 
 def _safe_path_parts(file_path: str | None) -> tuple[str, ...]:
@@ -381,6 +420,436 @@ def _metrics_contract() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def _analysis_profile_data(profile: pd.DataFrame) -> pd.DataFrame:
+    data = profile.copy()
+    data["baseline_eligibility_label"] = data["baseline_eligible_for_rework_t3"].map(
+        {
+            True: "Baseline eligible",
+            False: "Baseline not observed",
+        }
+    )
+    return data
+
+
+def _technical_complexity_rework_data(profile: pd.DataFrame) -> pd.DataFrame:
+    return _analysis_profile_data(profile)[
+        [
+            *TEAM_KEY,
+            "technical_complexity_mean_t3",
+            "clean_rework_churn_t3",
+            "clean_rework_ratio_t3",
+            "baseline_eligibility_label",
+            "planning_scope_tier",
+            "planning_scope_log1p_t1",
+            "score_trajectory_group",
+            "final7_commit_share_pct",
+            "final7_clean_churn_share_pct",
+        ]
+    ].copy()
+
+
+def _final_concentration_data(profile: pd.DataFrame) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for metric_label, column in {
+        "Final-7 commits": "final7_commit_share_pct",
+        "Final-7 clean churn": "final7_clean_churn_share_pct",
+    }.items():
+        metric_data = _analysis_profile_data(profile)[
+            [
+                *TEAM_KEY,
+                "technical_complexity_mean_t3",
+                column,
+                "score_trajectory_group",
+                "planning_scope_tier",
+                "clean_rework_churn_t3",
+                "baseline_eligibility_label",
+            ]
+        ].rename(columns={column: "final7_share_pct"})
+        metric_data["activity_metric"] = metric_label
+        rows.extend(metric_data.to_dict("records"))
+    return pd.DataFrame(rows)
+
+
+def _planning_rework_overlay_data(profile: pd.DataFrame) -> pd.DataFrame:
+    return _analysis_profile_data(profile)[
+        [
+            *TEAM_KEY,
+            "planning_scope_log1p_t1",
+            "clean_rework_churn_t3",
+            "clean_rework_ratio_t3",
+            "technical_complexity_mean_t3",
+            "baseline_eligibility_label",
+            "planning_scope_tier",
+            "score_trajectory_group",
+            "final7_commit_share_pct",
+            "final7_clean_churn_share_pct",
+        ]
+    ].copy()
+
+
+def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
+    figure = go.Figure()
+    for planning_tier in PLANNING_TIER_COLORS:
+        for semester in sorted(data["Semestre"].unique()):
+            subset = data.loc[data["planning_scope_tier"].eq(planning_tier) & data["Semestre"].eq(semester)]
+            if subset.empty:
+                continue
+            figure.add_trace(
+                go.Scatter(
+                    x=subset["technical_complexity_mean_t3"],
+                    y=subset["clean_rework_churn_t3"],
+                    mode="markers",
+                    marker={
+                        "color": PLANNING_TIER_COLORS[planning_tier],
+                        "symbol": SEMESTER_SYMBOLS.get(semester, "circle"),
+                        "size": 15,
+                        "line": {"color": "white", "width": 1.6},
+                    },
+                    name=f"{PLANNING_TIER_LABELS[planning_tier]} · {semester}",
+                    customdata=subset[
+                        [
+                            "ID_Equipe",
+                            "Semestre",
+                            "clean_rework_ratio_t3",
+                            "baseline_eligibility_label",
+                            "planning_scope_log1p_t1",
+                            "score_trajectory_group",
+                            "final7_commit_share_pct",
+                            "final7_clean_churn_share_pct",
+                        ]
+                    ],
+                    hovertemplate=(
+                        "Team=%{customdata[0]}<br>"
+                        "Semester=%{customdata[1]}<br>"
+                        "Technical complexity T3=%{x:.3f}<br>"
+                        "Clean rework T3=%{y:,.0f} lines<br>"
+                        "Clean rework ratio T3=%{customdata[2]:.3f}<br>"
+                        "Baseline status=%{customdata[3]}<br>"
+                        "Planning scope T1 log1p=%{customdata[4]:.3f}<br>"
+                        "Score trajectory=%{customdata[5]}<br>"
+                        "Final-7 commits=%{customdata[6]:.1f}%<br>"
+                        "Final-7 clean churn=%{customdata[7]:.1f}%"
+                        "<extra></extra>"
+                    ),
+                )
+            )
+
+    complexity_median = float(data["technical_complexity_mean_t3"].median())
+    rework_median = float(data["clean_rework_churn_t3"].median())
+    figure.add_vline(
+        x=complexity_median,
+        line_dash="dot",
+        line_color="#71717a",
+        annotation_text=f"Median T3 complexity: {complexity_median:.2f}",
+        annotation_position="top left",
+    )
+    figure.add_hline(
+        y=rework_median,
+        line_dash="dash",
+        line_color="#71717a",
+        annotation_text=f"Median rework: {rework_median:,.0f}",
+        annotation_position="bottom right",
+    )
+    figure.update_layout(
+        template="simple_white",
+        width=1100,
+        height=680,
+        margin={"l": 90, "r": 35, "t": 135, "b": 155},
+        title={
+            "text": "Technical complexity and T3 clean rework",
+            "font": {"size": 22},
+            "y": 0.98,
+        },
+        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        legend={
+            "title": "Planning tier · semester",
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.03,
+            "xanchor": "left",
+            "x": 0,
+            "font": {"size": 12},
+        },
+        xaxis={
+            "title": "Evaluator technical complexity at T3",
+            "gridcolor": "#e5e7eb",
+            "zeroline": False,
+        },
+        yaxis={
+            "title": "T3 clean rework magnitude (changed lines)",
+            "gridcolor": "#e5e7eb",
+            "zeroline": True,
+            "zerolinecolor": "#cbd5e1",
+        },
+        annotations=[
+            *figure.layout.annotations,
+            {
+                "text": (
+                    "Points are team-semesters. Color encodes repository-visible T1 planning tier; "
+                    "shape encodes semester.<br>"
+                    "The panel is descriptive: rework can reflect project complexity as well as planning or AI-use dynamics."
+                ),
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.22,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            }
+        ],
+    )
+    return figure
+
+
+def _build_complexity_vs_final_concentration(long_data: pd.DataFrame) -> go.Figure:
+    figure = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=("Commit concentration", "Clean changed-line concentration"),
+        shared_yaxes=True,
+        horizontal_spacing=0.08,
+    )
+    metric_columns = {
+        "Final-7 commits": 1,
+        "Final-7 clean churn": 2,
+    }
+    for metric_label, column in metric_columns.items():
+        metric_data = long_data.loc[long_data["activity_metric"].eq(metric_label)]
+        for score_group in ["improved", "stable", "declined"]:
+            subset = metric_data.loc[metric_data["score_trajectory_group"].eq(score_group)]
+            if subset.empty:
+                continue
+            figure.add_trace(
+                go.Scatter(
+                    x=subset["technical_complexity_mean_t3"],
+                    y=subset["final7_share_pct"],
+                    mode="markers",
+                    marker={
+                        "color": SCORE_GROUP_COLORS.get(score_group, "#64748b"),
+                        "size": 15,
+                        "line": {"color": "white", "width": 1.6},
+                    },
+                    name=SCORE_GROUP_LABELS.get(score_group, score_group),
+                    legendgroup=score_group,
+                    showlegend=column == 1,
+                    customdata=subset[
+                        [
+                            "ID_Equipe",
+                            "Semestre",
+                            "activity_metric",
+                            "planning_scope_tier",
+                            "clean_rework_churn_t3",
+                            "baseline_eligibility_label",
+                        ]
+                    ],
+                    hovertemplate=(
+                        "Team=%{customdata[0]}<br>"
+                        "Semester=%{customdata[1]}<br>"
+                        "Metric=%{customdata[2]}<br>"
+                        "Technical complexity T3=%{x:.3f}<br>"
+                        "Final-7 share=%{y:.1f}%<br>"
+                        "Planning tier=%{customdata[3]}<br>"
+                        "Clean rework T3=%{customdata[4]:,.0f} lines<br>"
+                        "Baseline status=%{customdata[5]}"
+                        "<extra></extra>"
+                    ),
+                ),
+                row=1,
+                col=column,
+            )
+
+    complexity_median = float(long_data["technical_complexity_mean_t3"].median())
+    concentration_median = float(long_data["final7_share_pct"].median())
+    for column in [1, 2]:
+        figure.add_vline(
+            x=complexity_median,
+            line_dash="dot",
+            line_color="#71717a",
+            row=1,
+            col=column,
+        )
+        figure.add_hline(
+            y=concentration_median,
+            line_dash="dash",
+            line_color="#71717a",
+            row=1,
+            col=column,
+        )
+
+    figure.update_layout(
+        template="simple_white",
+        width=1200,
+        height=680,
+        margin={"l": 85, "r": 35, "t": 125, "b": 155},
+        title={
+            "text": "Technical complexity versus final-week concentration",
+            "font": {"size": 22},
+            "y": 0.98,
+        },
+        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        legend={
+            "title": "Score trajectory",
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.02,
+            "xanchor": "left",
+            "x": 0,
+        },
+        annotations=[
+            *figure.layout.annotations,
+            {
+                "text": (
+                    "Points are team-semesters. Color encodes evaluator-score trajectory group. "
+                    f"Dashed guides show median concentration ({concentration_median:.1f}%) and "
+                    f"median T3 complexity ({complexity_median:.2f}).<br>"
+                    "Final-week concentration is a temporal activity proxy, not direct evidence of procrastination or causality."
+                ),
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.22,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            },
+        ],
+    )
+    figure.update_xaxes(title="Evaluator technical complexity at T3", gridcolor="#e5e7eb", zeroline=False)
+    figure.update_yaxes(
+        title="Final-7-day activity share",
+        ticksuffix="%",
+        range=[-4, 104],
+        gridcolor="#e5e7eb",
+        zeroline=False,
+    )
+    return figure
+
+
+def _build_planning_rework_complexity_overlay(data: pd.DataFrame) -> go.Figure:
+    figure = go.Figure()
+    for baseline_label, symbol in BASELINE_ELIGIBILITY_SYMBOLS.items():
+        subset = data.loc[data["baseline_eligibility_label"].eq(baseline_label)]
+        if subset.empty:
+            continue
+        figure.add_trace(
+            go.Scatter(
+                x=subset["planning_scope_log1p_t1"],
+                y=subset["clean_rework_churn_t3"],
+                mode="markers",
+                marker={
+                    "color": subset["technical_complexity_mean_t3"],
+                    "colorscale": "Viridis",
+                    "cmin": float(data["technical_complexity_mean_t3"].min()),
+                    "cmax": float(data["technical_complexity_mean_t3"].max()),
+                    "coloraxis": "coloraxis",
+                    "symbol": symbol,
+                    "size": 16,
+                    "line": {"color": "white", "width": 1.6},
+                },
+                name=baseline_label,
+                customdata=subset[
+                    [
+                        "ID_Equipe",
+                        "Semestre",
+                        "technical_complexity_mean_t3",
+                        "clean_rework_ratio_t3",
+                        "planning_scope_tier",
+                        "score_trajectory_group",
+                        "final7_commit_share_pct",
+                        "final7_clean_churn_share_pct",
+                    ]
+                ],
+                hovertemplate=(
+                    "Team=%{customdata[0]}<br>"
+                    "Semester=%{customdata[1]}<br>"
+                    "Planning scope T1 log1p=%{x:.3f}<br>"
+                    "Clean rework T3=%{y:,.0f} lines<br>"
+                    "Technical complexity T3=%{customdata[2]:.3f}<br>"
+                    "Clean rework ratio T3=%{customdata[3]:.3f}<br>"
+                    "Planning tier=%{customdata[4]}<br>"
+                    "Score trajectory=%{customdata[5]}<br>"
+                    "Final-7 commits=%{customdata[6]:.1f}%<br>"
+                    "Final-7 clean churn=%{customdata[7]:.1f}%"
+                    "<extra></extra>"
+                ),
+            )
+        )
+
+    planning_median = float(data["planning_scope_log1p_t1"].median())
+    rework_median = float(data["clean_rework_churn_t3"].median())
+    figure.add_vline(
+        x=planning_median,
+        line_dash="dot",
+        line_color="#71717a",
+        annotation_text=f"Median planning scope: {planning_median:.2f}",
+        annotation_position="top left",
+    )
+    figure.add_hline(
+        y=rework_median,
+        line_dash="dash",
+        line_color="#71717a",
+        annotation_text=f"Median rework: {rework_median:,.0f}",
+        annotation_position="bottom right",
+    )
+    figure.update_layout(
+        template="simple_white",
+        width=1100,
+        height=680,
+        margin={"l": 90, "r": 35, "t": 125, "b": 160},
+        title={
+            "text": "Planning, rework and technical complexity overlay",
+            "font": {"size": 22},
+            "y": 0.98,
+        },
+        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        legend={
+            "title": "T3 rework baseline status",
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.02,
+            "xanchor": "left",
+            "x": 0,
+        },
+        coloraxis={
+            "colorscale": "Viridis",
+            "colorbar": {"title": "T3 technical<br>complexity"},
+        },
+        xaxis={
+            "title": "Repository-visible T1 planning scope (log1p changed lines)",
+            "gridcolor": "#e5e7eb",
+            "zeroline": False,
+        },
+        yaxis={
+            "title": "T3 clean rework magnitude (changed lines)",
+            "gridcolor": "#e5e7eb",
+            "zeroline": True,
+            "zerolinecolor": "#cbd5e1",
+        },
+        annotations=[
+            *figure.layout.annotations,
+            {
+                "text": (
+                    "Points are team-semesters. Color encodes evaluator technical complexity at T3; "
+                    "shape encodes whether a T3 rework baseline was observed.<br>"
+                    "This overlay supports a confounding/sensitivity reading, not a causal adjustment model."
+                ),
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.23,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            }
+        ],
+    )
+    return figure
+
+
 def generate() -> dict[str, Any]:
     paper_v9 = resolve_paper_v9_dir()
     repo_root = paper_v9.parent
@@ -432,9 +901,42 @@ def generate() -> dict[str, Any]:
     data_path = figures_dir / f"{STEM}_data.csv"
     metrics_contract_path = figures_dir / f"{METRICS_CONTRACT_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
+    figure_stems = [
+        TECH_REWORK_STEM,
+        FINAL_CONCENTRATION_STEM,
+        PLANNING_REWORK_OVERLAY_STEM,
+    ]
+    figure_data_paths = {
+        TECH_REWORK_STEM: figures_dir / f"{TECH_REWORK_STEM}_data.csv",
+        FINAL_CONCENTRATION_STEM: figures_dir / f"{FINAL_CONCENTRATION_STEM}_data.csv",
+        PLANNING_REWORK_OVERLAY_STEM: figures_dir / f"{PLANNING_REWORK_OVERLAY_STEM}_data.csv",
+    }
     _atomic_csv(profile, data_path)
     metrics_contract = _metrics_contract()
     _atomic_csv(metrics_contract, metrics_contract_path)
+    technical_rework_data = _technical_complexity_rework_data(profile)
+    final_concentration_data = _final_concentration_data(profile)
+    planning_overlay_data = _planning_rework_overlay_data(profile)
+    figure_data = {
+        TECH_REWORK_STEM: technical_rework_data,
+        FINAL_CONCENTRATION_STEM: final_concentration_data,
+        PLANNING_REWORK_OVERLAY_STEM: planning_overlay_data,
+    }
+    for stem, frame in figure_data.items():
+        _atomic_csv(frame, figure_data_paths[stem])
+
+    figures = {
+        TECH_REWORK_STEM: _build_technical_complexity_vs_rework(technical_rework_data),
+        FINAL_CONCENTRATION_STEM: _build_complexity_vs_final_concentration(final_concentration_data),
+        PLANNING_REWORK_OVERLAY_STEM: _build_planning_rework_complexity_overlay(planning_overlay_data),
+    }
+    for stem, figure in figures.items():
+        _write_figure(figure, stem, figures_dir)
+
+    figure_output_paths = {
+        stem: {extension: figures_dir / f"{stem}.{extension}" for extension in ("png", "svg", "pdf")}
+        for stem in figure_stems
+    }
 
     metadata: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
@@ -444,6 +946,26 @@ def generate() -> dict[str, Any]:
         "data_sha256": compute_sha256(data_path),
         "metrics_contract_path": str(metrics_contract_path.relative_to(repo_root)),
         "metrics_contract_sha256": compute_sha256(metrics_contract_path),
+        "figure_data_paths": {
+            stem: str(path.relative_to(repo_root)) for stem, path in figure_data_paths.items()
+        },
+        "figure_data_sha256": {
+            stem: compute_sha256(path) for stem, path in figure_data_paths.items()
+        },
+        "figure_outputs": {
+            stem: {
+                extension: str(path.relative_to(repo_root))
+                for extension, path in extension_paths.items()
+            }
+            for stem, extension_paths in figure_output_paths.items()
+        },
+        "figure_output_sha256": {
+            stem: {
+                extension: compute_sha256(path)
+                for extension, path in extension_paths.items()
+            }
+            for stem, extension_paths in figure_output_paths.items()
+        },
         "inputs": {name: str(path.relative_to(repo_root)) for name, path in paths.items()},
         "input_sha256": {name: compute_sha256(path) for name, path in paths.items()},
         "coverage": {
@@ -464,6 +986,29 @@ def generate() -> dict[str, Any]:
             "manual_genai_architecture_classification_used": bool(
                 metrics_contract["manual_genai_architecture_classification"].any()
             ),
+        },
+        "visualization_contract": {
+            TECH_REWORK_STEM: {
+                "x": "technical_complexity_mean_t3",
+                "y": "clean_rework_churn_t3",
+                "color": "planning_scope_tier",
+                "shape": "Semestre",
+                "purpose": "Assess whether T3 rework magnitude may co-vary with evaluator-rated technical complexity.",
+            },
+            FINAL_CONCENTRATION_STEM: {
+                "x": "technical_complexity_mean_t3",
+                "y": "final7_share_pct",
+                "color": "score_trajectory_group",
+                "panels": ["final7_commit_share_pct", "final7_clean_churn_share_pct"],
+                "purpose": "Inspect whether final-week concentration patterns are separable from project technical complexity.",
+            },
+            PLANNING_REWORK_OVERLAY_STEM: {
+                "x": "planning_scope_log1p_t1",
+                "y": "clean_rework_churn_t3",
+                "color": "technical_complexity_mean_t3",
+                "shape": "baseline_eligibility_label",
+                "purpose": "Overlay planning, rework and complexity to support descriptive confounding discussion.",
+            },
         },
         "path_heuristics": {
             "clean_path_policy": CURRENT_POLICY_VERSION,
@@ -487,6 +1032,11 @@ def generate() -> dict[str, Any]:
         "status": "generated",
         "data_path": str(data_path),
         "metrics_contract_path": str(metrics_contract_path),
+        "figure_data_paths": {stem: str(path) for stem, path in figure_data_paths.items()},
+        "figure_outputs": {
+            stem: {extension: str(path) for extension, path in extension_paths.items()}
+            for stem, extension_paths in figure_output_paths.items()
+        },
         "metadata_path": str(metadata_path),
         "coverage": metadata["coverage"],
     }
