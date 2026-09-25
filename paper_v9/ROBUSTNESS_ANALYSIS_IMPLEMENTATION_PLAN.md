@@ -630,12 +630,12 @@ paper_v9/scripts/results/generate_score_trajectory_concentration.py
 
 **Output esperado**
 
-- `paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration_data.csv`
-- `paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv`
-- `paper_v9/figures/rq2_score_delta_vs_final7_concentration.metadata.json`
+- [x] `paper_v9/figures/rq2_score_delta_vs_final7_commit_concentration_data.csv`
+- [x] `paper_v9/figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv`
+- [x] `paper_v9/figures/rq2_score_delta_vs_final7_concentration.metadata.json`
 - Figuras:
-  - `rq2_score_delta_vs_final7_commit_concentration.{png,svg,pdf}`
-  - `rq2_score_delta_vs_final7_clean_churn_concentration.{png,svg,pdf}`
+  - [x] `rq2_score_delta_vs_final7_commit_concentration.{png,svg,pdf}`
+  - [x] `rq2_score_delta_vs_final7_clean_churn_concentration.{png,svg,pdf}`
 
 ## Tarefa 1.2 — Scatter: concentração final x delta score
 
@@ -654,12 +654,12 @@ paper_v9/scripts/results/generate_score_trajectory_concentration.py
 
 **Checklist**
 
-- [ ] Criar versão commits.
-- [ ] Criar versão clean changed lines.
-- [ ] Incluir linha horizontal em `delta = 0`.
-- [ ] Incluir linha vertical na mediana de concentração final.
-- [ ] Exibir pontos individuais.
-- [ ] Registrar `n` por quadrante.
+- [x] Criar versão commits.
+- [x] Criar versão clean changed lines.
+- [x] Incluir linha horizontal em `delta = 0`.
+- [x] Incluir linha vertical na mediana de concentração final.
+- [x] Exibir pontos individuais.
+- [x] Registrar `n` por quadrante.
 
 ## Tarefa 1.3 — Tabela de quadrantes
 
@@ -696,11 +696,11 @@ paper_v9/tests/test_score_trajectory_concentration.py
 
 **Checklist**
 
-- [ ] Testar geração dos CSVs.
-- [ ] Testar geração de PNG/SVG/PDF.
-- [ ] Testar `n=14` para commits.
-- [ ] Testar que `delta_score_t3_minus_t1` existe e é numérico.
-- [ ] Testar que `final7_share_pct` está entre 0 e 100.
+- [x] Testar geração dos CSVs.
+- [x] Testar geração de PNG/SVG/PDF.
+- [x] Testar `n=14` para commits.
+- [x] Testar que `delta_score_t3_minus_t1` existe e é numérico.
+- [x] Testar que `final7_share_pct` está entre 0 e 100.
 
 ---
 

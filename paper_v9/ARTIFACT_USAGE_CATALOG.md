@@ -35,3 +35,21 @@ editoriais.
 | `status` | `candidate` |
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
+
+### rq2_score_delta_vs_final7_concentration
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `rq2_score_delta_vs_final7_concentration` |
+| `artifact_family` | `score_trajectory_concentration` |
+| `files` | [`figures/rq2_score_delta_vs_final7_commit_concentration.png`](figures/rq2_score_delta_vs_final7_commit_concentration.png), [`figures/rq2_score_delta_vs_final7_commit_concentration.svg`](figures/rq2_score_delta_vs_final7_commit_concentration.svg), [`figures/rq2_score_delta_vs_final7_commit_concentration.pdf`](figures/rq2_score_delta_vs_final7_commit_concentration.pdf), [`figures/rq2_score_delta_vs_final7_commit_concentration_data.csv`](figures/rq2_score_delta_vs_final7_commit_concentration_data.csv), [`figures/rq2_score_delta_vs_final7_clean_churn_concentration.png`](figures/rq2_score_delta_vs_final7_clean_churn_concentration.png), [`figures/rq2_score_delta_vs_final7_clean_churn_concentration.svg`](figures/rq2_score_delta_vs_final7_clean_churn_concentration.svg), [`figures/rq2_score_delta_vs_final7_clean_churn_concentration.pdf`](figures/rq2_score_delta_vs_final7_clean_churn_concentration.pdf), [`figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv`](figures/rq2_score_delta_vs_final7_clean_churn_concentration_data.csv), [`figures/rq2_score_delta_vs_final7_concentration.metadata.json`](figures/rq2_score_delta_vs_final7_concentration.metadata.json) |
+| `data_inputs` | `paper_v9/figures/rq2_score_trajectory_base_data.csv` |
+| `unit_of_analysis` | equipe-semestre |
+| `main_question` | A concentração de commits ou linhas alteradas nos sete dias finais se associa a melhora, estabilidade ou piora do score avaliativo composto? |
+| `best_use` | Results/RQ2 ou Discussion; candidato para diferenciar recuperação tardia de concentração final sem ganho avaliativo |
+| `key_reading` | Artefato visual candidato: cruza concentração final de atividade com `delta_score_t3_minus_t1`, colorindo por planejamento repositório-visível e separando semestres por símbolo. A leitura substantiva deve ser feita após revisão visual/editorial dos quadrantes. |
+| `utility_score` | Alta |
+| `limitations` | Associação descritiva com n=14; concentração final não identifica causalidade; delta score usa score composto descritivo; quadrantes usam mediana de concentração e threshold de delta registrado na Fase 0. |
+| `status` | `candidate` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
