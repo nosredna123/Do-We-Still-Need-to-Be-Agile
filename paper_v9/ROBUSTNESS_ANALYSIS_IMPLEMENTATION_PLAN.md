@@ -1339,18 +1339,27 @@ paper_v9/scripts/results/generate_m5_2025_triangulation.py
 
 **Output esperado**
 
-- `rq2_m5_2025_triangulation_data.csv`
-- `rq2_m5_2025_triangulation.metadata.json`
-- figuras.
+- [x] `rq2_m5_2025_triangulation_data.csv`
+- [x] `rq2_m5_2025_triangulation_summary.csv`
+- [x] `rq2_m5_2025_triangulation.metadata.json`
+- [x] `rq2_m5_2025_triangulation_panel.{png,svg,pdf}`
+
+**Operacionalização**
+
+- [x] Script filtra a triangulação para `2025.2`, único semestre com cobertura M5.
+- [x] M5 é repetido por equipe apenas como contexto global por `temporal_marker`, com nota explícita de que não é medida team-level.
+- [x] Metadata registra `2026.1` como `unavailable_not_measured` e confirma que semestres indisponíveis não são preenchidos com zero.
+- [x] Dados integram M5 marker density, M4 clean churn, M8 T3 rework, score avaliativo composto e M6a planejamento estrutural.
 
 ## Tarefa 7.2 — Coverage-aware M5 panel
 
 **Visualização**
 
-- painel restrito a 2025.2;
-- M5 marker density por T1/T2/T3;
-- M4 clean churn por T1/T2/T3;
-- evaluator score por T1/T2/T3.
+- [x] painel restrito a 2025.2;
+- [x] M5 marker density por T1/T2/T3;
+- [x] M4 clean churn por T1/T2/T3;
+- [x] evaluator score por T1/T2/T3;
+- [x] M8 T3 clean rework como contexto de rework.
 
 **Insight esperado**
 
@@ -1359,9 +1368,9 @@ paper_v9/scripts/results/generate_m5_2025_triangulation.py
 
 **Checklist**
 
-- [ ] Não incluir 2026.1 como zero.
-- [ ] Marcar explicitamente `2026.1 unavailable_not_measured`.
-- [ ] Registrar que o corpus é global/transcript-level, não team-semester completo.
+- [x] Não incluir 2026.1 como zero.
+- [x] Marcar explicitamente `2026.1 unavailable_not_measured`.
+- [x] Registrar que o corpus é global/transcript-level, não team-semester completo.
 
 ---
 
@@ -1902,7 +1911,7 @@ git --no-pager status --short
 - [x] `generate_influence_maps.py`
 - [x] `generate_complexity_confounding_profiles.py`
 - [x] `generate_nonoverlapping_phase_activity.py`
-- [ ] `generate_m5_2025_triangulation.py`
+- [x] `generate_m5_2025_triangulation.py`
 - [ ] `build_team_semester_evidence_panel.py`
 
 ## Testes
@@ -1913,7 +1922,7 @@ git --no-pager status --short
 - [ ] `test_influence_maps.py`
 - [ ] `test_complexity_confounding_profiles.py`
 - [ ] `test_nonoverlapping_phase_activity.py`
-- [ ] `test_m5_2025_triangulation.py`
+- [x] `test_m5_2025_triangulation.py`
 - [ ] `test_team_semester_evidence_panel.py`
 
 ## Figuras principais candidatas

@@ -1,0 +1,4 @@
+temporal_marker,team_n,m5_friction_marker_density_per_1k_tokens,m5_friction_marker_n,m5_token_n,median_clean_churn,mean_clean_churn,median_evaluator_score_composite,mean_evaluator_score_composite,baseline_eligible_rework_team_n,median_clean_rework_churn_t3,median_clean_rework_ratio_t3_baseline_eligible
+T1,9,0.5151098901098901,12,23296,0.0,442.22222222222223,2.0,1.9756944444444444,7,262.0,0.2322491004310805
+T2,9,1.1319568179436117,54,47705,2803.0,3707.5555555555557,2.21875,2.107638888888889,7,262.0,0.2322491004310805
+T3,9,1.2867114871168013,40,31087,5837.0,10572.888888888889,2.40625,2.217592592592593,7,262.0,0.2322491004310805
