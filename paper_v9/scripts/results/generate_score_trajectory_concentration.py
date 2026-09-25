@@ -22,6 +22,7 @@ CONTRACT_VERSION = "rq2-score-trajectory-concentration-v1"
 COMMIT_STEM = "rq2_score_delta_vs_final7_commit_concentration"
 CHURN_STEM = "rq2_score_delta_vs_final7_clean_churn_concentration"
 METADATA_STEM = "rq2_score_delta_vs_final7_concentration"
+QUADRANT_STEM = "rq2_score_delta_final7_quadrants"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 DELTA_THRESHOLD = 0.125
 PLANNING_TIER_COLORS = {
@@ -35,6 +36,12 @@ PLANNING_TIER_LABELS = {
 SEMESTER_SYMBOLS = {
     "2025.2": "circle",
     "2026.1": "diamond",
+}
+QUADRANT_INTERPRETATIONS = {
+    "higher_final7_concentration__positive_delta": "Potential late recovery",
+    "higher_final7_concentration__negative_or_stable_delta": "Late concentration without evaluator-score gain",
+    "lower_final7_concentration__positive_delta": "Distributed progress with evaluator-score gain",
+    "lower_final7_concentration__negative_or_stable_delta": "Low final concentration without evaluator-score gain",
 }
 REQUIRED_BASE_COLUMNS = [
     *TEAM_KEY,
@@ -113,6 +120,42 @@ def _quadrant_counts(data: pd.DataFrame) -> list[dict[str, Any]]:
         .reset_index(drop=True)
     )
     return counts.to_dict("records")
+
+
+def _quadrant_summary(data_by_metric: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for metric, data in data_by_metric.items():
+        median_share = float(data["final7_share_pct"].median())
+        data = data.copy()
+        data["team_semester_label"] = data["ID_Equipe"].astype(str) + "/" + data["Semestre"].astype(str)
+        grouped = (
+            data.groupby(["quadrant", "planning_scope_tier"], as_index=False)
+            .agg(
+                team_semester_n=("ID_Equipe", "size"),
+                median_final7_share_pct=("final7_share_pct", "median"),
+                median_delta_score_t3_minus_t1=("delta_score_t3_minus_t1", "median"),
+                team_semesters=("team_semester_label", lambda values: ";".join(values.astype(str))),
+            )
+            .sort_values(["quadrant", "planning_scope_tier"])
+        )
+        for row in grouped.to_dict("records"):
+            quadrant = row["quadrant"]
+            rows.append(
+                {
+                    "activity_metric": metric,
+                    "quadrant": quadrant,
+                    "final7_concentration_cut": "median",
+                    "final7_concentration_median_pct": median_share,
+                    "delta_threshold": DELTA_THRESHOLD,
+                    "planning_scope_tier": row["planning_scope_tier"],
+                    "team_semester_n": int(row["team_semester_n"]),
+                    "median_final7_share_pct": row["median_final7_share_pct"],
+                    "median_delta_score_t3_minus_t1": row["median_delta_score_t3_minus_t1"],
+                    "interpretation": QUADRANT_INTERPRETATIONS[quadrant],
+                    "team_semesters": row["team_semesters"],
+                }
+            )
+    return pd.DataFrame(rows)
 
 
 def _build_scatter(data: pd.DataFrame, *, title: str, xaxis_title: str) -> go.Figure:
@@ -246,8 +289,10 @@ def generate() -> dict[str, Any]:
     }
 
     outputs: dict[str, Any] = {}
+    data_by_metric: dict[str, pd.DataFrame] = {}
     for stem, spec in metric_specs.items():
         data = _prepare_metric_data(base, share_column=spec["share_column"], metric_label=spec["metric_label"])
+        data_by_metric[spec["metric_label"]] = data
         data_path = figures_dir / f"{stem}_data.csv"
         _atomic_csv(data, data_path)
         figure = _build_scatter(data, title=spec["title"], xaxis_title=spec["xaxis_title"])
@@ -263,6 +308,10 @@ def generate() -> dict[str, Any]:
             + [str(data_path)],
         }
 
+    quadrants = _quadrant_summary(data_by_metric)
+    quadrants_path = figures_dir / f"{QUADRANT_STEM}.csv"
+    _atomic_csv(quadrants, quadrants_path)
+
     metadata: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
         "artifact_family": "score_trajectory_concentration",
@@ -275,7 +324,10 @@ def generate() -> dict[str, Any]:
             "higher_final7_concentration": "final7_share_pct >= metric-specific sample median",
             "positive_delta": f"delta_score_t3_minus_t1 > {DELTA_THRESHOLD}",
             "negative_or_stable_delta": f"delta_score_t3_minus_t1 <= {DELTA_THRESHOLD}",
+            "interpretations": QUADRANT_INTERPRETATIONS,
         },
+        "quadrant_summary_path": str(quadrants_path.relative_to(figures_dir.parent.parent)),
+        "quadrant_summary_sha256": compute_sha256(quadrants_path),
         "outputs": outputs,
         "unit_of_analysis": "team_semester",
         "inference": "descriptive_non_causal",
@@ -290,6 +342,7 @@ def generate() -> dict[str, Any]:
     return {
         "status": "generated",
         "metadata_path": str(metadata_path),
+        "quadrant_summary_path": str(quadrants_path),
         "outputs": outputs,
     }
 

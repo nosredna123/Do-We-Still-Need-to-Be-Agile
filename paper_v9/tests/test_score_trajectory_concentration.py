@@ -9,6 +9,7 @@ from paper_v9.scripts.results.generate_score_trajectory_concentration import (
     CHURN_STEM,
     COMMIT_STEM,
     METADATA_STEM,
+    QUADRANT_STEM,
     generate,
 )
 
@@ -20,12 +21,28 @@ def test_score_trajectory_concentration_generates_scatter_artifacts() -> None:
 
     figures = Path("paper_v9/figures")
     metadata_path = figures / f"{METADATA_STEM}.metadata.json"
+    quadrant_path = figures / f"{QUADRANT_STEM}.csv"
     assert metadata_path.is_file()
+    assert quadrant_path.is_file()
 
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    quadrants = pd.read_csv(quadrant_path)
     assert metadata["contract_version"] == "rq2-score-trajectory-concentration-v1"
     assert metadata["delta_threshold"] == 0.125
     assert metadata["inference"] == "descriptive_non_causal"
+    assert metadata["quadrant_summary_path"] == f"paper_v9/figures/{QUADRANT_STEM}.csv"
+    assert set(quadrants["activity_metric"]) == {"commits", "clean_source_or_test_changed_lines"}
+    assert quadrants.groupby("activity_metric")["team_semester_n"].sum().to_dict() == {
+        "clean_source_or_test_changed_lines": 14,
+        "commits": 14,
+    }
+    assert set(quadrants["planning_scope_tier"]) == {
+        "high_repository_visible_planning",
+        "lower_repository_visible_planning",
+    }
+    assert quadrants["interpretation"].notna().all()
+    assert (quadrants["final7_concentration_cut"] == "median").all()
+    assert (quadrants["delta_threshold"] == 0.125).all()
 
     for stem in (COMMIT_STEM, CHURN_STEM):
         assert all((figures / f"{stem}.{extension}").is_file() for extension in ("pdf", "svg", "png"))

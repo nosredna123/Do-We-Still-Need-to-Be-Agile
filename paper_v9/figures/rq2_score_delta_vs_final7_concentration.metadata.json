@@ -4,7 +4,7 @@
   "base_sha256": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
   "contract_version": "rq2-score-trajectory-concentration-v1",
   "delta_threshold": 0.125,
-  "generated_at_utc": "2026-09-25T17:41:56.767695+00:00",
+  "generated_at_utc": "2026-09-25T17:43:29.337241+00:00",
   "inference": "descriptive_non_causal",
   "limitations": [
     "Final-seven-day concentration is a temporal activity proxy, not causal evidence.",
@@ -126,8 +126,16 @@
   },
   "quadrant_definition": {
     "higher_final7_concentration": "final7_share_pct >= metric-specific sample median",
+    "interpretations": {
+      "higher_final7_concentration__negative_or_stable_delta": "Late concentration without evaluator-score gain",
+      "higher_final7_concentration__positive_delta": "Potential late recovery",
+      "lower_final7_concentration__negative_or_stable_delta": "Low final concentration without evaluator-score gain",
+      "lower_final7_concentration__positive_delta": "Distributed progress with evaluator-score gain"
+    },
     "negative_or_stable_delta": "delta_score_t3_minus_t1 <= 0.125",
     "positive_delta": "delta_score_t3_minus_t1 > 0.125"
   },
+  "quadrant_summary_path": "paper_v9/figures/rq2_score_delta_final7_quadrants.csv",
+  "quadrant_summary_sha256": "eb2da76b9c6e4bda9620ff273dd908156a1571d4f7c7de1496064b7ac4ea92fd",
   "unit_of_analysis": "team_semester"
 }

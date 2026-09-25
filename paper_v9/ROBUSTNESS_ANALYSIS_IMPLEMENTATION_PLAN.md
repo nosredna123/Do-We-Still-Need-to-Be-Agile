@@ -669,7 +669,7 @@ paper_v9/scripts/results/generate_score_trajectory_concentration.py
 
 **Output esperado**
 
-- `paper_v9/figures/rq2_score_delta_final7_quadrants.csv`
+- [x] `paper_v9/figures/rq2_score_delta_final7_quadrants.csv`
 
 **Quadrantes**
 
@@ -682,9 +682,9 @@ paper_v9/scripts/results/generate_score_trajectory_concentration.py
 
 **Checklist**
 
-- [ ] Usar mediana como corte de concentração.
-- [ ] Usar threshold da Fase 0 como corte de delta.
-- [ ] Reportar contagens por planejamento alto/baixo.
+- [x] Usar mediana como corte de concentração.
+- [x] Usar threshold da Fase 0 como corte de delta.
+- [x] Reportar contagens por planejamento alto/baixo.
 
 ## Tarefa 1.4 — Teste focado
 
