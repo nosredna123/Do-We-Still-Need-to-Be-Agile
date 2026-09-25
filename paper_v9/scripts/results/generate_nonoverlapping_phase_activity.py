@@ -23,6 +23,8 @@ CONTRACT_VERSION = "rq2-nonoverlapping-phase-activity-v1"
 STEM = "rq2_nonoverlapping_phase_activity"
 WEEKLY_STEM = "rq2_nonoverlapping_weekly_activity"
 PHASE_STEM = "rq2_phase_activity_share"
+WEEKLY_BIN_CONTRACT_STEM = "rq2_nonoverlapping_weekly_bin_contract"
+WEEKLY_ASSIGNMENT_AUDIT_STEM = "rq2_nonoverlapping_weekly_assignment_audit"
 WEEKLY_OVERVIEW_STEM = "rq2_nonoverlapping_weekly_activity_overview"
 PHASE_OVERVIEW_STEM = "rq2_phase_activity_share_overview"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
@@ -166,6 +168,31 @@ def _week_specs(t3_anchor: pd.Timestamp) -> list[dict[str, Any]]:
     return specs
 
 
+def _weekly_bin_contract(anchors: pd.DataFrame) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for anchor in anchors.to_dict("records"):
+        for spec in _week_specs(pd.Timestamp(anchor["T3"])):
+            rows.append(
+                {
+                    "ID_Equipe": anchor["ID_Equipe"],
+                    "Semestre": anchor["Semestre"],
+                    "week_bin": spec["week_bin"],
+                    "week_bin_order": spec["week_bin_order"],
+                    "period_start": spec["period_start"],
+                    "period_end": spec["period_end"],
+                    "start_day_relative_to_t3": spec["start_day_relative_to_t3"],
+                    "end_day_relative_to_t3": spec["end_day_relative_to_t3"],
+                    "interval_notation": "[period_start, period_end)",
+                    "assignment_policy": "nonoverlapping_fixed_interval_relative_to_team_t3",
+                    "rolling_window_used": False,
+                }
+            )
+    contract = pd.DataFrame(rows)
+    if len(contract) != 14 * len(WEEK_BIN_LABELS):
+        raise ValueError(f"Expected {14 * len(WEEK_BIN_LABELS)} weekly bin contract rows, got {len(contract)}")
+    return contract.sort_values([*TEAM_KEY, "week_bin_order"]).reset_index(drop=True)
+
+
 def _phase_specs(anchor: pd.Series, observed_start: pd.Timestamp | None) -> list[dict[str, Any]]:
     t1 = pd.Timestamp(anchor["T1"])
     t2 = pd.Timestamp(anchor["T2"])
@@ -256,6 +283,97 @@ def _weekly_activity(
     if len(weekly) != 14 * len(WEEK_BIN_LABELS):
         raise ValueError(f"Expected {14 * len(WEEK_BIN_LABELS)} weekly rows, got {len(weekly)}")
     return weekly.sort_values([*TEAM_KEY, "week_bin_order"]).reset_index(drop=True)
+
+
+def _weekly_assignment_audit(
+    commits: pd.DataFrame,
+    clean_churn: pd.DataFrame,
+    anchors: pd.DataFrame,
+    weekly: pd.DataFrame,
+) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    weekly_index = weekly.set_index([*TEAM_KEY, "week_bin"])
+    metric_configs = [
+        {
+            "activity_metric": "commits",
+            "events": commits,
+            "event_count_column": "commit_n",
+            "value_column": None,
+        },
+        {
+            "activity_metric": "clean_file_events",
+            "events": clean_churn,
+            "event_count_column": None,
+            "value_column": "clean_churn",
+        },
+    ]
+    for anchor in anchors.to_dict("records"):
+        specs = _week_specs(pd.Timestamp(anchor["T3"]))
+        covered_start = min(spec["period_start"] for spec in specs)
+        covered_end = max(spec["period_end"] for spec in specs)
+        for config in metric_configs:
+            events = config["events"]
+            team_events = events.loc[
+                events["ID_Equipe"].eq(anchor["ID_Equipe"])
+                & events["Semestre"].eq(anchor["Semestre"])
+                & events["timestamp"].ge(covered_start)
+                & events["timestamp"].lt(covered_end)
+            ].reset_index(drop=True)
+            assignment_counts = pd.Series(0, index=team_events.index, dtype=int)
+            assigned_event_rows = 0
+            assigned_value = 0.0
+            for spec in specs:
+                in_bin = team_events["timestamp"].ge(spec["period_start"]) & team_events["timestamp"].lt(spec["period_end"])
+                assignment_counts.loc[in_bin] = assignment_counts.loc[in_bin] + 1
+                assigned_event_rows += int(in_bin.sum())
+                if config["value_column"]:
+                    assigned_value += float(team_events.loc[in_bin, config["value_column"]].sum())
+            duplicate_assignment_rows = int(assignment_counts.gt(1).sum())
+            unassigned_event_rows = int(assignment_counts.eq(0).sum())
+            expected_value: float | int
+            if config["event_count_column"]:
+                expected_value = int(
+                    weekly_index.loc[
+                        (anchor["ID_Equipe"], anchor["Semestre"]),
+                        config["event_count_column"],
+                    ].sum()
+                )
+                observed_value = assigned_event_rows
+            else:
+                expected_value = float(
+                    weekly_index.loc[
+                        (anchor["ID_Equipe"], anchor["Semestre"]),
+                        config["value_column"],
+                    ].sum()
+                )
+                observed_value = assigned_value
+            rows.append(
+                {
+                    "ID_Equipe": anchor["ID_Equipe"],
+                    "Semestre": anchor["Semestre"],
+                    "activity_metric": config["activity_metric"],
+                    "covered_period_start": covered_start,
+                    "covered_period_end": covered_end,
+                    "covered_event_rows": int(len(team_events)),
+                    "assigned_event_rows": assigned_event_rows,
+                    "unassigned_event_rows": unassigned_event_rows,
+                    "duplicate_assignment_rows": duplicate_assignment_rows,
+                    "observed_weekly_metric_total": observed_value,
+                    "weekly_data_metric_total": expected_value,
+                    "assignment_status": (
+                        "pass"
+                        if unassigned_event_rows == 0
+                        and duplicate_assignment_rows == 0
+                        and abs(float(observed_value) - float(expected_value)) < 1e-9
+                        else "fail"
+                    ),
+                }
+            )
+    audit = pd.DataFrame(rows).sort_values([*TEAM_KEY, "activity_metric"]).reset_index(drop=True)
+    failed = audit.loc[audit["assignment_status"].ne("pass")]
+    if not failed.empty:
+        raise ValueError(f"Weekly assignment audit failed: {failed.to_dict('records')}")
+    return audit
 
 
 def _observed_start(
@@ -543,17 +661,23 @@ def generate() -> dict[str, Any]:
     clean_churn_events = _prepare_clean_churn_events(files)
     weekly = _weekly_activity(commit_events, clean_churn_events, anchors, score_base)
     phase = _phase_activity(commit_events, clean_churn_events, anchors, score_base)
+    weekly_bin_contract = _weekly_bin_contract(anchors)
+    weekly_assignment_audit = _weekly_assignment_audit(commit_events, clean_churn_events, anchors, weekly)
     weekly_summary = _weekly_summary(weekly)
     phase_summary = _phase_summary(phase)
 
     output_paths = {
         "weekly_data": figures_dir / f"{WEEKLY_STEM}_data.csv",
+        "weekly_bin_contract": figures_dir / f"{WEEKLY_BIN_CONTRACT_STEM}.csv",
+        "weekly_assignment_audit": figures_dir / f"{WEEKLY_ASSIGNMENT_AUDIT_STEM}.csv",
         "phase_data": figures_dir / f"{PHASE_STEM}_data.csv",
         "weekly_summary": figures_dir / f"{WEEKLY_STEM}_summary.csv",
         "phase_summary": figures_dir / f"{PHASE_STEM}_summary.csv",
         "metadata": figures_dir / f"{STEM}.metadata.json",
     }
     _atomic_csv(weekly, output_paths["weekly_data"])
+    _atomic_csv(weekly_bin_contract, output_paths["weekly_bin_contract"])
+    _atomic_csv(weekly_assignment_audit, output_paths["weekly_assignment_audit"])
     _atomic_csv(phase, output_paths["phase_data"])
     _atomic_csv(weekly_summary, output_paths["weekly_summary"])
     _atomic_csv(phase_summary, output_paths["phase_summary"])
@@ -587,8 +711,12 @@ def generate() -> dict[str, Any]:
         "coverage": {
             "team_semesters": int(anchors[TEAM_KEY].drop_duplicates().shape[0]),
             "weekly_rows": int(len(weekly)),
+            "weekly_bin_contract_rows": int(len(weekly_bin_contract)),
+            "weekly_assignment_audit_rows": int(len(weekly_assignment_audit)),
             "phase_rows": int(len(phase)),
-            "weekly_empty_bin_rows": int(weekly["commit_n"].eq(0).sum()),
+            "weekly_empty_commit_bin_rows": int(weekly["commit_n"].eq(0).sum()),
+            "weekly_empty_clean_churn_bin_rows": int(weekly["clean_churn"].eq(0).sum()),
+            "weekly_fully_empty_bin_rows": int(weekly["commit_n"].eq(0).mul(weekly["clean_churn"].eq(0)).sum()),
             "phase_empty_rows": int(phase["commit_n"].eq(0).sum()),
         },
         "weekly_bin_contract": {
@@ -599,6 +727,11 @@ def generate() -> dict[str, Any]:
             ),
             "event_assignment": "Each pre-T3 event inside the covered 91-day weekly window belongs to exactly one bin.",
             "empty_bins": "Retained as zero rows for every team-semester/bin combination.",
+            "audit_output": str(output_paths["weekly_assignment_audit"].relative_to(repo_root)),
+            "assignment_audit_status": (
+                "pass" if weekly_assignment_audit["assignment_status"].eq("pass").all() else "fail"
+            ),
+            "rolling_window_used": False,
         },
         "phase_contract": {
             "phase_labels": PHASE_LABELS,
@@ -626,6 +759,8 @@ def generate() -> dict[str, Any]:
     return {
         "status": "generated",
         "weekly_data": str(output_paths["weekly_data"]),
+        "weekly_bin_contract": str(output_paths["weekly_bin_contract"]),
+        "weekly_assignment_audit": str(output_paths["weekly_assignment_audit"]),
         "phase_data": str(output_paths["phase_data"]),
         "metadata": str(output_paths["metadata"]),
         "coverage": metadata["coverage"],

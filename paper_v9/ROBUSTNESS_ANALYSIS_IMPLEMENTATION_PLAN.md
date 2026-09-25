@@ -1244,9 +1244,20 @@ Métricas:
 
 **Checklist**
 
-- [ ] Não usar rolling windows.
-- [ ] Cada evento deve pertencer a exatamente um bin.
-- [ ] Registrar período coberto e bins vazios.
+- [x] Não usar rolling windows.
+- [x] Cada evento deve pertencer a exatamente um bin.
+- [x] Registrar período coberto e bins vazios.
+
+**Output produzido**
+
+- [x] `rq2_nonoverlapping_weekly_bin_contract.csv`
+- [x] `rq2_nonoverlapping_weekly_assignment_audit.csv`
+
+**Operacionalização**
+
+- [x] Contrato semanal registra `week_bin`, ordem, início/fim UTC, dias relativos ao T3, notação `[period_start, period_end)` e `rolling_window_used=False`.
+- [x] Auditoria valida, por equipe-semestre e métrica, que eventos cobertos foram atribuídos uma única vez, sem duplicidade e sem eventos não atribuídos.
+- [x] Metadata registra contagem de bins vazios para commits, clean churn e bins completamente vazios.
 
 ## Tarefa 6.3 — Phase bins
 
