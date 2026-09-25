@@ -1088,27 +1088,37 @@ paper_v9/scripts/results/generate_complexity_confounding_profiles.py
 
 ### Complexidade avaliada
 
-- `technical_complexity_mean_t1`
-- `technical_complexity_mean_t2`
-- `technical_complexity_mean_t3`
-- `delta_technical_complexity_t3_minus_t1`
+- [x] `technical_complexity_mean_t1`
+- [x] `technical_complexity_mean_t2`
+- [x] `technical_complexity_mean_t3`
+- [x] `delta_technical_complexity_t3_minus_t1`
 
 ### Complexidade estrutural do repositório
 
-- número de arquivos limpos distintos;
-- número de diretórios distintos;
-- profundidade máxima de caminho;
-- número de extensões;
-- proporção backend/frontend, se inferível por path;
-- número de commits tocando clean paths;
-- diversidade de arquivos por commit;
-- churn total limpo.
+- [x] número de arquivos limpos distintos;
+- [x] número de diretórios distintos;
+- [x] profundidade máxima de caminho;
+- [x] número de extensões;
+- [x] proporção backend/frontend, se inferível por path;
+- [x] número de commits tocando clean paths;
+- [x] diversidade de arquivos por commit;
+- [x] churn total limpo.
+
+**Output produzido**
+
+- [x] `rq3_complexity_metrics_contract.csv`
+
+**Operacionalização**
+
+- [x] Métricas avaliadas e estruturais separadas por `construct_family`.
+- [x] Cada métrica registra fonte, definição, requisito do plano e heurística/política.
+- [x] O contrato registra que não houve classificação manual de arquitetura GenAI.
 
 **Checklist**
 
-- [ ] Separar complexidade avaliada de complexidade estrutural inferida.
-- [ ] Documentar heurísticas de path.
-- [ ] Não classificar arquitetura GenAI manualmente sem protocolo.
+- [x] Separar complexidade avaliada de complexidade estrutural inferida.
+- [x] Documentar heurísticas de path.
+- [x] Não classificar arquitetura GenAI manualmente sem protocolo.
 
 ## Tarefa 5.3 — Visualizações
 

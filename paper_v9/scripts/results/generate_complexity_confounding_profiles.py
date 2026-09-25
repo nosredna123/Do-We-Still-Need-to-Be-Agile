@@ -19,6 +19,7 @@ from paper_v9.scripts.common.provenance import compute_sha256
 
 CONTRACT_VERSION = "rq3-complexity-profile-v1"
 STEM = "rq3_complexity_profile"
+METRICS_CONTRACT_STEM = "rq3_complexity_metrics_contract"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 TECHNICAL_COMPLEXITY_COLUMN = "technical_complexity_mean"
 REQUIRED_EVALUATOR_COLUMNS = [
@@ -90,6 +91,25 @@ BACKEND_PATH_MARKERS = frozenset(
         "repositories",
     }
 )
+
+
+EVALUATED_COMPLEXITY_COLUMNS = [
+    "technical_complexity_mean_t1",
+    "technical_complexity_mean_t2",
+    "technical_complexity_mean_t3",
+    "delta_technical_complexity_t3_minus_t1",
+]
+STRUCTURAL_COMPLEXITY_COLUMNS = [
+    "clean_distinct_file_n",
+    "clean_distinct_directory_n",
+    "clean_max_path_depth",
+    "clean_extension_n",
+    "clean_touching_commit_n_inferred",
+    "mean_clean_files_per_commit",
+    "clean_total_churn_inferred",
+    "frontend_clean_file_event_share",
+    "backend_clean_file_event_share",
+]
 
 
 def _atomic_csv(frame: pd.DataFrame, path: Path) -> None:
@@ -238,6 +258,129 @@ def _churn_t3(churn: pd.DataFrame) -> pd.DataFrame:
     )
 
 
+def _metrics_contract() -> pd.DataFrame:
+    rows = [
+        {
+            "metric": "technical_complexity_mean_t1",
+            "construct_family": "evaluated_complexity",
+            "plan_requirement": "technical_complexity_mean_t1",
+            "source": "data/lake/evaluator_team_cuts.parquet",
+            "definition": "Mean evaluator technical-complexity score at temporal marker T1.",
+            "heuristic_or_policy": "Evaluator-derived; not repository structural inference.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "technical_complexity_mean_t2",
+            "construct_family": "evaluated_complexity",
+            "plan_requirement": "technical_complexity_mean_t2",
+            "source": "data/lake/evaluator_team_cuts.parquet",
+            "definition": "Mean evaluator technical-complexity score at temporal marker T2.",
+            "heuristic_or_policy": "Evaluator-derived; not repository structural inference.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "technical_complexity_mean_t3",
+            "construct_family": "evaluated_complexity",
+            "plan_requirement": "technical_complexity_mean_t3",
+            "source": "data/lake/evaluator_team_cuts.parquet",
+            "definition": "Mean evaluator technical-complexity score at temporal marker T3.",
+            "heuristic_or_policy": "Evaluator-derived; not repository structural inference.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "delta_technical_complexity_t3_minus_t1",
+            "construct_family": "evaluated_complexity",
+            "plan_requirement": "delta_technical_complexity_t3_minus_t1",
+            "source": "data/lake/evaluator_team_cuts.parquet",
+            "definition": "technical_complexity_mean_t3 minus technical_complexity_mean_t1.",
+            "heuristic_or_policy": "Derived from evaluator technical-complexity means.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "clean_distinct_file_n",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "número de arquivos limpos distintos",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Number of distinct clean-path files touched in observed Git file events.",
+            "heuristic_or_policy": CURRENT_POLICY_VERSION,
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "clean_distinct_directory_n",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "número de diretórios distintos",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Number of distinct parent directories among clean-path file events.",
+            "heuristic_or_policy": "Directory is derived from normalized POSIX-style file paths after clean-path filtering.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "clean_max_path_depth",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "profundidade máxima de caminho",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Maximum normalized path depth among clean-path file events.",
+            "heuristic_or_policy": "Depth counts normalized path segments after clean-path filtering.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "clean_extension_n",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "número de extensões",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Number of distinct file extensions among clean-path file events.",
+            "heuristic_or_policy": "Missing/empty extensions are represented as (none).",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "frontend_clean_file_event_share",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "proporção backend/frontend, se inferível por path",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Share of clean file events whose path segments match frontend markers.",
+            "heuristic_or_policy": "Path segment markers only; no manual architecture or GenAI integration classification.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "backend_clean_file_event_share",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "proporção backend/frontend, se inferível por path",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Share of clean file events whose path segments match backend markers.",
+            "heuristic_or_policy": "Path segment markers only; no manual architecture or GenAI integration classification.",
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "clean_touching_commit_n_inferred",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "número de commits tocando clean paths",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Number of distinct commits touching at least one clean-path file.",
+            "heuristic_or_policy": CURRENT_POLICY_VERSION,
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "mean_clean_files_per_commit",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "diversidade de arquivos por commit",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Mean number of distinct clean-path files touched per clean-touching commit.",
+            "heuristic_or_policy": CURRENT_POLICY_VERSION,
+            "manual_genai_architecture_classification": False,
+        },
+        {
+            "metric": "clean_total_churn_inferred",
+            "construct_family": "repository_structural_complexity",
+            "plan_requirement": "churn total limpo",
+            "source": "data/lake/git_files.parquet",
+            "definition": "Total clean-path changed lines, computed as lines_added plus lines_deleted.",
+            "heuristic_or_policy": CURRENT_POLICY_VERSION,
+            "manual_genai_architecture_classification": False,
+        },
+    ]
+    return pd.DataFrame(rows)
+
+
 def generate() -> dict[str, Any]:
     paper_v9 = resolve_paper_v9_dir()
     repo_root = paper_v9.parent
@@ -282,24 +425,16 @@ def generate() -> dict[str, Any]:
     if len(profile) != 14:
         raise ValueError(f"Expected 14 team-semesters, got {len(profile)}")
 
-    structural_columns = [
-        "clean_distinct_file_n",
-        "clean_distinct_directory_n",
-        "clean_max_path_depth",
-        "clean_extension_n",
-        "clean_touching_commit_n_inferred",
-        "mean_clean_files_per_commit",
-        "clean_total_churn_inferred",
-        "frontend_clean_file_event_share",
-        "backend_clean_file_event_share",
-    ]
-    for column in structural_columns:
+    for column in STRUCTURAL_COMPLEXITY_COLUMNS:
         if profile[column].isna().any():
             profile[column] = profile[column].fillna(0)
 
     data_path = figures_dir / f"{STEM}_data.csv"
+    metrics_contract_path = figures_dir / f"{METRICS_CONTRACT_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
     _atomic_csv(profile, data_path)
+    metrics_contract = _metrics_contract()
+    _atomic_csv(metrics_contract, metrics_contract_path)
 
     metadata: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
@@ -307,6 +442,8 @@ def generate() -> dict[str, Any]:
         "generated_at_utc": datetime.now(UTC).isoformat(),
         "data_path": str(data_path.relative_to(repo_root)),
         "data_sha256": compute_sha256(data_path),
+        "metrics_contract_path": str(metrics_contract_path.relative_to(repo_root)),
+        "metrics_contract_sha256": compute_sha256(metrics_contract_path),
         "inputs": {name: str(path.relative_to(repo_root)) for name, path in paths.items()},
         "input_sha256": {name: compute_sha256(path) for name, path in paths.items()},
         "coverage": {
@@ -314,13 +451,19 @@ def generate() -> dict[str, Any]:
             "baseline_eligible_for_rework_t3": int(profile["baseline_eligible_for_rework_t3"].fillna(False).sum()),
         },
         "construct_separation": {
-            "evaluated_complexity": [
-                "technical_complexity_mean_t1",
-                "technical_complexity_mean_t2",
-                "technical_complexity_mean_t3",
-                "delta_technical_complexity_t3_minus_t1",
-            ],
-            "repository_structural_complexity": structural_columns,
+            "evaluated_complexity": EVALUATED_COMPLEXITY_COLUMNS,
+            "repository_structural_complexity": STRUCTURAL_COMPLEXITY_COLUMNS,
+        },
+        "metric_contract_summary": {
+            "evaluated_complexity_metrics": int(
+                metrics_contract["construct_family"].eq("evaluated_complexity").sum()
+            ),
+            "repository_structural_complexity_metrics": int(
+                metrics_contract["construct_family"].eq("repository_structural_complexity").sum()
+            ),
+            "manual_genai_architecture_classification_used": bool(
+                metrics_contract["manual_genai_architecture_classification"].any()
+            ),
         },
         "path_heuristics": {
             "clean_path_policy": CURRENT_POLICY_VERSION,
@@ -343,6 +486,7 @@ def generate() -> dict[str, Any]:
     return {
         "status": "generated",
         "data_path": str(data_path),
+        "metrics_contract_path": str(metrics_contract_path),
         "metadata_path": str(metadata_path),
         "coverage": metadata["coverage"],
     }

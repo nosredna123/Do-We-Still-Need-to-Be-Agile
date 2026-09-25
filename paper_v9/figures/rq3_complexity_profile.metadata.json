@@ -26,7 +26,7 @@
   },
   "data_path": "paper_v9/figures/rq3_complexity_profile_data.csv",
   "data_sha256": "99e0836e4e487b239be47a27af2748ce988f7d759b44b2cb0b05474892ff5e7e",
-  "generated_at_utc": "2026-09-25T18:14:56.678546+00:00",
+  "generated_at_utc": "2026-09-25T18:16:52.599996+00:00",
   "inference": "descriptive_confounding_profile_not_causal",
   "input_sha256": {
     "evaluator": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
@@ -50,6 +50,13 @@
     "Frontend/backend shares depend on path names and can under-detect unconventional project layouts.",
     "The profile supports confounding/sensitivity discussion and is not a causal adjustment model."
   ],
+  "metric_contract_summary": {
+    "evaluated_complexity_metrics": 4,
+    "manual_genai_architecture_classification_used": false,
+    "repository_structural_complexity_metrics": 9
+  },
+  "metrics_contract_path": "paper_v9/figures/rq3_complexity_metrics_contract.csv",
+  "metrics_contract_sha256": "553d3f8723fa7576090ca9c64a16a25669ef8bc6e40ca0af9fe97e1d89409a90",
   "path_heuristics": {
     "architecture_layer_rule": "Path segment markers classify clean file events as frontend, backend, mixed, or other_or_unclassified; this is a coarse repository-structure heuristic, not manual GenAI architecture classification.",
     "backend_markers": [
