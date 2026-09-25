@@ -56,7 +56,7 @@
     "temporal_entropy_clean_churn": "Shannon entropy of daily clean churn normalized by log(project_span_days).",
     "temporal_entropy_commits": "Shannon entropy of daily commit counts normalized by log(project_span_days)."
   },
-  "generated_at_utc": "2026-09-25T17:57:28.452285+00:00",
+  "generated_at_utc": "2026-09-25T17:59:35.492054+00:00",
   "inference": "descriptive_non_causal",
   "input_sha256": {
     "author_concentration": "bef70e1bbea337838b519ebb0ec77a3d0c922b8c8e9cd0e5c5649e03dd45e522",

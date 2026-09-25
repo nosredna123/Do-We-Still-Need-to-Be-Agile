@@ -926,10 +926,10 @@ paper_v9/tests/test_operational_regularity.py
 
 **Checklist**
 
-- [ ] Testar `n=14`.
-- [ ] Testar métricas dentro de faixas válidas.
-- [ ] Testar geração das figuras.
-- [ ] Testar metadata com fórmulas e limitações.
+- [x] Testar `n=14`.
+- [x] Testar métricas dentro de faixas válidas.
+- [x] Testar geração das figuras.
+- [x] Testar metadata com fórmulas e limitações.
 
 ---
 
