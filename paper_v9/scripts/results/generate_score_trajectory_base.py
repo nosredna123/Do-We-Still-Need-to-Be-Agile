@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from paper_v9.scripts.common.paths import resolve_figures_dir, resolve_paper_v9_dir
 from paper_v9.scripts.common.provenance import compute_sha256
 
-CONTRACT_VERSION = "rq2-score-trajectory-base-v1"
+CONTRACT_VERSION = "rq2-score-trajectory-base-v2"
 STEM = "rq2_score_trajectory_base"
 GROUP_COUNTS_STEM = "rq2_score_trajectory_group_counts"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
@@ -31,6 +31,11 @@ EVALUATOR_SCORE_COLUMNS = [
     "engagement_participation_mean",
 ]
 REQUIRED_COLUMNS = [*TEAM_KEY, "temporal_marker", *EVALUATOR_SCORE_COLUMNS]
+PLANNING_REQUIRED_COLUMNS = [
+    *TEAM_KEY,
+    "planning_artifact_present_t1",
+    "planning_scope_log1p_t1",
+]
 DESCRIPTIVE_SCORE_NOTE = (
     "The composite evaluator score is the unweighted mean of four evaluator "
     "dimensions. It is a descriptive analysis construct, not an official global "
@@ -117,6 +122,34 @@ def _build_score_trajectory_base(evaluator: pd.DataFrame) -> pd.DataFrame:
     ].sort_values(TEAM_KEY).reset_index(drop=True)
     grouped, _ = _assign_score_trajectory_groups(base)
     return grouped
+
+
+def _load_planning(path: Path) -> pd.DataFrame:
+    frame = pd.read_csv(path, dtype={"Semestre": str})
+    _require_columns(frame, PLANNING_REQUIRED_COLUMNS, path)
+
+    duplicate_keys = frame.duplicated(TEAM_KEY, keep=False)
+    if duplicate_keys.any():
+        duplicates = frame.loc[duplicate_keys, TEAM_KEY].to_dict("records")
+        raise ValueError(f"Duplicate planning team-semester rows found: {duplicates}")
+
+    frame = frame.copy()
+    frame["planning_present_t1"] = frame["planning_artifact_present_t1"].astype(bool)
+    frame["planning_scope_log1p_t1"] = pd.to_numeric(frame["planning_scope_log1p_t1"], errors="raise")
+    return frame[[*TEAM_KEY, "planning_present_t1", "planning_scope_log1p_t1"]]
+
+
+def _merge_repository_visible_planning(base: pd.DataFrame, planning: pd.DataFrame) -> tuple[pd.DataFrame, float]:
+    merged = base.merge(planning, on=TEAM_KEY, how="left", validate="one_to_one")
+    missing = merged.loc[merged["planning_present_t1"].isna(), TEAM_KEY]
+    if not missing.empty:
+        raise ValueError(f"Missing planning rows for score base: {missing.to_dict('records')}")
+
+    planning_scope_median = float(merged["planning_scope_log1p_t1"].median())
+    merged["planning_scope_tier"] = "lower_repository_visible_planning"
+    high_mask = merged["planning_present_t1"].astype(bool) & merged["planning_scope_log1p_t1"].ge(planning_scope_median)
+    merged.loc[high_mask, "planning_scope_tier"] = "high_repository_visible_planning"
+    return merged[_output_columns()], planning_scope_median
 
 
 def _assign_four_group_labels(frame: pd.DataFrame, threshold: float) -> pd.Series:
@@ -224,6 +257,9 @@ def _output_columns() -> list[str]:
         "delta_score_t2_minus_t1",
         "delta_score_t3_minus_t2",
         "score_trajectory_group",
+        "planning_present_t1",
+        "planning_scope_log1p_t1",
+        "planning_scope_tier",
     ]
 
 
@@ -232,12 +268,15 @@ def generate() -> dict[str, Any]:
     repo_root = paper_dir.parent
     figures_dir = resolve_figures_dir()
     source_path = repo_root / "data" / "lake" / "evaluator_team_cuts.parquet"
+    planning_path = paper_dir / "data" / "metrics" / "m6a_structural_planning.csv"
     data_path = figures_dir / f"{STEM}_data.csv"
     group_counts_path = figures_dir / f"{GROUP_COUNTS_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
 
     evaluator = _load_evaluator_scores(source_path)
     base = _build_score_trajectory_base(evaluator)
+    planning = _load_planning(planning_path)
+    base, planning_scope_median = _merge_repository_visible_planning(base, planning)
     _atomic_csv(base, data_path)
     group_counts = _score_group_counts(base)
     _atomic_csv(group_counts, group_counts_path)
@@ -258,7 +297,9 @@ def generate() -> dict[str, Any]:
         "data_path": str(data_path.relative_to(repo_root)),
         "group_counts_path": str(group_counts_path.relative_to(repo_root)),
         "source_path": str(source_path.relative_to(repo_root)),
+        "planning_path": str(planning_path.relative_to(repo_root)),
         "source_sha256": compute_sha256(source_path),
+        "planning_sha256": compute_sha256(planning_path),
         "data_sha256": compute_sha256(data_path),
         "group_counts_sha256": compute_sha256(group_counts_path),
         "team_key": TEAM_KEY,
@@ -274,11 +315,30 @@ def generate() -> dict[str, Any]:
             "interpretation": DESCRIPTIVE_SCORE_NOTE,
         },
         "score_trajectory_grouping": trajectory_grouping,
+        "repository_visible_planning": {
+            "presence_column": "planning_present_t1",
+            "scope_column": "planning_scope_log1p_t1",
+            "tier_column": "planning_scope_tier",
+            "tier_values": [
+                "high_repository_visible_planning",
+                "lower_repository_visible_planning",
+            ],
+            "planning_scope_log1p_t1_median": planning_scope_median,
+            "high_tier_rule": (
+                "planning_present_t1 is true and planning_scope_log1p_t1 is greater than "
+                "or equal to the sample median"
+            ),
+            "interpretation": (
+                "Repository-visible planning is a structural T1 artifact presence/scope "
+                "measure, not a semantic planning quality rating."
+            ),
+        },
         "output_columns": _output_columns(),
         "limitations": [
             "Descriptive evaluator construct; not an official project quality score.",
             "Scores summarize evaluator form dimensions and do not measure objective GenAI usage.",
             "Trajectory groups are descriptive bins over a 14 team-semester sample and should not be over-interpreted.",
+            "Repository-visible planning measures structural presence and scope, not planning quality.",
         ],
         "inference": "descriptive_non_causal",
     }

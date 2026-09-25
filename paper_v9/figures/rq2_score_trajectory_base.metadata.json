@@ -15,7 +15,7 @@
     ],
     "interpretation": "The composite evaluator score is the unweighted mean of four evaluator dimensions. It is a descriptive analysis construct, not an official global quality metric."
   },
-  "contract_version": "rq2-score-trajectory-base-v1",
+  "contract_version": "rq2-score-trajectory-base-v2",
   "coverage": {
     "checkpoint_rows": {
       "T1": 14,
@@ -51,15 +51,16 @@
     "team_semesters": 14
   },
   "data_path": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
-  "data_sha256": "5357d121ce68694baf3ec46c2366eb12667a96cca4942b19e615ac2b30bed72a",
-  "generated_at_utc": "2026-09-25T17:36:15.599215+00:00",
+  "data_sha256": "f56fdbf947ad2e4dc19e18d0a94edf6fcd1c1b24bac420ab178554f26c4c9eae",
+  "generated_at_utc": "2026-09-25T17:37:59.466134+00:00",
   "group_counts_path": "paper_v9/figures/rq2_score_trajectory_group_counts.csv",
   "group_counts_sha256": "12cdb1fba994b634ba8944c1e828f4f00530b28e8645e467458a6298219363d6",
   "inference": "descriptive_non_causal",
   "limitations": [
     "Descriptive evaluator construct; not an official project quality score.",
     "Scores summarize evaluator form dimensions and do not measure objective GenAI usage.",
-    "Trajectory groups are descriptive bins over a 14 team-semester sample and should not be over-interpreted."
+    "Trajectory groups are descriptive bins over a 14 team-semester sample and should not be over-interpreted.",
+    "Repository-visible planning measures structural presence and scope, not planning quality."
   ],
   "output_columns": [
     "ID_Equipe",
@@ -70,8 +71,25 @@
     "delta_score_t3_minus_t1",
     "delta_score_t2_minus_t1",
     "delta_score_t3_minus_t2",
-    "score_trajectory_group"
+    "score_trajectory_group",
+    "planning_present_t1",
+    "planning_scope_log1p_t1",
+    "planning_scope_tier"
   ],
+  "planning_path": "paper_v9/data/metrics/m6a_structural_planning.csv",
+  "planning_sha256": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01",
+  "repository_visible_planning": {
+    "high_tier_rule": "planning_present_t1 is true and planning_scope_log1p_t1 is greater than or equal to the sample median",
+    "interpretation": "Repository-visible planning is a structural T1 artifact presence/scope measure, not a semantic planning quality rating.",
+    "planning_scope_log1p_t1_median": 1.791759469228055,
+    "presence_column": "planning_present_t1",
+    "scope_column": "planning_scope_log1p_t1",
+    "tier_column": "planning_scope_tier",
+    "tier_values": [
+      "high_repository_visible_planning",
+      "lower_repository_visible_planning"
+    ]
+  },
   "score_trajectory_grouping": {
     "fallback_applied": true,
     "final_group_counts": {

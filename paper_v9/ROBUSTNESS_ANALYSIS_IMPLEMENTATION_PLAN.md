@@ -573,9 +573,9 @@ Criar variáveis:
 
 **Checklist**
 
-- [ ] Nomear explicitamente como `repository_visible_planning`.
-- [ ] Não usar linguagem de “qualidade de planejamento”.
-- [ ] Registrar mediana usada.
+- [x] Nomear explicitamente como `repository_visible_planning`.
+- [x] Não usar linguagem de “qualidade de planejamento”.
+- [x] Registrar mediana usada.
 
 ## Tarefa 0.4 — Reaproveitar concentração final já gerada
 

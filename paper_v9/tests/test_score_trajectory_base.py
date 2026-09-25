@@ -38,7 +38,7 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
     group_counts = pd.read_csv(group_counts_path)
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
 
-    assert data.shape == (14, 9)
+    assert data.shape == (14, 12)
     assert data[["ID_Equipe", "Semestre"]].drop_duplicates().shape[0] == 14
     assert list(data.columns) == [
         "ID_Equipe",
@@ -50,13 +50,24 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
         "delta_score_t2_minus_t1",
         "delta_score_t3_minus_t2",
         "score_trajectory_group",
+        "planning_present_t1",
+        "planning_scope_log1p_t1",
+        "planning_scope_tier",
     ]
     assert data.filter(like="evaluator_score_").notna().all().all()
     assert data.filter(like="delta_score_").notna().all().all()
     assert sorted(data["score_trajectory_group"].unique().tolist()) == ["declined", "improved", "stable"]
+    assert sorted(data["planning_scope_tier"].unique().tolist()) == [
+        "high_repository_visible_planning",
+        "lower_repository_visible_planning",
+    ]
+    assert data["planning_scope_tier"].value_counts().to_dict() == {
+        "high_repository_visible_planning": 7,
+        "lower_repository_visible_planning": 7,
+    }
     assert group_counts["team_semester_n"].sum() == 14
 
-    assert metadata["contract_version"] == "rq2-score-trajectory-base-v1"
+    assert metadata["contract_version"] == "rq2-score-trajectory-base-v2"
     assert metadata["checkpoints"] == list(CHECKPOINTS)
     assert metadata["composite_score"]["columns"] == EVALUATOR_SCORE_COLUMNS
     assert metadata["composite_score"]["aggregation"] == "unweighted_mean"
@@ -68,4 +79,10 @@ def test_score_trajectory_base_generates_checkpoint_composite_artifacts() -> Non
         "improved": 8,
         "stable": 4,
     }
+    assert metadata["repository_visible_planning"]["planning_scope_log1p_t1_median"] == 1.791759469228055
+    assert metadata["repository_visible_planning"]["tier_values"] == [
+        "high_repository_visible_planning",
+        "lower_repository_visible_planning",
+    ]
+    assert "not a semantic planning quality rating" in metadata["repository_visible_planning"]["interpretation"]
     assert metadata["inference"] == "descriptive_non_causal"
