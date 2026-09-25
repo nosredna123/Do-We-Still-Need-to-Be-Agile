@@ -1799,10 +1799,16 @@ paper_v9/REPRODUCIBILITY.md
 
 **Checklist**
 
-- [ ] Adicionar comandos dos novos scripts.
-- [ ] Adicionar testes focados.
-- [ ] Indicar inputs e outputs.
-- [ ] Indicar que decisões editoriais sobre artefatos são rastreadas em `ARTIFACT_USAGE_CATALOG.md`.
+- [x] Adicionar comandos dos novos scripts.
+- [x] Adicionar testes focados.
+- [x] Indicar inputs e outputs.
+- [x] Indicar que decisões editoriais sobre artefatos são rastreadas em `ARTIFACT_USAGE_CATALOG.md`.
+
+Validação: `REPRODUCIBILITY.md` recebeu uma seção dedicada ao pipeline de
+artefatos de robustez, com comandos executáveis a partir da raiz do
+repositório, entradas/saídas por família analítica, testes focados existentes
+e nota de governança que mantém `ARTIFACT_USAGE_CATALOG.md` como plano de
+controle editorial.
 
 ## Tarefa 11.3 — Atualizar results summary
 

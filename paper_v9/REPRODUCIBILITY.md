@@ -234,7 +234,60 @@ paper_v9/
 
 ---
 
-## 7. Validation Checklist
+## 7. Robustness Artifact Pipeline
+
+Run the following commands from the repository root. They regenerate the
+robustness artifacts used in the Paper V9 Results, Discussion, Threats to
+Validity, and reviewer-response analyses.
+
+### 7.1 Common execution pattern
+
+```bash
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python \
+  paper_v9/scripts/results/<script_name>.py
+```
+
+Focused syntax and contract checks should use the same interpreter:
+
+```bash
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python \
+  -m py_compile paper_v9/scripts/results/<script_name>.py paper_v9/tests/<test_name>.py
+
+/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/.venv/bin/python \
+  -m pytest paper_v9/tests/<test_name>.py
+```
+
+### 7.2 Script inventory, inputs, outputs, and focused tests
+
+| Purpose | Command | Key inputs | Key outputs | Focused validation |
+|---------|---------|------------|-------------|--------------------|
+| Score trajectory base and final-seven-day concentration inputs | `.venv/bin/python paper_v9/scripts/results/generate_score_trajectory_base.py` | `paper_v9/data/metrics/m3_*`, `m4_*`, `m6*`, evaluator-score inputs | `paper_v9/figures/rq2_score_trajectory_base_*`, base metadata/data CSVs | `.venv/bin/python -m pytest paper_v9/tests/test_score_trajectory_base.py` |
+| Score delta versus final-seven-day concentration | `.venv/bin/python paper_v9/scripts/results/generate_score_trajectory_concentration.py` | `paper_v9/figures/rq2_score_trajectory_base_data.csv` | `rq2_score_delta_vs_final7_commit_concentration.{pdf,svg,png}`, `rq2_score_delta_vs_final7_clean_churn_concentration.{pdf,svg,png}`, quadrant CSV/metadata | `.venv/bin/python -m pytest paper_v9/tests/test_score_trajectory_concentration.py` |
+| Planning scope versus final-seven-day concentration quadrants | `.venv/bin/python paper_v9/scripts/results/generate_planning_concentration_quadrants.py` | score-trajectory base data, `paper_v9/data/metrics/m8_*` rework metrics | `rq2_planning_vs_final7_commit_concentration.{pdf,svg,png}`, `rq2_planning_vs_final7_clean_churn_concentration.{pdf,svg,png}`, quadrant summary/metadata | `.venv/bin/python -m pytest paper_v9/tests/test_planning_concentration_quadrants.py` |
+| Operational regularity views | `.venv/bin/python paper_v9/scripts/results/generate_operational_regularity.py` | Git team-cut metrics, score trajectory base data | `rq2_regularity_vs_score_delta.{pdf,svg,png}`, `rq2_regularity_vs_final_concentration.{pdf,svg,png}`, `rq2_regularity_profile_heatmap.{pdf,svg,png}`, regularity CSV/metadata | `.venv/bin/python -m pytest paper_v9/tests/test_operational_regularity.py` |
+| RQ3 influence map | `.venv/bin/python paper_v9/scripts/results/generate_influence_maps.py` | registered RQ2/RQ3 relationship artifacts, leave-one-out diagnostics | `rq3_influence_map.{pdf,svg,png}`, `rq3_influence_map_data.csv`, `rq3_influence_heatmap_matrix.csv`, metadata | Validate with `py_compile`; rerun after upstream metric tests such as `test_m9.py` when M9 inputs change. |
+| Technical-complexity confounding profiles | `.venv/bin/python paper_v9/scripts/results/generate_complexity_confounding_profiles.py` | M9 planning/rework artifacts, M8 rework metrics, final concentration data | `rq3_technical_complexity_vs_rework.{pdf,svg,png}`, `rq3_complexity_vs_final_concentration.{pdf,svg,png}`, `rq3_planning_rework_complexity_overlay.{pdf,svg,png}`, complexity summary/metadata | Validate with `py_compile`; rerun `paper_v9/tests/test_m9.py` before generation if M9 source metrics changed. |
+| Non-overlapping phase activity | `.venv/bin/python paper_v9/scripts/results/generate_nonoverlapping_phase_activity.py` | project phase boundaries, Git activity windows, score trajectory base data | `rq2_phase_commit_share_by_score_trajectory.{pdf,svg,png}`, `rq2_phase_clean_churn_share_by_score_trajectory.{pdf,svg,png}`, phase-share CSV/metadata | Validate with `py_compile`; inspect generated metadata and rerun upstream M3/M4 tests when temporal activity inputs change. |
+| M5 2025.2 coverage-aware triangulation | `.venv/bin/python paper_v9/scripts/results/generate_m5_2025_triangulation.py` | `paper_v9/data/metrics/m5_marker_density.csv`, score/rework/concentration artifacts | `rq2_m5_2025_triangulation_panel.{pdf,svg,png}`, data CSV, summary CSV, metadata | `.venv/bin/python -m pytest paper_v9/tests/test_m5_2025_triangulation.py` |
+| Team-semester evidence panel | `.venv/bin/python paper_v9/scripts/results/build_team_semester_evidence_panel.py` | core M1--M9 metric outputs, coverage flags | `paper_v9/figures/team_semester_evidence_panel.csv` and metadata | `.venv/bin/python -m pytest paper_v9/tests/test_team_semester_evidence_panel.py` |
+| Legacy exploratory candidate figures | `.venv/bin/python paper_v9/scripts/results/generate_figure_candidates.py` | official metric artifacts | `candidate_rq1_*`, `candidate_rq2_*`, `candidate_rq3_*` figure/data files | `.venv/bin/python -m pytest paper_v9/tests/test_figure_candidates.py` |
+| Traceable results summary | `.venv/bin/python paper_v9/scripts/results/build_results_summary.py` | official metric outputs under `paper_v9/data/metrics` | `paper_v9/data/results/results_summary.json` | `.venv/bin/python -m pytest paper_v9/tests/test_results_summary.py` |
+
+### 7.3 Artifact governance
+
+`paper_v9/ARTIFACT_USAGE_CATALOG.md` is the authoritative control plane for
+editorial artifact decisions. It records which outputs are used in the main
+text, appendix, reviewer response, diagnostics, or not promoted, together with
+limitations and threat-mitigation roles. `paper_v9/FIGURES_CANDIDATES_WORKSHOP.md`
+is a compact synchronized inventory for quick review; it should not supersede
+the catalog.
+
+When adding or regenerating an artifact, update the catalog if the artifact's
+editorial role, limitation, or section mapping changes.
+
+---
+
+## 8. Validation Checklist
 
 - [x] pdfTeX installed and functional
 - [x] BibTeX installed and functional
@@ -252,7 +305,7 @@ paper_v9/
 
 ---
 
-## 8. Next Steps
+## 9. Next Steps
 
 ### For Task 0.2 (Freeze V8 Baseline)
 
@@ -273,7 +326,7 @@ To verify compilation of v8 content in v9 structure.
 
 ---
 
-## 9. Support and Troubleshooting
+## 10. Support and Troubleshooting
 
 ### If compilation fails:
 
@@ -307,7 +360,7 @@ To verify compilation of v8 content in v9 structure.
 
 ---
 
-## 10. Approval Record
+## 11. Approval Record
 
 **Task 0.1 Status:** ✓ APPROVED FOR NEXT GATE
 
