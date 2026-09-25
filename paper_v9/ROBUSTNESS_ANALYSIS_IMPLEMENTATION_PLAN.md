@@ -1008,9 +1008,19 @@ Calcular leave-one-out para:
 
 **Visualização**
 
-- rows: equipe-semestre removida.
-- columns: relação avaliada.
-- color: mudança no coeficiente ou mudança de sinal.
+- [x] rows: equipe-semestre removida.
+- [x] columns: relação avaliada.
+- [x] color: mudança no coeficiente (`rho leave-one-out - rho completo`).
+
+**Output produzido**
+
+- [x] `rq3_influence_map.{png,svg,pdf}`
+- [x] `rq3_influence_heatmap_matrix.csv`
+
+**Codificação**
+
+- [x] Hover registra rho completo, rho leave-one-out, variação absoluta, sinal completo, sinal leave-one-out e status de disponibilidade.
+- [x] Metadata registra `heatmap_encoding`.
 
 **Insight esperado**
 
@@ -1808,7 +1818,7 @@ git --no-pager status --short
 - [ ] Score delta vs final concentration.
 - [ ] Planning scope vs final concentration colored by T3 score.
 - [x] Regularity vs score delta.
-- [ ] Influence heatmap.
+- [x] Influence heatmap.
 - [ ] Complexity vs rework/concentration.
 
 ## Controle versionado de uso dos artefatos

@@ -21,6 +21,7 @@ from paper_v9.scripts.common.provenance import compute_sha256
 CONTRACT_VERSION = "rq3-influence-map-v1"
 STEM = "rq3_influence_map"
 RELATIONSHIP_CONTRACT_STEM = "rq3_influence_relationship_contract"
+HEATMAP_MATRIX_STEM = "rq3_influence_heatmap_matrix"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
 MIN_N = 4
 RELATIONSHIPS = [
@@ -315,6 +316,21 @@ def _relationship_contract(influence: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def _heatmap_matrix(data: pd.DataFrame) -> pd.DataFrame:
+    matrix = data.copy()
+    matrix["removed_team_semester"] = (
+        matrix["removed_ID_Equipe"].astype(str) + " · " + matrix["removed_Semestre"].astype(str)
+    )
+    ordered_columns = list(dict.fromkeys(matrix["relationship_label"].tolist()))
+    pivot = matrix.pivot(
+        index="removed_team_semester",
+        columns="relationship_label",
+        values="rho_delta_from_full",
+    ).reindex(columns=ordered_columns)
+    pivot = pivot.sort_index().reset_index()
+    return pivot
+
+
 def _build_influence_map(data: pd.DataFrame) -> go.Figure:
     data = data.copy()
     data["removed_team_semester"] = data["removed_ID_Equipe"].astype(str) + " · " + data["removed_Semestre"].astype(str)
@@ -435,10 +451,13 @@ def generate() -> dict[str, Any]:
 
     data_path = figures_dir / f"{STEM}_data.csv"
     relationship_contract_path = figures_dir / f"{RELATIONSHIP_CONTRACT_STEM}.csv"
+    heatmap_matrix_path = figures_dir / f"{HEATMAP_MATRIX_STEM}.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
     _atomic_csv(influence, data_path)
     relationship_contract = _relationship_contract(influence)
     _atomic_csv(relationship_contract, relationship_contract_path)
+    heatmap_matrix = _heatmap_matrix(influence)
+    _atomic_csv(heatmap_matrix, heatmap_matrix_path)
     _write_figure(_build_influence_map(influence), STEM, figures_dir)
 
     task_4_2_requirements = sorted(relationship_contract["task_4_2_requirement"].unique().tolist())
@@ -450,6 +469,8 @@ def generate() -> dict[str, Any]:
         "data_sha256": compute_sha256(data_path),
         "relationship_contract_path": str(relationship_contract_path.relative_to(repo_root)),
         "relationship_contract_sha256": compute_sha256(relationship_contract_path),
+        "heatmap_matrix_path": str(heatmap_matrix_path.relative_to(repo_root)),
+        "heatmap_matrix_sha256": compute_sha256(heatmap_matrix_path),
         "figure_artifacts": [
             str((figures_dir / f"{STEM}.{extension}").relative_to(repo_root))
             for extension in ("pdf", "svg", "png")
@@ -466,6 +487,12 @@ def generate() -> dict[str, Any]:
             "rows": int(len(influence)),
         },
         "metric": "Descriptive Spearman rho; influence is leave-one-out rho minus full-sample rho.",
+        "heatmap_encoding": {
+            "rows": "removed team-semester",
+            "columns": "evaluated relationship",
+            "color": "rho_delta_from_full = leave-one-out Spearman rho minus full-sample Spearman rho",
+            "hover": "full rho, leave-one-out rho, absolute delta, full sign, leave-one-out sign, and availability status",
+        },
         "task_4_2_relationship_requirements": task_4_2_requirements,
         "task_4_2_relationship_contract": (
             "Each planned Fase 4.2 relationship category is represented by one or more operationalized "
@@ -486,6 +513,7 @@ def generate() -> dict[str, Any]:
         "status": "generated",
         "data_path": str(data_path),
         "relationship_contract_path": str(relationship_contract_path),
+        "heatmap_matrix_path": str(heatmap_matrix_path),
         "metadata_path": str(metadata_path),
         "coverage": metadata["coverage"],
     }

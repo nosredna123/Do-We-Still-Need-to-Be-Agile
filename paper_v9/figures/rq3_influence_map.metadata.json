@@ -14,7 +14,15 @@
     "paper_v9/figures/rq3_influence_map.svg",
     "paper_v9/figures/rq3_influence_map.png"
   ],
-  "generated_at_utc": "2026-09-25T18:06:18.648174+00:00",
+  "generated_at_utc": "2026-09-25T18:08:12.805197+00:00",
+  "heatmap_encoding": {
+    "color": "rho_delta_from_full = leave-one-out Spearman rho minus full-sample Spearman rho",
+    "columns": "evaluated relationship",
+    "hover": "full rho, leave-one-out rho, absolute delta, full sign, leave-one-out sign, and availability status",
+    "rows": "removed team-semester"
+  },
+  "heatmap_matrix_path": "paper_v9/figures/rq3_influence_heatmap_matrix.csv",
+  "heatmap_matrix_sha256": "38e696a1fefcc1a46c5b114adfe363a1f6e1dd44393c0cb4f4d504b41ef50adf",
   "inference": "descriptive_directional_robustness_not_confirmatory",
   "input_sha256": {
     "base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
