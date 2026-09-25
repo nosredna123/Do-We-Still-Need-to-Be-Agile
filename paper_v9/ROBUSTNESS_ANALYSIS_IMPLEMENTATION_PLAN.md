@@ -1494,13 +1494,13 @@ paper_v9/ARTIFACT_USAGE_CATALOG.md
 
 **Checklist**
 
-- [ ] Registrar todos os artefatos já gerados sobre student syndrome.
-- [ ] Registrar artefatos de candidate figures existentes.
-- [ ] Registrar nova família de score trajectories após Fase 1.
-- [ ] Registrar nova família de quadrants após Fase 2.
-- [ ] Usar links relativos para os arquivos.
-- [ ] Registrar status inicial como `candidate` ou `diagnostic_only`.
-- [ ] Registrar `last_reviewed`.
+- [x] Registrar todos os artefatos já gerados sobre student syndrome.
+- [x] Registrar artefatos de candidate figures existentes.
+- [x] Registrar nova família de score trajectories após Fase 1.
+- [x] Registrar nova família de quadrants após Fase 2.
+- [x] Usar links relativos para os arquivos.
+- [x] Registrar status inicial como `candidate` ou `diagnostic_only`.
+- [x] Registrar `last_reviewed`.
 
 ## Tarefa 9.2 — Definir taxonomia de status editorial
 
