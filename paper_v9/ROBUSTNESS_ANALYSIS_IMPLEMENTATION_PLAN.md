@@ -956,9 +956,16 @@ paper_v9/scripts/results/generate_influence_maps.py
 
 **Output esperado**
 
-- `rq3_influence_map_data.csv`
-- `rq3_influence_map.metadata.json`
-- `rq3_influence_map.{png,svg,pdf}`
+- [x] `rq3_influence_map_data.csv`
+- [x] `rq3_influence_map.metadata.json`
+- [x] `rq3_influence_map.{png,svg,pdf}`
+
+**Status de implementação**
+
+- [x] Script reprodutível criado.
+- [x] Relações candidatas materializadas no metadata para revisão sistemática na Tarefa 4.2.
+- [x] Figura inicial gerada como mapa de influência leave-one-out.
+- [ ] Revisão/validação editorial das relações permanece na Tarefa 4.2.
 
 ## Tarefa 4.2 — Relações a avaliar
 
@@ -1768,7 +1775,7 @@ git --no-pager status --short
 - [ ] `generate_score_trajectory_concentration.py`
 - [ ] `generate_planning_concentration_quadrants.py`
 - [x] `generate_operational_regularity.py`
-- [ ] `generate_influence_maps.py`
+- [x] `generate_influence_maps.py`
 - [ ] `generate_complexity_confounding_profiles.py`
 - [ ] `generate_nonoverlapping_phase_activity.py`
 - [ ] `generate_m5_2025_triangulation.py`

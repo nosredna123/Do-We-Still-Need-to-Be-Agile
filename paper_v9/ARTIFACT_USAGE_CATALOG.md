@@ -54,6 +54,24 @@ editoriais.
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
+### rq3_influence_map
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `rq3_influence_map` |
+| `artifact_family` | `directional_robustness_sensitivity` |
+| `files` | [`figures/rq3_influence_map.png`](figures/rq3_influence_map.png), [`figures/rq3_influence_map.svg`](figures/rq3_influence_map.svg), [`figures/rq3_influence_map.pdf`](figures/rq3_influence_map.pdf), [`figures/rq3_influence_map_data.csv`](figures/rq3_influence_map_data.csv), [`figures/rq3_influence_map.metadata.json`](figures/rq3_influence_map.metadata.json) |
+| `data_inputs` | `paper_v9/data/metrics/m9_leave_one_out_intervals.csv`; `paper_v9/figures/rq2_score_trajectory_base_data.csv`; `paper_v9/figures/rq2_operational_regularity_data.csv`; `paper_v9/data/metrics/m8_rework_magnitude.csv`; `data/lake/evaluator_team_cuts.parquet` |
+| `unit_of_analysis` | relação avaliativa × equipe-semestre removida |
+| `main_question` | Quais associações direcionais descritivas são mais sensíveis à remoção de uma equipe-semestre específica? |
+| `best_use` | Discussion/Threats; diagnóstico de sensibilidade para mitigar amostra pequena e dependência de casos influentes |
+| `key_reading` | Artefato de sensibilidade: calcula Spearman rho completo e leave-one-out para relações entre planejamento, score, concentração final, regularidade, complexidade técnica e rework. A figura mostra a variação em rho quando cada equipe-semestre é removida. |
+| `utility_score` | Alta |
+| `limitations` | Diagnóstico small-n; não é teste confirmatório; mudanças de sinal devem ser descritas como robustez direcional; relações com rework ratio usam apenas casos baseline-eligible; associações observacionais não estabelecem causalidade. |
+| `status` | `candidate` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
+
 ### rq2_score_delta_vs_final7_concentration
 
 | Campo | Valor |
