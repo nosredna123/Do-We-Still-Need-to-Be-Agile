@@ -1,0 +1,79 @@
+{
+  "artifact_id": "rq3_complexity_profile",
+  "construct_separation": {
+    "evaluated_complexity": [
+      "technical_complexity_mean_t1",
+      "technical_complexity_mean_t2",
+      "technical_complexity_mean_t3",
+      "delta_technical_complexity_t3_minus_t1"
+    ],
+    "repository_structural_complexity": [
+      "clean_distinct_file_n",
+      "clean_distinct_directory_n",
+      "clean_max_path_depth",
+      "clean_extension_n",
+      "clean_touching_commit_n_inferred",
+      "mean_clean_files_per_commit",
+      "clean_total_churn_inferred",
+      "frontend_clean_file_event_share",
+      "backend_clean_file_event_share"
+    ]
+  },
+  "contract_version": "rq3-complexity-profile-v1",
+  "coverage": {
+    "baseline_eligible_for_rework_t3": 12,
+    "team_semesters": 14
+  },
+  "data_path": "paper_v9/figures/rq3_complexity_profile_data.csv",
+  "data_sha256": "99e0836e4e487b239be47a27af2748ce988f7d759b44b2cb0b05474892ff5e7e",
+  "generated_at_utc": "2026-09-25T18:14:56.678546+00:00",
+  "inference": "descriptive_confounding_profile_not_causal",
+  "input_sha256": {
+    "evaluator": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
+    "git_files": "c13269b33fcef0db61856678fc4ca8a9c86e2e8155d80f170de93f9274c1d1fa",
+    "m4_churn": "64fbb113302d8780f6d560debb9d35689c57d2852964d705b03f4367c6c7a4b0",
+    "m6a_planning": "1e1104d46ecad13ed2d97f2aedfb65311c920875bcbe1cba1cf9cad6a7572d01",
+    "m8_rework": "d583853b901da39813ea3bbb641d8cf4a1a0b9930a3df3270256ae0e79c1e623",
+    "score_base": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52"
+  },
+  "inputs": {
+    "evaluator": "data/lake/evaluator_team_cuts.parquet",
+    "git_files": "data/lake/git_files.parquet",
+    "m4_churn": "paper_v9/data/metrics/m4_churn_magnitude.csv",
+    "m6a_planning": "paper_v9/data/metrics/m6a_structural_planning.csv",
+    "m8_rework": "paper_v9/data/metrics/m8_rework_magnitude.csv",
+    "score_base": "paper_v9/figures/rq2_score_trajectory_base_data.csv"
+  },
+  "limitations": [
+    "Evaluator technical complexity is a human assessment dimension, not inferred repository structure.",
+    "Structural complexity metrics are Git/path heuristics over clean paths and do not classify architecture semantics.",
+    "Frontend/backend shares depend on path names and can under-detect unconventional project layouts.",
+    "The profile supports confounding/sensitivity discussion and is not a causal adjustment model."
+  ],
+  "path_heuristics": {
+    "architecture_layer_rule": "Path segment markers classify clean file events as frontend, backend, mixed, or other_or_unclassified; this is a coarse repository-structure heuristic, not manual GenAI architecture classification.",
+    "backend_markers": [
+      "api",
+      "apis",
+      "back-end",
+      "backend",
+      "controllers",
+      "models",
+      "repositories",
+      "routes",
+      "server",
+      "services"
+    ],
+    "clean_path_policy": "code-churn-metrics-v2",
+    "frontend_markers": [
+      "client",
+      "components",
+      "front-end",
+      "frontend",
+      "pages",
+      "ui",
+      "views",
+      "web"
+    ]
+  }
+}

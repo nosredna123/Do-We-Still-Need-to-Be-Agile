@@ -1073,8 +1073,16 @@ paper_v9/scripts/results/generate_complexity_confounding_profiles.py
 
 **Output esperado**
 
-- `rq3_complexity_profile_data.csv`
-- `rq3_complexity_profile.metadata.json`
+- [x] `rq3_complexity_profile_data.csv`
+- [x] `rq3_complexity_profile.metadata.json`
+
+**Status de implementação**
+
+- [x] Script reprodutível criado.
+- [x] Perfil base gerado com `n=14` equipe-semestres.
+- [x] Metadata registra separação entre complexidade avaliada e complexidade estrutural inferida.
+- [x] Metadata registra heurísticas de path usadas para camadas frontend/backend.
+- [ ] Revisão/validação editorial das métricas permanece na Tarefa 5.2.
 
 ## Tarefa 5.2 — Métricas de complexidade
 
@@ -1797,7 +1805,7 @@ git --no-pager status --short
 - [ ] `generate_planning_concentration_quadrants.py`
 - [x] `generate_operational_regularity.py`
 - [x] `generate_influence_maps.py`
-- [ ] `generate_complexity_confounding_profiles.py`
+- [x] `generate_complexity_confounding_profiles.py`
 - [ ] `generate_nonoverlapping_phase_activity.py`
 - [ ] `generate_m5_2025_triangulation.py`
 - [ ] `build_team_semester_evidence_panel.py`

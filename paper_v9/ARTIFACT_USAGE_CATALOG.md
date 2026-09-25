@@ -72,6 +72,24 @@ editoriais.
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
+### rq3_complexity_profile
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `rq3_complexity_profile` |
+| `artifact_family` | `complexity_confounding` |
+| `files` | [`figures/rq3_complexity_profile_data.csv`](figures/rq3_complexity_profile_data.csv), [`figures/rq3_complexity_profile.metadata.json`](figures/rq3_complexity_profile.metadata.json) |
+| `data_inputs` | `data/lake/evaluator_team_cuts.parquet`; `data/lake/git_files.parquet`; `paper_v9/data/metrics/m4_churn_magnitude.csv`; `paper_v9/data/metrics/m8_rework_magnitude.csv`; `paper_v9/data/metrics/m6a_structural_planning.csv`; `paper_v9/figures/rq2_score_trajectory_base_data.csv` |
+| `unit_of_analysis` | equipe-semestre |
+| `main_question` | A complexidade técnica avaliada e a complexidade estrutural inferida do repositório ajudam a contextualizar churn/rework, concentração final e planejamento? |
+| `best_use` | Discussion/Threats; base para visualizações e sumários da Fase 5 sobre complexidade como possível confundidor |
+| `key_reading` | Artefato contratual: reúne complexidade técnica avaliada em T1/T2/T3, delta T3-T1, métricas estruturais inferidas de clean paths, churn/rework T3, planejamento T1 e variáveis de trajetória/concentração final. |
+| `utility_score` | Alta |
+| `limitations` | Complexidade técnica avaliada é dimensão humana do avaliador, não estrutura inferida; métricas estruturais usam heurísticas Git/path e não classificam arquitetura semântica; frontend/backend por path pode subdetectar layouts não convencionais; não é modelo causal de ajuste. |
+| `status` | `candidate` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
+
 ### rq2_score_delta_vs_final7_concentration
 
 | Campo | Valor |
