@@ -31,6 +31,36 @@ Para `superseded` e `discarded`, a justificativa deve ser suficiente para que
 uma revisão editorial futura não precise reabrir todos os CSVs/figuras apenas
 para entender por que o artefato não deve ser promovido.
 
+## Gate editorial antes da integração LaTeX
+
+Antes de editar `results.tex`, `discussion.tex` ou `threats_to_validity.tex`,
+usar este catálogo como gate operacional:
+
+1. Revisar a seção **Registro de respostas aos insights esperados** e copiar
+   para a proposta textual apenas respostas com ressalvas explícitas.
+2. Consultar a **Matriz rápida de uso editorial** para descartar artefatos cujo
+   risco de má interpretação seja incompatível com o argumento pretendido.
+3. Priorizar artefatos com status `candidate`, `main_text` ou `appendix`.
+   Artefatos `diagnostic_only` só devem entrar no texto se houver justificativa
+   editorial nova; artefatos `response_letter` devem permanecer associados à
+   crítica que respondem, salvo promoção explícita.
+4. Evitar reabrir CSVs/figuras sem necessidade quando o catálogo e os metadados
+   já contiverem a leitura, limitação e contrato relevantes.
+5. Antes de promover um artefato, atualizar sua entrada com o novo status,
+   seção-alvo e, se aplicável, substituição/descarte de artefatos redundantes.
+6. Preservar no texto as limitações registradas no catálogo, especialmente
+   grão analítico, `n`, ausência de causalidade e estados `unavailable`.
+
+Pré-seleção atual para a próxima integração editorial:
+
+| Uso editorial provável | Artefatos elegíveis | Observação de gate |
+|---|---|---|
+| Results/RQ2 principal | `rq2_score_delta_vs_final7_concentration`; `rq2_planning_concentration_quadrants`; uma figura de `rq2_operational_regularity` se visualmente clara | Selecionar poucas figuras; manter linguagem descritiva e small-n. |
+| Results/RQ2 robustez/apêndice | `rq2_nonoverlapping_phase_activity`; `rq2_m5_2025_triangulation` | Usar para robustness/coverage, não como claim causal. |
+| Discussion/Threats | `rq3_influence_map`; `rq3_complexity_profile`; `team_semester_evidence_panel` | Priorizar sensibilidade, confundimento e transparência de cobertura. |
+| Response letter | `rq2_student_syndrome_reviewer_response` | Pode informar Discussion, mas sua função primária continua sendo responder à crítica de student syndrome. |
+| Inventário diagnóstico | `candidate_figure_inventory` | Comparar contra artefatos recentes antes de qualquer promoção. |
+
 ## Registro de respostas aos insights esperados
 
 Esta seção registra, de forma editorialmente rastreável, a resposta empírica

@@ -1572,14 +1572,16 @@ Para cada artefato, registrar:
 
 Antes de editar `results.tex`, `discussion.tex` ou `threats_to_validity.tex`:
 
-- [ ] Consultar o catálogo completo, não apenas a lista de artefatos.
-- [ ] Revisar o `Registro de respostas aos insights esperados` para identificar
+- [x] Consultar o catálogo completo, não apenas a lista de artefatos.
+- [x] Revisar o `Registro de respostas aos insights esperados` para identificar
   quais achados já têm resposta empírica curta, quais ressalvas devem ser
   preservadas e quais insights ainda não devem ser promovidos ao texto.
-- [ ] Selecionar artefatos com status `candidate`, `main_text` ou `appendix`.
-- [ ] Evitar reabrir todos os CSVs/figuras sem necessidade.
-- [ ] Atualizar status dos artefatos escolhidos.
-- [ ] Registrar artefatos substituídos.
+- [x] Selecionar artefatos com status `candidate`, `main_text` ou `appendix`.
+- [x] Evitar reabrir todos os CSVs/figuras sem necessidade.
+- [x] Registrar no gate que o status dos artefatos escolhidos deve ser
+  atualizado durante a seleção editorial da Fase 10.
+- [x] Registrar no gate que artefatos substituídos devem ser documentados antes
+  da integração LaTeX.
 
 ---
 
