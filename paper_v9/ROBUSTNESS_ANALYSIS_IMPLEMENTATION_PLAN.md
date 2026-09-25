@@ -878,20 +878,38 @@ Calcular por equipe-semestre:
 
 Figuras sugeridas:
 
-1. `rq2_regularity_vs_score_delta.{png,svg,pdf}`
+1. [x] `rq2_regularity_vs_score_delta.{png,svg,pdf}`
    - x: regularity index.
    - y: delta score T3-T1.
    - color: planning tier.
 
-2. `rq2_regularity_vs_final_concentration.{png,svg,pdf}`
+2. [x] `rq2_regularity_vs_final_concentration.{png,svg,pdf}`
    - x: regularity index.
    - y: final-seven-day concentration.
    - color: score trajectory group.
 
-3. `rq2_regularity_profile_heatmap.{png,svg,pdf}`
+3. [x] `rq2_regularity_profile_heatmap.{png,svg,pdf}`
    - rows: equipe-semestre.
    - columns: regularity metrics z-scored.
    - annotation: planning tier and score trajectory group.
+
+**Definição autorizada do índice**
+
+- [x] `regularity_index` aprovado no Gate B como média de oito componentes normalizados em que maior indica atividade observável mais distribuída:
+  - `active_day_share`;
+  - `temporal_entropy_commits`;
+  - `temporal_entropy_clean_churn`;
+  - inverso min-max de `commit_weekly_cv`;
+  - inverso min-max de `clean_churn_weekly_cv`;
+  - inverso de `m7_inactive_window_share`;
+  - inverso de `final7_commit_share_pct / 100`;
+  - inverso de `final7_clean_churn_share_pct / 100`.
+
+**Output produzido**
+
+- [x] `rq2_regularity_vs_score_delta_data.csv`
+- [x] `rq2_regularity_vs_final_concentration_data.csv`
+- [x] `rq2_regularity_profile_heatmap_data.csv`
 
 **Insight esperado**
 
@@ -1749,7 +1767,7 @@ git --no-pager status --short
 
 - [ ] `generate_score_trajectory_concentration.py`
 - [ ] `generate_planning_concentration_quadrants.py`
-- [ ] `generate_operational_regularity.py`
+- [x] `generate_operational_regularity.py`
 - [ ] `generate_influence_maps.py`
 - [ ] `generate_complexity_confounding_profiles.py`
 - [ ] `generate_nonoverlapping_phase_activity.py`
@@ -1760,7 +1778,7 @@ git --no-pager status --short
 
 - [ ] `test_score_trajectory_concentration.py`
 - [ ] `test_planning_concentration_quadrants.py`
-- [ ] `test_operational_regularity.py`
+- [x] `test_operational_regularity.py`
 - [ ] `test_influence_maps.py`
 - [ ] `test_complexity_confounding_profiles.py`
 - [ ] `test_nonoverlapping_phase_activity.py`
@@ -1771,7 +1789,7 @@ git --no-pager status --short
 
 - [ ] Score delta vs final concentration.
 - [ ] Planning scope vs final concentration colored by T3 score.
-- [ ] Regularity vs score delta.
+- [x] Regularity vs score delta.
 - [ ] Influence heatmap.
 - [ ] Complexity vs rework/concentration.
 

@@ -12,6 +12,8 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
@@ -22,7 +24,53 @@ from paper_v9.scripts.results.generate_score_trajectory_base import STEM as BASE
 
 CONTRACT_VERSION = "rq2-operational-regularity-v1"
 STEM = "rq2_operational_regularity"
+SCORE_DELTA_STEM = "rq2_regularity_vs_score_delta"
+FINAL_CONCENTRATION_STEM = "rq2_regularity_vs_final_concentration"
+HEATMAP_STEM = "rq2_regularity_profile_heatmap"
 TEAM_KEY = ["ID_Equipe", "Semestre"]
+PLANNING_TIER_COLORS = {
+    "high_repository_visible_planning": "#2563eb",
+    "lower_repository_visible_planning": "#f97316",
+}
+PLANNING_TIER_LABELS = {
+    "high_repository_visible_planning": "High repository-visible planning",
+    "lower_repository_visible_planning": "Lower repository-visible planning",
+}
+SCORE_GROUP_COLORS = {
+    "improved": "#16a34a",
+    "stable": "#64748b",
+    "declined": "#dc2626",
+}
+SCORE_GROUP_LABELS = {
+    "improved": "Improved",
+    "stable": "Stable",
+    "declined": "Declined",
+}
+SEMESTER_SYMBOLS = {
+    "2025.2": "circle",
+    "2026.1": "diamond",
+}
+REGULARITY_COMPONENTS = [
+    "regularity_active_day_share_component",
+    "regularity_commit_entropy_component",
+    "regularity_clean_churn_entropy_component",
+    "regularity_commit_weekly_cv_component",
+    "regularity_clean_churn_weekly_cv_component",
+    "regularity_m7_activity_component",
+    "regularity_commit_distribution_component",
+    "regularity_clean_churn_distribution_component",
+]
+HEATMAP_METRICS = [
+    "active_day_share",
+    "temporal_entropy_commits",
+    "temporal_entropy_clean_churn",
+    "commit_weekly_cv",
+    "clean_churn_weekly_cv",
+    "m7_inactive_window_share",
+    "final7_commit_share_pct",
+    "final7_clean_churn_share_pct",
+    "author_gini",
+]
 REQUIRED_BASE_COLUMNS = [
     *TEAM_KEY,
     "delta_score_t3_minus_t1",
@@ -57,6 +105,31 @@ def _require_columns(frame: pd.DataFrame, columns: list[str], source: Path) -> N
     missing = [column for column in columns if column not in frame.columns]
     if missing:
         raise ValueError(f"{source} is missing required columns: {missing}")
+
+
+def _write_figure(figure: go.Figure, stem: str, figures_dir: Path) -> None:
+    for extension in ("pdf", "svg", "png"):
+        figure.write_image(
+            figures_dir / f"{stem}.{extension}",
+            scale=2 if extension == "png" else 1,
+        )
+
+
+def _minmax(values: pd.Series) -> pd.Series:
+    values = values.astype(float)
+    minimum = float(values.min())
+    maximum = float(values.max())
+    if maximum == minimum:
+        return pd.Series(0.5, index=values.index, dtype=float)
+    return (values - minimum) / (maximum - minimum)
+
+
+def _zscore(values: pd.Series) -> pd.Series:
+    values = values.astype(float)
+    standard_deviation = float(values.std(ddof=0))
+    if standard_deviation == 0:
+        return pd.Series(0.0, index=values.index, dtype=float)
+    return (values - float(values.mean())) / standard_deviation
 
 
 def _normalized_entropy(values: pd.Series) -> float:
@@ -95,6 +168,361 @@ def _weekly_counts(daily: pd.Series) -> pd.Series:
     if weekly.empty:
         return pd.Series([float(daily.sum())])
     return weekly.astype(float)
+
+
+def _add_regularity_index(data: pd.DataFrame) -> pd.DataFrame:
+    data = data.copy()
+    data["regularity_active_day_share_component"] = data["active_day_share"].clip(0, 1)
+    data["regularity_commit_entropy_component"] = data["temporal_entropy_commits"].clip(0, 1)
+    data["regularity_clean_churn_entropy_component"] = data["temporal_entropy_clean_churn"].clip(0, 1)
+    data["regularity_commit_weekly_cv_component"] = 1 - _minmax(data["commit_weekly_cv"])
+    data["regularity_clean_churn_weekly_cv_component"] = 1 - _minmax(data["clean_churn_weekly_cv"])
+    data["regularity_m7_activity_component"] = 1 - data["m7_inactive_window_share"].clip(0, 1)
+    data["regularity_commit_distribution_component"] = 1 - (data["final7_commit_share_pct"].clip(0, 100) / 100)
+    data["regularity_clean_churn_distribution_component"] = 1 - (
+        data["final7_clean_churn_share_pct"].clip(0, 100) / 100
+    )
+    data["regularity_index"] = data[REGULARITY_COMPONENTS].mean(axis=1)
+    return data
+
+
+def _build_score_delta_plot(data: pd.DataFrame) -> go.Figure:
+    figure = go.Figure()
+    for planning_tier in PLANNING_TIER_COLORS:
+        for semester in sorted(data["Semestre"].unique()):
+            subset = data.loc[data["planning_scope_tier"].eq(planning_tier) & data["Semestre"].eq(semester)]
+            if subset.empty:
+                continue
+            figure.add_trace(
+                go.Scatter(
+                    x=subset["regularity_index"],
+                    y=subset["delta_score_t3_minus_t1"],
+                    mode="markers",
+                    marker={
+                        "color": PLANNING_TIER_COLORS[planning_tier],
+                        "symbol": SEMESTER_SYMBOLS.get(semester, "circle"),
+                        "size": 15,
+                        "line": {"color": "white", "width": 1.6},
+                    },
+                    name=f"{PLANNING_TIER_LABELS[planning_tier]} · {semester}",
+                    customdata=subset[
+                        [
+                            "ID_Equipe",
+                            "Semestre",
+                            "score_trajectory_group",
+                            "active_day_share",
+                            "m7_inactive_window_share",
+                            "final7_commit_share_pct",
+                            "final7_clean_churn_share_pct",
+                        ]
+                    ],
+                    hovertemplate=(
+                        "Team=%{customdata[0]}<br>"
+                        "Semester=%{customdata[1]}<br>"
+                        "Regularity index=%{x:.3f}<br>"
+                        "T3−T1 score delta=%{y:.3f}<br>"
+                        "Score trajectory=%{customdata[2]}<br>"
+                        "Active-day share=%{customdata[3]:.3f}<br>"
+                        "M7 inactive-window share=%{customdata[4]:.3f}<br>"
+                        "Final-7 commit share=%{customdata[5]:.1f}%<br>"
+                        "Final-7 clean churn share=%{customdata[6]:.1f}%"
+                        "<extra></extra>"
+                    ),
+                )
+            )
+
+    figure.add_hline(y=0, line_dash="dash", line_color="#71717a", annotation_text="No score change")
+    figure.update_layout(
+        template="simple_white",
+        width=1100,
+        height=680,
+        margin={"l": 85, "r": 35, "t": 145, "b": 175},
+        title={
+            "text": "Operational regularity versus evaluator-score trajectory",
+            "font": {"size": 22},
+            "y": 0.98,
+        },
+        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        legend={
+            "title": "Planning tier · semester",
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.04,
+            "xanchor": "left",
+            "x": 0,
+        },
+        xaxis={
+            "title": "Operational regularity index (0 = episodic, 1 = distributed)",
+            "range": [-0.04, 1.04],
+            "gridcolor": "#e5e7eb",
+            "zeroline": False,
+        },
+        yaxis={
+            "title": "Evaluator-score delta (T3 − T1)",
+            "gridcolor": "#e5e7eb",
+            "zeroline": False,
+        },
+        annotations=[
+            {
+                "text": (
+                    "Points are team-semesters. The index averages normalized cadence, entropy, inactivity, "
+                    "weekly-variation and final-concentration components.<br>"
+                    "This is a descriptive Git proxy for operational regularity, not productivity or process compliance."
+                ),
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.26,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            }
+        ],
+    )
+    return figure
+
+
+def _final_concentration_long(data: pd.DataFrame) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    metrics = {
+        "Final-7 commits": "final7_commit_share_pct",
+        "Final-7 clean churn": "final7_clean_churn_share_pct",
+    }
+    for metric_label, column in metrics.items():
+        metric_data = data[
+            [
+                *TEAM_KEY,
+                "regularity_index",
+                "score_trajectory_group",
+                "planning_scope_tier",
+                "delta_score_t3_minus_t1",
+                column,
+            ]
+        ].copy()
+        metric_data = metric_data.rename(columns={column: "final7_share_pct"})
+        metric_data["activity_metric"] = metric_label
+        rows.extend(metric_data.to_dict("records"))
+    return pd.DataFrame(rows)
+
+
+def _build_final_concentration_plot(long_data: pd.DataFrame) -> go.Figure:
+    figure = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=("Commit concentration", "Clean changed-line concentration"),
+        shared_yaxes=True,
+        horizontal_spacing=0.08,
+    )
+    metric_columns = {
+        "Final-7 commits": 1,
+        "Final-7 clean churn": 2,
+    }
+    for metric_label, column in metric_columns.items():
+        metric_data = long_data.loc[long_data["activity_metric"].eq(metric_label)]
+        for score_group in ["improved", "stable", "declined"]:
+            subset = metric_data.loc[metric_data["score_trajectory_group"].eq(score_group)]
+            if subset.empty:
+                continue
+            figure.add_trace(
+                go.Scatter(
+                    x=subset["regularity_index"],
+                    y=subset["final7_share_pct"],
+                    mode="markers",
+                    marker={
+                        "color": SCORE_GROUP_COLORS.get(score_group, "#64748b"),
+                        "size": 15,
+                        "line": {"color": "white", "width": 1.6},
+                    },
+                    name=SCORE_GROUP_LABELS.get(score_group, score_group),
+                    legendgroup=score_group,
+                    showlegend=column == 1,
+                    customdata=subset[
+                        [
+                            "ID_Equipe",
+                            "Semestre",
+                            "planning_scope_tier",
+                            "delta_score_t3_minus_t1",
+                            "activity_metric",
+                        ]
+                    ],
+                    hovertemplate=(
+                        "Team=%{customdata[0]}<br>"
+                        "Semester=%{customdata[1]}<br>"
+                        "Metric=%{customdata[4]}<br>"
+                        "Regularity index=%{x:.3f}<br>"
+                        "Final-7 share=%{y:.1f}%<br>"
+                        "Planning tier=%{customdata[2]}<br>"
+                        "T3−T1 score delta=%{customdata[3]:.3f}"
+                        "<extra></extra>"
+                    ),
+                ),
+                row=1,
+                col=column,
+            )
+
+    figure.update_layout(
+        template="simple_white",
+        width=1200,
+        height=680,
+        margin={"l": 85, "r": 35, "t": 125, "b": 155},
+        title={
+            "text": "Operational regularity versus final-week concentration",
+            "font": {"size": 22},
+            "y": 0.98,
+        },
+        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        legend={
+            "title": "Score trajectory",
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.02,
+            "xanchor": "left",
+            "x": 0,
+        },
+        annotations=[
+            *figure.layout.annotations,
+            {
+                "text": (
+                    "Lower final-week concentration with higher regularity is consistent with more distributed "
+                    "repository activity; interpretation remains descriptive and small-n."
+                ),
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.22,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            },
+        ],
+    )
+    for column in (1, 2):
+        figure.update_xaxes(
+            title_text="Operational regularity index",
+            range=[-0.04, 1.04],
+            gridcolor="#e5e7eb",
+            zeroline=False,
+            row=1,
+            col=column,
+        )
+    figure.update_yaxes(
+        title_text="Final-7 share of project activity (%)",
+        range=[-4, 104],
+        ticksuffix="%",
+        gridcolor="#e5e7eb",
+        zeroline=False,
+        row=1,
+        col=1,
+    )
+    figure.update_yaxes(
+        range=[-4, 104],
+        ticksuffix="%",
+        gridcolor="#e5e7eb",
+        zeroline=False,
+        row=1,
+        col=2,
+    )
+    return figure
+
+
+def _heatmap_data(data: pd.DataFrame) -> pd.DataFrame:
+    heatmap = data[[*TEAM_KEY, "planning_scope_tier", "score_trajectory_group", *HEATMAP_METRICS]].copy()
+    heatmap["team_semester"] = heatmap["ID_Equipe"].astype(str) + " · " + heatmap["Semestre"].astype(str)
+    for metric in HEATMAP_METRICS:
+        heatmap[f"{metric}_z"] = _zscore(heatmap[metric])
+    return heatmap.sort_values(["score_trajectory_group", "planning_scope_tier", "team_semester"]).reset_index(
+        drop=True
+    )
+
+
+def _build_heatmap(heatmap: pd.DataFrame) -> go.Figure:
+    metric_labels = {
+        "active_day_share": "Active-day share",
+        "temporal_entropy_commits": "Commit entropy",
+        "temporal_entropy_clean_churn": "Clean-churn entropy",
+        "commit_weekly_cv": "Commit weekly CV",
+        "clean_churn_weekly_cv": "Clean-churn weekly CV",
+        "m7_inactive_window_share": "Inactive-window share",
+        "final7_commit_share_pct": "Final-7 commits",
+        "final7_clean_churn_share_pct": "Final-7 clean churn",
+        "author_gini": "Author Gini",
+    }
+    z_columns = [f"{metric}_z" for metric in HEATMAP_METRICS]
+    row_labels = (
+        heatmap["team_semester"]
+        + " · "
+        + heatmap["planning_scope_tier"].map(PLANNING_TIER_LABELS)
+        + " · "
+        + heatmap["score_trajectory_group"].map(SCORE_GROUP_LABELS)
+    )
+    customdata = []
+    for _, row in heatmap.iterrows():
+        customdata.append(
+            [
+                [
+                    row["team_semester"],
+                    row["planning_scope_tier"],
+                    row["score_trajectory_group"],
+                    metric,
+                    row[metric],
+                ]
+                for metric in HEATMAP_METRICS
+            ]
+        )
+
+    figure = go.Figure(
+        data=go.Heatmap(
+            z=heatmap[z_columns].to_numpy(),
+            x=[metric_labels[metric] for metric in HEATMAP_METRICS],
+            y=row_labels,
+            colorscale="RdBu",
+            zmid=0,
+            colorbar={"title": "z-score"},
+            customdata=customdata,
+            hovertemplate=(
+                "Team-semester=%{customdata[0]}<br>"
+                "Planning tier=%{customdata[1]}<br>"
+                "Score trajectory=%{customdata[2]}<br>"
+                "Metric=%{customdata[3]}<br>"
+                "Raw value=%{customdata[4]:.3f}<br>"
+                "z-score=%{z:.2f}"
+                "<extra></extra>"
+            ),
+        )
+    )
+    figure.update_layout(
+        template="simple_white",
+        width=1250,
+        height=830,
+        margin={"l": 330, "r": 45, "t": 105, "b": 240},
+        title={
+            "text": "Operational regularity profile by team-semester",
+            "font": {"size": 22},
+            "y": 0.98,
+        },
+        font={"size": 13, "family": "DejaVu Sans, Arial, sans-serif"},
+        xaxis={"tickangle": -32, "side": "bottom", "tickfont": {"size": 12}},
+        yaxis={"title": "", "automargin": True},
+        annotations=[
+            {
+                "text": (
+                    "Columns are z-scored for visual comparison only; raw metrics have different units.<br>"
+                    "CV, inactivity and final-concentration columns remain directionally episodic when high."
+                ),
+                "xref": "paper",
+                "yref": "paper",
+                "x": 0,
+                "y": -0.34,
+                "xanchor": "left",
+                "showarrow": False,
+                "align": "left",
+                "font": {"size": 12, "color": "#52525b"},
+            }
+        ],
+    )
+    return figure
 
 
 def _regularity_for_team(
@@ -247,10 +675,57 @@ def generate() -> dict[str, Any]:
     )
     if len(output) != 14:
         raise ValueError(f"Expected 14 team-semesters, got {len(output)}")
+    output = _add_regularity_index(output)
 
     data_path = figures_dir / f"{STEM}_data.csv"
     metadata_path = figures_dir / f"{STEM}.metadata.json"
     _atomic_csv(output, data_path)
+
+    score_delta_data_path = figures_dir / f"{SCORE_DELTA_STEM}_data.csv"
+    final_concentration_data_path = figures_dir / f"{FINAL_CONCENTRATION_STEM}_data.csv"
+    heatmap_data_path = figures_dir / f"{HEATMAP_STEM}_data.csv"
+
+    score_delta_data = output.copy()
+    final_concentration_data = _final_concentration_long(output)
+    heatmap_data = _heatmap_data(output)
+
+    _atomic_csv(score_delta_data, score_delta_data_path)
+    _atomic_csv(final_concentration_data, final_concentration_data_path)
+    _atomic_csv(heatmap_data, heatmap_data_path)
+
+    _write_figure(_build_score_delta_plot(score_delta_data), SCORE_DELTA_STEM, figures_dir)
+    _write_figure(_build_final_concentration_plot(final_concentration_data), FINAL_CONCENTRATION_STEM, figures_dir)
+    _write_figure(_build_heatmap(heatmap_data), HEATMAP_STEM, figures_dir)
+
+    figure_outputs = {
+        SCORE_DELTA_STEM: {
+            "data_path": str(score_delta_data_path.relative_to(repo_root)),
+            "data_sha256": compute_sha256(score_delta_data_path),
+            "artifacts": [
+                str((figures_dir / f"{SCORE_DELTA_STEM}.{extension}").relative_to(repo_root))
+                for extension in ("pdf", "svg", "png")
+            ]
+            + [str(score_delta_data_path.relative_to(repo_root))],
+        },
+        FINAL_CONCENTRATION_STEM: {
+            "data_path": str(final_concentration_data_path.relative_to(repo_root)),
+            "data_sha256": compute_sha256(final_concentration_data_path),
+            "artifacts": [
+                str((figures_dir / f"{FINAL_CONCENTRATION_STEM}.{extension}").relative_to(repo_root))
+                for extension in ("pdf", "svg", "png")
+            ]
+            + [str(final_concentration_data_path.relative_to(repo_root))],
+        },
+        HEATMAP_STEM: {
+            "data_path": str(heatmap_data_path.relative_to(repo_root)),
+            "data_sha256": compute_sha256(heatmap_data_path),
+            "artifacts": [
+                str((figures_dir / f"{HEATMAP_STEM}.{extension}").relative_to(repo_root))
+                for extension in ("pdf", "svg", "png")
+            ]
+            + [str(heatmap_data_path.relative_to(repo_root))],
+        },
+    }
 
     metadata: dict[str, Any] = {
         "contract_version": CONTRACT_VERSION,
@@ -281,7 +756,15 @@ def generate() -> dict[str, Any]:
             "author_count": "M3 pre-T3 author count.",
             "max_author_share": "M3 pre-T3 maximum local-author commit share.",
             "author_gini": "M3 pre-T3 local-author commit Gini coefficient.",
+            "regularity_index": (
+                "Mean of eight normalized components where higher values indicate more distributed observed "
+                "repository activity: active-day share, commit entropy, clean-churn entropy, inverted min-max "
+                "commit weekly CV, inverted min-max clean-churn weekly CV, inverted M7 inactive-window share, "
+                "inverted final-7 commit share, and inverted final-7 clean-churn share."
+            ),
         },
+        "regularity_index_components": REGULARITY_COMPONENTS,
+        "figure_outputs": figure_outputs,
         "separation_of_constructs": (
             "Regularity metrics describe temporal distribution of observed repository activity, "
             "not productivity, process compliance, or semantic quality."
@@ -291,6 +774,7 @@ def generate() -> dict[str, Any]:
             "Repository regularity is an observable Git proxy, not a direct measurement of Scrum, Kanban, or coordination process.",
             "Weekly zero bins are included only after first observed commit and before the T3 anchor.",
             "Clean churn uses the repository code-path policy and is not semantic quality evidence.",
+            "The regularity index is a descriptive composite approved for visualization, not a validated latent process scale.",
         ],
     }
     _atomic_json(metadata, metadata_path)
@@ -300,6 +784,7 @@ def generate() -> dict[str, Any]:
         "data_path": str(data_path),
         "metadata_path": str(metadata_path),
         "coverage": metadata["coverage"],
+        "figure_outputs": figure_outputs,
     }
 
 
