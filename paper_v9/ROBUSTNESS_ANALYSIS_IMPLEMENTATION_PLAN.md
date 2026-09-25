@@ -1396,8 +1396,8 @@ paper_v9/scripts/results/build_team_semester_evidence_panel.py
 
 **Output esperado**
 
-- `paper_v9/figures/team_semester_evidence_panel.csv`
-- `paper_v9/figures/team_semester_evidence_panel.metadata.json`
+- [x] `paper_v9/figures/team_semester_evidence_panel.csv`
+- [x] `paper_v9/figures/team_semester_evidence_panel.metadata.json`
 
 ## Tarefa 8.2 — Conteúdo do painel
 
@@ -1433,9 +1433,9 @@ Colunas sugeridas:
 
 **Checklist**
 
-- [ ] Não misturar métricas de grão estudante com equipe sem explicitar agregação.
-- [ ] Incluir colunas de status/cobertura.
-- [ ] Usar como base para tabelas e apêndices.
+- [x] Não misturar métricas de grão estudante com equipe sem explicitar agregação.
+- [x] Incluir colunas de status/cobertura.
+- [x] Usar como base para tabelas e apêndices.
 
 ---
 
@@ -1912,7 +1912,7 @@ git --no-pager status --short
 - [x] `generate_complexity_confounding_profiles.py`
 - [x] `generate_nonoverlapping_phase_activity.py`
 - [x] `generate_m5_2025_triangulation.py`
-- [ ] `build_team_semester_evidence_panel.py`
+- [x] `build_team_semester_evidence_panel.py`
 
 ## Testes
 
@@ -1923,7 +1923,7 @@ git --no-pager status --short
 - [ ] `test_complexity_confounding_profiles.py`
 - [ ] `test_nonoverlapping_phase_activity.py`
 - [x] `test_m5_2025_triangulation.py`
-- [ ] `test_team_semester_evidence_panel.py`
+- [x] `test_team_semester_evidence_panel.py`
 
 ## Figuras principais candidatas
 

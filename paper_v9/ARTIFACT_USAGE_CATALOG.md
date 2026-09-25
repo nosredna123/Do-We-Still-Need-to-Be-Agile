@@ -98,6 +98,24 @@ devem ser lidas como sínteses descritivas small-n, não como inferências causa
 | `superseded_by` | — |
 | `last_reviewed` | 2026-09-25 |
 
+### team_semester_evidence_panel
+
+| Campo | Valor |
+|---|---|
+| `artifact_id` | `team_semester_evidence_panel` |
+| `artifact_family` | `integrated_evidence_panel` |
+| `files` | [`figures/team_semester_evidence_panel.csv`](figures/team_semester_evidence_panel.csv), [`figures/team_semester_evidence_panel.metadata.json`](figures/team_semester_evidence_panel.metadata.json) |
+| `data_inputs` | `paper_v9/figures/rq2_score_trajectory_base_data.csv`; `paper_v9/figures/rq2_operational_regularity_data.csv`; `paper_v9/figures/rq3_complexity_profile_data.csv`; `paper_v9/figures/rq2_phase_activity_share_data.csv`; `paper_v9/figures/rq2_m5_2025_triangulation_summary.csv`; `paper_v9/data/metrics/m1_rq1_perception_panel_wide.csv`; `paper_v9/data/metrics/m2_role_perception_by_team_semester.csv`; `paper_v9/data/metrics/m6b_llm_planning_content.json` |
+| `unit_of_analysis` | equipe-semestre; inclui agregados M1/M2 por semestre/checkpoint repetidos com campo de grão explícito e contexto M5 global restrito a 2025.2 |
+| `main_question` | Como reunir, em uma única tabela auditável, as evidências por equipe-semestre usadas nas análises de planejamento, atividade, score, regularidade, rework, complexidade e cobertura? |
+| `best_use` | Appendix/suplemento; base de revisão editorial, tabelas de evidência e checagem de cobertura antes da integração textual |
+| `key_reading` | Painel integrador com 14 linhas, uma por equipe-semestre. Consolida planejamento M6a, score/deltas, atividade Git, regularidade, rework M8, complexidade, shares por fase, status M6b e cobertura M5. Campos `m1_aggregation_level`, `m2_aggregation_level`, `m5_analysis_level`, `m5_team_level_measure` e `m5_zero_filled_unavailable_semesters` tornam explícito quando uma métrica não é originalmente team-level. |
+| `utility_score` | Alta |
+| `limitations` | Não é modelo estatístico nem evidência causal; M1/M2 são agregados por semestre/checkpoint; M5 é contexto global de corpus apenas para 2025.2; M6b depende de disponibilidade de commit subjects T1. |
+| `status` | `appendix` |
+| `superseded_by` | — |
+| `last_reviewed` | 2026-09-25 |
+
 ### rq2_operational_regularity
 
 | Campo | Valor |
