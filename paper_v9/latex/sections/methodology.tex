@@ -49,10 +49,13 @@ interval-like scores; medians and interquartile ranges are used for skewed
 counts and ratios. Proportions retain denominators. Rolling seven-day windows
 are indexed relative to evaluator anchors and are temporal summaries, not
 independent observations. Exploratory associations use Spearman's rank
-correlation $\rho$~\cite{spearman1904proof}; p-values are descriptive
-diagnostics rather than confirmatory tests. Leave-one-out analyses recompute
-associations after removing each eligible team-semester and show sensitivity
-to influential cases rather than confidence intervals.
+correlation $\rho$~\cite{spearman1904proof}, which tests whether two variables
+tend to move monotonically together after replacing raw values by ranks. This
+choice avoids assuming linear relationships or normally distributed variables
+in a small, mixed-scale panel; p-values are descriptive diagnostics rather than
+confirmatory tests. Leave-one-out analyses recompute associations after
+removing each eligible team-semester and show sensitivity to influential cases
+rather than confidence intervals.
 
 In addition to the primary M1--M9 families, we compute robustness views:
 non-overlapping phase bins, final-seven-day concentration contrasts by score

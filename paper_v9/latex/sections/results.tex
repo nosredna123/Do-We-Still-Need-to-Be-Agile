@@ -124,9 +124,12 @@ $100.0\%$; three team-semesters have fewer than ten total commits, and their
 shares should be treated as small-denominator descriptions. In the author
 concentration output, the median pre-anchor window contains 12.5 commits,
 3.5 active days, and 3 authors, with a median maximum-author share of $0.50$
-and median Gini coefficient of $0.22$. Post-anchor windows are frequently
-inactive; where activity exists, concentration statistics are not interpreted
-for no-activity cases.
+and median Gini coefficient of $0.22$. Here, the Gini coefficient summarizes
+how unevenly commits are distributed across authors, with values near zero
+indicating more even participation and larger values indicating stronger
+author-level concentration. Post-anchor windows are frequently inactive; where
+activity exists, concentration statistics are not interpreted for no-activity
+cases.
 % PROVENANCE: Checkpoint and author summaries are from
 % paper_v9/data/metrics/m3_author_activity_participation.csv and
 % m3_author_concentration.csv. No author identity is exposed in these outputs.
@@ -141,12 +144,14 @@ as independent causal tests.
 % rq2_nonoverlapping_phase_activity.metadata.json.
 
 To address whether the final peak is simply ``student syndrome,'' we compare
-final-seven-day concentration with evaluator-score change and repository-visible
-planning scope at team-semester grain ($n=14$). Higher final concentration
-appears in both positive-delta and non-positive-delta cases, and the clean-churn
-variant agrees directionally with the commit-based view. Figure~\ref{fig:rq2-planning-commit}
-keeps the representative planning/concentration contrast in the main text;
-the score-delta and clean-churn variants remain in the replication artifacts.
+final-seven-day concentration--the share of a team's total repository activity
+occurring in the seven days around final delivery--with evaluator-score change
+and repository-visible planning scope at team-semester grain ($n=14$). Higher
+final concentration appears in both positive-delta and non-positive-delta
+cases, and the clean-churn variant agrees directionally with the commit-based
+view. Figure~\ref{fig:rq2-planning-commit} keeps the representative
+planning/concentration contrast in the main text; the score-delta and
+clean-churn variants remain in the replication artifacts.
 
 \begin{figure*}[t]
 \centering
@@ -256,12 +261,13 @@ RQ2 descriptive contrast within the observed evidence streams.
 
 RQ3 is evaluated at team-semester grain across only 14 observations. This
 small sample substantially limits statistical power and the stability of any
-correlation estimate; accordingly, the reported Spearman coefficients are
-strictly exploratory diagnostics of structural variation, not confirmatory
-tests. This narrower analysis complements the broader descriptive evidence for
-RQ1 and RQ2, which is situated in a cohort of approximately 70 participating
-students and draws on repeated surveys, repositories from all 14 projects, and
-the available transcript corpus. These evidence streams retain their distinct
+correlation estimate; accordingly, the reported rank-based Spearman
+coefficients are used only to summarize directional monotonic patterns in the
+observed cases, not as confirmatory tests. This narrower analysis complements
+the broader descriptive evidence for RQ1 and RQ2, which is situated in a cohort
+of approximately 70 participating students and draws on repeated surveys,
+repositories from all 14 projects, and the available transcript corpus. These
+evidence streams retain their distinct
 analytical grains and are not treated as 70 independent observations. The RQ3
 analysis separates observable upfront architectural artifacts from their
 semantic interpretation, separates rework magnitude from a
@@ -333,7 +339,8 @@ eligibility.
 \centering
 \includegraphics[width=\textwidth]{figures/rq3_architecture_rework_profile.png}
 \caption{T1 architectural-artifact scope versus T3 clean-rework magnitude.
-Points represent team-semesters; the vertical scale is logarithmic. Clean
+Points represent team-semesters; the vertical scale is logarithmic so that
+small and very large rework magnitudes remain visible in the same panel. Clean
 rework is a file-provenance proxy, not semantic defect validation.}
 \label{fig:rq3-profile}
 \end{figure*}
