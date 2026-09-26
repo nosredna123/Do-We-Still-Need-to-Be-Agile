@@ -22,16 +22,16 @@
 \BIBdecl
 
 \bibitem{github2025spec}
-\BIBentryALTinterwordspacing
-{GitHub Blog}, ``Spec-driven development with ai: Get started with a new open
-  source toolkit,'' September 2025. [Online]. Available:
-  \url{https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/}
-\BIBentrySTDinterwordspacing
+D.~Delimarsky, ``Spec-driven development with {AI}: Get started with a new open
+  source toolkit,''
+  \url{https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/},
+  sep 2025.
 
 \bibitem{thoughtworks202Xspec}
 \BIBentryALTinterwordspacing
-{Thoughtworks}, ``Spec-driven development,'' 2025. [Online]. Available:
-  \url{https://www.thoughtworks.com/en-br/insights/decoder/s/spec-driven-development}
+{Thoughtworks}, ``Spec-driven development,'' November 2025. [Online].
+  Available:
+  \url{https://www.thoughtworks.com/insights/decoder/s/spec-driven-development}
 \BIBentrySTDinterwordspacing
 
 \bibitem{agile_manifesto_2001}
@@ -77,17 +77,6 @@ M.~Yabaku and S.~Ouhbi, ``On usage and assessment of generative ai by computer
   International Conference on Software Engineering Education and Training
   (CSEE\&T)}, 2024.
 
-\bibitem{verdecchia2018architectural}
-R.~Verdecchia, ``Architectural technical debt identification: Moving forward,''
-  in \emph{2018 IEEE International Conference on Software Architecture
-  Companion (ICSA-C)}, 2018, pp. 43--44.
-
-\bibitem{nayebi2019longitudinal}
-M.~Nayebi, Y.~Cai, R.~Kazman, G.~Ruhe, Q.~Feng, C.~Carlson, and F.~Chew, ``A
-  longitudinal study of identifying and paying down architecture debt,'' in
-  \emph{2019 IEEE/ACM 41st International Conference on Software Engineering:
-  Software Engineering in Practice (ICSE-SEIP)}, 2019, pp. 171--180.
-
 \bibitem{cunningham_1992_technical_debt}
 W.~Cunningham, ``The wycash portfolio management system,'' in \emph{OOPSLA '92
   Experience Report}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 1992.
@@ -102,6 +91,17 @@ M.~Fowler, ``Technical debt quadrant,'' 2009. [Online]. Available:
 P.~Kruchten, R.~L. Nord, and I.~Ozkaya, ``Technical debt: From metaphor to
   theory and practice,'' \emph{IEEE Software}, vol.~29, no.~6, pp. 18--21,
   2012.
+
+\bibitem{verdecchia2018architectural}
+R.~Verdecchia, ``Architectural technical debt identification: Moving forward,''
+  in \emph{2018 IEEE International Conference on Software Architecture
+  Companion (ICSA-C)}, 2018, pp. 43--44.
+
+\bibitem{nayebi2019longitudinal}
+M.~Nayebi, Y.~Cai, R.~Kazman, G.~Ruhe, Q.~Feng, C.~Carlson, and F.~Chew, ``A
+  longitudinal study of identifying and paying down architecture debt,'' in
+  \emph{2019 IEEE/ACM 41st International Conference on Software Engineering:
+  Software Engineering in Practice (ICSE-SEIP)}, 2019, pp. 171--180.
 
 \bibitem{lewis2020retrieval}
 P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
@@ -178,19 +178,17 @@ M.~Chen, J.~Tworek, H.~Jun, Q.~Yuan, H.~de~Oliveira~Pinto, J.~Kaplan,
   arXiv:2107.03374}, 2021.
 
 \bibitem{williams_2024_ai_software_engineering_education}
-C.~Williams, M.~Jones, and R.~Patel, ``Generative ai and software engineering
-  education: Opportunities, risks, and design constraints,'' in
-  \emph{Proceedings of the International Conference on Software Engineering
-  Education and Training}, 2024.
+P.~Haindl and G.~Weinberger, ``Experiences of using chatgpt in an undergraduate
+  programming course,'' \emph{IEEE Access}, vol.~12, pp. 43\,518--43\,537,
+  2024.
 
 \bibitem{miller_2023_coordination_ai_teams}
-S.~Miller, J.~Ferris, and A.~Chen, ``Coordination signals and human-ai teaming
-  in software engineering courses,'' in \emph{Proceedings of the ACM/IEEE
-  International Conference on Software Engineering}, 2023.
+D.~Spinellis, ``Ai: The blind-men elephant in the software developers' room,''
+  \emph{IEEE Software}, vol.~41, no.~4, pp. 4--8, 2024.
 
 \bibitem{perez_2022_planning_and_rework}
-J.~Pérez, A.~Moreno, and E.~Lauri, ``Planning quality, rework, and team
-  coordination in project-based software courses,'' \emph{IEEE Transactions on
-  Education}, vol.~65, no.~2, pp. 214--223, 2022.
+B.~Bruegge, S.~Krusche, and L.~Alperowitz, ``Software engineering project
+  courses with industrial clients,'' \emph{ACM Transactions on Computing
+  Education}, vol.~15, no.~4, pp. 17:1--17:31, 2015.
 
 \end{thebibliography}
