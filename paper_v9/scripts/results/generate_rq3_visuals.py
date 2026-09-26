@@ -72,18 +72,36 @@ def generate() -> None:
         "no_repository_artifact_observed_n": "No repository artifact observed",
     })
     presence_long.to_csv(figures / "rq3_architectural_artifact_presence_data.csv", index=False)
+    presence_long["evidence_state_display"] = presence_long["evidence_state"].map({
+        "Artifact observed": "Artifact observed",
+        "No repository artifact observed": "No repo artifact",
+    })
     presence_figure = px.bar(
         presence_long,
         x="Semestre",
         y="team_semester_count",
-        color="evidence_state",
+        color="evidence_state_display",
         barmode="stack",
         text="team_semester_count",
-        labels={"team_semester_count": "Team-semesters", "Semestre": "Cohort", "evidence_state": "Evidence state"},
-        title="T1 architectural-artifact presence",
-        color_discrete_map={"Artifact observed": "#4f6bed", "No repository artifact observed": "#b9c0cc"},
+        labels={"team_semester_count": "Team-semesters", "Semestre": "Cohort", "evidence_state_display": ""},
+        color_discrete_map={"Artifact observed": "#4f6bed", "No repo artifact": "#b9c0cc"},
     )
-    presence_figure.update_layout(template="simple_white", width=1200, height=500, font={"size": 15}, title_font={"size": 20}, margin={"l": 70, "r": 35, "t": 65, "b": 60})
+    presence_figure.update_layout(
+        template="simple_white",
+        width=760,
+        height=620,
+        font={"size": 18},
+        margin={"l": 80, "r": 25, "t": 25, "b": 95},
+        legend={
+            "orientation": "h",
+            "yanchor": "top",
+            "y": -0.18,
+            "xanchor": "center",
+            "x": 0.5,
+            "title_text": "",
+        },
+    )
+    presence_figure.update_traces(textposition="inside", textfont={"size": 18})
     _write(presence_figure, "rq3_architectural_artifact_presence", figures)
 
     associations = loo.groupby(["analysis_id", "predictor", "outcome"], as_index=False).agg(

@@ -44,15 +44,13 @@ def generate() -> None:
         )
     )
     m3_figure.add_vline(x=0, line_dash="dash", line_color="#333333")
-    m3_figure.add_annotation(x=1, y=302, text="Peak: 302 commits", showarrow=True, arrowhead=2, ax=70, ay=-45)
+    m3_figure.add_annotation(x=1, y=302, text="Peak: 302", showarrow=True, arrowhead=2, ax=55, ay=-32)
     m3_figure.update_layout(
         template="simple_white",
         width=1200,
-        height=560,
-        margin={"l": 75, "r": 35, "t": 65, "b": 65},
-        title="M3 pooled rolling repository activity",
+        height=420,
+        margin={"l": 75, "r": 30, "t": 25, "b": 55},
         font={"size": 15},
-        title_font={"size": 20},
         xaxis={"title": "Window end relative to T3 anchor (days)", "tickfont": {"size": 14}, "title_font": {"size": 16}},
         yaxis={"title": "Commits across all team-semesters", "tickfont": {"size": 14}, "title_font": {"size": 16}},
     )
@@ -88,7 +86,7 @@ def generate() -> None:
         yaxis_title="Candidate markers per 1,000 tokens",
     )
 
-    combined = make_subplots(rows=1, cols=2, subplot_titles=("M4 clean source/test churn", "M5 lexical marker density"), horizontal_spacing=0.12)
+    combined = make_subplots(rows=1, cols=2, subplot_titles=("M4 clean churn", "M5 marker density"), horizontal_spacing=0.1)
     for trace in m4_figure.data:
         combined.add_trace(trace, row=1, col=1)
     for trace in m5_figure.data:
@@ -96,11 +94,10 @@ def generate() -> None:
     combined.update_layout(
         template="simple_white",
         width=1200,
-        height=500,
-        margin={"l": 70, "r": 35, "t": 70, "b": 65},
+        height=400,
+        margin={"l": 70, "r": 30, "t": 45, "b": 50},
         showlegend=False,
         font={"size": 14},
-        title={"text": "RQ2 checkpoint summaries with explicit units", "font": {"size": 20}},
     )
     combined.update_xaxes(title="Checkpoint", tickfont={"size": 13})
     combined.update_yaxes(title="Clean churn (lines)", tickfont={"size": 13}, row=1, col=1)

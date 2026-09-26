@@ -202,9 +202,8 @@ def _build_quadrant_plot(data: pd.DataFrame, *, title: str, yaxis_title: str) ->
     figure.update_layout(
         template="simple_white",
         width=1100,
-        height=680,
-        margin={"l": 85, "r": 35, "t": 95, "b": 130},
-        title={"text": title, "font": {"size": 22}},
+        height=540,
+        margin={"l": 85, "r": 30, "t": 55, "b": 70},
         font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
         legend={
             "title": "Semester",
@@ -216,7 +215,7 @@ def _build_quadrant_plot(data: pd.DataFrame, *, title: str, yaxis_title: str) ->
         },
         coloraxis={
             "colorscale": "Viridis",
-            "colorbar": {"title": "T3 evaluator<br>score"},
+            "colorbar": {"title": "T3<br>score"},
         },
         xaxis={
             "title": "Repository-visible T1 planning scope (log1p changed lines)",
@@ -230,23 +229,7 @@ def _build_quadrant_plot(data: pd.DataFrame, *, title: str, yaxis_title: str) ->
             "gridcolor": "#e5e7eb",
             "zeroline": False,
         },
-        annotations=[
-            *figure.layout.annotations,
-            {
-                "text": (
-                    "Points are team-semesters. Color encodes T3 evaluator score; "
-                    "marker area encodes absolute T3−T1 score delta.<br>"
-                    "Planning is repository-visible T1 scope, not semantic planning quality."
-                ),
-                "xref": "paper",
-                "yref": "paper",
-                "x": 0,
-                "y": -0.2,
-                "showarrow": False,
-                "align": "left",
-                "font": {"size": 12, "color": "#52525b"},
-            },
-        ],
+        annotations=[*figure.layout.annotations],
     )
     return figure
 

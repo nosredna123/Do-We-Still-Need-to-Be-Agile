@@ -71,6 +71,17 @@ TEXINPUTS=.:../: pdflatex -synctex=1 -interaction=nonstopmode main.tex
 TEXINPUTS=.:../: pdflatex -synctex=1 -interaction=nonstopmode main.tex
 ```
 
+**Baseline recorded on 2026-09-25**
+
+- Current PDF: 28 pages.
+- References begin on page 27 (`main.bbl` starts after page 26 in the LaTeX
+  log), so the current split is approximately 26 text pages + 2 reference
+  pages.
+- `\includegraphics` count before removals: 18 total, all in
+  `latex/sections/results.tex`.
+- Immediate target delta: remove or absorb at least 16 text pages to satisfy
+  the 10-page text budget.
+
 ### Phase 2 — Remove Secondary Robustness Figures from Main Text
 
 **Purpose:** reclaim the largest space without changing empirical claims.
@@ -244,6 +255,45 @@ Condense Results for ICSE page budget
   replication artifacts/catalog.
 - The paper still preserves the non-causal, descriptive interpretation
   boundary.
+
+## Implementation Checkpoint — Careful First Pass
+
+Recorded on 2026-09-25 after the first page-budget implementation pass.
+
+**Applied without removing central evidence**
+
+- Removed secondary robustness figures from the main text:
+  - non-overlapping phase shares;
+  - score-delta scatter variants;
+  - clean-churn planning/concentration variant;
+  - operational-regularity scatter;
+  - coverage-aware M5 triangulation;
+  - RQ3 sensitivity and influence-map diagnostics.
+- Preserved the central visuals/tables identified as narrative anchors:
+  - `fig:rq2-m3`;
+  - `fig:rq2-planning-commit`;
+  - `fig:rq2-m4-m5`;
+  - `tab:rq1-m1-endpoints`;
+  - `tab:rq2-summary`;
+  - `tab:rq3-associations`.
+- Condensed Results prose by removing table-level repeated numbers while
+  keeping high-level trends, denominators, non-causal cautions, and pointers to
+  replication artifacts.
+
+**Measured effect**
+
+- Baseline before refactor: 28 total pages; references began on page 27.
+- Careful first pass: 18 total pages; references begin on page 17.
+- Remaining delta: approximately 6 total pages, or about 6 text pages beyond
+  the 10-page text budget.
+
+**Decision point**
+
+Further reduction cannot be achieved by the supplied report alone without
+broader editorial compression of other sections (for example Background,
+Methodology, Discussion, and Threats to Validity) or demotion of additional
+core tables/figures. Those next cuts should be explicitly approved because
+they carry higher narrative risk than the first-pass figure demotions.
 
 ## Risk Controls
 

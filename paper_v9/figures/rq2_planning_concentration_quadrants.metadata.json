@@ -3,7 +3,7 @@
   "base_path": "paper_v9/figures/rq2_score_trajectory_base_data.csv",
   "base_sha256": "3027e67d064786302e6590da562be9212a7721e74f777996b19545014d46ca52",
   "contract_version": "rq2-planning-concentration-quadrants-v1",
-  "generated_at_utc": "2026-09-25T17:47:14.667824+00:00",
+  "generated_at_utc": "2026-09-25T21:07:16.400255+00:00",
   "inference": "descriptive_non_causal",
   "limitations": [
     "Planning scope is repository-visible structural evidence, not semantic planning quality.",

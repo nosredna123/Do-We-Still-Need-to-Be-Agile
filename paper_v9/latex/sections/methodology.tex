@@ -1,247 +1,96 @@
 \section{Methodology}
 \label{sec:method}
 
-To investigate how planning discipline and coordination evolve in AI-assisted
-software engineering projects, we designed an empirical study combining
-longitudinal repository mining, standardized instructor evaluations,
-multi-checkpoint student surveys, and qualitative meeting transcripts across
-two academic offerings.
+We studied two offerings of a project-based undergraduate software-engineering
+course at a large public university in South America: 2025.2 ($N=9$
+analyzable teams) and 2026.1 ($N=5$), for $N=14$ team-semesters and
+approximately 70 participating students. Teams of roughly five students had
+autonomy over process model and project management approach, including Scrum,
+Kanban, other Agile variants, or unguided work. Each team built an operational
+software project with an integrated GenAI component, but no AI architecture was
+mandated. RAG was presented as one domain-dependent example
+~\cite{lewis2020retrieval}; none of the 14 projects implemented a full RAG
+pipeline. The analyzed systems spanned healthcare, finance, education,
+research, ecotourism, onboarding, and tutoring domains, and used
+project-specific integrations such as summarization, document/profile
+analysis, chatbots, recommendations, and content generation.
 
-\subsection{Context, Course Design, and ``Rules of the Game''}
-The study was conducted within a project-based undergraduate software engineering course at a large public university in South America, spanning two semesters: 2025.2 ($N = 9$ analyzable teams) and 2026.1 ($N = 5$ teams), yielding a total inferential dataset of $N = 14$ team-semesters ($\approx 70$ participating students).
-
-Students formed teams of approximately five members through spontaneous self-allocation, with remaining students assigned to vacant slots to ensure balanced team sizes. Teams enjoyed complete autonomy regarding their internal organization, process models, and project management methodologies (e.g., choosing freely between Agile variants, Scrum, Kanban, or unguided approaches). However, course guidelines enforced two structural constraints:
-\begin{enumerate}
-	\item Teams were required to develop an operational software project featuring an integrated Generative AI component as a core functional requirement, but no particular AI architecture was mandated. Course instruction presented Retrieval-Augmented Generation (RAG)---which grounds Large Language Models (LLMs) in external knowledge bases \cite{lewis2020retrieval}---as one domain-dependent example rather than a universal requirement. Teams retained autonomy over their architectures, and none of the 14 projects implemented a full RAG pipeline. Instead, they developed project-specific integrations including LLM-supported summarization and content generation, profile or document analysis and matching, conversational tutoring and chatbots, and personalized recommendations, as summarized in Table~\ref{tab:projects}.
-	\item Students were strongly encouraged to utilize generative AI assistants throughout all phases of software development, from requirements specification to implementation and testing.
-\end{enumerate}
-
-The project lifecycle was anchored by three synchronized temporal checkpoints ($T_1$, $T_2$, and $T_3$) paced identically across both cohorts:
-\begin{itemize}
-	\item \textbf{$T_1$ (Baseline):} Administered on the first day of class prior to any formal instruction on generative AI processes, capturing baseline perceptions, initial project scope, and early planning commits.
-	\item \textbf{$T_2$ (Mid-Semester):} Conducted following structured instructional modules covering generative AI mechanics, RAG architectures, and software process models, accompanied by the second wave of survey instruments and status presentations.
-	\item \textbf{$T_3$ (Final Integration):} Positioned one week prior to the final project delivery and presentation, capturing the peak pressure of system integration and deadline convergence.
-\end{itemize}
-% PROVENANCE: Study context is retained from paper_v8/latex_code/main.tex.
-% V9 input coverage: paper_v9/data/manifests/input_inventory.json.
-
-\subsection{Project Scope and Real-World Complexity}
-To ensure ecological validity and induce realistic coordination friction, the course guidelines explicitly prohibited trivial algorithmic exercises and toy applications. Under the course rules, teams were required to identify and solve real-world community, educational, or business problems. This constraint forced students to grapple with high domain complexity, authentic user requirements, and the nontrivial challenge of embedding Generative AI into functional architectures.
-
-The resulting software systems spanned diverse domains, ranging from healthcare and financial management to academic research and ecotourism. Table~\ref{tab:projects} details the 14 projects analyzed in this study. The breadth and complexity of these applications validate that the observed late-stage integration challenges and chronic coordination friction were driven by authentic software engineering workloads rather than artificially simplistic academic tasks.
-
-\begin{table*}[t]
-\caption{Analyzed Student Projects by Cohort, Demonstrating Real-World Problem Scope and Generative AI Integration}
-\label{tab:projects}
-\centering
-\begin{tabular}{@{}lp{3cm}p{12.5cm}@{}}
-\toprule
-\textbf{Semester} & \textbf{Project Name} & \textbf{System Description \& AI Integration Scope} \\
-\midrule
-2026.1 & FoodGuard & Web platform utilizing nutritional data and medical history to identify food allergens and prevent adverse reactions. \\
-2026.1 & RevisAI & Educational system that generates intelligent flashcards and organizes customized weekly study review cycles. \\
-2026.1 & SmartFlowIA & SaaS WhatsApp chatbot focusing on intelligent onboarding, orientation, and welcoming for university freshmen. \\
-2026.1 & Interview Prep IA & AI-driven system that analyzes resumes against job vacancies, simulates interviews, and provides personalized candidate feedback. \\
-2026.1 & EnemBot & Domain-specific chatbot designed to tutor and assist students with questions regarding the Brazilian National High School Exam. \\
-\midrule
-2025.2 & CampusGuide & Intelligent virtual assistant and campus navigation system designed to help students and professors locate university resources. \\
-2025.2 & EstudaAI & Study management platform that processes multimodal files (audio, image, PDF) to generate lecture summaries, reminders, and track grades. \\
-2025.2 & CareerPath IA & Resume analysis tool that uses GenAI to match user profiles with market demands and suggest targeted skill development. \\
-2025.2 & Buliçoso & Healthcare application that utilizes LLMs to simplify complex medical leaflets and manage medication reminders for the elderly. \\
-2025.2 & EcoRoteiro & Ecotourism platform that generates personalized travel itineraries based on user profiles, physical conditions, and specific interests. \\
-2025.2 & Research Flow & Academic research assistant that searches articles, generates intelligent summaries, and formats texts to academic standards (e.g., ABNT, APA). \\
-2025.2 & ExamForge & Assessment simulator that ingests past exams and course materials to generate new tests matching specific professor grading patterns. \\
-2025.2 & SoFiA & Financial management web platform utilizing AI to help university students dynamically organize their personal finances. \\
-2025.2 & Synapse & Requirements engineering tool that summarizes technical client meetings to automatically generate functional requirements, user stories, and backlogs. \\
-\bottomrule
-\end{tabular}
-\end{table*}
-% PROVENANCE: Project names and descriptions are retained from the V8 study
-% design; team-semester coverage is validated by the V9 input inventory.
-
-\subsection{Data Sources and Collection Framework}
 \label{sec:data-sources}
-Our data collection framework triangulates four distinct evidentiary channels to capture both technical artifacts and human behavioral dynamics.
+The course used three synchronized checkpoints. $T_1$ was administered on the
+first day of class, before formal instruction on GenAI processes; $T_2$
+followed modules on GenAI mechanics, RAG architectures, and software process;
+and $T_3$ occurred one week before final delivery and presentation. The study
+combines four evidence streams. First, complete Git histories provide commits,
+line changes, file provenance, branch information, and repository-visible
+artifacts. Students were instructed to keep requirements, architecture,
+documentation, and source code in the repository, but Git remains repository
+evidence rather than AI-use telemetry. Second, independent evaluator
+scorecards were collected at $T_1$--$T_3$ through blind scoring after status
+presentations, with 4 evaluators in 2025.2 and 3 in 2026.1. Third,
+multi-checkpoint surveys captured demographics, experience, GenAI adoption,
+perceived role disruption, and project expectations at cohort/checkpoint grain;
+survey responses carry no team identifier. Fourth, a bounded 2025.2 transcript
+corpus covers status presentations and supervisor discussions, segmented into
+100 chunks across $T_1$, $T_2$, and $T_3$. Transcript evidence is a global
+checkpoint corpus and is not imputed for 2026.1.
 
-\textbf{1. Git Repositories:} Complete historical commit logs, branch structures, line change counts, and file-level provenance were extracted from all team repositories across the entire semester lifecycle. Students were explicitly instructed to centralize all project artifacts---including requirements, architectural specifications, documentation, and source code---directly within their Git repositories. This directive defined the repository as the intended source of truth for the team's production effort. The analysis used read-only repository histories and standardized event tables; Git remains repository evidence, not AI-use telemetry.
-
-\textbf{2. Independent Evaluator Scorecards:} At each checkpoint ($T_1$, $T_2$, $T_3$), teams delivered formal status presentations. These were assessed by a panel of independent supervisors (4 evaluators in the 2025.2 cohort, and 3 in the 2026.1 cohort). To prevent groupthink and ensure scoring validity, an independent blind-scoring protocol was enforced: following the presentation and open feedback, each supervisor submitted their scores via a private electronic form. Evaluators remained blind to their peers' scores throughout the semester. The final project score was calculated as an unweighted average of these independent assessments. Projects were assessed across four structured criteria on explicit bounded scales: \emph{Project Evolution} (0 to 4.0 points), \emph{Scope and Applicability} (0 to 2.0 points), \emph{Technical Complexity} (0 to 2.0 points), and \emph{Engagement and Participation} (0 to 2.0 points). These observations were organized by team-semester and checkpoint for analysis.
-
-\textbf{3. Multi-Checkpoint Student Surveys:} Students completed identical survey instruments at $T_1$, $T_2$, and $T_3$ (totaling six instrument cycles). These surveys systematically captured data across five core constructs: Demographics, Professional Experience, GenAI Adoption, Perceptions of AI Impact on SE Roles, and Project Expectations. To ensure replicability, the core dimensions and sample variables tracked across these checkpoints are detailed in Table~\ref{tab:survey_instrument}. Survey responses are cohort-by-semester/checkpoint data and carry no team identifier; Self-Reported AI Usage and Perceptions (M1) and Perceived Role Disruption (M2) therefore remain at that grain.
-
-\begin{table*}[t]
-\caption{Structure of the Multi-Checkpoint Survey Instrument}
-\label{tab:survey_instrument}
-\centering
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.5cm}@{}}
-\toprule
-\textbf{Construct} & \textbf{Evaluated Variables \& Inquiries} & \textbf{Data Type} \\
-\midrule
-\textbf{Demographics \& Academic Background} & Age, Gender, Current academic semester, Previous degrees, High school educational background. & Categorical \\
-\addlinespace
-\textbf{Professional SE Experience} & Years of software development experience, Current employment status, Preferred engineering role (e.g., Backend, QA, ML), Largest past team size. & Categorical \\
-\addlinespace
-\textbf{Generative AI Adoption \& Tooling} & Frequency of AI usage, Specific tools adopted (e.g., ChatGPT, Gemini, GitHub Copilot, Claude), Primary use cases (e.g., Code generation, Debugging, Documentation). & Categorical \& Multiple Choice \\
-\addlinespace
-\textbf{Perceived AI Impact on SE Roles} & Perceived risk of extinction or severe disruption for specific roles: Backend, Frontend, QA, Project Manager, Product Manager, Scrum Master. & 5-point Likert \\
-\addlinespace
-\textbf{Expectations \& Motivation} & Confidence levels prior to project initiation, Motivation to learn new techniques, Expected 5-year impact of AI on the industry. & 5-point Likert \& Open-ended \\
-\bottomrule
-\end{tabularx}
-\end{table*}
-
-\textbf{4. Qualitative Meeting Transcripts:} To contextualize coordination dynamics and evaluative feedback, we constructed a bounded, single-cohort qualitative corpus from audio recordings of the three formal status presentation checkpoints in 2025.2. The corpus comprises the full audio records of the student presentations alongside the subsequent deliberative discussions among the supervisors in a private chat group. Crucially, these supervisory discussions were free-form qualitative reflections, completely decoupled from the numeric scorecasting process. To make the transcription data computationally feasible for analysis, the raw text was segmented into analytical chunks, yielding 100 distinct fragments (35 at $T_1$, 37 at $T_2$, and 28 at $T_3$). Coordination-Language Evidence (M5) reconstructs one global corpus per checkpoint; chunks and source sessions are provenance units, not independent observations. This qualitative deep dive informs interpretation of the repository evidence collected across both cohorts, but it is not used to claim cross-cohort replication: no transcript-based comparison with 2026.1 is made, and no transcript evidence is imputed for that cohort.
-
-\textbf{Data Anonymization and Privacy:} To ensure strict ethical compliance and protect participant confidentiality, all raw data streams were subjected to a rigorous anonymization pipeline, combining deterministic heuristics with LLM-assisted redaction to scrub unstructured text across commit messages, survey free-text responses, and audio transcripts. Finalized analytical artifacts exclude direct personal identifiers. Detailed call records and raw payload provenance remain restricted to the internal reproducibility record.
+All raw streams were anonymized before analysis. Analytical artifacts exclude
+direct personal identifiers; restricted provenance records preserve prompts,
+responses, hashes, and usage metadata for auditability.
 % PROVENANCE: Canonical inputs and checksums are listed in
 % paper_v9/data/manifests/input_inventory.json; survey and evaluator schemas
 % are validated by paper_v9/tests/test_input_contracts.py.
 
-\subsection{Statistical and Analytical Concepts}
+\subsection{Analytical Approach}
 
-The analysis uses descriptive summaries to preserve the scale and grain of each
-evidence stream. Means are reported with standard deviations when the metric is
-an approximately interval-like score; medians and interquartile ranges are used
-for skewed counts and ratios. Proportions retain their denominators, and rolling
-seven-day windows are indexed relative to evaluator anchors; overlapping windows
-are therefore summaries of nearby periods, not independent observations.
+The analysis is descriptive and preserves the scale and grain of each evidence
+stream. Means are reported with standard deviations for approximately
+interval-like scores; medians and interquartile ranges are used for skewed
+counts and ratios. Proportions retain denominators. Rolling seven-day windows
+are indexed relative to evaluator anchors and are temporal summaries, not
+independent observations. Exploratory associations use Spearman's rank
+correlation $\rho$~\cite{spearman1904proof}; p-values are descriptive
+diagnostics rather than confirmatory tests. Leave-one-out analyses recompute
+associations after removing each eligible team-semester and show sensitivity
+to influential cases rather than confidence intervals.
 
-For exploratory associations, Spearman's rank correlation $\rho$ measures the
-strength and direction of a monotonic relationship between two ranked variables
-without assuming a linear scale~\cite{spearman1904proof}. Its handling of ties
-is retained in the metric definition; study-specific limits from sample size,
-missingness, and influential observations are addressed in Threats to Validity.
-Artifact--Rework--Outcome Associations (M9) reports exploratory p-values as
-descriptive diagnostics rather than
-confirmatory significance tests. Leave-one-out analysis
-recomputes an association after removing each eligible team-semester in turn;
-the resulting range shows sensitivity to influential cases and is not a
-confidence interval. These summaries are always interpreted with their
-denominator, stratum, and measurement-availability state.
+In addition to the primary M1--M9 families, we compute robustness views:
+non-overlapping phase bins, final-seven-day concentration contrasts by score
+change and planning scope, operational-regularity proxies,
+technical-complexity profiles, and leave-one-out influence diagnostics. These
+views qualify interpretation and validity threats; they do not introduce
+causal estimators.
 
-\subsection{Advanced Metrics Operationalization}
-\label{sec:advanced-metrics}
+\subsection{Metric Families}
 
-Sections~\ref{sec:method}A--D established what was collected. This subsection
-formalizes how repository history, evaluator scorecards, survey responses, and
-transcript text become nine metric families used for RQ1--RQ3. Each family
-retains its analytical grain and exposes components only when they represent
-distinct constructs; no component is silently combined into a new score.
-To improve readability, we retain the M1--M9 identifiers for traceability but
-refer to each family by a concise descriptive name throughout the results and
-discussion (for example, Self-Reported AI Usage and Perceptions (M1) and
-Repository Activity (M3)).
+RQ1 is operationalized at cohort/checkpoint grain. Self-Reported AI Usage and
+Perceptions (M1) separates six perception families from self-reported usage
+frequency, tasks, tools, prior experience, autonomy/tool balance, and
+exploratory career topics. Perceived Role Disruption (M2) preserves
+role-specific Likert distributions and paired sensitivity summaries. Neither
+metric is behavioral AI-use telemetry.
 
-\textbf{A note on $T_1$/$T_2$/$T_3$ for repository-derived measures.} The
-checkpoint labels for commit and file history denote windows bounded by each
-team's evaluator presentation dates, not single calendar days. This distinction
-is retained throughout the repository-derived families and is made explicit in
-the corresponding artifacts and provenance comments.
+RQ2 uses repository and transcript evidence with explicit grain separation.
+Repository Activity (M3) summarizes commit timing, author participation,
+rolling windows, final-seven-day concentration, and non-overlapping phase
+shares for 14 team-semesters. Clean-Change Dynamics (M4) applies a versioned
+clean-path policy and reports clean churn separately from total churn.
+Coordination-Language Evidence (M5) reconstructs one 2025.2 global transcript
+corpus per checkpoint and deterministically counts versioned lexical markers;
+it is not correlated with team-semester repository observations.
 
-In addition to the primary M1--M9 metric families, we compute robustness and
-sensitivity views that preserve the same source data and analytical grains:
-non-overlapping phase bins for repository activity and clean churn,
-final-seven-day concentration contrasts by evaluator-score change and planning
-scope, operational-regularity proxies, technical-complexity profiles, and
-leave-one-out influence diagnostics. These views qualify interpretation and
-validity threats; they do not introduce new causal estimators.
-
-\subsubsection{RQ1: How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?}
-
-RQ1 is operationalized at cohort-by-semester/checkpoint grain because the
-anonymized survey responses contain no team identifier. Self-Reported AI Usage
-and Perceptions (M1) separates the
-perception panel from self-reported usage frequency, tasks, tools, prior
-experience, autonomy/tool balance, and exploratory career topics. Perceived
-Role Disruption (M2) preserves
-role-specific Likert distributions and paired sensitivity summaries. These
-families describe self-report and perceived role disruption; neither is AI-use
-telemetry or objective extinction risk.
-
-\textbf{Self-Reported AI Usage and Perceptions (M1).} The six perception
-families remain separate. Descriptive distributions are reported alongside raw
-usage fields and missingness; no heterogeneous family average is interpreted as
-a behavioral dependency measure. Career-topic coding remains exploratory.
-
-\textbf{Perceived Role Disruption (M2).} Role-specific Likert responses are
-summarized by cohort, checkpoint, and role. Where privacy-preserving respondent
-identifiers permit it, paired T1--T3 sensitivity summaries are reported without
-exposing identities.
-
-\subsubsection{RQ2: How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?}
-
-\textbf{Repository Activity (M3).} This family separates phase activity, author
-concentration, and rolling seven-day activity. A secondary pooled relative-window
-view removes the semester dimension only for visualization; it does not replace
-semester-stratified observations. A mutually exclusive phase-bin view and
-final-seven-day phase shares provide a robustness check against interpreting
-overlapping rolling windows as independent observations.
-
-\textbf{Clean-Change Dynamics (M4).} This family separates clean-change magnitude,
-touching-commit intensity, artifact composition, and rolling clean churn. The
-consistent path-classification rule defines the included source and test paths;
-commit counts remain contextual rather than the primary Clean-Change Dynamics
-(M4) outcome. Clean source/test churn is also summarized in the same
-non-overlapping phase structure used for Repository Activity (M3), allowing the
-late-stage concentration pattern to be inspected under a clean-path policy.
-% Implementation provenance: code-churn-metrics-v2 and
-% is_measurement_code_path define the path-classification rule.
-
-\textbf{Coordination-Language Evidence (M5).} This family reconstructs one global transcript
-corpus per checkpoint and deterministically counts versioned lexical markers for
-alignment, handoff, integration, blockers, and rework. It reports density,
-composition, corpus coverage, and an auditable chunk queue.
-Coordination-Language Evidence (M5) is not joined or correlated with
-team-semester Repository Activity (M3) or Clean-Change Dynamics (M4)
-observations. Transcript-derived M5 evidence is available only for 2025.2;
-2026.1 is treated as unavailable coverage, not as zero marker evidence.
-
-\subsubsection{RQ3: How does the observable scope and content evidence of upfront architectural artifacts at baseline \texorpdfstring{$T_1$}{T1} associate with late-stage clean-path rework and independent, blind-scored project outcomes?}
-
-\textbf{Upfront Architecture Evidence (M6).} Architectural Artifact Scope (M6a)
-reports T1 artifact presence and repository-visible scope. Approved Planning
-Content Evidence (M6b) reports separate categories---goals,
-architecture/design, task decomposition,
-risk/dependency, and literal evidence quotes---for nine observed team-semesters;
-five cases without T1 commit subjects were not measured. Planning Content
-Evidence (M6b) is exploratory
-and is never reduced
-to a composite planning-quality score.
-
-\textbf{Repository Inactivity (M7).} This family reports recent seven-day repository
-inactivity around evaluator checkpoints and in T3-relative rolling windows. It
-describes repository timing and coverage only; it does not identify planning
-omission and is not an independent predictor in Artifact--Rework--Outcome
-Associations (M9). Operational-regularity summaries extend this timing view by
-combining observable temporal and author-activity dispersion in Git. They are
-descriptive process proxies, not validated measures of agile adherence,
-productivity, or process quality.
-
-\textbf{Clean-Path Rework (M8).} This family separates clean
-rework magnitude, the clean rework ratio, the late-stage rolling trajectory,
-and baseline eligibility. This is a path-provenance proxy for destructive
-rework, not semantic defect validation. A path first observed at T1 or T2 is
-eligible for the provenance
-analysis; baseline-ineligible cases remain separate and are not imputed as
-stability or low quality.
-
-\textbf{M9: associations among artifacts, rework, and outcomes.} This family reports
-descriptive Spearman associations between T1
-architectural-artifact predictors and Clean-Path Rework (M8a/M8b) or
-independent, blind-scored T3
-evaluator outcomes, restricting
-ratio analyses to the baseline-eligible stratum. Approved
-Planning Content Evidence (M6b) fields enter a separate non-composite
-association output for observed cases.
-Leave-one-out diagnostics expose influence. Technical-complexity profiles use
-evaluator technical-complexity scores and repository-structural heuristics as
-contextual variables for sensitivity summaries. They are not causal
-adjustments, but they help assess whether rework and concentration patterns may
-be partly explained by project difficulty. No Repository Inactivity (M7)
-predictor or floor-imputation analysis is used.
-
-Table~\ref{tab:metrics_summary} summarizes the nine metric families, their
-components, and their primary analytical grains.
+RQ3 uses team-semester artifacts and outcomes. Upfront Architecture Evidence
+(M6) combines repository-visible T1 artifact presence/scope (M6a) with
+structured Planning Content Evidence (M6b) from T1 commit subjects for nine
+observed team-semesters; five cases without T1 subjects remain unavailable.
+Repository Inactivity (M7) reports timing and coverage diagnostics, not
+planning omission. Clean-Path Rework (M8) reports late changes to previously
+observed clean paths, preserving baseline eligibility. Artifact--Rework--
+Outcome Associations (M9) reports exploratory Spearman associations among T1
+artifact predictors, M8 rework, and independent T3 scorecard outcomes, with
+ratio analyses restricted to baseline-eligible cases. Technical-complexity
+profiles contextualize rework and concentration, but are not causal
+adjustments.
 
 \begin{table}[t]
 \caption{Summary of Metric Families and Components}
@@ -270,46 +119,15 @@ M9 & Artifact--Rework--Outcome Associations & Team-semester / stratum \\
 % are documented in paper_v9/metricas_v8-analysis/analyze_m1.md through
 % analyze_m9.md and in the corresponding verification notebooks.
 
-\subsection{LLM Usage in Data Extraction, Processing, and Metrics}
-Language-model assistance is used selectively for data extraction and is kept
-separate from deterministic metric construction. Self-Reported AI Usage and
-Perceptions (M1) uses coded survey responses, and Coordination-Language Evidence
-(M5) uses deterministic lexical coding of the transcript corpus; neither metric
-receives a new language-model score. Planning Content Evidence (M6b) uses structured extraction from
-$T_1$ commit subjects for nine observed team-semesters; five team-semesters have
-no $T_1$ subjects and remain unavailable rather than being imputed.
+\subsection{Language-Model Assistance}
 
-Table~\ref{tab:llm_prompt_catalog} summarizes the metric-bound language-model
-task and the metric component it supports.
-
-\begin{table}[t]
-\caption{Metric-Bound Language-Model Task}
-\label{tab:llm_prompt_catalog}
-\centering
-\small
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{3.7cm}@{}}
-\toprule
-\textbf{Task} & \textbf{Feeds} & \textbf{Structured output} \\
-\midrule
-Planning evidence extraction & Planning Content Evidence (M6b) & Goals, architecture/design, task decomposition, risk/dependency, and literal evidence quotes from $T_1$ commit subjects. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Planning Content Evidence (M6b) outputs were reviewed by the research team and retained for exploratory
-analysis as separate categories. They are not reduced to a composite
-planning-quality or architectural-quality score.
-
-\textbf{Persistence and auditability.} Model-assisted outputs are retained with
-their associated prompts, responses, hashes, usage metadata, and status so that
-each reported value can be traced to its source evidence. These records support
-reproducibility while remaining outside the paper-facing narrative.
-% PROVENANCE: LLM evidence is indexed by
-% paper_v9/data/metrics/m6_llm_planning_content.metadata.json and the restricted
-% data/analysis/.private/llm_call_ledger.parquet. The extraction uses the
-% approved m6b-structured-planning-v1.1 contract.
-
-\textbf{Inference boundary.} All reported metric families and components are
-descriptive or exploratory. Missing evidence remains distinct from zero or
-low quality, incompatible analytical grains are not silently combined, and no
-causal claim is made without a design that supports it.
+Language-model assistance is used only for bounded data extraction and is kept
+separate from deterministic metric construction. M1 uses coded survey
+responses and M5 uses deterministic lexical coding; neither receives a new
+language-model score. M6b uses structured extraction from $T_1$ commit subjects
+to identify goals, architecture/design, task decomposition, risk/dependency,
+and literal evidence quotes. Outputs were reviewed by the research team and
+retained as separate exploratory categories, never as a composite
+planning-quality or architectural-quality score. Missing evidence remains
+distinct from zero or low quality, incompatible grains are not combined, and no
+causal claim is made without a supporting design.

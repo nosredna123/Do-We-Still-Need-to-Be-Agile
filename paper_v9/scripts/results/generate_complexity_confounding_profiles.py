@@ -656,6 +656,10 @@ def _confounding_summary(profile: pd.DataFrame) -> pd.DataFrame:
 
 def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
     figure = go.Figure()
+    compact_planning_labels = {
+        "high_repository_visible_planning": "High planning",
+        "lower_repository_visible_planning": "Lower planning",
+    }
     for planning_tier in PLANNING_TIER_COLORS:
         for semester in sorted(data["Semestre"].unique()):
             subset = data.loc[data["planning_scope_tier"].eq(planning_tier) & data["Semestre"].eq(semester)]
@@ -672,7 +676,7 @@ def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
                         "size": 15,
                         "line": {"color": "white", "width": 1.6},
                     },
-                    name=f"{PLANNING_TIER_LABELS[planning_tier]} · {semester}",
+                    name=f"{compact_planning_labels[planning_tier]} · {semester}",
                     customdata=subset[
                         [
                             "ID_Equipe",
@@ -720,16 +724,11 @@ def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
     figure.update_layout(
         template="simple_white",
         width=1100,
-        height=680,
-        margin={"l": 90, "r": 35, "t": 135, "b": 155},
-        title={
-            "text": "Technical complexity and T3 clean rework",
-            "font": {"size": 22},
-            "y": 0.98,
-        },
+        height=500,
+        margin={"l": 90, "r": 30, "t": 60, "b": 70},
         font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
         legend={
-            "title": "Planning tier · semester",
+            "title": "",
             "orientation": "h",
             "yanchor": "bottom",
             "y": 1.03,
@@ -748,24 +747,7 @@ def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
             "zeroline": True,
             "zerolinecolor": "#cbd5e1",
         },
-        annotations=[
-            *figure.layout.annotations,
-            {
-                "text": (
-                    "Points are team-semesters. Color encodes repository-visible T1 planning tier; "
-                    "shape encodes semester.<br>"
-                    "The panel is descriptive: rework can reflect project complexity as well as planning or AI-use dynamics."
-                ),
-                "xref": "paper",
-                "yref": "paper",
-                "x": 0,
-                "y": -0.22,
-                "xanchor": "left",
-                "showarrow": False,
-                "align": "left",
-                "font": {"size": 12, "color": "#52525b"},
-            }
-        ],
+        annotations=[*figure.layout.annotations],
     )
     return figure
 

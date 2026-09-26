@@ -56,12 +56,6 @@ S.~Barke, M.~B. James, and N.~Polikarpova, ``Grounded copilot: How programmers i
 \bibitem{yabaku2024usage}
 M.~Yabaku and S.~Ouhbi, ``On usage and assessment of generative ai by computer science students in software development projects,'' in \emph{2024 36th International Conference on Software Engineering Education and Training (CSEE\&T)}, 2024.
 
-\bibitem{verdecchia2018architectural}
-R.~Verdecchia, ``Architectural technical debt identification: Moving forward,'' in \emph{2018 IEEE International Conference on Software Architecture Companion (ICSA-C)}, 2018, pp. 43--44.
-
-\bibitem{nayebi2019longitudinal}
-M.~Nayebi, Y.~Cai, R.~Kazman, G.~Ruhe, Q.~Feng, C.~Carlson, and F.~Chew, ``A longitudinal study of identifying and paying down architecture debt,'' in \emph{2019 IEEE/ACM 41st International Conference on Software Engineering: Software Engineering in Practice (ICSE-SEIP)}, 2019, pp. 171--180.
-
 \bibitem{cunningham_1992_technical_debt}
 W.~Cunningham, ``The wycash portfolio management system,'' in \emph{OOPSLA '92 Experience Report}.\hskip 1em plus 0.5em minus 0.4em\relax ACM, 1992.
 
@@ -72,6 +66,12 @@ M.~Fowler, ``Technical debt quadrant,'' 2009. [Online]. Available: \url{https://
 
 \bibitem{kruchten2012technicaldebt}
 P.~Kruchten, R.~L. Nord, and I.~Ozkaya, ``Technical debt: From metaphor to theory and practice,'' \emph{IEEE Software}, vol.~29, no.~6, pp. 18--21, 2012.
+
+\bibitem{verdecchia2018architectural}
+R.~Verdecchia, ``Architectural technical debt identification: Moving forward,'' in \emph{2018 IEEE International Conference on Software Architecture Companion (ICSA-C)}, 2018, pp. 43--44.
+
+\bibitem{nayebi2019longitudinal}
+M.~Nayebi, Y.~Cai, R.~Kazman, G.~Ruhe, Q.~Feng, C.~Carlson, and F.~Chew, ``A longitudinal study of identifying and paying down architecture debt,'' in \emph{2019 IEEE/ACM 41st International Conference on Software Engineering: Software Engineering in Practice (ICSE-SEIP)}, 2019, pp. 171--180.
 
 \bibitem{lewis2020retrieval}
 P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal, H.~K{\"{u}}ttler, M.~Lewis, W.~Yih, T.~Rockt{\"{a}}schel, S.~Riedel, and D.~Kiela, ``Retrieval-augmented generation for knowledge-intensive {NLP} tasks,'' in \emph{Advances in Neural Information Processing Systems}, vol.~33, 2020, pp. 9459--9474.

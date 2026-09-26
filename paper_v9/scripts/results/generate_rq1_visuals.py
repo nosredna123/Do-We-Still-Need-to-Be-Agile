@@ -73,11 +73,9 @@ def _m1_trajectory(metrics_dir: Path, figures_dir: Path) -> None:
     figure.update_layout(
         template="simple_white",
         width=900,
-        height=520,
-        margin={"l": 55, "r": 25, "t": 55, "b": 45},
-        title="M1 perception families by cohort and checkpoint",
+        height=440,
+        margin={"l": 55, "r": 25, "t": 35, "b": 40},
         font={"size": 14},
-        title_font={"size": 18},
         legend_font={"size": 13},
     )
     figure.update_xaxes(categoryorder="array", categoryarray=["T1", "T2", "T3"], title="Checkpoint", title_font={"size": 15}, tickfont={"size": 13})

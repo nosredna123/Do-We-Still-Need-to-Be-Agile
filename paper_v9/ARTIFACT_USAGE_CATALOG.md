@@ -119,6 +119,25 @@ Figuras densas devem ser integradas em largura total (`figure*`,
 | Manter como resposta/referência | `rq2_student_syndrome_reviewer_response` | Response letter; Discussion se necessário | `figure*` para full-period plots se promovidos | Responde diretamente ao revisor e informa a nuance sobre student syndrome. | Não promover integralmente ao texto principal sem condensar para evitar repetição com Fases 1/2/6. |
 | Manter diagnóstico | `candidate_figure_inventory` | Interno/diagnóstico | — | Inventário inicial foi superado por artefatos mais específicos das Fases 1–8. | Não promover sem justificativa nova. |
 
+## Decisão editorial — Fase 12 / orçamento de páginas ICSE-SEET
+
+Decisão registrada em 2026-09-25. A meta ICSE/SEET de 10 páginas de texto + 2
+de referências exige reduzir o número de figuras no texto principal. As
+demissões abaixo são decisões de economia narrativa e orçamento de páginas,
+não invalidação metodológica dos artefatos; todos continuam reproduzíveis no
+pacote de replicação e rastreados neste catálogo.
+
+| Decisão de page budget | Artefato/figura | Novo uso editorial | Justificativa | Observação |
+|---|---|---|---|---|
+| Manter no texto principal | `rq2_m3_activity_pooled` (`fig:rq2-m3`) | Results/RQ2 | Figura central do gargalo temporal. | Mantém a evidência visual do pico bruto. |
+| Manter no texto principal | `rq2_planning_vs_final7_commit_concentration` (`fig:rq2-planning-commit`) | Results/RQ2 | Visual representativo da relação planejamento visível × concentração final × score. | Variantes score-delta e clean-churn passam a ser resumidas em texto. |
+| Manter no texto principal | `rq2_m4_m5_checkpoint_panels` (`fig:rq2-m4-m5`) | Results/RQ2 | Painel compacto para M4/M5 com unidades explícitas. | Substitui a necessidade do painel M5 coverage-aware no corpo principal. |
+| Demover do texto principal | `rq2_phase_commit_share_by_score_trajectory`; `rq2_phase_clean_churn_share_by_score_trajectory` | Replication package / robustness artifact | Robustez contra janelas rolling sobrepostas pode ser resumida em uma frase. | Mantém limitação sobre fases e Git-only evidence no texto. |
+| Demover do texto principal | `rq2_score_delta_vs_final7_commit_concentration`; `rq2_score_delta_vs_final7_clean_churn_concentration`; `rq2_planning_vs_final7_clean_churn_concentration` | Replication package / robustness artifact | Variações confirmam a leitura do visual representativo, mas são redundantes para a narrativa principal. | Não remover os arquivos gerados. |
+| Demover do texto principal | `rq2_regularity_vs_final_concentration` | Replication package / process-heterogeneity check | Proxy de regularidade operacional é controle secundário. | Resumido em meia frase no Results. |
+| Demover do texto principal | `rq2_m5_2025_triangulation_panel` | Replication package / coverage-aware check | O painel M4/M5 já preserva a trajetória principal; triangulação 2025.2 é detalhe de cobertura. | 2026.1 continua explicitamente unavailable, não zero-filled. |
+| Demover do texto principal | `rq3_association_sensitivity`; `rq3_influence_map` | Replication package / Threats support | Diagnósticos leave-one-out sustentam robustez e small-n sensitivity, mas não precisam ocupar página principal. | Texto preserva que são diagnósticos, não ICs ou testes confirmatórios. |
+
 ## Sincronização catálogo-metadados
 
 Revisão executada em 2026-09-25. Todos os links relativos registrados neste

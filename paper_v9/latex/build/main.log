@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  25 SEP 2026 16:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  26 SEP 2026 04:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -453,165 +453,63 @@ ap}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ])
-(./sections/background_related_work.tex) (./sections/methodology.tex [2]
-[3] [4] [5]) (./sections/results.tex [6]
-<figures/rq1_m1_perception_with_sd.png, id=212, 1806.75pt x 1043.9pt>
+(./sections/background_related_work.tex) (./sections/methodology.tex [2])
+(./sections/results.tex [3]
+<figures/rq1_m1_perception_with_sd.png, id=134, 1806.75pt x 883.3pt>
 File: figures/rq1_m1_perception_with_sd.png Graphic file (type png)
 <use figures/rq1_m1_perception_with_sd.png>
 Package pdftex.def Info: figures/rq1_m1_perception_with_sd.png  used on input l
-ine 47.
-(pdftex.def)             Requested size: 516.0pt x 298.1358pt.
-<figures/rq1_m2_role_perception_heatmap.png, id=215, 1806.75pt x 863.225pt>
-File: figures/rq1_m2_role_perception_heatmap.png Graphic file (type png)
-<use figures/rq1_m2_role_perception_heatmap.png>
-Package pdftex.def Info: figures/rq1_m2_role_perception_heatmap.png  used on in
-put line 130.
-(pdftex.def)             Requested size: 516.0pt x 246.53539pt.
- [7]
-<figures/rq2_m3_activity_pooled.png, id=225, 2409.0pt x 1124.2pt>
+ine 34.
+(pdftex.def)             Requested size: 516.0pt x 252.26875pt.
+<figures/rq2_m3_activity_pooled.png, id=138, 2409.0pt x 843.15pt>
 File: figures/rq2_m3_activity_pooled.png Graphic file (type png)
 <use figures/rq2_m3_activity_pooled.png>
 Package pdftex.def Info: figures/rq2_m3_activity_pooled.png  used on input line
- 182.
-(pdftex.def)             Requested size: 516.0pt x 240.78914pt.
-<figures/rq2_phase_commit_share_by_score_trajectory.png, id=228, 2208.25pt x 13
-24.95pt>
-File: figures/rq2_phase_commit_share_by_score_trajectory.png Graphic file (type
- png)
-<use figures/rq2_phase_commit_share_by_score_trajectory.png>
-Package pdftex.def Info: figures/rq2_phase_commit_share_by_score_trajectory.png
-  used on input line 219.
-(pdftex.def)             Requested size: 516.0pt x 309.6044pt.
-<figures/rq2_phase_clean_churn_share_by_score_trajectory.png, id=229, 2208.25pt
- x 1324.95pt>
-File: figures/rq2_phase_clean_churn_share_by_score_trajectory.png Graphic file 
-(type png)
-<use figures/rq2_phase_clean_churn_share_by_score_trajectory.png>
-Package pdftex.def Info: figures/rq2_phase_clean_churn_share_by_score_trajector
-y.png  used on input line 228.
-(pdftex.def)             Requested size: 516.0pt x 309.6044pt.
- [8 <../figures/rq1_m1_perception_with_sd.png>]
-<figures/rq2_score_delta_vs_final7_commit_concentration.png, id=244, 2208.25pt 
-x 1365.1pt>
-File: figures/rq2_score_delta_vs_final7_commit_concentration.png Graphic file (
-type png)
-<use figures/rq2_score_delta_vs_final7_commit_concentration.png>
-Package pdftex.def Info: figures/rq2_score_delta_vs_final7_commit_concentration
-.png  used on input line 257.
-(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
-<figures/rq2_score_delta_vs_final7_clean_churn_concentration.png, id=245, 2208.
-25pt x 1365.1pt>
-File: figures/rq2_score_delta_vs_final7_clean_churn_concentration.png Graphic f
-ile (type png)
-<use figures/rq2_score_delta_vs_final7_clean_churn_concentration.png>
-Package pdftex.def Info: figures/rq2_score_delta_vs_final7_clean_churn_concentr
-ation.png  used on input line 267.
-(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
-<figures/rq2_planning_vs_final7_commit_concentration.png, id=246, 2208.25pt x 1
-365.1pt>
+ 111.
+(pdftex.def)             Requested size: 516.0pt x 180.59184pt.
+<figures/rq2_planning_vs_final7_commit_concentration.png, id=140, 2208.25pt x 1
+084.05pt>
 File: figures/rq2_planning_vs_final7_commit_concentration.png Graphic file (typ
 e png)
 <use figures/rq2_planning_vs_final7_commit_concentration.png>
 Package pdftex.def Info: figures/rq2_planning_vs_final7_commit_concentration.pn
-g  used on input line 276.
-(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
-<figures/rq2_planning_vs_final7_clean_churn_concentration.png, id=247, 2208.25p
-t x 1365.1pt>
-File: figures/rq2_planning_vs_final7_clean_churn_concentration.png Graphic file
- (type png)
-<use figures/rq2_planning_vs_final7_clean_churn_concentration.png>
-Package pdftex.def Info: figures/rq2_planning_vs_final7_clean_churn_concentrati
-on.png  used on input line 285.
-(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
-<figures/rq2_regularity_vs_final_concentration.png, id=249, 2409.0pt x 1365.1pt
->
-File: figures/rq2_regularity_vs_final_concentration.png Graphic file (type png)
-
-<use figures/rq2_regularity_vs_final_concentration.png>
-Package pdftex.def Info: figures/rq2_regularity_vs_final_concentration.png  use
-d on input line 305.
-(pdftex.def)             Requested size: 516.0pt x 292.38681pt.
-<figures/rq2_m5_2025_triangulation_panel.png, id=253, 2409.0pt x 1646.15pt>
-File: figures/rq2_m5_2025_triangulation_panel.png Graphic file (type png)
-<use figures/rq2_m5_2025_triangulation_panel.png>
-Package pdftex.def Info: figures/rq2_m5_2025_triangulation_panel.png  used on i
-nput line 363.
-(pdftex.def)             Requested size: 516.0pt x 352.58409pt.
-<figures/rq2_m4_m5_checkpoint_panels.png, id=254, 2409.0pt x 1003.75pt>
+g  used on input line 153.
+(pdftex.def)             Requested size: 516.0pt x 253.3127pt.
+ [4]
+<figures/rq2_m4_m5_checkpoint_panels.png, id=151, 2409.0pt x 803.0pt>
 File: figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
 <use figures/rq2_m4_m5_checkpoint_panels.png>
 Package pdftex.def Info: figures/rq2_m4_m5_checkpoint_panels.png  used on input
- line 396.
-(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
- [9 <../figures/rq1_m2_role_perception_heatmap.png>] [10
-
- <../figures/rq2_m3_activity_pooled.png>] [11 <../figures/rq2_phase_commit_shar
-e_by_score_trajectory.png>] [12 <../figures/rq2_phase_clean_churn_share_by_scor
-e_trajectory.png>] [13 <../figures/rq2_score_delta_vs_final7_commit_concentrati
-on.png>]
-[14 <../figures/rq2_score_delta_vs_final7_clean_churn_concentration.png>]
-[15 <../figures/rq2_planning_vs_final7_commit_concentration.png>] [16 <../figur
-es/rq2_planning_vs_final7_clean_churn_concentration.png>] [17 <../figures/rq2_r
-egularity_vs_final_concentration.png>] [18 <../figures/rq2_m5_2025_triangulatio
-n_panel.png> <../figures/rq2_m4_m5_checkpoint_panels.png>]
-<figures/rq3_architectural_artifact_presence.png, id=317, 2409.0pt x 1003.75pt>
+ line 241.
+(pdftex.def)             Requested size: 516.0pt x 171.99223pt.
+ [5 <../figures/rq1_m1_perception_with_sd.png> <../figures/rq2_m3_activity_pool
+ed.png>]
+<figures/rq3_architectural_artifact_presence.png, id=161, 1525.7pt x 1244.65pt>
 
 File: figures/rq3_architectural_artifact_presence.png Graphic file (type png)
 <use figures/rq3_architectural_artifact_presence.png>
 Package pdftex.def Info: figures/rq3_architectural_artifact_presence.png  used 
-on input line 443.
-(pdftex.def)             Requested size: 516.0pt x 214.9903pt.
-<figures/rq3_architecture_rework_profile.png, id=319, 2409.0pt x 1124.2pt>
+on input line 286.
+(pdftex.def)             Requested size: 252.0pt x 205.56729pt.
+<figures/rq3_architecture_rework_profile.png, id=163, 2409.0pt x 1124.2pt>
 File: figures/rq3_architecture_rework_profile.png Graphic file (type png)
 <use figures/rq3_architecture_rework_profile.png>
 Package pdftex.def Info: figures/rq3_architecture_rework_profile.png  used on i
-nput line 491.
+nput line 334.
 (pdftex.def)             Requested size: 516.0pt x 240.78914pt.
-<figures/rq3_technical_complexity_vs_rework.png, id=322, 2208.25pt x 1365.1pt>
+ [6 <../figures/rq2_planning_vs_final7_commit_concentration.png>]
+<figures/rq3_technical_complexity_vs_rework.png, id=173, 2208.25pt x 1003.75pt>
+
 File: figures/rq3_technical_complexity_vs_rework.png Graphic file (type png)
 <use figures/rq3_technical_complexity_vs_rework.png>
 Package pdftex.def Info: figures/rq3_technical_complexity_vs_rework.png  used o
-n input line 518.
-(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
-<figures/rq3_planning_rework_complexity_overlay.png, id=323, 2208.25pt x 1365.1
-pt>
-File: figures/rq3_planning_rework_complexity_overlay.png Graphic file (type png
-)
-<use figures/rq3_planning_rework_complexity_overlay.png>
-Package pdftex.def Info: figures/rq3_planning_rework_complexity_overlay.png  us
-ed on input line 527.
-(pdftex.def)             Requested size: 516.0pt x 318.98636pt.
- [19
-
-
-]
-<figures/rq3_association_sensitivity.png, id=336, 2409.0pt x 1043.9pt>
-File: figures/rq3_association_sensitivity.png Graphic file (type png)
-<use figures/rq3_association_sensitivity.png>
-Package pdftex.def Info: figures/rq3_association_sensitivity.png  used on input
- line 616.
-(pdftex.def)             Requested size: 516.0pt x 223.5899pt.
-<figures/rq3_influence_map.png, id=338, 2910.875pt x 1726.45pt>
-File: figures/rq3_influence_map.png Graphic file (type png)
-<use figures/rq3_influence_map.png>
-Package pdftex.def Info: figures/rq3_influence_map.png  used on input line 639.
-
-(pdftex.def)             Requested size: 516.0pt x 306.0321pt.
- [20 <../figures/rq3_architectural_artifact_presence.png> <../figures/rq3_archi
-tecture_rework_profile.png>] [21
-
- <../figures/rq3_technical_complexity_vs_rework.png>] [22 <../figures/rq3_plann
-ing_rework_complexity_overlay.png> <../figures/rq3_association_sensitivity.png>
-] [23 <../figures/rq3_influence_map.png>])
-(./sections/discussion.tex [24
-
-
-]) (./sections/threats_to_validity.tex [25]
-Underfull \hbox (badness 5288) in paragraph at lines 55--66
-[]\OT1/ptm/m/n/10 Artifact--Rework--Outcome As-so-ci-a-tions (M9) are ex-
- []
-
-) (./sections/conclusion.tex [26]) (build/main.bbl [27])
+n input line 360.
+(pdftex.def)             Requested size: 516.0pt x 234.5488pt.
+) (./sections/discussion.tex [7 <../figures/rq2_m4_m5_checkpoint_panels.png> <.
+./figures/rq3_architectural_artifact_presence.png>]
+[8 <../figures/rq3_architecture_rework_profile.png>])
+(./sections/threats_to_validity.tex [9 <../figures/rq3_technical_complexity_vs_
+rework.png>]) (./sections/conclusion.tex) (build/main.bbl [10])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -623,24 +521,22 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[28
-
-] (build/main.aux)
+[11] (build/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 39EF232B8580E86082192827E266D32A;11928.
+(rerunfilecheck)             Checksum: 18A263FE04A076E966532D7B49C42254;5510.
  ) 
 Here is how much of TeX's memory you used:
- 10578 strings out of 476182
- 172443 string characters out of 5795595
- 1964975 words of memory out of 5000000
- 32312 multiletter control sequences out of 15000+600000
- 599637 words of font info for 106 fonts, out of 8000000 for 9000
+ 10423 strings out of 476182
+ 166996 string characters out of 5795595
+ 1954975 words of memory out of 5000000
+ 32204 multiletter control sequences out of 15000+600000
+ 598530 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,1260b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,1162b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
@@ -649,18 +545,16 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf
 onts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-sy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
-ri8a.pfb>
-Output written on build/main.pdf (28 pages, 2167375 bytes).
+ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/urw/times/utmri8a.pfb>
+Output written on build/main.pdf (11 pages, 687124 bytes).
 PDF statistics:
- 522 PDF objects out of 1000 (max. 8388607)
- 417 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
- 339 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 327 PDF objects out of 1000 (max. 8388607)
+ 267 compressed objects within 3 object streams
+ 72 named destinations out of 1000 (max. 500000)
+ 188 words of extra memory for PDF output out of 10000 (max. 10000000)
 
