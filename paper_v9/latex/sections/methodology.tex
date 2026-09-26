@@ -8,11 +8,12 @@ approximately 70 participating students. Teams of roughly five students had
 autonomy over process model and project management approach, including Scrum,
 Kanban, other Agile variants, or unguided work. Each team built an operational
 software project with an integrated GenAI component, but no AI architecture was
-mandated. RAG was presented as one domain-dependent example
-~\cite{lewis2020retrieval}; none of the 14 projects implemented a full RAG
-pipeline. The analyzed systems spanned healthcare, finance, education,
-research, ecotourism, onboarding, and tutoring domains, and used
-project-specific integrations such as summarization, document/profile
+mandated. Retrieval-Augmented Generation (RAG), in which a model conditions
+its output on retrieved project or domain documents, was presented as one
+domain-dependent example~\cite{lewis2020retrieval}; none of the 14 projects
+implemented a full RAG pipeline. The analyzed systems spanned healthcare,
+finance, education, research, ecotourism, onboarding, and tutoring domains,
+and used project-specific integrations such as summarization, document/profile
 analysis, chatbots, recommendations, and content generation.
 
 \label{sec:data-sources}
@@ -23,10 +24,12 @@ and $T_3$ occurred one week before final delivery and presentation. The study
 combines four evidence streams. First, complete Git histories provide commits,
 line changes, file provenance, branch information, and repository-visible
 artifacts. Students were instructed to keep requirements, architecture,
-documentation, and source code in the repository, but Git remains repository
-evidence rather than AI-use telemetry. Second, independent evaluator
-scorecards were collected at $T_1$--$T_3$ through blind scoring after status
-presentations, with 4 evaluators in 2025.2 and 3 in 2026.1. Third,
+documentation, and source code in the repository, but Git captures only
+repository-visible evidence--artifacts and changes committed to version
+control--rather than AI-use telemetry such as prompt logs, API calls, or IDE
+acceptance events. Second, independent evaluator scorecards were collected at
+$T_1$--$T_3$ through blind scoring after status presentations, with 4
+evaluators in 2025.2 and 3 in 2026.1. Third,
 multi-checkpoint surveys captured demographics, experience, GenAI adoption,
 perceived role disruption, and project expectations at cohort/checkpoint grain;
 survey responses carry no team identifier. Fourth, a bounded 2025.2 transcript
@@ -88,7 +91,8 @@ structured Planning Content Evidence (M6b) from T1 commit subjects for nine
 observed team-semesters; five cases without T1 subjects remain unavailable.
 Repository Inactivity (M7) reports timing and coverage diagnostics, not
 planning omission. Clean-Path Rework (M8) reports late changes to previously
-observed clean paths, preserving baseline eligibility. Artifact--Rework--
+observed clean source/test paths, using file provenance as a rework proxy while
+preserving baseline eligibility. Artifact--Rework--
 Outcome Associations (M9) reports exploratory Spearman associations among T1
 artifact predictors, M8 rework, and independent T3 scorecard outcomes, with
 ratio analyses restricted to baseline-eligible cases. Technical-complexity
