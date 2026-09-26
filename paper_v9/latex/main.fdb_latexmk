@@ -1,13 +1,13 @@
 # Fdb version 4
 ["bibtex main"] 0 "main.aux" "main.bbl" "main" 0 -1
-  "./references.bib" 1790408697.51402 14595 08975a660e6fd914f1d3c03365935348 ""
+  "./references.bib" 1790412098.89601 16596 12505e8433fe91c29641cb6a2504dbd9 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "main.aux" 1790408698.19409 9407 5486dd555fb7ff20cb151799700e50c1 "pdflatex"
+  "main.aux" 1790412100.03001 9407 5486dd555fb7ff20cb151799700e50c1 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1790408697.86919 "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" "main.pdf" "main" 1790408698.28462 2
+["pdflatex"] 1790412099.70555 "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" "main.pdf" "main" 1790412100.12183 2
   "/etc/texmf/web2c/texmf.cnf" 1758825120.26148 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" 1790365678.83092 1009 6346574b0d0aa1f8876a0e6e4eafdc7b ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -119,9 +119,9 @@
   "figures/rq3_architectural_artifact_presence.png" 0 -1 0 ""
   "figures/rq3_architecture_rework_profile.png" 0 -1 0 ""
   "figures/rq3_technical_complexity_vs_rework.png" 0 -1 0 ""
-  "main.aux" 1790408698.19409 9407 5486dd555fb7ff20cb151799700e50c1 "pdflatex"
-  "main.bbl" 1790408644.16047 7431 c3cd09dafd61c77c52f4eacf52b127e3 "bibtex main"
-  "main.out" 1790408698.19509 5510 18a263fe04a076e966532d7b49c42254 "pdflatex"
+  "main.aux" 1790412100.03001 9407 5486dd555fb7ff20cb151799700e50c1 "pdflatex"
+  "main.bbl" 1790412099.12901 8282 62e0f139b108ddca7f134878a8bf71fe "bibtex main"
+  "main.out" 1790412100.03101 5510 18a263fe04a076e966532d7b49c42254 "pdflatex"
   "main.tex" 1790365678.83092 1009 6346574b0d0aa1f8876a0e6e4eafdc7b ""
   "sections/abstract.tex" 1790364653.76038 2066 4292441c8d12b9e5cdb31bb891db647f ""
   "sections/background_related_work.tex" 1790368382.06026 2764 ec99da54c64195c86fa7fe2ae32193bc ""

@@ -69,13 +69,13 @@ D.~Russo \emph{et~al.}, ``Navigating the complexity of generative ai adoption
 \bibitem{barke2023grounded}
 S.~Barke, M.~B. James, and N.~Polikarpova, ``Grounded copilot: How programmers
   interact with code-generating models,'' \emph{Proceedings of the ACM on
-  Programming Languages}, vol.~7, 2023.
+  Programming Languages}, vol.~7, no. OOPSLA1, pp. 85--111, 2023.
 
 \bibitem{yabaku2024usage}
-M.~Yabaku and S.~Ouhbi, ``On usage and assessment of generative ai by computer
-  science students in software development projects,'' in \emph{2024 36th
+M.~Yabaku and S.~Ouhbi, ``University students' perception and expectations of
+  generative ai tools for software engineering,'' in \emph{2024 36th
   International Conference on Software Engineering Education and Training
-  (CSEE\&T)}, 2024.
+  (CSEE\&T)}, 2024, pp. 1--5.
 
 \bibitem{cunningham_1992_technical_debt}
 W.~Cunningham, ``The wycash portfolio management system,'' in \emph{OOPSLA '92
@@ -160,9 +160,9 @@ K.-J. Stol and B.~Fitzgerald, ``The abc of software engineering research,''
   no.~3, 2018.
 
 \bibitem{runeson2009case}
-P.~Runeson, M.~Host, A.~J. Rainer, and B.~Regnell, ``Case study research in
-  software engineering: Guidelines and examples,'' \emph{Empirical Software
-  Engineering}, vol.~14, 2009.
+P.~Runeson and M.~H{\"o}st, ``Guidelines for conducting and reporting case
+  study research in software engineering,'' \emph{Empirical Software
+  Engineering}, vol.~14, no.~2, pp. 131--164, 2009.
 
 \bibitem{li_2015_technical_debt_mapping}
 Z.~Li, P.~Avgeriou, and P.~Liang, ``A systematic mapping study on technical
@@ -170,21 +170,21 @@ Z.~Li, P.~Avgeriou, and P.~Liang, ``A systematic mapping study on technical
   pp. 193--220, 2015.
 
 \bibitem{chen_2021_evaluating_code_llms}
-M.~Chen, J.~Tworek, H.~Jun, Q.~Yuan, H.~de~Oliveira~Pinto, J.~Kaplan,
-  H.~Edwards, Y.~Burda, N.~Joseph, G.~Brockman, A.~Ray, R.~Puri, G.~Krueger,
-  M.~Petrov, H.~Khlaaf, G.~Sastry, P.~Mishkin, B.~Chan, S.~Gray, N.~Ryder,
-  M.~Pavlov, A.~Power, L.~Kaiser, M.~Boston, B.~McGrew, S.~Karthik, and et~al.,
-  ``Evaluating large language models trained on code,'' in \emph{arXiv preprint
-  arXiv:2107.03374}, 2021.
+\BIBentryALTinterwordspacing
+M.~Chen \emph{et~al.}, ``Evaluating large language models trained on code,''
+  \emph{arXiv preprint arXiv:2107.03374}, 2021. [Online]. Available:
+  \url{https://arxiv.org/abs/2107.03374}
+\BIBentrySTDinterwordspacing
 
 \bibitem{williams_2024_ai_software_engineering_education}
-P.~Haindl and G.~Weinberger, ``Experiences of using chatgpt in an undergraduate
-  programming course,'' \emph{IEEE Access}, vol.~12, pp. 43\,518--43\,537,
-  2024.
+P.~Haindl and G.~Weinberger, ``Students' experiences of using chatgpt in an
+  undergraduate programming course,'' \emph{IEEE Access}, vol.~12, pp.
+  43\,519--43\,529, 2024.
 
 \bibitem{miller_2023_coordination_ai_teams}
-D.~Spinellis, ``Ai: The blind-men elephant in the software developers' room,''
-  \emph{IEEE Software}, vol.~41, no.~4, pp. 4--8, 2024.
+D.~Spinellis, B.~Baudry, and J.~Voas, ``Ai: The blind-men elephant in the
+  software developers' room,'' \emph{Computer}, vol.~59, no.~7, pp. 96--99,
+  2026.
 
 \bibitem{perez_2022_planning_and_rework}
 B.~Bruegge, S.~Krusche, and L.~Alperowitz, ``Software engineering project

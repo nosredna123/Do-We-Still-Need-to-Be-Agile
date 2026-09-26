@@ -18,7 +18,10 @@
   year      = {2020}
 }
 
-% [VERIFICADA]: Referência confirmada como autêntica no repositório de preprints (2026).
+% [PROVISÓRIA]: A URL do preprint existe em resultados de busca, mas a página
+% retornou HTTP 403 durante a auditoria, impedindo conferência independente de
+% autoria/metadados completos. Manter apenas se o texto precisar de uma referência
+% muito recente; caso contrário, preferir revisão sistemática revisada por pares.
 @article{nguyenduc2026systematic,
   title={A Systematic Literature Review on Generative AI in Software Engineering},
   author={Nguyen-Duc, Anh and others},
@@ -28,7 +31,9 @@
   url={https://www.preprints.org/manuscript/202605.1638}
 }
 
-% [VERIFICADA]: Referência confirmada como autêntica.
+% [PROVISÓRIA]: A URL resolve para a IEEE Computer Society CSDL, mas a auditoria
+% extraiu apenas metadados genéricos da página. Conferir autores/páginas exatos
+% manualmente antes da versão final, caso a referência permaneça central.
 @article{ieee2025transforming,
   title={Transforming Software Engineering Processes Through Generative AI},
   author={{IEEE Computer Society}},
@@ -134,17 +139,27 @@
   title = {Grounded Copilot: How Programmers Interact with Code-Generating Models},
   journal = {Proceedings of the ACM on Programming Languages},
   volume = {7},
+  number = {OOPSLA1},
+  pages = {85--111},
   year = {2023},
   doi = {10.1145/3586030}
 }
 
-% [VERIFICADA]: Referência confirmada como autêntica.
+% [CORRIGIDA]: DOI verificado em Crossref. O registro anterior usava o mesmo DOI,
+% mas com título diferente do metadado oficial. Mantido o ID para preservar as
+% citações no LaTeX.
+% REGISTRO ANTERIOR: inproceedings yabaku2024usage; title={On Usage and
+% Assessment of Generative AI by Computer Science Students in Software
+% Development Projects}; booktitle={2024 36th International Conference on
+% Software Engineering Education and Training (CSEE&T)}; year={2024};
+% doi={10.1109/CSEET62301.2024.10663035}
 @inproceedings{yabaku2024usage,
-  author = {Yabaku, Mounika and Ouhbi, Sofia},
-  title = {On Usage and Assessment of Generative AI by Computer Science Students in Software Development Projects},
+  author    = {Yabaku, Mounika and Ouhbi, Sofia},
+  title     = {University Students' Perception and Expectations of Generative AI Tools for Software Engineering},
   booktitle = {2024 36th International Conference on Software Engineering Education and Training (CSEE\&T)},
-  year = {2024},
-  doi = {10.1109/CSEET62301.2024.10663035}
+  pages     = {1--5},
+  year      = {2024},
+  doi       = {10.1109/CSEET62301.2024.10663035}
 }
 
 % [VERIFICADA]: Referência confirmada como autêntica.
@@ -178,14 +193,23 @@
   doi = {10.1145/3241743}
 }
 
-% [VERIFICADA]: Referência confirmada como autêntica.
+% [CORRIGIDA]: DOI verificado em Crossref. O registro anterior misturava o título
+% e autores do livro "Case Study Research in Software Engineering: Guidelines and
+% Examples" com o DOI do artigo de Runeson e Höst em Empirical Software Engineering.
+% Mantido o ID para preservar as citações no LaTeX.
+% REGISTRO ANTERIOR: article runeson2009case; author={Runeson, Per and Host,
+% Martin and Rainer, A. J. and Regnell, Bjorn}; title={Case Study Research in
+% Software Engineering: Guidelines and Examples}; journal={Empirical Software
+% Engineering}; volume={14}; year={2009}; doi={10.1007/s10664-008-9102-8}
 @article{runeson2009case,
-  author = {Runeson, Per and Host, Martin and Rainer, A. J. and Regnell, Bjorn},
-  title = {Case Study Research in Software Engineering: Guidelines and Examples},
+  author  = {Runeson, Per and H{\"o}st, Martin},
+  title   = {Guidelines for Conducting and Reporting Case Study Research in Software Engineering},
   journal = {Empirical Software Engineering},
-  volume = {14},
-  year = {2009},
-  doi = {10.1007/s10664-008-9102-8}
+  volume  = {14},
+  number  = {2},
+  pages   = {131--164},
+  year    = {2009},
+  doi     = {10.1007/s10664-008-9102-8}
 }
 
 % [VERIFICADA]: Referência confirmada como autêntica.
@@ -196,7 +220,8 @@
   volume = {15},
   number = {1},
   pages = {72--101},
-  year = {1904}
+  year = {1904},
+  doi = {10.2307/1412159}
 }
 
 % [VERIFICADA]: Referência confirmada como autêntica.
@@ -263,43 +288,64 @@
   doi = {10.1016/j.jss.2014.12.027}
 }
 
-% [VERIFICADA]: Referência confirmada como autêntica.
-@inproceedings{chen_2021_evaluating_code_llms,
-  author = {Chen, Mark and Tworek, Jerry and Jun, Heewoo and Yuan, Qiming and de Oliveira Pinto, Henrique and Kaplan, Jared and Edwards, Harrison and Burda, Yuri and Joseph, Nicholas and Brockman, Greg and Ray, Alex and Puri, Raul and Krueger, Gretchen and Petrov, Michael and Khlaaf, Heidy and Sastry, Girish and Mishkin, Pamela and Chan, Brooke and Gray, Scott and Ryder, Nick and Pavlov, Mikhail and Power, Alethea and Kaiser, Lukasz and Boston, Mohammad and McGrew, Benjamin and Karthik, Sandhini and et al.},
-  title = {Evaluating Large Language Models Trained on Code},
-  booktitle = {arXiv preprint arXiv:2107.03374},
-  year = {2021}
+% [CORRIGIDA]: Fonte verificada como preprint arXiv 2107.03374, não como
+% inproceedings. A lista longa de autores anterior continha prováveis erros de
+% transcrição; "and others" evita introduzir nomes incorretos e preserva a
+% renderização IEEE compacta.
+% REGISTRO ANTERIOR: inproceedings chen_2021_evaluating_code_llms;
+% booktitle={arXiv preprint arXiv:2107.03374}; year={2021}
+@article{chen_2021_evaluating_code_llms,
+  author  = {Chen, Mark and others},
+  title   = {Evaluating Large Language Models Trained on Code},
+  journal = {arXiv preprint arXiv:2107.03374},
+  year    = {2021},
+  url     = {https://arxiv.org/abs/2107.03374}
 }
 
-% [SUBSTITUÍDA]: A entrada original 'williams_2024_ai_software_engineering_education' (Williams et al., 2024) não existe em indexadores acadêmicos. Substituída por um estudo equivalente (Haindl e Weinberger, 2024) sobre o uso de IA em cursos de engenharia de software e programação. O ID foi mantido.
+% [CORRIGIDA]: A substituição por Haindl e Weinberger é real, mas o registro
+% anterior tinha título, grafia do segundo autor, páginas e DOI incorretos.
+% Metadados conferidos via Crossref. Mantido o ID para preservar as citações no LaTeX.
 % REGISTRO ANTERIOR: inproceedings williams_2024_ai_software_engineering_education;
 % author={Williams, Christopher and Jones, Maya and Patel, Rohan};
 % title={Generative AI and Software Engineering Education: Opportunities, Risks,
 % and Design Constraints}; ...
+% REGISTRO SUBSTITUÍDO ANTERIOR: article williams_2024_ai_software_engineering_education;
+% author={Haindl, Philipp and Weinberger, Georg};
+% title={Experiences of Using ChatGPT in an Undergraduate Programming Course};
+% journal={IEEE Access}; volume={12}; pages={43518--43537}; year={2024};
+% doi={10.1109/ACCESS.2024.3378945}
 @article{williams_2024_ai_software_engineering_education,
-  author = {Haindl, Philipp and Weinberger, Georg},
-  title = {Experiences of Using ChatGPT in an Undergraduate Programming Course},
+  author  = {Haindl, Philipp and Weinberger, Gerald},
+  title   = {Students' Experiences of Using ChatGPT in an Undergraduate Programming Course},
   journal = {IEEE Access},
-  volume = {12},
-  pages = {43518--43537},
-  year = {2024},
-  doi = {10.1109/ACCESS.2024.3378945}
+  volume  = {12},
+  pages   = {43519--43529},
+  year    = {2024},
+  doi     = {10.1109/ACCESS.2024.3380909}
 }
 
-% [SUBSTITUÍDA]: A entrada original 'miller_2023_coordination_ai_teams' não foi encontrada nas bases de dados. Substituída pelo artigo de Diomidis Spinellis (IEEE Software, 2024) que aborda diretamente o impacto das ferramentas colaborativas de IA no trabalho de times de engenheiros. O ID foi mantido.
+% [CORRIGIDA]: A substituição por Spinellis et al. é real, mas o registro
+% anterior apontava para DOI inexistente e informava periódico, ano, volume,
+% número, páginas e autoria incorretos. Metadados conferidos via Crossref.
+% Mantido o ID para preservar as citações no LaTeX. A adequação semântica foi
+% reavaliada: este ID não é citado atualmente no manuscrito principal.
 % REGISTRO ANTERIOR: inproceedings miller_2023_coordination_ai_teams;
 % author={Miller, Sarah and Ferris, Jordan and Chen, Angela};
 % title={Coordination Signals and Human-AI Teaming in Software Engineering
 % Courses}; ...
+% REGISTRO SUBSTITUÍDO ANTERIOR: article miller_2023_coordination_ai_teams;
+% author={Spinellis, Diomidis}; title={AI: The Blind-Men Elephant in the Software
+% Developers' Room}; journal={IEEE Software}; volume={41}; number={4};
+% pages={4--8}; year={2024}; doi={10.1109/MS.2024.3387819}
 @article{miller_2023_coordination_ai_teams,
-  author = {Spinellis, Diomidis},
-  title = {AI: The Blind-Men Elephant in the Software Developers' Room},
-  journal = {IEEE Software},
-  volume = {41},
-  number = {4},
-  pages = {4--8},
-  year = {2024},
-  doi = {10.1109/MS.2024.3387819}
+  author  = {Spinellis, Diomidis and Baudry, Benoit and Voas, Jeffrey},
+  title   = {AI: The Blind-Men Elephant in the Software Developers' Room},
+  journal = {Computer},
+  volume  = {59},
+  number  = {7},
+  pages   = {96--99},
+  year    = {2026},
+  doi     = {10.1109/MC.2026.3686931}
 }
 
 % [VERIFICADA]: Placeholders para empacotamento anônimo e artefatos de dados (identificadores fictícios propositais no paper cego).
