@@ -1119,6 +1119,88 @@ provided now do not complete permitted chart/table selection synchronization.
 Exports, full accessibility/visual review and all 11 publication gates also
 remain pending. No excerpt feature or payload was added.
 
+### T018 - Grain-safe chart and table selection
+
+**Completed 2026-10-22.** The [application](assets/app.js) now passes the same
+permitted row selection and filter summary to the [figure viewer](assets/charts.js)
+that it uses for the observation table. Selecting a mapped dataset opens its
+figure; choosing a figure opens its primary source dataset and existing filters.
+Figure source tables have explicit source-selection buttons. Unmapped datasets
+show a clear no-mapped-figure message, not a stale unrelated chart.
+The [entry page](index.html) and [README](README.md) explain these rules,
+reset behavior, fixed summaries, and alternative tables.
+
+Only exact source-dataset identities are linked. The two M4/M5 panels remain
+independent: selecting a checkpoint in one filters only that source's existing
+rows; the other source stays full-snapshot and is identified as such. Opening
+the other source resets incompatible filters instead of transferring them across
+repository/transcript grains. Repeated team labels remain cohort-plus-team keys.
+
+Per-source captions and exact alternative tables show selected/original row
+counts and filter scope, units, grain, denominator and missingness. Fixed pooled
+summaries are labeled as existing published rows, never recalculated selected-case
+populations or Ns. Original score-color bounds, sample sizes, thresholds and
+median guides remain fixed. Sorting orders the matching source alternative
+exactly like the observation table; scientific checkpoint/day order stays intact
+in line plots.
+
+Empty intersections show no marks, an explicit empty state and zero-row source
+alternative. Log-axis zeros stay unchanged in source tables and exclusion lists;
+an all-zero selection shows no-plottable-values rather than fabricated marks.
+Null ratios remain Unavailable. A synthetic missing-SD probe found that the
+renderer coerced null error magnitudes into zero-length bars. The viewer now
+draws bars only for available SDs while retaining original means/lines; missing
+SD hover/table values explicitly say Unavailable. With one SD removed, all
+36 original means and exactly 35 SD bars render, with no validation warning.
+
+Filtering exposed two other renderer-specific corner cases: unused second
+facet axes after a one-cohort RQ1 selection, and an empty artifact-state trace
+causing the single-visible-trace legend validator exception. The implementation
+shows only the surviving labeled cohort facet (same original scale/colors/SDs)
+and omits empty artifact-state series. No validation error is suppressed and no
+vendor/scientific data is modified.
+
+Verification before completion:
+
+- All **54 Python and 50 JavaScript tests pass** (104 total, zero failed/skipped).
+  Six new [figure regressions](tools/test_charts.cjs) verify exact subsets,
+  independent fixed-summary panels, frozen guides/color limits, empty/log-zero
+  selections, one-cohort facets, rejection of altered/duplicate rows, and
+  all eight source mappings without mutation. Existing missing-SD and
+  [page-shell tests](tools/test_page.py) were updated for the completed behavior.
+- Browser checks cover all **118 full/single-choice selections across eight
+  figure-source datasets**, including every offered filter value: rendered
+  scientific arrays, 5,376 exact source-table cells, clean Plotly validation
+  when marks exist, and three no-plottable zero selections.
+- Additional checks verify repeated TEAM_01 across two cohorts (two exact cases),
+  cohort/team intersection, empty intersection, reset-view retaining filters,
+  reset-rows restoring all 14 cases, two baseline-unobserved cases with
+  unavailable ratios, and a zero-only log selection retained in its table.
+- M4/M5 selection gives 1/3 or 3/1 rows in the independent panels/alternatives.
+  Sorting all three transcript rows by token count gives T2/T3/T1 in both tables
+  while the plotted time series remains T1/T2/T3.
+- An unavailable secondary dataset reports HTTP 404, clears figure content, and
+  preserves the three valid primary observation rows; changing filters/retrying
+  recovers the proper 1/3 scoped figure. Held old requests and old render
+  completions cannot overwrite the newer source/filter selection.
+- All seven figures retain original mark counts with local horizontal scrolling
+  at 360/320 px (14 combinations), no whole-page overflow, and locally contained
+  32 px source-table text. Browser requests stay local. Hidden-browser
+  scalar/geometry/DOM checks are not real keyboard/pointer or pixel-perfect
+  visual accessibility sign-off; the later audit remains required.
+- An independent directory copy passes all 104 tests, JavaScript syntax,
+  99-artifact data-manifest verification, and byte-identical root/nested HTTP
+  checks. Frozen data/catalog/release and vendor/license bytes are unchanged.
+  Whitespace, local documentation links and task/publication markers pass.
+
+An initial broad browser loop used throttled timers in the hidden page and was
+stopped in favor of event-driven observation; the final exhaustive 118-selection
+run completed successfully. This was verification overhead, not a site failure.
+
+T019 export controls and subsequent release tasks remain pending; all 11
+publication gates stay unchecked. No excerpt feature, backend, new dependency,
+statistical estimator or cross-dataset join was introduced.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1295,7 +1377,7 @@ is measured, what is missing, and which comparisons are valid.
 
 - [x] T016 [US3] [Plan:4.1] Check representative error-bar, heatmap, and scatterplot fidelity; if needed, bundle the pinned chart library and license under `microsite/assets/vendor/`. Do not add a chart framework or second library. Verified Plotly.js Cartesian 4.1.2, upstream integrity/MIT notices, 1.51 MB raw/0.50 MB gzip, representative rendered geometry/data, local-only requests, 85 tests and independent root/nested delivery; see Section 3.
 - [x] T017 [US3] [Plan:4.1] Implement selected RQ1-RQ3 figures in `microsite/assets/charts.js` from approved figure-data mappings, preserving units, uncertainty semantics, axes, zero handling, eligibility, and sample sizes.
-- [ ] T018 [US3] [Plan:4.1] Connect permitted chart filtering to table selection in `microsite/assets/app.js`; label fixed pooled/association summaries and ensure unavailable values are not plotted as zero. Provide captions and table alternatives in `microsite/index.html`.
+- [x] T018 [US3] [Plan:4.1] Connect permitted chart filtering to table selection in `microsite/assets/app.js`; label fixed pooled/association summaries and ensure unavailable values are not plotted as zero. Provide captions and table alternatives in `microsite/index.html`.
 
 **Plan 4.2:** Make approved data easy to reuse.
 **Requirements:** REQ-005, REQ-007, REQ-008, REQ-009.

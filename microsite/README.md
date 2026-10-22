@@ -13,12 +13,12 @@ methods with native in-page navigation and responsive local styling.
 Catalog-based RQ/metric/source navigation, definitions, snapshot details,
 observation tables, row filters, sorting, and compatible multi-cohort/team-semester
 selection are implemented. All seven selected paper figures now render from
-their full approved snapshots, with exact source tables. Figure/filter
-synchronization and export controls remain pending, as does
+approved snapshots, with exact source tables and synchronized permitted
+row selection. Export controls remain pending, as does
 whole-directory/actual-host approval.
 This is not a ready-to-publish site.
 T016 has selected and bundled one local chart dependency after a fidelity/size
-check; T017 loads it locally. Filter/table integration remains T018.
+check; T017 loads it locally. T018 links exact source-dataset filters to figures.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
@@ -37,7 +37,7 @@ viewing the seven paper figures separately; export controls are pending.
 Local catalog, release-manifest, and documentation links work.
 T011 provides layout/focus styling; T012 provides catalog loading and
 dataset navigation; T013 provides row filters/tables/sorting; T014 adds multi-case
-selection. T017 adds full-snapshot figures; synchronized filtering and export
+selection. T017 adds figures; T018 synchronizes permitted row selection. Export
 actions remain later tasks.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
@@ -204,8 +204,7 @@ in the bundle are retained. The license's third-party copyright attribution is
 not an author/project identity. No package manager or build is needed on the
 hosting server. The entry page now loads this local dependency with deferred
 scripts, before the figure and application scripts. T017 provides figures,
-captions and full-snapshot source tables; T018 connects permitted filtering to
-table selection.
+captions and source tables; T018 connects permitted filtering to table selection.
 
 The Cartesian bundle supports scatter/line/bar traces, SD error bars, heatmaps,
 color scales, variable marker diameters/symbols, logarithmic axes, and zoom.
@@ -258,8 +257,8 @@ eighth manuscript figure or an extension of the approved seven-figure scope.
 The probe is not shipped, and these semantic/geometry checks are not pixel-perfect
 image matching or full keyboard/pointer accessibility sign-off. The shared hidden
 browser made screenshot/stability waits unreliable. T017 checks final rendering,
-responsive containment, and exact full-snapshot tables; synchronized filtering
-and the full accessibility audit remain later gates. Do not enable cloud links, editable charts, external
+responsive containment, and exact tables; T018 verifies synchronization. The full
+accessibility audit remains a later gate. Do not enable cloud links, editable charts, external
 fonts, maps, MathJax/CDN scripts, or telemetry. Browser requests for the tested
 Cartesian plots stayed local. Preserve this property when wiring the library.
 Vendor assets are outside the **data-only** release manifest; the vendor hash
@@ -267,8 +266,9 @@ tests and final whole-directory review cover them separately.
 
 ## Paper figures (T017)
 
-Choose a figure in **Explore > Paper figures**. Selection loads only its one or
-two approved local datasets, using the same type/key/count validation and
+Choose a figure in **Explore > Paper figures**. Selection opens its primary
+source in the observation table and loads its one or two approved local
+datasets, using the same type/key/count validation and
 15-second request limit as observation tables. No new estimator, pooled subset,
 cross-grain join, or browser-side threshold is calculated.
 The [figure script](assets/charts.js) implements exactly the seven catalog
@@ -285,22 +285,23 @@ mappings; the M2 heatmap tested for T016 is not another selected figure.
 | RQ3 complexity/rework | Linear magnitude axis retains all 14 cases and three zeros; eligibility, planning-tier colors, cohort symbols and original medians remain distinct. |
 
 Every figure has a caption explaining units, coverage and limitations, plus
-expandable exact source tables containing **every original column and row**.
+expandable exact source tables containing **every approved column and selected
+original row** (all rows when filters are clear).
 Tables preserve full numeric precision, composite cohort/team identity and
 original denominators. `Unavailable` represents null, never zero. Source-table
 Ns describe original populations, not the number of currently visible marks.
 Hover is supplementary; exact values do not depend on pointer interaction.
 
 Drag to zoom, use legends to toggle traces, and use **Reset figure view** to
-reload the original complete figure and restore its view. Visibility changes
+restore zoom and trace visibility for the current row selection. Visibility changes
 do not change source tables, values, denominators, or frozen guides. Narrow
 screens use a labeled, focusable horizontal-scroll region instead of shrinking
 multi-panel figures until their labels are illegible. Tables scroll locally too.
 
-**Current boundary:** figures use full snapshots independently of the observation
-filters above them. The page states this explicitly. T018 will synchronize only
-permitted selections; it must not turn fixed pooled/association summaries into
-new selected-case estimates. T017's source tables do not mark T018 complete.
+**Selection behavior (T018):** figures now follow the exact mapped dataset's
+permitted observation filters and sorting. No filter is copied to a different
+dataset. Fixed pooled/association summaries never become new selected-case
+estimates. See the synchronization rules below.
 
 Missing renderer files, HTTP/JSON/schema/count errors, and failed rendering have
 explicit alerts, logged errors and retry/reload instructions. Old figures and
@@ -327,6 +328,52 @@ The dependency itself remains byte-identical to the pinned upstream release.
 These checks are not pixel-perfect image matching or full real-keyboard/pointer
 accessibility sign-off; those later gates and all publication approvals remain
 pending.
+
+## Synchronized figures and source tables (T018)
+
+Use the existing observation controls; there is no second chart-filter system.
+Selecting a mapped dataset selects its paper figure automatically. Selecting a
+figure opens its primary source dataset, resets incompatible row filters/sort,
+and clears navigation restrictions so that source is available. Other datasets
+show an explicit "no mapped figure" message rather than an unrelated stale chart.
+
+Only existing rows of the **exact mapped source dataset** are selected. The
+figure, active-filter summary, observation table, and matching figure source
+table use the same row selection. Sorting the observation table also orders its
+source alternative; chart checkpoint/day ordering remains scientific rather
+than alphabetical. Cohort and team choices retain the existing OR-within,
+AND-between logic and composite cohort/team identity.
+
+The M4/M5 figure has two independent source datasets. Filtering one changes only
+that panel and its source table. The other retains its full approved snapshot,
+explicitly identified in the caption. Use **Filter this source** in either
+source-table disclosure to open that exact dataset in the existing observation
+controls; changing sources resets the previous source's filters. A checkpoint
+selection is not silently transferred between repository and transcript grains.
+
+Captions identify each source's selected/original row counts and active filters.
+Fixed published summaries are labeled as existing summary rows with original
+populations and Ns, not recomputed estimates. Original Ns, denominators, score
+color limits, planning thresholds, and median guides never change with filters.
+Selecting one cohort in RQ1 shows that cohort's labeled facet with the original
+0-5 displayed scale, original SDs and family colors/legends.
+
+An empty filter intersection removes old marks and shows a clear empty-selection
+message with a zero-row source table. Selected log-axis zeros remain unchanged
+in source tables and explicit exclusion details; a selection containing only
+such zeros shows "no plottable values", not a successful-looking fabricated plot.
+Unavailable coordinates remain unavailable, not zero. Other panels, if any,
+can still show their explicitly unfiltered data.
+An unavailable SD has no error bar and is labeled Unavailable in hover/table;
+known SDs and the original means remain visible. A missing SD is not drawn as
+a zero-length error bar.
+
+**Reset figure view** restores zoom/trace visibility without changing row
+filters. **Reset row filters and sort** restores all original source rows.
+Legend toggles change mark visibility only; they do not filter either table or
+redefine scientific populations. Load/filter/source changes clear stale content
+and cancel or invalidate older requests/renders. Errors remain explicit with
+retry, and valid observation tables remain usable after figure-only failures.
 
 ## Responsive styling (T011)
 

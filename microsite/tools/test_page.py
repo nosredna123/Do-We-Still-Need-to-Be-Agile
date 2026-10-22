@@ -124,7 +124,7 @@ class PageTests(unittest.TestCase):
         self.assertNotIn("Excerpts unavailable", self.content)
 
     def test_figure_loading_scope_and_recovery_are_explicit(self) -> None:
-        for phrase in ("full approved snapshot", "Filter synchronization is pending",
+        for phrase in ("full approved snapshot", "exact mapped source dataset", "Fixed published summaries",
                        "Exact source tables", "Reset figure view"):
             self.assertIn(phrase, self.content)
         for target in ("figure-controls", "figure-select", "figure-status", "figure-error",

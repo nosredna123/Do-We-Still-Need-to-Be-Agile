@@ -260,7 +260,7 @@
     const snapshot = byId("snapshot-details");
     const definitions = byId("definition-results");
     const search = byId("definition-search");
-    const figures = window.ResearchCharts?.createViewer(loadDataset);
+    const figures = window.ResearchCharts?.createViewer(loadDataset, chooseFigureDataset);
     let catalog;
     let release;
     const rowControls = byId("row-controls");
@@ -336,8 +336,8 @@
         if (column.value_labels) fields.append(tree(column.value_labels));
         if (column.value_order) fields.append(tree({ value_order: column.value_order }));
       }
-      detail.append(fields, element("p", "Paper figures are available separately below, using full snapshots. " +
-        "They do not follow these row filters yet. Export controls are not implemented yet."));
+      detail.append(fields, element("p", "Mapped paper figures below follow this dataset's permitted row filters. " +
+        "Original populations, Ns and thresholds remain fixed. Export controls are not implemented yet."));
       const available = datasetSelect.options.length;
       status.textContent = `${available} ${available === 1 ? "dataset" : "datasets"} available in this navigation selection. ` +
         `Showing definitions for ${dataset.title}.`;
@@ -345,6 +345,7 @@
     }
 
     function clearRows() {
+      figures?.setSelection(null);
       requestVersion += 1;
       rowRequest?.abort();
       rowRequest = null;
@@ -378,6 +379,8 @@
       });
       byId("active-filters").textContent = summaries.length
         ? `Active row filters: ${summaries.join("; ")}` : "No active row filters.";
+      figures?.setSelection({ id: activeDataset.id, rows: visible,
+        summary: summaries.length ? `Active row filters: ${summaries.join("; ")}` : "No active row filters" });
       tableContainer.replaceChildren();
       if (!visible.length) return;
       const table = element("table");
@@ -512,6 +515,17 @@
       } finally {
         if (version === requestVersion) rowStatus.setAttribute("aria-busy", "false");
       }
+    }
+
+    function chooseFigureDataset(id) {
+      rq.value = "";
+      metric.value = "";
+      source.value = "";
+      options(metric, catalog.research_questions.flatMap(item => item.metrics).map(value => [value, value]), "All metrics");
+      options(source, catalog.sources.map(item => [item.id, item.label]), "All evidence sources");
+      options(datasetSelect, catalog.datasets.map(dataset => [dataset.id, dataset.title]));
+      datasetSelect.value = id;
+      showDataset();
     }
 
     function updateNavigation(level) {

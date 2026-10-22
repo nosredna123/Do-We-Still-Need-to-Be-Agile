@@ -25,7 +25,7 @@
   const symbol = cohort => cohort === "2025.2" ? "circle" : "diamond";
   const config = { responsive: true, displaylogo: false, displayModeBar: false, scrollZoom: false };
 
-  function buildFigure(catalog, id, datasets) {
+  function buildFigure(catalog, id, datasets, selection) {
     const index = figureIds.indexOf(id);
     const figure = catalog.figures?.find(item => item.id === id);
     check(index >= 0 && figure, "Unsupported paper figure.");
@@ -44,7 +44,16 @@
             ? present(value) : typeof value === column.type), `Invalid figure value: ${field}.`);
         }
       }
-      return { id: descriptor.id, descriptor, rows };
+      let selected = rows;
+      if (selection?.id === descriptor.id) {
+        check(Array.isArray(selection.rows) && typeof selection.summary === "string", "Invalid figure row selection.");
+        const originals = new Set(rows.map(row => JSON.stringify(row)));
+        check(selection.rows.every(row => originals.has(JSON.stringify(row))) &&
+          new Set(selection.rows.map(row => JSON.stringify(row))).size === selection.rows.length,
+        "Figure selection must contain unchanged original rows.");
+        selected = selection.rows;
+      }
+      return { id: descriptor.id, descriptor, rows: selected, total: rows.length };
     });
     const data = [];
     const excluded = [];
@@ -102,17 +111,30 @@
           for (const [fi, family] of families.entries()) {
             const selected = checkpointOrder(rows.filter(row => row.cohort === cohort && row.perception_family === family));
             if (!selected.length) continue;
-            data.push({
+            const trace = {
               type: "scatter", mode: "lines+markers", name: escape(labels[family]),
-              meta: { family }, legendgroup: family, showlegend: ci === 0,
+              meta: { family }, legendgroup: family, showlegend: !data.some(trace => trace.legendgroup === family),
               xaxis: ci ? "x2" : "x", yaxis: ci ? "y2" : "y",
               x: selected.map(row => safe(row.checkpoint)), y: selected.map(row => row.mean),
               error_y: { type: "data", array: selected.map(row => row.std), visible: true },
-              customdata: selected.map(row => [safe(row.cohort), row.response_n, row.std]),
+              customdata: selected.map(row => [safe(row.cohort), row.response_n, row.std === null ? "Unavailable" : row.std]),
               line: { color: colors[fi] }, marker: { size: 7 }, connectgaps: false,
               hovertemplate: "%{customdata[0]} / %{x}<br>Mean=%{y}<br>SD=%{customdata[2]}" +
                 "<br>Responses=%{customdata[1]}<extra>%{fullData.name}</extra>",
-            });
+            };
+            data.push(trace);
+            if (selected.some(row => row.std === null)) {
+              delete trace.error_y;
+              const known = selected.filter(row => present(row.std) && present(row.mean));
+              if (known.length) data.push({
+                type: "scatter", mode: "markers", name: escape(labels[family]),
+                meta: { uncertaintyFor: family }, legendgroup: family, showlegend: false,
+                xaxis: trace.xaxis, yaxis: trace.yaxis,
+                x: known.map(row => safe(row.checkpoint)), y: known.map(row => row.mean),
+                marker: { opacity: 0 }, hoverinfo: "skip",
+                error_y: { type: "data", array: known.map(row => row.std), visible: true, color: colors[fi] },
+              });
+            }
           }
         }
         layout.grid = { rows: 1, columns: 2, pattern: "independent" };
@@ -120,7 +142,15 @@
         layout.xaxis2 = { ...layout.xaxis, title: { text: "2026.1 checkpoint" } };
         layout.yaxis = { range: [0, 5], title: { text: "Mean score (family scale)" } };
         layout.yaxis2 = { range: [0, 5], matches: "y" };
-        explanation = "Bars show standard deviations, not confidence intervals. Coded families use 0-4; autonomy/tool balance retains its 1-5 scale. Axes display 0-5 as in the paper; uncertainty below zero is clipped, not changed. Original response Ns are retained per point.";
+        const visibleCohorts = cohorts.filter(cohort => rows.some(row => row.cohort === cohort));
+        if (visibleCohorts.length === 1) {
+          delete layout.grid;
+          delete layout.xaxis2;
+          delete layout.yaxis2;
+          layout.xaxis.title.text = `${visibleCohorts[0]} checkpoint`;
+          for (const trace of data) { trace.xaxis = "x"; trace.yaxis = "y"; }
+        }
+        explanation = "Bars show standard deviations, not confidence intervals. Unavailable SDs have no bar, not a zero-length bar. Coded families use 0-4; autonomy/tool balance retains its 1-5 scale. Axes display 0-5 as in the paper; uncertainty below zero is clipped, not changed. Original response Ns are retained per point.";
         break;
       }
       case "rq2-pooled-activity": {
@@ -144,14 +174,16 @@
       }
       case "rq2-planning-final7": {
         const selected = usable(rows, "planning_scope_log1p_t1", "final7_share_pct");
-        const scores = rows.map(row => row.evaluator_score_t3).filter(present);
+        const scores = datasets[sources[0].id].map(row => row.evaluator_score_t3).filter(present);
         for (const cohort of cohorts) {
           const subset = selected.filter(row => row.cohort === cohort);
+          if (!subset.length) continue;
+          const showscale = data.length === 0;
           const trace = scatter(subset, cohort, "planning_scope_log1p_t1", "final7_share_pct", {
             symbol: symbol(cohort), size: subset.map(row => row.marker_size), sizemode: "diameter",
             color: subset.map(row => row.evaluator_score_t3), colorscale: "Viridis",
-            cmin: Math.min(...scores), cmax: Math.max(...scores), showscale: cohort === cohorts[0],
-            ...(cohort === cohorts[0] ? { colorbar: { title: { text: "T3 evaluator score" } } } : {}),
+            cmin: Math.min(...scores), cmax: Math.max(...scores), showscale,
+            ...(showscale ? { colorbar: { title: { text: "T3 evaluator score" } } } : {}),
           });
           trace.customdata = subset.map(row => [safe(row.cohort), safe(row.team_id),
             row.evaluator_score_t3, row.abs_delta_score_t3_minus_t1, safe(row.planning_scope_tier)]);
@@ -191,6 +223,7 @@
         const states = ["Artifact observed", "No repository artifact observed"];
         for (const [i, state] of states.entries()) {
           const selected = [...rows.filter(row => row.evidence_state === state)].sort((a, b) => a.cohort.localeCompare(b.cohort));
+          if (!selected.length) continue;
           data.push({ type: "bar", name: state, x: selected.map(row => safe(row.cohort)),
             y: selected.map(row => row.team_semester_count), text: selected.map(row => row.team_semester_count),
             textposition: "inside", marker: { color: i ? "#718096" : colors[0] },
@@ -237,13 +270,18 @@
         break;
       }
     }
-    if (data.length === 1) delete layout.legend;
-    const caption = `${figure.rq}: ${figure.title}. ${explanation} ${figure.notes} ` +
+    if (data.length <= 1) delete layout.legend;
+    const scope = sources.map(source => `${source.descriptor.title}: ${source.rows.length} of ${source.total} rows. ` +
+      (selection?.id === source.id ? `${selection.summary}. ` : "Full approved source snapshot. ") +
+      (source.descriptor.filter_effect === "select_rows_only"
+        ? "Fixed published summary: selection chooses existing summary rows, not a recalculated population or N. "
+        : "Existing observations only; original thresholds and association populations remain fixed. ")).join("");
+    const caption = `${figure.rq}: ${figure.title}. ${scope}${explanation} ${figure.notes} ` +
       (excluded.length ? `${excluded.length} rows not plotted; see exclusion details and complete source table.` : "");
     return { id, title: figure.title, data, layout, config: { ...config }, caption, sources, excluded };
   }
 
-  function createViewer(loadDataset) {
+  function createViewer(loadDataset, chooseDataset) {
     const byId = id => document.getElementById(id);
     const controls = byId("figure-controls");
     const select = byId("figure-select");
@@ -258,6 +296,8 @@
     let version = 0;
     let plot;
     let currentSpec;
+    let selection;
+    let selectionKey;
     const node = (tag, text) => {
       const element = document.createElement(tag);
       if (text !== undefined) element.textContent = text;
@@ -273,7 +313,7 @@
       output.replaceChildren();
       error.textContent = "";
       status.setAttribute("aria-busy", "false");
-      status.textContent = "Choose a paper figure to load its full approved snapshot.";
+      status.textContent = "Choose a paper figure or a mapped source dataset to inspect its approved rows.";
       retry.hidden = true;
       reset.disabled = true;
     }
@@ -281,16 +321,21 @@
       const result = node("div");
       for (const source of spec.sources) {
         const detail = node("details");
-        detail.append(node("summary", `Exact source table: ${source.descriptor.title} (${source.rows.length} rows)`),
+        detail.append(node("summary", `Exact source table: ${source.descriptor.title} (${source.rows.length} of ${source.total} rows)`),
           node("p", `Grain: ${source.descriptor.grain}. Denominator: ${source.descriptor.denominator}. ` +
             source.descriptor.estimation_population));
+        const use = node("button", `Filter this source: ${source.descriptor.title}`);
+        use.type = "button";
+        use.addEventListener("click", () => chooseDataset(source.id));
+        detail.append(use);
         const wrapper = node("div");
         wrapper.className = "table-scroll";
         wrapper.tabIndex = 0;
         wrapper.setAttribute("role", "region");
         wrapper.setAttribute("aria-label", `Figure source table: ${source.descriptor.title}`);
         const table = node("table");
-        table.append(node("caption", `${source.descriptor.title}. All original rows; Unavailable means null, never zero.`));
+        table.append(node("caption", `${source.descriptor.title}. ${source.rows.length} of ${source.total} original rows; ` +
+          `Unavailable means null, never zero. ${selection?.id === source.id ? selection.summary : "Full source snapshot."}`));
         const head = node("thead");
         const header = node("tr");
         for (const column of source.descriptor.columns) {
@@ -329,7 +374,7 @@
         check(window.Plotly?.version === "4.1.2", "Local chart renderer 4.1.2 is unavailable. Check the vendor file.");
         const figure = catalog.figures.find(item => item.id === select.value);
         check(figureIds.includes(figure?.id), "Unsupported paper figure.");
-        status.textContent = `Loading the full snapshot for ${figure.title}...`;
+        status.textContent = `Loading selected source rows for ${figure.title}...`;
         status.setAttribute("aria-busy", "true");
         const ids = [...new Set(figure.panels.map(panel => panel.dataset))];
         const entries = await Promise.all(ids.map(async id => {
@@ -339,14 +384,21 @@
           return [id, await loadDataset(descriptor, record.row_count, fetch, request.signal)];
         }));
         if (token !== version) return;
-        const spec = buildFigure(catalog, figure.id, Object.fromEntries(entries));
+        const spec = buildFigure(catalog, figure.id, Object.fromEntries(entries), selection);
         pendingPlot.className = "figure-plot";
-        const errors = window.Plotly.validate(spec.data, spec.layout) || [];
-        check(!errors.length, `Chart specification rejected: ${errors.map(item => item.msg).join("; ")}`);
-        await window.Plotly.newPlot(pendingPlot, spec.data,
-          { ...spec.layout, width: Math.max(760, output.clientWidth) }, spec.config);
+        const hasPoints = spec.data.some(trace => trace.y.some(value => present(value)));
+        if (hasPoints) {
+          const errors = window.Plotly.validate(spec.data, spec.layout) || [];
+          check(!errors.length, `Chart specification rejected: ${errors.map(item => item.msg).join("; ")}`);
+          await window.Plotly.newPlot(pendingPlot, spec.data,
+            { ...spec.layout, width: Math.max(760, output.clientWidth) }, spec.config);
+        } else {
+          pendingPlot.append(node("p", spec.sources.every(source => !source.rows.length)
+            ? "No rows match these filters. Change a filter or reset row filters."
+            : "No plottable values in the selected rows. See the exact source table and exclusion details; unavailable values are not zero."));
+        }
         if (token !== version) { window.Plotly.purge(pendingPlot); return; }
-        plot = pendingPlot;
+        plot = hasPoints ? pendingPlot : null;
         currentSpec = spec;
         const figureNode = node("figure");
         const caption = node("figcaption", spec.caption);
@@ -357,7 +409,7 @@
         wrapper.setAttribute("role", "region");
         wrapper.setAttribute("aria-label", spec.title);
         wrapper.setAttribute("aria-describedby", caption.id);
-        wrapper.append(plot);
+        wrapper.append(pendingPlot);
         figureNode.append(caption, wrapper);
         output.append(figureNode);
         if (spec.excluded.length) {
@@ -366,7 +418,7 @@
           output.append(node("p", "Rows retained in the source table but excluded from the plot:"), list);
         }
         output.append(tables(spec));
-        status.textContent = `Figure loaded: ${spec.title}. Full approved snapshot; observation filters above do not affect this figure yet.`;
+        status.textContent = `Figure loaded: ${spec.title}. ${scopeText()}`;
         reset.disabled = false;
       } catch (failure) {
         window.Plotly?.purge(pendingPlot);
@@ -383,7 +435,16 @@
         if (token === version) status.setAttribute("aria-busy", "false");
       }
     }
-    select.addEventListener("change", show);
+    function scopeText() {
+      return selection ? `Linked to the observation table for ${selection.id}. ${selection.summary}. ` +
+        "Only that exact source is filtered; other panels retain their full snapshots. Original Ns and guides remain fixed."
+        : "Full approved source snapshots; no observation selection is linked.";
+    }
+    select.addEventListener("change", () => {
+      const figure = catalog.figures.find(item => item.id === select.value);
+      if (figure) chooseDataset(figure.panels[0].dataset);
+      else clear();
+    });
     retry.addEventListener("click", show);
     reset.addEventListener("click", show);
     window.addEventListener("resize", () => {
@@ -398,7 +459,29 @@
       }
     });
     return {
-      clear() { clear(); controls.disabled = true; select.replaceChildren(new Option("Choose a paper figure", "")); },
+      clear() {
+        clear(); selection = null; selectionKey = null;
+        controls.disabled = true; select.replaceChildren(new Option("Choose a paper figure", ""));
+      },
+      setSelection(next) {
+        if (!next) {
+          selection = null; selectionKey = null;
+          clear();
+          status.textContent = "Waiting for the selected observation dataset. No stale figure is shown.";
+          return;
+        }
+        const key = JSON.stringify(next);
+        if (key === selectionKey) return;
+        selectionKey = key;
+        selection = next;
+        const figure = catalog.figures.find(item => item.panels.some(panel => panel.dataset === next.id));
+        select.value = figure?.id || "";
+        if (figure) show();
+        else {
+          clear();
+          status.textContent = "No selected paper figure maps to this dataset. Choose a paper figure to open its source dataset and filters.";
+        }
+      },
       configure(nextCatalog, nextRelease) {
         clear();
         catalog = nextCatalog;

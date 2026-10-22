@@ -156,7 +156,11 @@ test("missing line values remain gaps and uncertainty never silently becomes zer
   const spec = buildFigure(catalog, "rq1-perceptions", altered);
   const trace = spec.data.find(trace => trace.meta.family === "ai_benefit" && trace.customdata[0][0] === "2025.2");
   assert.equal(trace.y[0], null);
-  assert.equal(trace.error_y.array[0], null);
+  assert.equal(trace.error_y, undefined);
+  assert.equal(trace.customdata[0][2], "Unavailable");
+  const uncertainty = spec.data.find(item => item.meta?.uncertaintyFor === "ai_benefit");
+  assert.deepEqual(uncertainty.x, ["T2", "T3"]);
+  assert(uncertainty.error_y.array.every(value => typeof value === "number"));
   assert.equal(trace.connectgaps, false);
 });
 
@@ -179,4 +183,79 @@ test("HTML-like cohort/team metadata is escaped in chart hover/custom labels", (
   const spec = buildFigure(catalog, "rq3-planning-rework", altered);
   const text = spec.data.flatMap(trace => trace.customdata).find(row => String(row[1]).includes("img"))[1];
   assert.equal(text, "&lt;img src=x&gt;");
+});
+
+test("selected source rows drive plots and alternatives without changing frozen score domain or medians", () => {
+  const id = "planning-final7-commits";
+  const selected = datasets[id].filter(row => row.cohort === "2026.1");
+  const spec = buildFigure(catalog, "rq2-planning-final7", datasets, { id, rows: selected, summary: "Cohort: 2026.1" });
+  assert.equal(points(spec).length, 5);
+  assert.deepEqual(spec.sources[0].rows, selected);
+  assert.equal(spec.sources[0].total, 14);
+  assert(spec.caption.includes("Cohort: 2026.1"));
+  assert(spec.data.every(t => t.marker.cmin === 1.5 && t.marker.cmax === 2.5));
+  assert.equal(spec.layout.shapes[1].y0, 43.743509865005194);
+});
+
+test("fixed summary selections choose existing rows, not populations, and never cross-filter the other panel", () => {
+  const id = "m4-checkpoint-pooled";
+  const selected = datasets[id].filter(row => row.checkpoint === "T2");
+  const spec = buildFigure(catalog, "rq2-churn-and-lexical-density", datasets, { id, rows: selected, summary: "Checkpoint: T2" });
+  assert.equal(spec.data[0].y.length, 1);
+  assert.equal(spec.data[0].customdata[0][0], 14);
+  assert.equal(spec.data[1].y.length, 3);
+  assert(spec.caption.includes("Fixed published summary"));
+  assert.equal(spec.sources[1].rows.length, 3);
+});
+
+test("empty selection is genuinely empty; logarithmic zeros remain selected source rows but not marks", () => {
+  const id = "planning-rework-profile";
+  const empty = buildFigure(catalog, "rq3-planning-rework", datasets, { id, rows: [], summary: "Conflicting filters" });
+  assert.equal(points(empty).length, 0);
+  assert.equal(empty.sources[0].rows.length, 0);
+  const zeros = datasets[id].filter(row => row.clean_rework_churn_t3 === 0);
+  const spec = buildFigure(catalog, "rq3-planning-rework", datasets, { id, rows: zeros, summary: "Zero cases" });
+  assert.equal(points(spec).length, 0);
+  assert.equal(spec.excluded.length, 3);
+  assert.equal(spec.sources[0].rows.length, 3);
+});
+
+test("single-cohort perception selection labels the surviving facet and keeps all family legends and SDs", () => {
+  const id = "m1-perceptions";
+  for (const cohort of ["2025.2", "2026.1"]) {
+    const rows = datasets[id].filter(row => row.cohort === cohort);
+    const spec = buildFigure(catalog, "rq1-perceptions", datasets, { id, rows, summary: cohort });
+    assert.equal(points(spec).length, 18);
+    assert.equal(spec.layout.xaxis.title.text, `${cohort} checkpoint`);
+    assert.equal(spec.layout.xaxis2, undefined);
+    assert(spec.data.every(t => t.showlegend && t.yaxis === "y" && t.xaxis === "x"));
+    assert.deepEqual(spec.layout.yaxis.range, [0, 5]);
+    assert.deepEqual(spec.data.flatMap(t => t.error_y.array).sort(), rows.map(r => r.std).sort());
+  }
+});
+
+test("figure selection rejects altered values, duplicate rows and malformed selection rather than fabricating points", () => {
+  const id = "planning-final7-commits";
+  for (const rows of [[{ ...datasets[id][0], marker_size: 999 }], [datasets[id][0], datasets[id][0]], null]) {
+    assert.throws(() => buildFigure(catalog, "rq2-planning-final7", datasets, { id, rows, summary: "Invalid" }),
+      /selection|unchanged/);
+  }
+});
+
+test("every mapped source supports exact row subsets and order without mutating full snapshots", () => {
+  const before = JSON.stringify(datasets);
+  for (const figure of catalog.figures) {
+    for (const panel of figure.panels) {
+      const rows = datasets[panel.dataset].filter((_, i) => i % 2 === 0).reverse();
+      const spec = buildFigure(catalog, figure.id, datasets, { id: panel.dataset, rows, summary: "Existing rows" });
+      const source = spec.sources.find(s => s.id === panel.dataset);
+      assert.deepEqual(source.rows, rows);
+      assert.equal(source.total, datasets[panel.dataset].length);
+      for (const other of spec.sources.filter(s => s.id !== panel.dataset)) {
+        assert.deepEqual(other.rows, datasets[other.id]);
+      }
+      assert(spec.caption.includes(`${rows.length} of ${source.total} rows`));
+    }
+  }
+  assert.equal(JSON.stringify(datasets), before);
 });
