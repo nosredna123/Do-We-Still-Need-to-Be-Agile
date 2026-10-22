@@ -357,8 +357,8 @@ publishable directory.
   publishing its text. Full transcripts, audit-trail text, and commit subjects
   remain excluded.
 - T015 must implement the no-excerpt branch: no excerpt-specific UI or dataset
-  request. It is not completed by this decision; verify that branch when the
-  application is built. T007/T008 and the final release review must likewise
+  request. This decision alone did not complete T015; its runtime verification
+  is recorded below. T007/T008 and the final release review must likewise
   ensure no excerpt descriptors or payloads are shipped.
 - Adding excerpts later requires reopening T004 and obtaining individual human
   approval of each exact text and its public context, with renewed field/snapshot
@@ -913,6 +913,57 @@ Temporary previews were stopped and removed; no private artifacts or bytecode
 were added to the site. T015 and all later tasks remain open. Excerpt omission
 is unchanged, and all 11 human/actual-host publication gates remain unchecked.
 
+### T015 - Verified no-excerpt branch
+
+**Completed 2026-10-22 through the T004 omission decision.** The approved-excerpt
+set is empty, so no excerpt renderer, navigation, placeholder, search index,
+download, payload, or request is added. The existing [page](index.html) and
+[application](assets/app.js) already implement that branch. Adding a dormant
+renderer or feature switch would conflict with the explicit omission boundary
+and introduce unnecessary code. No production HTML/JavaScript/CSS or public
+data changes were needed for this task.
+
+Three new [JavaScript regressions](tools/test_app.cjs) verify that the shipped
+catalog/release/data inventory contains no excerpt descriptor or placeholder;
+missing or changed omission policy fails before observation requests; and
+approved lexical aggregates/definitions and structured planning counts remain
+valid while added quotation fields fail exact-schema validation. A new
+[page test](tools/test_page.py) checks absence of quote markup, excerpt controls,
+links and misleading empty-feature messages. These are regression tests for an
+already implemented branch, not a new renderer developed through a failing
+implementation test.
+
+Verification before completion:
+
+- All **53 Python and 29 JavaScript tests pass** (82 total, zero failed/skipped),
+  including the preparation allowlist, deterministic catalog, public snapshot,
+  exact-schema and new omission checks. JavaScript syntax, release verification
+  of 99 artifact hashes, and whitespace checks pass.
+- Browser navigation visits all 49 datasets in an independent nested copy:
+  no excerpt UI, quote markup or excerpt request appears. Searching for the
+  omitted dataset identifier yields the normal no-match definition state,
+  not an excerpt view or placeholder. All observed requests stay within the
+  local copied site.
+- Approved transcript coverage still displays three checkpoint rows and
+  structured planning still displays 14 cases, including its approved
+  evidence-quote count column without source quotations.
+- Injecting an enabled excerpt policy causes an explicit logged publication-
+  policy error, disables navigation, clears rows, and makes no observation
+  request. Restoring the catalog and retrying recovers all 49 choices and
+  the initial 36-row table without any excerpt feature.
+- The same independent-copy verifier used for T014 passes all current tests
+  and byte-identical root/nested HTTP delivery of assets, metadata and all
+  49 datasets. Production runtime assets, HTML and frozen data remain
+  byte-for-byte unchanged from T014.
+
+The [README](README.md) documents the omission branch and its limits. Structural
+checks are not a classifier for unapproved prose disguised inside an existing
+field: allowlisted generation, frozen hashes and final human review remain
+required. No real quotations or private approval records were used as fixtures.
+Temporary previews were stopped and removed; no dependencies were installed.
+Adding excerpts later requires reopening T004 and approving exact text/context.
+T016 onward and all 11 human/actual-host publication gates remain pending.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1077,7 +1128,7 @@ resulting directory cannot depend on them at runtime.
 
 - [x] T013 [US2] [Plan:3.2] Implement dataset-specific filters, reset, active-filter summaries, visible counts, numeric/text sorting, missing-value display, and empty states in `microsite/assets/app.js`. Verified all 49 tables/17,046 cells, every approved filter and column, explicit errors/retry/cancellation, 73 tests, and independent root/nested hosting; see Section 3.
 - [x] T014 [US2] [Plan:3.2] Implement compatible multi-cohort/team-semester selections in `microsite/assets/app.js`, using cohort-plus-team keys and disabling unsupported team filters for surveys/transcripts. Verified all 49 datasets/51 checkbox groups, exact values, OR/AND/reset and evidence-grain limits, 78 tests, and independent root/nested delivery; see Section 3.
-- [ ] T015 [US2] [Plan:3.2] Render approved excerpts, if any, in `microsite/index.html` through `microsite/assets/app.js`, with checkpoint/source context and no fabricated team attribution.
+- [x] T015 [US2] [Plan:3.2] Render approved excerpts, if any, in `microsite/index.html` through `microsite/assets/app.js`, with checkpoint/source context and no fabricated team attribution. Completed the no-excerpt branch required by T004: no view/payload/placeholder/request; 82 tests, all 49 runtime datasets, fail-closed policy/retry and independent root/nested delivery verified; see Section 3.
 
 **Exit:** A researcher can navigate from an RQ to exact values and understand what
 is measured, what is missing, and which comparisons are valid.

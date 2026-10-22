@@ -82,9 +82,34 @@ node --test tools/test_app.cjs
 ```
 
 There are no npm packages, package manifest, installation, bundling, or build
-step. Nine JavaScript tests use only Node's built-in runner and the public files:
+step. Twelve metadata/policy JavaScript tests use only Node's built-in runner and the public files:
 metadata/schema errors, cross-RQ navigation, definition matching, HTTP/JSON
 failure, request scope, and abort timeout.
+
+## Excerpt omission (T015)
+
+The approved-excerpt set for this release is empty by explicit human decision.
+The application therefore implements the **no-excerpt branch**: no excerpt view,
+navigation item, placeholder, text-search index, download, payload, or request.
+This is not a claim that qualitative evidence does not exist. Approved lexical
+aggregates, coding definitions, and structured planning counts remain available;
+an evidence-quote count does not authorize publishing its source text.
+
+No dormant renderer or feature switch was added. The existing metadata loader
+requires the omission policy and fails explicitly before requesting observations
+if that policy is missing or changed. Exact observation schemas reject added
+quotation fields. These structural checks are not a classifier or guarantee
+against arbitrary unapproved text disguised as an existing field: the frozen
+allowlisted exports, release hashes, and final whole-directory human review
+remain necessary.
+
+Regression tests check the shipped descriptors/files/release inventory for
+excerpt artifacts (including empty placeholders), absence of excerpt UI,
+fail-closed policy loading, rejected extra quote fields, and continued availability
+of approved aggregates/counts. Browser checks verify the runtime navigation,
+definition search, and requests without an excerpt feature. Reopening this
+decision requires individual human approval of exact text and context under
+T004 before changing the export contracts or application.
 
 ## Observation tables and row filters (T013)
 

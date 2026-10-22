@@ -2,10 +2,10 @@
 "use strict";
 
 const assert = require("node:assert/strict");
-const { readFileSync } = require("node:fs");
+const { readFileSync, readdirSync } = require("node:fs");
 const path = require("node:path");
 const { test } = require("node:test");
-const { validateMetadata, matchingDatasets, matchesDefinition, loadMetadata } = require("../assets/app.js");
+const { validateMetadata, matchingDatasets, matchesDefinition, loadMetadata, validateRows } = require("../assets/app.js");
 const site = path.resolve(__dirname, "..");
 const catalog = JSON.parse(readFileSync(path.join(site, "data/catalog.json")));
 const release = JSON.parse(readFileSync(path.join(site, "data/release.json")));
@@ -104,6 +104,55 @@ test("loads only two local metadata files, not observation files", async () => {
   assert.equal(loaded.catalog, catalog);
   assert.equal(loaded.release, release);
   assert.deepEqual(calls.sort(), ["data/catalog.json", "data/release.json"]);
+});
+
+test("omission release contains no excerpt descriptor, artifact or empty placeholder", () => {
+  const walk = directory => readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
+    const name = path.join(directory, entry.name);
+    return entry.isDirectory() ? walk(name) : [path.relative(site, name).split(path.sep).join("/")];
+  });
+  const excerptName = /excerpt|verbatim|quotation/i;
+  for (const name of walk(path.join(site, "data"))) assert(!excerptName.test(name), name);
+  for (const dataset of catalog.datasets) {
+    assert(!excerptName.test([dataset.id, dataset.title, dataset.source, ...Object.values(dataset.paths)].join(" ")));
+    assert(!matchesDefinition(dataset, "qualitative-excerpts"));
+    assert(!dataset.columns.some(column =>
+      ["text", "quote", "excerpt", "evidence_quotes", "raw_response", "parsed_response"].includes(column.id)));
+  }
+  for (const artifact of release.artifacts) assert(!excerptName.test(artifact.path), artifact.path);
+});
+
+test("changed or missing excerpt policy fails metadata loading before any observations are requested", async () => {
+  for (const policy of [undefined, "approved", "enabled", ""]) {
+    const altered = clone(catalog);
+    if (policy === undefined) delete altered.excerpt_policy;
+    else altered.excerpt_policy = policy;
+    const calls = [];
+    await assert.rejects(loadMetadata(async url => {
+      calls.push(url);
+      assert(["data/catalog.json", "data/release.json"].includes(url));
+      return { ok: true, json: async () => url.endsWith("catalog.json") ? altered : release };
+    }), /publication policy/);
+    assert.deepEqual(calls.sort(), ["data/catalog.json", "data/release.json"]);
+  }
+});
+
+test("omission keeps approved lexical aggregates and planning counts, never their source quotations", () => {
+  for (const id of ["m5-marker-density", "m5-marker-composition", "m5-corpus-coverage",
+    "m5-lexicon", "transcript-context-2025", "m6b-planning-content"]) {
+    const dataset = catalog.datasets.find(item => item.id === id);
+    assert(dataset, id);
+    const rows = JSON.parse(readFileSync(path.join(site, dataset.paths.json)));
+    validateRows(rows, dataset, release.datasets.find(item => item.id === id).row_count);
+    const altered = clone(rows);
+    altered[0].evidence_quotes = ["Synthetic unapproved text"];
+    assert.throws(() => validateRows(altered, dataset, rows.length), /columns disagree/);
+    if (id === "m6b-planning-content") {
+      assert(dataset.columns.some(column => column.id === "evidence_quotes_n"));
+      assert(rows.some(row => row.evidence_quotes_n > 0));
+      assert(rows.every(row => !Object.hasOwn(row, "evidence_quotes")));
+    }
+  }
 });
 
 test("HTTP failures and invalid JSON are explicit load errors", async () => {

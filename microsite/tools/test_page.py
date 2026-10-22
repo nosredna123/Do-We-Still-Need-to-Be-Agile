@@ -113,6 +113,15 @@ class PageTests(unittest.TestCase):
         for marker in ("http://", "https://", "file://", "/home/", "paper_v9", "github.com"):
             self.assertNotIn(marker, self.source)
 
+    def test_excerpt_omission_has_no_view_or_placeholder(self) -> None:
+        for tag, attrs in self.page.elements:
+            self.assertNotIn(tag, ("blockquote", "q"))
+            for key in ("id", "class", "href", "src", "aria-label", "aria-labelledby"):
+                self.assertNotIn("excerpt", (attrs.get(key) or "").lower())
+        self.assertNotIn("No excerpts", self.content)
+        self.assertNotIn("Approved excerpts", self.content)
+        self.assertNotIn("Excerpts unavailable", self.content)
+
 
 if __name__ == "__main__":
     unittest.main()
