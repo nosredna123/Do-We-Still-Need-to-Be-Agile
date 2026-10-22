@@ -47,6 +47,7 @@ class StylesTests(unittest.TestCase):
     def test_focus_controls_and_table_contract(self) -> None:
         for marker in (":focus-visible", "outline-offset:", "min-block-size: 2.75rem",
                        "input", "select", "button", "label", "fieldset",
+                       ".case-choices label", ".case-choices input", "overflow-y: auto",
                        ".table-scroll", "overflow-x: auto", "font-variant-numeric: tabular-nums",
                        "caption", "th", "td", "@media", "prefers-reduced-motion"):
             self.assertIn(marker, self.css)

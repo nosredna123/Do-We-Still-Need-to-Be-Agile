@@ -11,8 +11,8 @@ implemented, along with the [public data release manifest](data/release.json).
 The [page shell](index.html) provides overview, research-question guides, and
 methods with native in-page navigation and responsive local styling.
 Catalog-based RQ/metric/source navigation, definitions, snapshot details,
-observation tables, row filters, and sorting are implemented. Multi-case comparisons,
-figures, and export controls remain pending, and
+observation tables, row filters, sorting, and compatible multi-cohort/team-semester
+selection are implemented. Figures and export controls remain pending, and
 whole-directory/actual-host approval remains pending.
 This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
@@ -28,10 +28,12 @@ the main content. The overview explains survey, team-semester, global transcript
 and fixed-estimate grains before the research-question guides.
 
 The styled explorer now loads approved observation rows on dataset selection.
-The page states that multi-case comparisons, figures, and export controls are pending.
+The page supports comparing existing compatible cases in the same table;
+figures and export controls are pending.
 Local catalog, release-manifest, and documentation links work.
 T011 provides layout/focus styling; T012 provides catalog loading and
-dataset navigation; T013 provides row filters/tables/sorting. Charts and export actions remain later tasks.
+dataset navigation; T013 provides row filters/tables/sorting; T014 adds multi-case
+selection. Charts and export actions remain later tasks.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
 the working shell as whole-directory or host approval.
@@ -95,9 +97,9 @@ removes the old table while the new file loads. A failed, malformed, missing, or
 timed-out file produces a logged error, no rows, disabled row controls, and retry;
 it is never presented as a successful empty dataset.
 
-Each catalog-approved filter is a labeled native selector with All plus observed
-typed values. At this stage choose **one value per filter**; T014 will extend
-cohort/team-semester selection for multi-case comparisons. Team and omitted-case
+Each catalog-approved filter uses observed typed values. Cohort, team-semester,
+and omitted-case filters are native checkbox groups allowing multiple choices;
+other filters are labeled single-value selectors with All. Team and omitted-case
 choices always include cohort plus team, never a repeated team label alone.
 Surveys and global transcript aggregates receive no unsupported team selector.
 Selections are combined by intersection without changing values, estimators,
@@ -117,7 +119,7 @@ dataset missingness notes retain their reasons. Headers include units, numeric
 cells preserve full precision, and every value is inserted as literal text.
 The named table region scrolls horizontally via keyboard at narrow widths.
 
-Twelve additional built-in Node tests cover all 49 datasets, every approved
+Seventeen row tests using Node's built-in runner cover all 49 datasets, every approved
 filter choice, composite keys, empty intersections/reset, stable numeric/text/
 boolean/null sorting, exact display, fixed estimates, and fetch errors/cancellation/
 timeout. Run both JavaScript test files with one command:
@@ -125,6 +127,42 @@ timeout. Run both JavaScript test files with one command:
 ```sh
 node --test tools/test_app.cjs tools/test_rows.cjs
 ```
+
+## Compatible multi-case selection (T014)
+
+Compare selected cohorts or team-semesters in the **same observation table**,
+without a separate comparison view or joining different datasets. Cohort,
+team-semester, omitted-cohort, and omitted-case filters use native checkbox
+groups with explicit legends and clickable labels. Check any number of choices;
+**none checked means all**, as the group hint explains. This avoids modifier-key
+multiselect gestures. Long lists scroll locally; Tab and Space operate the
+checkboxes. Other filters retain their one-value-or-All selector.
+
+Choices within one group use **OR**; different filters use **AND**. Selecting
+both cohorts and two team-semesters shows only those two cases, not every team
+in either cohort. Team/omitted-case labels always include the cohort, and their
+values encode the full composite identity. Repeated team labels never merge.
+Conflicting selections produce an explicit empty result without deleting
+choices. Uncheck the last choice to show all for that group; Reset clears every
+group, single-value filter, and sort. Dataset/RQ navigation clears all old state.
+Active-filter summaries list the selected cases, and counts update together
+with the existing table.
+
+The UI offers only filters declared in the catalog. Survey summaries can compare
+cohorts, never teams. Global transcript aggregates cannot acquire team or
+unmeasured-cohort selectors. Datasets without a team-semester observation filter
+say so explicitly. Omitted-case diagnostic filters select existing fixed
+leave-one-out results; they do not calculate new omissions or associations.
+Original rows, denominators, estimator Ns, eligibility, missingness, and scientific
+values stay fixed. The selection helper rejects unknown filters, unapproved or
+wrongly typed choices, and duplicate tokens rather than silently returning a
+misleading result.
+
+Five T014 regression tests extend the twelve T013 row tests: cross-cohort repeated
+team labels, OR/AND across every approved filter, invalid selections, fixed
+omitted-case estimates, and absence of unsupported survey/transcript team filters.
+Run them with the combined Node command above. No new package, server-side
+requirement, or data artifact is introduced.
 
 ## Responsive styling (T011)
 

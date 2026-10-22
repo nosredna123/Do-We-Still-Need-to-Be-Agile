@@ -180,13 +180,14 @@
   }
 
   function selectRows(rows, dataset, selection) {
-    const predicates = Object.entries(selection).map(([id, value]) => {
+    const predicates = Object.entries(selection).map(([id, values]) => {
       const filter = dataset.filters.find(item => item.id === id);
-      requireValue(filter && typeof value === "string", "Unknown filter selection.");
-      const chosen = JSON.parse(value);
-      requireValue(Array.isArray(chosen) && chosen.length === filter.fields.length,
-        "Invalid filter selection.");
-      return row => filter.fields.every((field, index) => row[field] === chosen[index]);
+      requireValue(filter && Array.isArray(values) && values.every(value => typeof value === "string") &&
+        unique(values), "Invalid filter selection.");
+      const approved = new Set(filterChoices(rows, dataset, filter).map(choice => choice.value));
+      requireValue(values.every(value => approved.has(value)), "Unknown or wrongly typed filter choice.");
+      const chosen = new Set(values);
+      return row => !chosen.size || chosen.has(JSON.stringify(filter.fields.map(field => row[field])));
     });
     return rows.filter(row => predicates.every(predicate => predicate(row)));
   }
@@ -334,7 +335,7 @@
         if (column.value_labels) fields.append(tree(column.value_labels));
         if (column.value_order) fields.append(tree({ value_order: column.value_order }));
       }
-      detail.append(fields, element("p", "Figures, multi-case comparison controls, and export controls are not implemented yet."));
+      detail.append(fields, element("p", "Figures and export controls are not implemented yet."));
       const available = datasetSelect.options.length;
       status.textContent = `${available} ${available === 1 ? "dataset" : "datasets"} available in this navigation selection. ` +
         `Showing definitions for ${dataset.title}.`;
@@ -367,10 +368,11 @@
       }
       rowStatus.textContent = `${visible.length} of ${rows.length} rows shown. ` +
         (visible.length ? "Values retain their original precision." : "No rows match these filters. Change a filter or reset.");
-      const summaries = Object.entries(selection).map(([id, value]) => {
+      const summaries = Object.entries(selection).map(([id, values]) => {
         const filter = activeDataset.filters.find(item => item.id === id);
-        const choice = filterChoices(rows, activeDataset, filter).find(item => item.value === value);
-        return `${filter.label}: ${choice.label}`;
+        const choices = filterChoices(rows, activeDataset, filter);
+        return `${filter.label}: ${values.map(value =>
+          choices.find(item => item.value === value).label).join(" or ")}`;
       });
       byId("active-filters").textContent = summaries.length
         ? `Active row filters: ${summaries.join("; ")}` : "No active row filters.";
@@ -434,12 +436,45 @@
       byId("row-scope").textContent = dataset.filter_effect === "select_rows_only"
         ? "Filters select existing published rows only. Original populations, denominators, sample sizes and estimates remain fixed; nothing is recalculated."
         : "Filters select existing observations at the stated grain. No new estimates or thresholds are calculated.";
+      if (!dataset.filters.some(filter => filter.id === "team_semester")) {
+        byId("row-scope").append(" No team-semester observation filter is available for this dataset; only its approved filters are offered.");
+      }
       try {
         const expected = release.datasets.find(item => item.id === dataset.id).row_count;
         const loaded = await loadDataset(dataset, expected, fetch, rowRequest.signal);
         if (version !== requestVersion) return;
         rows = loaded;
         for (const filter of dataset.filters) {
+          const choices = filterChoices(rows, dataset, filter);
+          if (filter.fields.includes("cohort") || filter.fields.includes("omitted_cohort")) {
+            const group = element("fieldset");
+            group.className = "case-filter";
+            group.dataset.filterId = filter.id;
+            group.append(element("legend", filter.label));
+            const hint = element("p", "Select any number. None selected means all.");
+            hint.id = `filter-${filter.id}-hint`;
+            group.append(hint);
+            const list = element("div");
+            list.className = "case-choices";
+            group.setAttribute("aria-describedby", hint.id);
+            for (const choice of choices) {
+              const title = element("label");
+              const control = element("input");
+              control.type = "checkbox";
+              control.value = choice.value;
+              control.addEventListener("change", () => {
+                const values = [...list.querySelectorAll("input:checked")].map(input => input.value);
+                if (values.length) selection[filter.id] = values;
+                else delete selection[filter.id];
+                renderRows();
+              });
+              title.append(control, element("span", choice.label));
+              list.append(title);
+            }
+            group.append(list);
+            filterContainer.append(group);
+            continue;
+          }
           const wrapper = element("div");
           const control = element("select");
           const id = `filter-${filter.id}`;
@@ -447,11 +482,11 @@
           const title = element("label", filter.label);
           title.htmlFor = id;
           control.append(new Option(`All: ${filter.label}`, ""));
-          for (const choice of filterChoices(rows, dataset, filter)) {
+          for (const choice of choices) {
             control.append(new Option(choice.label, choice.value));
           }
           control.addEventListener("change", () => {
-            if (control.value) selection[filter.id] = control.value;
+            if (control.value) selection[filter.id] = [control.value];
             else delete selection[filter.id];
             renderRows();
           });
@@ -587,6 +622,7 @@
       selection = {};
       sort = null;
       for (const control of filterContainer.querySelectorAll("select")) control.value = "";
+      for (const control of filterContainer.querySelectorAll('input[type="checkbox"]')) control.checked = false;
       renderRows();
     });
     window.addEventListener("hashchange", () => {

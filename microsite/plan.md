@@ -788,9 +788,9 @@ source order while retaining the dataset. Changing datasets clears incompatible
 filters, sort state, and the prior table. Surveys and global transcript datasets
 never acquire unsupported team filters.
 
-Each filter currently allows one value or All. The catalog's allowed multi-select
-capability is intentionally staged: compatible multi-cohort/team-semester
-selection remains T014, not a completed comparison feature. Filters select
+At T013 completion, each filter allowed one value or All. The catalog's allowed
+multi-select capability was intentionally staged; compatible multi-cohort/
+team-semester selection is implemented in T014 below. Filters select
 existing observations or published estimates only; denominators, estimator Ns,
 thresholds, populations, and scientific values are never recalculated.
 
@@ -845,6 +845,74 @@ temporary previews/fixtures were removed and servers stopped. Only T013 is
 completed here: multi-case selection, figures, exports, full accessibility,
 human release review, and actual-host publication gates remain pending.
 
+### T014 - Compatible multi-cohort and team-semester selection
+
+**Completed 2026-10-22.** The [application script](assets/app.js) now supports
+multiple cohort/team-semester selections directly in the existing observation
+table, without a separate comparison subsystem, cross-dataset joins, or new
+estimates. The same mechanism applies to approved omitted-cohort/omitted-case
+diagnostic filters: these select existing fixed leave-one-out rows, not newly
+computed exclusions.
+
+Catalog-approved cohort and composite case filters use native checkbox groups
+with legends, explicit instructions, and clickable labels. Checkbox-based
+multiselects avoid modifier-key gestures and work with the existing native-control
+styles. None checked means all; one or more checked choices use OR within that
+group. Different filters use AND. Other approved filters retain their existing
+one-value-or-All selector. Reset clears every checkbox, selector, and sort;
+navigation to another dataset clears incompatible state. Sorting retains selected
+cases. Active summaries and counts update with the table, and conflicting
+selections remain visible as explicit empty results rather than disappearing.
+
+Team and omitted-case tokens/labels always include both cohort and team:
+repeated team names cannot merge. Survey aggregates offer only their approved
+cohort/category filters; global transcript aggregates offer no team or unmeasured
+cohort choice. A scope notice explicitly identifies datasets without a
+team-semester observation filter. All filters select existing rows at the
+documented grain and preserve original values, missingness, populations, sample
+sizes, denominators, and estimates. Unknown, duplicate, unapproved, or wrongly
+typed selection tokens are rejected explicitly.
+
+Verification before completion:
+
+- Five new [row regression tests](tools/test_rows.cjs) cover cross-cohort repeated
+  team labels, OR-within/AND-across every approved filter, empty/all selections,
+  invalid inputs, fixed omitted-case rows, and unsupported team filters. The
+  initial test-first run failed before the selection-array implementation;
+  all 17 row tests and nine metadata tests now pass, along with all 52 Python
+  authoring/static tests: **78 passed, zero failed/skipped**. No package,
+  dependency, build, or backend requirement was introduced.
+- Browser DOM checks exercised all 49 datasets, 51 checkbox groups across
+  31 datasets, and their combination with single-value selectors. All
+  17,046 unfiltered scalar cells match the approved source exactly; filtered
+  tables match OR/AND predicates, counts, and complete reset behavior.
+- Two baseline-eligible `TEAM_01` observations, one per cohort, display as two
+  distinct cases with both composite labels in the active summary. Cohort
+  intersection reduces this to one; selecting both cohorts restores two.
+  Incompatible cohort/team choices give an explicit empty state; unchecking
+  the last choice restores all. Sorting preserves selection.
+- Changing from selected teams to a survey clears checks and sort, offers
+  cohort comparison but no team filter, and retains the fixed-population
+  notice. Global transcript coverage offers neither team nor cohort groups.
+  An injected dataset 404 clears all stale groups/rows, disables row controls,
+  and exposes a logged error; retry restores all cases unchecked.
+- Checkbox labels remain at least 44 px high, lists scroll locally, and the
+  page fits at 1280/360/320 px and 200% text at 320 px. Fieldsets/legends,
+  label association, hints, native checkbox focus, and label activation pass.
+  The hidden shared browser did not deliver Space activation to the focused
+  checkbox. DOM events verify behavior, but real keyboard/pointer journeys
+  remain open for the later accessibility gate; this is not full sign-off.
+- An independent copied directory passes all 78 tests, JavaScript syntax,
+  the 99-artifact release integrity check, and byte-identical HTTP delivery
+  of assets/metadata/all 49 datasets at root and `/review/explorer/`. Browser
+  comparison checks run against that nested independent copy. All frozen
+  public data/catalog/release bytes remain unchanged.
+
+The [README](README.md) documents selection semantics and scientific limits.
+Temporary previews were stopped and removed; no private artifacts or bytecode
+were added to the site. T015 and all later tasks remain open. Excerpt omission
+is unchanged, and all 11 human/actual-host publication gates remain unchecked.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -883,7 +951,7 @@ shareable query state is not required.
 
 - Show only filters valid for the selected dataset. Reset incompatible filters
   when changing datasets and display the active filters and visible row count.
-- Use select boxes/multiselects for cohort, checkpoint, role/category, and
+- Use native select boxes or checkbox-based multiselects for cohort, checkpoint, role/category, and
   team-semester where applicable. Avoid a general-purpose query builder.
 - Provide a clear reset action, understandable empty states, and visible data-load
   errors. Distinguish load failure, unavailable measurement, ineligible observation,
@@ -1008,7 +1076,7 @@ resulting directory cannot depend on them at runtime.
 **Requirements:** REQ-002, REQ-004, REQ-005.
 
 - [x] T013 [US2] [Plan:3.2] Implement dataset-specific filters, reset, active-filter summaries, visible counts, numeric/text sorting, missing-value display, and empty states in `microsite/assets/app.js`. Verified all 49 tables/17,046 cells, every approved filter and column, explicit errors/retry/cancellation, 73 tests, and independent root/nested hosting; see Section 3.
-- [ ] T014 [US2] [Plan:3.2] Implement compatible multi-cohort/team-semester selections in `microsite/assets/app.js`, using cohort-plus-team keys and disabling unsupported team filters for surveys/transcripts.
+- [x] T014 [US2] [Plan:3.2] Implement compatible multi-cohort/team-semester selections in `microsite/assets/app.js`, using cohort-plus-team keys and disabling unsupported team filters for surveys/transcripts. Verified all 49 datasets/51 checkbox groups, exact values, OR/AND/reset and evidence-grain limits, 78 tests, and independent root/nested delivery; see Section 3.
 - [ ] T015 [US2] [Plan:3.2] Render approved excerpts, if any, in `microsite/index.html` through `microsite/assets/app.js`, with checkpoint/source context and no fabricated team attribution.
 
 **Exit:** A researcher can navigate from an RQ to exact values and understand what

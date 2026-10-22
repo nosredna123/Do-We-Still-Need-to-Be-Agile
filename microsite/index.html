@@ -113,8 +113,11 @@
       <p id="row-scope"></p>
       <fieldset id="row-controls" disabled aria-describedby="row-status row-scope">
         <legend>Filter the selected dataset</legend>
-        <p>Choose one value per filter, or All. Team choices always include the cohort.
-          Multi-case comparison controls are not implemented yet.</p>
+        <p>Select one or more cohorts or team-semesters using the checkboxes where
+          available; none selected means all. Team choices always include the cohort.
+          Choices within a group are combined with OR; different filters use AND.
+          Other filters offer one value or All. Compare existing rows in the same
+          table at the stated grain, without recalculating estimates.</p>
         <div id="row-filters" class="navigation-controls"></div>
         <button id="row-reset" type="button">Reset row filters and sort</button>
       </fieldset>

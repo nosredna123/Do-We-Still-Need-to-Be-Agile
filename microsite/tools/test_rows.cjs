@@ -52,7 +52,7 @@ test("every approved filter uses typed source values and exact row predicates", 
       assert(choices.length > 0, dataset.id);
       assert.equal(new Set(choices.map(choice => choice.value)).size, choices.length);
       for (const choice of choices) {
-        const selected = selectRows(rows, dataset, { [filter.id]: choice.value });
+        const selected = selectRows(rows, dataset, { [filter.id]: [choice.value] });
         assert.deepEqual(selected, rows.filter(row =>
           JSON.stringify(filter.fields.map(field => row[field])) === choice.value));
         assert(selected.length > 0);
@@ -68,7 +68,7 @@ test("cohort-plus-team choices never merge repeated team labels", () => {
   const choices = filterChoices(rows, dataset, filter);
   assert.equal(choices.length, 14);
   for (const choice of choices) {
-    assert.equal(selectRows(rows, dataset, { team_semester: choice.value }).length, 1);
+    assert.equal(selectRows(rows, dataset, { team_semester: [choice.value] }).length, 1);
     const [cohort, team] = JSON.parse(choice.value);
     assert(choice.label.includes(cohort) && choice.label.includes(team));
   }
@@ -78,7 +78,7 @@ test("filter reset is identity; incompatible intersections are empty, not zeros"
   const dataset = descriptor("m8-rework-magnitude");
   const rows = rowsFor(dataset);
   const team = JSON.stringify(["2025.2", rows[0].team_id]);
-  assert.deepEqual(selectRows(rows, dataset, { cohort: '["2026.1"]', team_semester: team }), []);
+  assert.deepEqual(selectRows(rows, dataset, { cohort: ['["2026.1"]'], team_semester: [team] }), []);
   assert.deepEqual(selectRows(rows, dataset, {}), rows);
   assert.throws(() => selectRows(rows, dataset, { unknown: '["value"]' }));
   assert.throws(() => selectRows(rows, dataset, { cohort: "malformed" }));
@@ -131,9 +131,78 @@ test("published summary filtering selects existing estimates without re-estimati
   const rows = rowsFor(dataset);
   const filter = dataset.filters[0];
   const choice = filterChoices(rows, dataset, filter)[0];
-  const selected = selectRows(rows, dataset, { [filter.id]: choice.value });
+  const selected = selectRows(rows, dataset, { [filter.id]: [choice.value] });
   assert(selected.every(row => rows.includes(row)));
   assert.deepEqual(rows, rowsFor(dataset));
+});
+
+test("multiple cohorts and repeated team labels select exact compatible cases without duplicates", () => {
+  const dataset = descriptor("m8-rework-magnitude");
+  const rows = rowsFor(dataset);
+  const cohorts = ['["2025.2"]', '["2026.1"]'];
+  const commonTeam = rows.find(row => rows.some(other =>
+    other.cohort !== row.cohort && other.team_id === row.team_id)).team_id;
+  const teams = cohorts.map(cohort => JSON.stringify([JSON.parse(cohort)[0], commonTeam]));
+  const selected = selectRows(rows, dataset, { cohort: cohorts, team_semester: teams });
+  assert.equal(selected.length, 2);
+  assert(selected.every(row => row.team_id === commonTeam));
+  assert.equal(new Set(selected.map(row => row.cohort)).size, 2);
+  assert.deepEqual(selectRows(rows, dataset, { cohort: [cohorts[0]], team_semester: teams }),
+    selected.filter(row => row.cohort === "2025.2"));
+  assert.deepEqual(selectRows(rows, dataset, { cohort: cohorts }), rows);
+  assert.deepEqual(selectRows(rows, dataset, { cohort: [], team_semester: [] }), rows);
+  assert.deepEqual(rows, rowsFor(dataset));
+});
+
+test("every approved multi-value filter uses union within a filter and intersection across filters", () => {
+  for (const dataset of catalog.datasets) {
+    const rows = rowsFor(dataset);
+    const selection = {};
+    let expected = rows;
+    for (const filter of dataset.filters) {
+      const tokens = filterChoices(rows, dataset, filter).slice(0, 2).map(choice => choice.value);
+      selection[filter.id] = tokens;
+      expected = expected.filter(row => tokens.includes(JSON.stringify(filter.fields.map(field => row[field]))));
+      assert.deepEqual(selectRows(rows, dataset, selection), expected, dataset.id);
+    }
+    assert.deepEqual(rows, rowsFor(dataset));
+  }
+});
+
+test("multi-case selection rejects malformed, unapproved, duplicate or wrongly typed choices", () => {
+  const dataset = descriptor("m8-rework-magnitude");
+  const rows = rowsFor(dataset);
+  for (const selection of [
+    { cohort: '["2025.2"]' },
+    { cohort: ["invalid JSON"] },
+    { cohort: ['["unmeasured"]'] },
+    { cohort: ['[2025.2]'] },
+    { cohort: ['["2025.2"]', '["2025.2"]'] },
+    { team_semester: ['["TEAM01"]'] },
+    { cohort: null },
+  ]) assert.throws(() => selectRows(rows, dataset, selection));
+});
+
+test("omitted-case selections keep their composite identity and never recalculate fixed estimates", () => {
+  const dataset = catalog.datasets.find(item => item.filters.some(filter => filter.id === "omitted_case"));
+  const rows = rowsFor(dataset);
+  const filter = dataset.filters.find(item => item.id === "omitted_case");
+  const tokens = filterChoices(rows, dataset, filter).slice(0, 2).map(choice => choice.value);
+  const selected = selectRows(rows, dataset, { omitted_case: tokens });
+  assert.deepEqual(selected, rows.filter(row =>
+    tokens.includes(JSON.stringify(filter.fields.map(field => row[field])))));
+  assert(selected.length > 0 && selected.every(row => rows.includes(row)));
+  assert.deepEqual(rows, rowsFor(dataset));
+});
+
+test("surveys and global transcripts never offer or accept team filters", () => {
+  for (const dataset of catalog.datasets.filter(item =>
+    ["surveys", "transcript-aggregates"].includes(item.source) || item.id === "transcript-context-2025")) {
+    assert(!dataset.filters.some(filter => filter.fields.some(field => field.includes("team"))), dataset.id);
+    assert.throws(() => selectRows(rowsFor(dataset), dataset, {
+      team_semester: ['["2025.2","TEAM01"]'],
+    }), dataset.id);
+  }
 });
 
 test("selected dataset fetch is local and validates its actual response", async () => {

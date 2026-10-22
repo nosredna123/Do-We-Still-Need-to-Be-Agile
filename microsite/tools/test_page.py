@@ -77,6 +77,7 @@ class PageTests(unittest.TestCase):
 
     def test_methods_and_catalog_navigation_state(self) -> None:
         for phrase in ("not zero", "original sample sizes", "not recalculated",
+                       "none selected means all", "combined with OR", "different filters use AND",
                        "not a defect count", "0-4", "1-5",
                        "Catalog navigation requires JavaScript",
                        "Publication approval is pending"):
