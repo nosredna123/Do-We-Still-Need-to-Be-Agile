@@ -185,6 +185,16 @@ class PageTests(unittest.TestCase):
         self.assertIn("NOT PASSED", audit)
         self.assertEqual(readme.count("- [ ]"), 11)
 
+    def test_isolated_copy_report_preserves_portability_and_release_boundaries(self) -> None:
+        readme = (self.site / "README.md").read_text(encoding="utf-8")
+        self.assertIn("## Independent-copy verification (T022)", readme)
+        report = readme.split("## Independent-copy verification (T022)", 1)[1].split("## Public-safe naming", 1)[0]
+        for phrase in ("read-only", "Nginx", "/review/explorer/", "125",
+                       "808", "text/csv", "deny-only proxy", "no Python, Node, npm or Git",
+                       "T023-T026", "not publication approval", "unchanged"):
+            self.assertIn(phrase, report)
+        self.assertEqual(readme.count("- [ ]"), 11)
+
 
 if __name__ == "__main__":
     unittest.main()

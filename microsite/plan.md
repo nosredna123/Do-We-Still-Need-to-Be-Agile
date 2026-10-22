@@ -1403,6 +1403,63 @@ and neutralize prohibited material. Human linkage-risk approval and actual
 neutral HTTPS-host/header/redirect/error-page checks cannot be inferred from
 this local audit; the paper URL must not be updated yet.
 
+### T022 - Independent root and nested static deployment
+
+**Completed 2026-10-22.** The
+[README portability record](README.md#independent-copy-verification-t022)
+documents a fresh copy of only this directory into an independent temporary
+location. All 125 shipped file hashes match before/after. A bare Nginx static
+container mounts only the copied site and neutral server configuration,
+both read-only, and has no Python/Node/npm/Git, research inputs, pipeline,
+parent-repository mount or build service. The unchanged copy serves at both
+`/` and `/review/explorer/`; containerization is a test isolation technique,
+not a destination requirement.
+
+Real Chrome 155.0.8059.84 and Firefox 158.0 each pass three runtime flows:
+native keyboard/RQ/filter/sort/reset/comparison journeys, all 49 exact
+tables/generated CSVs and seven figures/source alternatives at both
+prefixes, and every dataset's four native download kinds. Together the
+runs verify 808 completed saved files, including empty header-only exports
+and scoped metadata. A deny-only local browser proxy blocks external HTTP
+and HTTPS while exempting loopback; reserved-domain controls fail in both
+browsers. No application request escapes its site prefix, and happy paths
+have no console errors or JavaScript exceptions. Browser service traffic
+is rejected, not forwarded or confused with application requests.
+
+All 125 shipped files return exact bytes at both prefixes, with correct
+runtime MIME types. Private/missing paths return 404, raw parent paths are
+rejected and directory listings are disabled. A clean public-only test copy
+passes every shipped test, JavaScript syntax and all 99 manifest hashes;
+the final task total is 60 Python + 58 JavaScript tests, zero failed/skipped.
+A new page regression failed before the portability record existed.
+Final documentation/task markers/links and the updated copied directory
+are independently verified before completion.
+
+Problems and remedies:
+
+- Nginx's default CSV MIME mapping was generic binary. The test configuration
+  now explicitly maps `text/csv`; final complete HTTP/browser runs pass.
+  T024 must document host MIME verification, without changing scientific files.
+- Copying read-only files into mutable test fixtures initially prevented
+  deliberate fixture mutation. Developer tests now use a distinct writable
+  disposable copy; the served tree stays immutable.
+- Initial static-server harness settings omitted permissions needed by
+  root workers; the test uses a non-root worker with separate temporary
+  writable server storage. Docker tmpfs mounts are checked through their
+  proper inspection fields. These were harness startup failures, not
+  application failures; all final servers start and respond.
+- Raw parent traversal may be rejected with HTTP 400/403 instead of 404;
+  the final check requires rejection/no content rather than one response code.
+
+No application/chart logic, scientific snapshot, vendor/license bytes,
+new hosting dependency or public runtime tool was added. Test scripts,
+drivers and detailed logs remain outside this directory. All browser sessions,
+servers/proxy/container, downloaded files and temporary copies were cleaned.
+The five publication checks and all 11 hosting gates remain open:
+T023-T026 must complete privacy/whole-directory/human review, deployment
+documentation, actual neutral HTTPS-host checks and citation registration.
+This portability verification is not anonymous-publication approval.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1596,7 +1653,7 @@ downloads faithfully represent the approved snapshot and the displayed filters.
 **Requirements:** REQ-001 through REQ-009.
 
 - [x] T021 [Plan:5.1] Complete the acceptance checklist below and record pass/fail evidence in `microsite/README.md`, using neutral descriptions and no private screenshots or machine paths. Audit complete: 20 local passes, five publication checks not passed; release remains NEEDS_SIGNOFF.
-- [ ] T022 [Plan:5.1] Copy only `microsite/` to a separate location and serve it over HTTP at both `/` and a non-root prefix such as `/review/explorer/`; confirm all views/downloads work without the repository, pipeline, or internet asset requests.
+- [x] T022 [Plan:5.1] Copy only `microsite/` to a separate location and serve it over HTTP at both `/` and a non-root prefix such as `/review/explorer/`; confirm all views/downloads work without the repository, pipeline, or internet asset requests.
 - [ ] T023 [Plan:5.1] Review every file to be published, including `microsite/plan.md`, `microsite/README.md`, assets, downloads, metadata, and tools, against the privacy allowlist and double-blind requirements.
 
 **Plan 5.2:** Release the frozen snapshot on a neutral host.

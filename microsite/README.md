@@ -20,6 +20,9 @@ The consolidated researcher guide covers dataset choice, snapshot recording,
 units, download scope, typed import and scientific interpretation limits.
 The [T021 acceptance audit](#acceptance-audit-t021) records local passes and
 the publication checks that are not yet passed; an audit is not release approval.
+The [independent-copy verification](#independent-copy-verification-t022)
+confirms root/nested operation on a read-only static server without research
+inputs or internet assets; publication approval is still pending.
 This is not a ready-to-publish site.
 T016 has selected and bundled one local chart dependency after a fidelity/size
 check; T017 loads it locally. T018 links exact source-dataset filters to figures.
@@ -557,8 +560,9 @@ full application accessibility and actual-host review.
 **20 PASS locally; 5 NOT PASSED because whole-directory/human/actual-host
 release gates remain open.** T021 completes the evidence audit, not the
 anonymous-publication checklist. All 11 hosting/release boxes below remain
-unchecked. T022-T026 are separate tasks and are not marked complete by these
-local results.
+unchecked. These local acceptance results did not themselves complete T022-T026;
+the subsequent T022 portability verification is recorded below. T023-T026
+remain pending.
 
 ### Scientific fidelity
 
@@ -665,8 +669,65 @@ environment: static HTML/CSS/JS; Node and real Chrome/Firefox available;
 startup: PASS — isolated local static servers respond at both URL prefixes
 integration: PASS — exit_code: 0; 117 regressions, exact source/hash/HTTP checks
 e2e: PASS — exit_code: 0 per browser; 3 flows each; native keys/files verified
-overall: NEEDS_SIGNOFF — five publication checks and T022-T026 remain open
+overall: NEEDS_SIGNOFF — five publication checks and T023-T026 remain open
 ```
+
+## Independent-copy verification (T022)
+
+**Verified 2026-10-22. Portability: PASS; not publication approval.**
+Only this directory was copied to a new temporary location outside the
+repository. All **125 shipped files** were inventoried and compared by hash.
+The destination was a bare Nginx static server with **no Python, Node, npm or Git**,
+no research inputs, pipeline, parent-repository mount, symlinks, authoring
+environment or build service. Only the copied public directory and a neutral
+static-server configuration were mounted, both read-only. Temporary server
+working storage was separate from the site.
+
+The same unchanged copy was served independently at `/` and
+`/review/explorer/`. Browser test clients and their drivers were outside the
+destination and are not site or hosting dependencies. This verifies
+copy-and-serve behavior, not a requirement to use Nginx, containers or a
+particular provider.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Exact independent directory | PASS | All 125 copied file hashes agree before/after; the served tree is read-only and unchanged. No parent research tree or pipeline is available to the static server. |
+| Entire HTTP inventory at both prefixes | PASS | Every shipped file returns HTTP 200 with identical bytes at both URLs, including all 49 JSON/CSV pairs, catalog, manifest, application/vendor/license, documentation and tools. The 99-artifact scientific manifest still validates. Publicly reachable does not mean publication-approved. |
+| Views and scientific values | PASS | Real Chrome 155.0.8059.84 and Firefox 158.0 each exercise all 49 exact observation tables/generated CSVs and all seven figures with exact source alternatives at both prefixes: 17,046 observation cells per browser/prefix. RQ navigation, definition search, cohort/checkpoint filters, numeric sort, reset and composite team-semester comparison work. |
+| Native full and generated downloads | PASS | **808 completed file saves** are checked: all four download kinds for every dataset, plus header-only empty results, in both browsers at both prefixes (792 files), and the additional keyboard-operated comparison downloads (16 files). Full files match original bytes; generated CSVs match the selected exact values/columns/null encoding; companion metadata matches snapshot, scope and definitions. Conflicting filters produce zero rows and reset restores all 14 original cases. |
+| No internet asset dependency | PASS | Both browsers use a local **deny-only proxy**, with only loopback site traffic exempt. Reserved-domain negative controls demonstrably fail in each browser; the proxy never forwards requests. All application asset/data requests remain within the active site prefix, with no external or parent-prefix requests and no happy-path console/JavaScript errors. Browser background-service requests are also rejected; they are not reported as site asset requests. |
+| Server behavior | PASS | HTML, CSS, JavaScript, JSON, CSV and SVG have appropriate MIME types. Missing/private paths return 404, raw parent-traversal requests are rejected, and dataset-directory listing returns 403. This is local server evidence, not proof of a future host's headers/error pages. |
+| Standalone authoring regressions | PASS | Public tests execute from a separate copy with no repository/pipeline input or user-site Python imports; JavaScript syntax and reproducible release hashes pass. These developer-side checks use Python/Node on the test client, not on the static destination. |
+
+The test host's default MIME map did not assign CSV correctly. Adding the
+explicit `text/csv` mapping fixed delivery; the complete HTTP/browser checks
+were rerun. The later T024 deployment procedure must require MIME verification
+rather than assume a server's defaults. This is a server configuration issue,
+not a reason to modify approved CSV bytes or add application infrastructure.
+
+The first developer-side test run also inherited read-only fixture permissions
+when copying the immutable site, preventing tests that intentionally mutate
+their own temporary data. Verification now runs those tests in a separate
+writable disposable copy, while the served tree remains read-only throughout.
+No test writes into the approved source or served directory. Raw parent paths
+can be rejected with HTTP 400/403 as well as 404; no parent content is returned.
+
+All final runtime runners exit 0 (three flows per browser), and all
+**60 Python + 58 JavaScript tests pass** (118 regressions, zero failed/skipped).
+The new page regression requires this portability evidence and keeps the
+11 publication checklist gates unchecked. The final updated documentation
+and tests were also copied and rechecked independently. Application/chart
+logic, data/catalog/release and vendor/license bytes remain unchanged.
+All task browser sessions, test servers, proxy, container and disposable
+copies/downloads were cleaned up after verification.
+
+**Remaining boundaries:** T023-T026 still require every-file privacy review
+and neutralization of prohibited source references, human linkage-risk/release
+approval, provider-neutral deployment documentation, neutral HTTPS-host
+verification and the separate citation update. The T021 audit's five
+publication checks remain NOT PASSED. No real public URL or anonymous-host
+approval is implied. Firefox headless minimum width remains 500 px; the
+360/320 px browser layout checks are Chrome results, not Firefox results.
 
 ## Public-safe naming
 
