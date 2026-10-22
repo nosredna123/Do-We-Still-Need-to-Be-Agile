@@ -341,6 +341,33 @@ T003 does not approve verbatim excerpts (T004), authorize copying internal
 metadata wholesale, or replace whole-directory/host anonymity checks (T023/T025).
 No public data was exported during this task.
 
+### T004 - Excerpt disposition for this release
+
+**Completed 2026-10-22.** The human approver explicitly chose to omit all verbatim
+excerpts from this release. The approved-excerpt set is empty; this is a
+deliberate release decision, not a failed extraction or evidence that no
+qualitative material exists. The decision is recorded privately outside this
+publishable directory.
+
+- Do not create or ship `data/datasets/qualitative-excerpts.json`, even as an
+  empty placeholder. Do not add an excerpt dataset descriptor, navigation item,
+  search index, view, download, or hidden bundled quote payload.
+- Approved lexical aggregates, coding definitions, and structured planning
+  evidence counts remain in scope under T003. A quote count does not authorize
+  publishing its text. Full transcripts, audit-trail text, and commit subjects
+  remain excluded.
+- T015 must implement the no-excerpt branch: no excerpt-specific UI or dataset
+  request. It is not completed by this decision; verify that branch when the
+  application is built. T007/T008 and the final release review must likewise
+  ensure no excerpt descriptors or payloads are shipped.
+- Adding excerpts later requires reopening T004 and obtaining individual human
+  approval of each exact text and its public context, with renewed field/snapshot
+  review where applicable. Generic prior approval cannot enable that feature.
+
+Verification confirmed no excerpt file, runtime catalog, or public dataset
+directory exists at this stage. No source transcripts or quotations were copied
+into the microsite during T004.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -471,7 +498,7 @@ datasets/figures. **Requirements:** REQ-003, REQ-006, REQ-009.
 **Requirements:** REQ-005, REQ-008, REQ-009.
 
 - [x] T003 [Plan:1.2] Obtain an explicit human-reviewed allowlist for every field destined for `microsite/data/datasets/`, assessing direct identifiers, searchable values, small cells, linkage, and free text. Keep the signed/private review record outside `microsite/`. Explicit authorized human approval recorded privately on 2026-10-22; pinned field scope, identifier policy, and remaining gates are summarized in Section 3.
-- [ ] T004 [Plan:1.2] Individually approve any excerpts intended for `microsite/data/datasets/qualitative-excerpts.json`; omit this dataset/view if none are approved. Do not reuse the full transcript audit trail.
+- [x] T004 [Plan:1.2] Individually approve any excerpts intended for `microsite/data/datasets/qualitative-excerpts.json`; omit this dataset/view if none are approved. Do not reuse the full transcript audit trail. Human decision on 2026-10-22: empty approved-excerpt set; omit all excerpt payloads and UI for this release, as recorded in Section 3.
 - [ ] T005 [Plan:1.2] Document public-safe naming, exclusions, excerpt policy, and the hosting anonymity checklist in `microsite/README.md`, without including private source locations or reviewer identities.
 
 **Exit:** A bounded dataset/figure inventory and explicit publication approval.
