@@ -8,11 +8,30 @@ and local JSON/CSV, contained entirely in this directory.
 [public catalog](data/catalog.json), and 49 matched
 [observation JSON](data/datasets/)/[download CSV](data/downloads/) pairs are
 implemented, along with the [public data release manifest](data/release.json).
-The application is not implemented, and whole-directory/actual-host approval
-remains pending. This is not a ready-to-publish site.
+The [page shell](index.html) provides overview, research-question guides, and
+methods with native in-page navigation. Styling and interactive dataset loading
+are not implemented, and whole-directory/actual-host approval remains pending.
+This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
+
+## Page shell (T010)
+
+[The entry page](index.html) has three semantic sections: overview, explore,
+and measures/methods. Main navigation and the three RQ cards use native fragment
+links and work without JavaScript. A visible skip link moves keyboard focus to
+the main content. The overview explains survey, team-semester, global transcript,
+and fixed-estimate grains before the research-question guides.
+
+This is an unstyled development shell, not an operational table explorer.
+There are no fake controls or loading indicators: the page states that interactive
+selection is not implemented. Local catalog, release-manifest, and documentation
+links work now. T011 adds layout/focus styling; T012 adds catalog loading and
+dataset navigation; filters, charts, and export actions remain later tasks.
+No missing stylesheet/script references, external assets, router, or build step
+have been added. Serve the directory over HTTP(S) to preview it; do not interpret
+the working shell as whole-directory or host approval.
 
 ## Public-safe naming
 

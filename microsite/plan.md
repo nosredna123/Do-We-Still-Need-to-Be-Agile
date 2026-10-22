@@ -592,6 +592,53 @@ Phase 2's data-export tasks are complete. The manifest deliberately retains
 whole-directory privacy review, human release authorization, and actual-host
 validation remain pending. No deployment URL or publication approval is claimed.
 
+### T010 - Semantic three-section page shell
+
+**Completed 2026-10-22.** The [entry page](index.html) provides semantic overview,
+explore, and measures/methods sections in one English-language HTML document.
+Native main-navigation links and three RQ cards target visible sections without
+a router or JavaScript. The explore section has RQ1-RQ3 guides covering M1-M9,
+with no inert dataset controls or simulated loading state.
+
+The overview visibly distinguishes survey aggregates, composite cohort-plus-team
+repository observations, one global measured transcript corpus, and fixed
+published summaries. Methods explain scales, null-versus-zero semantics, baseline
+eligibility, exact values, original denominators, and exploratory interpretation.
+All catalog, release-manifest, and documentation links are local and relative.
+There are no external assets, source identities, excerpt features, or missing
+script/stylesheet references. The page explicitly labels its development state
+and pending publication approval; T011 styling and T012 interactive navigation
+are not claimed complete. The [README](README.md) describes these boundaries.
+
+Verification before completion:
+
+- Five new [shell tests](tools/test_page.py) were added before the page and
+  initially failed on the missing HTML. All 48 standard-library tests now pass
+  locally and in an isolated directory. They check landmarks, English language,
+  headings/section labels, unique IDs, fragment targets, all local link paths,
+  RQ/metric coverage, evidence grains, scientific caveats, and absence of
+  unapproved features/external assets.
+- A browser check confirmed the page title, a single top-level heading, visible
+  methods content, and RQ1/RQ2/RQ3 fragment navigation. Keyboard activation of
+  the visible skip link moves focus to the main landmark. No external resources
+  were requested. These are shell checks, not full accessibility sign-off.
+- An independently copied directory served identical HTML over HTTP both at
+  `/` and `/review/explorer/`. All local links returned their expected bytes,
+  and fragment targets resolved without the parent research repository.
+- Saved catalog and release checks pass; every existing data artifact remains
+  byte-for-byte unchanged. Pylance syntax/diagnostics and whitespace checks pass.
+  Temporary servers/copies were stopped/removed; no bytecode was installed.
+
+VS Code still cannot discover the standalone unittest files; explicit
+standard-library discovery runs all 48 successfully without new dependencies.
+One initial browser-verification snippet used an unavailable `URL` global in
+the tool's execution context, not in the page. Replacing that check with plain
+string fragment comparisons allowed the same browser actions to pass.
+
+The shell is deliberately unstyled and the interactive explorer remains
+unimplemented. Continue with T011 and T012; later chart, export, accessibility,
+privacy, human release, and actual-host gates remain unchecked.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -747,7 +794,7 @@ resulting directory cannot depend on them at runtime.
 **Plan 3.1:** Build the three-view shell.
 **Requirements:** REQ-001, REQ-002, REQ-003, REQ-005.
 
-- [ ] T010 [US1] [Plan:3.1] Build semantic overview, explore, and methods sections in `microsite/index.html`, with RQ cards and a visible evidence-grain explanation.
+- [x] T010 [US1] [Plan:3.1] Build semantic overview, explore, and methods sections in `microsite/index.html`, with RQ cards and a visible evidence-grain explanation. Verified semantic structure, RQ/metric scope, local links, keyboard skip-link focus, browser fragment navigation, isolated HTTP root/nested hosting, and all 48 tests; see Section 3.
 - [ ] T011 [US1] [Plan:3.1] Implement the responsive layout, system-font styling, accessible controls, focus states, and readable tables in `microsite/assets/styles.css`.
 - [ ] T012 [US1] [Plan:3.1] Load the local catalog and implement RQ/metric navigation, definitions, snapshot details, and explicit loading/error states in `microsite/assets/app.js`.
 

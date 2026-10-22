@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the approved research data accompanying the submitted paper, with evidence grains, measures, and interpretation limits.">
+  <title>Research Data Explorer</title>
+</head>
+<body>
+  <a href="#main-content">Skip to main content</a>
+  <header>
+    <h1>Research Data Explorer</h1>
+    <p>A companion to the submitted paper's approved research data.</p>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#explore">Explore</a></li>
+        <li><a href="#methods">Measures and methods</a></li>
+      </ul>
+    </nav>
+    <p><strong>Development preview.</strong> Publication approval is pending.
+      This page provides orientation; interactive tables and figures are not available yet.</p>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section id="overview" aria-labelledby="overview-heading">
+      <h2 id="overview-heading">Overview</h2>
+      <p>Browse three research questions about perceptions, activity, and coordination
+        in student projects using generative AI. These are descriptive and exploratory
+        observations, not causal evidence or a ranking of teams.</p>
+
+      <nav aria-label="Research questions">
+        <ul class="rq-cards">
+          <li>
+            <h3><a href="#rq1">RQ1: Self-report and coded perceptions</a></h3>
+            <p>M1-M2: reported AI use, coded perceptions, and role perceptions.
+              Survey summaries do not measure actual AI-use telemetry.</p>
+          </li>
+          <li>
+            <h3><a href="#rq2">RQ2: Repository activity and transcript evidence</a></h3>
+            <p>M3-M5: participation, code change, and lexical aggregates.
+              Repository and transcript evidence have different analytical grains.</p>
+          </li>
+          <li>
+            <h3><a href="#rq3">RQ3: Planning, inactivity, rework, and associations</a></h3>
+            <p>M6-M9: structural and content evidence, timing, rework eligibility,
+              and published exploratory associations.</p>
+          </li>
+        </ul>
+      </nav>
+
+      <h3 id="evidence-grain">Understand the evidence grain</h3>
+      <p>Each dataset has a specific unit of observation. Similar labels do not
+        make datasets interchangeable or authorize joining them.</p>
+      <dl>
+        <dt>Survey summaries</dt>
+        <dd>Aggregated by cohort and checkpoint, with role or category where documented.
+          There is no team key; responses cannot be assigned to project teams.</dd>
+        <dt>Repository activity</dt>
+        <dd>Team-semesters are identified by cohort plus team, not by the repeated
+          team label alone. Checkpoint and window keys must also be retained where present.
+          Coverage spans 14 team-semesters: nine in 2025.2 and five in 2026.1.</dd>
+        <dt>Transcript lexical aggregates</dt>
+        <dd>One measured 2025.2 corpus, summarized by checkpoint, not individual teams.
+          No transcript measurements are available for 2026.1.</dd>
+        <dt>Published summaries and associations</dt>
+        <dd>Fixed published populations and original sample sizes.
+          Estimates are not recalculated for a selected subset.</dd>
+      </dl>
+      <p><strong>Missing is not zero.</strong> Unavailable measurement, ineligible
+        observation, an empty selection, and a failed load are different states.</p>
+    </section>
+
+    <section id="explore" aria-labelledby="explore-heading">
+      <h2 id="explore-heading">Explore</h2>
+      <p id="explorer-status">Interactive dataset selection is not implemented yet.
+        The research-question guide below describes the available evidence.
+        The <a href="data/catalog.json">public dataset catalog (JSON)</a> provides
+        the full field definitions and relative paths to approved JSON and CSV files.</p>
+
+      <article id="rq1" aria-labelledby="rq1-heading">
+        <h3 id="rq1-heading">RQ1: Self-report and coded perceptions</h3>
+        <ul>
+          <li><strong>M1: AI use and perceptions.</strong> Frequency, tasks, tools,
+            experience, autonomy, career topics, and coded perception families.</li>
+          <li><strong>M2: Role perceptions.</strong> Role-specific distributions
+            and summaries; paired-response sensitivity evidence is labeled separately.</li>
+        </ul>
+        <p>Use cohort, checkpoint, role, or category only where supported.
+          These are survey aggregates, never team-level observations.
+          Keep original respondent, paired-response, and topic-assignment denominators distinct.</p>
+      </article>
+
+      <article id="rq2" aria-labelledby="rq2-heading">
+        <h3 id="rq2-heading">RQ2: Repository activity and transcript evidence</h3>
+        <ul>
+          <li><strong>M3: Participation and concentration.</strong> Observed commits,
+            author concentration, and explicitly labeled activity windows.</li>
+          <li><strong>M4: Code change.</strong> Checkpoint churn and artifact
+            composition; clean change is distinct from all change.</li>
+          <li><strong>M5: Lexical aggregates.</strong> Marker density, composition,
+            corpus coverage, and lexical definitions from the measured transcript corpus.</li>
+        </ul>
+        <p>Repository comparisons use composite team-semester keys. Rolling windows
+          overlap; non-overlapping phase bins are a separate view.
+          Global transcript aggregates must not be correlated with individual teams.</p>
+      </article>
+
+      <article id="rq3" aria-labelledby="rq3-heading">
+        <h3 id="rq3-heading">RQ3: Planning, inactivity, rework, and associations</h3>
+        <ul>
+          <li><strong>M6: Planning evidence.</strong> M6a structural artifacts and M6b
+            structured content. Content was measured for nine cases; five are unavailable,
+            not cases with zero planning evidence.</li>
+          <li><strong>M7: Inactivity.</strong> Checkpoint timing diagnostics,
+            not evidence of planning omission.</li>
+          <li><strong>M8: Rework.</strong> Magnitude and baseline-eligible ratios;
+            12 of 14 team-semesters have an observed baseline.</li>
+          <li><strong>M9: Exploratory associations.</strong> Published predictor/outcome
+            rows, fixed eligibility strata, and leave-one-out diagnostics.</li>
+        </ul>
+        <p>Supporting complexity, regularity, planning, and timing profiles preserve
+          their original definitions and thresholds. Do not compute new subset
+          correlations or interpret diagnostics as causal effects.</p>
+      </article>
+    </section>
+
+    <section id="methods" aria-labelledby="methods-heading">
+      <h2 id="methods-heading">Measures and methods</h2>
+      <p>Read the selected dataset's units, denominator, coverage, and eligibility
+        before comparing values. The catalog contains the complete dataset-specific definitions.</p>
+      <h3>Scales, eligibility, and interpretation</h3>
+      <dl>
+        <dt>Perception scales</dt>
+        <dd>M1 coded perception scores use 0-4. Raw autonomy categories and M2 Likert
+          responses use 1-5; these scales are not interchangeable.</dd>
+        <dt>Unavailable and empty evidence</dt>
+        <dd>Unmeasured planning-content fields are null, not zero. Successfully
+          measured empty evidence can be an observed zero. Absent rows are not synthesized.</dd>
+        <dt>Rework eligibility</dt>
+        <dd>Ratios require an observed baseline and a nonzero clean-churn denominator.
+          Ineligible ratios are null with an explicit status. Rework is not a defect count.</dd>
+        <dt>Fixed estimates</dt>
+        <dd>Pooled summaries, association estimates, thresholds, and original sample sizes
+          remain fixed. Leave-one-out diagnostics are not confidence intervals.</dd>
+        <dt>Exact values</dt>
+        <dd>Approved JSON and CSV files preserve the same rows, columns, and scientific
+          precision. Empty CSV cells represent null values, not numeric zero.</dd>
+      </dl>
+      <h3>Snapshot and provenance</h3>
+      <p>The <a href="data/release.json">public release manifest (JSON)</a> provides the
+        snapshot identifier, schema version, artifact hashes, row counts, and coverage.
+        These describe a frozen data snapshot, not proof of anonymity or publication approval.
+        Row counts are not independent participant counts.</p>
+      <ul>
+        <li><a href="data/catalog.json">Dataset definitions, units, and permitted relationships (JSON)</a></li>
+        <li><a href="dataset-contracts.md">Detailed dataset contracts (Markdown)</a></li>
+        <li><a href="README.md">Snapshot documentation and publication boundaries (Markdown)</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>Descriptive research evidence. Preserve each dataset's grain, coverage,
+      and interpretation limits when reusing values.</p>
+    <p><a href="#overview">Back to overview</a></p>
+  </footer>
+</body>
+</html>
