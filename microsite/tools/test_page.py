@@ -46,6 +46,11 @@ class PageTests(unittest.TestCase):
                 self.assertTrue(attrs.get("aria-labelledby") or attrs.get("aria-label"))
         self.assertIn(("a", {"href": "#main-content"}), self.page.elements)
 
+    def test_neutral_favicon_stays_inside_the_portable_directory(self) -> None:
+        icons = [a["href"] for t, a in self.page.elements if t == "link" and a.get("rel") == "icon"]
+        self.assertEqual(icons, ["assets/favicon.svg"])
+        self.assertTrue((self.site / icons[0]).is_file())
+
     def test_unique_ids_and_all_links_resolve_locally(self) -> None:
         ids = [a["id"] for _, a in self.page.elements if "id" in a]
         self.assertEqual(len(ids), len(set(ids)))
@@ -169,6 +174,16 @@ class PageTests(unittest.TestCase):
             self.assertIn(phrase, readme)
         for target in ("index.html#reuse-guide", "index.html#snapshot-details"):
             self.assertIn(f"]({target})", readme)
+
+    def test_acceptance_audit_records_every_check_without_claiming_release_approval(self) -> None:
+        readme = (self.site / "README.md").read_text(encoding="utf-8")
+        audit = readme.split("## Acceptance audit (T021)", 1)[1].split("## Public-safe naming", 1)[0]
+        for prefix, count in (("S", 8), ("R", 6), ("A", 5), ("P", 6)):
+            for number in range(1, count + 1):
+                self.assertEqual(audit.count(f"| {prefix}{number} |"), 1)
+        self.assertIn("Overall: NEEDS_SIGNOFF", audit)
+        self.assertIn("NOT PASSED", audit)
+        self.assertEqual(readme.count("- [ ]"), 11)
 
 
 if __name__ == "__main__":

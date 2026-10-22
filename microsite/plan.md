@@ -1344,6 +1344,65 @@ not claimed as real keyboard/pointer or native file-save UX success.
 T021-T026 remain pending; no final whole-directory or actual-host sign-off
 is implied by this documentation task.
 
+### T021 - Acceptance audit and explicit publication blockers
+
+**Completed 2026-10-22 as an evidence audit, not release approval.**
+The [README acceptance audit](README.md#acceptance-audit-t021) assesses all
+25 Section 6 checks individually: 20 PASS locally and five anonymous-publication
+checks NOT PASSED pending whole-directory, human or actual-host review.
+The overall release verdict is NEEDS_SIGNOFF; T022-T026 and all 11 hosting
+checklist gates remain open.
+
+Fresh approved-source preparation reproduces every public JSON/CSV byte,
+49 datasets/1,674 rows/17,046 scalar cells. The pinned manuscript source set
+and seven included PNG fingerprints remain unchanged. All 59 Python and
+58 JavaScript regressions pass (117 total, zero failures/skips), as do syntax,
+99 manifest hashes and independent root/nested HTTP delivery checks.
+
+Three new private, runnable browser flows execute against isolated copies in
+real Chrome 155.0.8059.84 and Firefox 158.0: full keyboard selection/filter/
+sort/reset/comparison/download journeys, all 49 exact tables/generated CSVs
+and seven figures/source alternatives, and missing/malformed data/metadata
+errors with native retry. Both browser runners pass all three flows (six
+total, exit code 0). Four download kinds are saved and checked on disk at both
+prefixes in each browser, resolving the earlier integrated-browser save-event
+limitation for local testing. Happy paths have no console/JavaScript errors or
+parent-prefix/external asset requests; injected failure logs are expected and
+separate. Current tests do not certify screen-reader or actual-host behavior.
+
+The audit found an implicit root favicon request/404 outside a nested prefix.
+The user explicitly authorized the related fix: a neutral local
+[SVG icon](assets/favicon.svg), relative HTML reference and page regression.
+That regression failed before implementation; both browsers now fetch only the
+local icon. A second page regression verifies that every audit item and
+unpassed release gates remain explicit. No scientific data, application/chart
+logic, vendor/license bytes or destination-host dependency changed.
+
+Chrome validates actual 360/320 px layouts for all seven figures, keyboard
+table scrolling and enlarged text without whole-page overflow. Firefox's
+headless minimum is 500 px; only its actual measured widths are reported.
+Initial decoded resources are 1,979,090 bytes plus 21,866 HTML bytes. Only the
+chosen observation dataset loads initially, although the independent table
+and figure loaders fetch that same 13,736-byte source twice. The README
+documents this bounded duplication and the optional shared-cache remedy
+without adding infrastructure or changing cancellation semantics.
+
+Tooling issues were resolved rather than waived: Firefox driver retrieval
+succeeded through a direct upstream retry; keyboard traversal uses forward/
+reverse Tab instead of a browser-chrome wraparound assumption; download
+verification waits for completed files rather than transient zero-byte
+placeholders. An older private source checker was updated to recognize the
+release manifest added after its original task. The final complete runs pass.
+Test-only dependencies/fixtures/logs stay outside this directory, and all
+preview servers, browser sessions and temporary copies were cleaned afterward.
+
+The five unpassed publication checks have explicit remedies in the README.
+In particular, field/value approval does not approve planning/authoring
+source-filename/location references or the whole directory: T023 must review
+and neutralize prohibited material. Human linkage-risk approval and actual
+neutral HTTPS-host/header/redirect/error-page checks cannot be inferred from
+this local audit; the paper URL must not be updated yet.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1536,7 +1595,7 @@ downloads faithfully represent the approved snapshot and the displayed filters.
 **Plan 5.1:** Verify scientific fidelity, usability, and directory independence.
 **Requirements:** REQ-001 through REQ-009.
 
-- [ ] T021 [Plan:5.1] Complete the acceptance checklist below and record pass/fail evidence in `microsite/README.md`, using neutral descriptions and no private screenshots or machine paths.
+- [x] T021 [Plan:5.1] Complete the acceptance checklist below and record pass/fail evidence in `microsite/README.md`, using neutral descriptions and no private screenshots or machine paths. Audit complete: 20 local passes, five publication checks not passed; release remains NEEDS_SIGNOFF.
 - [ ] T022 [Plan:5.1] Copy only `microsite/` to a separate location and serve it over HTTP at both `/` and a non-root prefix such as `/review/explorer/`; confirm all views/downloads work without the repository, pipeline, or internet asset requests.
 - [ ] T023 [Plan:5.1] Review every file to be published, including `microsite/plan.md`, `microsite/README.md`, assets, downloads, metadata, and tools, against the privacy allowlist and double-blind requirements.
 

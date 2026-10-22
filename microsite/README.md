@@ -18,6 +18,8 @@ row selection. Full CSV/JSON links and displayed-row CSV with matching scope
 metadata are implemented. Whole-directory/actual-host approval remains pending.
 The consolidated researcher guide covers dataset choice, snapshot recording,
 units, download scope, typed import and scientific interpretation limits.
+The [T021 acceptance audit](#acceptance-audit-t021) records local passes and
+the publication checks that are not yet passed; an audit is not release approval.
 This is not a ready-to-publish site.
 T016 has selected and bundled one local chart dependency after a fidelity/size
 check; T017 loads it locally. T018 links exact source-dataset filters to figures.
@@ -510,8 +512,9 @@ rejection. Browser checks read the actual Blob payloads and all 49 original
 JSON/CSV pairs, and verify scope/reset, errors/retry and URL cleanup.
 The integrated hidden browser did not emit file-save download events for native
 links despite click attempts; payload bytes, MIME types, relative targets and
-download filenames were verified directly. Normal-browser file-save UX remains
-an explicit later portability/actual-host check, not a claimed sign-off.
+download filenames were verified directly at T019. T021 now additionally verifies
+completed native file saves in real Chrome and Firefox at root and nested paths.
+Actual-host file-save behavior remains a release check.
 T020 provides consolidated reuse guidance above. Later release/accessibility
 gates remain pending.
 
@@ -546,6 +549,124 @@ the control/table styling contract. Browser checks cover 320/360/768/1280 px
 widths, 200% text at 360 px, keyboard focus, and a temporary control/wide-table
 fixture. The fixture is not shipped. These checks do not replace the later
 full application accessibility and actual-host review.
+
+## Acceptance audit (T021)
+
+**Audited 2026-10-22. Overall: NEEDS_SIGNOFF.** All 25 checks from
+[plan Section 6](plan.md#6-acceptance-and-release-checklist) are assessed below:
+**20 PASS locally; 5 NOT PASSED because whole-directory/human/actual-host
+release gates remain open.** T021 completes the evidence audit, not the
+anonymous-publication checklist. All 11 hosting/release boxes below remain
+unchecked. T022-T026 are separate tasks and are not marked complete by these
+local results.
+
+### Scientific fidelity
+
+| ID | Check | Result | Evidence |
+|---|---|---|---|
+| S1 | Selected datasets/figures mapped or explicitly excluded | PASS | Pinned manuscript and seven included figure fingerprints still agree with the inventory. All 49 approved dataset mappings and seven figure mappings validate; inventory/contracts retain explicit exclusions and the human no-excerpt decision. |
+| S2 | Exact source values, table/download precision, documented transformations | PASS | Fresh preparation from the approved frozen inputs reproduces all 98 JSON/CSV files byte-for-byte: 1,674 rows and 17,046 scalar cells per format. Public-safe projections and eligibility masking are documented; no new rounding, suppression or estimates. Both browsers independently compare every table and generated CSV cell with the typed snapshot. |
+| S3 | Manuscript coverage | PASS | Source checks and public snapshot tests confirm 14 team-semesters (9/5 by cohort), 9 measured M6b cases and 12 baseline-eligible M8 cases. Row counts are not participant Ns. |
+| S4 | M2 filename cannot imply team filtering | PASS | M2 summaries retain cohort/checkpoint/role grain. Both browsers offer no team-semester control; schema/filter tests cover all survey descriptors. |
+| S5 | M5 measured corpus only, no team attribution | PASS | Only the global 2025.2 checkpoint corpus is measured; chunk coverage is 35/37/28. No 2026.1 observations or team keys/controls are fabricated. |
+| S6 | Unavailable planning and ineligible ratios differ from zero | PASS | Null/status/boolean and eligibility tests pass. Both browsers retain literal Unavailable cells and null-to-empty CSV encoding; log figures explain excluded measured zeros rather than substituting a positive value. |
+| S7 | SD versus CI; fixed M9/leave-one-out populations | PASS | Chart/caption tests and rendered captions say standard deviations, not confidence intervals. Original Ns, strata, denominators and diagnostic meanings stay fixed under selection. |
+| S8 | Figure axes/scales/labels/zero policy | PASS | All seven figures render in both browsers with exact source-table alternatives; the chart tests check original coordinates, SDs, scales, fixed medians, cohort/score encodings and separate M4/M5 units. The log profile plots 11 positive cases while retaining 14 source rows; the linear complexity view retains three zeros. |
+
+### Researcher journeys
+
+| ID | Check | Result | Evidence |
+|---|---|---|---|
+| R1 | Landing page to each RQ's measures/definitions | PASS | Native keyboard activation of all three RQ cards selects the corresponding evidence. Dataset definitions, denominators and labeled definition search remain available. Without scripts, native RQ/methods/catalog links and the static guide remain available. |
+| R2 | Cohort/checkpoint, numeric sort, exact values and reset | PASS | Keyboard selection of one cohort and T3 yields six exact M1 rows; ascending mean order is numeric. Reset restores 36 original rows with no active filters or stale sort. |
+| R3 | Two eligible cases and unsupported comparison | PASS | Keyboard selection compares TEAM_01 from each cohort as two distinct team-semesters. M2 survey and M5 transcript datasets expose no team-semester comparison control. |
+| R4 | Full/filtered download fidelity and missingness | PASS | Chrome and Firefox each save full CSV, full typed JSON, displayed-row CSV and scope JSON to disk at both URL prefixes (16 completed saves overall). Full files match original bytes; the filtered two-row CSV matches the table/order and its metadata. All 49 generated CSVs also match exact typed rows/null encoding in each browser; quoting, empty output and unsafe-text policies pass the export tests. |
+| R5 | No misleading excerpt feature | PASS | The approved branch omits excerpts. Catalog, application and file-inventory regressions find no excerpt payload, descriptor, request or empty feature. Counts do not authorize quotation text. |
+| R6 | Missing/malformed data fail explicitly | PASS | In isolated copies, missing observation JSON (HTTP 404), malformed observations and malformed metadata show explicit errors, remove stale tables/generated links and recover through the native retry controls. No success-shaped empty default is used. Expected injected errors are separate from clean happy-path logs. |
+
+### Accessibility and portability
+
+| ID | Check | Result | Evidence |
+|---|---|---|---|
+| A1 | Keyboard journeys, visible focus, labels and table alternatives | PASS | Both browsers use native Tab/Shift+Tab, Space, arrows and Enter for RQ selection, dataset choice, cohort/checkpoint filters, sorting, composite comparison, reset and downloads. Focus-visible outlines are present; inputs/selects have labels. Arrow keys scroll the focused observation region. All seven figures have exact source tables. This is not a screen-reader or comprehensive WCAG certification. |
+| A2 | 360 px navigation/controls and contained tables | PASS | Actual Chrome inner widths of 360 and 320 px preserve all seven charts and controls without whole-page horizontal overflow. Wide tables scroll locally; enlarged 32 px text also stays contained. Firefox's headless window clamps at 500 px: its desktop/500 px checks pass, but no 360 px Firefox result is claimed. |
+| A3 | Current Firefox and Chromium-based browser | PASS | Real headless Firefox 158.0 and Chrome 155.0.8059.84 each pass the same three multi-step runtime flows. These are browser-engine/native-input checks, not a claim of testing every operating system or assistive technology. |
+| A4 | Isolated root/nested URLs, local requests and clean console | PASS | Independent copies serve byte-identical assets, metadata and all 49 JSON/CSV pairs at `/` and `/review/explorer/`. Both browsers complete journeys and native downloads at both prefixes. No parent-prefix/external asset requests, happy-path console errors or JavaScript exceptions remain after the favicon correction below. No host-time build/backend is required. |
+| A5 | On-demand data and measured payload | PASS | Initial loading requests only the chosen M1 dataset, not all 49. Local metadata and chart code load first; later requests follow the selected dataset or its explicitly mapped figure sources. Actual decoded file sizes and the duplicate-source observation are recorded below; no infrastructure was added. |
+
+### Anonymous publication
+
+`NOT PASSED` is a blocking release result, not an implied approval or an
+unreported test failure. These checks require later whole-directory or
+actual-host evidence that local functional tests cannot supply.
+
+| ID | Check | Result | Evidence and required action |
+|---|---|---|---|
+| P1 | Inspect all shipped content/source/metadata/licenses/URLs/error pages | NOT PASSED | Runtime content, paths and data projections were checked, but this is not a completed every-file publication review or actual-host inspection. T023 must review the entire directory, including planning/authoring material and retained vendor notices; T025 must inspect deployed URLs, redirects, headers and generated pages. |
+| P2 | Exclude identities/private fields/source paths/restricted evidence | NOT PASSED | Fresh preparation and public snapshot tests verify approved fields and no raw transcript/private observation payload. Planning/authoring documentation and tools still contain source-filename/relative research-location references. T023 must remove or neutralize prohibited source references and assess every shipped file; field approval cannot certify the entire directory. Keep confidential lineage and reviewer records outside the served directory. |
+| P3 | Searchable combinations/linkage risk, human approval | NOT PASSED | The prior exact field/value scope decision does not approve the final directory or host. Human reviewers must assess combinations, small cells and residual linkage risk for the actual release; automated scans cannot close this gate. No quotations are enabled. |
+| P4 | No telemetry/widgets/source links; retain third-party notices | PASS | Local application and browser network checks show no analytics, tracking, external assets or deployment badges. Vendor integrity/license tests pass and required notices remain unchanged. Repeat network checks after hosting; provider-injected behavior is not covered locally. |
+| P5 | Neutral host/domain/account presentation and HTTPS | NOT PASSED | No public host has been selected or approved. T024 must document deployment requirements; T025 must verify neutrality, HTTPS, redirects, headers and error/directory responses on the actual host. `noindex` would not replace this review. |
+| P6 | Whole-directory approval and actual hosted files before citation | NOT PASSED | T023/T025 human release and deployed-snapshot verification remain mandatory. Only T026 may record a verified neutral URL and snapshot for the separate paper citation update. No public URL or final approval is claimed here. |
+
+### Measurements, corrected issue and remaining limitations
+
+- The first real Chrome audit found an implicit `/favicon.ico` request outside
+  the nested site prefix and a 404. With explicit human authorization, a neutral
+  [local SVG icon](assets/favicon.svg) and relative HTML reference were added.
+  The new page regression failed before this fix. Both browsers now request
+  only the local icon and pass the clean-prefix/console checks.
+- Initial decoded resource bodies total **1,979,090 bytes**, plus the
+  **21,866-byte HTML** at this audit. Major components: vendor renderer
+  1,507,990; catalog 322,214; manifest 45,542; application 40,836; chart logic
+  29,454; stylesheet 5,386; icon 196 bytes. The default observation file is
+  13,736 bytes and is fetched twice by the independent table/figure loaders.
+  This is duplicate retrieval of the same chosen dataset, not preloading the
+  collection. Observation files range from 483 to 115,834 decoded bytes.
+  The preview uses no compression or shared cache; transfer headers add overhead.
+  Host compression of unchanged static bytes is the simplest later delivery
+  improvement. If duplicate reads become material, use an explicitly tested
+  shared in-flight request/cache rather than a backend; no cache/lifecycle change
+  is justified solely by this 13,736-byte duplicate.
+- The test-only browser drivers ran outside the publishable directory; no
+  package manifest, browser framework or host dependency was added to the site.
+  A Firefox driver download needed a direct upstream retry. The browser harness
+  was corrected to use reverse Tab instead of wrapping through browser chrome,
+  and to wait for finished downloads rather than empty temporary placeholders.
+  These were test-harness problems, not silently waived application failures.
+- The earlier integrated hidden-browser file-save limitation is resolved for
+  this local acceptance audit by real WebDriver/native-key activation and
+  completed disk-save checks in both browsers. Actual-host downloads still
+  require verification. No private screenshots, machine paths, reviewer
+  identity or runtime logs are included here.
+
+### Reproduction and verdict
+
+From this directory, the dependency-free public regression commands are:
+
+```sh
+python3 -B -m unittest discover -s tools -p 'test_*.py' -q
+node --test tools/test_*.cjs
+python3 -B tools/build_release.py --output data/release.json --check
+```
+
+Results: **59 Python + 58 JavaScript regressions pass** (117 total,
+zero failed/skipped; exit code 0). Three additional native-browser runtime
+flows pass in each browser (six total, both runner exit codes 0).
+Source reproduction and independent root/nested HTTP/hash checks also exit 0.
+For browser repetition, follow R1-R6/A1-A5 on isolated copies, use the table
+and typed snapshot as the oracle, verify completed saved files, and inject
+failures only into disposable copies. No private fixtures or authoring inputs
+are required on a publication server.
+
+```text
+environment: static HTML/CSS/JS; Node and real Chrome/Firefox available;
+             no database, authentication or persistent application state
+startup: PASS — isolated local static servers respond at both URL prefixes
+integration: PASS — exit_code: 0; 117 regressions, exact source/hash/HTTP checks
+e2e: PASS — exit_code: 0 per browser; 3 flows each; native keys/files verified
+overall: NEEDS_SIGNOFF — five publication checks and T022-T026 remain open
+```
 
 ## Public-safe naming
 
