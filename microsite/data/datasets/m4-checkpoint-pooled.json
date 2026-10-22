@@ -1,0 +1,32 @@
+[
+  {
+    "checkpoint": "T1",
+    "team_semester_n": 14,
+    "observed_clean_team_semester_n": 7,
+    "total_clean_churn": 21718,
+    "median_clean_churn": 66.5,
+    "total_all_churn": 50614,
+    "median_clean_unique_file_n": 0.5,
+    "clean_share_of_all_churn": 0.4290907654008772
+  },
+  {
+    "checkpoint": "T2",
+    "team_semester_n": 14,
+    "observed_clean_team_semester_n": 10,
+    "total_clean_churn": 47545,
+    "median_clean_churn": 3232.5,
+    "total_all_churn": 242399,
+    "median_clean_unique_file_n": 31.0,
+    "clean_share_of_all_churn": 0.19614354844698204
+  },
+  {
+    "checkpoint": "T3",
+    "team_semester_n": 14,
+    "observed_clean_team_semester_n": 14,
+    "total_clean_churn": 136325,
+    "median_clean_churn": 6975.5,
+    "total_all_churn": 13502131,
+    "median_clean_unique_file_n": 83.0,
+    "clean_share_of_all_churn": 0.010096554388340626
+  }
+]

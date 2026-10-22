@@ -1,0 +1,156 @@
+[
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_01",
+    "measurement_status": "success",
+    "planning_evidence_present": false,
+    "goals_n": 0,
+    "architecture_or_design_n": 0,
+    "task_decomposition_n": 0,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 0
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_02",
+    "measurement_status": "unavailable_not_measured",
+    "planning_evidence_present": null,
+    "goals_n": null,
+    "architecture_or_design_n": null,
+    "task_decomposition_n": null,
+    "risk_or_dependency_n": null,
+    "evidence_quotes_n": null
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_03",
+    "measurement_status": "unavailable_not_measured",
+    "planning_evidence_present": null,
+    "goals_n": null,
+    "architecture_or_design_n": null,
+    "task_decomposition_n": null,
+    "risk_or_dependency_n": null,
+    "evidence_quotes_n": null
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_04",
+    "measurement_status": "success",
+    "planning_evidence_present": false,
+    "goals_n": 0,
+    "architecture_or_design_n": 0,
+    "task_decomposition_n": 0,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 0
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_05",
+    "measurement_status": "unavailable_not_measured",
+    "planning_evidence_present": null,
+    "goals_n": null,
+    "architecture_or_design_n": null,
+    "task_decomposition_n": null,
+    "risk_or_dependency_n": null,
+    "evidence_quotes_n": null
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_07",
+    "measurement_status": "success",
+    "planning_evidence_present": true,
+    "goals_n": 2,
+    "architecture_or_design_n": 2,
+    "task_decomposition_n": 2,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 6
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_08",
+    "measurement_status": "unavailable_not_measured",
+    "planning_evidence_present": null,
+    "goals_n": null,
+    "architecture_or_design_n": null,
+    "task_decomposition_n": null,
+    "risk_or_dependency_n": null,
+    "evidence_quotes_n": null
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_09",
+    "measurement_status": "success",
+    "planning_evidence_present": false,
+    "goals_n": 0,
+    "architecture_or_design_n": 0,
+    "task_decomposition_n": 0,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 0
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_10",
+    "measurement_status": "unavailable_not_measured",
+    "planning_evidence_present": null,
+    "goals_n": null,
+    "architecture_or_design_n": null,
+    "task_decomposition_n": null,
+    "risk_or_dependency_n": null,
+    "evidence_quotes_n": null
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_01",
+    "measurement_status": "success",
+    "planning_evidence_present": false,
+    "goals_n": 0,
+    "architecture_or_design_n": 0,
+    "task_decomposition_n": 0,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 0
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_02",
+    "measurement_status": "success",
+    "planning_evidence_present": true,
+    "goals_n": 1,
+    "architecture_or_design_n": 0,
+    "task_decomposition_n": 0,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 1
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_03",
+    "measurement_status": "success",
+    "planning_evidence_present": true,
+    "goals_n": 1,
+    "architecture_or_design_n": 1,
+    "task_decomposition_n": 1,
+    "risk_or_dependency_n": 1,
+    "evidence_quotes_n": 4
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_04",
+    "measurement_status": "success",
+    "planning_evidence_present": true,
+    "goals_n": 6,
+    "architecture_or_design_n": 1,
+    "task_decomposition_n": 0,
+    "risk_or_dependency_n": 0,
+    "evidence_quotes_n": 7
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_05",
+    "measurement_status": "success",
+    "planning_evidence_present": true,
+    "goals_n": 2,
+    "architecture_or_design_n": 2,
+    "task_decomposition_n": 2,
+    "risk_or_dependency_n": 1,
+    "evidence_quotes_n": 7
+  }
+]

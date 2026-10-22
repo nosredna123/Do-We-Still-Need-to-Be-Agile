@@ -1,0 +1,15 @@
+cohort,team_id,measurement_status,planning_evidence_present,goals_n,architecture_or_design_n,task_decomposition_n,risk_or_dependency_n,evidence_quotes_n
+2025.2,TEAM_01,success,false,0,0,0,0,0
+2025.2,TEAM_02,unavailable_not_measured,,,,,,
+2025.2,TEAM_03,unavailable_not_measured,,,,,,
+2025.2,TEAM_04,success,false,0,0,0,0,0
+2025.2,TEAM_05,unavailable_not_measured,,,,,,
+2025.2,TEAM_07,success,true,2,2,2,0,6
+2025.2,TEAM_08,unavailable_not_measured,,,,,,
+2025.2,TEAM_09,success,false,0,0,0,0,0
+2025.2,TEAM_10,unavailable_not_measured,,,,,,
+2026.1,TEAM_01,success,false,0,0,0,0,0
+2026.1,TEAM_02,success,true,1,0,0,0,1
+2026.1,TEAM_03,success,true,1,1,1,1,4
+2026.1,TEAM_04,success,true,6,1,0,0,7
+2026.1,TEAM_05,success,true,2,2,2,1,7

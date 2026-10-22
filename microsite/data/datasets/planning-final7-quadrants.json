@@ -1,0 +1,98 @@
+[
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "high_repository_visible_planning__higher_final7_concentration",
+    "team_semester_n": 3,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 1.972222222222222,
+    "median_t3_score": 1.9583333333333333,
+    "mean_delta_score": 0.28125,
+    "median_delta_score": 0.3333333333333335,
+    "mean_clean_rework_churn_t3": 661.6666666666666,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "high_repository_visible_planning__lower_final7_concentration",
+    "team_semester_n": 4,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 2.416666666666667,
+    "median_t3_score": 2.4375,
+    "mean_delta_score": 0.04427083333333358,
+    "median_delta_score": 0.06770833333333345,
+    "mean_clean_rework_churn_t3": 2444.0,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "lower_repository_visible_planning__higher_final7_concentration",
+    "team_semester_n": 4,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 2.234375,
+    "median_t3_score": 2.34375,
+    "mean_delta_score": 0.21354166666666669,
+    "median_delta_score": 0.28125,
+    "mean_clean_rework_churn_t3": 2258.0,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "lower_repository_visible_planning__lower_final7_concentration",
+    "team_semester_n": 3,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 2.3541666666666665,
+    "median_t3_score": 2.416666666666667,
+    "mean_delta_score": 0.4895833333333335,
+    "median_delta_score": 0.3333333333333335,
+    "mean_clean_rework_churn_t3": 5505.0,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "high_repository_visible_planning__higher_final7_concentration",
+    "team_semester_n": 3,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 1.972222222222222,
+    "median_t3_score": 1.9583333333333333,
+    "mean_delta_score": 0.28125,
+    "median_delta_score": 0.3333333333333335,
+    "mean_clean_rework_churn_t3": 661.6666666666666,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "high_repository_visible_planning__lower_final7_concentration",
+    "team_semester_n": 4,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 2.416666666666667,
+    "median_t3_score": 2.4375,
+    "mean_delta_score": 0.04427083333333358,
+    "median_delta_score": 0.06770833333333345,
+    "mean_clean_rework_churn_t3": 2444.0,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "lower_repository_visible_planning__higher_final7_concentration",
+    "team_semester_n": 4,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 2.161458333333333,
+    "median_t3_score": 2.2447916666666665,
+    "mean_delta_score": 0.16145833333333337,
+    "median_delta_score": 0.24479166666666674,
+    "mean_clean_rework_churn_t3": 5509.25,
+    "small_n_flag": false
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "lower_repository_visible_planning__lower_final7_concentration",
+    "team_semester_n": 3,
+    "team_semester_denominator": 14,
+    "mean_t3_score": 2.451388888888889,
+    "median_t3_score": 2.4375,
+    "mean_delta_score": 0.5590277777777778,
+    "median_delta_score": 0.5416666666666667,
+    "mean_clean_rework_churn_t3": 1170.0,
+    "small_n_flag": false
+  }
+]

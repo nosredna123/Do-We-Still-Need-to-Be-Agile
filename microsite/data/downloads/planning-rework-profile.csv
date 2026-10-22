@@ -1,0 +1,15 @@
+cohort,team_id,pi_file_count_t1,pi_line_delta_t1,planning_artifact_present_t1,planning_scope_log1p_t1,measurement_status,clean_rework_churn_t3,baseline_eligible_for_rework_t3
+2025.2,TEAM_01,4,62,true,4.143134726391533,available,262,true
+2025.2,TEAM_02,0,0,false,0.0,available,6519,true
+2025.2,TEAM_03,0,0,false,0.0,available,0,false
+2025.2,TEAM_04,8,232,true,5.4510384535657,available,860,true
+2025.2,TEAM_05,0,0,false,0.0,available,0,false
+2025.2,TEAM_07,3,11,true,2.4849066497880004,available,0,true
+2025.2,TEAM_08,0,0,false,0.0,available,172,true
+2025.2,TEAM_09,1,2,true,1.0986122886681096,available,15518,true
+2025.2,TEAM_10,0,0,false,0.0,available,825,true
+2026.1,TEAM_01,1,2,true,1.0986122886681096,available,2513,true
+2026.1,TEAM_02,5,118,true,4.77912349311153,available,5278,true
+2026.1,TEAM_03,7,114,true,4.74493212836325,available,196,true
+2026.1,TEAM_04,3,79,true,4.382026634673881,available,863,true
+2026.1,TEAM_05,4,222,true,5.407171771460119,available,4302,true

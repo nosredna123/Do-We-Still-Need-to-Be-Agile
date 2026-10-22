@@ -4,9 +4,11 @@ An English-language companion for navigating the submitted paper's approved
 research data. The intended implementation is plain static HTML, CSS, JavaScript,
 and local JSON/CSV, contained entirely in this directory.
 
-**Current status:** publication boundaries, the preparation tool, and the
-[public catalog](data/catalog.json) are implemented. The application and public
-observation/download snapshot are not implemented. This is not a ready-to-publish site.
+**Current status:** publication boundaries, the preparation tool, the
+[public catalog](data/catalog.json), and 49 matched
+[observation JSON](data/datasets/)/[download CSV](data/downloads/) pairs are
+implemented. The application and release metadata are not implemented, and
+whole-directory/actual-host approval remains pending. This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
@@ -203,6 +205,14 @@ not duplicate data-browser tabs. The catalog already embeds their 13 weekly-bin
 and 13 complexity definitions; these preparation outputs can verify agreement.
 Release metadata remains a separate task.
 
+The T008 snapshot installs only the candidate's `datasets/` and `downloads/`
+directories under `data/`, after catalog/schema and source-byte agreement checks.
+The existing catalog is retained; do not pass the existing `data/` directory as
+the preparation output or copy the private lineage. Do not install redundant
+`definitions/` files: compare them with the embedded catalog definitions instead.
+For future replacements, validate a separate candidate copy of the site and
+repeat release review rather than overwriting the approved release in place.
+
 `PRIVATE_LINEAGE_OUTPUT` must be outside this directory and the public output.
 It records source fingerprints and exact original ratio cells before eligibility
 masking, with private file permissions. Never copy it into a release.
@@ -218,8 +228,8 @@ rejected rather than silently altered. Any future need to export such text
 requires a reviewed safety policy. No raw JSON records, quotes, or hidden source
 columns are copied.
 
-Run the synthetic standard-library tests without generating bytecode in this
-publishable directory:
+Run the synthetic and shipped-snapshot standard-library tests without generating
+bytecode in this publishable directory:
 
 ```sh
 python3 -B -m unittest discover -s tools -p 'test_*.py'
@@ -241,9 +251,11 @@ are embedded. English display labels do not rewrite source category values.
 All catalog data/download paths are relative to the **site root**, not relative
 to the catalog file. For example, `data/datasets/<dataset-id>.json` is resolved
 from the page alongside this README, including at a nested hosting path.
-These paths describe future T008 files; they do not claim those files exist yet.
-The catalog is marked `metadata_only_datasets_pending` until that stage is
-reconciled. Do not present missing files as empty datasets.
+All 49 JSON paths and 49 CSV paths now resolve to the approved T008 snapshot:
+1,674 observation rows and 17,046 scalar cells per format. JSON/CSV pairs preserve
+identical row order, column order, and values. The catalog is marked
+`snapshot_prepared_release_pending`; this is not full-site publication approval.
+Do not present missing files as empty datasets.
 
 Use the local, standard-library [catalog authoring tool](tools/build_catalog.py)
 to verify saved bytes:
@@ -264,6 +276,11 @@ time: its descriptors use only explicit public contract definitions. Compare and
 review the candidate before replacing the saved catalog. For changes to the
 underlying approved scope or values, reconcile source fingerprints and obtain
 renewed approval first; catalog generation is not a publication authorization.
-Catalog tests run with the same synthetic test command above. Before observation
-exports, also verify column types, nullability, keys, and filters against the
-approved prepared rows.
+Catalog and shipped-snapshot tests run with the same test command above, using
+only local public files. They check exact inventory, deterministic serialization,
+JSON/CSV parity, column types, nullability, keys, coverage, and scientific
+missingness. Authoring verification must also reproduce every exported byte
+from the pinned approved inputs; public-file tests alone cannot prove provenance.
+Distinct profile/figure inputs retain their own original numeric precision;
+cross-table ratio comparisons use the preparation contract's `1e-12` absolute
+tolerance without rounding or rewriting exported values.

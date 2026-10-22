@@ -1,0 +1,326 @@
+[
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "topic": "other_or_insufficient_evidence",
+    "count": 16,
+    "topic_assignment_n": 58,
+    "share_of_topic_assignments": 0.27586206896551724,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "topic": "productivity_and_speed",
+    "count": 10,
+    "topic_assignment_n": 58,
+    "share_of_topic_assignments": 0.1724137931034483,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "topic": "replacement_or_job_risk",
+    "count": 7,
+    "topic_assignment_n": 58,
+    "share_of_topic_assignments": 0.1206896551724138,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "topic": "skills_and_learning",
+    "count": 3,
+    "topic_assignment_n": 58,
+    "share_of_topic_assignments": 0.05172413793103448,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "topic": "task_or_role_change",
+    "count": 5,
+    "topic_assignment_n": 58,
+    "share_of_topic_assignments": 0.08620689655172414,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "topic": "uncertainty_or_condition",
+    "count": 17,
+    "topic_assignment_n": 58,
+    "share_of_topic_assignments": 0.29310344827586204,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "topic": "other_or_insufficient_evidence",
+    "count": 15,
+    "topic_assignment_n": 55,
+    "share_of_topic_assignments": 0.2727272727272727,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "topic": "productivity_and_speed",
+    "count": 7,
+    "topic_assignment_n": 55,
+    "share_of_topic_assignments": 0.12727272727272726,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "topic": "replacement_or_job_risk",
+    "count": 5,
+    "topic_assignment_n": 55,
+    "share_of_topic_assignments": 0.09090909090909091,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "topic": "skills_and_learning",
+    "count": 7,
+    "topic_assignment_n": 55,
+    "share_of_topic_assignments": 0.12727272727272726,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "topic": "task_or_role_change",
+    "count": 5,
+    "topic_assignment_n": 55,
+    "share_of_topic_assignments": 0.09090909090909091,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "topic": "uncertainty_or_condition",
+    "count": 16,
+    "topic_assignment_n": 55,
+    "share_of_topic_assignments": 0.2909090909090909,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "topic": "other_or_insufficient_evidence",
+    "count": 14,
+    "topic_assignment_n": 46,
+    "share_of_topic_assignments": 0.30434782608695654,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "topic": "productivity_and_speed",
+    "count": 4,
+    "topic_assignment_n": 46,
+    "share_of_topic_assignments": 0.08695652173913043,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "topic": "replacement_or_job_risk",
+    "count": 4,
+    "topic_assignment_n": 46,
+    "share_of_topic_assignments": 0.08695652173913043,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "topic": "skills_and_learning",
+    "count": 7,
+    "topic_assignment_n": 46,
+    "share_of_topic_assignments": 0.15217391304347827,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "topic": "task_or_role_change",
+    "count": 6,
+    "topic_assignment_n": 46,
+    "share_of_topic_assignments": 0.13043478260869565,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "topic": "uncertainty_or_condition",
+    "count": 11,
+    "topic_assignment_n": 46,
+    "share_of_topic_assignments": 0.2391304347826087,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "topic": "other_or_insufficient_evidence",
+    "count": 9,
+    "topic_assignment_n": 25,
+    "share_of_topic_assignments": 0.36,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "topic": "productivity_and_speed",
+    "count": 4,
+    "topic_assignment_n": 25,
+    "share_of_topic_assignments": 0.16,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "topic": "replacement_or_job_risk",
+    "count": 1,
+    "topic_assignment_n": 25,
+    "share_of_topic_assignments": 0.04,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "topic": "skills_and_learning",
+    "count": 2,
+    "topic_assignment_n": 25,
+    "share_of_topic_assignments": 0.08,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "topic": "task_or_role_change",
+    "count": 3,
+    "topic_assignment_n": 25,
+    "share_of_topic_assignments": 0.12,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "topic": "uncertainty_or_condition",
+    "count": 6,
+    "topic_assignment_n": 25,
+    "share_of_topic_assignments": 0.24,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "topic": "other_or_insufficient_evidence",
+    "count": 7,
+    "topic_assignment_n": 27,
+    "share_of_topic_assignments": 0.25925925925925924,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "topic": "productivity_and_speed",
+    "count": 6,
+    "topic_assignment_n": 27,
+    "share_of_topic_assignments": 0.2222222222222222,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "topic": "replacement_or_job_risk",
+    "count": 1,
+    "topic_assignment_n": 27,
+    "share_of_topic_assignments": 0.037037037037037035,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "topic": "skills_and_learning",
+    "count": 1,
+    "topic_assignment_n": 27,
+    "share_of_topic_assignments": 0.037037037037037035,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "topic": "task_or_role_change",
+    "count": 7,
+    "topic_assignment_n": 27,
+    "share_of_topic_assignments": 0.25925925925925924,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "topic": "uncertainty_or_condition",
+    "count": 5,
+    "topic_assignment_n": 27,
+    "share_of_topic_assignments": 0.18518518518518517,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "topic": "other_or_insufficient_evidence",
+    "count": 9,
+    "topic_assignment_n": 23,
+    "share_of_topic_assignments": 0.391304347826087,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "topic": "productivity_and_speed",
+    "count": 2,
+    "topic_assignment_n": 23,
+    "share_of_topic_assignments": 0.08695652173913043,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "topic": "replacement_or_job_risk",
+    "count": 2,
+    "topic_assignment_n": 23,
+    "share_of_topic_assignments": 0.08695652173913043,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "topic": "skills_and_learning",
+    "count": 1,
+    "topic_assignment_n": 23,
+    "share_of_topic_assignments": 0.043478260869565216,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "topic": "task_or_role_change",
+    "count": 3,
+    "topic_assignment_n": 23,
+    "share_of_topic_assignments": 0.13043478260869565,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "topic": "uncertainty_or_condition",
+    "count": 6,
+    "topic_assignment_n": 23,
+    "share_of_topic_assignments": 0.2608695652173913,
+    "coding_status": "exploratory_rule_based_unvalidated"
+  }
+]

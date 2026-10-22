@@ -1,0 +1,44 @@
+[
+  {
+    "checkpoint": "T1",
+    "team_n": 9,
+    "m5_friction_marker_density_per_1k_tokens": 0.5151098901098901,
+    "m5_friction_marker_n": 12,
+    "m5_token_n": 23296,
+    "median_clean_churn": 0.0,
+    "mean_clean_churn": 442.22222222222223,
+    "median_evaluator_score_composite": 2.0,
+    "mean_evaluator_score_composite": 1.9756944444444444,
+    "baseline_eligible_rework_team_n": 7,
+    "median_clean_rework_churn_t3": 262.0,
+    "median_clean_rework_ratio_t3_baseline_eligible": 0.2322491004310805
+  },
+  {
+    "checkpoint": "T2",
+    "team_n": 9,
+    "m5_friction_marker_density_per_1k_tokens": 1.1319568179436117,
+    "m5_friction_marker_n": 54,
+    "m5_token_n": 47705,
+    "median_clean_churn": 2803.0,
+    "mean_clean_churn": 3707.5555555555557,
+    "median_evaluator_score_composite": 2.21875,
+    "mean_evaluator_score_composite": 2.107638888888889,
+    "baseline_eligible_rework_team_n": 7,
+    "median_clean_rework_churn_t3": 262.0,
+    "median_clean_rework_ratio_t3_baseline_eligible": 0.2322491004310805
+  },
+  {
+    "checkpoint": "T3",
+    "team_n": 9,
+    "m5_friction_marker_density_per_1k_tokens": 1.2867114871168013,
+    "m5_friction_marker_n": 40,
+    "m5_token_n": 31087,
+    "median_clean_churn": 5837.0,
+    "mean_clean_churn": 10572.888888888889,
+    "median_evaluator_score_composite": 2.40625,
+    "mean_evaluator_score_composite": 2.217592592592593,
+    "baseline_eligible_rework_team_n": 7,
+    "median_clean_rework_churn_t3": 262.0,
+    "median_clean_rework_ratio_t3_baseline_eligible": 0.2322491004310805
+  }
+]

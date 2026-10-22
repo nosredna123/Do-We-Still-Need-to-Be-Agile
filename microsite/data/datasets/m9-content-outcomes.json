@@ -1,0 +1,242 @@
+[
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_architecture_or_design_n",
+    "outcome": "clean_rework_churn_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.39651972354028314,
+    "spearman_p_exploratory": 0.2907091034528085
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_architecture_or_design_n",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.16226575401825766,
+    "spearman_p_exploratory": 0.6766024473423959
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_architecture_or_design_n",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.11454053224818188,
+    "spearman_p_exploratory": 0.7691960001259738
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_architecture_or_design_n",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.2465244607009405,
+    "spearman_p_exploratory": 0.5225287865077526
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_architecture_or_design_n",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.0913717355809759,
+    "spearman_p_exploratory": 0.8151492120575649
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_evidence_quotes_n",
+    "outcome": "clean_rework_churn_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.1573869187761005,
+    "spearman_p_exploratory": 0.6859188723450562
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_evidence_quotes_n",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.27151823034599865,
+    "spearman_p_exploratory": 0.4797319834846645
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_evidence_quotes_n",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.0814554691037996,
+    "spearman_p_exploratory": 0.8349750511403834
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_evidence_quotes_n",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.1402526438305428,
+    "spearman_p_exploratory": 0.71892192270124
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_evidence_quotes_n",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.05775909822579078,
+    "spearman_p_exploratory": 0.882660762652699
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_goals_n",
+    "outcome": "clean_rework_churn_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.17568209223157663,
+    "spearman_p_exploratory": 0.6511811622893935
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_goals_n",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.2182178902359924,
+    "spearman_p_exploratory": 0.5727151653763797
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_goals_n",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.08183170883849714,
+    "spearman_p_exploratory": 0.8342212906754378
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_goals_n",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.09393364366277243,
+    "spearman_p_exploratory": 0.8100414306858374
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_goals_n",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.09187431842106274,
+    "spearman_p_exploratory": 0.8141467112138165
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_planning_evidence_present",
+    "outcome": "clean_rework_churn_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.1732050807568877,
+    "spearman_p_exploratory": 0.6558521087759753
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_planning_evidence_present",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.0,
+    "spearman_p_exploratory": 1.0
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_planning_evidence_present",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.0,
+    "spearman_p_exploratory": 1.0
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_planning_evidence_present",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.30869745325651593,
+    "spearman_p_exploratory": 0.4189496331143614
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_planning_evidence_present",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.2860387767736777,
+    "spearman_p_exploratory": 0.4555686092508525
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_risk_or_dependency_n",
+    "outcome": "clean_rework_churn_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.10350983390135313,
+    "spearman_p_exploratory": 0.7910051864396366
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_risk_or_dependency_n",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.21428571428571427,
+    "spearman_p_exploratory": 0.5798217662067431
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_risk_or_dependency_n",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.0,
+    "spearman_p_exploratory": 1.0
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_risk_or_dependency_n",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.3689640277608545,
+    "spearman_p_exploratory": 0.32848565102526345
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_risk_or_dependency_n",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.05698028822981897,
+    "spearman_p_exploratory": 0.8842343186644603
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_task_decomposition_n",
+    "outcome": "clean_rework_churn_t3",
+    "sample_n": 9,
+    "spearman_rho": -0.4083697748559178,
+    "spearman_p_exploratory": 0.27518868125543466
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_task_decomposition_n",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.10309826235529032,
+    "spearman_p_exploratory": 0.7918214426161063
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_task_decomposition_n",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.30929478706587094,
+    "spearman_p_exploratory": 0.41800275454673186
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_task_decomposition_n",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.47929833168529035,
+    "spearman_p_exploratory": 0.19172339280824802
+  },
+  {
+    "analysis_id": "m6b_structured_content",
+    "predictor": "m6b_task_decomposition_n",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 9,
+    "spearman_rho": 0.2083513700705935,
+    "spearman_p_exploratory": 0.5906062647611368
+  }
+]

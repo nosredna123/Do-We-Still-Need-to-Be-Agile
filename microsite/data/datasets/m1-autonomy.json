@@ -1,0 +1,236 @@
+[
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 1,
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 2,
+    "count": 11,
+    "respondent_n": 46,
+    "share": 0.2391304347826087
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 3,
+    "count": 25,
+    "respondent_n": 46,
+    "share": 0.5434782608695652
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 4,
+    "count": 4,
+    "respondent_n": 46,
+    "share": 0.08695652173913043
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 5,
+    "count": 5,
+    "respondent_n": 46,
+    "share": 0.10869565217391304
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 1,
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 2,
+    "count": 8,
+    "respondent_n": 41,
+    "share": 0.1951219512195122
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 3,
+    "count": 26,
+    "respondent_n": 41,
+    "share": 0.6341463414634146
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 4,
+    "count": 6,
+    "respondent_n": 41,
+    "share": 0.14634146341463414
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 1,
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 2,
+    "count": 11,
+    "respondent_n": 40,
+    "share": 0.275
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 3,
+    "count": 17,
+    "respondent_n": 40,
+    "share": 0.425
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 4,
+    "count": 6,
+    "respondent_n": 40,
+    "share": 0.15
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 5,
+    "count": 5,
+    "respondent_n": 40,
+    "share": 0.125
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 2,
+    "count": 3,
+    "respondent_n": 22,
+    "share": 0.13636363636363635
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 3,
+    "count": 17,
+    "respondent_n": 22,
+    "share": 0.7727272727272727
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 4,
+    "count": 1,
+    "respondent_n": 22,
+    "share": 0.045454545454545456
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "autonomy_tool_balance",
+    "category": 5,
+    "count": 1,
+    "respondent_n": 22,
+    "share": 0.045454545454545456
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 1,
+    "count": 1,
+    "respondent_n": 20,
+    "share": 0.05
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 2,
+    "count": 4,
+    "respondent_n": 20,
+    "share": 0.2
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 3,
+    "count": 13,
+    "respondent_n": 20,
+    "share": 0.65
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "autonomy_tool_balance",
+    "category": 5,
+    "count": 2,
+    "respondent_n": 20,
+    "share": 0.1
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 2,
+    "count": 6,
+    "respondent_n": 18,
+    "share": 0.3333333333333333
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 3,
+    "count": 5,
+    "respondent_n": 18,
+    "share": 0.2777777777777778
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 4,
+    "count": 3,
+    "respondent_n": 18,
+    "share": 0.16666666666666666
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "autonomy_tool_balance",
+    "category": 5,
+    "count": 4,
+    "respondent_n": 18,
+    "share": 0.2222222222222222
+  }
+]

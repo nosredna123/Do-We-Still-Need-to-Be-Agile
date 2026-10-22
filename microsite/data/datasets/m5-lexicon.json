@@ -1,0 +1,37 @@
+[
+  {
+    "lexicon_version": "m5-friction-lexicon-pt-v1",
+    "subtype": "alignment",
+    "pattern": "coordena[\u00e7c][a\u00e3]o|comunica[\u00e7c][a\u00e3]o|alinh|sincron|divis[a\u00e3]o de taref|distribui[\u00e7c][a\u00e3]o de taref|depend[e\u00ea]ncia",
+    "language": "Portuguese",
+    "counting_rule": "regex match count per transcript chunk; chunks are provenance units, not independent observations"
+  },
+  {
+    "lexicon_version": "m5-friction-lexicon-pt-v1",
+    "subtype": "blocker",
+    "pattern": "bloque|imped|trava|gargalo",
+    "language": "Portuguese",
+    "counting_rule": "regex match count per transcript chunk; chunks are provenance units, not independent observations"
+  },
+  {
+    "lexicon_version": "m5-friction-lexicon-pt-v1",
+    "subtype": "handoff",
+    "pattern": "repasse|handoff|deleg[a\u00e3]|passar.{0,30}para",
+    "language": "Portuguese",
+    "counting_rule": "regex match count per transcript chunk; chunks are provenance units, not independent observations"
+  },
+  {
+    "lexicon_version": "m5-friction-lexicon-pt-v1",
+    "subtype": "integration",
+    "pattern": "integra[\u00e7c][a\u00e3]o|merge|conflit|incompatibil|acopl",
+    "language": "Portuguese",
+    "counting_rule": "regex match count per transcript chunk; chunks are provenance units, not independent observations"
+  },
+  {
+    "lexicon_version": "m5-friction-lexicon-pt-v1",
+    "subtype": "rework",
+    "pattern": "retrabalh|refaz|refazer|revis[a\u00e3]o",
+    "language": "Portuguese",
+    "counting_rule": "regex match count per transcript chunk; chunks are provenance units, not independent observations"
+  }
+]

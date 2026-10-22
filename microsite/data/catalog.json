@@ -3,7 +3,7 @@
   "language": "en",
   "title": "Research Data Explorer",
   "path_base": "site_root",
-  "status": "metadata_only_datasets_pending",
+  "status": "snapshot_prepared_release_pending",
   "excerpt_policy": "omitted_by_human_decision",
   "research_questions": [
     {

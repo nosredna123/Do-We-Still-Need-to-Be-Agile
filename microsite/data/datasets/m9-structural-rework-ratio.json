@@ -1,0 +1,18 @@
+[
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "sample_n": 12,
+    "spearman_rho": -0.031916699728542886,
+    "spearman_p_exploratory": 0.921561581518955
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "sample_n": 12,
+    "spearman_rho": -0.06007217153221088,
+    "spearman_p_exploratory": 0.8528751447991527
+  }
+]

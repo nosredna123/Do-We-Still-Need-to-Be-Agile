@@ -1,0 +1,338 @@
+[
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_01",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_01",
+    "checkpoint": "T2",
+    "commit_n_7d": 1,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_01",
+    "checkpoint": "T3",
+    "commit_n_7d": 11,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_02",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_02",
+    "checkpoint": "T2",
+    "commit_n_7d": 19,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_02",
+    "checkpoint": "T3",
+    "commit_n_7d": 109,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_03",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_03",
+    "checkpoint": "T2",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_03",
+    "checkpoint": "T3",
+    "commit_n_7d": 9,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_04",
+    "checkpoint": "T1",
+    "commit_n_7d": 9,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_04",
+    "checkpoint": "T2",
+    "commit_n_7d": 5,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_04",
+    "checkpoint": "T3",
+    "commit_n_7d": 27,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_05",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_05",
+    "checkpoint": "T2",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_05",
+    "checkpoint": "T3",
+    "commit_n_7d": 1,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_07",
+    "checkpoint": "T1",
+    "commit_n_7d": 30,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_07",
+    "checkpoint": "T2",
+    "commit_n_7d": 30,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_07",
+    "checkpoint": "T3",
+    "commit_n_7d": 6,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_08",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_08",
+    "checkpoint": "T2",
+    "commit_n_7d": 1,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_08",
+    "checkpoint": "T3",
+    "commit_n_7d": 1,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_09",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_09",
+    "checkpoint": "T2",
+    "commit_n_7d": 25,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_09",
+    "checkpoint": "T3",
+    "commit_n_7d": 52,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_10",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_10",
+    "checkpoint": "T2",
+    "commit_n_7d": 8,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_10",
+    "checkpoint": "T3",
+    "commit_n_7d": 7,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_01",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_01",
+    "checkpoint": "T2",
+    "commit_n_7d": 1,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_01",
+    "checkpoint": "T3",
+    "commit_n_7d": 1,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_02",
+    "checkpoint": "T1",
+    "commit_n_7d": 8,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_02",
+    "checkpoint": "T2",
+    "commit_n_7d": 16,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_02",
+    "checkpoint": "T3",
+    "commit_n_7d": 20,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_03",
+    "checkpoint": "T1",
+    "commit_n_7d": 11,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_03",
+    "checkpoint": "T2",
+    "commit_n_7d": 15,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_03",
+    "checkpoint": "T3",
+    "commit_n_7d": 15,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_04",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_04",
+    "checkpoint": "T2",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_04",
+    "checkpoint": "T3",
+    "commit_n_7d": 14,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_05",
+    "checkpoint": "T1",
+    "commit_n_7d": 0,
+    "repository_inactive_7d": true,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_05",
+    "checkpoint": "T2",
+    "commit_n_7d": 21,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_05",
+    "checkpoint": "T3",
+    "commit_n_7d": 14,
+    "repository_inactive_7d": false,
+    "measurement_status": "available"
+  }
+]

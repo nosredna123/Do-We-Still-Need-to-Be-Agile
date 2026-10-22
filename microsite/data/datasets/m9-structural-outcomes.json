@@ -1,0 +1,66 @@
+[
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": -0.07852214935877319,
+    "spearman_p_exploratory": 0.7896063288168236
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": 0.1003466214899358,
+    "spearman_p_exploratory": 0.7328626662966031
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": 0.02547133540542466,
+    "spearman_p_exploratory": 0.9311227995580339
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": 0.27074686881076865,
+    "spearman_p_exploratory": 0.3491470841132631
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "engagement_participation_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": -0.14285714285714282,
+    "spearman_p_exploratory": 0.6261174762253241
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "project_progress_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": 0.09551214609346731,
+    "spearman_p_exploratory": 0.7453340145752252
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "scope_applicability_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": 0.038118866882081236,
+    "spearman_p_exploratory": 0.8970604983832768
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "technical_complexity_mean_t3",
+    "sample_n": 14,
+    "spearman_rho": 0.22175979848406138,
+    "spearman_p_exploratory": 0.4460886251854279
+  }
+]

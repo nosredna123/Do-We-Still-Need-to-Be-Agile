@@ -1,0 +1,15 @@
+cohort,team_id,prior_clean_path_n,baseline_eligible_for_rework_t3,measurement_status
+2025.2,TEAM_01,30,true,baseline_eligible
+2025.2,TEAM_02,33,true,baseline_eligible
+2025.2,TEAM_03,0,false,baseline_not_observed
+2025.2,TEAM_04,47,true,baseline_eligible
+2025.2,TEAM_05,0,false,baseline_not_observed
+2025.2,TEAM_07,129,true,baseline_eligible
+2025.2,TEAM_08,32,true,baseline_eligible
+2025.2,TEAM_09,161,true,baseline_eligible
+2025.2,TEAM_10,26,true,baseline_eligible
+2026.1,TEAM_01,106,true,baseline_eligible
+2026.1,TEAM_02,43,true,baseline_eligible
+2026.1,TEAM_03,65,true,baseline_eligible
+2026.1,TEAM_04,25,true,baseline_eligible
+2026.1,TEAM_05,130,true,baseline_eligible

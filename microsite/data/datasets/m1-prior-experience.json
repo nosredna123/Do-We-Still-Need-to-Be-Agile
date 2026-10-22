@@ -1,0 +1,110 @@
+[
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "prior_ai_project_experience",
+    "category": "N\u00e3o",
+    "count": 27,
+    "respondent_n": 46,
+    "share": 0.5869565217391305
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "prior_ai_project_experience",
+    "category": "Sim",
+    "count": 19,
+    "respondent_n": 46,
+    "share": 0.41304347826086957
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "prior_ai_project_experience",
+    "category": "N\u00e3o",
+    "count": 20,
+    "respondent_n": 41,
+    "share": 0.4878048780487805
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "prior_ai_project_experience",
+    "category": "Sim",
+    "count": 21,
+    "respondent_n": 41,
+    "share": 0.5121951219512195
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "prior_ai_project_experience",
+    "category": "N\u00e3o",
+    "count": 12,
+    "respondent_n": 40,
+    "share": 0.3
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "prior_ai_project_experience",
+    "category": "Sim",
+    "count": 28,
+    "respondent_n": 40,
+    "share": 0.7
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "prior_ai_project_experience",
+    "category": "N\u00e3o",
+    "count": 15,
+    "respondent_n": 22,
+    "share": 0.6818181818181818
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "prior_ai_project_experience",
+    "category": "Sim",
+    "count": 7,
+    "respondent_n": 22,
+    "share": 0.3181818181818182
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "prior_ai_project_experience",
+    "category": "N\u00e3o",
+    "count": 7,
+    "respondent_n": 20,
+    "share": 0.35
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "prior_ai_project_experience",
+    "category": "Sim",
+    "count": 13,
+    "respondent_n": 20,
+    "share": 0.65
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "prior_ai_project_experience",
+    "category": "N\u00e3o",
+    "count": 1,
+    "respondent_n": 18,
+    "share": 0.05555555555555555
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "prior_ai_project_experience",
+    "category": "Sim",
+    "count": 17,
+    "respondent_n": 18,
+    "share": 0.9444444444444444
+  }
+]

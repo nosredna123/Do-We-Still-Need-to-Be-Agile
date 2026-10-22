@@ -1,0 +1,560 @@
+[
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "ChatGPT",
+    "count": 46,
+    "respondent_n": 46,
+    "share": 1.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Claude",
+    "count": 7,
+    "respondent_n": 46,
+    "share": 0.15217391304347827
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Cursor",
+    "count": 3,
+    "respondent_n": 46,
+    "share": 0.06521739130434782
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "DeepSeek",
+    "count": 31,
+    "respondent_n": 46,
+    "share": 0.6739130434782609
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Gemini",
+    "count": 34,
+    "respondent_n": 46,
+    "share": 0.7391304347826086
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "GitHub Copilot",
+    "count": 18,
+    "respondent_n": 46,
+    "share": 0.391304347826087
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Lovable",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Microsoft copilot",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Perplexity",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "n8n",
+    "count": 2,
+    "respondent_n": 46,
+    "share": 0.043478260869565216
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "v0",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Amazon Q",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Base44",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "ChatGPT",
+    "count": 40,
+    "respondent_n": 41,
+    "share": 0.975609756097561
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Claude",
+    "count": 6,
+    "respondent_n": 41,
+    "share": 0.14634146341463414
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Cursor",
+    "count": 4,
+    "respondent_n": 41,
+    "share": 0.0975609756097561
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "DeepSeek",
+    "count": 29,
+    "respondent_n": 41,
+    "share": 0.7073170731707317
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Gemini",
+    "count": 32,
+    "respondent_n": 41,
+    "share": 0.7804878048780488
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "GitHub Copilot",
+    "count": 18,
+    "respondent_n": 41,
+    "share": 0.43902439024390244
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Manus AI",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Perplexity",
+    "count": 2,
+    "respondent_n": 41,
+    "share": 0.04878048780487805
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "lovable",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "n8n",
+    "count": 3,
+    "respondent_n": 41,
+    "share": 0.07317073170731707
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "qwen",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "stich",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "v0",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Base44",
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "ChatGPT",
+    "count": 40,
+    "respondent_n": 40,
+    "share": 1.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Claude",
+    "count": 9,
+    "respondent_n": 40,
+    "share": 0.225
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Cursor",
+    "count": 3,
+    "respondent_n": 40,
+    "share": 0.075
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "DeepSeek",
+    "count": 26,
+    "respondent_n": 40,
+    "share": 0.65
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Gemini",
+    "count": 31,
+    "respondent_n": 40,
+    "share": 0.775
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "GitHub Copilot",
+    "count": 13,
+    "respondent_n": 40,
+    "share": 0.325
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Perplexity",
+    "count": 4,
+    "respondent_n": 40,
+    "share": 0.1
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Windsurf",
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "lovable",
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "n8n",
+    "count": 3,
+    "respondent_n": 40,
+    "share": 0.075
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "stich",
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "v0",
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "ChatGPT",
+    "count": 19,
+    "respondent_n": 22,
+    "share": 0.8636363636363636
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Claude",
+    "count": 8,
+    "respondent_n": 22,
+    "share": 0.36363636363636365
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Cursor",
+    "count": 2,
+    "respondent_n": 22,
+    "share": 0.09090909090909091
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "DeepSeek",
+    "count": 6,
+    "respondent_n": 22,
+    "share": 0.2727272727272727
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Gemini",
+    "count": 19,
+    "respondent_n": 22,
+    "share": 0.8636363636363636
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "GitHub Copilot",
+    "count": 12,
+    "respondent_n": 22,
+    "share": 0.5454545454545454
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "Perplexity",
+    "count": 2,
+    "respondent_n": 22,
+    "share": 0.09090909090909091
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tools",
+    "category": "n8n",
+    "count": 3,
+    "respondent_n": 22,
+    "share": 0.13636363636363635
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "ChatGPT",
+    "count": 17,
+    "respondent_n": 20,
+    "share": 0.85
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Claude",
+    "count": 14,
+    "respondent_n": 20,
+    "share": 0.7
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Cursor",
+    "count": 3,
+    "respondent_n": 20,
+    "share": 0.15
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "DeepSeek",
+    "count": 3,
+    "respondent_n": 20,
+    "share": 0.15
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "Gemini",
+    "count": 18,
+    "respondent_n": 20,
+    "share": 0.9
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "GitHub Copilot",
+    "count": 6,
+    "respondent_n": 20,
+    "share": 0.3
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tools",
+    "category": "n8n",
+    "count": 2,
+    "respondent_n": 20,
+    "share": 0.1
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "ChatGPT",
+    "count": 15,
+    "respondent_n": 18,
+    "share": 0.8333333333333334
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Claude",
+    "count": 15,
+    "respondent_n": 18,
+    "share": 0.8333333333333334
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Cursor",
+    "count": 4,
+    "respondent_n": 18,
+    "share": 0.2222222222222222
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "DeepSeek",
+    "count": 4,
+    "respondent_n": 18,
+    "share": 0.2222222222222222
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Gemini",
+    "count": 14,
+    "respondent_n": 18,
+    "share": 0.7777777777777778
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "GitHub Copilot",
+    "count": 8,
+    "respondent_n": 18,
+    "share": 0.4444444444444444
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "Perplexity",
+    "count": 1,
+    "respondent_n": 18,
+    "share": 0.05555555555555555
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tools",
+    "category": "n8n",
+    "count": 2,
+    "respondent_n": 18,
+    "share": 0.1111111111111111
+  }
+]

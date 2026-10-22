@@ -1,0 +1,100 @@
+[
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_01",
+    "prior_clean_path_n": 30,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_02",
+    "prior_clean_path_n": 33,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_03",
+    "prior_clean_path_n": 0,
+    "baseline_eligible_for_rework_t3": false,
+    "measurement_status": "baseline_not_observed"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_04",
+    "prior_clean_path_n": 47,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_05",
+    "prior_clean_path_n": 0,
+    "baseline_eligible_for_rework_t3": false,
+    "measurement_status": "baseline_not_observed"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_07",
+    "prior_clean_path_n": 129,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_08",
+    "prior_clean_path_n": 32,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_09",
+    "prior_clean_path_n": 161,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2025.2",
+    "team_id": "TEAM_10",
+    "prior_clean_path_n": 26,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_01",
+    "prior_clean_path_n": 106,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_02",
+    "prior_clean_path_n": 43,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_03",
+    "prior_clean_path_n": 65,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_04",
+    "prior_clean_path_n": 25,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  },
+  {
+    "cohort": "2026.1",
+    "team_id": "TEAM_05",
+    "prior_clean_path_n": 130,
+    "baseline_eligible_for_rework_t3": true,
+    "measurement_status": "baseline_eligible"
+  }
+]

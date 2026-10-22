@@ -1,0 +1,62 @@
+[
+  {
+    "checkpoint": "T1",
+    "file_category": "clean_source_or_test",
+    "included_in_m4": true,
+    "team_semester_n": 6,
+    "file_event_n": 405,
+    "unique_file_n": 256,
+    "churn_lines": 21718,
+    "churn_share": 0.4290907654008772
+  },
+  {
+    "checkpoint": "T1",
+    "file_category": "excluded_or_non_measurement",
+    "included_in_m4": false,
+    "team_semester_n": 7,
+    "file_event_n": 306,
+    "unique_file_n": 251,
+    "churn_lines": 28896,
+    "churn_share": 0.5709092345991228
+  },
+  {
+    "checkpoint": "T2",
+    "file_category": "clean_source_or_test",
+    "included_in_m4": true,
+    "team_semester_n": 9,
+    "file_event_n": 981,
+    "unique_file_n": 644,
+    "churn_lines": 47545,
+    "churn_share": 0.19614354844698204
+  },
+  {
+    "checkpoint": "T2",
+    "file_category": "excluded_or_non_measurement",
+    "included_in_m4": false,
+    "team_semester_n": 9,
+    "file_event_n": 1919,
+    "unique_file_n": 1750,
+    "churn_lines": 194854,
+    "churn_share": 0.803856451553018
+  },
+  {
+    "checkpoint": "T3",
+    "file_category": "clean_source_or_test",
+    "included_in_m4": true,
+    "team_semester_n": 9,
+    "file_event_n": 1916,
+    "unique_file_n": 1074,
+    "churn_lines": 136325,
+    "churn_share": 0.010096554388340626
+  },
+  {
+    "checkpoint": "T3",
+    "file_category": "excluded_or_non_measurement",
+    "included_in_m4": false,
+    "team_semester_n": 9,
+    "file_event_n": 45514,
+    "unique_file_n": 23832,
+    "churn_lines": 13365806,
+    "churn_share": 0.9899034456116593
+  }
+]

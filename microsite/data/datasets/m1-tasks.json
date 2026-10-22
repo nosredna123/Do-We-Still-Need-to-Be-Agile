@@ -1,0 +1,524 @@
+[
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "An\u00e1lise de requisitos",
+    "count": 11,
+    "respondent_n": 46,
+    "share": 0.2391304347826087
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Brainstorming de ideias",
+    "count": 26,
+    "respondent_n": 46,
+    "share": 0.5652173913043478
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Depura\u00e7\u00e3o / debug",
+    "count": 27,
+    "respondent_n": 46,
+    "share": 0.5869565217391305
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Documenta\u00e7\u00e3o",
+    "count": 20,
+    "respondent_n": 46,
+    "share": 0.43478260869565216
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Escrita de testes",
+    "count": 12,
+    "respondent_n": 46,
+    "share": 0.2608695652173913
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Gera\u00e7\u00e3o de c\u00f3digo",
+    "count": 30,
+    "respondent_n": 46,
+    "share": 0.6521739130434783
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Organiza\u00e7\u00e3o de trabalhos acad\u00eamicos.",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c",
+    "count": 42,
+    "respondent_n": 46,
+    "share": 0.9130434782608695
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Prototipa\u00e7\u00e3o",
+    "count": 10,
+    "respondent_n": 46,
+    "share": 0.21739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Refatora\u00e7\u00e3o",
+    "count": 14,
+    "respondent_n": 46,
+    "share": 0.30434782608695654
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Tirar algum tipo de d\u00favida",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "entender alguma coisa",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "ter ideias",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "An\u00e1lise de requisitos",
+    "count": 11,
+    "respondent_n": 41,
+    "share": 0.2682926829268293
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Brainstorming de ideias",
+    "count": 23,
+    "respondent_n": 41,
+    "share": 0.5609756097560976
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Depura\u00e7\u00e3o / debug",
+    "count": 23,
+    "respondent_n": 41,
+    "share": 0.5609756097560976
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Documenta\u00e7\u00e3o",
+    "count": 23,
+    "respondent_n": 41,
+    "share": 0.5609756097560976
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Escrita de testes",
+    "count": 9,
+    "respondent_n": 41,
+    "share": 0.21951219512195122
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Gera\u00e7\u00e3o de c\u00f3digo",
+    "count": 29,
+    "respondent_n": 41,
+    "share": 0.7073170731707317
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c",
+    "count": 28,
+    "respondent_n": 41,
+    "share": 0.6829268292682927
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Prototipa\u00e7\u00e3o",
+    "count": 9,
+    "respondent_n": 41,
+    "share": 0.21951219512195122
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Refatora\u00e7\u00e3o",
+    "count": 13,
+    "respondent_n": 41,
+    "share": 0.3170731707317073
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "An\u00e1lise de requisitos",
+    "count": 13,
+    "respondent_n": 40,
+    "share": 0.325
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Brainstorming de ideias",
+    "count": 25,
+    "respondent_n": 40,
+    "share": 0.625
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Depura\u00e7\u00e3o / debug",
+    "count": 22,
+    "respondent_n": 40,
+    "share": 0.55
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Documenta\u00e7\u00e3o",
+    "count": 22,
+    "respondent_n": 40,
+    "share": 0.55
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Escrita de testes",
+    "count": 11,
+    "respondent_n": 40,
+    "share": 0.275
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Gera\u00e7\u00e3o de c\u00f3digo",
+    "count": 31,
+    "respondent_n": 40,
+    "share": 0.775
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c",
+    "count": 29,
+    "respondent_n": 40,
+    "share": 0.725
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Prototipa\u00e7\u00e3o",
+    "count": 9,
+    "respondent_n": 40,
+    "share": 0.225
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Refatora\u00e7\u00e3o",
+    "count": 13,
+    "respondent_n": 40,
+    "share": 0.325
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "An\u00e1lise de requisitos",
+    "count": 8,
+    "respondent_n": 22,
+    "share": 0.36363636363636365
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Brainstorming de ideias",
+    "count": 14,
+    "respondent_n": 22,
+    "share": 0.6363636363636364
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Depura\u00e7\u00e3o / debug",
+    "count": 7,
+    "respondent_n": 22,
+    "share": 0.3181818181818182
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Documenta\u00e7\u00e3o",
+    "count": 16,
+    "respondent_n": 22,
+    "share": 0.7272727272727273
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Escrita de testes",
+    "count": 7,
+    "respondent_n": 22,
+    "share": 0.3181818181818182
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Gera\u00e7\u00e3o de c\u00f3digo",
+    "count": 15,
+    "respondent_n": 22,
+    "share": 0.6818181818181818
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c",
+    "count": 16,
+    "respondent_n": 22,
+    "share": 0.7272727272727273
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Prototipa\u00e7\u00e3o",
+    "count": 4,
+    "respondent_n": 22,
+    "share": 0.18181818181818182
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "real_ai_use_tasks",
+    "category": "Refatora\u00e7\u00e3o",
+    "count": 12,
+    "respondent_n": 22,
+    "share": 0.5454545454545454
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "An\u00e1lise de requisitos",
+    "count": 6,
+    "respondent_n": 20,
+    "share": 0.3
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Brainstorming de ideias",
+    "count": 10,
+    "respondent_n": 20,
+    "share": 0.5
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Depura\u00e7\u00e3o / debug",
+    "count": 13,
+    "respondent_n": 20,
+    "share": 0.65
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Documenta\u00e7\u00e3o",
+    "count": 14,
+    "respondent_n": 20,
+    "share": 0.7
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Escrita de testes",
+    "count": 8,
+    "respondent_n": 20,
+    "share": 0.4
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Gera\u00e7\u00e3o de c\u00f3digo",
+    "count": 15,
+    "respondent_n": 20,
+    "share": 0.75
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c",
+    "count": 13,
+    "respondent_n": 20,
+    "share": 0.65
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Prototipa\u00e7\u00e3o",
+    "count": 6,
+    "respondent_n": 20,
+    "share": 0.3
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "real_ai_use_tasks",
+    "category": "Refatora\u00e7\u00e3o",
+    "count": 8,
+    "respondent_n": 20,
+    "share": 0.4
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "An\u00e1lise de requisitos",
+    "count": 5,
+    "respondent_n": 18,
+    "share": 0.2777777777777778
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Brainstorming de ideias",
+    "count": 7,
+    "respondent_n": 18,
+    "share": 0.3888888888888889
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Depura\u00e7\u00e3o / debug",
+    "count": 12,
+    "respondent_n": 18,
+    "share": 0.6666666666666666
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Documenta\u00e7\u00e3o",
+    "count": 12,
+    "respondent_n": 18,
+    "share": 0.6666666666666666
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Escrita de testes",
+    "count": 6,
+    "respondent_n": 18,
+    "share": 0.3333333333333333
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Gera\u00e7\u00e3o de c\u00f3digo",
+    "count": 11,
+    "respondent_n": 18,
+    "share": 0.6111111111111112
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Pesquisa / Perguntas gerais / Uso anon_ccabe18c441c",
+    "count": 12,
+    "respondent_n": 18,
+    "share": 0.6666666666666666
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Prototipa\u00e7\u00e3o",
+    "count": 7,
+    "respondent_n": 18,
+    "share": 0.3888888888888889
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "real_ai_use_tasks",
+    "category": "Refatora\u00e7\u00e3o",
+    "count": 8,
+    "respondent_n": 18,
+    "share": 0.4444444444444444
+  }
+]

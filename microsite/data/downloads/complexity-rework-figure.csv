@@ -1,0 +1,15 @@
+cohort,team_id,technical_complexity_mean_t3,clean_rework_churn_t3,clean_rework_ratio_t3,planning_scope_tier,planning_scope_log1p_t1,score_trajectory_group,final7_commit_share_pct,final7_clean_churn_share_pct,baseline_eligible_for_rework_t3,ratio_status
+2025.2,TEAM_01,1.125,262,0.1529480443666082,high_repository_visible_planning,4.143134726391533,stable,57.89473684210526,42.40405962575325,true,available
+2025.2,TEAM_02,1.6666666666666667,6519,0.2322491004310805,lower_repository_visible_planning,0.0,declined,54.22885572139303,79.86525006478362,true,available
+2025.2,TEAM_03,1.875,0,,lower_repository_visible_planning,0.0,improved,100.0,100.0,false,baseline_not_observed
+2025.2,TEAM_04,2.0,860,0.0679465908193094,high_repository_visible_planning,5.4510384535657,improved,52.94117647058823,62.16216216216216,true,available
+2025.2,TEAM_05,1.875,0,,lower_repository_visible_planning,0.0,improved,100.0,100.0,false,baseline_not_observed
+2025.2,TEAM_07,2.0,0,0.0,high_repository_visible_planning,2.4849066497880004,stable,8.219178082191782,6.368620835090679,true,available
+2025.2,TEAM_08,1.8333333333333333,172,1.0,lower_repository_visible_planning,0.0,stable,3.8461538461538463,0.0,true,available
+2025.2,TEAM_09,1.6666666666666667,15518,0.5704727593559297,lower_repository_visible_planning,1.0986122886681096,improved,48.598130841121495,26.70546756953383,true,available
+2025.2,TEAM_10,2.0,825,0.4488574537540805,lower_repository_visible_planning,0.0,improved,38.888888888888886,27.585171844514484,true,available
+2026.1,TEAM_01,2.0,2513,0.3838985640085548,lower_repository_visible_planning,1.0986122886681096,improved,33.333333333333336,61.836387681843945,true,available
+2026.1,TEAM_02,2.0,5278,0.6987951807228916,high_repository_visible_planning,4.77912349311153,stable,28.571428571428573,24.19753086419753,true,available
+2026.1,TEAM_03,2.0,196,1.0,high_repository_visible_planning,4.74493212836325,improved,21.428571428571427,1.606864274570983,true,available
+2026.1,TEAM_04,1.8333333333333333,863,0.0443268786275617,high_repository_visible_planning,4.382026634673881,improved,58.333333333333336,92.0085066162571,true,available
+2026.1,TEAM_05,1.8333333333333333,4302,0.5809588116137745,high_repository_visible_planning,5.407171771460119,declined,11.570247933884298,10.074643543556968,true,available

@@ -754,7 +754,7 @@ def build_catalog() -> dict[str, object]:
     catalog: dict[str, object] = {
         "schema_version": "1.0", "language": "en",
         "title": "Research Data Explorer", "path_base": "site_root",
-        "status": "metadata_only_datasets_pending",
+        "status": "snapshot_prepared_release_pending",
         "excerpt_policy": "omitted_by_human_decision",
         "research_questions": [
             {"id": "RQ1", "title": "Self-report and coded perceptions", "metrics": ["M1", "M2"]},

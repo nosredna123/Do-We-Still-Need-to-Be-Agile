@@ -484,6 +484,57 @@ performance check. Only the catalog exists under `data/`: its observation and
 download paths intentionally remain pending T008. T009 release metadata,
 application implementation, and final directory/host approval remain pending.
 
+### T008 - Approved observation and download snapshot
+
+**Completed 2026-10-22.** Installed all 49 approved
+[observation JSON datasets](data/datasets/) and 49 matching
+[CSV downloads](data/downloads/): 1,674 rows and 17,046 scalar cells per format.
+The preparation utility read the pinned inputs and private human decisions,
+validated a separate candidate, and installed only its dataset/download
+directories. No source files were copied wholesale. The catalog now reports
+`snapshot_prepared_release_pending`; its paths resolve to actual local files.
+The [README](README.md) documents this state and candidate-installation boundaries.
+
+Verification before completion:
+
+- All 34 standard-library tests pass: 17 preparation, 10 catalog, and seven
+  [public-snapshot tests](tools/test_public_snapshot.py). The new suite initially
+  failed on absent data, then passed against the installed files. VS Code
+  discovery cannot discover these standalone tests; explicit standard-library
+  discovery executes them without requiring new dependencies.
+- A second fresh preparation from all 58 approved source inputs reproduces
+  every JSON/CSV byte. All 49 schemas match the catalog's 510 column descriptors,
+  including column/row order, scalar types, finite numbers, nullable cells,
+  unique composite keys, and lowercase boolean/empty-null CSV serialization.
+- Coverage remains 14 team-semesters (9/5 by cohort), nine measured and five
+  unmeasured M6b cases, 12 M8-baseline-eligible cases, and transcript chunks
+  35/37/28. Unmeasured M6b fields remain null, successful empty evidence remains
+  zero, and ineligible rework ratios remain null with explicit status. Fixed-T3
+  transcript context stays fixed, and surveys/transcripts gain no team key.
+- Cross-profile ratio checks initially assumed exact equality between distinct
+  source tables. Ten cells differ by less than `1e-16` because of original
+  source serialization precision. The check now uses the existing preparation
+  contract's `1e-12` absolute comparison tolerance. No source or exported value
+  was rounded or replaced; exact per-source byte reproduction still passes.
+- A copied standalone directory passes all 34 tests without parent research
+  inputs. Isolated mutations prove rejection of altered CSV, an exposed
+  ineligible ratio, and an extra unapproved dataset file.
+- The 42 pre-masking ratio lineage cells stay outside this directory with
+  private permissions. No private records/paths/URLs, excerpt payloads,
+  duplicate definition assets, symlinks, bytecode, or temporary candidates
+  were installed. Embedded catalog definitions agree with the preparation.
+- Catalog determinism, Pylance syntax/diagnostics, unchanged approval
+  contract/index fingerprints, and whitespace checks pass.
+
+The 98 observation/download files occupy 759,659 bytes. Their output-set SHA-256
+is `522c7bd9f048389011d49b7642e58ade83e41ca0e3d978a5d5c1aa7d02f53f0c`
+(sorted site-relative path, NUL, file SHA-256, LF, then SHA-256). The status-only
+catalog update has SHA-256
+`65fe835ca8326514ae99759900b8efe618fd018c8fbe9958eb7393159c421a7c`.
+These are task-verification fingerprints, not T009 release metadata.
+T009, the application, browser/host validation, and final human publication
+approval remain pending; this snapshot is not a ready-to-publish site.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -627,7 +678,7 @@ Unresolved privacy questions block the affected dataset, not an implicit release
 
 - [x] T006 [Plan:2.1] Implement `microsite/tools/prepare_snapshot.py` with explicit source/approval inputs, schema/key validation, deterministic JSON/CSV output, and explicit rejection of unapproved fields or broken required contracts. Never copy source files wholesale. Verified 17 unit tests, all 58 source dispositions, isolated deterministic exports, JSON/CSV parity, and fail-closed rejection paths; see Section 3.
 - [x] T007 [Plan:2.1] Produce `microsite/data/catalog.json` with English labels, source-grain definitions, valid filters, approved relationships, missingness states, figure mappings, and interpretation notes. Use neutral source labels rather than identifying URLs. Verified 49 descriptors, 510 columns, seven figure mappings, embedded definitions, all 17,046 prepared scalar cells, 27 passing tests, and isolated deterministic generation; see Section 3.
-- [ ] T008 [Plan:2.1] Write approved rows to `microsite/data/datasets/<dataset-id>.json` and matching `microsite/data/downloads/<dataset-id>.csv`; preserve scientific values and explicit unavailable/ineligible states.
+- [x] T008 [Plan:2.1] Write approved rows to `microsite/data/datasets/<dataset-id>.json` and matching `microsite/data/downloads/<dataset-id>.csv`; preserve scientific values and explicit unavailable/ineligible states. Verified all 49 pairs, 1,674 rows, 17,046 scalar cells, exact approved-source byte reproduction, 34 passing tests, standalone-copy checks, and corruption rejection; see Section 3.
 - [ ] T009 [Plan:2.1] Write `microsite/data/release.json` with a neutral snapshot identifier, schema version, public artifact hashes, row counts, and coverage. Retain confidential source lineage only outside the directory.
 
 **Exit:** Frozen public JSON/CSV that agrees with the paper and contains no private

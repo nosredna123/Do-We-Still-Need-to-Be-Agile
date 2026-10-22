@@ -1,0 +1,47 @@
+[
+  {
+    "checkpoint": "T1",
+    "transcript_chunk_n": 35,
+    "source_session_n": 2,
+    "character_n": 131572,
+    "token_n": 23296,
+    "friction_marker_n": 12,
+    "alignment": 5,
+    "handoff": 2,
+    "integration": 2,
+    "blocker": 2,
+    "rework": 1,
+    "friction_marker_density_per_1k_tokens": 0.5151098901098901,
+    "measurement_status": "available"
+  },
+  {
+    "checkpoint": "T2",
+    "transcript_chunk_n": 37,
+    "source_session_n": 2,
+    "character_n": 262712,
+    "token_n": 47705,
+    "friction_marker_n": 54,
+    "alignment": 19,
+    "handoff": 3,
+    "integration": 20,
+    "blocker": 6,
+    "rework": 6,
+    "friction_marker_density_per_1k_tokens": 1.1319568179436117,
+    "measurement_status": "available"
+  },
+  {
+    "checkpoint": "T3",
+    "transcript_chunk_n": 28,
+    "source_session_n": 2,
+    "character_n": 172869,
+    "token_n": 31087,
+    "friction_marker_n": 40,
+    "alignment": 10,
+    "handoff": 5,
+    "integration": 14,
+    "blocker": 7,
+    "rework": 4,
+    "friction_marker_density_per_1k_tokens": 1.2867114871168013,
+    "measurement_status": "available"
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "checkpoint": "T1",
+    "friction_subtype": "alignment",
+    "friction_marker_n": 12,
+    "marker_n": 5,
+    "marker_share": 0.4166666666666667
+  },
+  {
+    "checkpoint": "T1",
+    "friction_subtype": "blocker",
+    "friction_marker_n": 12,
+    "marker_n": 2,
+    "marker_share": 0.16666666666666666
+  },
+  {
+    "checkpoint": "T1",
+    "friction_subtype": "handoff",
+    "friction_marker_n": 12,
+    "marker_n": 2,
+    "marker_share": 0.16666666666666666
+  },
+  {
+    "checkpoint": "T1",
+    "friction_subtype": "integration",
+    "friction_marker_n": 12,
+    "marker_n": 2,
+    "marker_share": 0.16666666666666666
+  },
+  {
+    "checkpoint": "T1",
+    "friction_subtype": "rework",
+    "friction_marker_n": 12,
+    "marker_n": 1,
+    "marker_share": 0.08333333333333333
+  },
+  {
+    "checkpoint": "T2",
+    "friction_subtype": "alignment",
+    "friction_marker_n": 54,
+    "marker_n": 19,
+    "marker_share": 0.35185185185185186
+  },
+  {
+    "checkpoint": "T2",
+    "friction_subtype": "blocker",
+    "friction_marker_n": 54,
+    "marker_n": 6,
+    "marker_share": 0.1111111111111111
+  },
+  {
+    "checkpoint": "T2",
+    "friction_subtype": "handoff",
+    "friction_marker_n": 54,
+    "marker_n": 3,
+    "marker_share": 0.05555555555555555
+  },
+  {
+    "checkpoint": "T2",
+    "friction_subtype": "integration",
+    "friction_marker_n": 54,
+    "marker_n": 20,
+    "marker_share": 0.37037037037037035
+  },
+  {
+    "checkpoint": "T2",
+    "friction_subtype": "rework",
+    "friction_marker_n": 54,
+    "marker_n": 6,
+    "marker_share": 0.1111111111111111
+  },
+  {
+    "checkpoint": "T3",
+    "friction_subtype": "alignment",
+    "friction_marker_n": 40,
+    "marker_n": 10,
+    "marker_share": 0.25
+  },
+  {
+    "checkpoint": "T3",
+    "friction_subtype": "blocker",
+    "friction_marker_n": 40,
+    "marker_n": 7,
+    "marker_share": 0.175
+  },
+  {
+    "checkpoint": "T3",
+    "friction_subtype": "handoff",
+    "friction_marker_n": 40,
+    "marker_n": 5,
+    "marker_share": 0.125
+  },
+  {
+    "checkpoint": "T3",
+    "friction_subtype": "integration",
+    "friction_marker_n": 40,
+    "marker_n": 14,
+    "marker_share": 0.35
+  },
+  {
+    "checkpoint": "T3",
+    "friction_subtype": "rework",
+    "friction_marker_n": 40,
+    "marker_n": 4,
+    "marker_share": 0.1
+  }
+]

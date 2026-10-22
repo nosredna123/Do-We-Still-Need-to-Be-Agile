@@ -1,0 +1,15 @@
+cohort,team_id,clean_rework_churn_t3,clean_deferred_churn_t3,prior_clean_path_n,clean_total_churn_t3,baseline_eligible_for_rework_t3,clean_rework_ratio_t3,measurement_status,ratio_status
+2025.2,TEAM_01,262,1451,30,1713,true,0.15294804436660828,baseline_eligible,available
+2025.2,TEAM_02,6519,21550,33,28069,true,0.23224910043108055,baseline_eligible,available
+2025.2,TEAM_03,0,15186,0,15186,false,,baseline_not_observed,baseline_not_observed
+2025.2,TEAM_04,860,11797,47,12657,true,0.06794659081930947,baseline_eligible,available
+2025.2,TEAM_05,0,2482,0,2482,false,,baseline_not_observed,baseline_not_observed
+2025.2,TEAM_07,0,5837,129,5837,true,0.0,baseline_eligible,available
+2025.2,TEAM_08,172,0,32,172,true,1.0,baseline_eligible,available
+2025.2,TEAM_09,15518,11684,161,27202,true,0.5704727593559297,baseline_eligible,available
+2025.2,TEAM_10,825,1013,26,1838,true,0.44885745375408054,baseline_eligible,available
+2026.1,TEAM_01,2513,4033,106,6546,true,0.3838985640085548,baseline_eligible,available
+2026.1,TEAM_02,5278,2275,43,7553,true,0.6987951807228916,baseline_eligible,available
+2026.1,TEAM_03,196,0,65,196,true,1.0,baseline_eligible,available
+2026.1,TEAM_04,863,18606,25,19469,true,0.04432687862756177,baseline_eligible,available
+2026.1,TEAM_05,4302,3103,130,7405,true,0.5809588116137745,baseline_eligible,available

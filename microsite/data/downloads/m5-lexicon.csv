@@ -1,0 +1,6 @@
+lexicon_version,subtype,pattern,language,counting_rule
+m5-friction-lexicon-pt-v1,alignment,coordena[çc][aã]o|comunica[çc][aã]o|alinh|sincron|divis[aã]o de taref|distribui[çc][aã]o de taref|depend[eê]ncia,Portuguese,"regex match count per transcript chunk; chunks are provenance units, not independent observations"
+m5-friction-lexicon-pt-v1,blocker,bloque|imped|trava|gargalo,Portuguese,"regex match count per transcript chunk; chunks are provenance units, not independent observations"
+m5-friction-lexicon-pt-v1,handoff,"repasse|handoff|deleg[aã]|passar.{0,30}para",Portuguese,"regex match count per transcript chunk; chunks are provenance units, not independent observations"
+m5-friction-lexicon-pt-v1,integration,integra[çc][aã]o|merge|conflit|incompatibil|acopl,Portuguese,"regex match count per transcript chunk; chunks are provenance units, not independent observations"
+m5-friction-lexicon-pt-v1,rework,retrabalh|refaz|refazer|revis[aã]o,Portuguese,"regex match count per transcript chunk; chunks are provenance units, not independent observations"

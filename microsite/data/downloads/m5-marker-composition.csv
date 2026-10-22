@@ -1,0 +1,16 @@
+checkpoint,friction_subtype,friction_marker_n,marker_n,marker_share
+T1,alignment,12,5,0.4166666666666667
+T1,blocker,12,2,0.16666666666666666
+T1,handoff,12,2,0.16666666666666666
+T1,integration,12,2,0.16666666666666666
+T1,rework,12,1,0.08333333333333333
+T2,alignment,54,19,0.35185185185185186
+T2,blocker,54,6,0.1111111111111111
+T2,handoff,54,3,0.05555555555555555
+T2,integration,54,20,0.37037037037037035
+T2,rework,54,6,0.1111111111111111
+T3,alignment,40,10,0.25
+T3,blocker,40,7,0.175
+T3,handoff,40,5,0.125
+T3,integration,40,14,0.35
+T3,rework,40,4,0.1

@@ -1,0 +1,542 @@
+[
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 11,
+    "respondent_n": 46,
+    "share": 0.2391304347826087
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Diariamente",
+    "count": 19,
+    "respondent_n": 46,
+    "share": 0.41304347826086957
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Nunca",
+    "count": 1,
+    "respondent_n": 46,
+    "share": 0.021739130434782608
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Raramente",
+    "count": 2,
+    "respondent_n": 46,
+    "share": 0.043478260869565216
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Semanalmente",
+    "count": 13,
+    "respondent_n": 46,
+    "share": 0.2826086956521739
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 12,
+    "respondent_n": 46,
+    "share": 0.2608695652173913
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Diariamente",
+    "count": 11,
+    "respondent_n": 46,
+    "share": 0.2391304347826087
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 46,
+    "share": 0.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Raramente",
+    "count": 7,
+    "respondent_n": 46,
+    "share": 0.15217391304347827
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Semanalmente",
+    "count": 16,
+    "respondent_n": 46,
+    "share": 0.34782608695652173
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 6,
+    "respondent_n": 41,
+    "share": 0.14634146341463414
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Diariamente",
+    "count": 19,
+    "respondent_n": 41,
+    "share": 0.4634146341463415
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 41,
+    "share": 0.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 41,
+    "share": 0.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Semanalmente",
+    "count": 16,
+    "respondent_n": 41,
+    "share": 0.3902439024390244
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 12,
+    "respondent_n": 41,
+    "share": 0.2926829268292683
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Diariamente",
+    "count": 12,
+    "respondent_n": 41,
+    "share": 0.2926829268292683
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Nunca",
+    "count": 1,
+    "respondent_n": 41,
+    "share": 0.024390243902439025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 41,
+    "share": 0.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Semanalmente",
+    "count": 16,
+    "respondent_n": 41,
+    "share": 0.3902439024390244
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 3,
+    "respondent_n": 40,
+    "share": 0.075
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Diariamente",
+    "count": 18,
+    "respondent_n": 40,
+    "share": 0.45
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 40,
+    "share": 0.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Raramente",
+    "count": 1,
+    "respondent_n": 40,
+    "share": 0.025
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Semanalmente",
+    "count": 18,
+    "respondent_n": 40,
+    "share": 0.45
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 10,
+    "respondent_n": 40,
+    "share": 0.25
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Diariamente",
+    "count": 13,
+    "respondent_n": 40,
+    "share": 0.325
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 40,
+    "share": 0.0
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Raramente",
+    "count": 2,
+    "respondent_n": 40,
+    "share": 0.05
+  },
+  {
+    "cohort": "2025.2",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Semanalmente",
+    "count": 15,
+    "respondent_n": 40,
+    "share": 0.375
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 5,
+    "respondent_n": 22,
+    "share": 0.22727272727272727
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Diariamente",
+    "count": 12,
+    "respondent_n": 22,
+    "share": 0.5454545454545454
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Nunca",
+    "count": 1,
+    "respondent_n": 22,
+    "share": 0.045454545454545456
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 22,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "general_frequency",
+    "category": "Semanalmente",
+    "count": 4,
+    "respondent_n": 22,
+    "share": 0.18181818181818182
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 6,
+    "respondent_n": 22,
+    "share": 0.2727272727272727
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Diariamente",
+    "count": 9,
+    "respondent_n": 22,
+    "share": 0.4090909090909091
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Nunca",
+    "count": 1,
+    "respondent_n": 22,
+    "share": 0.045454545454545456
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Raramente",
+    "count": 1,
+    "respondent_n": 22,
+    "share": 0.045454545454545456
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T1",
+    "measure": "software_frequency",
+    "category": "Semanalmente",
+    "count": 5,
+    "respondent_n": 22,
+    "share": 0.22727272727272727
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 4,
+    "respondent_n": 20,
+    "share": 0.2
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Diariamente",
+    "count": 13,
+    "respondent_n": 20,
+    "share": 0.65
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 20,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 20,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "general_frequency",
+    "category": "Semanalmente",
+    "count": 3,
+    "respondent_n": 20,
+    "share": 0.15
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 3,
+    "respondent_n": 20,
+    "share": 0.15
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Diariamente",
+    "count": 10,
+    "respondent_n": 20,
+    "share": 0.5
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 20,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 20,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T2",
+    "measure": "software_frequency",
+    "category": "Semanalmente",
+    "count": 7,
+    "respondent_n": 20,
+    "share": 0.35
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 2,
+    "respondent_n": 18,
+    "share": 0.1111111111111111
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Diariamente",
+    "count": 11,
+    "respondent_n": 18,
+    "share": 0.6111111111111112
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 18,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 18,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "general_frequency",
+    "category": "Semanalmente",
+    "count": 5,
+    "respondent_n": 18,
+    "share": 0.2777777777777778
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Algumas vezes por m\u00eas",
+    "count": 2,
+    "respondent_n": 18,
+    "share": 0.1111111111111111
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Diariamente",
+    "count": 7,
+    "respondent_n": 18,
+    "share": 0.3888888888888889
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Nunca",
+    "count": 0,
+    "respondent_n": 18,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Raramente",
+    "count": 0,
+    "respondent_n": 18,
+    "share": 0.0
+  },
+  {
+    "cohort": "2026.1",
+    "checkpoint": "T3",
+    "measure": "software_frequency",
+    "category": "Semanalmente",
+    "count": 9,
+    "respondent_n": 18,
+    "share": 0.5
+  }
+]

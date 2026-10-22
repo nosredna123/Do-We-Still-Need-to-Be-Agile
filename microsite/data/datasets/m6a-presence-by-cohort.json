@@ -1,0 +1,26 @@
+[
+  {
+    "cohort": "2025.2",
+    "evidence_state": "Artifact observed",
+    "team_semester_n": 9,
+    "team_semester_count": 4
+  },
+  {
+    "cohort": "2025.2",
+    "evidence_state": "No repository artifact observed",
+    "team_semester_n": 9,
+    "team_semester_count": 5
+  },
+  {
+    "cohort": "2026.1",
+    "evidence_state": "Artifact observed",
+    "team_semester_n": 5,
+    "team_semester_count": 5
+  },
+  {
+    "cohort": "2026.1",
+    "evidence_state": "No repository artifact observed",
+    "team_semester_n": 5,
+    "team_semester_count": 0
+  }
+]

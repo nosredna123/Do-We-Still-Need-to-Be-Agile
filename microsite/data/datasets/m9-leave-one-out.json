@@ -1,0 +1,522 @@
+[
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.23369506908606286,
+    "spearman_p_exploratory": 0.4422297181681001
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.3769640977478092,
+    "spearman_p_exploratory": 0.20419343527508535
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_03",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.07844245199144652,
+    "spearman_p_exploratory": 0.7989381537784029
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.21120455478564534,
+    "spearman_p_exploratory": 0.4885255033081787
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_05",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.07844245199144652,
+    "spearman_p_exploratory": 0.7989381537784029
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_07",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.25259435524475987,
+    "spearman_p_exploratory": 0.4050680053889657
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_08",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.09283444198266944,
+    "spearman_p_exploratory": 0.7629232353562988
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_09",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.26789434748890134,
+    "spearman_p_exploratory": 0.3762014890936892
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_10",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.18566888396533887,
+    "spearman_p_exploratory": 0.5436489203589705
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.23654500895296604,
+    "spearman_p_exploratory": 0.4365218302307725
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.168392820707474,
+    "spearman_p_exploratory": 0.5823708341801286
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_03",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.28255744491593093,
+    "spearman_p_exploratory": 0.34959159364859116
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.22799518935225643,
+    "spearman_p_exploratory": 0.45375414331098696
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_05",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.18239615148180513,
+    "spearman_p_exploratory": 0.5508991681606794
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.3073444995431298,
+    "spearman_p_exploratory": 0.30702245468164296
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.4937124337756901,
+    "spearman_p_exploratory": 0.08640571801258629
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_03",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.19415301512944838,
+    "spearman_p_exploratory": 0.52504560105729
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.3073444995431298,
+    "spearman_p_exploratory": 0.30702245468164296
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_05",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.19415301512944838,
+    "spearman_p_exploratory": 0.52504560105729
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_07",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.3514158232371825,
+    "spearman_p_exploratory": 0.239031961009545
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_08",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.2075836369284151,
+    "spearman_p_exploratory": 0.4961809799077197
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_09",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.3864634590332683,
+    "spearman_p_exploratory": 0.19209548667330892
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_10",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.28051842828164203,
+    "spearman_p_exploratory": 0.3532291430639708
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.34099716973523675,
+    "spearman_p_exploratory": 0.25420510110666894
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.25327463388276433,
+    "spearman_p_exploratory": 0.4037610581509281
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_03",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.32441919396219254,
+    "spearman_p_exploratory": 0.27950002920451283
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.29596136993042127,
+    "spearman_p_exploratory": 0.3261907541706853
+  },
+  {
+    "analysis_id": "all_team_semesters",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_churn_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_05",
+    "remaining_sample_n": 13,
+    "spearman_rho": 0.25327463388276433,
+    "spearman_p_exploratory": 0.4037610581509281
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 11,
+    "spearman_rho": 0.013857736867152848,
+    "spearman_p_exploratory": 0.9677435134442886
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.034483578691765326,
+    "spearman_p_exploratory": 0.91982628646316
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 11,
+    "spearman_rho": 0.16205266787072378,
+    "spearman_p_exploratory": 0.6340413598025377
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_07",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.041573210601458535,
+    "spearman_p_exploratory": 0.9034037736603096
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_08",
+    "remaining_sample_n": 11,
+    "spearman_rho": 0.1651445647689541,
+    "spearman_p_exploratory": 0.6274948659508894
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_09",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.013857736867152848,
+    "spearman_p_exploratory": 0.9677435134442886
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_10",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.01609233672282382,
+    "spearman_p_exploratory": 0.9625449867911318
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 11,
+    "spearman_rho": 0.004619245622384282,
+    "spearman_p_exploratory": 0.9892456963916223
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.18520304899511292,
+    "spearman_p_exploratory": 0.5856249759992195
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_03",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.22173798428500235,
+    "spearman_p_exploratory": 0.5122880506273711
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.041573210601458535,
+    "spearman_p_exploratory": 0.9034037736603096
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "pi_file_count_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_05",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.16167359678344986,
+    "spearman_p_exploratory": 0.6348456030037812
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.027650944022224015,
+    "spearman_p_exploratory": 0.9356802025155397
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.0755150718576594,
+    "spearman_p_exploratory": 0.8253497906485028
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 11,
+    "spearman_rho": 0.1336462294407494,
+    "spearman_p_exploratory": 0.6952412193060609
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_07",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.08295283206667202,
+    "spearman_p_exploratory": 0.8084109169606124
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_08",
+    "remaining_sample_n": 11,
+    "spearman_rho": 0.13698772949316693,
+    "spearman_p_exploratory": 0.6879488032535689
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_09",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.05517372590682454,
+    "spearman_p_exploratory": 0.8719991803538497
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2025.2",
+    "omitted_team_id": "TEAM_10",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.05720838777095409,
+    "spearman_p_exploratory": 0.8673142106703108
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_01",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.03678248393788302,
+    "spearman_p_exploratory": 0.9144977097235478
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_02",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.18894811748519744,
+    "spearman_p_exploratory": 0.5779278216328014
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_03",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.22070423513841744,
+    "spearman_p_exploratory": 0.5143071921721074
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_04",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.06451886938518936,
+    "spearman_p_exploratory": 0.8505137906021057
+  },
+  {
+    "analysis_id": "baseline_eligible_only",
+    "predictor": "planning_scope_log1p_t1",
+    "outcome": "clean_rework_ratio_t3",
+    "omitted_cohort": "2026.1",
+    "omitted_team_id": "TEAM_05",
+    "remaining_sample_n": 11,
+    "spearman_rho": -0.18894811748519744,
+    "spearman_p_exploratory": 0.5779278216328014
+  }
+]

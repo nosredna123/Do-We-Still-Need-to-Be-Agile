@@ -1,0 +1,178 @@
+[
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 42.40405962575325,
+    "median_delta_score_t3_minus_t1": -0.03125
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 79.86525006478362,
+    "median_delta_score_t3_minus_t1": -0.25
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "higher_final7_concentration__positive_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 2,
+    "median_final7_share_pct": 77.08533438920963,
+    "median_delta_score_t3_minus_t1": 0.4375
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "higher_final7_concentration__positive_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 3,
+    "median_final7_share_pct": 100.0,
+    "median_delta_score_t3_minus_t1": 0.40625
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 3,
+    "median_final7_share_pct": 10.074643543556968,
+    "median_delta_score_t3_minus_t1": 0.0416666666666669
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 0.0,
+    "median_delta_score_t3_minus_t1": 0.0729166666666669
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "lower_final7_concentration__positive_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 1.606864274570983,
+    "median_delta_score_t3_minus_t1": 0.1666666666666669
+  },
+  {
+    "activity_metric": "clean_source_or_test_changed_lines",
+    "quadrant": "lower_final7_concentration__positive_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 34.99461573513386,
+    "delta_threshold": 0.125,
+    "team_semester_n": 2,
+    "median_final7_share_pct": 27.145319707024157,
+    "median_delta_score_t3_minus_t1": 0.6979166666666667
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 57.89473684210526,
+    "median_delta_score_t3_minus_t1": -0.03125
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "higher_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 54.22885572139303,
+    "median_delta_score_t3_minus_t1": -0.25
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "higher_final7_concentration__positive_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 2,
+    "median_final7_share_pct": 55.63725490196079,
+    "median_delta_score_t3_minus_t1": 0.4375
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "higher_final7_concentration__positive_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 3,
+    "median_final7_share_pct": 100.0,
+    "median_delta_score_t3_minus_t1": 0.3333333333333335
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 3,
+    "median_final7_share_pct": 11.570247933884298,
+    "median_delta_score_t3_minus_t1": 0.0416666666666669
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "lower_final7_concentration__negative_or_stable_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 3.8461538461538463,
+    "median_delta_score_t3_minus_t1": 0.0729166666666669
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "lower_final7_concentration__positive_delta",
+    "planning_scope_tier": "high_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 1,
+    "median_final7_share_pct": 21.428571428571427,
+    "median_delta_score_t3_minus_t1": 0.1666666666666669
+  },
+  {
+    "activity_metric": "commits",
+    "quadrant": "lower_final7_concentration__positive_delta",
+    "planning_scope_tier": "lower_repository_visible_planning",
+    "final7_concentration_cut": "median",
+    "final7_concentration_median_pct": 43.743509865005194,
+    "delta_threshold": 0.125,
+    "team_semester_n": 2,
+    "median_final7_share_pct": 36.111111111111114,
+    "median_delta_score_t3_minus_t1": 0.8020833333333334
+  }
+]

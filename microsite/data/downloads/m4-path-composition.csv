@@ -1,0 +1,7 @@
+checkpoint,file_category,included_in_m4,team_semester_n,file_event_n,unique_file_n,churn_lines,churn_share
+T1,clean_source_or_test,true,6,405,256,21718,0.4290907654008772
+T1,excluded_or_non_measurement,false,7,306,251,28896,0.5709092345991228
+T2,clean_source_or_test,true,9,981,644,47545,0.19614354844698204
+T2,excluded_or_non_measurement,false,9,1919,1750,194854,0.803856451553018
+T3,clean_source_or_test,true,9,1916,1074,136325,0.010096554388340626
+T3,excluded_or_non_measurement,false,9,45514,23832,13365806,0.9899034456116593
