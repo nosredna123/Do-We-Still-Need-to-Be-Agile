@@ -1,0 +1,9 @@
+{
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false,
+    "gradle.autoDetect": "off",
+    "files.readonlyInclude": {
+        "**/data/raw/repos_cache/**": true,
+        "**/data/raw/repos_parent_cache/**": true
+    }
+}

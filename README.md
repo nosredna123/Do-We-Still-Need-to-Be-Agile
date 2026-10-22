@@ -32,6 +32,33 @@ Never commit `.env`, the anonymization salt, raw data, processed text, private N
 
 Versioned methodological decisions live in `pipeline_config.py`. Versioned prompts live in `pipeline_prompts.py`. Neither file may contain credentials, PII, or raw research text.
 
+### Cached repositories in VS Code
+
+Treat `data/raw/repos_cache/` and `data/raw/repos_parent_cache/` as research
+inputs, not development projects. Do not build, upgrade, or edit projects inside
+these directories. Use a separate working copy for development.
+
+The workspace settings in [.vscode/settings.json](.vscode/settings.json) disable
+automatic Java Maven/Gradle imports and Gradle task detection. This prevents
+those importers from treating cached projects as active workspace projects and
+writing build state into them. The settings also mark raw cache files read-only
+in the editor. After changing these settings, run **Developer: Reload Window**.
+If Java projects were already imported, run **Java: Clean Java Language Server
+Workspace** when that command is available.
+
+These are editor safeguards, not filesystem immutability: terminals, pipeline
+commands, and other extensions can still write to the cache. Strict protection
+requires a read-only filesystem mount or a separately managed immutable archive,
+with deliberate write access only when populating the cache.
+
+Some cached repositories are tracked by the outer repository as Git links
+(mode `160000`), rather than ordinary files. A dirty cached working tree can
+therefore appear as one modified cache path in Source Control. Adding the path
+to `.gitignore` does not untrack it or prevent writes. Inspect changes with
+`git -C <cache-directory> status --short` and
+`git -C <cache-directory> diff` before restoring anything; reloading VS Code
+does not undo existing modifications.
+
 ## Pipeline Entry Point
 
 The main entry point is `run_pipeline.py`. The default sequence is:
