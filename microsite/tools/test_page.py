@@ -75,18 +75,27 @@ class PageTests(unittest.TestCase):
                        "not individual teams", "descriptive and exploratory"):
             self.assertIn(phrase, self.content)
 
-    def test_methods_and_honest_unimplemented_state(self) -> None:
+    def test_methods_and_catalog_navigation_state(self) -> None:
         for phrase in ("not zero", "original sample sizes", "not recalculated",
                        "not a defect count", "0-4", "1-5",
-                       "Interactive dataset selection is not implemented yet",
+                       "Catalog navigation requires JavaScript",
                        "Publication approval is pending"):
             self.assertIn(phrase, self.content)
         self.assertTrue(any(t == "dl" for t, _ in self.page.elements))
         for target in ("data/catalog.json", "data/release.json", "dataset-contracts.md"):
             self.assertTrue(any(t == "a" and a.get("href") == target for t, a in self.page.elements))
-        self.assertFalse(any(t in ("script", "iframe", "form", "button", "select") for t, _ in self.page.elements))
-        self.assertFalse(any("hidden" in a or a.get("role") == "tab"
-                             for _, a in self.page.elements))
+        self.assertFalse(any(t in ("iframe", "form") for t, _ in self.page.elements))
+        self.assertFalse(any(a.get("role") == "tab" for _, a in self.page.elements))
+        self.assertEqual([a.get("src") for t, a in self.page.elements if t == "script"], ["assets/app.js"])
+        labels = {a["for"] for t, a in self.page.elements if t == "label"}
+        controls = {a["id"] for t, a in self.page.elements if t in ("input", "select")}
+        self.assertEqual(labels, controls)
+        self.assertTrue(any(t == "script" and "defer" in a for t, a in self.page.elements))
+        self.assertTrue(any(t == "fieldset" and a.get("id") == "dataset-navigation" and
+                            "disabled" in a for t, a in self.page.elements))
+        self.assertTrue(any(t == "noscript" for t, _ in self.page.elements))
+        self.assertTrue(any(a.get("id") == "metadata-error" and a.get("role") == "alert"
+                            for _, a in self.page.elements))
 
     def test_no_external_assets_or_unapproved_features(self) -> None:
         for tag, attrs in self.page.elements:

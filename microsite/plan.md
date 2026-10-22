@@ -691,6 +691,83 @@ checks are scoped to this shell and temporary control/table examples, not a
 full application accessibility certification. T012 data loading, later table
 interactions, final human review, and host validation remain pending.
 
+### T012 - Catalog navigation, definitions, and metadata states
+
+**Completed 2026-10-22.** The local [application script](assets/app.js), loaded
+with `defer`, fetches only the public catalog and release manifest. It validates
+supported versions/policies, dataset schemas and local paths, RQ/metric/source
+references, and matching public inventories/counts before enabling controls.
+This is structural metadata validation, not runtime verification of file hashes
+or a new publication authorization.
+
+Researchers can select RQ, metric, evidence source, and any of the 49 dataset
+descriptors. Downstream choices remain compatible; changing RQ resets metric
+and source, and changing metric resets source. RQ cards select the corresponding
+catalog scope and focus its control; native guide links and RQ fragments remain
+available, including initial fragments and later hash changes. No router,
+general query builder, or full filter-state URL persistence was introduced.
+
+The selected dataset shows its definition, grain/key, denominator, coverage,
+missingness/status semantics, fixed population, limitations, and expandable
+column definitions, units, nullability, and category labels/order. Methods adds
+literal case-insensitive search over all dataset definitions and the two embedded
+codebooks, plus expandable frozen policies/thresholds. Snapshot identity, schema,
+counts, coverage guidance, and hash scope come from the manifest. Metadata is
+rendered via text nodes, never trusted HTML.
+
+Loading disables navigation/search and announces progress. HTTP/JSON failures,
+unsupported/inconsistent metadata, and the 15-second request timeout produce
+an explicit logged alert, clear derived content, keep controls disabled, and
+offer retry. Empty definition search is a separate, non-error state. Static
+guides and local metadata/documentation links remain with a no-JavaScript
+explanation. No excerpt feature/payload/request or fabricated observations
+were added. The [README](README.md) documents behavior and both test commands.
+
+Verification before completion:
+
+- Nine new [JavaScript tests](tools/test_app.cjs) use only Node's built-in
+  runner and public fixtures. They failed before the implementation existed;
+  all nine now pass, along with all 52 Python authoring/static tests locally
+  and in an isolated copied site. No package manifest, dependency installation,
+  bundling, or server-side JavaScript requirement was introduced.
+- Testing caught an overly restrictive draft assumption that all dataset
+  metrics must belong to its primary RQ. Five existing supporting datasets
+  correctly span metric families from other RQs. The validator now checks
+  each declared metric against the complete approved metric vocabulary, and
+  navigation preserves those actual mappings. RQ2/M6 planning/activity is
+  explicitly regression-tested.
+- Browser DOM checks rendered all 49 selected descriptors, including field
+  definitions/units. They verified RQ scope changes, incompatible-choice reset,
+  M5 corpus coverage, M8 ineligibility statuses, snapshot identity, RQ fragment
+  initialization/hash changes, metric/field/codebook search, and no-match search.
+- Browser fault injection verified loading/busy/disabled state, explicit 404,
+  malformed JSON and unsupported snapshot errors, retry recovery, and timeout.
+  HTML/script-like metadata stayed literal text without creating elements.
+  Unit tests also reject invalid local paths, columns, keys, counts and hashes,
+  and confirm requests are limited to the two metadata files.
+- An independently copied site passes all 61 tests and HTTP checks at root and
+  `/review/explorer/`. Nested browser navigation loads only local CSS, JS,
+  catalog, and manifest under that prefix; no observation/excerpt or external
+  requests occur. All data/catalog/manifest bytes remain unchanged.
+- New controls remain at least 44 px high without horizontal page overflow at
+  320/360/1280 px; 200% text sizing at narrow width also fits. JavaScript syntax,
+  updated HTML semantic/label checks, Pylance diagnostics for the Python test,
+  release verification, and whitespace checks pass.
+
+The hidden shared browser tab stalled pointer stability and animation-frame
+polling; browser event/state checks used dispatched DOM events and timer
+polling instead. An attempted interception using the tool's route-fetch helper
+also stalled; fulfilling an already-read public fixture verified inert rendering
+without that helper. These verification-tool issues do not imply full keyboard/
+pointer accessibility sign-off; that remains part of later application checks.
+VS Code still cannot discover the standalone Python tests; explicit
+standard-library discovery executes all 52, and Node executes the nine JS tests.
+
+Temporary fixtures, copied previews, and servers were removed/stopped; no
+bytecode or private artifacts were installed. Observation loading, row filters,
+sorting/counts, comparisons, figures, and exports remain T013 onward, explicitly
+marked pending in the UI. Human release and actual-host gates remain unchecked.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -848,7 +925,7 @@ resulting directory cannot depend on them at runtime.
 
 - [x] T010 [US1] [Plan:3.1] Build semantic overview, explore, and methods sections in `microsite/index.html`, with RQ cards and a visible evidence-grain explanation. Verified semantic structure, RQ/metric scope, local links, keyboard skip-link focus, browser fragment navigation, isolated HTTP root/nested hosting, and all 48 tests; see Section 3.
 - [x] T011 [US1] [Plan:3.1] Implement the responsive layout, system-font styling, accessible controls, focus states, and readable tables in `microsite/assets/styles.css`. Verified 52 tests, measured contrast, browser widths 320-1280 px, 200% text, keyboard focus and local table scrolling, and standalone HTTP CSS delivery; see Section 3.
-- [ ] T012 [US1] [Plan:3.1] Load the local catalog and implement RQ/metric navigation, definitions, snapshot details, and explicit loading/error states in `microsite/assets/app.js`.
+- [x] T012 [US1] [Plan:3.1] Load the local catalog and implement RQ/metric navigation, definitions, snapshot details, and explicit loading/error states in `microsite/assets/app.js`. Verified all 49 descriptors, cross-RQ metrics, definition search, snapshot metadata, loading/errors/retry, 52 Python plus nine JavaScript tests, and isolated root/nested delivery; see Section 3.
 
 **Plan 3.2:** Add compatible filtering, sorting, and comparisons.
 **Requirements:** REQ-002, REQ-004, REQ-005.

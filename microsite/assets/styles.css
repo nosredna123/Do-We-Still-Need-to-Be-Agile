@@ -170,6 +170,31 @@ article + article {
   border-block-start: 1px solid var(--border);
 }
 
+.navigation-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+details {
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+}
+
+summary {
+  min-block-size: 2.75rem;
+  padding-block: 0.5rem;
+  color: var(--link);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#metadata-error:not(:empty) {
+  padding: 1rem;
+  border-inline-start: 4px solid var(--focus);
+}
+
 label,
 legend {
   font-weight: 600;
@@ -270,7 +295,8 @@ th button {
 }
 
 @media (max-width: 52rem) {
-  .rq-cards {
+  .rq-cards,
+  .navigation-controls {
     grid-template-columns: minmax(0, 1fr);
   }
 }

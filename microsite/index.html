@@ -6,6 +6,7 @@
   <meta name="description" content="Explore the approved research data accompanying the submitted paper, with evidence grains, measures, and interpretation limits.">
   <title>Research Data Explorer</title>
   <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/app.js" defer></script>
 </head>
 <body>
   <a href="#main-content">Skip to main content</a>
@@ -74,10 +75,37 @@
 
     <section id="explore" aria-labelledby="explore-heading">
       <h2 id="explore-heading">Explore</h2>
-      <p id="explorer-status">Interactive dataset selection is not implemented yet.
-        The research-question guide below describes the available evidence.
+      <p id="explorer-status" role="status" aria-live="polite">Catalog navigation requires JavaScript.
+        Loading local metadata when enabled.</p>
+      <p id="metadata-error" role="alert"></p>
+      <button id="metadata-retry" type="button" hidden>Retry metadata loading</button>
+      <noscript><p>JavaScript is disabled. Use the research-question guides and local metadata
+        links below; interactive catalog navigation and definition search require JavaScript.</p></noscript>
+      <p>The research-question guide below describes the available evidence.
         The <a href="data/catalog.json">public dataset catalog (JSON)</a> provides
         the full field definitions and relative paths to approved JSON and CSV files.</p>
+      <fieldset id="dataset-navigation" disabled aria-describedby="explorer-status">
+        <legend>Choose evidence to inspect</legend>
+        <div class="navigation-controls">
+          <div>
+            <label for="rq-select">Research question</label>
+            <select id="rq-select"><option value="">All research questions</option></select>
+          </div>
+          <div>
+            <label for="metric-select">Metric</label>
+            <select id="metric-select"><option value="">All metrics</option></select>
+          </div>
+          <div>
+            <label for="source-select">Evidence source</label>
+            <select id="source-select"><option value="">All evidence sources</option></select>
+          </div>
+          <div>
+            <label for="dataset-select">Dataset</label>
+            <select id="dataset-select"></select>
+          </div>
+        </div>
+      </fieldset>
+      <div id="dataset-details" role="region" aria-label="Selected dataset definitions"></div>
 
       <article id="rq1" aria-labelledby="rq1-heading">
         <h3 id="rq1-heading">RQ1: Self-report and coded perceptions</h3>
@@ -130,6 +158,16 @@
       <h2 id="methods-heading">Measures and methods</h2>
       <p>Read the selected dataset's units, denominator, coverage, and eligibility
         before comparing values. The catalog contains the complete dataset-specific definitions.</p>
+      <h3>Find a definition</h3>
+      <label for="definition-search">Search dataset and coding definitions</label>
+      <input id="definition-search" type="search" disabled
+        aria-describedby="definition-status" placeholder="Try a field name, unit, or metric">
+      <p id="definition-status" role="status" aria-live="polite">Definitions require the local catalog.</p>
+      <div id="definition-results"></div>
+      <details>
+        <summary>Frozen scientific policies and thresholds</summary>
+        <div id="method-policies"></div>
+      </details>
       <h3>Scales, eligibility, and interpretation</h3>
       <dl>
         <dt>Perception scales</dt>
@@ -149,6 +187,7 @@
           precision. Empty CSV cells represent null values, not numeric zero.</dd>
       </dl>
       <h3>Snapshot and provenance</h3>
+      <div id="snapshot-details" role="region" aria-label="Snapshot details"></div>
       <p>The <a href="data/release.json">public release manifest (JSON)</a> provides the
         snapshot identifier, schema version, artifact hashes, row counts, and coverage.
         These describe a frozen data snapshot, not proof of anonymity or publication approval.

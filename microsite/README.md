@@ -10,7 +10,9 @@ and local JSON/CSV, contained entirely in this directory.
 implemented, along with the [public data release manifest](data/release.json).
 The [page shell](index.html) provides overview, research-question guides, and
 methods with native in-page navigation and responsive local styling.
-Interactive dataset loading is not implemented, and whole-directory/actual-host approval remains pending.
+Catalog-based RQ/metric/source navigation, definitions, and snapshot details
+are implemented. Observation tables and filters are not implemented, and
+whole-directory/actual-host approval remains pending.
 This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
@@ -25,13 +27,62 @@ the main content. The overview explains survey, team-semester, global transcript
 and fixed-estimate grains before the research-question guides.
 
 This is a styled development shell, not an operational table explorer.
-There are no fake controls or loading indicators: the page states that interactive
-selection is not implemented. Local catalog, release-manifest, and documentation
-links work now. T011 provides layout/focus styling; T012 adds catalog loading and
+Controls now select dataset metadata, not observation rows; the page explicitly
+states that observation tables, filters, figures, and export controls are pending.
+Local catalog, release-manifest, and documentation links work.
+T011 provides layout/focus styling; T012 provides catalog loading and
 dataset navigation; filters, charts, and export actions remain later tasks.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
 the working shell as whole-directory or host approval.
+
+## Catalog navigation and definitions (T012)
+
+The local [application script](assets/app.js) loads only `data/catalog.json`
+and `data/release.json`. It validates the supported schema, no-excerpt policy,
+RQ/metric/source references, local paths, field definitions, and agreement of
+the two public inventories/counts before enabling navigation. The validation
+checks metadata consistency, not artifact bytes or publication permission;
+use the release-authoring `--check` command for actual file-hash verification.
+
+Choose a research question, metric, evidence source, and dataset. Choices are
+restricted by the catalog's actual relationships; changing the RQ resets metric
+and source, and changing metric resets source. Cross-RQ supporting datasets
+retain all their catalog metric tags rather than being forced into one metric.
+RQ cards select the appropriate catalog scope and move to Explore. Native
+RQ guide links and `#rq1`/`#rq2`/`#rq3` fragments remain useful without a router;
+full dataset/filter URL persistence is not implemented.
+
+The selected descriptor shows grain, composite keys, denominator, coverage,
+null/status meaning, fixed population, limitations, and expandable column
+definitions/units. Measures and methods includes literal, case-insensitive
+search over all dataset definitions (including RQ/metric tags, field names,
+and units), the embedded weekly/complexity codebooks, and expandable frozen
+policies. An unmatched search is explicitly empty, not a metadata-load failure.
+Snapshot details come from the release manifest instead of a duplicated
+hard-coded identifier. All metadata is inserted as text, never trusted HTML.
+
+While metadata is loading, controls are disabled and the status is explicit.
+HTTP errors, invalid JSON, unsupported/inconsistent metadata, and requests
+exceeding 15 seconds display an alert, clear derived content, log the error,
+and offer retry. No observation rows are synthesized or requested.
+Without JavaScript the static RQ guides and local documentation links remain
+available, with a visible explanation that interactive catalog features need
+JavaScript. The no-excerpt decision remains enforced; there is no excerpt
+descriptor, view, request, or hidden payload.
+
+Run all authoring/static tests with the Python command below, and JavaScript
+tests with Node.js 18+ (authoring only, not required on the server):
+
+```sh
+node --check assets/app.js
+node --test tools/test_app.cjs
+```
+
+There are no npm packages, package manifest, installation, bundling, or build
+step. Nine JavaScript tests use only Node's built-in runner and the public files:
+metadata/schema errors, cross-RQ navigation, definition matching, HTTP/JSON
+failure, request scope, and abort timeout.
 
 ## Responsive styling (T011)
 
