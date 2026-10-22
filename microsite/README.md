@@ -143,9 +143,85 @@ that public copies or caches disappear.
 ## Remaining operational documentation
 
 The later deployment task will add the provider-neutral copy-and-serve procedure,
-preview instructions, and refresh commands once the application and snapshot
-preparation utility exist. No runnable commands or deployment URL are claimed
-here yet. A refresh must verify input fingerprints, obtain renewed review for
-changed fields/values/vocabularies or identifier policy, export only approved
-rows, and repeat whole-directory and actual-host checks. Changed hashes must
-never silently inherit an earlier approval.
+preview instructions, and release refresh procedure once the application exists.
+No deployment URL is claimed here yet. A refresh must verify input fingerprints,
+obtain renewed review for changed fields/values/vocabularies or identifier policy,
+export only approved rows, and repeat whole-directory and actual-host checks.
+Changed hashes must never silently inherit an earlier approval.
+
+## Snapshot authoring (T006)
+
+The preparation utility is implemented; no catalog or public snapshot has been
+released yet. Authoring requires Python 3.10+ with only its standard library.
+Python is **not** required to serve the resulting static files.
+The tool and its [projection definitions](tools/snapshot_contracts.py) are local
+to this directory and import nothing from the research pipeline.
+
+From this directory, set the variables below to explicitly selected local
+inputs, then validate without writing:
+
+```sh
+python3 -B tools/prepare_snapshot.py \
+  --source-root "$SOURCE_ROOT" \
+  --approval "$PUBLICATION_APPROVAL" \
+  --registry "$IDENTIFIER_REGISTRY" \
+  --excerpt-decision "$EXCERPT_DECISION" \
+  --check
+```
+
+- `SOURCE_ROOT` is the selected research snapshot root containing its indexed
+  metric and figure inputs, not a repository inferred from the current directory.
+- The other three inputs are the private T003 publication record, private
+  cohort/team registry, and private T004 omission decision. All must remain
+  outside this directory and the public output. No example private locations
+  or reviewer identities should be added here.
+- The tool supports only the currently pinned contract/index and approved
+  no-excerpt decision. It also pins the eight selected figure/support inputs
+  absent from the results index as one supplementary set. Hash, schema, row
+  count, key, alias, coverage, or required join failures block preparation.
+  Changed inputs require reconciliation and renewed review, not a bypass flag.
+
+After successful validation, prepare a candidate in a **new** output directory:
+
+```sh
+python3 -B tools/prepare_snapshot.py \
+  --source-root "$SOURCE_ROOT" \
+  --approval "$PUBLICATION_APPROVAL" \
+  --registry "$IDENTIFIER_REGISTRY" \
+  --excerpt-decision "$EXCERPT_DECISION" \
+  --output "$PUBLIC_DATA_OUTPUT" \
+  --private-lineage "$PRIVATE_LINEAGE_OUTPUT"
+```
+
+Both output paths must be new, with existing parent directories. Symlink paths
+and overwrites are rejected. `PUBLIC_DATA_OUTPUT` is a data directory, not the
+site root. It receives `datasets/<dataset-id>.json` and
+`downloads/<dataset-id>.csv`: 49 matched dataset pairs in the current snapshot.
+Two `definitions/<definition-id>.json` files hold reviewed definition-only rows
+for later catalog assembly, not duplicate data-browser tabs. Catalog and release
+metadata are separate tasks.
+
+`PRIVATE_LINEAGE_OUTPUT` must be outside this directory and the public output.
+It records source fingerprints and exact original ratio cells before eligibility
+masking, with private file permissions. Never copy it into a release.
+Serialization and scientific checks run before public files are installed;
+validation failures are logged explicitly and exit nonzero, without a partial
+public snapshot. Existing releases are never modified in place.
+
+JSON preserves typed scalar values; CSV uses the same rows/columns, lowercase
+`true`/`false`, standard quoting, and empty cells for nulls. M8-ineligible or
+zero-denominator ratios are null with explicit `ratio_status`; exact eligible
+values remain unchanged. Text cells that could act as spreadsheet formulas are
+rejected rather than silently altered. Any future need to export such text
+requires a reviewed safety policy. No raw JSON records, quotes, or hidden source
+columns are copied.
+
+Run the synthetic standard-library tests without generating bytecode in this
+publishable directory:
+
+```sh
+python3 -B -m unittest discover -s tools -p 'test_prepare_snapshot.py'
+```
+
+Preparation and successful tests do not replace whole-directory human release
+approval or verification on the actual anonymous host.

@@ -384,6 +384,52 @@ T024 must still supply executable preview/copy/refresh instructions after the
 application exists; T023/T025/T026 retain whole-directory review, actual-host
 verification, and the verified public URL record.
 
+### T006 - Deterministic snapshot preparation
+
+**Completed 2026-10-22.** The standard-library-only
+[preparation utility](tools/prepare_snapshot.py) and its explicit
+[projection definitions](tools/snapshot_contracts.py) implement all 58 selected
+source dispositions. Source root, human publication approval, cohort/team
+registry, and no-excerpt decision are explicit authoring inputs. Nothing is
+imported from the parent research pipeline; private inputs and lineage remain
+outside the publishable directory. Usage and spreadsheet-safety policy are
+documented in the [README](README.md).
+
+The pinned results index covers 50 of these inputs. Eight already-selected
+figure/support CSVs are outside that index; they now have a supplementary
+source-set fingerprint
+`e721a33801a1e01be8d7cdd05aa2f7bdfd95bfb5d03ef856e7e8c34264a7d5a0`.
+This hashes sorted `basename + NUL + file_sha256 + LF` records for the eight
+explicitly listed supplemental inputs. It closes a preparation-validation gap,
+not a new dataset approval. Indexed and supplemental byte changes both block
+preparation pending reconciliation/review.
+
+Verification before completion:
+
+- All 17 synthetic [unit tests](tools/test_prepare_snapshot.py) pass, including
+  projection agreement with the reviewed contract, strict scalar/null parsing,
+  unique composite keys, alias failures, approval rejection, definition
+  deduplication, spreadsheet safety, and no-write-on-validation-failure.
+- An isolated copy of the directory, supplied only explicit external inputs,
+  validated all 58 sources and prepared 49 dataset pairs (1,674 rows) plus two
+  definition-only JSON sets for later catalog assembly. Those definitions are
+  not extra data-browser tabs.
+- Two preparations produced 100 byte-identical public files. JSON/CSV column,
+  row, value, boolean, and null parity was checked, along with M6b's 9 measured
+  and 5 unmeasured cases, 12 eligible M8 ratios, two baseline-masked ratios,
+  exact private pre-masking cells, and retained fixed T3 transcript context.
+- Mutated index, indexed CSV, supplemental CSV, and contract; missing required
+  input; invalid private output placement; and attempted overwrite all failed
+  explicitly without installing a public snapshot. Symlink paths are rejected.
+- Pylance syntax/diagnostic checks and whitespace validation pass. No dependency
+  was installed, research input changed, or private record copied into this
+  directory.
+
+Candidate exports existed only in automatically removed verification directories.
+No `data/` directory, catalog, or release manifest has been installed here:
+T007-T009 remain pending. Whole-directory and actual-host approval also remain
+separate release gates.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -525,7 +571,7 @@ Unresolved privacy questions block the affected dataset, not an implicit release
 **Plan 2.1:** Export approved data and public metadata.
 **Requirements:** REQ-001, REQ-004, REQ-005, REQ-007, REQ-008, REQ-009.
 
-- [ ] T006 [Plan:2.1] Implement `microsite/tools/prepare_snapshot.py` with explicit source/approval inputs, schema/key validation, deterministic JSON/CSV output, and explicit rejection of unapproved fields or broken required contracts. Never copy source files wholesale.
+- [x] T006 [Plan:2.1] Implement `microsite/tools/prepare_snapshot.py` with explicit source/approval inputs, schema/key validation, deterministic JSON/CSV output, and explicit rejection of unapproved fields or broken required contracts. Never copy source files wholesale. Verified 17 unit tests, all 58 source dispositions, isolated deterministic exports, JSON/CSV parity, and fail-closed rejection paths; see Section 3.
 - [ ] T007 [Plan:2.1] Produce `microsite/data/catalog.json` with English labels, source-grain definitions, valid filters, approved relationships, missingness states, figure mappings, and interpretation notes. Use neutral source labels rather than identifying URLs.
 - [ ] T008 [Plan:2.1] Write approved rows to `microsite/data/datasets/<dataset-id>.json` and matching `microsite/data/downloads/<dataset-id>.csv`; preserve scientific values and explicit unavailable/ineligible states.
 - [ ] T009 [Plan:2.1] Write `microsite/data/release.json` with a neutral snapshot identifier, schema version, public artifact hashes, row counts, and coverage. Retain confidential source lineage only outside the directory.
