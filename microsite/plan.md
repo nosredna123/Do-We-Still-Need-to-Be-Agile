@@ -1295,6 +1295,55 @@ T020 and subsequent acceptance/accessibility/release tasks remain pending.
 All 11 publication gates are still unchecked; no publication approval, excerpt
 payload, backend, dependency or statistical estimator was added.
 
+### T020 - Consolidated dataset selection and reuse guidance
+
+**Completed 2026-10-22.** The [entry page](index.html#reuse-guide) and
+[researcher quick start](README.md#researcher-quick-start-t020) now provide
+the same six-step workflow: choose evidence at its documented grain, check
+units/denominators, record snapshot identity, choose full versus displayed-row
+scope, import without changing values, and preserve interpretation limits.
+Overview and download-region links make the guide discoverable; native
+metadata/definition links remain usable without the interactive application.
+The snapshot identifier is read from existing provenance/manifest output,
+not duplicated as a hardcoded identifier in the guide.
+
+Guidance covers composite team-semester identity, navigation versus row
+selection, OR/AND and reset behavior, fixed original populations, separate
+multi-source panels, paired CSV/scope metadata, empty selections, UTF-8/quoted
+CSV, explicit import types, precision, null/zero/false distinctions,
+spreadsheet auto-conversion and reject-not-alter safety policy. Scientific
+caveats preserve descriptive scope, SD/CI distinctions, ratio eligibility,
+zero handling, transcript coverage, evaluator/structural distinctions,
+artifact-absence limits and the no-quotation/privacy boundary. Snapshot IDs
+and artifact hashes are explicitly not licensing or release approvals.
+
+Verification before completion:
+
+- Both new [page guidance tests](tools/test_page.py) failed before implementation;
+  all **10 page tests and 4 stylesheet tests pass**, with no failures/skips.
+  Existing three-view landmarks, local links, ARIA targets and no-excerpt
+  constraints remain intact. No application logic, data, vendor or dependencies
+  changed. The only styling addition applies the existing readable text-width
+  limit to the ordered guide.
+- Browser checks from an independent copied site show all six steps at
+  1280/360/320 px and enlarged text, without whole-page horizontal overflow.
+  Every guide fragment resolves; referenced README/catalog/manifest/contracts
+  return HTTP 200 at a nested prefix. With all three application/vendor scripts
+  blocked, the static guide, native links and six steps still render while
+  interactive navigation remains disabled; no live snapshot is fabricated.
+- Local README/plan links and fragments resolve inside the portable directory.
+  All 11 publication checklist gates remain unchecked. A preview server was
+  stopped and its temporary copy cleaned after verification.
+
+The editor test-discovery tool found no configured tests, so verification used
+the repository's standard unittest runner. The restricted integrated browser
+cannot create a separate no-JavaScript context or use its request-context
+cookie API; existing-page geometry, same-origin fetches and script-blocking
+checks provided the relevant evidence instead. These tooling limitations are
+not claimed as real keyboard/pointer or native file-save UX success.
+T021-T026 remain pending; no final whole-directory or actual-host sign-off
+is implied by this documentation task.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1477,7 +1526,7 @@ is measured, what is missing, and which comparisons are valid.
 **Requirements:** REQ-005, REQ-007, REQ-008, REQ-009.
 
 - [x] T019 [US4] [Plan:4.2] Add full-dataset links and filtered CSV export in `microsite/assets/app.js`, preserving public column definitions, filter scope, exact numeric values, and unambiguous missingness.
-- [ ] T020 [US4] [Plan:4.2] Explain dataset selection, snapshot identity, units, download scope, spreadsheet handling, and scientific caveats in `microsite/index.html` and `microsite/README.md`.
+- [x] T020 [US4] [Plan:4.2] Explain dataset selection, snapshot identity, units, download scope, spreadsheet handling, and scientific caveats in `microsite/index.html` and `microsite/README.md`.
 
 **Exit:** Paper figures are inspectable without becoming a new statistical tool;
 downloads faithfully represent the approved snapshot and the displayed filters.

@@ -74,6 +74,8 @@
       </dl>
       <p><strong>Missing is not zero.</strong> Unavailable measurement, ineligible
         observation, an empty selection, and a failed load are different states.</p>
+      <p>New to these data? Follow the <a href="#reuse-guide">data selection and reuse guide</a>
+        before comparing or downloading observations.</p>
     </section>
 
     <section id="explore" aria-labelledby="explore-heading">
@@ -133,6 +135,7 @@
 
       <div role="region" aria-labelledby="downloads-heading">
         <h3 id="downloads-heading">Download selected dataset</h3>
+        <p>For a complete workflow, read the <a href="#reuse-guide">data selection and reuse guide</a>.</p>
         <p>Full links contain all original dataset rows, regardless of filters or sort.
           Displayed-row CSV contains exactly the observation table selection and order,
           not chart legend visibility or another panel. Keep its matching scope and
@@ -223,6 +226,76 @@
       <h2 id="methods-heading">Measures and methods</h2>
       <p>Read the selected dataset's units, denominator, coverage, and eligibility
         before comparing values. The catalog contains the complete dataset-specific definitions.</p>
+      <article id="reuse-guide" aria-labelledby="reuse-heading">
+        <h3 id="reuse-heading">Data selection and reuse guide</h3>
+        <ol>
+          <li><strong>Choose the evidence.</strong> In <a href="#explore">Explore</a>,
+            narrow the research question, metric and evidence source, then choose a dataset.
+            Read its definition, grain, keys, coverage and limitations before filtering.
+            Team-semester identity is cohort plus team; repeated team labels are not
+            the same case. These navigation choices choose datasets, not observation
+            rows. Survey summaries and the global transcript corpus do not
+            support team attribution. Only the dataset's permitted filters are available.
+            None selected means all; selected values within a group use OR and groups
+            use AND. Changing datasets resets incompatible selections.</li>
+          <li><strong>Check units and denominators.</strong> Read column definitions
+            beside the table or use definition search below. Counts, changed lines,
+            score points, fractions, percentages and markers per 1,000 tokens are
+            different units. A fraction from 0 to 1 is not a percentage from 0 to 100;
+            score points are not percentage points. Preserve original Ns and
+            denominators; the visible row count is not a new participant sample size.
+            Null/Unavailable, observed zero, false, an empty filter result and a load
+            error have different meanings. Consult measurement and ratio status fields.
+            Use the visible retry control after a load error; do not treat it as
+            absent evidence.</li>
+          <li><strong>Record the snapshot.</strong> Use
+            <a href="#snapshot-details">Snapshot and provenance</a> and the
+            <a href="data/release.json">release manifest</a> for the snapshot ID,
+            schema version, coverage and original-file hashes. Keep the dataset ID,
+            downloaded files and matching scope metadata together; do not mix snapshots.
+            The manifest hashes original public data artifacts, not generated filtered
+            CSVs or the entire site. A snapshot identifier is not a license or proof
+            of publication or anonymity approval. The development preview remains
+            subject to the publication gates.</li>
+          <li><strong>Choose the download scope.</strong> Full CSV and typed JSON
+            links always contain all original rows of the selected dataset.
+            Displayed-row CSV follows only the observation table's current filters and
+            sort; save its matching export scope and column-definitions JSON too.
+            Empty selections yield headers only and zero selected rows in metadata.
+            Chart zoom and legend visibility do not filter exports. In a multi-source
+            figure, only the selected exact source is filtered/exported; the other
+            panel is not joined or included. Reset row filters and sort restores all
+            source rows; Reset figure view changes the view, not the row selection.</li>
+          <li><strong>Import without changing values.</strong> Use a CSV-aware import
+            tool with UTF-8 encoding, comma delimiter and double-quote text qualifier;
+            quoted fields can contain commas or newlines. Assign text types to cohort,
+            team and category identifiers, and numeric/boolean types according to the
+            companion definitions. Treat empty CSV cells as null, never zero, false
+            or a value to fill forward. Preserve original IDs and status columns.
+            Do not open-and-resave through automatic spreadsheet conversion: it can
+            change identifiers or round numbers. Quoting is not a safety guarantee;
+            formula-leading text is rejected rather than altered. Keep original files
+            unchanged; use typed JSON if the import tool cannot preserve the types
+            and numeric precision. JSON is structured data, not spreadsheet cell text.</li>
+          <li><strong>Preserve interpretation limits.</strong> These observations and
+            associations are descriptive and exploratory, not causal estimates or
+            team rankings. Filters select existing rows; pooled estimates, thresholds,
+            median guides and original Ns stay fixed. SD bars are not confidence intervals.
+            An absent repository artifact does not prove no planning, and rework is
+            not a defect count. Ineligible ratios remain unavailable even when a
+            magnitude exists; logarithmic charts omit zero magnitudes without changing
+            their source-table values. Do not infer individual or team transcript
+            observations, unmeasured-cohort evidence, or new subset correlations.
+            The transcript corpus covers 2025.2 only, not 2026.1. Evaluator score
+            points are not repository structural complexity. No verbatim quotations
+            are released here.
+            Preserve privacy boundaries and do not attempt to re-identify participants.</li>
+        </ol>
+        <p>The <a href="data/catalog.json">public catalog</a> and
+          <a href="dataset-contracts.md">dataset contracts</a> give the authoritative
+          dataset-specific definitions. The <a href="README.md">researcher quick start
+          and technical documentation</a> provide a reusable checklist for downloaded files.</p>
+      </article>
       <h3>Find a definition</h3>
       <label for="definition-search">Search dataset and coding definitions</label>
       <input id="definition-search" type="search" disabled

@@ -140,6 +140,36 @@ class PageTests(unittest.TestCase):
                        "export-retry", "filtered-downloads"):
             self.assertTrue(any(a.get("id") == target for _, a in self.page.elements))
 
+    def test_reuse_guide_covers_the_complete_researcher_workflow_without_javascript(self) -> None:
+        self.assertTrue(any(t == "article" and a.get("id") == "reuse-guide"
+                            and a.get("aria-labelledby") == "reuse-heading" for t, a in self.page.elements))
+        self.assertTrue(any(t == "a" and a.get("href") == "#reuse-guide" for t, a in self.page.elements))
+        guide = PageParser()
+        guide.feed(self.source.split('<article id="reuse-guide"', 1)[1].split("</article>", 1)[0])
+        content = " ".join(" ".join(guide.words).split())
+        for phrase in ("Choose the evidence", "Check units and denominators",
+                       "Record the snapshot", "Choose the download scope",
+                       "Import without changing values", "Preserve interpretation limits",
+                       "percentage points", "cohort plus team", "not a license",
+                       "SD bars are not confidence intervals", "Do not infer individual",
+                       "do not mix snapshots", "not observation rows", "2025.2 only, not 2026.1",
+                       "No verbatim quotations", "visible retry control"):
+            self.assertIn(phrase, content)
+        self.assertTrue(any(t == "a" and a.get("href") == "#snapshot-details"
+                            for t, a in self.page.elements))
+        self.assertNotIn("research-data-001", self.source)
+
+    def test_readme_reuse_guide_retains_scope_identity_and_import_instructions(self) -> None:
+        readme = (self.site / "README.md").read_text(encoding="utf-8").split("## Page shell", 1)[0]
+        for phrase in ("Researcher quick start (T020)", "Choose the evidence",
+                       "Check units and denominators", "Record the snapshot",
+                       "Choose the download scope", "Import without changing values",
+                       "Preserve interpretation limits", "UTF-8", "percentage points",
+                       "not a license", "do not mix snapshots", "SD bars are not confidence intervals"):
+            self.assertIn(phrase, readme)
+        for target in ("index.html#reuse-guide", "index.html#snapshot-details"):
+            self.assertIn(f"]({target})", readme)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -78,6 +78,7 @@ h3 {
 
 p,
 dl,
+article > ol,
 article > ul,
 section > ul {
   max-inline-size: 75ch;

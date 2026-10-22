@@ -16,12 +16,92 @@ selection are implemented. All seven selected paper figures now render from
 approved snapshots, with exact source tables and synchronized permitted
 row selection. Full CSV/JSON links and displayed-row CSV with matching scope
 metadata are implemented. Whole-directory/actual-host approval remains pending.
+The consolidated researcher guide covers dataset choice, snapshot recording,
+units, download scope, typed import and scientific interpretation limits.
 This is not a ready-to-publish site.
 T016 has selected and bundled one local chart dependency after a fidelity/size
 check; T017 loads it locally. T018 links exact source-dataset filters to figures.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
+
+## Researcher quick start (T020)
+
+Use the on-page [data selection and reuse guide](index.html#reuse-guide) for
+the same workflow while browsing. This guide explains reuse of the approved
+snapshot; it does not grant publication approval or additional data access.
+
+1. **Choose the evidence.** In Explore, narrow the research question, metric
+   and evidence source, then select a dataset. Read its definition, grain,
+   coverage, keys and limitations first. Navigation chooses datasets, not
+   observation rows. Use **cohort plus team**, not the
+   repeated team label alone, for a team-semester. Surveys and the global
+   transcript corpus have no team attribution. Only permitted filters are
+   offered: values within a group use OR, groups use AND, and none selected
+   means all. Dataset changes reset incompatible filters. Use definition
+   search for a field name, unit or metric rather than guessing its meaning.
+2. **Check units and denominators.** Column headers and definitions distinguish
+   counts, changed lines, score points, fractions, percentages and markers per
+   1,000 tokens. A fraction (0-1) is not a percentage (0-100), and a score-point
+   difference is not a difference in percentage points. Keep original Ns and
+   denominators: selected rows are not a newly measured participant population.
+   Null/Unavailable, observed zero, false, a zero-row selection and a failed
+   load are distinct; preserve measurement/ratio status columns as well as values.
+   Retry a failed load with its visible control rather than interpreting it
+   as absent evidence.
+3. **Record the snapshot.** Read [Snapshot and provenance](index.html#snapshot-details)
+   and save the [release manifest](data/release.json). Record the manifest's
+   snapshot ID, schema version and selected dataset ID, together with the full
+   files or filtered CSV and matching metadata; do not mix snapshots. Record
+   the dataset's coverage as well, not just an ID. The manifest hashes original
+   public data files, not generated filtered CSVs or the whole application.
+   A snapshot identifier is not a license or evidence of publication/anonymity
+   approval. All release gates remain required for this development preview.
+4. **Choose the download scope.** Full CSV/typed JSON contains every original
+   row of the chosen dataset, independent of filters and sort. Displayed-row CSV
+   contains exactly the observation table selection in its current sort order.
+   Save its matching scope/column-definitions JSON: it records snapshot, dataset,
+   counts, typed filter choices/field order and OR/AND rules, sort, units,
+   denominator and interpretation limits. Empty selections are header-only CSV
+   with zero selected rows in metadata. A chart's zoom or hidden legend traces
+   do not affect exports. Other source panels are not joined or included;
+   M4/M5 remain separate. Reset row filters and sort restores all original rows;
+   Reset figure view keeps the selected rows and only resets the view.
+5. **Import without changing values.** Use a CSV-aware importer configured for
+   UTF-8, comma separators and a double-quote text qualifier. Quoted cells may
+   contain commas/newlines; do not split CSV by lines or commas manually.
+   Explicitly import cohort/team/category IDs as text and measures/booleans
+   using the supplied column types. Map empty CSV cells to null, never zero,
+   false or forward-filled values. Keep IDs/status fields and full precision.
+   Avoid opening and resaving via automatic spreadsheet conversion, which can
+   change identifiers and round numbers even when CSV text is quoted.
+   Formula-leading text is rejected under the reviewed export policy, not
+   prefixed or changed; quoting alone is not a safety guarantee. Preserve
+   original downloads, and use typed JSON with a suitable data tool if the
+   importer cannot preserve types/numeric precision. JSON is structured data,
+   not literal spreadsheet cell text. Generated numeric decimal spelling can
+   differ from authoring CSV while retaining the same numeric value.
+6. **Preserve interpretation limits.** These are descriptive/exploratory
+   observations and published associations, not causal evidence or team
+   rankings. Filters choose existing rows, never new pooled/subset estimates.
+   Original thresholds, medians, sample sizes and denominators stay fixed.
+   SD bars are not confidence intervals; leave-one-out diagnostics are not
+   confidence intervals either. No repository artifact observed does not mean
+   no planning; rework is not a defect count. Ineligible ratios are unavailable
+   even when magnitudes exist. Log axes omit zero magnitudes but retain them
+   unchanged in source tables. Do not assign global transcript aggregates to
+   teams, infer unmeasured-cohort evidence, calculate new subset correlations
+   as if published, or attempt to re-identify participants. The transcript corpus
+   covers 2025.2 only, not 2026.1. Evaluator scores are not repository structural
+   complexity. No verbatim quotations are released here.
+
+Before reusing a result, check that **dataset ID, snapshot, coverage,
+column definitions/units, original denominator, selection/sort and missingness**
+are all recorded. The [dataset contracts](dataset-contracts.md) and
+[public catalog](data/catalog.json) are the dataset-specific reference, not a
+license to join different grains. See [download operation and serialization](#dataset-and-displayed-row-downloads-t019)
+for the CSV conventions and failure states. No neutral public URL or final
+whole-directory/actual-host approval has been recorded yet.
 
 ## Page shell (T010)
 
@@ -432,8 +512,8 @@ The integrated hidden browser did not emit file-save download events for native
 links despite click attempts; payload bytes, MIME types, relative targets and
 download filenames were verified directly. Normal-browser file-save UX remains
 an explicit later portability/actual-host check, not a claimed sign-off.
-T020's consolidated reuse guidance and later release/accessibility gates remain
-pending.
+T020 provides consolidated reuse guidance above. Later release/accessibility
+gates remain pending.
 
 ## Responsive styling (T011)
 
