@@ -295,8 +295,51 @@ Verified on 2026-10-22:
   catalog were created. Actual identifier mappings and human release decisions
   remain outside the publishable directory under T003/T004.
 
-T002 is complete as a specification task. T003 must approve or narrow its field
-projections before any public snapshot is prepared.
+T002 is complete as a specification task. Its field projections require T003
+approval before public snapshot preparation; that approval is recorded below.
+
+### T003 - Human-reviewed publication allowlist
+
+**Completed 2026-10-22.** The authorized human approver explicitly attested to
+reviewing every proposed field and actual value/category vocabulary in the
+[T002 contract specification](dataset-contracts.md), and confirmed that applicable
+consent, ethics, and data-use permissions cover the release. Approval is bound to
+contract SHA-256
+`5cb0534f36bcee75eb08d56fda403f6ef443c826400ca790c727223972e52c68`
+and the reconciled source-index fingerprint recorded above.
+
+The private review record incorporates the contract's enumerated keys, projected
+fields, derived fields, aliases, and catalog-only definitions as an explicit
+allowlist. Unlisted fields remain denied; verification/derivation-only inputs
+are not additional public datasets. The private approval record and identifier
+registry are stored outside this publishable directory and are not site assets.
+
+Review decisions:
+
+- Exact approved numeric values, including small positive cells, may be released
+  without adding a new suppression threshold. The approver considered residual
+  linkage risk from small cells and exact project-level profiles.
+- Original cohort labels and existing TEAM labels are approved. A private
+  identity registry explicitly covers both cohorts and all 14 cohort/team pairs,
+  including omitted-case analyses. A team label alone is never a valid key.
+- Free-text-derived category vocabularies and proposed definition fields were
+  included in the human review. Raw text, source paths/URLs, commit subjects and
+  hashes, respondent/author identifiers, model output, and private crosswalks
+  remain excluded under the contract.
+- No additional restrictions were requested. This is a recorded human
+  authorization, not a cryptographic signature or an automated guarantee of
+  non-identifiability.
+
+The original small-cell and linkage findings are resolved by an explicit,
+permission-confirming human release decision, not by claiming that renaming
+eliminates linkage. Verify the approved projections against exported rows during
+T006-T008. Any new fields, source values/vocabularies, datasets, or changed
+identifier policy require renewed review of the affected scope; changed hashes
+must not silently inherit approval.
+
+T003 does not approve verbatim excerpts (T004), authorize copying internal
+metadata wholesale, or replace whole-directory/host anonymity checks (T023/T025).
+No public data was exported during this task.
 
 ### Publication hazards already identified
 
@@ -422,12 +465,12 @@ cosmetic review.
 datasets/figures. **Requirements:** REQ-003, REQ-006, REQ-009.
 
 - [x] T001 [Plan:1.1] Record the paper/snapshot version and a concise RQ-to-dataset/figure inventory in `microsite/plan.md`, reconciling the manuscript, metric index, and artifact usage catalog. Verified in Section 3, "T001 - Paper snapshot and bounded inventory"; the identified stale-index checksum drift was resolved on 2026-10-22.
-- [x] T002 [Plan:1.1] Specify each selected dataset's grain, key, units, filters, denominators, eligibility rules, and source-to-public field mapping for the future `microsite/data/catalog.json`; keep identifying source mappings in the private approval record instead. Verified in `microsite/dataset-contracts.md` and Section 3's T002 verification record; publication approval is still pending.
+- [x] T002 [Plan:1.1] Specify each selected dataset's grain, key, units, filters, denominators, eligibility rules, and source-to-public field mapping for the future `microsite/data/catalog.json`; keep identifying source mappings in the private approval record instead. Verified in `microsite/dataset-contracts.md` and Section 3's T002 verification record; subsequent field-publication approval is recorded under T003.
 
 **Plan 1.2:** Approve fields and anonymity boundaries.
 **Requirements:** REQ-005, REQ-008, REQ-009.
 
-- [ ] T003 [Plan:1.2] Obtain an explicit human-reviewed allowlist for every field destined for `microsite/data/datasets/`, assessing direct identifiers, searchable values, small cells, linkage, and free text. Keep the signed/private review record outside `microsite/`.
+- [x] T003 [Plan:1.2] Obtain an explicit human-reviewed allowlist for every field destined for `microsite/data/datasets/`, assessing direct identifiers, searchable values, small cells, linkage, and free text. Keep the signed/private review record outside `microsite/`. Explicit authorized human approval recorded privately on 2026-10-22; pinned field scope, identifier policy, and remaining gates are summarized in Section 3.
 - [ ] T004 [Plan:1.2] Individually approve any excerpts intended for `microsite/data/datasets/qualitative-excerpts.json`; omit this dataset/view if none are approved. Do not reuse the full transcript audit trail.
 - [ ] T005 [Plan:1.2] Document public-safe naming, exclusions, excerpt policy, and the hosting anonymity checklist in `microsite/README.md`, without including private source locations or reviewer identities.
 
