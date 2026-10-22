@@ -267,6 +267,37 @@ blocker is resolved; privacy approval and figure-fidelity release checks remain
 required. T002-T005 and the remaining implementation tasks are not completed by
 this inventory or index correction.
 
+### T002 - Dataset contracts and proposed public field mappings
+
+The [dataset contract specification](dataset-contracts.md) defines each selected
+source's analytical grain, unique keys, proposed public ID/columns, units,
+filters, denominators, eligibility, and missingness rules. It also specifies
+aliases and definition-only inputs so the explorer does not duplicate tables.
+This is the design input to T003 and the future T007 catalog, not an early
+publication approval or an actual public catalog/data export.
+
+Verified on 2026-10-22:
+
+- All 58 selected source files (32 primary and 26 figure/support inputs) have
+  explicit dispositions; all 56 CSV keys are non-null and unique.
+- Checked 298 explicit table field references and the expanded regularity and
+  complexity projections against source schemas.
+- Verified survey/topic, activity, lexical, rework, phase, and regularity
+  denominators; JSON extraction shapes; four chart aliases; M8 projection
+  equivalence; figure/profile joins; influence-pivot cells and sign-preservation
+  shares; 13 distinct weekly definitions; and fixed threshold values.
+- Resolved interpretation hazards in the contract: topic assignments are not
+  respondents; M3's 14-day final window is not the final-seven concentration;
+  ineligible M8 ratios need explicit null/status masking; artifact activity is
+  an integer count, not a boolean; and repeated T3 rework context in the
+  triangulation summary is not a checkpoint-varying measurement.
+- No private pseudonym crosswalks, approved observations, excerpts, or runtime
+  catalog were created. Actual identifier mappings and human release decisions
+  remain outside the publishable directory under T003/T004.
+
+T002 is complete as a specification task. T003 must approve or narrow its field
+projections before any public snapshot is prepared.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -391,7 +422,7 @@ cosmetic review.
 datasets/figures. **Requirements:** REQ-003, REQ-006, REQ-009.
 
 - [x] T001 [Plan:1.1] Record the paper/snapshot version and a concise RQ-to-dataset/figure inventory in `microsite/plan.md`, reconciling the manuscript, metric index, and artifact usage catalog. Verified in Section 3, "T001 - Paper snapshot and bounded inventory"; the identified stale-index checksum drift was resolved on 2026-10-22.
-- [ ] T002 [Plan:1.1] Specify each selected dataset's grain, key, units, filters, denominators, eligibility rules, and source-to-public field mapping for the future `microsite/data/catalog.json`; keep identifying source mappings in the private approval record instead.
+- [x] T002 [Plan:1.1] Specify each selected dataset's grain, key, units, filters, denominators, eligibility rules, and source-to-public field mapping for the future `microsite/data/catalog.json`; keep identifying source mappings in the private approval record instead. Verified in `microsite/dataset-contracts.md` and Section 3's T002 verification record; publication approval is still pending.
 
 **Plan 1.2:** Approve fields and anonymity boundaries.
 **Requirements:** REQ-005, REQ-008, REQ-009.
