@@ -4,8 +4,9 @@ An English-language companion for navigating the submitted paper's approved
 research data. The intended implementation is plain static HTML, CSS, JavaScript,
 and local JSON/CSV, contained entirely in this directory.
 
-**Current status:** publication boundaries are documented, but the application
-and public snapshot are not implemented. This is not a ready-to-publish site.
+**Current status:** publication boundaries, the preparation tool, and the
+[public catalog](data/catalog.json) are implemented. The application and public
+observation/download snapshot are not implemented. This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
@@ -151,7 +152,7 @@ Changed hashes must never silently inherit an earlier approval.
 
 ## Snapshot authoring (T006)
 
-The preparation utility is implemented; no catalog or public snapshot has been
+The preparation utility is implemented; no public observation snapshot has been
 released yet. Authoring requires Python 3.10+ with only its standard library.
 Python is **not** required to serve the resulting static files.
 The tool and its [projection definitions](tools/snapshot_contracts.py) are local
@@ -197,9 +198,10 @@ Both output paths must be new, with existing parent directories. Symlink paths
 and overwrites are rejected. `PUBLIC_DATA_OUTPUT` is a data directory, not the
 site root. It receives `datasets/<dataset-id>.json` and
 `downloads/<dataset-id>.csv`: 49 matched dataset pairs in the current snapshot.
-Two `definitions/<definition-id>.json` files hold reviewed definition-only rows
-for later catalog assembly, not duplicate data-browser tabs. Catalog and release
-metadata are separate tasks.
+Two `definitions/<definition-id>.json` files hold reviewed definition-only rows,
+not duplicate data-browser tabs. The catalog already embeds their 13 weekly-bin
+and 13 complexity definitions; these preparation outputs can verify agreement.
+Release metadata remains a separate task.
 
 `PRIVATE_LINEAGE_OUTPUT` must be outside this directory and the public output.
 It records source fingerprints and exact original ratio cells before eligibility
@@ -220,8 +222,48 @@ Run the synthetic standard-library tests without generating bytecode in this
 publishable directory:
 
 ```sh
-python3 -B -m unittest discover -s tools -p 'test_prepare_snapshot.py'
+python3 -B -m unittest discover -s tools -p 'test_*.py'
 ```
 
 Preparation and successful tests do not replace whole-directory human release
 approval or verification on the actual anonymous host.
+
+## Catalog metadata (T007)
+
+[The catalog](data/catalog.json) has schema version `1.0`, 49 dataset
+descriptors, and seven paper-figure mappings. It describes public columns,
+types, units, null states, original denominators, coverage, valid filters, frozen
+thresholds, and permitted relationships. Definition-only rows are embedded under
+`methods.definition_sets`; they are not extra observation datasets. Source labels
+are neutral and no confidential source paths, hashes, approvals, or observations
+are embedded. English display labels do not rewrite source category values.
+
+All catalog data/download paths are relative to the **site root**, not relative
+to the catalog file. For example, `data/datasets/<dataset-id>.json` is resolved
+from the page alongside this README, including at a nested hosting path.
+These paths describe future T008 files; they do not claim those files exist yet.
+The catalog is marked `metadata_only_datasets_pending` until that stage is
+reconciled. Do not present missing files as empty datasets.
+
+Use the local, standard-library [catalog authoring tool](tools/build_catalog.py)
+to verify saved bytes:
+
+```sh
+python3 -B tools/build_catalog.py --output data/catalog.json --check
+```
+
+To regenerate a candidate after an intentional metadata change, set
+`NEW_CATALOG_OUTPUT` to a new file with an existing parent directory:
+
+```sh
+python3 -B tools/build_catalog.py --output "$NEW_CATALOG_OUTPUT"
+```
+
+The tool refuses overwrites and needs no research inputs at runtime or authoring
+time: its descriptors use only explicit public contract definitions. Compare and
+review the candidate before replacing the saved catalog. For changes to the
+underlying approved scope or values, reconcile source fingerprints and obtain
+renewed approval first; catalog generation is not a publication authorization.
+Catalog tests run with the same synthetic test command above. Before observation
+exports, also verify column types, nullability, keys, and filters against the
+approved prepared rows.

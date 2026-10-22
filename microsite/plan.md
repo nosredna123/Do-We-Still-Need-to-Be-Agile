@@ -430,6 +430,60 @@ No `data/` directory, catalog, or release manifest has been installed here:
 T007-T009 remain pending. Whole-directory and actual-host approval also remain
 separate release gates.
 
+### T007 - Public catalog and interpretation metadata
+
+**Completed 2026-10-22.** The [public catalog](data/catalog.json), schema version
+`1.0`, describes all 49 non-duplicate public datasets, with 510 column
+descriptors, English labels, analytical grains/keys, units, denominators,
+coverage, permitted filters, null/status semantics, and interpretation limits.
+It embeds the 13 relative weekly-bin definitions and 13 complexity definitions
+as catalog-only metadata, not extra data-browser tabs. Neutral evidence-source
+labels replace identifying provenance. No private source fingerprints, source
+locations, approval records, observation rows, or excerpt feature are included.
+
+The local [catalog authoring tool](tools/build_catalog.py) uses explicit public
+contracts and needs no research-repository imports or private inputs. It checks
+descriptor coverage, column/key projections, grain-specific filter choices,
+composite team selections, figure fields/encodings, relationships, and relative
+public paths. It refuses overwrites and can check saved bytes without writing.
+The [README](README.md) documents the schema's site-root-relative path base,
+candidate generation, and current metadata-only state.
+
+Verification before completion:
+
+- All 27 standard-library tests pass: 17 existing preparation tests plus 10
+  [catalog tests](tools/test_catalog.py). The saved catalog matches regenerated
+  bytes; malformed filters, figure mappings, columns, duplicate IDs, and
+  non-local paths are rejected.
+- All 49 descriptors were compared against approved in-memory preparation of
+  the 58 selected sources: 17,046 scalar cells agree with the declared column
+  order, types, nullability, and keys. All filter fields and seven paper-figure
+  mappings resolve to approved fields.
+- Surveys and global transcript data have no team filters; transcript
+  observations have no cohort filter or fabricated unmeasured-cohort values.
+  Team and omitted-case selections require cohort-plus-team identity.
+- Fixed association populations, original Ns, M6b unmeasured-versus-zero
+  semantics, M8 ratio status/precedence, and repeated fixed-T3 transcript
+  rework context are explicit. Frozen thresholds and no-reestimation rules
+  remain unchanged.
+- Figure-generator checks confirmed M3 plots pooled total commits, M1 facets
+  by cohort with perception-family series, and M1's display axis is 0-5 while
+  coded score units remain 0-4. Separate M4/M5 panels, logarithmic rework
+  zero handling, and planning/complexity encodings are recorded faithfully.
+- Embedded definitions agree with the approved source keys and structural
+  fields. An initial assumed weekly label was corrected to the canonical
+  `final_7_days`; exact weekly-definition comparison now passes.
+- An isolated copy generates byte-identical catalog metadata and passes all
+  27 tests without access to the parent repository. Overwrite and stale-catalog
+  checks fail explicitly. Pylance syntax/diagnostic and whitespace checks pass.
+
+The catalog is 322,211 bytes; its SHA-256 is
+`a4280a18705491ede48196b8f3968c131ceaef12a8fe35f70aa1e48bd3a0e98f`.
+This records an actual metadata payload size, not a completed browser
+performance check. Only the catalog exists under `data/`: its observation and
+download paths intentionally remain pending T008. T009 release metadata,
+application implementation, and final directory/host approval remain pending.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -572,7 +626,7 @@ Unresolved privacy questions block the affected dataset, not an implicit release
 **Requirements:** REQ-001, REQ-004, REQ-005, REQ-007, REQ-008, REQ-009.
 
 - [x] T006 [Plan:2.1] Implement `microsite/tools/prepare_snapshot.py` with explicit source/approval inputs, schema/key validation, deterministic JSON/CSV output, and explicit rejection of unapproved fields or broken required contracts. Never copy source files wholesale. Verified 17 unit tests, all 58 source dispositions, isolated deterministic exports, JSON/CSV parity, and fail-closed rejection paths; see Section 3.
-- [ ] T007 [Plan:2.1] Produce `microsite/data/catalog.json` with English labels, source-grain definitions, valid filters, approved relationships, missingness states, figure mappings, and interpretation notes. Use neutral source labels rather than identifying URLs.
+- [x] T007 [Plan:2.1] Produce `microsite/data/catalog.json` with English labels, source-grain definitions, valid filters, approved relationships, missingness states, figure mappings, and interpretation notes. Use neutral source labels rather than identifying URLs. Verified 49 descriptors, 510 columns, seven figure mappings, embedded definitions, all 17,046 prepared scalar cells, 27 passing tests, and isolated deterministic generation; see Section 3.
 - [ ] T008 [Plan:2.1] Write approved rows to `microsite/data/datasets/<dataset-id>.json` and matching `microsite/data/downloads/<dataset-id>.csv`; preserve scientific values and explicit unavailable/ineligible states.
 - [ ] T009 [Plan:2.1] Write `microsite/data/release.json` with a neutral snapshot identifier, schema version, public artifact hashes, row counts, and coverage. Retain confidential source lineage only outside the directory.
 
