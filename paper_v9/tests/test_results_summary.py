@@ -45,3 +45,12 @@ def test_results_summary_file_is_valid_json() -> None:
     path = Path("paper_v9/data/results/results_summary.json")
     assert path.is_file()
     assert json.loads(path.read_text(encoding="utf-8"))["status"] == "success"
+
+
+def test_saved_results_summary_matches_current_artifacts() -> None:
+    path = Path("paper_v9/data/results/results_summary.json")
+    saved_summary = json.loads(path.read_text(encoding="utf-8"))
+    assert saved_summary == build_summary(), (
+        "The saved results index is stale. Review artifact changes, then run "
+        ".venv/bin/python -m paper_v9.scripts.results.build_results_summary"
+    )

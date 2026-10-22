@@ -7,8 +7,8 @@ should be able to find the evidence behind a research question, inspect its
 measures, compare compatible observations, and download approved data without
 working directly with the research pipeline.
 
-This document specifies future work; it does not approve any dataset for release.
-All implementation tasks below are initially unchecked.
+This document tracks implementation work; it does not approve any dataset for
+release. Completed tasks are checked only after their stated scope is verified.
 
 ### Decisions agreed during clarification
 
@@ -84,6 +84,188 @@ Current paper reference checks include 14 team-semesters (9 and 5 across the two
 cohorts), M6b availability for 9 cases, M8 baseline eligibility for 12 cases, and
 M5 coverage restricted to the 2025.2 corpus. These are snapshot checks, not
 hard-coded application constants; reconcile any discrepancy before release.
+
+### T001 - Paper snapshot and bounded inventory
+
+**Inventory baseline:** `paper-v9-2026-10-22-t001`, inspected on 2026-10-22.
+The paper version is the current anonymous manuscript rooted at
+`paper_v9/latex/main.tex`, titled *Do We Still Need to Be Agile? What Student
+Projects Reveal About Coordination Skills in the GenAI Era*. This identifies
+the available submission-target source, not a certified final submission or
+approved public-data release. Any subsequent manuscript/data change requires
+reconciliation against this baseline before preparing the public snapshot.
+
+Content fingerprints below pin the inspected inputs without publishing a Git
+commit or identifying repository URL:
+
+| Input | SHA-256 |
+|---|---|
+| Manuscript source set: `latex/main.tex`, its eight directly included section files, and `latex/references.bib` | `db86b65f1394dc84985026c73fd09a9d6a369a9545fa7935570e2fd5ce837f32` |
+| `data/results/results_summary.json` (reconciled 2026-10-22) | `f0fe56c09d02104593e86da7e5f3d4e63b11cf782282988e99ec4019256c6fff` |
+| `ARTIFACT_USAGE_CATALOG.md` | `c41defcd12ec37b71a5f7b986048fb0ac0244c785bf4477e208037507efccf12` |
+| Seven manuscript PNGs in the figure inventory below | `f0f92e8011ffa91b3b7d976aed98c164fccfeaa9bbae5ccab9d845ff9739cade` |
+
+Paths in this inventory are relative to `paper_v9/`, unless explicitly stated
+otherwise. For either source-set fingerprint, sort member paths lexicographically,
+then concatenate `relative_path + NUL + lowercase_file_sha256 + LF` for each
+member, encode as UTF-8, and SHA-256 the result. Individual file fingerprints
+hash the file bytes. The metric index also pins its individual source artifacts;
+the previously detected rendering/index drift and its resolution are recorded
+below. This index correction does not constitute public-release approval.
+
+#### Selected metric datasets
+
+The following is the complete initial metric selection: 32 source datasets.
+Numbers in parentheses are inspected record counts, excluding CSV headers.
+All filenames in this table are under `data/metrics/`. Selection means
+"needed for the paper companion," not permission to publish every source field.
+Field mappings, filters, and anonymization are T002/T003 work.
+
+| RQ / family | Selected source datasets | Manuscript use |
+|---|---|---|
+| RQ1 / M1 | `m1_rq1_perception_panel_long.csv` (36); `m1_rq1_usage_frequency.csv` (60); `m1_rq1_usage_tasks.csv` (58); `m1_rq1_usage_tools.csv` (62); `m1_rq1_prior_ai_project_experience.csv` (12); `m1_rq1_autonomy_tool_balance.csv` (26); `m1_rq1_career_impact_topics_exploratory.csv` (36) | Perception means/SDs, usage and experience; career topics explicitly remain an exploratory supplement. |
+| RQ1 / M2 | `m2_role_perception_distributions.csv` (165); `m2_role_perception_by_team_semester.csv` (36); `m2_role_perception_paired_t1_t3.csv` (12) | Role-specific agreement and separately labeled paired sensitivity summaries, not team observations. |
+| RQ2 / M3 | `m3_author_activity_participation.csv` (14); `m3_author_concentration.csv` (28); `m3_activity_rolling_7day.csv` (406); `m3_activity_rolling_7day_pooled.csv` (29) | Team-semester timing/participation and the pooled temporal figure/summary table. |
+| RQ2 / M4 | `m4_churn_magnitude.csv` (42); `m4_churn_magnitude_pooled.csv` (3); `m4_artifact_composition_pooled.csv` (6) | Checkpoint clean churn, observed coverage, and clean versus all churn. |
+| RQ2 / M5 | `m5_marker_density.csv` (3); `m5_marker_composition.csv` (15); `m5_corpus_coverage.csv` (3); `m5_lexicon.json` (versioned lexical definitions, not observation rows) | Global checkpoint density, marker counts/composition, corpus coverage, and coding definitions. No transcript audit text. |
+| RQ3 / M6 | `m6a_structural_planning.csv` (14); `m6b_llm_planning_content.json` (14 records: 9 successful, 5 unavailable) | Structural T1 evidence and separate exploratory content categories. The JSON is a restricted authoring input; only approved structured fields may be exported. |
+| RQ3 / M7 | `m7_checkpoint_inactivity.csv` (42) | Checkpoint timing/coverage diagnostic, not a planning-omission predictor. |
+| RQ3 / M8 | `m8_rework_magnitude.csv` (14); `m8_rework_participation.csv` (14); `m8_baseline_eligibility.csv` (14) | Rework magnitude, ratio, and explicit eligibility for the 12 eligible cases. |
+| RQ3 / M9 | `m9_planning_vs_rework_m6a_m8a.csv` (2); `m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv` (2); `m9_planning_vs_outcomes_m6a_t3.csv` (8); `m9_planning_vs_outcomes_m6b_t3_if_approved.csv` (30); `m9_leave_one_out_intervals.csv` (52) | The 12-row primary association table, separate M6b exploratory associations, and leave-one-out sensitivity. Existing analytical approval is not public-release approval. |
+
+Ten indexed metadata files are definition/eligibility references, not automatic
+public downloads: `m1_rq1_perception_panel.metadata.json`,
+`m2_role_perception.metadata.json`, `m3_author_activity_dynamics.metadata.json`,
+`m4_clean_change_dynamics.metadata.json`, `m5_coordination_evidence.metadata.json`,
+`m6_structural_planning.metadata.json`, `m6_llm_planning_content.metadata.json`,
+`m7_repository_inactivity.metadata.json`, `m8_clean_rework.metadata.json`, and
+`m9_structured_associations.metadata.json`, all under `data/metrics/`.
+
+#### Exact manuscript figure inventory
+
+The current manuscript includes seven figures, all in Results, in the order
+below. Image paths are under `figures/`; listed CSVs are also under `figures/`.
+Their interactive counterparts are the initial chart scope. Supporting diagnostic
+datasets below do not imply additional mandatory charts.
+
+| RQ / manuscript label | Current PNG | Exact figure-data CSVs (rows) |
+|---|---|---|
+| RQ1 / `fig:rq1-m1` | `rq1_m1_perception_with_sd.png` | `rq1_m1_perception_with_sd_data.csv` (36), from the M1 long panel. Preserve SD bars and family scales. |
+| RQ2 / `fig:rq2-m3` | `rq2_m3_activity_pooled.png` | `rq2_m3_activity_pooled_data.csv` (29), from the M3 pooled rolling table. |
+| RQ2 / `fig:rq2-planning-commit` | `rq2_planning_vs_final7_commit_concentration.png` | `rq2_planning_vs_final7_commit_concentration_data.csv` (14). Preserve median quadrants, T3 score color, and absolute score-change size. |
+| RQ2 / `fig:rq2-m4-m5` | `rq2_m4_m5_checkpoint_panels.png` | **Two inputs:** `rq2_m4_m5_checkpoint_data.csv` (3, M4 only) and `rq2_m5_density_data.csv` (3, M5 only). There is no `rq2_m4_m5_checkpoint_panels_data.csv`; the generator confirms separate panels/units. |
+| RQ3 / `fig:rq3-presence` | `rq3_architectural_artifact_presence.png` | `rq3_architectural_artifact_presence_data.csv` (4), derived from M6a. |
+| RQ3 / `fig:rq3-profile` | `rq3_architecture_rework_profile.png` | `rq3_architecture_rework_profile_data.csv` (14), combining M6a scope and M8 magnitude/eligibility. |
+| RQ3 / `fig:rq3-complexity-rework` | `rq3_technical_complexity_vs_rework.png` | `rq3_technical_complexity_vs_rework_data.csv` (14), from the complexity profile family. |
+
+The three manuscript tables also have bounded sources: `tab:metrics_summary`
+comes from the Methodology definitions; `tab:rq2-summary` uses the M3 pooled,
+M4 pooled, and M5 density tables above; `tab:rq3-associations` concatenates the
+2 + 2 + 8 primary M9 rows. No new statistical estimation is required.
+
+#### Supporting robustness inventory and catalog reconciliation
+
+The seven families below have catalog status `main_text`, but that status does
+not mean every family image is included in the current manuscript. Follow actual
+manuscript use: present non-included views as supporting diagnostics, not extra
+paper figures. Files below are under `figures/`.
+
+| RQ / catalog artifact ID | Selected supporting CSVs (rows) | Current manuscript role |
+|---|---|---|
+| RQ2 / `rq2_nonoverlapping_phase_activity` | `rq2_phase_activity_share_data.csv` (56); `rq2_phase_activity_share_summary.csv` (12); `rq2_nonoverlapping_weekly_bin_contract.csv` (182, definition/audit reference only) | Descriptive non-overlapping phase check; no phase/weekly image is currently included. |
+| RQ2 / `rq2_score_delta_vs_final7_concentration` | `rq2_score_delta_vs_final7_commit_concentration_data.csv` (14); `rq2_score_delta_vs_final7_clean_churn_concentration_data.csv` (14); `rq2_score_delta_final7_quadrants.csv` (16) | Score-change/concentration contrast referenced in text; variants remain supporting replication evidence. |
+| RQ2 / `rq2_planning_concentration_quadrants` | Commit figure data above; `rq2_planning_vs_final7_clean_churn_concentration_data.csv` (14); `rq2_planning_concentration_quadrant_summary.csv` (8) | Commit view is an included figure; clean-churn variant and quadrant summary support the narrative. |
+| RQ2 / `rq2_operational_regularity` | `rq2_operational_regularity_data.csv` (14) | Textual process-heterogeneity check; no regularity figure is included. |
+| RQ2 / `rq2_m5_2025_triangulation` | `rq2_m5_2025_triangulation_summary.csv` (3) | Supporting coverage-aware context, explicitly left in replication artifacts by the current text. Do not repeat a global M5 value as a team observation. |
+| RQ3 / `rq3_complexity_profile` | `rq3_complexity_profile_data.csv` (14); `rq3_complexity_confounding_summary.csv` (6); `rq3_complexity_metrics_contract.csv` (13, definitions) | Included complexity/rework figure plus text-reported median split and stratified sensitivity. |
+| RQ3 / `rq3_influence_map` | `rq3_influence_map_data.csv` (182); `rq3_influence_heatmap_matrix.csv` (14); `rq3_influence_relationship_contract.csv` (13, definitions); `rq3_directional_robustness_summary.csv` (13) | Text-referenced influence diagnostics, not an included figure or confidence interval. |
+
+Consult the corresponding family metadata for definitions:
+`rq2_nonoverlapping_phase_activity.metadata.json`,
+`rq2_score_delta_vs_final7_concentration.metadata.json`,
+`rq2_planning_concentration_quadrants.metadata.json`,
+`rq2_operational_regularity.metadata.json`,
+`rq2_m5_2025_triangulation.metadata.json`,
+`rq3_complexity_profile.metadata.json`, and `rq3_influence_map.metadata.json`.
+The catalog's `candidate` artifact `rq2_score_trajectory_base` supplies
+`rq2_score_trajectory_base_data.csv` (14) and
+`rq2_score_trajectory_base.metadata.json` as shared score/delta definitions and
+derivation context, not an additional explorer view.
+The manuscript mentions outcomes derived from `data/lake/evaluator_team_cuts.parquet`
+(repository-root-relative); it remains an internal provenance input. Existing
+score/profile/association tables supply the selected paper views; no raw lake
+download is in scope.
+
+#### Explicit exclusions and verification result
+
+Of the 54 primary artifacts indexed by `results_summary.json`, 32 are selected
+datasets and 10 are metadata references above. The other 12 are deliberately not
+separate public datasets:
+
+- Redundant/unused M1 views: `m1_rq1_perception_panel_wide.csv` and
+  `m1_rq1_perception_distribution.csv`.
+- M4 components not used by the current manuscript views:
+  `m4_commit_intensity.csv`, `m4_artifact_composition.csv`,
+  `m4_rolling_7day_trajectory.csv`, `m4_commit_intensity_pooled.csv`, and
+  `m4_rolling_7day_trajectory_pooled.csv`.
+- Restricted audit/review files: `m5_evidence_audit_trail.csv` and
+  `m6b_llm_planning_sample_for_review.md`. Approval of structured planning fields
+  does not approve source quotes or full transcripts.
+- Finer-grained views unnecessary for the selected manuscript claims:
+  `m7_inactivity_trajectory.csv`, `m7_inactivity_pattern.csv`, and
+  `m8_rework_trajectory.csv`.
+
+These excluded filenames are all under `data/metrics/`. Also exclude the
+catalog's `diagnostic_only` candidate-figure inventory, `response_letter`
+student-syndrome family, and `appendix` integrated team-semester evidence panel:
+none is an included figure/table or required distinct view in this manuscript.
+Keep the seven selected robustness families' unused images, full event-assignment
+audits, and duplicate chart exports out of the initial site. No verbatim excerpts
+are selected by T001; any later excerpt requires T004 approval.
+
+**Verification performed for T001:**
+
+- All 54 primary indexed files exist and match their recorded SHA-256 checksums;
+  CSV row counts and columns match the index.
+- All 38 CSVs in the robustness index match their indexed row/column contracts;
+  their checksums match. The selected figure/source files and metadata exist.
+- All seven manuscript figures and three tables have the explicit mappings above.
+  Four M1/M3/M4/M5 figure-data exports were compared with their canonical metric
+  inputs by semantic keys, not row position. They agree within an absolute
+  `1e-12` serialization tolerance (observed maximum difference
+  `8.881784197001252e-16`); this does not authorize rounding public source values.
+- Coverage checks confirm 14 distinct team-semesters (9 + 5), 9 successful and 5
+  unavailable M6b records, 12 M8-eligible cases, and M5 checkpoint chunk counts
+  35 / 37 / 28.
+- **Resolved 2026-10-22 - stale index:** the initial inventory detected 15
+  non-CSV checksum mismatches. Seven belonged to
+  `rq2_planning_concentration_quadrants` (family metadata and two PNG/SVG/PDF
+  triplets); eight belonged to `rq3_complexity_profile` (family metadata,
+  complexity/rework PNG/SVG/PDF, and two other SVG/PDF pairs). History traced
+  the drift to later page-budget figure revisions without an index refresh.
+  Current family metadata input/data hashes were verified; the complexity
+  metadata's output hashes also match the rendered files. The planning metadata
+  differs from its earlier version only in generation time.
+- Rebuilt `data/results/results_summary.json` with the existing generator,
+  without regenerating figures or data. The correction changes only 25
+  checksum/byte-count fields across those 15 records. All 180 indexed records
+  now match their files' hashes and sizes; metrics, CSVs, inventory membership,
+  manuscript, catalog, and figure-set fingerprints remain unchanged. The initial
+  index fingerprint was
+  `eb303948170fddc3cfd9a7aff70e164da231ae09702e76a0b130b9c83f6bdbdd`;
+  the table above records the reconciled fingerprint.
+- A regression assertion in `paper_v9/tests/test_results_summary.py` compares
+  the saved summary with a freshly built one. It failed on the stale index
+  before the correction. After any intentional indexed-artifact change, review
+  its scientific/visual impact, then run
+  `.venv/bin/python -m paper_v9.scripts.results.build_results_summary` last and
+  `.venv/bin/pytest -x -q paper_v9/tests/test_results_summary.py`. Verify the
+  resulting diff and update this baseline fingerprint if it changes.
+
+T001 is complete as a verified scope/inventory task. The identified checksum
+blocker is resolved; privacy approval and figure-fidelity release checks remain
+required. T002-T005 and the remaining implementation tasks are not completed by
+this inventory or index correction.
 
 ### Publication hazards already identified
 
@@ -208,7 +390,7 @@ cosmetic review.
 **Plan 1.1:** Identify the submitted-paper snapshot and the exact supporting
 datasets/figures. **Requirements:** REQ-003, REQ-006, REQ-009.
 
-- [ ] T001 [Plan:1.1] Record the paper/snapshot version and a concise RQ-to-dataset/figure inventory in `microsite/plan.md`, reconciling the manuscript, metric index, and artifact usage catalog.
+- [x] T001 [Plan:1.1] Record the paper/snapshot version and a concise RQ-to-dataset/figure inventory in `microsite/plan.md`, reconciling the manuscript, metric index, and artifact usage catalog. Verified in Section 3, "T001 - Paper snapshot and bounded inventory"; the identified stale-index checksum drift was resolved on 2026-10-22.
 - [ ] T002 [Plan:1.1] Specify each selected dataset's grain, key, units, filters, denominators, eligibility rules, and source-to-public field mapping for the future `microsite/data/catalog.json`; keep identifying source mappings in the private approval record instead.
 
 **Plan 1.2:** Approve fields and anonymity boundaries.

@@ -2176,25 +2176,25 @@
             "bytes": 4742,
             "format": "json",
             "path": "figures/rq2_planning_concentration_quadrants.metadata.json",
-            "sha256": "2ff80fbc9913519a7e83ee1cf28973a29d13d7443a6b8366204d56ea06552dd0"
+            "sha256": "c49b12dbbfd5747369081647f7f5d39346b9a6d51db9799c21bfba40bc584dc0"
           },
           {
-            "bytes": 34833,
+            "bytes": 33381,
             "format": "pdf",
             "path": "figures/rq2_planning_vs_final7_clean_churn_concentration.pdf",
-            "sha256": "fc1a255959a09aa051474b00007a7a8df050d803b8dfedb3503d47bb924f55eb"
+            "sha256": "50e8f361c7ff7344e89f494bad776da977bd7fb11f346d77673176702e40f316"
           },
           {
-            "bytes": 210364,
+            "bytes": 144924,
             "format": "png",
             "path": "figures/rq2_planning_vs_final7_clean_churn_concentration.png",
-            "sha256": "72430cea3bb9e956128860ec28c4469158a642c97070a61d0d327d63e83475ad"
+            "sha256": "244faa5cd0b70fe20f1204837d3f6d538bcd0f9d030a452f735aaf8e7fd62bcd"
           },
           {
-            "bytes": 21079,
+            "bytes": 19905,
             "format": "svg",
             "path": "figures/rq2_planning_vs_final7_clean_churn_concentration.svg",
-            "sha256": "3e72fdcd967c1e405571eef05e125be3ee438ab388fdd0fc6110eb338345c9b1"
+            "sha256": "6197386e902c0dc0efb1e728cfd356ae9bde16c67b3fd9421713cfbd337d2cfa"
           },
           {
             "bytes": 3969,
@@ -2219,22 +2219,22 @@
             "sha256": "5ad2ba6645629cfbb694e09f7a51e5a800760554a6deb432651f4138c3f3e37f"
           },
           {
-            "bytes": 34819,
+            "bytes": 33264,
             "format": "pdf",
             "path": "figures/rq2_planning_vs_final7_commit_concentration.pdf",
-            "sha256": "b220035a5b56c6525b5959f04df638de5bb9983c3940d929c44955f2b98eda98"
+            "sha256": "741502c7d8c996e078f4f622dd79f5c5fc4e2ea80f5adfc0dd15032ea9c67d4c"
           },
           {
-            "bytes": 206129,
+            "bytes": 142990,
             "format": "png",
             "path": "figures/rq2_planning_vs_final7_commit_concentration.png",
-            "sha256": "9c65a0d4855edebdce2d0b0ee18938ba88898b8546db08621c09fb6d1b0c7d2f"
+            "sha256": "f43749cc2eaaf0f6f87a3d151565a9455035bfc643f3d6884d0af309a5ff57c1"
           },
           {
-            "bytes": 21062,
+            "bytes": 19933,
             "format": "svg",
             "path": "figures/rq2_planning_vs_final7_commit_concentration.svg",
-            "sha256": "2f00669a41e8f2276a756608592865c3722f871380f0c4202891a4df78225b9d"
+            "sha256": "61319ee8af50f3838438f7684300088ed34b3a6b2866e06d29e24ca4cd0a9b8c"
           },
           {
             "bytes": 3611,
@@ -2717,7 +2717,7 @@
             "bytes": 7750,
             "format": "json",
             "path": "figures/rq3_complexity_profile.metadata.json",
-            "sha256": "5f85d821514e77ea851643dbe90fa96cdc72943a6be519a491c19d4785e60d3a"
+            "sha256": "ba96e801dc66301b4d4e40eaeab16ac6857bd67a6aed5318a248646e2eb5f6c3"
           },
           {
             "bytes": 4952,
@@ -2767,7 +2767,7 @@
             "bytes": 23937,
             "format": "pdf",
             "path": "figures/rq3_complexity_vs_final_concentration.pdf",
-            "sha256": "c56f0d77a3ef8233cab9948473b0e029acec4327fbc9cd60703d6b6aa6895100"
+            "sha256": "e379cae6ce2f2fd06259d75e8aa98f17a34743171f694de9d566a809c1cdc610"
           },
           {
             "bytes": 210306,
@@ -2779,7 +2779,7 @@
             "bytes": 27694,
             "format": "svg",
             "path": "figures/rq3_complexity_vs_final_concentration.svg",
-            "sha256": "6532e6b16aeed6c35d81b5106bc1b6101c7e9cef2e0bf7a7c50706ccd72bf1df"
+            "sha256": "e3f8e81fb0c4f6a5dd7ca8f4a9f7770c3f574038bfdd5b958dd195524a7382f7"
           },
           {
             "bytes": 3685,
@@ -2822,10 +2822,10 @@
             "sha256": "783c83a997ce1dd148419e4286ab9a731a7f27caa085ed1f922f54f433294795"
           },
           {
-            "bytes": 16501,
+            "bytes": 24397,
             "format": "pdf",
             "path": "figures/rq3_planning_rework_complexity_overlay.pdf",
-            "sha256": "7d17d6a3a03602e8885d209a56f60f59f48a304f4b29274a6bfe9fbcf17c78a0"
+            "sha256": "294192773c0d7712f2ac532279b13a90da1d3997d1c4f31f15800410f831726f"
           },
           {
             "bytes": 217551,
@@ -2837,7 +2837,7 @@
             "bytes": 24382,
             "format": "svg",
             "path": "figures/rq3_planning_rework_complexity_overlay.svg",
-            "sha256": "b3c2c3547fab2f87b6107b978021f83ed3b12d19c8bda21f56094553fc273f15"
+            "sha256": "5ce38efa816a37c0bf32697fa3492b00749e23f696b40603290a67fa9be89ea3"
           },
           {
             "bytes": 2341,
@@ -2860,22 +2860,22 @@
             "sha256": "8639a2f66514f41a785e8f5109b0d5ece8c1f353e9b6f137b471a956749983cd"
           },
           {
-            "bytes": 23240,
+            "bytes": 21698,
             "format": "pdf",
             "path": "figures/rq3_technical_complexity_vs_rework.pdf",
-            "sha256": "223bd29faf454c62e5c0240034458ca4e75041232ce0e9f02bb01c1a1f50fc67"
+            "sha256": "c51aec45442f849517fe259ec7717dd58be0da08074f22a571877f700c97fa14"
           },
           {
-            "bytes": 198725,
+            "bytes": 123665,
             "format": "png",
             "path": "figures/rq3_technical_complexity_vs_rework.png",
-            "sha256": "45471f91cc0c6b25b922502ce8f75e71c281f39a4b56e49b63d17cc963ba3e54"
+            "sha256": "1b6d2b8b862ec4e0be89a94a5986fc74e1970f4ca9f342397d44b52d785f9f86"
           },
           {
-            "bytes": 21874,
+            "bytes": 20386,
             "format": "svg",
             "path": "figures/rq3_technical_complexity_vs_rework.svg",
-            "sha256": "580071a0a7987b434de835753b8e9776cef1d533d3a3b0fb64b5d4eeaeab7897"
+            "sha256": "6b9f20afaaf09b1010a9d94b56e628d629847fdeb0dba98c91eb286ba0c63904"
           },
           {
             "bytes": 2341,
