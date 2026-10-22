@@ -132,6 +132,14 @@ class PageTests(unittest.TestCase):
             self.assertTrue(any(a.get("id") == target for _, a in self.page.elements))
         self.assertTrue(all("defer" in a for t, a in self.page.elements if t == "script"))
 
+    def test_download_scope_missingness_and_recovery_are_explicit(self) -> None:
+        for phrase in ("Full links contain all original", "observation table selection",
+                       "headers only", "Formula-leading text is rejected", "Typed JSON"):
+            self.assertIn(phrase, self.content)
+        for target in ("downloads-heading", "full-downloads", "export-status", "export-error",
+                       "export-retry", "filtered-downloads"):
+            self.assertTrue(any(a.get("id") == target for _, a in self.page.elements))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1201,6 +1201,100 @@ T019 export controls and subsequent release tasks remain pending; all 11
 publication gates stay unchecked. No excerpt feature, backend, new dependency,
 statistical estimator or cross-dataset join was introduced.
 
+### T019 - Full dataset and faithful filtered CSV downloads
+
+**Completed 2026-10-22.** The [application](assets/app.js) supplies native links
+to the selected dataset's original full CSV and typed JSON, plus a locally
+generated CSV for exactly the displayed observation rows/current sort order.
+Its matching JSON companion records snapshot/dataset/filename, selected and
+original row counts, filter definitions/typed choices/combination semantics,
+sort, approved column definitions/order/units, grain/key, denominator,
+missingness, coverage and fixed-population limitations. Scope information stays
+out of CSV data rows, so ordinary CSV readers receive a conventional table.
+The [entry page](index.html) distinguishes these download scopes and gives
+essential null/precision/safety guidance; the [README](README.md) documents
+operation. T020's consolidated reuse guidance remains a separate pending task.
+
+Full links ignore filtering, sort and legend visibility and point only to
+catalog-validated local snapshot paths. Filtered exports reuse the table's
+typed selection/sort helpers, never chart-only visibility, hidden fields or
+another source panel. Native filenames contain only approved dataset IDs.
+Both generated downloads are refreshed together when selection changes.
+An empty intersection produces column headers only with zero selected rows
+in the companion metadata, never a fabricated null row.
+
+Generated CSV uses UTF-8 without BOM, LF records, comma separators, quoted
+headers/text with doubled double quotes, lowercase booleans, original approved
+column order, and finite numbers' round-trip JavaScript decimal spelling
+without display rounding. Numeric values match loaded original values even
+where authoring Python's decimal spelling differs. An empty unquoted cell is
+null/Unavailable, not zero or false. Current data has no empty strings or
+nullable text columns; any future ambiguous empty nullable text is rejected
+explicitly rather than silently collapsed into null. Full typed JSON preserves
+explicit nulls.
+
+The existing preparation policy for spreadsheet-unsafe text is reused:
+formula-leading strings (including whitespace-prefixed indicators) and
+tab/CR/LF-leading text fail explicitly, without prefixes or value changes.
+Negative numeric values remain numbers. Quoting alone is not claimed to make
+spreadsheets preserve types/precision; import guidance and companion definitions
+explain that boundary.
+
+Loading/changing datasets clears stale filtered links. Missing/malformed data
+cannot generate an export; the current full links remain independent native
+snapshot links. Serialization/Blob URL errors log an alert, remove partial
+downloads, retain valid observation tables, and offer retry. Replaced URLs are
+revoked, page exit releases them, and back/forward cache restoration rebuilds
+the current pair.
+
+Verification before completion:
+
+- All **55 Python and 58 JavaScript tests pass** (113 total, zero failed/skipped).
+  Eight new [export tests](tools/test_exports.cjs) cover all 49 datasets and
+  17,046 scalar cells, every permitted single-choice filter, composite
+  selection/sort, metadata definitions/scope, empty output, CSV quoting/Unicode,
+  null/zero/false distinctions, and explicit unsafe/invalid/ambiguous rejection.
+  A new [page test](tools/test_page.py) checks scope, missingness and retry UI.
+  All six initial export tests failed for absent helpers before implementation.
+- Browser reads of actual generated Blob URLs verify all 49 filtered CSV
+  payloads against the displayed tables (17,046 cells), original column order,
+  metadata definitions/counts and MIME types. All 49 native JSON/CSV pairs
+  were fetched and compared by typed scalar value; full targets/filenames
+  resolve to their correct dataset.
+- Repeated TEAM_01 across two cohorts exports exactly two sorted rows with
+  composite filter choices and descending sort recorded. Conflicting filters
+  produce one header record/zero data rows and explicit status. Reset restores
+  all 14 rows and clears filters/sort. Legend visibility leaves export URLs
+  and original selected row counts unchanged.
+- Unsafe synthetic text remains literal in the valid observation table while
+  filtered export fails explicitly without links. A simulated second-Blob
+  creation failure revokes the first partial URL, leaves zero live URLs/links,
+  preserves 14 observation rows and full links, and recovers through retry.
+  Replaced pairs and page exit revoke URLs; simulated cached-page restoration
+  recreates exactly two links.
+- HTTP 404 clears filtered downloads and rows without exposing stale content;
+  row retry recovers the 29-row dataset. A held old request cannot replace the
+  newer dataset's filename, metadata or 14 selected rows.
+- Four download links and scope guidance stay within 360/320 px layouts and
+  enlarged text without whole-page overflow. Requests remain local.
+- Independent-copy tests, JavaScript syntax, all 99 data-manifest hashes,
+  whitespace/local-document links, and byte-identical root/nested HTTP
+  delivery pass. The HTTP verifier now checks **both** formats for all 49
+  dataset pairs. Data/catalog/release and vendor/license bytes are unchanged.
+
+The integrated hidden browser did not emit Playwright file-save download events
+for native download links using dispatched, DOM or forced clicks. Blob payloads,
+MIME types, relative native URLs and download attributes/filenames were verified
+directly instead; no actual save-dialog or downloaded-file-on-disk success is
+claimed. Normal-browser download UX remains an explicit T021/T022/actual-host
+check. This tool limitation is not hidden as a successful end-user gesture.
+The initial page-shell test also caught an unnecessary extra section; downloads
+now use a labeled region inside Explore, preserving the three-view structure.
+
+T020 and subsequent acceptance/accessibility/release tasks remain pending.
+All 11 publication gates are still unchecked; no publication approval, excerpt
+payload, backend, dependency or statistical estimator was added.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1382,7 +1476,7 @@ is measured, what is missing, and which comparisons are valid.
 **Plan 4.2:** Make approved data easy to reuse.
 **Requirements:** REQ-005, REQ-007, REQ-008, REQ-009.
 
-- [ ] T019 [US4] [Plan:4.2] Add full-dataset links and filtered CSV export in `microsite/assets/app.js`, preserving public column definitions, filter scope, exact numeric values, and unambiguous missingness.
+- [x] T019 [US4] [Plan:4.2] Add full-dataset links and filtered CSV export in `microsite/assets/app.js`, preserving public column definitions, filter scope, exact numeric values, and unambiguous missingness.
 - [ ] T020 [US4] [Plan:4.2] Explain dataset selection, snapshot identity, units, download scope, spreadsheet handling, and scientific caveats in `microsite/index.html` and `microsite/README.md`.
 
 **Exit:** Paper figures are inspectable without becoming a new statistical tool;

@@ -14,8 +14,8 @@ Catalog-based RQ/metric/source navigation, definitions, snapshot details,
 observation tables, row filters, sorting, and compatible multi-cohort/team-semester
 selection are implemented. All seven selected paper figures now render from
 approved snapshots, with exact source tables and synchronized permitted
-row selection. Export controls remain pending, as does
-whole-directory/actual-host approval.
+row selection. Full CSV/JSON links and displayed-row CSV with matching scope
+metadata are implemented. Whole-directory/actual-host approval remains pending.
 This is not a ready-to-publish site.
 T016 has selected and bundled one local chart dependency after a fidelity/size
 check; T017 loads it locally. T018 links exact source-dataset filters to figures.
@@ -33,12 +33,12 @@ and fixed-estimate grains before the research-question guides.
 
 The styled explorer now loads approved observation rows on dataset selection.
 The page supports comparing existing compatible cases in the same table and
-viewing the seven paper figures separately; export controls are pending.
+viewing the seven paper figures and downloading full datasets or displayed rows.
 Local catalog, release-manifest, and documentation links work.
 T011 provides layout/focus styling; T012 provides catalog loading and
 dataset navigation; T013 provides row filters/tables/sorting; T014 adds multi-case
-selection. T017 adds figures; T018 synchronizes permitted row selection. Export
-actions remain later tasks.
+selection. T017 adds figures; T018 synchronizes permitted row selection; T019
+provides full and filtered downloads.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
 the working shell as whole-directory or host approval.
@@ -241,7 +241,7 @@ local script paths. Run all JavaScript tests together:
 ```sh
 node --check assets/vendor/plotly-cartesian-4.1.2.min.js
 node --check assets/charts.js
-node --test tools/test_app.cjs tools/test_rows.cjs tools/test_vendor.cjs tools/test_charts.cjs
+node --test tools/test_app.cjs tools/test_rows.cjs tools/test_vendor.cjs tools/test_charts.cjs tools/test_exports.cjs
 ```
 
 A temporary authoring-only browser probe used approved data, not existing chart
@@ -374,6 +374,66 @@ Legend toggles change mark visibility only; they do not filter either table or
 redefine scientific populations. Load/filter/source changes clear stale content
 and cancel or invalidate older requests/renders. Errors remain explicit with
 retry, and valid observation tables remain usable after figure-only failures.
+
+## Dataset and displayed-row downloads (T019)
+
+The download region below the observation table separates:
+
+- **Full dataset (CSV)** and **Full dataset (typed JSON)**: native links to the
+  selected dataset's original local snapshot files, unaffected by filters,
+  sorting, figure legends, or another figure panel.
+- **Download displayed rows (CSV)**: generated locally from the same typed
+  rows, permitted filter predicates and stable sort order as the observation
+  table. No hidden fields, display rounding, recalculation or chart-only
+  visibility selection is applied.
+- **Download matching export scope and column definitions (JSON)**: the CSV's
+  companion record, identifying its filename, snapshot and dataset, selected
+  and total row counts, typed filter choices and their field/OR/AND encoding, sort, column order, complete
+  approved column definitions/units, grain, keys, denominator, missingness,
+  coverage and fixed-population caveats.
+
+Keep the companion JSON with its CSV. Both are regenerated together when the
+dataset, filters or sort changes. Filenames use neutral approved dataset IDs;
+no host, private source location, user identity or timestamp is inserted.
+The visible status reports the current scope before downloading. Full files
+are byte-identical snapshot artifacts; generated CSV uses equivalent typed
+values rather than promising the author's Python decimal spelling.
+
+Generated CSV is UTF-8 without a byte-order mark, with comma separators, LF
+records, quoted string/header cells and doubled embedded double quotes.
+Embedded commas, newlines and Unicode remain literal text. Finite numbers use
+JavaScript's round-trip decimal representation, not chart/table formatting;
+booleans are lowercase `true`/`false`. An empty unquoted cell means null
+(`Unavailable`), not zero or false; use the supplied types and status fields.
+The current snapshot has no empty strings or nullable text columns. A future
+ambiguous empty nullable-text value is rejected rather than made indistinguishable
+from null. Typed full JSON retains explicit nulls.
+
+Formula-leading textual cells/headers are rejected under the preparation
+tool's existing spreadsheet-safety policy, not prefixed or otherwise changed.
+Negative numeric values remain numbers. Import with explicit column types:
+even quoted CSV does not stop spreadsheets from auto-converting identifiers or
+losing numeric precision. No spreadsheet application is a fidelity validator.
+
+An empty filter intersection downloads a header-only CSV and companion record
+with zero selected rows. Load failures expose no stale filtered download.
+Full links still target the currently selected snapshot files, independently of
+whether its observation JSON loaded. Export-generation failures show an alert,
+log the error, clear partial links/Blob URLs, preserve valid observation tables,
+and offer retry. Old Blob URLs are revoked on selection changes and page exit;
+back/forward cache restoration rebuilds current links.
+
+The [export tests](tools/test_exports.cjs) check all 49 datasets/17,046 scalar
+cells, each permitted single-choice filter, exact sort/scope metadata, quoting,
+empty results, null/zero/false distinction and explicit unsafe/invalid-data
+rejection. Browser checks read the actual Blob payloads and all 49 original
+JSON/CSV pairs, and verify scope/reset, errors/retry and URL cleanup.
+The integrated hidden browser did not emit file-save download events for native
+links despite click attempts; payload bytes, MIME types, relative targets and
+download filenames were verified directly. Normal-browser file-save UX remains
+an explicit later portability/actual-host check, not a claimed sign-off.
+T020's consolidated reuse guidance and later release/accessibility gates remain
+pending.
 
 ## Responsive styling (T011)
 

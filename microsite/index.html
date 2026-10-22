@@ -24,7 +24,7 @@
     </nav>
     <p><strong>Development preview.</strong> Publication approval is pending.
       Explore the approved observations, paper figures, and their definitions.
-      Permitted figure filters select existing rows only. Export controls are not available yet.</p>
+      Permitted figure filters and downloads select existing rows only.</p>
   </header>
 
   <main id="main-content" tabindex="-1">
@@ -130,6 +130,24 @@
         use the arrow keys to scroll horizontally.</p>
       <div id="dataset-table" class="table-scroll" tabindex="0" role="region"
         aria-labelledby="observations-heading" aria-describedby="row-status"></div>
+
+      <div role="region" aria-labelledby="downloads-heading">
+        <h3 id="downloads-heading">Download selected dataset</h3>
+        <p>Full links contain all original dataset rows, regardless of filters or sort.
+          Displayed-row CSV contains exactly the observation table selection and order,
+          not chart legend visibility or another panel. Keep its matching scope and
+          column-definitions JSON for the snapshot, typed filters, units and denominator.</p>
+        <div id="full-downloads" aria-label="Full dataset downloads"></div>
+        <p id="export-status" role="status" aria-live="polite">Filtered downloads are available after observations load successfully.</p>
+        <p id="export-error" role="alert"></p>
+        <button id="export-retry" type="button" hidden>Retry preparing filtered export</button>
+        <div id="filtered-downloads" aria-label="Displayed-row downloads"></div>
+        <p>CSV uses UTF-8, original column IDs, lowercase true/false and empty cells
+          for null (Unavailable), never zero. No numeric display rounding is applied.
+          Empty selections download headers only. Formula-leading text is rejected,
+          not silently changed. Import with the supplied column types: spreadsheet
+          auto-conversion can lose numeric precision. Typed JSON preserves explicit nulls.</p>
+      </div>
 
       <h3 id="figures-heading">Paper figures</h3>
       <p id="figure-scope">These seven figures follow the observation table's permitted filters

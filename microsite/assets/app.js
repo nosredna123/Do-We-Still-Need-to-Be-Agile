@@ -203,6 +203,63 @@
     }).map(item => item.row);
   }
 
+  function selectedRows(rows, dataset, selection, sort) {
+    const visible = selectRows(rows, dataset, selection);
+    if (!sort) return visible;
+    const column = dataset.columns.find(item => item.id === sort.field);
+    requireValue(column, "Invalid export/table sort field.");
+    return sortRows(visible, column, sort.direction);
+  }
+
+  function csvText(rows, dataset) {
+    requireValue(Array.isArray(rows), "Invalid export rows.");
+    if (rows.length) validateRows(rows, dataset, rows.length);
+    const quote = value => {
+      requireValue(!/^ *[\t\r\n]/u.test(value) && !/^[\s\u0085\u001c-\u001f]*[=+\-@]/u.test(value),
+        "Spreadsheet-unsafe text requires reviewed export handling; no CSV was created.");
+      return `"${value.replaceAll('"', '""')}"`;
+    };
+    const header = dataset.columns.map(column => quote(column.id)).join(",");
+    const lines = rows.map(row => dataset.columns.map(column => {
+      const value = row[column.id];
+      if (typeof value === "string") {
+        requireValue(value !== "" || !column.nullable,
+          "Empty nullable text is ambiguous with CSV null; use the typed JSON instead.");
+        return quote(value);
+      }
+      return value === null ? "" : String(value);
+    }).join(","));
+    return [header, ...lines].join("\n") + "\n";
+  }
+
+  function prepareExport(dataset, rows, selection, sort, snapshotId) {
+    requireValue(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(dataset.id) && text(snapshotId), "Invalid export identity.");
+    const visible = selectedRows(rows, dataset, selection, sort);
+    const csv = csvText(visible, dataset);
+    return {
+      filename: `${dataset.id}-filtered.csv`,
+      csv,
+      metadata: {
+        schema_version: "1.0", snapshot_id: snapshotId, dataset_id: dataset.id,
+        csv_filename: `${dataset.id}-filtered.csv`, title: dataset.title,
+        selected_row_count: visible.length, total_row_count: rows.length,
+        filters: JSON.parse(JSON.stringify(selection)), sort: sort ? { ...sort } : null,
+        filter_definitions: dataset.filters.map(filter => ({ ...filter, fields: [...filter.fields] })),
+        filter_value_encoding: "Each choice is a JSON-encoded array of typed values in the filter's fields order. Choices within a filter use OR; filters use AND; absent or empty choices mean all.",
+        column_order: dataset.columns.map(column => column.id),
+        columns: dataset.columns.map(column => ({ ...column })),
+        grain: dataset.grain, key: [...dataset.key], denominator: dataset.denominator,
+        filter_effect: dataset.filter_effect, estimation_population: dataset.estimation_population,
+        missingness: dataset.missingness, coverage: dataset.coverage, limitations: dataset.limitations,
+        csv_encoding: "UTF-8 without BOM; comma-separated; LF records; quoted strings and doubled double quotes.",
+        csv_null_encoding: "An empty unquoted cell means null (Unavailable), never numeric zero or false. Use column types and status fields.",
+        spreadsheet_safety: "Formula-leading text is rejected, not altered. Import using the supplied column types; spreadsheet auto-conversion can lose precision.",
+        numeric_encoding: "Finite numbers use round-trip JavaScript decimal notation, without display rounding. Original numeric values are retained.",
+        scope: "Exactly the displayed observation rows in current sort order, not chart legend visibility or other panels. No estimates are recalculated.",
+      },
+    };
+  }
+
   async function fetchJSON(path, signal, fetcher = fetch) {
     const response = await fetcher(path, { signal, cache: "no-cache" });
     requireValue(response.ok, `${path} returned HTTP ${response.status}.`);
@@ -269,6 +326,11 @@
     const rowError = byId("row-error");
     const rowRetry = byId("row-retry");
     const tableContainer = byId("dataset-table");
+    const fullDownloads = byId("full-downloads");
+    const filteredDownloads = byId("filtered-downloads");
+    const exportStatus = byId("export-status");
+    const exportError = byId("export-error");
+    let exportUrls = [];
     let activeDataset;
     let rows = [];
     let selection = {};
@@ -337,7 +399,7 @@
         if (column.value_order) fields.append(tree({ value_order: column.value_order }));
       }
       detail.append(fields, element("p", "Mapped paper figures below follow this dataset's permitted row filters. " +
-        "Original populations, Ns and thresholds remain fixed. Export controls are not implemented yet."));
+        "Original populations, Ns and thresholds remain fixed. Downloads below distinguish full and displayed rows."));
       const available = datasetSelect.options.length;
       status.textContent = `${available} ${available === 1 ? "dataset" : "datasets"} available in this navigation selection. ` +
         `Showing definitions for ${dataset.title}.`;
@@ -345,6 +407,8 @@
     }
 
     function clearRows() {
+      clearExports();
+      fullDownloads.replaceChildren();
       figures?.setSelection(null);
       requestVersion += 1;
       rowRequest?.abort();
@@ -364,11 +428,49 @@
       byId("row-scope").textContent = "";
     }
 
-    function renderRows() {
-      let visible = selectRows(rows, activeDataset, selection);
-      if (sort) {
-        visible = sortRows(visible, activeDataset.columns.find(column => column.id === sort.field), sort.direction);
+    function clearExports() {
+      for (const url of exportUrls) URL.revokeObjectURL(url);
+      exportUrls = [];
+      filteredDownloads.replaceChildren();
+      byId("export-retry").hidden = true;
+      exportError.textContent = "";
+      exportStatus.textContent = "Filtered downloads are available after observations load successfully.";
+    }
+
+    function renderExports() {
+      clearExports();
+      try {
+        const result = prepareExport(activeDataset, rows, selection, sort, release.snapshot_id);
+        for (const [content, type, filename, title] of [
+          [result.csv, "text/csv;charset=utf-8", result.filename, "Download displayed rows (CSV)"],
+          [JSON.stringify(result.metadata, null, 2) + "\n", "application/json;charset=utf-8",
+            `${activeDataset.id}-filtered-metadata.json`, "Download matching export scope and column definitions (JSON)"],
+        ]) {
+          const url = URL.createObjectURL(new Blob([content], { type }));
+          exportUrls.push(url);
+          const link = element("a", title);
+          link.href = url;
+          link.download = filename;
+          const entry = element("p");
+          entry.append(link);
+          filteredDownloads.append(entry);
+        }
+        exportStatus.textContent = `${result.metadata.selected_row_count} of ${rows.length} rows ready for ${activeDataset.title}. ` +
+          `Snapshot: ${release.snapshot_id}. ${byId("active-filters").textContent} ` +
+          (sort ? `Sort: ${sort.field}, ${sort.direction}.` : "Original source order.") +
+          (result.metadata.selected_row_count ? "" : " CSV contains column headers only; no rows match.");
+      } catch (error) {
+        clearExports();
+        exportStatus.textContent = "Filtered export could not be prepared. Observation tables remain available.";
+        exportError.textContent = `Export error: ${error instanceof Error ? error.message : String(error)} ` +
+          "Check the data and export policy, or retry preparing the export.";
+        byId("export-retry").hidden = false;
+        console.error("Research explorer export preparation failed:", error);
       }
+    }
+
+    function renderRows() {
+      const visible = selectedRows(rows, activeDataset, selection, sort);
       rowStatus.textContent = `${visible.length} of ${rows.length} rows shown. ` +
         (visible.length ? "Values retain their original precision." : "No rows match these filters. Change a filter or reset.");
       const summaries = Object.entries(selection).map(([id, values]) => {
@@ -379,6 +481,7 @@
       });
       byId("active-filters").textContent = summaries.length
         ? `Active row filters: ${summaries.join("; ")}` : "No active row filters.";
+      renderExports();
       figures?.setSelection({ id: activeDataset.id, rows: visible,
         summary: summaries.length ? `Active row filters: ${summaries.join("; ")}` : "No active row filters" });
       tableContainer.replaceChildren();
@@ -434,6 +537,14 @@
       clearRows();
       if (!dataset) return;
       activeDataset = dataset;
+      for (const [kind, title] of [["csv", "Full dataset (CSV)"], ["json", "Full dataset (typed JSON)"]]) {
+        const link = element("a", title);
+        link.href = dataset.paths[kind];
+        link.download = `${dataset.id}.${kind}`;
+        const entry = element("p");
+        entry.append(link);
+        fullDownloads.append(entry);
+      }
       const version = requestVersion;
       rowRequest = new AbortController();
       rowStatus.textContent = `Loading observations for ${dataset.title}...`;
@@ -641,6 +752,13 @@
     search.addEventListener("input", renderDefinitions);
     retry.addEventListener("click", load);
     rowRetry.addEventListener("click", () => showRows(activeDataset));
+    byId("export-retry").addEventListener("click", () => {
+      if (activeDataset && rows.length) renderExports();
+    });
+    window.addEventListener("pagehide", clearExports);
+    window.addEventListener("pageshow", event => {
+      if (event.persisted && activeDataset && rows.length) renderExports();
+    });
     byId("row-reset").addEventListener("click", () => {
       selection = {};
       sort = null;
@@ -671,7 +789,7 @@
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = { validateMetadata, matchingDatasets, matchesDefinition, loadMetadata,
-      validateRows, filterChoices, selectRows, sortRows, displayCell, loadDataset };
+      validateRows, filterChoices, selectRows, sortRows, displayCell, loadDataset, csvText, prepareExport };
   } else {
     start();
   }

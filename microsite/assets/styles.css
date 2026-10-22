@@ -220,6 +220,7 @@ summary {
 
 #metadata-error:not(:empty),
 #row-error:not(:empty),
+#export-error:not(:empty),
 #figure-error:not(:empty) {
   padding: 1rem;
   border-inline-start: 4px solid var(--focus);
