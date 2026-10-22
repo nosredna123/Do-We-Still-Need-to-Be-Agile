@@ -9,8 +9,8 @@ and local JSON/CSV, contained entirely in this directory.
 [observation JSON](data/datasets/)/[download CSV](data/downloads/) pairs are
 implemented, along with the [public data release manifest](data/release.json).
 The [page shell](index.html) provides overview, research-question guides, and
-methods with native in-page navigation. Styling and interactive dataset loading
-are not implemented, and whole-directory/actual-host approval remains pending.
+methods with native in-page navigation and responsive local styling.
+Interactive dataset loading is not implemented, and whole-directory/actual-host approval remains pending.
 This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
@@ -24,14 +24,46 @@ links and work without JavaScript. A visible skip link moves keyboard focus to
 the main content. The overview explains survey, team-semester, global transcript,
 and fixed-estimate grains before the research-question guides.
 
-This is an unstyled development shell, not an operational table explorer.
+This is a styled development shell, not an operational table explorer.
 There are no fake controls or loading indicators: the page states that interactive
 selection is not implemented. Local catalog, release-manifest, and documentation
-links work now. T011 adds layout/focus styling; T012 adds catalog loading and
+links work now. T011 provides layout/focus styling; T012 adds catalog loading and
 dataset navigation; filters, charts, and export actions remain later tasks.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
 the working shell as whole-directory or host approval.
+
+## Responsive styling (T011)
+
+The local [stylesheet](assets/styles.css) uses system fonts, a restrained light
+palette, readable text widths, underlined links, and a bounded page layout.
+Research-question cards use three columns on wide screens and stack below
+52 rem. Navigation wraps instead of clipping. Text can enlarge and long values
+can wrap without hiding content or forcing whole-page horizontal scrolling.
+Keyboard focus uses an offset, high-contrast outline; no fixed header obscures
+anchor targets. No external fonts, images, CSS imports, or build tools are used.
+
+Shared native control styles cover labels, fieldsets, inputs, selects, and
+buttons. Future controls must still have explicit labels and appropriate
+semantics; CSS cannot supply those. Controls have a 44 px minimum height at
+the default font size, except native checkboxes/radios, which must be paired
+with clickable labels. Disabled controls retain legible colors and use a
+dashed border and disabled cursor rather than reduced opacity.
+
+Future tables should use a `.table-scroll` wrapper with `tabindex="0"`,
+`role="region"`, and an accessible name, so narrow-screen users can scroll
+with the keyboard. Use a caption and scoped headers; mark numeric data cells
+with `.numeric` for right-aligned tabular numerals without splitting values.
+Headers wrap, while long numeric values scroll within the wrapper. Sort
+buttons retain native focus behavior. These are reusable presentation rules,
+not an implemented dataset table or sorting feature.
+
+Four [stylesheet tests](tools/test_styles.py) check local wiring, system-font
+and no-network rules, palette contrast (4.5:1 text and 3:1 focus/borders), and
+the control/table styling contract. Browser checks cover 320/360/768/1280 px
+widths, 200% text at 360 px, keyboard focus, and a temporary control/wide-table
+fixture. The fixture is not shipped. These checks do not replace the later
+full application accessibility and actual-host review.
 
 ## Public-safe naming
 

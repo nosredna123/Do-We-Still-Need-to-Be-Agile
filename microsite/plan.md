@@ -639,6 +639,58 @@ The shell is deliberately unstyled and the interactive explorer remains
 unimplemented. Continue with T011 and T012; later chart, export, accessibility,
 privacy, human release, and actual-host gates remain unchecked.
 
+### T011 - Responsive accessible presentation
+
+**Completed 2026-10-22.** The [local stylesheet](assets/styles.css) is linked
+once from the [entry page](index.html). It provides system fonts, bounded
+readable content, wrapping navigation, three-column RQ cards that stack below
+52 rem, clear section spacing, underlined links, and offset keyboard-focus
+outlines. No content is hidden to solve overflow, and no external assets,
+fonts, framework, script, or build dependency is introduced.
+
+Reusable native control rules cover labels, fieldsets, inputs, selects,
+buttons, and disabled states without opacity-based loss of contrast. Table
+rules provide captions, readable headers, right-aligned tabular numeric cells,
+and local horizontal scrolling via `.table-scroll`. The [README](README.md)
+specifies that future table wrappers need keyboard focus and an accessible
+region name, and that future controls still need real labels and semantics.
+No placeholder controls/tables were added to the shipped page; actual catalog
+loading, filters, tables, and sorting remain in subsequent tasks.
+
+Verification before completion:
+
+- Four new [stylesheet tests](tools/test_styles.py) initially failed before
+  the stylesheet existed. All 52 standard-library tests now pass locally and
+  in an isolated copied directory. Tests check single local stylesheet wiring,
+  system fonts, no network/hidden-content rules, contrast, focus and table styles.
+- Measured text contrast is 14.76:1 for body text, 7.64:1 for muted text,
+  8.50:1 for links on white, 7.75:1 for links on the soft panel background, and
+  8.50:1 for button text. Focus contrast is at least 8.45:1 against page/panel
+  backgrounds; control borders are 4.02:1 against white.
+- Browser checks at 1280, 768, 360, and 320 px found no whole-page horizontal
+  overflow. Cards use three columns on desktop and one on narrow screens.
+  At 360 px with 200% root text sizing, content still fits horizontally.
+- Real keyboard Tab navigation shows the solid offset focus ring, and Enter
+  on the skip link focuses main. A programmatic focus check after pointer
+  input did not activate `:focus-visible`, as expected; actual keyboard input
+  was used to verify the keyboard-specific style rather than weakening it.
+- A temporary browser-only fixture verified a 44 px select, a 46 px button,
+  keyboard focus traversal, and a wide numeric table scrolling within its
+  wrapper without widening the page. ArrowRight scrolls the focused wrapper;
+  numeric cells use tabular numerals. The fixture was removed, not shipped.
+- Browser inspection found no external resource requests. An isolated HTTP
+  copy serves identical HTML/CSS at `/` and `/review/explorer/` with the correct
+  MIME types; public release verification still passes.
+- All data/catalog/manifest bytes remain unchanged. Pylance syntax/diagnostics
+  and whitespace checks pass; temporary servers/copies were cleaned and no
+  bytecode was installed.
+
+VS Code still reports no discovered standalone unittest tests; explicit
+standard-library discovery successfully executes all 52. Responsive/contrast
+checks are scoped to this shell and temporary control/table examples, not a
+full application accessibility certification. T012 data loading, later table
+interactions, final human review, and host validation remain pending.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -795,7 +847,7 @@ resulting directory cannot depend on them at runtime.
 **Requirements:** REQ-001, REQ-002, REQ-003, REQ-005.
 
 - [x] T010 [US1] [Plan:3.1] Build semantic overview, explore, and methods sections in `microsite/index.html`, with RQ cards and a visible evidence-grain explanation. Verified semantic structure, RQ/metric scope, local links, keyboard skip-link focus, browser fragment navigation, isolated HTTP root/nested hosting, and all 48 tests; see Section 3.
-- [ ] T011 [US1] [Plan:3.1] Implement the responsive layout, system-font styling, accessible controls, focus states, and readable tables in `microsite/assets/styles.css`.
+- [x] T011 [US1] [Plan:3.1] Implement the responsive layout, system-font styling, accessible controls, focus states, and readable tables in `microsite/assets/styles.css`. Verified 52 tests, measured contrast, browser widths 320-1280 px, 200% text, keyboard focus and local table scrolling, and standalone HTTP CSS delivery; see Section 3.
 - [ ] T012 [US1] [Plan:3.1] Load the local catalog and implement RQ/metric navigation, definitions, snapshot details, and explicit loading/error states in `microsite/assets/app.js`.
 
 **Plan 3.2:** Add compatible filtering, sorting, and comparisons.

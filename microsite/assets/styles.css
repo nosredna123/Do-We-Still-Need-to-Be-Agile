@@ -1,0 +1,284 @@
+:root {
+  color-scheme: light;
+  --ink: #1f2933;
+  --muted: #465565;
+  --surface: #ffffff;
+  --soft: #f1f5f8;
+  --link: #174e86;
+  --action: #174e86;
+  --focus: #7a3100;
+  --border: #718096;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--surface);
+  line-height: 1.6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+body > header,
+main,
+body > footer,
+body > a {
+  display: block;
+  max-inline-size: 76rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+body > a {
+  padding-block: 0.75rem;
+}
+
+body > header {
+  padding-block: 1.5rem 2rem;
+  border-block-end: 1px solid var(--border);
+}
+
+main > section {
+  padding-block: 2rem;
+  border-block-end: 1px solid var(--border);
+}
+
+body > footer {
+  padding-block: 1.5rem;
+  color: var(--muted);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+h1 {
+  margin-block: 0 1rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+h2 {
+  margin-block: 0 1.25rem;
+  font-size: 1.75rem;
+}
+
+h3 {
+  margin-block: 1.75rem 0.75rem;
+  font-size: 1.25rem;
+}
+
+p,
+dl,
+article > ul,
+section > ul {
+  max-inline-size: 75ch;
+}
+
+li + li {
+  margin-block-start: 0.5rem;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.18em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+[id] {
+  scroll-margin-block-start: 1rem;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li + li {
+  margin-block-start: 0;
+}
+
+nav a {
+  display: inline-block;
+  min-block-size: 2.75rem;
+  padding-block: 0.5rem;
+}
+
+.rq-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem 2rem;
+}
+
+.rq-cards > li {
+  min-inline-size: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  background: var(--soft);
+}
+
+.rq-cards h3 {
+  margin-block-start: 0;
+}
+
+.rq-cards p {
+  margin-block-end: 0;
+}
+
+dt {
+  margin-block-start: 1rem;
+  font-weight: 700;
+}
+
+dd {
+  margin: 0.35rem 0 1rem;
+}
+
+#explorer-status,
+header > p:last-child {
+  padding: 1rem;
+  border-inline-start: 4px solid var(--link);
+  background: var(--soft);
+}
+
+article + article {
+  margin-block-start: 2rem;
+  padding-block-start: 0.5rem;
+  border-block-start: 1px solid var(--border);
+}
+
+label,
+legend {
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin-block-end: 0.4rem;
+}
+
+fieldset {
+  min-inline-size: 0;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+}
+
+button,
+input,
+select,
+textarea {
+  max-inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  inline-size: 100%;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  min-block-size: auto;
+  accent-color: var(--action);
+}
+
+button {
+  color: var(--surface);
+  background: var(--action);
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.table-scroll {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+}
+
+table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+caption {
+  padding-block: 0.5rem 1rem;
+  text-align: start;
+  font-weight: 600;
+}
+
+th,
+td {
+  padding: 0.75rem;
+  border-block-end: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+th {
+  background: var(--soft);
+}
+
+td.numeric {
+  text-align: end;
+  white-space: nowrap;
+}
+
+th button {
+  color: var(--link);
+  background: var(--surface);
+  text-align: start;
+  text-decoration: underline;
+}
+
+@media (max-width: 52rem) {
+  .rq-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+  }
+}
