@@ -7,8 +7,9 @@ and local JSON/CSV, contained entirely in this directory.
 **Current status:** publication boundaries, the preparation tool, the
 [public catalog](data/catalog.json), and 49 matched
 [observation JSON](data/datasets/)/[download CSV](data/downloads/) pairs are
-implemented. The application and release metadata are not implemented, and
-whole-directory/actual-host approval remains pending. This is not a ready-to-publish site.
+implemented, along with the [public data release manifest](data/release.json).
+The application is not implemented, and whole-directory/actual-host approval
+remains pending. This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
@@ -203,7 +204,7 @@ site root. It receives `datasets/<dataset-id>.json` and
 Two `definitions/<definition-id>.json` files hold reviewed definition-only rows,
 not duplicate data-browser tabs. The catalog already embeds their 13 weekly-bin
 and 13 complexity definitions; these preparation outputs can verify agreement.
-Release metadata remains a separate task.
+The release manifest is generated separately as described under T009 below.
 
 The T008 snapshot installs only the candidate's `datasets/` and `downloads/`
 directories under `data/`, after catalog/schema and source-byte agreement checks.
@@ -284,3 +285,58 @@ from the pinned approved inputs; public-file tests alone cannot prove provenance
 Distinct profile/figure inputs retain their own original numeric precision;
 cross-table ratio comparisons use the preparation contract's `1e-12` absolute
 tolerance without rounding or rewriting exported values.
+
+## Public release metadata (T009)
+
+[The release manifest](data/release.json) identifies the frozen public snapshot
+as `research-data-001`, with manifest schema version `1.0`. Its
+`snapshot_prepared_release_pending` status is not publication approval.
+It contains only public metadata:
+
+- SHA-256 and byte length for the catalog and every approved observation JSON
+  and CSV download: 99 artifacts, with paths relative to the site root.
+- Per-file and per-dataset row counts; per-dataset column counts; 49 datasets,
+  1,674 observation rows, and 17,046 scalar cells counted once across JSON,
+  not doubled by CSV. These are exported rows, not independent participant Ns.
+- Catalog-declared coverage plus observed cohort/checkpoint lists where those
+  columns exist, distinct team-semester counts only for team-keyed datasets,
+  measurement/ratio-status counts, baseline eligibility, and transcript chunks.
+  Pooled datasets retain original denominator fields; transcript coverage is
+  restricted to the measured corpus and is never attributed to teams.
+
+The hash scope is the **data snapshot**, not every site file. The manifest
+excludes its own hash to avoid circularity and excludes documentation, tools,
+and application assets. Future application/host review still covers those files.
+Hash equality detects byte changes; it does not establish anonymity, scientific
+approval, or authenticity against malicious replacement of both data and manifest.
+No Git identifiers, private source hashes/locations, approval records, reviewer
+identities, confidential lineage, or authoring timestamps are included.
+
+Check all saved metadata from this directory with the local, standard-library
+[release authoring tool](tools/build_release.py):
+
+```sh
+python3 -B tools/build_release.py --output data/release.json --check
+```
+
+It needs only this directory's public files. It validates the reviewed catalog,
+exact data inventory, columns/types/nulls/keys, canonical JSON, and JSON/CSV
+agreement before computing hashes and counts. Missing or malformed inputs,
+symlinks, extra files under `data/`, and stale manifest bytes fail explicitly.
+Existing output files are never overwritten.
+
+For an intentionally reviewed refresh, prepare a separate candidate site and
+set `CANDIDATE_SITE` and `NEW_RELEASE_OUTPUT` to that site and a new output path:
+
+```sh
+python3 -B tools/build_release.py \
+  --site-root "$CANDIDATE_SITE" --output "$NEW_RELEASE_OUTPUT"
+```
+
+Investigate a stale check before regenerating: restore accidentally modified
+public bytes from the approved snapshot, or reconcile intentional input changes,
+renew affected approval, and prepare a new snapshot. A genuinely new data
+snapshot must receive a new neutral identifier in the authoring tool and its
+tests; do not reuse `research-data-001` to hide changed data. Review the new
+manifest before installing it, then rerun `--check` and the full local test
+command above. Do not copy confidential lineage into the candidate or release.

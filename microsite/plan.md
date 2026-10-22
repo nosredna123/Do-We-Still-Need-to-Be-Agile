@@ -535,6 +535,63 @@ These are task-verification fingerprints, not T009 release metadata.
 T009, the application, browser/host validation, and final human publication
 approval remain pending; this snapshot is not a ready-to-publish site.
 
+### T009 - Reproducible public release metadata
+
+**Completed 2026-10-22.** The [release manifest](data/release.json), schema
+version `1.0`, identifies the snapshot neutrally as `research-data-001`.
+It records SHA-256 hashes and byte lengths for the public catalog and all 98
+observation/download files (99 artifacts), row counts for each JSON/CSV,
+per-dataset column counts and coverage, and totals of 49 datasets, 1,674 rows,
+and 17,046 scalar cells. Totals count JSON observations once, not again for CSV;
+exported row counts are not independent participant/sample sizes.
+
+The local [release authoring tool](tools/build_release.py) reads only public
+files inside an explicitly selected site directory. It reuses the strict JSON
+reader, public serializers, catalog validation, scalar types, and schema/key
+contracts. It rejects malformed columns/types/nulls/keys, JSON/CSV disagreement,
+missing/extra data artifacts, symlinks, stale saved metadata, and overwrites.
+No private source inputs, source hashes, Git identifiers, authoring timestamps,
+reviewer/approval records, or confidential lineage enter the public manifest.
+The existing private T008 lineage remains outside this directory.
+
+Coverage combines catalog-declared scope with observed row fields: cohort and
+checkpoint lists where present, distinct composite team-semester counts only
+for team-keyed data, measurement and ratio-status counts, baseline eligibility,
+and corpus chunks. Original denominator fields and analytical grains remain
+authoritative. No team attribution or unmeasured transcript cohort is invented.
+
+Verification before completion:
+
+- All 43 standard-library tests pass: 34 prior tests plus nine
+  [release tests](tools/test_release.py). Tests were added first and failed
+  before the implementation existed. VS Code still reports no discovered tests;
+  explicit standard-library discovery executes the complete suite successfully.
+- Independent verification recomputed every public artifact hash and byte
+  length, every JSON/CSV row count, all per-dataset column counts, totals,
+  status counts, and distinct team coverage from the persisted files.
+- An isolated copied directory checks and regenerates byte-identical release
+  metadata and passes all 43 tests without parent research files, dependencies,
+  or private lineage.
+- Negative tests reject a missing CSV, extra data file, changed CSV, extra JSON
+  column, incorrect boolean-for-integer type, duplicate key, symlink, altered
+  manifest hash, and output overwrite. Invalid input creates no new manifest.
+- Existing catalog and all 98 T008 data files remain byte-for-byte unchanged,
+  as do the approved contract/index fingerprints. Pylance syntax/diagnostics
+  and whitespace checks pass; temporary copies and bytecode are absent.
+
+The manifest is 45,542 bytes, SHA-256
+`c5dbf7fc800c639cc584f90961000156f6c60c2a3c1491982d6e75834dd7c603`.
+It excludes its own hash to avoid circularity and explicitly covers data
+artifacts only, not documentation/tools/application assets or whole-site
+approval. Hashes detect byte changes, not anonymity or authenticity if both
+the manifest and data are replaced. The [README](README.md) documents check,
+candidate generation, stale-hash diagnosis, and reviewed snapshot refresh.
+
+Phase 2's data-export tasks are complete. The manifest deliberately retains
+`snapshot_prepared_release_pending`: application implementation (T010 onward),
+whole-directory privacy review, human release authorization, and actual-host
+validation remain pending. No deployment URL or publication approval is claimed.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -679,7 +736,7 @@ Unresolved privacy questions block the affected dataset, not an implicit release
 - [x] T006 [Plan:2.1] Implement `microsite/tools/prepare_snapshot.py` with explicit source/approval inputs, schema/key validation, deterministic JSON/CSV output, and explicit rejection of unapproved fields or broken required contracts. Never copy source files wholesale. Verified 17 unit tests, all 58 source dispositions, isolated deterministic exports, JSON/CSV parity, and fail-closed rejection paths; see Section 3.
 - [x] T007 [Plan:2.1] Produce `microsite/data/catalog.json` with English labels, source-grain definitions, valid filters, approved relationships, missingness states, figure mappings, and interpretation notes. Use neutral source labels rather than identifying URLs. Verified 49 descriptors, 510 columns, seven figure mappings, embedded definitions, all 17,046 prepared scalar cells, 27 passing tests, and isolated deterministic generation; see Section 3.
 - [x] T008 [Plan:2.1] Write approved rows to `microsite/data/datasets/<dataset-id>.json` and matching `microsite/data/downloads/<dataset-id>.csv`; preserve scientific values and explicit unavailable/ineligible states. Verified all 49 pairs, 1,674 rows, 17,046 scalar cells, exact approved-source byte reproduction, 34 passing tests, standalone-copy checks, and corruption rejection; see Section 3.
-- [ ] T009 [Plan:2.1] Write `microsite/data/release.json` with a neutral snapshot identifier, schema version, public artifact hashes, row counts, and coverage. Retain confidential source lineage only outside the directory.
+- [x] T009 [Plan:2.1] Write `microsite/data/release.json` with a neutral snapshot identifier, schema version, public artifact hashes, row counts, and coverage. Retain confidential source lineage only outside the directory. Verified all 99 public artifact hashes, 49 dataset counts/coverage, isolated byte-identical regeneration, 43 passing tests, and explicit failure paths; see Section 3.
 
 **Exit:** Frozen public JSON/CSV that agrees with the paper and contains no private
 fields. Preparation can depend on explicitly supplied research inputs; the

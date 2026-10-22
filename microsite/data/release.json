@@ -1,0 +1,1618 @@
+{
+  "schema_version": "1.0",
+  "snapshot_id": "research-data-001",
+  "status": "snapshot_prepared_release_pending",
+  "path_base": "site_root",
+  "hash_algorithm": "sha256",
+  "artifact_scope": "Public catalog and all observation JSON/CSV files only. Excludes this manifest (no self-hash), documentation, tools, and application assets; not a whole-site approval.",
+  "coverage_note": "Counts describe exported rows, not independent participants or pooled sample sizes. Dataset grains, original denominators, and declared coverage remain in the catalog. Observed cohort/checkpoint lists are included only when present in the rows; global transcript measurements are not attributed to teams or unmeasured cohorts.",
+  "summary": {
+    "dataset_count": 49,
+    "artifact_count": 99,
+    "observation_row_count": 1674,
+    "scalar_cell_count": 17046
+  },
+  "artifacts": [
+    {
+      "path": "data/catalog.json",
+      "sha256": "65fe835ca8326514ae99759900b8efe618fd018c8fbe9958eb7393159c421a7c",
+      "bytes": 322214
+    },
+    {
+      "path": "data/datasets/complexity-profile.json",
+      "sha256": "fdf7429fb04c21ec5cb5d9ffb0de721890c42ccd6ad8c475e1adc980067b6d07",
+      "bytes": 20573,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/complexity-rework-figure.json",
+      "sha256": "2e6548c2770bd08fbd566d451f051ccfb799206c012851372da4eb287f32a811",
+      "bytes": 7193,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/complexity-stratified-associations.json",
+      "sha256": "1d63d0905db89aec00885af6b70327cc447ee811624ebb0c67454aabd815494d",
+      "bytes": 4843,
+      "row_count": 6
+    },
+    {
+      "path": "data/datasets/influence-cases.json",
+      "sha256": "cb25e5254b7ac26b87f60eaa5fe954832b21cceddc2e62131ed5bbfddaca74af",
+      "bytes": 115834,
+      "row_count": 182
+    },
+    {
+      "path": "data/datasets/influence-relations.json",
+      "sha256": "90af9a751e5966fcdf914745a22c40edfc83b22bf422fe93c1fd111a301a73c7",
+      "bytes": 7879,
+      "row_count": 13
+    },
+    {
+      "path": "data/datasets/influence-summary.json",
+      "sha256": "85719741457ad9b3d0de7b39b4c731699bcb4d1aa31d6e7ae516f7d3e4afca55",
+      "bytes": 5834,
+      "row_count": 13
+    },
+    {
+      "path": "data/datasets/m1-autonomy.json",
+      "sha256": "48f1e3058a05aaeb991fe31ed7bc935275ad17152920f33e42f72bbbb89a8ea4",
+      "bytes": 4787,
+      "row_count": 26
+    },
+    {
+      "path": "data/datasets/m1-career-topics.json",
+      "sha256": "af1793995d42c71435ff5123d7496cd6f772eacf310d9d0825602fc97e105cb0",
+      "bytes": 9124,
+      "row_count": 36
+    },
+    {
+      "path": "data/datasets/m1-frequency.json",
+      "sha256": "926b231966cf29b08f24e8f9c4fcbe4fe7614a99874fc41740eab7d3dc04966f",
+      "bytes": 11494,
+      "row_count": 60
+    },
+    {
+      "path": "data/datasets/m1-perceptions.json",
+      "sha256": "0042bd841e3a2e007e5e8783887aa67d7133b673272980a372d02cc3a82ca709",
+      "bytes": 13736,
+      "row_count": 36
+    },
+    {
+      "path": "data/datasets/m1-prior-experience.json",
+      "sha256": "f78b2d4922bcc241785b1367229e6e6628959a393f9d7d0b4936379b3e823b95",
+      "bytes": 2362,
+      "row_count": 12
+    },
+    {
+      "path": "data/datasets/m1-tasks.json",
+      "sha256": "a39c321873c722dec0f0b2d3b4a425603b455aedb18035b45bab8e1ec53a2d22",
+      "bytes": 12094,
+      "row_count": 58
+    },
+    {
+      "path": "data/datasets/m1-tools.json",
+      "sha256": "138af48f464cf443807d342b5d18c95562e91ae637829ac649319fd63b9ad907",
+      "bytes": 11680,
+      "row_count": 62
+    },
+    {
+      "path": "data/datasets/m2-paired-sensitivity.json",
+      "sha256": "e07d93eaf0ce9b836052d27f2d8aa324dfe126e8463b4f535d3a0760e07a99d1",
+      "bytes": 3584,
+      "row_count": 12
+    },
+    {
+      "path": "data/datasets/m2-role-distributions.json",
+      "sha256": "ae0f69f744e915bc387fbbcedb29888ede5046fc8f088305306ce2c69633e778",
+      "bytes": 27528,
+      "row_count": 165
+    },
+    {
+      "path": "data/datasets/m2-role-summaries.json",
+      "sha256": "9718b5eab42d2d2834baf9e64a257668c7dd1e0fc819e66cdcfd085fb7e27824",
+      "bytes": 12319,
+      "row_count": 36
+    },
+    {
+      "path": "data/datasets/m3-author-concentration.json",
+      "sha256": "5f157208db2e0405d8f5305ccaf3dc3ec64f16d760025a0f17b55d24cd52d502",
+      "bytes": 6900,
+      "row_count": 28
+    },
+    {
+      "path": "data/datasets/m3-participation.json",
+      "sha256": "c0376db50b3424b03d2e9f7e7fb6ba310b8bd5e0aa98cead3887d4a648667b6c",
+      "bytes": 4925,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/m3-rolling-pooled.json",
+      "sha256": "15127aed61b65ef8a31e0a363b85ce78fa0997b6d2dce59c4fd7769fd0a0590f",
+      "bytes": 11061,
+      "row_count": 29
+    },
+    {
+      "path": "data/datasets/m3-rolling.json",
+      "sha256": "530ecaa071e8c98b4ff5ec4570ecac431dfb066b9d6788bc8500233b78167b4a",
+      "bytes": 102468,
+      "row_count": 406
+    },
+    {
+      "path": "data/datasets/m4-checkpoint-churn.json",
+      "sha256": "e7984674ba333d6efd668b2ee003f4f19e1adec7f0ad1ff7aa7e7e4c52bbd39a",
+      "bytes": 16264,
+      "row_count": 42
+    },
+    {
+      "path": "data/datasets/m4-checkpoint-pooled.json",
+      "sha256": "2ab5edbcfb6f87401ce27c3353d08720f5ab89816450fcf2c7290129328d5dac",
+      "bytes": 874,
+      "row_count": 3
+    },
+    {
+      "path": "data/datasets/m4-path-composition.json",
+      "sha256": "669f491c2e9262b3e4fe4a3f6565593b9e7d1acbcc3fafd568d231007c75f09f",
+      "bytes": 1524,
+      "row_count": 6
+    },
+    {
+      "path": "data/datasets/m5-corpus-coverage.json",
+      "sha256": "4cae4a4c48c84bc55be5639f4c5edfb1b2882c474db3f588d0ec34bf5347f06b",
+      "bytes": 594,
+      "row_count": 3
+    },
+    {
+      "path": "data/datasets/m5-lexicon.json",
+      "sha256": "08b95858192d32c8d3fa1b83dc803bf451ba92ba535fc9d6da92ae892b64f4e1",
+      "bytes": 1617,
+      "row_count": 5
+    },
+    {
+      "path": "data/datasets/m5-marker-composition.json",
+      "sha256": "82d8f0f8c44439424c8cf4f7740bea5f3de78d6e06501777282e76df9f1d8b81",
+      "bytes": 2285,
+      "row_count": 15
+    },
+    {
+      "path": "data/datasets/m5-marker-density.json",
+      "sha256": "fccd07ece7395eb1e3fc3a6df88a1d16b86489c5953c647b994811b8960bae9d",
+      "bytes": 1105,
+      "row_count": 3
+    },
+    {
+      "path": "data/datasets/m6a-presence-by-cohort.json",
+      "sha256": "3fac80bd9036f8434b9c60828158b593b5f408e7d84b3b2c90f297d99f5c3e42",
+      "bytes": 555,
+      "row_count": 4
+    },
+    {
+      "path": "data/datasets/m6a-structural-planning.json",
+      "sha256": "5b36ee84de478f4415d8c0950c0a23ca0ae551b56708a5372a5c4b44302b9da7",
+      "bytes": 5604,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/m6b-planning-content.json",
+      "sha256": "71ccdaa288e1c27cb77c75ccec6b44e79dcfa456d374dd1bf4ef227a206e8243",
+      "bytes": 4045,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/m7-checkpoint-inactivity.json",
+      "sha256": "def1709994b8e3cd75fa4c08228bfe8e5089c561777e39d110e7fbb1cf8f3b09",
+      "bytes": 7567,
+      "row_count": 42
+    },
+    {
+      "path": "data/datasets/m8-baseline-eligibility.json",
+      "sha256": "0b744fd8565de5f8ba6ebd8e00e81d66608e7e0d52e822be4be2a58c870cea3a",
+      "bytes": 2535,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/m8-rework-magnitude.json",
+      "sha256": "99efe889754a1938dd8da75d8b79cead3680597d12cfe4932613d9ba45d4a9a7",
+      "bytes": 5111,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/m9-content-outcomes.json",
+      "sha256": "d7f6de9ac91016185d836fc4241878f515a42e06e427d6d70e83239f56b0480b",
+      "bytes": 7479,
+      "row_count": 30
+    },
+    {
+      "path": "data/datasets/m9-leave-one-out.json",
+      "sha256": "5def627d353db64c20fffb4bb8cc3dba68d27874bf4bba8d01772d1b55c66ce5",
+      "bytes": 16572,
+      "row_count": 52
+    },
+    {
+      "path": "data/datasets/m9-structural-outcomes.json",
+      "sha256": "c28d760b2734f58b9dbcc9f637787c0d1bad7c41f1339c155acc02a81e64a84c",
+      "bytes": 1983,
+      "row_count": 8
+    },
+    {
+      "path": "data/datasets/m9-structural-rework-magnitude.json",
+      "sha256": "9a8882f04b0b6af20cb053f7e1439bef6e384ca8c99a9d50b5ed2581d0e68d7a",
+      "bytes": 483,
+      "row_count": 2
+    },
+    {
+      "path": "data/datasets/m9-structural-rework-ratio.json",
+      "sha256": "cd139db1a9baee16250b89475d95a6cb5d616a95519cc9aff5293b2f2b0f5d8c",
+      "bytes": 494,
+      "row_count": 2
+    },
+    {
+      "path": "data/datasets/operational-regularity.json",
+      "sha256": "2ce88cee131eba1a932f42ccbeb9c17053ee905aae6060686dac65d1989eeb0f",
+      "bytes": 19755,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/phase-activity-summary.json",
+      "sha256": "d2b927783f640f3aea3aa9105c9829f3236eea0f8539a499d1de79da191ba337",
+      "bytes": 4753,
+      "row_count": 12
+    },
+    {
+      "path": "data/datasets/phase-activity.json",
+      "sha256": "017811235999e4bd03ab38ac76c6e3e6aef5f2bc2643c58f3cbe2db705567da7",
+      "bytes": 30360,
+      "row_count": 56
+    },
+    {
+      "path": "data/datasets/planning-final7-clean-churn.json",
+      "sha256": "7387ad0f081fdb781a6cb72623719cfbf403340be788612ad33aa5a919ebe827",
+      "bytes": 8991,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/planning-final7-commits.json",
+      "sha256": "8c359b0e229a1e20f63ed55c4ef1a554c6642d78cca6f8311b9b219221d9d327",
+      "bytes": 8633,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/planning-final7-quadrants.json",
+      "sha256": "1d411a52f67f81b4fb80e96bc9469f841bbb933a562875e40f51abca7a5fbe03",
+      "bytes": 3476,
+      "row_count": 8
+    },
+    {
+      "path": "data/datasets/planning-rework-profile.json",
+      "sha256": "2ab10591d889f1d963e7f25809b7a483412409e6e14c227a7539ff8deda3836e",
+      "bytes": 4458,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/score-final7-clean-churn.json",
+      "sha256": "60f442db449814c86791438a48c1d24001637f6a270bbcfdfc9ae676e32c06bb",
+      "bytes": 7870,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/score-final7-commits.json",
+      "sha256": "ec292dcc52665509b256a225b06abeb1daa4949a38a6bd8a75163e5b4c06cd6b",
+      "bytes": 7512,
+      "row_count": 14
+    },
+    {
+      "path": "data/datasets/score-final7-quadrants.json",
+      "sha256": "ad2a17a5245b2e54da52cc7bc2c4a313a7ffe2a03b98008d579e36eca98b669e",
+      "bytes": 7106,
+      "row_count": 16
+    },
+    {
+      "path": "data/datasets/transcript-context-2025.json",
+      "sha256": "87e3e65f49c53efd55743885c7fe7b9310c3186259ba534ae1b5b683e1d97270",
+      "bytes": 1548,
+      "row_count": 3
+    },
+    {
+      "path": "data/downloads/complexity-profile.csv",
+      "sha256": "9237ab74e2ad71e379a5598f2998837f1f2231a3fae2949ab28d16676fabf3d5",
+      "bytes": 4979,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/complexity-rework-figure.csv",
+      "sha256": "5e6405f90c60df060ceb6ded20e276294a1ae117d7407f512d4cf623efd46182",
+      "bytes": 2297,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/complexity-stratified-associations.csv",
+      "sha256": "0abfd5020a5796a22a6fecffc8f7eafe7e06e7d9f3d5915c14bfef29106e4a43",
+      "bytes": 2298,
+      "row_count": 6
+    },
+    {
+      "path": "data/downloads/influence-cases.csv",
+      "sha256": "06d1e008860072512d5e81e18925e9ac61b6ed0c068c2820df053162eb3a98e6",
+      "bytes": 45446,
+      "row_count": 182
+    },
+    {
+      "path": "data/downloads/influence-relations.csv",
+      "sha256": "6b54cad6e03153f788860d5925a11bdf5b2e0c6797a0825c5bd99c3217d6fc31",
+      "bytes": 3193,
+      "row_count": 13
+    },
+    {
+      "path": "data/downloads/influence-summary.csv",
+      "sha256": "3091b507a30b177fe72e0fa84af2c987ef31db05d9fdb219e18b03387af06657",
+      "bytes": 2115,
+      "row_count": 13
+    },
+    {
+      "path": "data/downloads/m1-autonomy.csv",
+      "sha256": "4e9ed6e4999b5380c6726b1a2815e8e22c0797eb5cdba28e88b8c1cab5828091",
+      "bytes": 1464,
+      "row_count": 26
+    },
+    {
+      "path": "data/downloads/m1-career-topics.csv",
+      "sha256": "6d99078028822c8faaf408a873e89391cf9d6a575fc173fa3eb398d60fc07b52",
+      "bytes": 3379,
+      "row_count": 36
+    },
+    {
+      "path": "data/downloads/m1-frequency.csv",
+      "sha256": "7f1919810129dc84b5ec9bf115bacb15c4045c2c06e234ebd75b10ee86b68ce0",
+      "bytes": 3583,
+      "row_count": 60
+    },
+    {
+      "path": "data/downloads/m1-perceptions.csv",
+      "sha256": "046434d22ef2b3b5925be8f9ab2f803af194dae4d96615e926be0969242d952a",
+      "bytes": 4293,
+      "row_count": 36
+    },
+    {
+      "path": "data/downloads/m1-prior-experience.csv",
+      "sha256": "c2b2aebd07bcf8bfd1dc5f4a50841a31e1e21b38c795d09c89644053af4e7c02",
+      "bytes": 811,
+      "row_count": 12
+    },
+    {
+      "path": "data/downloads/m1-tasks.csv",
+      "sha256": "77fcf5dc62d0486bb8b1e02c6c751954dc4888f2345b506f1e312c6ff27988a7",
+      "bytes": 4191,
+      "row_count": 58
+    },
+    {
+      "path": "data/downloads/m1-tools.csv",
+      "sha256": "88e5bd055aa14cbf58db88710056777101b729cbd03411b07434fb4fead7dce4",
+      "bytes": 3553,
+      "row_count": 62
+    },
+    {
+      "path": "data/downloads/m2-paired-sensitivity.csv",
+      "sha256": "1cea84357869ff804803418c895ee9479d17b8c7b59d9694ab0673b3cca530fa",
+      "bytes": 1278,
+      "row_count": 12
+    },
+    {
+      "path": "data/downloads/m2-role-distributions.csv",
+      "sha256": "f5b56e6e3f17355510edbbc292aabd5ec3207690d7c3791df6f180cd420ecb23",
+      "bytes": 7119,
+      "row_count": 165
+    },
+    {
+      "path": "data/downloads/m2-role-summaries.csv",
+      "sha256": "51ff13e2e43690fa1a67a0dd7a2da2d66387d158284240ad61e509be36b7f5bb",
+      "bytes": 4253,
+      "row_count": 36
+    },
+    {
+      "path": "data/downloads/m3-author-concentration.csv",
+      "sha256": "acc55e5de5a395c4ee712aec1e549a77d0827c25451a09bb345591b0a5af530c",
+      "bytes": 1704,
+      "row_count": 28
+    },
+    {
+      "path": "data/downloads/m3-participation.csv",
+      "sha256": "92dfa6c237c08bb9102302011e326137bdab73a0816cd902efcdca76f8997ca0",
+      "bytes": 1388,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/m3-rolling-pooled.csv",
+      "sha256": "6053509b73cb5c3f2dace04114894a790093bcaa7eedac5c611f4f738ebdb98c",
+      "bytes": 2646,
+      "row_count": 29
+    },
+    {
+      "path": "data/downloads/m3-rolling.csv",
+      "sha256": "98920da0048dad272d74ba84b8839a1c474f2fca657a03a0108b1c18805be7bf",
+      "bytes": 22657,
+      "row_count": 406
+    },
+    {
+      "path": "data/downloads/m4-checkpoint-churn.csv",
+      "sha256": "ae05825cc31ef6a3dab4a1b256fc3cf08b00951d08c6dfe50a283c3aa5d24dc0",
+      "bytes": 3118,
+      "row_count": 42
+    },
+    {
+      "path": "data/downloads/m4-checkpoint-pooled.csv",
+      "sha256": "68b92675f9dca9323abe729604da27a407c86623b4a8f2c3bbe4943306985bed",
+      "bytes": 323,
+      "row_count": 3
+    },
+    {
+      "path": "data/downloads/m4-path-composition.csv",
+      "sha256": "86eff90c5ab8e4b7d8f0666a38453a7a200cf593b902d94d2cd3a1768cd7b909",
+      "bytes": 530,
+      "row_count": 6
+    },
+    {
+      "path": "data/downloads/m5-corpus-coverage.csv",
+      "sha256": "50e57e5fed4631d8bb000340bba4a3200afc6b47be2f2ac8a123e8aecb5e5781",
+      "bytes": 183,
+      "row_count": 3
+    },
+    {
+      "path": "data/downloads/m5-lexicon.csv",
+      "sha256": "5a2115fd1ba4c403f1b368b31e1e65b133640b83db591483935e7735489b79e0",
+      "bytes": 1068,
+      "row_count": 5
+    },
+    {
+      "path": "data/downloads/m5-marker-composition.csv",
+      "sha256": "ec16de3d0afd004831ce4eaed208f8396fbad24cc993835937fd66e5da5ffa21",
+      "bytes": 550,
+      "row_count": 15
+    },
+    {
+      "path": "data/downloads/m5-marker-density.csv",
+      "sha256": "11fc661dbe509096965c7e7164245fabf6fd9088874e23f5c91799d8d7ec7d26",
+      "bytes": 380,
+      "row_count": 3
+    },
+    {
+      "path": "data/downloads/m6a-presence-by-cohort.csv",
+      "sha256": "a8deddb231a73d09a283653d2f54013b0c8d7cee92c03b052977cd48c2835445",
+      "bytes": 202,
+      "row_count": 4
+    },
+    {
+      "path": "data/downloads/m6a-structural-planning.csv",
+      "sha256": "d8b33e100e81f6f5be39b6c92855f183f47965e373afb1ab3982827458451542",
+      "bytes": 1084,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/m6b-planning-content.csv",
+      "sha256": "e678e0da9096ba67ccf52c60309f0d3ed0f0004ca67979245978729b34e5103c",
+      "bytes": 729,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/m7-checkpoint-inactivity.csv",
+      "sha256": "5e3a1ea347ad0411088aea44cad8dda3a8c6804464e817a1f5b506b8c8c2b3cb",
+      "bytes": 1596,
+      "row_count": 42
+    },
+    {
+      "path": "data/downloads/m8-baseline-eligibility.csv",
+      "sha256": "42b39d9ab473a27647b27aa98e5e84ee836dc02b37e1379b48f13085dbfe8e6c",
+      "bytes": 671,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/m8-rework-magnitude.csv",
+      "sha256": "93028215f1a251c9b73b630a7bd7ca03cda6bc8d8f1786cc930606974989c20d",
+      "bytes": 1325,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/m9-content-outcomes.csv",
+      "sha256": "1f1d2a03d13eb6719c37fb4b0909eaa5429ddc779bba1a76a77a8056801e7325",
+      "bytes": 3441,
+      "row_count": 30
+    },
+    {
+      "path": "data/downloads/m9-leave-one-out.csv",
+      "sha256": "d3893e11f27fb9a1a452ea7211b9015701a651e40c497e10c7203da74f1d9274",
+      "bytes": 6389,
+      "row_count": 52
+    },
+    {
+      "path": "data/downloads/m9-structural-outcomes.csv",
+      "sha256": "e85ac38f930a5503ba76466e6f6a2bf86cb167f50399381b95d40dd187d00656",
+      "bytes": 959,
+      "row_count": 8
+    },
+    {
+      "path": "data/downloads/m9-structural-rework-magnitude.csv",
+      "sha256": "7c2f8288486f3c7a426bb6bf8a787f879dc32fcd53ffe2dc47f18f5ff9359357",
+      "bytes": 281,
+      "row_count": 2
+    },
+    {
+      "path": "data/downloads/m9-structural-rework-ratio.csv",
+      "sha256": "cd5f3b98d8f36da8b59a610240a16029043c951f5d318eb300060244625108ec",
+      "bytes": 292,
+      "row_count": 2
+    },
+    {
+      "path": "data/downloads/operational-regularity.csv",
+      "sha256": "76033e7a787fb6941bd6208711c2cb12a8af1fd6777f52e89e6d24cfc232bf05",
+      "bytes": 6457,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/phase-activity-summary.csv",
+      "sha256": "fb1fe90a1a79ff7bbc0c09c431b54a138893b94ccb1d9fc2932b7cab93667e3b",
+      "bytes": 1468,
+      "row_count": 12
+    },
+    {
+      "path": "data/downloads/phase-activity.csv",
+      "sha256": "eebb637ac8202cce2568620dbe5295bf0612c97e363b46595c25b7b09cae7ab7",
+      "bytes": 8376,
+      "row_count": 56
+    },
+    {
+      "path": "data/downloads/planning-final7-clean-churn.csv",
+      "sha256": "aa5f9ef108d89c07e1d8f14f88f792e622032fbee28ee1e0dd938e9691e69f49",
+      "bytes": 3937,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/planning-final7-commits.csv",
+      "sha256": "9e30df03134b4bc7f17cbed34178ebc7ad088f9aa712996a10be6e3059bb2741",
+      "bytes": 3579,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/planning-final7-quadrants.csv",
+      "sha256": "8295a795c6e9d7218f83ae5a47aaf6db46666b2a9f657bb6ed75b83365ac92bd",
+      "bytes": 1526,
+      "row_count": 8
+    },
+    {
+      "path": "data/downloads/planning-rework-profile.csv",
+      "sha256": "2ef527eb0817f7afda0a9d65a12bd05d82e3fa0d23116dec41c397ad29d5d6ee",
+      "bytes": 976,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/score-final7-clean-churn.csv",
+      "sha256": "4e923e6fdf3ef3151ae0271872b8b74911c3eb7a806747885a3a491e82a9efd3",
+      "bytes": 3535,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/score-final7-commits.csv",
+      "sha256": "1f2a892fc8fafb3a50a69d192da27c3feac540dca558f27a8f693cf5c2cc3c5a",
+      "bytes": 3177,
+      "row_count": 14
+    },
+    {
+      "path": "data/downloads/score-final7-quadrants.csv",
+      "sha256": "f9aec93c895622c0865047ed4ef8a65329063ecb61bc0deb2234ff3b453b2edf",
+      "bytes": 2860,
+      "row_count": 16
+    },
+    {
+      "path": "data/downloads/transcript-context-2025.csv",
+      "sha256": "29089b587679803cc55d199e2f6ced19d3230597cae2b4a638daab1d82c6389c",
+      "bytes": 629,
+      "row_count": 3
+    }
+  ],
+  "datasets": [
+    {
+      "id": "complexity-profile",
+      "row_count": 14,
+      "column_count": 36,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "baseline_eligible": 12,
+          "baseline_not_observed": 2
+        },
+        "ratio_status_counts": {
+          "available": 12,
+          "baseline_not_observed": 2
+        },
+        "baseline_eligible": 12,
+        "baseline_ineligible": 2
+      }
+    },
+    {
+      "id": "complexity-rework-figure",
+      "row_count": 14,
+      "column_count": 12,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "ratio_status_counts": {
+          "available": 12,
+          "baseline_not_observed": 2
+        },
+        "baseline_eligible": 12,
+        "baseline_ineligible": 2
+      }
+    },
+    {
+      "id": "complexity-stratified-associations",
+      "row_count": 6,
+      "column_count": 15,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed relationship",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "influence-cases",
+      "row_count": 182,
+      "column_count": 16,
+      "coverage": {
+        "declared": {
+          "scope": "Relationship / omitted team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "influence-relations",
+      "row_count": 13,
+      "column_count": 14,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed relationship",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "influence-summary",
+      "row_count": 13,
+      "column_count": 10,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed relationship",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "m1-autonomy",
+      "row_count": 26,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / measure / integer category",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m1-career-topics",
+      "row_count": 36,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / topic",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m1-frequency",
+      "row_count": 60,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / measure / category",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m1-perceptions",
+      "row_count": 36,
+      "column_count": 14,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / perception family",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ],
+        "measurement_status_counts": {
+          "available": 36
+        }
+      }
+    },
+    {
+      "id": "m1-prior-experience",
+      "row_count": 12,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / measure / category",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m1-tasks",
+      "row_count": 58,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / measure / category",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m1-tools",
+      "row_count": 62,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / measure / category",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m2-paired-sensitivity",
+      "row_count": 12,
+      "column_count": 10,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / role / observed T1-T3 pairs",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ]
+      }
+    },
+    {
+      "id": "m2-role-distributions",
+      "row_count": 165,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / role / Likert score",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m2-role-summaries",
+      "row_count": 36,
+      "column_count": 13,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / checkpoint / role",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m3-author-concentration",
+      "row_count": 28,
+      "column_count": 9,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / pre or post phase",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 21,
+          "no_observed_activity": 7
+        }
+      }
+    },
+    {
+      "id": "m3-participation",
+      "row_count": 14,
+      "column_count": 11,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 14
+        }
+      }
+    },
+    {
+      "id": "m3-rolling",
+      "row_count": 406,
+      "column_count": 9,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / relative window-end day",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 262,
+          "no_observed_activity": 144
+        }
+      }
+    },
+    {
+      "id": "m3-rolling-pooled",
+      "row_count": 29,
+      "column_count": 11,
+      "coverage": {
+        "declared": {
+          "scope": "Relative window-end day / fixed pooled population",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "m4-checkpoint-churn",
+      "row_count": 42,
+      "column_count": 11,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / checkpoint",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 31,
+          "no_clean_change_observed": 11
+        }
+      }
+    },
+    {
+      "id": "m4-checkpoint-pooled",
+      "row_count": 3,
+      "column_count": 8,
+      "coverage": {
+        "declared": {
+          "scope": "Checkpoint / fixed pooled population",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m4-path-composition",
+      "row_count": 6,
+      "column_count": 8,
+      "coverage": {
+        "declared": {
+          "scope": "Checkpoint / file category",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m5-corpus-coverage",
+      "row_count": 3,
+      "column_count": 7,
+      "coverage": {
+        "declared": {
+          "scope": "Checkpoint / one global 2025.2 corpus",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "cohorts": [
+            "2025.2"
+          ],
+          "team_attribution": false,
+          "chunks_by_checkpoint": {
+            "T1": 35,
+            "T2": 37,
+            "T3": 28
+          }
+        },
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ],
+        "chunks_by_checkpoint": {
+          "T1": 35,
+          "T2": 37,
+          "T3": 28
+        }
+      }
+    },
+    {
+      "id": "m5-lexicon",
+      "row_count": 5,
+      "column_count": 5,
+      "coverage": {
+        "declared": {
+          "scope": "Lexicon version / subtype",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "cohorts": [
+            "2025.2"
+          ],
+          "team_attribution": false
+        }
+      }
+    },
+    {
+      "id": "m5-marker-composition",
+      "row_count": 15,
+      "column_count": 5,
+      "coverage": {
+        "declared": {
+          "scope": "Checkpoint / lexical subtype / one global corpus",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "cohorts": [
+            "2025.2"
+          ],
+          "team_attribution": false
+        },
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    },
+    {
+      "id": "m5-marker-density",
+      "row_count": 3,
+      "column_count": 13,
+      "coverage": {
+        "declared": {
+          "scope": "Checkpoint / one global 2025.2 corpus",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "cohorts": [
+            "2025.2"
+          ],
+          "team_attribution": false
+        },
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ],
+        "measurement_status_counts": {
+          "available": 3
+        }
+      }
+    },
+    {
+      "id": "m6a-presence-by-cohort",
+      "row_count": 4,
+      "column_count": 4,
+      "coverage": {
+        "declared": {
+          "scope": "Cohort / evidence state",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ]
+      }
+    },
+    {
+      "id": "m6a-structural-planning",
+      "row_count": 14,
+      "column_count": 12,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / T1",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 14
+        }
+      }
+    },
+    {
+      "id": "m6b-planning-content",
+      "row_count": 14,
+      "column_count": 9,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / T1",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          },
+          "measured": 9,
+          "unmeasured": 5
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "success": 9,
+          "unavailable_not_measured": 5
+        }
+      }
+    },
+    {
+      "id": "m7-checkpoint-inactivity",
+      "row_count": 42,
+      "column_count": 6,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / checkpoint",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 42
+        }
+      }
+    },
+    {
+      "id": "m8-baseline-eligibility",
+      "row_count": 14,
+      "column_count": 5,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / T3",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          },
+          "baseline_eligible": 12,
+          "baseline_not_observed": 2
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "baseline_eligible": 12,
+          "baseline_not_observed": 2
+        },
+        "baseline_eligible": 12,
+        "baseline_ineligible": 2
+      }
+    },
+    {
+      "id": "m8-rework-magnitude",
+      "row_count": 14,
+      "column_count": 10,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / T3",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          },
+          "baseline_eligible": 12,
+          "baseline_not_observed": 2
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "baseline_eligible": 12,
+          "baseline_not_observed": 2
+        },
+        "ratio_status_counts": {
+          "available": 12,
+          "baseline_not_observed": 2
+        },
+        "baseline_eligible": 12,
+        "baseline_ineligible": 2
+      }
+    },
+    {
+      "id": "m9-content-outcomes",
+      "row_count": 30,
+      "column_count": 6,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed analysis / predictor / outcome",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "m9-leave-one-out",
+      "row_count": 52,
+      "column_count": 8,
+      "coverage": {
+        "declared": {
+          "scope": "Analysis / predictor / outcome / omitted team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "m9-structural-outcomes",
+      "row_count": 8,
+      "column_count": 6,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed analysis / predictor / outcome",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "m9-structural-rework-magnitude",
+      "row_count": 2,
+      "column_count": 6,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed analysis / predictor / outcome",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "m9-structural-rework-ratio",
+      "row_count": 2,
+      "column_count": 6,
+      "coverage": {
+        "declared": {
+          "scope": "Fixed analysis / predictor / outcome",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "operational-regularity",
+      "row_count": 14,
+      "column_count": 30,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        }
+      }
+    },
+    {
+      "id": "phase-activity",
+      "row_count": 56,
+      "column_count": 16,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester / phase",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        }
+      }
+    },
+    {
+      "id": "phase-activity-summary",
+      "row_count": 12,
+      "column_count": 10,
+      "coverage": {
+        "declared": {
+          "scope": "Trajectory group / phase",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "planning-final7-clean-churn",
+      "row_count": 14,
+      "column_count": 13,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        }
+      }
+    },
+    {
+      "id": "planning-final7-commits",
+      "row_count": 14,
+      "column_count": 13,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        }
+      }
+    },
+    {
+      "id": "planning-final7-quadrants",
+      "row_count": 8,
+      "column_count": 10,
+      "coverage": {
+        "declared": {
+          "scope": "Activity metric / quadrant",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "planning-rework-profile",
+      "row_count": 14,
+      "column_count": 9,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        },
+        "measurement_status_counts": {
+          "available": 14
+        },
+        "baseline_eligible": 12,
+        "baseline_ineligible": 2
+      }
+    },
+    {
+      "id": "score-final7-clean-churn",
+      "row_count": 14,
+      "column_count": 12,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        }
+      }
+    },
+    {
+      "id": "score-final7-commits",
+      "row_count": 14,
+      "column_count": 12,
+      "coverage": {
+        "declared": {
+          "scope": "Team-semester",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "team_semesters": 14,
+          "cohort_counts": {
+            "2025.2": 9,
+            "2026.1": 5
+          }
+        },
+        "observed_cohorts": [
+          "2025.2",
+          "2026.1"
+        ],
+        "team_semesters_by_cohort": {
+          "2025.2": 9,
+          "2026.1": 5
+        }
+      }
+    },
+    {
+      "id": "score-final7-quadrants",
+      "row_count": 16,
+      "column_count": 9,
+      "coverage": {
+        "declared": {
+          "scope": "Activity metric / quadrant / planning tier",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts."
+        }
+      }
+    },
+    {
+      "id": "transcript-context-2025",
+      "row_count": 3,
+      "column_count": 12,
+      "coverage": {
+        "declared": {
+          "scope": "Checkpoint / one global corpus and cohort-level context",
+          "sample_sizes": "Original per-row denominator fields, not filtered row counts.",
+          "cohorts": [
+            "2025.2"
+          ],
+          "team_attribution": false
+        },
+        "observed_checkpoints": [
+          "T1",
+          "T2",
+          "T3"
+        ]
+      }
+    }
+  ]
+}
