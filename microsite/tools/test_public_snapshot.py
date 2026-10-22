@@ -9,7 +9,7 @@ from pathlib import Path
 import unittest
 
 from build_catalog import validate_catalog
-from prepare_snapshot import csv_bytes, json_bytes, read_json
+from snapshot_io import csv_bytes, json_bytes, read_json
 
 
 class PublicSnapshotTests(unittest.TestCase):

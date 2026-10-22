@@ -9,9 +9,9 @@ import sys
 
 sys.dont_write_bytecode = True
 
-from prepare_snapshot import ContractError, json_bytes, require  # noqa: E402
-from snapshot_contracts import (  # noqa: E402
-    BOOLEAN_FIELDS, INTEGER_FIELDS, NULLABLE_FIELDS, RENAMES, TABLES, TEXT_FIELDS,
+from snapshot_io import ContractError, json_bytes, require  # noqa: E402
+from public_schema import (  # noqa: E402
+    BOOLEAN_FIELDS, INTEGER_FIELDS, NULLABLE_FIELDS, SCHEMAS, TEXT_FIELDS,
 )
 
 # Each entry gives the title, analytical grain, denominator, and interpretation.
@@ -366,22 +366,7 @@ def label(field: str) -> str:
 
 
 def public_schema() -> dict[str, tuple[list[str], list[str]]]:
-    result = {}
-    for spec in TABLES:
-        if not spec.definition:
-            columns = [target for _, target in spec.fields]
-            if "clean_rework_ratio_t3" in columns:
-                if "baseline_eligible_for_rework_t3" not in columns:
-                    columns.append("baseline_eligible_for_rework_t3")
-                columns.append("ratio_status")
-            result[spec.dataset_id] = ([RENAMES.get(k, k) for k in spec.keys], columns)
-    result["m5-lexicon"] = (["lexicon_version", "subtype"],
-                            ["lexicon_version", "subtype", "pattern", "language", "counting_rule"])
-    result["m6b-planning-content"] = (
-        ["cohort", "team_id"], ["cohort", "team_id", "measurement_status", "planning_evidence_present",
-                              "goals_n", "architecture_or_design_n", "task_decomposition_n",
-                              "risk_or_dependency_n", "evidence_quotes_n"])
-    return result
+    return {name: (list(key), list(columns)) for name, (key, columns) in SCHEMAS.items()}
 
 
 def column(field: str, dataset_id: str, key: list[str]) -> dict[str, object]:
@@ -818,7 +803,7 @@ def build_catalog() -> dict[str, object]:
 
 
 def validate_catalog(catalog: dict[str, object]) -> None:
-    from prepare_snapshot import array, obj, text
+    from snapshot_io import array, obj, text
 
     require(catalog.get("schema_version") == "1.0" and catalog.get("language") == "en",
             "Unsupported catalog schema/language")

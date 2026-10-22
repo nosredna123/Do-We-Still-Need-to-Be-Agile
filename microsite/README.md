@@ -729,6 +729,63 @@ publication checks remain NOT PASSED. No real public URL or anonymous-host
 approval is implied. Firefox headless minimum width remains 500 px; the
 360/320 px browser layout checks are Chrome results, not Firefox results.
 
+## Whole-directory publication review (T023)
+
+**Sanitized candidate reviewed and explicitly approved by an authorized human
+for the later hosting gate, including status-only completion updates.** This review
+does not approve an actual public host or a manuscript citation.
+
+The review covers every shipped file, whether linked or not: all 100 data and
+manifest files, five browser assets/page files, two vendor/license files, three
+documents, and 15 public validation/test files. No hidden files, symlinks,
+source maps, private approval records, or authoring inputs are shipped.
+
+Prohibited private-input filenames, research locations, original column mappings,
+and private input fingerprints were removed from the public plan, contracts,
+and source-specific tools. Their original bytes and originally approved contract
+were preserved outside this directory. The public contract now documents only
+the unchanged public catalog. Public catalog and release generation still verify
+the exact reviewed metadata, not just a weaker structural substitute.
+
+All 49 JSON/CSV pairs, catalog and release bytes, page/browser assets, favicon,
+and vendor/license bytes remain unchanged. Private preparation with the original
+approved contract reproduces all 98 observation/download files exactly.
+The 45 public Python tests, 17 private source-preparation tests, and 58 JavaScript
+tests pass. The new privacy regression detected original source references before
+sanitation and passes after it. Public schema and serialization helpers also
+pass Python syntax validation.
+
+A fresh isolated copy returned all 125 files byte-identically at both `/` and
+`/review/explorer/` (250 HTTP checks); all 134 local documentation links resolve.
+Chrome and Firefox each rechecked all 49 exact tables/CSV representations and
+seven figures at both prefixes, with local-only page resources. Chrome also
+passed actual 320/360 px layouts; the Firefox headless minimum was 500 px, so
+no narrower Firefox viewport is claimed.
+
+Vendor URLs, contributor notices and copyright names belong to the upstream
+chart library, not the paper authors. Required license attribution is retained.
+Their presence is not permission to introduce external browser requests.
+Upstream namespace/documentation and license URLs are inert here; defaults for
+online chart publishing and geographic resources are unused by these Cartesian
+figures. The site disables the chart logo and mode bar. Do not enable new vendor
+features without repeating dependency, privacy and network review.
+Public hashes identify only public artifacts; prohibition strings in test code
+are synthetic policy assertions, not private records. Approved lexical patterns
+are definitions, not transcript excerpts.
+
+Exact cohort/team labels, small cells, categories, and cross-dataset combinations
+retain residual linkage risk. Existing field/value approval is not automatically
+extended to revised documentation or another directory. The authorized human
+confirmed review of this complete candidate, accepted the stated residual
+linkage/anonymity risks, and approved only completion/status-record updates.
+T023 is complete; any substantive change requires renewed review. Hosting
+branding, HTTPS, redirects, headers, error pages and actual-host checks remain
+unverified; all 11 hosting checklist gates remain unchecked.
+
+The T021 and T022 sections above are historical candidate evidence. Their
+previous directory-reference blockers have been remediated locally; neither
+record certifies this changed candidate or a future deployment.
+
 ## Public-safe naming
 
 - Use neutral English titles, dataset identifiers, filenames, labels, and
@@ -817,9 +874,9 @@ recording this policy alone does not complete those checks.
 ## Anonymous-hosting checklist
 
 **All checks below remain release gates.** Documentation and field approval are
-not approval of the final directory or the actual host. Complete the
-whole-directory review and obtain human release approval before public copying,
-then verify the deployed result.
+not approval of the actual host. T023 records review of the sanitized candidate;
+recheck these gates against the exact deployment copy before public copying,
+then verify the deployed result. They are not automatically checked by T023.
 
 - [ ] Review all directory contents, including HTML/JavaScript source, comments,
   JSON/CSV, downloadable headers, filenames, chart metadata, docs, tools, license
@@ -868,91 +925,27 @@ obtain renewed review for changed fields/values/vocabularies or identifier polic
 export only approved rows, and repeat whole-directory and actual-host checks.
 Changed hashes must never silently inherit an earlier approval.
 
-## Snapshot authoring (T006)
+## Public validation tooling
 
-The preparation utility is implemented; no public observation snapshot has been
-released yet. Authoring requires Python 3.10+ with only its standard library.
-Python is **not** required to serve the resulting static files.
-The tool and its [projection definitions](tools/snapshot_contracts.py) are local
-to this directory and import nothing from the research pipeline.
+Only source-free public validation tools are shipped. The source preparation
+utility, original pinned contract, private input mappings and authoring history
+are retained outside this directory and must never be deployed. Runtime files,
+data, public catalog generation and release validation do not import them.
 
-From this directory, set the variables below to explicitly selected local
-inputs, then validate without writing:
-
-```sh
-python3 -B tools/prepare_snapshot.py \
-  --source-root "$SOURCE_ROOT" \
-  --approval "$PUBLICATION_APPROVAL" \
-  --registry "$IDENTIFIER_REGISTRY" \
-  --excerpt-decision "$EXCERPT_DECISION" \
-  --check
-```
-
-- `SOURCE_ROOT` is the selected research snapshot root containing its indexed
-  metric and figure inputs, not a repository inferred from the current directory.
-- The other three inputs are the private T003 publication record, private
-  cohort/team registry, and private T004 omission decision. All must remain
-  outside this directory and the public output. No example private locations
-  or reviewer identities should be added here.
-- The tool supports only the currently pinned contract/index and approved
-  no-excerpt decision. It also pins the eight selected figure/support inputs
-  absent from the results index as one supplementary set. Hash, schema, row
-  count, key, alias, coverage, or required join failures block preparation.
-  Changed inputs require reconciliation and renewed review, not a bypass flag.
-
-After successful validation, prepare a candidate in a **new** output directory:
-
-```sh
-python3 -B tools/prepare_snapshot.py \
-  --source-root "$SOURCE_ROOT" \
-  --approval "$PUBLICATION_APPROVAL" \
-  --registry "$IDENTIFIER_REGISTRY" \
-  --excerpt-decision "$EXCERPT_DECISION" \
-  --output "$PUBLIC_DATA_OUTPUT" \
-  --private-lineage "$PRIVATE_LINEAGE_OUTPUT"
-```
-
-Both output paths must be new, with existing parent directories. Symlink paths
-and overwrites are rejected. `PUBLIC_DATA_OUTPUT` is a data directory, not the
-site root. It receives `datasets/<dataset-id>.json` and
-`downloads/<dataset-id>.csv`: 49 matched dataset pairs in the current snapshot.
-Two `definitions/<definition-id>.json` files hold reviewed definition-only rows,
-not duplicate data-browser tabs. The catalog already embeds their 13 weekly-bin
-and 13 complexity definitions; these preparation outputs can verify agreement.
-The release manifest is generated separately as described under T009 below.
-
-The T008 snapshot installs only the candidate's `datasets/` and `downloads/`
-directories under `data/`, after catalog/schema and source-byte agreement checks.
-The existing catalog is retained; do not pass the existing `data/` directory as
-the preparation output or copy the private lineage. Do not install redundant
-`definitions/` files: compare them with the embedded catalog definitions instead.
-For future replacements, validate a separate candidate copy of the site and
-repeat release review rather than overwriting the approved release in place.
-
-`PRIVATE_LINEAGE_OUTPUT` must be outside this directory and the public output.
-It records source fingerprints and exact original ratio cells before eligibility
-masking, with private file permissions. Never copy it into a release.
-Serialization and scientific checks run before public files are installed;
-validation failures are logged explicitly and exit nonzero, without a partial
-public snapshot. Existing releases are never modified in place.
-
-JSON preserves typed scalar values; CSV uses the same rows/columns, lowercase
-`true`/`false`, standard quoting, and empty cells for nulls. M8-ineligible or
-zero-denominator ratios are null with explicit `ratio_status`; exact eligible
-values remain unchanged. Text cells that could act as spreadsheet formulas are
-rejected rather than silently altered. Any future need to export such text
-requires a reviewed safety policy. No raw JSON records, quotes, or hidden source
-columns are copied.
-
-Run the synthetic and shipped-snapshot standard-library tests without generating
-bytecode in this publishable directory:
+Run public tests with Python 3.10+ and Node 18+ on an authoring/test machine:
 
 ```sh
 python3 -B -m unittest discover -s tools -p 'test_*.py'
+node --test tools/test_*.cjs
 ```
 
-Preparation and successful tests do not replace whole-directory human release
-approval or verification on the actual anonymous host.
+Neither interpreter is required by the static hosting server. The
+[serialization helpers](tools/snapshot_io.py) preserve the original JSON/CSV
+bytes. [Public schemas](tools/public_schema.py) specify only public keys and
+ordered columns; catalog generation still compares every reviewed metadata value.
+Public tests cannot prove agreement with private originals or authorize release.
+Private source reproduction and renewed human review remain necessary for
+changed fields, values, category vocabularies, or identifier policies.
 
 ## Catalog metadata (T007)
 

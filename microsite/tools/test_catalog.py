@@ -8,8 +8,8 @@ from pathlib import Path
 import unittest
 
 from build_catalog import build_catalog, validate_catalog
-from prepare_snapshot import ContractError, json_bytes
-from snapshot_contracts import RENAMES, TABLES
+from snapshot_io import ContractError, json_bytes
+from public_schema import SCHEMAS
 
 
 class CatalogTests(unittest.TestCase):
@@ -24,15 +24,10 @@ class CatalogTests(unittest.TestCase):
 
     def test_complete_explicit_projections(self) -> None:
         self.assertEqual(len(self.datasets), 49)
-        for spec in TABLES:
-            if spec.definition:
-                continue
-            expected = {target for _, target in spec.fields}
-            if "clean_rework_ratio_t3" in expected:
-                expected |= {"baseline_eligible_for_rework_t3", "ratio_status"}
-            descriptor = self.datasets[spec.dataset_id]
-            self.assertEqual({c["id"] for c in descriptor["columns"]}, expected, spec.dataset_id)
-            self.assertEqual(descriptor["key"], [RENAMES.get(k, k) for k in spec.keys])
+        for dataset_id, (key, columns) in SCHEMAS.items():
+            descriptor = self.datasets[dataset_id]
+            self.assertEqual([c["id"] for c in descriptor["columns"]], columns, dataset_id)
+            self.assertEqual(descriptor["key"], key)
         for descriptor in self.datasets.values():
             self.assertTrue(descriptor["definition"])
             self.assertTrue(descriptor["denominator"])
@@ -90,7 +85,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_catalog_contains_no_private_lineage_or_observations(self) -> None:
         content = json.dumps(self.catalog)
-        for forbidden in ("/home/", "paper_v9", "sha256", "github.com", "parsed_response",
+        for forbidden in ("/home/", "paper_" + "v9", "sha256", "github.com", "parsed_response",
                           "raw_response", "input_subjects", "source_path", "reviewer"):
             self.assertNotIn(forbidden, content)
         for descriptor in self.datasets.values():

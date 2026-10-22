@@ -11,7 +11,7 @@ import sys
 sys.dont_write_bytecode = True
 
 from build_catalog import build_catalog, validate_catalog
-from prepare_snapshot import (
+from snapshot_io import (
     ContractError, Row, array, csv_bytes, digest, json_bytes, obj, read_json,
     require, resolved, text,
 )

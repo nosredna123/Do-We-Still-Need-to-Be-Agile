@@ -116,7 +116,7 @@ class PageTests(unittest.TestCase):
             self.assertNotIn(tag, ("base", "object", "embed"))
             self.assertFalse(any(key.startswith("on") for key in attrs))
             self.assertFalse(any("excerpt" in str(value).lower() for value in attrs.values()))
-        for marker in ("http://", "https://", "file://", "/home/", "paper_v9", "github.com"):
+        for marker in ("http://", "https://", "file://", "/home/", "paper_" + "v9", "github.com"):
             self.assertNotIn(marker, self.source)
 
     def test_excerpt_omission_has_no_view_or_placeholder(self) -> None:

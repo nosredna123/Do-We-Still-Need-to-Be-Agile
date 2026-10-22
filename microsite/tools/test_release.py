@@ -11,7 +11,7 @@ import tempfile
 import unittest
 
 from build_release import build_release, main
-from prepare_snapshot import ContractError, json_bytes, read_json
+from snapshot_io import ContractError, json_bytes, read_json
 
 
 class ReleaseTests(unittest.TestCase):
