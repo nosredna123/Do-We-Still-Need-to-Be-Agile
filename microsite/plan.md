@@ -368,6 +368,22 @@ Verification confirmed no excerpt file, runtime catalog, or public dataset
 directory exists at this stage. No source transcripts or quotations were copied
 into the microsite during T004.
 
+### T005 - Public documentation and hosting boundaries
+
+**Completed 2026-10-22.** The [public README](README.md) documents neutral
+naming, approved cohort/team-key semantics, allowlisted projections, exclusions,
+the empty-excerpt policy, and an anonymous-hosting checklist. It distinguishes
+field approval from final directory/host approval and explicitly states that
+the application and public snapshot are not yet implemented.
+
+Verification confirmed valid relative documentation links, no private source
+locations or reviewer identities in the README, unchanged approved contracts,
+and no runtime/data scaffolding. All 11 hosting checklist items remain unchecked:
+they describe later release obligations, not checks passed by writing this file.
+T024 must still supply executable preview/copy/refresh instructions after the
+application exists; T023/T025/T026 retain whole-directory review, actual-host
+verification, and the verified public URL record.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -499,7 +515,7 @@ datasets/figures. **Requirements:** REQ-003, REQ-006, REQ-009.
 
 - [x] T003 [Plan:1.2] Obtain an explicit human-reviewed allowlist for every field destined for `microsite/data/datasets/`, assessing direct identifiers, searchable values, small cells, linkage, and free text. Keep the signed/private review record outside `microsite/`. Explicit authorized human approval recorded privately on 2026-10-22; pinned field scope, identifier policy, and remaining gates are summarized in Section 3.
 - [x] T004 [Plan:1.2] Individually approve any excerpts intended for `microsite/data/datasets/qualitative-excerpts.json`; omit this dataset/view if none are approved. Do not reuse the full transcript audit trail. Human decision on 2026-10-22: empty approved-excerpt set; omit all excerpt payloads and UI for this release, as recorded in Section 3.
-- [ ] T005 [Plan:1.2] Document public-safe naming, exclusions, excerpt policy, and the hosting anonymity checklist in `microsite/README.md`, without including private source locations or reviewer identities.
+- [x] T005 [Plan:1.2] Document public-safe naming, exclusions, excerpt policy, and the hosting anonymity checklist in `microsite/README.md`, without including private source locations or reviewer identities. Verified README scope, links, exclusions, unchanged contracts, and 11 unchecked future hosting gates; see Section 3.
 
 **Exit:** A bounded dataset/figure inventory and explicit publication approval.
 Unresolved privacy questions block the affected dataset, not an implicit release.
