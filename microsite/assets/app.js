@@ -55,6 +55,15 @@
       requireValue(object(dataset.coverage) && object(dataset.missingness) &&
         strings(dataset.limitations) && metadataTree(dataset.coverage) &&
         metadataTree(dataset.missingness), "Invalid dataset coverage or missingness.");
+      requireValue(Array.isArray(dataset.filters) && unique(dataset.filters.map(filter => filter?.id)) &&
+        dataset.filters.every(filter => object(filter) && text(filter.id) && text(filter.label) &&
+          filter.mode === "multi_select" && strings(filter.fields) && unique(filter.fields) &&
+          filter.fields.every(field => dataset.columns.some(column => column.id === field)) &&
+          (!filter.fields.includes("team_id") || JSON.stringify(filter.fields) === '["cohort","team_id"]') &&
+          (!filter.fields.includes("omitted_team_id") ||
+            JSON.stringify(filter.fields) === '["omitted_cohort","omitted_team_id"]')) &&
+        ["select_rows_only", "select_observations"].includes(dataset.filter_effect),
+      "Invalid grain-specific filters.");
     }
     requireValue(object(catalog.methods) && metadataTree(catalog.methods) &&
       Array.isArray(catalog.methods.definition_sets) && catalog.methods.definition_sets.length > 0 &&
@@ -104,15 +113,127 @@
     return content.toLowerCase().includes(query.trim().toLowerCase());
   }
 
+  function validateRows(rows, dataset, expectedCount) {
+    requireValue(Array.isArray(rows) && rows.length === expectedCount && rows.length > 0,
+      "Dataset row count disagrees with the frozen snapshot.");
+    const names = dataset.columns.map(column => column.id);
+    const keys = new Set();
+    for (const row of rows) {
+      requireValue(object(row) && JSON.stringify(Object.keys(row)) === JSON.stringify(names),
+        "Dataset columns disagree with the catalog.");
+      for (const column of dataset.columns) {
+        const value = row[column.id];
+        const valid = value === null ? column.nullable :
+          column.type === "integer" ? Number.isSafeInteger(value) :
+          column.type === "number" ? typeof value === "number" && Number.isFinite(value) :
+          typeof value === column.type;
+        requireValue(valid, `Invalid value for ${column.id}; expected ${column.type}${column.nullable ? " or null" : ""}.`);
+      }
+      const identity = dataset.key.map(key => row[key]);
+      const serialized = JSON.stringify(identity);
+      requireValue(identity.every(value => value !== null && value !== "") && !keys.has(serialized),
+        "Dataset has a missing or duplicate analytical key.");
+      keys.add(serialized);
+    }
+  }
+
+  function displayCell(value) {
+    return value === null ? "Unavailable" : String(value);
+  }
+
+  function compareValues(left, right, type) {
+    if (left === right) return 0;
+    if (left === null) return 1;
+    if (right === null) return -1;
+    if (type === "number" || type === "integer" || type === "boolean") return left < right ? -1 : 1;
+    return String(left).localeCompare(String(right), "en");
+  }
+
+  function filterChoices(rows, dataset, filter) {
+    const choices = new Map();
+    for (const row of rows) {
+      const values = filter.fields.map(field => row[field]);
+      const value = JSON.stringify(values);
+      if (!choices.has(value)) {
+        const labels = values.map((cell, index) => {
+          const column = dataset.columns.find(item => item.id === filter.fields[index]);
+          const translated = column.value_labels?.[cell];
+          return translated ? `${translated} (${displayCell(cell)})` : displayCell(cell);
+        });
+        choices.set(value, { value, label: labels.join(" / "), values });
+      }
+    }
+    return [...choices.values()].sort((a, b) => {
+      for (let index = 0; index < filter.fields.length; index += 1) {
+        const column = dataset.columns.find(item => item.id === filter.fields[index]);
+        const order = column.value_order;
+        let compared;
+        if (order && order.includes(a.values[index]) && order.includes(b.values[index])) {
+          compared = order.indexOf(a.values[index]) - order.indexOf(b.values[index]);
+        } else {
+          compared = compareValues(a.values[index], b.values[index], column.type);
+        }
+        if (compared) return compared;
+      }
+      return 0;
+    });
+  }
+
+  function selectRows(rows, dataset, selection) {
+    const predicates = Object.entries(selection).map(([id, value]) => {
+      const filter = dataset.filters.find(item => item.id === id);
+      requireValue(filter && typeof value === "string", "Unknown filter selection.");
+      const chosen = JSON.parse(value);
+      requireValue(Array.isArray(chosen) && chosen.length === filter.fields.length,
+        "Invalid filter selection.");
+      return row => filter.fields.every((field, index) => row[field] === chosen[index]);
+    });
+    return rows.filter(row => predicates.every(predicate => predicate(row)));
+  }
+
+  function sortRows(rows, column, direction) {
+    requireValue(["ascending", "descending"].includes(direction), "Invalid sort direction.");
+    return rows.map((row, index) => ({ row, index })).sort((a, b) => {
+      const left = a.row[column.id];
+      const right = b.row[column.id];
+      let compared = compareValues(left, right, column.type);
+      if (direction === "descending" && left !== null && right !== null) compared = -compared;
+      return compared || a.index - b.index;
+    }).map(item => item.row);
+  }
+
+  async function fetchJSON(path, signal, fetcher = fetch) {
+    const response = await fetcher(path, { signal, cache: "no-cache" });
+    requireValue(response.ok, `${path} returned HTTP ${response.status}.`);
+    return response.json();
+  }
+
+  async function loadDataset(dataset, expectedCount, fetcher = fetch, signal, timeout = 15000) {
+    const controller = new AbortController();
+    const cancel = () => controller.abort();
+    if (signal?.aborted) cancel();
+    else signal?.addEventListener("abort", cancel, { once: true });
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, timeout);
+    try {
+      const rows = await fetchJSON(dataset.paths.json, controller.signal, fetcher);
+      validateRows(rows, dataset, expectedCount);
+      return rows;
+    } catch (error) {
+      if (timedOut) throw new Error("Dataset request timed out. Check the local server and retry.");
+      throw error;
+    } finally {
+      clearTimeout(timer);
+      signal?.removeEventListener("abort", cancel);
+    }
+  }
+
   async function loadMetadata(fetcher = fetch, timeout = 15000) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
     try {
-      const [catalog, release] = await Promise.all(["data/catalog.json", "data/release.json"].map(async path => {
-        const response = await fetcher(path, { signal: controller.signal, cache: "no-cache" });
-        requireValue(response.ok, `${path} returned HTTP ${response.status}.`);
-        return response.json();
-      }));
+      const [catalog, release] = await Promise.all(["data/catalog.json", "data/release.json"]
+        .map(path => fetchJSON(path, controller.signal, fetcher)));
       validateMetadata(catalog, release);
       return { catalog, release };
     } catch (error) {
@@ -140,6 +261,18 @@
     const search = byId("definition-search");
     let catalog;
     let release;
+    const rowControls = byId("row-controls");
+    const filterContainer = byId("row-filters");
+    const rowStatus = byId("row-status");
+    const rowError = byId("row-error");
+    const rowRetry = byId("row-retry");
+    const tableContainer = byId("dataset-table");
+    let activeDataset;
+    let rows = [];
+    let selection = {};
+    let sort = null;
+    let rowRequest = null;
+    let requestVersion = 0;
 
     function element(tag, value) {
       const node = document.createElement(tag);
@@ -181,6 +314,7 @@
       detail.replaceChildren();
       const dataset = catalog.datasets.find(item => item.id === datasetSelect.value);
       if (!dataset) {
+        clearRows();
         status.textContent = "No datasets match this navigation selection. Change the research question, metric, or source.";
         return;
       }
@@ -200,10 +334,147 @@
         if (column.value_labels) fields.append(tree(column.value_labels));
         if (column.value_order) fields.append(tree({ value_order: column.value_order }));
       }
-      detail.append(fields, element("p", "Observation tables, filters, figures, and export controls are not implemented yet."));
+      detail.append(fields, element("p", "Figures, multi-case comparison controls, and export controls are not implemented yet."));
       const available = datasetSelect.options.length;
       status.textContent = `${available} ${available === 1 ? "dataset" : "datasets"} available in this navigation selection. ` +
         `Showing definitions for ${dataset.title}.`;
+      showRows(dataset);
+    }
+
+    function clearRows() {
+      requestVersion += 1;
+      rowRequest?.abort();
+      rowRequest = null;
+      rows = [];
+      selection = {};
+      sort = null;
+      activeDataset = null;
+      rowControls.disabled = true;
+      rowRetry.hidden = true;
+      filterContainer.replaceChildren();
+      tableContainer.replaceChildren();
+      rowError.textContent = "";
+      rowStatus.textContent = "Select a dataset to load its observations.";
+      rowStatus.setAttribute("aria-busy", "false");
+      byId("active-filters").textContent = "No active row filters.";
+      byId("row-scope").textContent = "";
+    }
+
+    function renderRows() {
+      let visible = selectRows(rows, activeDataset, selection);
+      if (sort) {
+        visible = sortRows(visible, activeDataset.columns.find(column => column.id === sort.field), sort.direction);
+      }
+      rowStatus.textContent = `${visible.length} of ${rows.length} rows shown. ` +
+        (visible.length ? "Values retain their original precision." : "No rows match these filters. Change a filter or reset.");
+      const summaries = Object.entries(selection).map(([id, value]) => {
+        const filter = activeDataset.filters.find(item => item.id === id);
+        const choice = filterChoices(rows, activeDataset, filter).find(item => item.value === value);
+        return `${filter.label}: ${choice.label}`;
+      });
+      byId("active-filters").textContent = summaries.length
+        ? `Active row filters: ${summaries.join("; ")}` : "No active row filters.";
+      tableContainer.replaceChildren();
+      if (!visible.length) return;
+      const table = element("table");
+      const caption = element("caption", `${activeDataset.title}: ${visible.length} of ${rows.length} rows. ` +
+        `Grain: ${activeDataset.grain}. Unavailable means null, not zero.`);
+      table.append(caption);
+      const head = element("thead");
+      const headerRow = element("tr");
+      for (const column of activeDataset.columns) {
+        const header = element("th");
+        header.scope = "col";
+        const direction = sort?.field === column.id ? sort.direction : "none";
+        header.setAttribute("aria-sort", direction);
+        const button = element("button", `${column.label} (${column.unit})` +
+          (direction === "none" ? "" : ` [${direction}]`));
+        button.type = "button";
+        button.dataset.sortField = column.id;
+        button.setAttribute("aria-label", `Sort by ${column.label}, ` +
+          `${direction === "ascending" ? "descending" : "ascending"}; ${column.unit}`);
+        button.addEventListener("click", () => {
+          sort = { field: column.id, direction: direction === "ascending" ? "descending" : "ascending" };
+          renderRows();
+          [...tableContainer.querySelectorAll("button")].find(item => item.dataset.sortField === column.id).focus();
+        });
+        header.append(button);
+        headerRow.append(header);
+      }
+      head.append(headerRow);
+      table.append(head);
+      const body = element("tbody");
+      for (const row of visible) {
+        const entry = element("tr");
+        for (const column of activeDataset.columns) {
+          const value = row[column.id];
+          const cell = element("td", displayCell(value));
+          if (value !== null && ["number", "integer"].includes(column.type)) cell.className = "numeric";
+          if (value === null) {
+            cell.className = "unavailable";
+            const reason = row.ratio_status || row.measurement_status;
+            cell.title = reason ? `Unavailable (${reason}); see dataset missingness.` : column.definition;
+          }
+          entry.append(cell);
+        }
+        body.append(entry);
+      }
+      table.append(body);
+      tableContainer.append(table);
+    }
+
+    async function showRows(dataset) {
+      clearRows();
+      if (!dataset) return;
+      activeDataset = dataset;
+      const version = requestVersion;
+      rowRequest = new AbortController();
+      rowStatus.textContent = `Loading observations for ${dataset.title}...`;
+      rowStatus.setAttribute("aria-busy", "true");
+      byId("row-scope").textContent = dataset.filter_effect === "select_rows_only"
+        ? "Filters select existing published rows only. Original populations, denominators, sample sizes and estimates remain fixed; nothing is recalculated."
+        : "Filters select existing observations at the stated grain. No new estimates or thresholds are calculated.";
+      try {
+        const expected = release.datasets.find(item => item.id === dataset.id).row_count;
+        const loaded = await loadDataset(dataset, expected, fetch, rowRequest.signal);
+        if (version !== requestVersion) return;
+        rows = loaded;
+        for (const filter of dataset.filters) {
+          const wrapper = element("div");
+          const control = element("select");
+          const id = `filter-${filter.id}`;
+          control.id = id;
+          const title = element("label", filter.label);
+          title.htmlFor = id;
+          control.append(new Option(`All: ${filter.label}`, ""));
+          for (const choice of filterChoices(rows, dataset, filter)) {
+            control.append(new Option(choice.label, choice.value));
+          }
+          control.addEventListener("change", () => {
+            if (control.value) selection[filter.id] = control.value;
+            else delete selection[filter.id];
+            renderRows();
+          });
+          wrapper.append(title, control);
+          filterContainer.append(wrapper);
+        }
+        if (!dataset.filters.length) filterContainer.append(element("p", "This dataset has no approved row filters."));
+        rowControls.disabled = false;
+        renderRows();
+      } catch (error) {
+        if (version !== requestVersion) return;
+        rows = [];
+        tableContainer.replaceChildren();
+        filterContainer.replaceChildren();
+        rowControls.disabled = true;
+        rowStatus.textContent = "Observations could not be loaded. No rows are being shown.";
+        rowError.textContent = `Dataset error: ${error instanceof Error ? error.message : String(error)} ` +
+          "Check the copied data files and retry, or choose another dataset.";
+        rowRetry.hidden = false;
+        console.error("Research explorer dataset load failed:", error);
+      } finally {
+        if (version === requestVersion) rowStatus.setAttribute("aria-busy", "false");
+      }
     }
 
     function updateNavigation(level) {
@@ -256,6 +527,7 @@
     }
 
     async function load() {
+      clearRows();
       navigation.disabled = true;
       search.disabled = true;
       retry.hidden = true;
@@ -286,6 +558,7 @@
         byId("method-policies").append(tree(policies));
         renderDefinitions();
       } catch (error) {
+        clearRows();
         navigation.disabled = true;
         search.disabled = true;
         detail.replaceChildren();
@@ -309,6 +582,13 @@
     datasetSelect.addEventListener("change", showDataset);
     search.addEventListener("input", renderDefinitions);
     retry.addEventListener("click", load);
+    rowRetry.addEventListener("click", () => showRows(activeDataset));
+    byId("row-reset").addEventListener("click", () => {
+      selection = {};
+      sort = null;
+      for (const control of filterContainer.querySelectorAll("select")) control.value = "";
+      renderRows();
+    });
     window.addEventListener("hashchange", () => {
       if (navigation.disabled) return;
       const question = location.hash.slice(1).toUpperCase();
@@ -331,7 +611,8 @@
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { validateMetadata, matchingDatasets, matchesDefinition, loadMetadata };
+    module.exports = { validateMetadata, matchingDatasets, matchesDefinition, loadMetadata,
+      validateRows, filterChoices, selectRows, sortRows, displayCell, loadDataset };
   } else {
     start();
   }

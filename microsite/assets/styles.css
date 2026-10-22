@@ -190,9 +190,15 @@ summary {
   cursor: pointer;
 }
 
-#metadata-error:not(:empty) {
+#metadata-error:not(:empty),
+#row-error:not(:empty) {
   padding: 1rem;
   border-inline-start: 4px solid var(--focus);
+}
+
+.unavailable {
+  font-style: italic;
+  color: var(--muted);
 }
 
 label,

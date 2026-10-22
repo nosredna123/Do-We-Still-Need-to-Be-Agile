@@ -96,6 +96,13 @@ class PageTests(unittest.TestCase):
         self.assertTrue(any(t == "noscript" for t, _ in self.page.elements))
         self.assertTrue(any(a.get("id") == "metadata-error" and a.get("role") == "alert"
                             for _, a in self.page.elements))
+        self.assertTrue(any(t == "div" and a.get("id") == "dataset-table" and
+                            a.get("role") == "region" and a.get("tabindex") == "0"
+                            for t, a in self.page.elements))
+        self.assertTrue(any(a.get("id") == "row-error" and a.get("role") == "alert"
+                            for _, a in self.page.elements))
+        self.assertTrue(any(t == "button" and a.get("id") == "row-reset"
+                            for t, a in self.page.elements))
 
     def test_no_external_assets_or_unapproved_features(self) -> None:
         for tag, attrs in self.page.elements:

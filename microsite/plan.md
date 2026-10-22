@@ -768,6 +768,83 @@ bytecode or private artifacts were installed. Observation loading, row filters,
 sorting/counts, comparisons, figures, and exports remain T013 onward, explicitly
 marked pending in the UI. Human release and actual-host gates remain unchecked.
 
+### T013 - Observation filters, counts, sorting, and table states
+
+**Completed 2026-10-22.** The [application script](assets/app.js) now loads the
+selected public JSON dataset, checks its exact column order, scalar types,
+nullability, unique analytical keys, and release row count, and renders every
+observation without rounding. Only the selected dataset is fetched; no parent
+repository, private input, backend, package, or build is needed at hosting time.
+Structural validation does not authenticate downloaded bytes; the existing
+release-manifest verification remains the authoring-time integrity check.
+
+The table exposes only catalog-approved filters and their actual typed values,
+including composite cohort/team and omitted-case identities. Filter choices
+retain the complete vocabulary; selections intersect, with explicit empty
+results rather than implicit filter changes or fabricated zeros. Active filters,
+visible/total counts, reset, a caption with grain, units in headers, and the
+fixed-population notice explain scope. Reset restores the original rows and
+source order while retaining the dataset. Changing datasets clears incompatible
+filters, sort state, and the prior table. Surveys and global transcript datasets
+never acquire unsupported team filters.
+
+Each filter currently allows one value or All. The catalog's allowed multi-select
+capability is intentionally staged: compatible multi-cohort/team-semester
+selection remains T014, not a completed comparison feature. Filters select
+existing observations or published estimates only; denominators, estimator Ns,
+thresholds, populations, and scientific values are never recalculated.
+
+Column buttons toggle stable typed ascending/descending sorting, announce
+`aria-sort`, and retain focus after rendering. Nulls remain last in either
+direction and display **Unavailable**, distinct from zero/false and empty
+results. Existing status columns and missingness definitions explain unavailable
+measurements and ineligible observations. All cell text is literal and numeric
+precision is preserved. Wide tables stay inside the named focusable scroll
+region; the whole page does not widen at narrow widths.
+
+Loading clears old rows and disables row controls. HTTP/JSON/schema/count/key
+failures and a 15-second timeout produce explicit logged errors and retry.
+Changing selection cancels the old request; a version guard prevents stale
+responses or errors from overwriting newer selections. Metadata failure also
+clears the observation UI. Static no-JavaScript guidance remains available.
+
+Verification before completion:
+
+- Twelve new [row tests](tools/test_rows.cjs), alongside the nine existing
+  [metadata tests](tools/test_app.cjs), pass using Node's built-in runner.
+  The new tests initially failed before row helpers existed. They cover every
+  approved dataset/filter choice, composite identity, intersections/reset,
+  schema/type/key/count rejection, stable numeric/text/boolean/null sorting,
+  all 510 shipped columns in both directions, precision, fixed estimates, and
+  fetch failure/timeout/cancellation. All 52 Python tests also pass.
+- Browser DOM checks compared all 49 rendered tables and all 17,046 scalar
+  cells to their source values: null becomes `Unavailable`, otherwise exact
+  string conversion. Filtering M1 to one cohort/team yields six family rows;
+  reset restores 36. Incompatible cohort/team selection is explicitly empty.
+  M8 unavailable ratios stay last on descending sort; changing to M5 clears
+  unsupported team filters. Fixed summary populations remain visibly fixed.
+- Injected 404 and malformed-schema responses clear the table, disable row
+  controls, and expose an explicit error; retry recovers. A delayed request
+  is aborted when selecting another dataset and cannot overwrite the newer
+  table. HTML-like observation text creates no elements.
+- Browser checks at 1280/360/320 px and 200% text at 320 px show no page
+  overflow; the 406-row rolling dataset scrolls locally at narrow widths.
+  Sorting retains the header-button focus. As in T012, the hidden browser
+  uses dispatched DOM events and timer polling: real pointer/keyboard journey
+  sign-off remains a later accessibility gate.
+- An independent copied directory passes all 73 tests, JavaScript syntax,
+  release integrity, and byte-identical HTTP delivery of assets, metadata,
+  and all 49 dataset files at root and `/review/explorer/`. Nested browser
+  navigation renders observations with requests confined to that prefix.
+  All public data/catalog/release bytes remain unchanged.
+
+The [README](README.md) describes the implemented behavior and test commands.
+Explicit standard-library discovery is still needed because the editor does
+not discover these standalone Python tests. No dependencies were installed;
+temporary previews/fixtures were removed and servers stopped. Only T013 is
+completed here: multi-case selection, figures, exports, full accessibility,
+human release review, and actual-host publication gates remain pending.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -930,7 +1007,7 @@ resulting directory cannot depend on them at runtime.
 **Plan 3.2:** Add compatible filtering, sorting, and comparisons.
 **Requirements:** REQ-002, REQ-004, REQ-005.
 
-- [ ] T013 [US2] [Plan:3.2] Implement dataset-specific filters, reset, active-filter summaries, visible counts, numeric/text sorting, missing-value display, and empty states in `microsite/assets/app.js`.
+- [x] T013 [US2] [Plan:3.2] Implement dataset-specific filters, reset, active-filter summaries, visible counts, numeric/text sorting, missing-value display, and empty states in `microsite/assets/app.js`. Verified all 49 tables/17,046 cells, every approved filter and column, explicit errors/retry/cancellation, 73 tests, and independent root/nested hosting; see Section 3.
 - [ ] T014 [US2] [Plan:3.2] Implement compatible multi-cohort/team-semester selections in `microsite/assets/app.js`, using cohort-plus-team keys and disabling unsupported team filters for surveys/transcripts.
 - [ ] T015 [US2] [Plan:3.2] Render approved excerpts, if any, in `microsite/index.html` through `microsite/assets/app.js`, with checkpoint/source context and no fabricated team attribution.
 

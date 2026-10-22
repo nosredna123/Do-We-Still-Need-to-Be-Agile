@@ -10,8 +10,9 @@ and local JSON/CSV, contained entirely in this directory.
 implemented, along with the [public data release manifest](data/release.json).
 The [page shell](index.html) provides overview, research-question guides, and
 methods with native in-page navigation and responsive local styling.
-Catalog-based RQ/metric/source navigation, definitions, and snapshot details
-are implemented. Observation tables and filters are not implemented, and
+Catalog-based RQ/metric/source navigation, definitions, snapshot details,
+observation tables, row filters, and sorting are implemented. Multi-case comparisons,
+figures, and export controls remain pending, and
 whole-directory/actual-host approval remains pending.
 This is not a ready-to-publish site.
 See the [implementation plan](plan.md) for task status and the
@@ -26,20 +27,19 @@ links and work without JavaScript. A visible skip link moves keyboard focus to
 the main content. The overview explains survey, team-semester, global transcript,
 and fixed-estimate grains before the research-question guides.
 
-This is a styled development shell, not an operational table explorer.
-Controls now select dataset metadata, not observation rows; the page explicitly
-states that observation tables, filters, figures, and export controls are pending.
+The styled explorer now loads approved observation rows on dataset selection.
+The page states that multi-case comparisons, figures, and export controls are pending.
 Local catalog, release-manifest, and documentation links work.
 T011 provides layout/focus styling; T012 provides catalog loading and
-dataset navigation; filters, charts, and export actions remain later tasks.
+dataset navigation; T013 provides row filters/tables/sorting. Charts and export actions remain later tasks.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
 the working shell as whole-directory or host approval.
 
 ## Catalog navigation and definitions (T012)
 
-The local [application script](assets/app.js) loads only `data/catalog.json`
-and `data/release.json`. It validates the supported schema, no-excerpt policy,
+The local [application script](assets/app.js) first loads `data/catalog.json`
+and `data/release.json`, then the selected dataset on demand. It validates the supported schema, no-excerpt policy,
 RQ/metric/source references, local paths, field definitions, and agreement of
 the two public inventories/counts before enabling navigation. The validation
 checks metadata consistency, not artifact bytes or publication permission;
@@ -65,7 +65,7 @@ hard-coded identifier. All metadata is inserted as text, never trusted HTML.
 While metadata is loading, controls are disabled and the status is explicit.
 HTTP errors, invalid JSON, unsupported/inconsistent metadata, and requests
 exceeding 15 seconds display an alert, clear derived content, log the error,
-and offer retry. No observation rows are synthesized or requested.
+and offer retry. No observation rows are synthesized.
 Without JavaScript the static RQ guides and local documentation links remain
 available, with a visible explanation that interactive catalog features need
 JavaScript. The no-excerpt decision remains enforced; there is no excerpt
@@ -84,6 +84,48 @@ step. Nine JavaScript tests use only Node's built-in runner and the public files
 metadata/schema errors, cross-RQ navigation, definition matching, HTTP/JSON
 failure, request scope, and abort timeout.
 
+## Observation tables and row filters (T013)
+
+Selecting a dataset requests only its local JSON file, validates its exact
+column order, scalar types/nullability, finite values, unique analytical keys,
+and frozen row count, then renders all rows without rounding or pagination.
+Metadata and observation loading/errors are separate. Changing datasets cancels
+the previous request and invalidates stale responses, clears filters/sort, and
+removes the old table while the new file loads. A failed, malformed, missing, or
+timed-out file produces a logged error, no rows, disabled row controls, and retry;
+it is never presented as a successful empty dataset.
+
+Each catalog-approved filter is a labeled native selector with All plus observed
+typed values. At this stage choose **one value per filter**; T014 will extend
+cohort/team-semester selection for multi-case comparisons. Team and omitted-case
+choices always include cohort plus team, never a repeated team label alone.
+Surveys and global transcript aggregates receive no unsupported team selector.
+Selections are combined by intersection without changing values, estimators,
+thresholds, denominators, or original pooled/association populations.
+
+The active-filter summary, visible/total counts, and table caption show the
+current scope. Zero matching rows is explicit and distinct from a load error.
+Reset clears row filters and sort while keeping the chosen dataset. Filter
+choices retain the full dataset vocabulary, so conflicting intersections are
+visible as empty results rather than silently removing selections.
+
+Column-header buttons toggle ascending/descending sort with `aria-sort` and keep
+keyboard focus after rendering. Numbers and booleans use their types, text uses
+English collation, ties keep source order, and nulls stay last in both directions.
+Null cells read **Unavailable**, not zero; measurement/ratio-status columns and
+dataset missingness notes retain their reasons. Headers include units, numeric
+cells preserve full precision, and every value is inserted as literal text.
+The named table region scrolls horizontally via keyboard at narrow widths.
+
+Twelve additional built-in Node tests cover all 49 datasets, every approved
+filter choice, composite keys, empty intersections/reset, stable numeric/text/
+boolean/null sorting, exact display, fixed estimates, and fetch errors/cancellation/
+timeout. Run both JavaScript test files with one command:
+
+```sh
+node --test tools/test_app.cjs tools/test_rows.cjs
+```
+
 ## Responsive styling (T011)
 
 The local [stylesheet](assets/styles.css) uses system fonts, a restrained light
@@ -101,13 +143,13 @@ the default font size, except native checkboxes/radios, which must be paired
 with clickable labels. Disabled controls retain legible colors and use a
 dashed border and disabled cursor rather than reduced opacity.
 
-Future tables should use a `.table-scroll` wrapper with `tabindex="0"`,
+Tables use a `.table-scroll` wrapper with `tabindex="0"`,
 `role="region"`, and an accessible name, so narrow-screen users can scroll
 with the keyboard. Use a caption and scoped headers; mark numeric data cells
 with `.numeric` for right-aligned tabular numerals without splitting values.
 Headers wrap, while long numeric values scroll within the wrapper. Sort
-buttons retain native focus behavior. These are reusable presentation rules,
-not an implemented dataset table or sorting feature.
+buttons retain native focus behavior. T013 applies these reusable rules to
+the observation table.
 
 Four [stylesheet tests](tools/test_styles.py) check local wiring, system-font
 and no-network rules, palette contrast (4.5:1 text and 3:1 focus/borders), and

@@ -21,7 +21,7 @@
       </ul>
     </nav>
     <p><strong>Development preview.</strong> Publication approval is pending.
-      This page provides orientation; interactive tables and figures are not available yet.</p>
+      Explore the approved observations and their definitions. Figures and export controls are not available yet.</p>
   </header>
 
   <main id="main-content" tabindex="-1">
@@ -106,6 +106,24 @@
         </div>
       </fieldset>
       <div id="dataset-details" role="region" aria-label="Selected dataset definitions"></div>
+      <h3 id="observations-heading">Observations</h3>
+      <p id="row-status" role="status" aria-live="polite">Select a dataset to load its observations.</p>
+      <p id="row-error" role="alert"></p>
+      <button id="row-retry" type="button" hidden>Retry dataset loading</button>
+      <p id="row-scope"></p>
+      <fieldset id="row-controls" disabled aria-describedby="row-status row-scope">
+        <legend>Filter the selected dataset</legend>
+        <p>Choose one value per filter, or All. Team choices always include the cohort.
+          Multi-case comparison controls are not implemented yet.</p>
+        <div id="row-filters" class="navigation-controls"></div>
+        <button id="row-reset" type="button">Reset row filters and sort</button>
+      </fieldset>
+      <p id="active-filters">No active row filters.</p>
+      <p>Use column-header buttons to sort ascending or descending. Unavailable values
+        stay last in either direction. On narrow screens, focus the table region and
+        use the arrow keys to scroll horizontally.</p>
+      <div id="dataset-table" class="table-scroll" tabindex="0" role="region"
+        aria-labelledby="observations-heading" aria-describedby="row-status"></div>
 
       <article id="rq1" aria-labelledby="rq1-heading">
         <h3 id="rq1-heading">RQ1: Self-report and coded perceptions</h3>

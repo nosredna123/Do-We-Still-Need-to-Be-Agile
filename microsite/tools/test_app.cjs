@@ -64,6 +64,9 @@ test("rejects malformed, duplicate, or unsafe dataset descriptors", () => {
     c => { c.datasets[0].paths.json = "https://example.invalid/data.json"; },
     c => { c.datasets[0].paths.csv = "../private.csv"; },
     c => { c.datasets[0].coverage = null; },
+    c => { c.datasets[0].filters[0].fields = ["unknown"]; },
+    c => { c.datasets[0].filters[0].mode = "query"; },
+    c => { c.datasets[0].filters.push({ id: "team", label: "Team", fields: ["team_id"], mode: "multi_select" }); },
     c => { c.methods.definition_sets[0].rows = "malformed"; },
     c => { c.methods.definition_sets[0].rows[0].unexpected = []; },
   ]) {
