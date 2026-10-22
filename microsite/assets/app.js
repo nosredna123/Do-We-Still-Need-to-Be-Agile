@@ -260,6 +260,7 @@
     const snapshot = byId("snapshot-details");
     const definitions = byId("definition-results");
     const search = byId("definition-search");
+    const figures = window.ResearchCharts?.createViewer(loadDataset);
     let catalog;
     let release;
     const rowControls = byId("row-controls");
@@ -335,7 +336,8 @@
         if (column.value_labels) fields.append(tree(column.value_labels));
         if (column.value_order) fields.append(tree({ value_order: column.value_order }));
       }
-      detail.append(fields, element("p", "Figures and export controls are not implemented yet."));
+      detail.append(fields, element("p", "Paper figures are available separately below, using full snapshots. " +
+        "They do not follow these row filters yet. Export controls are not implemented yet."));
       const available = datasetSelect.options.length;
       status.textContent = `${available} ${available === 1 ? "dataset" : "datasets"} available in this navigation selection. ` +
         `Showing definitions for ${dataset.title}.`;
@@ -563,6 +565,7 @@
 
     async function load() {
       clearRows();
+      figures?.clear();
       navigation.disabled = true;
       search.disabled = true;
       retry.hidden = true;
@@ -576,6 +579,11 @@
       byId("method-policies").replaceChildren();
       try {
         ({ catalog, release } = await loadMetadata());
+        if (figures) figures.configure(catalog, release);
+        else {
+          byId("figure-error").textContent = "Figure code is unavailable. Check the copied assets/charts.js file and reload. Observation tables remain available.";
+          console.error("Research explorer figure code is unavailable.");
+        }
         options(rq, catalog.research_questions.map(item => [item.id, `${item.id}: ${item.title}`]), "All research questions");
         const initialQuestion = location.hash.slice(1).toUpperCase();
         if (catalog.research_questions.some(item => item.id === initialQuestion)) rq.value = initialQuestion;
@@ -594,6 +602,7 @@
         renderDefinitions();
       } catch (error) {
         clearRows();
+        figures?.clear();
         navigation.disabled = true;
         search.disabled = true;
         detail.replaceChildren();

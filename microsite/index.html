@@ -6,6 +6,8 @@
   <meta name="description" content="Explore the approved research data accompanying the submitted paper, with evidence grains, measures, and interpretation limits.">
   <title>Research Data Explorer</title>
   <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/vendor/plotly-cartesian-4.1.2.min.js" defer></script>
+  <script src="assets/charts.js" defer></script>
   <script src="assets/app.js" defer></script>
 </head>
 <body>
@@ -21,7 +23,8 @@
       </ul>
     </nav>
     <p><strong>Development preview.</strong> Publication approval is pending.
-      Explore the approved observations and their definitions. Figures and export controls are not available yet.</p>
+      Explore the approved observations, paper figures, and their definitions.
+      Figure/filter synchronization and export controls are not available yet.</p>
   </header>
 
   <main id="main-content" tabindex="-1">
@@ -127,6 +130,25 @@
         use the arrow keys to scroll horizontally.</p>
       <div id="dataset-table" class="table-scroll" tabindex="0" role="region"
         aria-labelledby="observations-heading" aria-describedby="row-status"></div>
+
+      <h3 id="figures-heading">Paper figures</h3>
+      <p id="figure-scope">These seven figures use the full approved snapshot, independently
+        of the observation filters above. Filter synchronization is pending.
+        No new estimates are computed. Exact source tables accompany each figure.</p>
+      <fieldset id="figure-controls" disabled aria-describedby="figure-scope figure-status">
+        <legend>Choose a paper figure</legend>
+        <label for="figure-select">Figure</label>
+        <select id="figure-select"><option value="">Choose a paper figure</option></select>
+      </fieldset>
+      <p id="figure-status" role="status" aria-live="polite">Choose a paper figure to load its full approved snapshot.</p>
+      <p id="figure-error" role="alert"></p>
+      <button id="figure-retry" type="button" hidden>Retry figure loading</button>
+      <button id="figure-reset" type="button" disabled>Reset figure view</button>
+      <p>Hover for point details or use the exact source tables. Drag to zoom;
+        Reset figure view restores the complete figure. Legends toggle traces;
+        this changes visibility, not populations or stored values. On narrow screens,
+        focus the figure region and scroll horizontally.</p>
+      <div id="figure-output" role="region" aria-labelledby="figures-heading"></div>
 
       <article id="rq1" aria-labelledby="rq1-heading">
         <h3 id="rq1-heading">RQ1: Self-report and coded perceptions</h3>

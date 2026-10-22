@@ -87,7 +87,8 @@ class PageTests(unittest.TestCase):
             self.assertTrue(any(t == "a" and a.get("href") == target for t, a in self.page.elements))
         self.assertFalse(any(t in ("iframe", "form") for t, _ in self.page.elements))
         self.assertFalse(any(a.get("role") == "tab" for _, a in self.page.elements))
-        self.assertEqual([a.get("src") for t, a in self.page.elements if t == "script"], ["assets/app.js"])
+        self.assertEqual([a.get("src") for t, a in self.page.elements if t == "script"], [
+            "assets/vendor/plotly-cartesian-4.1.2.min.js", "assets/charts.js", "assets/app.js"])
         labels = {a["for"] for t, a in self.page.elements if t == "label"}
         controls = {a["id"] for t, a in self.page.elements if t in ("input", "select")}
         self.assertEqual(labels, controls)
@@ -121,6 +122,15 @@ class PageTests(unittest.TestCase):
         self.assertNotIn("No excerpts", self.content)
         self.assertNotIn("Approved excerpts", self.content)
         self.assertNotIn("Excerpts unavailable", self.content)
+
+    def test_figure_loading_scope_and_recovery_are_explicit(self) -> None:
+        for phrase in ("full approved snapshot", "Filter synchronization is pending",
+                       "Exact source tables", "Reset figure view"):
+            self.assertIn(phrase, self.content)
+        for target in ("figure-controls", "figure-select", "figure-status", "figure-error",
+                       "figure-retry", "figure-reset", "figure-output"):
+            self.assertTrue(any(a.get("id") == target for _, a in self.page.elements))
+        self.assertTrue(all("defer" in a for t, a in self.page.elements if t == "script"))
 
 
 if __name__ == "__main__":

@@ -12,12 +12,13 @@ The [page shell](index.html) provides overview, research-question guides, and
 methods with native in-page navigation and responsive local styling.
 Catalog-based RQ/metric/source navigation, definitions, snapshot details,
 observation tables, row filters, sorting, and compatible multi-cohort/team-semester
-selection are implemented. Figures and export controls remain pending, and
-whole-directory/actual-host approval remains pending.
+selection are implemented. All seven selected paper figures now render from
+their full approved snapshots, with exact source tables. Figure/filter
+synchronization and export controls remain pending, as does
+whole-directory/actual-host approval.
 This is not a ready-to-publish site.
 T016 has selected and bundled one local chart dependency after a fidelity/size
-check; it is not loaded by the entry page yet. Figure rendering and filter/table
-integration remain T017/T018.
+check; T017 loads it locally. Filter/table integration remains T018.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
@@ -31,12 +32,13 @@ the main content. The overview explains survey, team-semester, global transcript
 and fixed-estimate grains before the research-question guides.
 
 The styled explorer now loads approved observation rows on dataset selection.
-The page supports comparing existing compatible cases in the same table;
-figures and export controls are pending.
+The page supports comparing existing compatible cases in the same table and
+viewing the seven paper figures separately; export controls are pending.
 Local catalog, release-manifest, and documentation links work.
 T011 provides layout/focus styling; T012 provides catalog loading and
 dataset navigation; T013 provides row filters/tables/sorting; T014 adds multi-case
-selection. Charts and export actions remain later tasks.
+selection. T017 adds full-snapshot figures; synchronized filtering and export
+actions remain later tasks.
 No missing stylesheet/script references, external assets, router, or build step
 have been added. Serve the directory over HTTP(S) to preview it; do not interpret
 the working shell as whole-directory or host approval.
@@ -200,9 +202,10 @@ The sole chart dependency is the official **Plotly.js Cartesian distribution
 Its upstream [MIT license](assets/vendor/LICENSE-plotly-4.1.2.txt) and all notices
 in the bundle are retained. The license's third-party copyright attribution is
 not an author/project identity. No package manager or build is needed on the
-hosting server. This dependency is bundled but **not yet loaded by the entry
-page**: T017 implements the selected figures and T018 connects them to filters,
-captions, and table alternatives.
+hosting server. The entry page now loads this local dependency with deferred
+scripts, before the figure and application scripts. T017 provides figures,
+captions and full-snapshot source tables; T018 connects permitted filtering to
+table selection.
 
 The Cartesian bundle supports scatter/line/bar traces, SD error bars, heatmaps,
 color scales, variable marker diameters/symbols, logarithmic axes, and zoom.
@@ -238,7 +241,8 @@ local script paths. Run all JavaScript tests together:
 
 ```sh
 node --check assets/vendor/plotly-cartesian-4.1.2.min.js
-node --test tools/test_app.cjs tools/test_rows.cjs tools/test_vendor.cjs
+node --check assets/charts.js
+node --test tools/test_app.cjs tools/test_rows.cjs tools/test_vendor.cjs tools/test_charts.cjs
 ```
 
 A temporary authoring-only browser probe used approved data, not existing chart
@@ -253,13 +257,76 @@ eighth manuscript figure or an extension of the approved seven-figure scope.
 
 The probe is not shipped, and these semantic/geometry checks are not pixel-perfect
 image matching or full keyboard/pointer accessibility sign-off. The shared hidden
-browser made screenshot/stability waits unreliable; final rendering, responsive
-layout, interaction, and exact table/caption integration remain T017/T018 and the
-later accessibility gate. Do not enable cloud links, editable charts, external
+browser made screenshot/stability waits unreliable. T017 checks final rendering,
+responsive containment, and exact full-snapshot tables; synchronized filtering
+and the full accessibility audit remain later gates. Do not enable cloud links, editable charts, external
 fonts, maps, MathJax/CDN scripts, or telemetry. Browser requests for the tested
 Cartesian plots stayed local. Preserve this property when wiring the library.
 Vendor assets are outside the **data-only** release manifest; the vendor hash
 tests and final whole-directory review cover them separately.
+
+## Paper figures (T017)
+
+Choose a figure in **Explore > Paper figures**. Selection loads only its one or
+two approved local datasets, using the same type/key/count validation and
+15-second request limit as observation tables. No new estimator, pooled subset,
+cross-grain join, or browser-side threshold is calculated.
+The [figure script](assets/charts.js) implements exactly the seven catalog
+mappings; the M2 heatmap tested for T016 is not another selected figure.
+
+| Figure | Preserved scientific meaning |
+| --- | --- |
+| RQ1 coded perceptions | Two cohort facets; 36 means, SD bars (not confidence intervals), original response Ns and 0-5 displayed axes. Coded families retain 0-4 units; autonomy/tool balance retains 1-5 units. |
+| RQ2 pooled activity | 29 overlapping seven-day windows, numerically ordered relative days, original pooled Ns, T3 anchor and original day-one peak annotation. |
+| RQ2 planning/concentration | 14 cases, original marker diameters for absolute score change, common T3 evaluator-score color limits, cohort symbols, and frozen median guides. |
+| RQ2 churn/lexical density | Separate M4/M5 panels, axes, units and denominators. Global 2025.2 transcript evidence is never reassigned to individual teams or another cohort. |
+| RQ3 artifact presence | Stacked raw counts and original cohort Ns (9/5), not percentages or quality scores. |
+| RQ3 planning/rework | Logarithmic magnitude axis plots 11 positive cases; all three zeros remain unchanged in the source table and are listed as excluded, never replaced by one. Baseline eligibility stays separate from magnitude. |
+| RQ3 complexity/rework | Linear magnitude axis retains all 14 cases and three zeros; eligibility, planning-tier colors, cohort symbols and original medians remain distinct. |
+
+Every figure has a caption explaining units, coverage and limitations, plus
+expandable exact source tables containing **every original column and row**.
+Tables preserve full numeric precision, composite cohort/team identity and
+original denominators. `Unavailable` represents null, never zero. Source-table
+Ns describe original populations, not the number of currently visible marks.
+Hover is supplementary; exact values do not depend on pointer interaction.
+
+Drag to zoom, use legends to toggle traces, and use **Reset figure view** to
+reload the original complete figure and restore its view. Visibility changes
+do not change source tables, values, denominators, or frozen guides. Narrow
+screens use a labeled, focusable horizontal-scroll region instead of shrinking
+multi-panel figures until their labels are illegible. Tables scroll locally too.
+
+**Current boundary:** figures use full snapshots independently of the observation
+filters above them. The page states this explicitly. T018 will synchronize only
+permitted selections; it must not turn fixed pooled/association summaries into
+new selected-case estimates. T017's source tables do not mark T018 complete.
+
+Missing renderer files, HTTP/JSON/schema/count errors, and failed rendering have
+explicit alerts, logged errors and retry/reload instructions. Old figures and
+source tables are cleared, not displayed as a successful empty result. Changing
+figures aborts superseded data loads and invalidates stale results. A figure
+failure does not disable valid observation tables; a metadata failure clears
+and disables both until metadata retry succeeds.
+
+Browser checks matched all seven rendered scientific arrays and **1,378 exact
+source-table cells across 117 rows**, including all 36 SD endpoint pairs within
+0.011 px of their projected values. Marker diameters, common score limits,
+composite hover identity, zoom/reset, trace visibility, errors/recovery and
+stale-request handling were checked. All seven figures passed Plotly validation
+and stayed contained at 1280/360/320 px; enlarged source-table text also stayed
+locally scrollable. Requests remained local.
+
+Two renderer-validation problems found during implementation were resolved,
+not suppressed: the single-trace activity plot omits an unused legend
+configuration, and the two score-colored traces use identical explicit
+Viridis limits (1.5-2.5), with one visible colorbar, rather than shared color-axis
+references rejected by this bundle's validator. The scientific color mapping is
+unchanged. A duplicated percent suffix in concentration hover was also removed.
+The dependency itself remains byte-identical to the pinned upstream release.
+These checks are not pixel-perfect image matching or full real-keyboard/pointer
+accessibility sign-off; those later gates and all publication approvals remain
+pending.
 
 ## Responsive styling (T011)
 

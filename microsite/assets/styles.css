@@ -219,9 +219,29 @@ summary {
 }
 
 #metadata-error:not(:empty),
-#row-error:not(:empty) {
+#row-error:not(:empty),
+#figure-error:not(:empty) {
   padding: 1rem;
   border-inline-start: 4px solid var(--focus);
+}
+
+.figure-scroll {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+#figure-output figure {
+  margin: 1rem 0;
+}
+
+#figure-output figcaption {
+  max-inline-size: 85ch;
+  margin-block-end: 1rem;
+}
+
+.figure-plot {
+  min-inline-size: 760px;
 }
 
 .unavailable {

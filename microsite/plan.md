@@ -1043,6 +1043,82 @@ no prototype or fixture is shipped. Temporary servers/copies and the downloaded
 archive were removed after verification. T017 onward and all 11 publication
 gates remain pending.
 
+### T017 - Selected paper figures
+
+**Completed 2026-10-22.** The [figure script](assets/charts.js) renders exactly
+the seven approved catalog figure mappings using the pinned local Cartesian
+bundle. The [entry page](index.html), [application](assets/app.js) and
+[stylesheet](assets/styles.css) provide independent figure selection,
+loading/error/retry states, zoom/reset, captions, exclusion details, and
+expandable exact full-snapshot source tables. No backend, package installation,
+build step, external asset, new estimator, or additional figure is introduced.
+The [README](README.md) documents operation, encodings and remaining boundaries.
+
+Scientific fidelity verified before completion:
+
+- RQ1: all 36 means, original SDs and response Ns, checkpoint/family ordering,
+  two cohort facets, 0-5 displayed axes, and original family-unit distinctions.
+  All 36 rendered SD endpoint pairs match projected mean plus/minus SD within
+  0.011 px; the caption explicitly distinguishes SD from confidence intervals
+  and discloses clipped below-zero uncertainty.
+- RQ2 pooled activity: 29 numerically ordered overlapping windows, original
+  pooled Ns, day-zero T3 guide and original day-one/302 peak annotation.
+- Planning/concentration: all 14 exact x/y pairs, stored marker diameters
+  (also checked in rendered marker data), common original T3-score domain
+  1.5-2.5, cohort symbols and frozen median guides. Composite hover identities
+  and percent units are correct.
+- M4/M5: distinct panels, axes, units and denominators. Global 2025.2 transcript
+  density remains separate from pooled team-semester churn.
+- Artifact presence: four stacked count observations, categorical cohort axis,
+  original cohort Ns of 9/5, and no conversion to percentages or quality scores.
+- Log rework: 11 original positive magnitudes plot; all three original zeros
+  remain in the 14-row source table and are explicitly listed as excluded,
+  never replaced with one. Eligibility is separate from magnitude.
+- Complexity/rework: all 14 magnitudes and three zeros on a linear axis,
+  separate planning/cohort encodings, fixed original guides, baseline eligibility
+  and ratio status. Null ratio hover says Unavailable; the log-profile hover
+  does not invent a ratio field absent from its source dataset.
+- All seven rendered scientific arrays match the specifications checked against
+  approved sources. All **1,378 source-table cells across 117 rows** match exact
+  original scalar strings, including null-to-Unavailable presentation. No
+  data/catalog/release/vendor bytes change.
+
+Interaction and resilience checks verified explicit HTTP 404, malformed JSON,
+invalid row shape/count, missing renderer and missing figure-script failures;
+successful retries; observation-table independence; metadata-failure clearing
+and recovery; and cancellation/stale-result protection after figure changes.
+Zoom and legend toggles preserve source values/populations; Reset restores the
+original ranges and trace visibility. Filtering the initial observation table
+to 18 rows leaves the independent 14-case figure unchanged, with the full-snapshot
+boundary visibly stated.
+
+All seven specifications pass Plotly validation without warnings. Browser
+validation originally exposed an unnecessary single-trace legend configuration
+that triggered a validator exception, and rejected shared score-color-axis
+references. The activity figure omits its unused legend; score traces now have
+identical explicit full-population Viridis bounds and one visible colorbar.
+An unused second colorbar container was removed as well. These changes preserve
+scientific encodings without suppressing validation or modifying the vendor.
+A doubled hover-percent suffix found by interaction testing was also corrected.
+
+All seven figures retain their mark counts with local chart/table scrolling
+at 1280/360/320 px (21 combinations), without whole-page horizontal overflow.
+Enlarged source-table text remains contained. Requests stay local. The hidden
+browser evidence is scalar/SVG geometry and programmatic interaction, not
+pixel-perfect screenshots or real keyboard/pointer accessibility sign-off.
+
+All **54 Python and 44 JavaScript tests pass** (98 total, zero failed/skipped),
+including 12 new [figure tests](tools/test_charts.cjs) and a figure-shell
+regression in the [page tests](tools/test_page.py). The independent copied site
+passes syntax, 99-artifact release verification, and byte-identical root/nested
+HTTP checks. Whitespace and local documentation links are verified.
+
+**T018 remains pending:** figures intentionally use complete original snapshots,
+not observation-filter subsets. Captions and standalone source alternatives
+provided now do not complete permitted chart/table selection synchronization.
+Exports, full accessibility/visual review and all 11 publication gates also
+remain pending. No excerpt feature or payload was added.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1218,7 +1294,7 @@ is measured, what is missing, and which comparisons are valid.
 **Requirements:** REQ-002, REQ-004, REQ-005, REQ-006.
 
 - [x] T016 [US3] [Plan:4.1] Check representative error-bar, heatmap, and scatterplot fidelity; if needed, bundle the pinned chart library and license under `microsite/assets/vendor/`. Do not add a chart framework or second library. Verified Plotly.js Cartesian 4.1.2, upstream integrity/MIT notices, 1.51 MB raw/0.50 MB gzip, representative rendered geometry/data, local-only requests, 85 tests and independent root/nested delivery; see Section 3.
-- [ ] T017 [US3] [Plan:4.1] Implement selected RQ1-RQ3 figures in `microsite/assets/charts.js` from approved figure-data mappings, preserving units, uncertainty semantics, axes, zero handling, eligibility, and sample sizes.
+- [x] T017 [US3] [Plan:4.1] Implement selected RQ1-RQ3 figures in `microsite/assets/charts.js` from approved figure-data mappings, preserving units, uncertainty semantics, axes, zero handling, eligibility, and sample sizes.
 - [ ] T018 [US3] [Plan:4.1] Connect permitted chart filtering to table selection in `microsite/assets/app.js`; label fixed pooled/association summaries and ensure unavailable values are not plotted as zero. Provide captions and table alternatives in `microsite/index.html`.
 
 **Plan 4.2:** Make approved data easy to reuse.
