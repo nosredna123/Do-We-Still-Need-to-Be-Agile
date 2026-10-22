@@ -15,6 +15,9 @@ observation tables, row filters, sorting, and compatible multi-cohort/team-semes
 selection are implemented. Figures and export controls remain pending, and
 whole-directory/actual-host approval remains pending.
 This is not a ready-to-publish site.
+T016 has selected and bundled one local chart dependency after a fidelity/size
+check; it is not loaded by the entry page yet. Figure rendering and filter/table
+integration remain T017/T018.
 See the [implementation plan](plan.md) for task status and the
 [dataset contracts](dataset-contracts.md) for scientific definitions and explicit
 field projections.
@@ -188,6 +191,75 @@ team labels, OR/AND across every approved filter, invalid selections, fixed
 omitted-case estimates, and absence of unsupported survey/transcript team filters.
 Run them with the combined Node command above. No new package, server-side
 requirement, or data artifact is introduced.
+
+## Local chart dependency and fidelity gate (T016)
+
+The sole chart dependency is the official **Plotly.js Cartesian distribution
+4.1.2**, copied without modification as
+[plotly-cartesian-4.1.2.min.js](assets/vendor/plotly-cartesian-4.1.2.min.js).
+Its upstream [MIT license](assets/vendor/LICENSE-plotly-4.1.2.txt) and all notices
+in the bundle are retained. The license's third-party copyright attribution is
+not an author/project identity. No package manager or build is needed on the
+hosting server. This dependency is bundled but **not yet loaded by the entry
+page**: T017 implements the selected figures and T018 connects them to filters,
+captions, and table alternatives.
+
+The Cartesian bundle supports scatter/line/bar traces, SD error bars, heatmaps,
+color scales, variable marker diameters/symbols, logarithmic axes, and zoom.
+It avoids the full bundle's unnecessary geospatial and 3D modules. A basic
+scatter/bar-only bundle would not cover the requested heatmap capability.
+Keeping this single maintained renderer is simpler than implementing error-bar
+geometry, scales, hit testing, zoom, and heatmap behavior independently.
+
+Size check: **1,507,990 bytes** raw (1.44 MiB), **499,721 bytes** with gzip level 9
+(488.0 KiB). The full version's published package is about 6.17 MB unpacked,
+versus 1.51 MB for this Cartesian package. The site remains usable on a plain
+static server even without compression, at the larger raw transfer size. Gzip
+is an optional hosting optimization, not a hosting-time build step or a shipped
+second copy. No performance budget was previously specified; these measured
+sizes are recorded transparently rather than claimed to meet an invented limit.
+
+Pinned provenance and integrity:
+
+- Package: `plotly.js-cartesian-dist-min@4.1.2`, from the
+  [npm registry](https://registry.npmjs.org/plotly.js-cartesian-dist-min/4.1.2).
+- Archive: `plotly.js-cartesian-dist-min-4.1.2.tgz`; verified against the registry's
+  SHA-512 integrity before extracting only the bundle and license.
+- Archive integrity:
+  `sha512-3UkyAT7/U8f3sOLavLnUjA6mqFmnqEe246GZhxT0J3TT9oZ0mh6SgwsL1yo/3/4xfmRSDFdGOxe+EsvT2XiE0g==`.
+- JavaScript SHA-256:
+  `aaf12ff1d4671f7e93f6df4291651ab4ca6b76c0ea5f1576ec1030e3c2819a20`.
+- License SHA-256:
+  `8c45d9eaf50c2f72dd9c7ab9ef440788ba58a3538484b5c51c1f17d5128752e7`.
+
+The [vendor tests](tools/test_vendor.cjs) pin the exact version, bundle/license
+hashes, raw/compressed sizes, single-library inventory, retained notices, and
+local script paths. Run all JavaScript tests together:
+
+```sh
+node --check assets/vendor/plotly-cartesian-4.1.2.min.js
+node --test tools/test_app.cjs tools/test_rows.cjs tools/test_vendor.cjs
+```
+
+A temporary authoring-only browser probe used approved data, not existing chart
+HTML or private inputs. It verified all 36 M1 mean/SD points and rendered SD
+endpoints, a correctly oriented 36-cell M2 role heatmap with the fixed 1-5 scale,
+14 score-colored/size-encoded planning-concentration cases, and 11 positive
+rework values on a log axis while retaining three zeros in the table. A synthetic
+null heatmap cell remained a gap, not zero. Composite hover identity and
+programmatic zoom/reset worked; all four plot specifications passed Plotly
+validation without warnings. The M2 heatmap is a **capability probe**, not an
+eighth manuscript figure or an extension of the approved seven-figure scope.
+
+The probe is not shipped, and these semantic/geometry checks are not pixel-perfect
+image matching or full keyboard/pointer accessibility sign-off. The shared hidden
+browser made screenshot/stability waits unreliable; final rendering, responsive
+layout, interaction, and exact table/caption integration remain T017/T018 and the
+later accessibility gate. Do not enable cloud links, editable charts, external
+fonts, maps, MathJax/CDN scripts, or telemetry. Browser requests for the tested
+Cartesian plots stayed local. Preserve this property when wiring the library.
+Vendor assets are outside the **data-only** release manifest; the vendor hash
+tests and final whole-directory review cover them separately.
 
 ## Responsive styling (T011)
 

@@ -964,6 +964,85 @@ Temporary previews were stopped and removed; no dependencies were installed.
 Adding excerpts later requires reopening T004 and approving exact text/context.
 T016 onward and all 11 human/actual-host publication gates remain pending.
 
+### T016 - Chart fidelity/size gate and pinned local vendor
+
+**Completed 2026-10-22.** Selected the official **Plotly.js Cartesian 4.1.2**
+distribution, vendored unchanged as
+[plotly-cartesian-4.1.2.min.js](assets/vendor/plotly-cartesian-4.1.2.min.js), with
+the upstream [MIT license](assets/vendor/LICENSE-plotly-4.1.2.txt) and in-bundle
+notices retained. The npm registry's package version/license and archive SHA-512
+integrity were checked before extracting only those two files. No package
+manager, dependency installation, build, CDN, chart framework, second library,
+or pre-existing chart HTML was introduced.
+
+The Cartesian subset covers the requested error bars, heatmaps, scatter/line/bar
+traces, colors/symbols/marker sizes, logarithmic axes, and zoom without the full
+distribution's geospatial/3D weight. The smaller basic bundle does not provide
+heatmaps. Hand-building scale/error-bar geometry, hit testing, heatmaps and zoom
+would add unnecessary custom code, so the plan's preferred single local Plotly
+renderer is retained. The measured tradeoff is explicit: **1,507,990 bytes raw**,
+**499,721 bytes with gzip level 9**, versus about 6.17 MB for the full published
+package unpacked. Compression is optional hosting configuration; no gzip copy
+or hosting-time build is required. No prior transfer budget was specified.
+
+The [README](README.md) records provenance, exact bundle/license hashes, size,
+upgrade precautions and integration boundaries. Three new
+[vendor tests](tools/test_vendor.cjs) failed on the missing vendor files before
+installation, then passed. They pin the exact raw bytes/version, retained
+license/notices, raw size, approximate compressed-size guard, single-library
+inventory, and local existing script references. Compressed output can differ
+slightly between zlib versions; raw SHA-256 is the exact integrity check.
+
+Representative fidelity verification used a **private temporary prototype** in
+an isolated copied site, built from approved public data and compared against
+the reference figure scripts and images:
+
+- M1: all 36 mean/SD points across two cohort facets, original checkpoint order,
+  shared 0-5 displayed axes, and explicit SD-not-CI semantics. All 36 rendered
+  SVG error-bar endpoint pairs agree with the axis projection of mean plus/minus
+  the original SD to within 0.011 px (SVG coordinate rounding).
+- M2: all 36 role/cohort-checkpoint means in the reference 6-by-6 orientation,
+  role order, reversed vertical display, fixed 1-5 color scale and two-decimal
+  cell labels. A synthetic missing cell removes its label instead of appearing
+  as zero. This heatmap is a capability check only: it is not an eighth included
+  manuscript figure or approval to expand the seven-figure scope.
+- Planning/concentration: all 14 exact x/y values, original stored marker
+  diameters, T3 score colors, cohort symbols, and original frozen median guides.
+  Composite cohort/team identity is available in hover. Programmatic zoom and
+  reset leave scientific arrays unchanged.
+- Log-axis planning/rework: the 11 positive magnitudes plot at original values;
+  three original zeros remain in the exact source table and are not replaced
+  by one or plotted on a logarithmic axis. Original eligibility stays separate.
+- All four specifications pass Plotly validation without warnings. Browser
+  requests are confined to the copied site: the local library, private probe,
+  and four approved JSON files; no font, cloud, map, MathJax or other external
+  request occurs. Plot mark/label counts remain correct at 1280/360/320 px
+  with local horizontal scrolling for the temporary narrow prototype.
+
+The hidden browser made screenshot/stability capture unreliable. An attempted
+inspection of an internal circular Plotly calculation object also exceeded
+the tool response timeout; bounded scalar/geometry reads then succeeded.
+A first endpoint probe mistakenly indexed traces independently of their subplot;
+using Plotly's actual trace index verified all 36 bars. These are verification
+tool/probe issues, not plot failures. The evidence is semantic/geometry fidelity,
+not pixel-perfect image equivalence or real pointer/keyboard accessibility
+sign-off. Final styling, interactions and table/caption alternatives remain
+T017/T018 and the later accessibility gate.
+
+All **53 Python and 32 JavaScript tests pass** (85 total, zero failed/skipped),
+both in the repository and an independent directory copy. JavaScript syntax,
+the 99-artifact data-manifest verification, whitespace, and root/nested HTTP
+checks pass, including byte-identical vendor and license delivery. Data-manifest
+hashes intentionally exclude application/vendor assets; exact vendor hashes
+are separately pinned by the new tests.
+
+The entry page still loads no chart library and displays its original 49-dataset,
+36-row initial table. Production HTML, application code/styles and all frozen
+data are unchanged. Only the vendor files, tests and documentation are added;
+no prototype or fixture is shipped. Temporary servers/copies and the downloaded
+archive were removed after verification. T017 onward and all 11 publication
+gates remain pending.
+
 ### Publication hazards already identified
 
 - The input inventory contains repository directory names and internal lineage.
@@ -1031,9 +1110,9 @@ shareable query state is not required.
   chart type, grain, and limitations. It is metadata, not a generic plugin system.
 - Keep CSV downloads alongside JSON. Prepare both from the same approved rows
   before release. Generate filtered CSV in the browser from those same public rows.
-- Prefer a locally bundled Plotly distribution, subject to a short fidelity/size
-  check, because existing figures already use Plotly and require error bars,
-  heatmaps, and scatterplots. Use only one library, pin its version, and retain
+- Use the locally bundled Plotly.js Cartesian 4.1.2 distribution selected by
+  T016's fidelity/size check, because existing figures already use Plotly and
+  require error bars, heatmaps, and scatterplots. Use only one library and retain
   its license. Do not load it from a CDN or embed unreviewed existing chart HTML.
 - Render dataset text as text, never as trusted HTML. Use robust CSV quoting and
   a documented spreadsheet-safety policy for textual export cells.
@@ -1138,7 +1217,7 @@ is measured, what is missing, and which comparisons are valid.
 **Plan 4.1:** Recreate only the selected paper visualizations.
 **Requirements:** REQ-002, REQ-004, REQ-005, REQ-006.
 
-- [ ] T016 [US3] [Plan:4.1] Check representative error-bar, heatmap, and scatterplot fidelity; if needed, bundle the pinned chart library and license under `microsite/assets/vendor/`. Do not add a chart framework or second library.
+- [x] T016 [US3] [Plan:4.1] Check representative error-bar, heatmap, and scatterplot fidelity; if needed, bundle the pinned chart library and license under `microsite/assets/vendor/`. Do not add a chart framework or second library. Verified Plotly.js Cartesian 4.1.2, upstream integrity/MIT notices, 1.51 MB raw/0.50 MB gzip, representative rendered geometry/data, local-only requests, 85 tests and independent root/nested delivery; see Section 3.
 - [ ] T017 [US3] [Plan:4.1] Implement selected RQ1-RQ3 figures in `microsite/assets/charts.js` from approved figure-data mappings, preserving units, uncertainty semantics, axes, zero handling, eligibility, and sample sizes.
 - [ ] T018 [US3] [Plan:4.1] Connect permitted chart filtering to table selection in `microsite/assets/app.js`; label fixed pooled/association summaries and ensure unavailable values are not plotted as zero. Provide captions and table alternatives in `microsite/index.html`.
 
