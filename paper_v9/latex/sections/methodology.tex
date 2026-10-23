@@ -43,15 +43,29 @@ repository-visible artifacts. Students were instructed to keep requirements,
 architecture, documentation, and source code in the repository, but Git
 captures only repository-visible evidence--artifacts and changes committed to
 version control--rather than AI-use telemetry such as prompt logs, API calls,
-or IDE acceptance events. Second, independent evaluator scorecards were
-collected at $T_1$--$T_3$ through blind scoring after status presentations,
-with 4 evaluators in 2025.2 and 3 in 2026.1. Third, multi-checkpoint surveys
-captured demographics, experience, GenAI adoption, perceived role disruption,
-and project expectations at cohort/checkpoint grain; survey responses carry no
-team identifier. Fourth, a bounded 2025.2 transcript corpus covers status
-presentations and supervisor discussions, segmented into 100 chunks across
-$T_1$, $T_2$, and $T_3$. Transcript evidence is a global checkpoint corpus
-and is not imputed for 2026.1.
+or IDE acceptance events. Second, independent evaluators blindly scored
+status presentations at $T_1$--$T_3$ (4 evaluators in 2025.2; 3 in 2026.1)
+on four ordinal dimensions, using 0.5-point steps: Engagement/Participation
+(0--2), Project Progress (0--4), Scope/Applicability (0--2), and Technical
+Complexity (0--2). The versioned exports preserve numeric scores but not
+verbal endpoint descriptions. For each team-semester-checkpoint, we computed
+the unweighted arithmetic mean across available ratings and retained the
+sample standard deviation, median, interquartile range, and valid-rater count.
+The 2025.2 data contain 102 scorecards across 27 team-checkpoint units (22
+with four ratings, four with three, and one with two); 2026.1 contains 45
+scorecards across 15 units, each with three ratings. Ordinal Krippendorff's
+$\alpha$, computed by dimension and cohort from evaluator-level ratings, was
+0.294, 0.604, 0.519, and 0.242 in 2025.2, and 0.632, 0.696, 0.565, and
+0.308 in 2026.1, respectively, in the dimension order above. Agreement thus
+varied by dimension and cohort and was not uniformly high; we treat these
+coefficients as descriptive diagnostics rather than evidence of a calibrated
+rubric. Third, multi-checkpoint surveys captured demographics, experience,
+GenAI adoption, perceived role disruption, and project expectations at
+cohort/checkpoint grain; survey responses carry no team identifier. Fourth, a
+bounded 2025.2 transcript corpus covers status presentations and supervisor
+discussions, segmented into 100 chunks across $T_1$, $T_2$, and $T_3$.
+Transcript evidence is a global checkpoint corpus and is not imputed for
+2026.1.
 
 All raw streams were anonymized before analysis. Analytical artifacts exclude
 direct personal identifiers; restricted provenance records preserve prompts,
