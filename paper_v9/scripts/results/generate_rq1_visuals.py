@@ -79,7 +79,7 @@ def _m1_trajectory(metrics_dir: Path, figures_dir: Path) -> None:
         legend_font={"size": 13},
     )
     figure.update_xaxes(categoryorder="array", categoryarray=["T1", "T2", "T3"], title="Checkpoint", title_font={"size": 15}, tickfont={"size": 13})
-    figure.update_yaxes(title="Mean score (family scale)", range=[0, 5], row=1, col=1, title_font={"size": 15}, tickfont={"size": 13})
+    figure.update_yaxes(title="Mean score (0-4 NLP rubric)", range=[0, 5], row=1, col=1, title_font={"size": 15}, tickfont={"size": 13})
     figure.update_yaxes(showticklabels=False, range=[0, 5], row=1, col=2, tickfont={"size": 13})
     _write_figure(figure, "rq1_m1_perception_with_sd", figures_dir)
     data.to_csv(figures_dir / "rq1_m1_perception_with_sd_data.csv", index=False)
