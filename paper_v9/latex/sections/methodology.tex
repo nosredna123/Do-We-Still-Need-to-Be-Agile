@@ -123,11 +123,25 @@ metric is behavioral AI-use telemetry.
 RQ2 uses repository and transcript evidence with explicit grain separation.
 Repository Activity (M3) summarizes commit timing, author participation,
 rolling windows, final-seven-day concentration, and non-overlapping phase
-shares for 14 team-semesters. Clean-Change Dynamics (M4) applies a versioned
-clean-path policy and reports clean churn separately from total churn.
-Coordination-Language Evidence (M5) reconstructs one 2025.2 global transcript
-corpus per checkpoint and deterministically counts versioned lexical markers;
-it is not correlated with team-semester repository observations.
+shares for 14 team-semesters. Clean-Change Dynamics (M4) counts churn only for
+paths allowed by the shared \texttt{code-churn-metrics-v2} policy: an
+allowlisted source-code extension (e.g., \texttt{.py}, \texttt{.ts},
+\texttt{.java}, \texttt{.sql}) and no excluded directory segment (e.g.,
+\texttt{node\_modules/}, \texttt{vendor/}, \texttt{venv/}, \texttt{build/},
+\texttt{dist/}, or \texttt{.next/}). Non-allowlisted files, including lockfiles
+and data/media files, are excluded; this path rule does not infer authorship.
+M4 reports clean churn separately from total churn. Coordination-Language
+Evidence (M5) lowercases the global 2025.2 transcript corpus and counts matches
+to a versioned Portuguese regex dictionary: alignment (e.g.,
+\textit{coordena\c{c}\~ao}, \textit{alinhamento}), handoff (e.g.,
+\textit{repasse}, \textit{handoff}), integration (e.g.,
+\textit{merge}, \textit{conflito}), blockers (e.g.,
+\textit{impedimento}, \textit{gargalo}), and rework (e.g.,
+\textit{retrabalho}, \textit{revis\~ao}). Marker density is reported per
+$1{,}000$ tokens by checkpoint, where each token is a maximal sequence of
+letters, digits, or underscores in the lowercased text. These lexical markers
+are candidate textual signals, not diagnoses of coordination failure, and are
+not linked to team-semester repository observations.
 
 RQ3 uses team-semester artifacts and outcomes. Upfront Architecture Evidence
 (M6) combines repository-visible T1 artifact presence/scope (M6a) with
@@ -135,8 +149,11 @@ structured Planning Content Evidence (M6b) from T1 commit subjects for nine
 observed team-semesters; five cases without T1 subjects remain unavailable.
 Repository Inactivity (M7) reports timing and coverage diagnostics, not
 planning omission. Clean-Path Rework (M8) reports late changes to previously
-observed clean source/test paths, using file provenance as a rework proxy while
-preserving baseline eligibility. Artifact--Rework--
+observed clean source/test paths: T3 changes to paths first observed at T1 or
+T2 are classified as rework, while paths first observed at T3 are deferred
+change. This file-provenance rule is a proxy, not semantic validation of
+rework, and rework ratios are limited to teams with a previously observed
+clean path. Artifact--Rework--
 Outcome Associations (M9) reports exploratory Spearman associations among T1
 artifact predictors, M8 rework, and independent T3 scorecard outcomes, with
 ratio analyses restricted to baseline-eligible cases. Technical-complexity
@@ -183,8 +200,12 @@ M9 & Artifact--Rework--Outcome Associations (Spearman $\rho$ + leave-one-out sen
 Language-model assistance is used for bounded data extraction and is kept
 separate from deterministic metric construction. M1 uses coded survey
 responses and M5 uses deterministic lexical coding; neither receives a new
-language-model score. M6b uses structured extraction from $T_1$ commit subjects
-to identify goals, architecture/design, task decomposition, risk/dependency,
-and literal evidence quotes. Outputs were reviewed by the research team and
-retained as separate exploratory categories, never as a composite
-planning-quality or architectural-quality score.
+language-model score. For M6b, a fixed JSON-schema prompt uses
+\texttt{gpt-4o-mini} at temperature $0$ to classify $T_1$ commit subjects for
+goals, architecture/design, task decomposition, and risk/dependency, requiring
+verbatim evidence quotes. Nine team-semesters had $T_1$ subjects; five remain
+unavailable. The validator checks quotes against the input subjects and their
+commit hashes, and the outputs passed the human-review gate; these checks do
+not establish semantic correctness. M6b remains exploratory and its
+categories are separate, not a composite planning- or architectural-quality
+score; M6a separately measures repository-visible artifact presence and scope.
