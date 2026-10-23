@@ -11,18 +11,24 @@ upfront design, but which intent, interface, dependency, and acceptance
 constraints must remain explicit while implementation iterates.
 
 Generative AI changes local software-engineering work unevenly across tasks,
-users, and contexts~\cite{carleton2024generative,banh2025copiloting,russo2024navigating}.
-Studies of code-generating tools show that developers steer, verify, and
-contextualize generated code rather than merely accepting it~\cite{barke2023grounded}.
-For student projects, this distinction matters because faster local generation
-does not automatically resolve cross-file dependencies, architectural
-boundaries, or coordination across contributors. Software-engineering
-education is already confronting these questions as students adopt GenAI in
-project work~\cite{yabaku2024usage}.
+users, and contexts~\cite{carleton2024generative,banh2025copiloting,russo2024navigating,ieee2025transforming,staron2025exploring}.
+Early evaluations of code-generating models examine their capabilities
+\cite{chen_2021_evaluating_code_llms}, while studies of developer interaction
+show that programmers steer, verify, and contextualize generated code rather
+than merely accepting it~\cite{barke2023grounded}. Critical perspectives also
+warn that locally plausible outputs can obscure system-level context
+\cite{miller_2023_coordination_ai_teams}. For student projects, this distinction
+matters because faster local generation does not automatically resolve
+cross-file dependencies, architectural boundaries, or coordination across
+contributors. Studies of student experiences document GenAI use in
+undergraduate programming and software-engineering education
+\cite{williams_2024_ai_software_engineering_education,yabaku2024usage}, while
+project-course research describes the coordination demands of client-facing
+software engineering work~\cite{perez_2022_planning_and_rework}.
 
 Architecture and technical-debt research similarly treats design decisions as
 evolving constraints whose consequences may accumulate over time
-~\cite{cunningham_1992_technical_debt,fowler2009technicaldebt,kruchten2012technicaldebt,verdecchia2018architectural,nayebi2019longitudinal}.
+~\cite{cunningham_1992_technical_debt,fowler2009technicaldebt,kruchten2012technicaldebt,verdecchia2018architectural,nayebi2019longitudinal,li_2015_technical_debt_mapping}.
 This motivates measuring early architectural artifacts separately from semantic
 quality: an observed artifact is evidence of an observable practice, not proof
 that the design was adequate. Spec-Driven Development (SDD) extends this
