@@ -100,23 +100,31 @@ profiles contextualize rework and concentration, but are not causal
 adjustments.
 
 \begin{table}[t]
-\caption{Summary of Metric Families and Components}
+\caption{Summary of Metric Families, Operational Grains, and Coverage}
 \label{tab:metrics_summary}
 \centering
 \small
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.6cm}>{\raggedright\arraybackslash}p{3.8cm}>{\raggedright\arraybackslash}p{2.6cm}@{}}
+\begin{tabular}{@{}lp{4.1cm}p{3.0cm}@{}}
 \toprule
-\textbf{ID} & \textbf{Metric family and components} & \textbf{Primary grain} \\
+\textbf{ID} & \textbf{Metric Family and Components} & \textbf{Primary Grain ($N$)} \\
 \midrule
-M1 & Self-Reported AI Usage and Perceptions & Cohort $\times$ checkpoint \\
-M2 & Perceived Role Disruption & Cohort $\times$ checkpoint $\times$ role \\
-M3 & Repository Activity & Team-semester / window \\
-M4 & Clean-Change Dynamics & Team-semester / checkpoint / window \\
-M5 & Coordination-Language Evidence & Global corpus / checkpoint \\
-M6 & Upfront Architecture Evidence & Team-semester \\
-M7 & Repository Inactivity & Team-semester / window \\
-M8 & Clean-Path Rework & Team-semester / window \\
-M9 & Artifact--Rework--Outcome Associations & Team-semester / stratum \\
+M1 & Self-Reported AI Usage \& Perceptions (6 perception scales + task/tool frequency) & Cohort $\times$ checkpoint ($6$ cells) \\
+\midrule
+M2 & Perceived Role Disruption (5-point Likert across 6 SE roles + paired shifts) & Cohort $\times$ checkpoint $\times$ role \\
+\midrule
+M3 & Repository Activity (commit timing, rolling windows, author Gini, phase bins) & Team-semester / window ($N=14$) \\
+\midrule
+M4 & Clean-Change Dynamics (source/test line churn under clean-path policy) & Team-semester / checkpoint ($N=14$) \\
+\midrule
+M5 & Coordination-Language Evidence (deterministic lexical markers per 1k tokens) & Global corpus / checkpoint (\texttt{2025.2}) \\
+\midrule
+M6 & Upfront Architecture Evidence: artifact scope (M6a, $N=14$) \& commit-subject categories (M6b, $n=9$) & Team-semester ($N=14$ / $n=9$) \\
+\midrule
+M7 & Repository Inactivity (7-day window coverage diagnostic) & Team-semester / window ($N=14$) \\
+\midrule
+M8 & Clean-Path Rework (late modifications to prior clean source/test files) & Team-semester ($N=14$; $n=12$ ratio) \\
+\midrule
+M9 & Artifact--Rework--Outcome Associations (Spearman $\rho$ + leave-one-out sensitivity) & Team-semester / stratum ($N=14$) \\
 \bottomrule
 \end{tabular}
 \end{table}

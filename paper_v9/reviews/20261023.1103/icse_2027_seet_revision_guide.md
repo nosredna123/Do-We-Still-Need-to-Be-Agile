@@ -79,7 +79,7 @@ $T_1$ artifact line scope & Engagement/participation & All team-semesters & 14 &
 \end{table}
 ```
 
-* [ ] **Action 1.2:** Fix row alignment and merged cells in **Table I** (Section III-B, Page 3) | **Addresses:** Reviewer 1, Detailed Comment 4
+* [x] **Action 1.2:** Fix row alignment and merged cells in **Table I** (Section III-B, Page 3) | **Addresses:** Reviewer 1, Detailed Comment 4
   * **Context:** In the current PDF (Page 3), rows `M1`/`M2` and `M5`–`M8` lack horizontal breaks or proper row alignment, causing `Primary grain` labels to bleed across rows.
   * **Ready-to-Paste LaTeX Code for Table I:**
 ```latex
