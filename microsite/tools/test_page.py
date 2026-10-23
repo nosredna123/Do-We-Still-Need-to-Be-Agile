@@ -183,7 +183,12 @@ class PageTests(unittest.TestCase):
                 self.assertEqual(audit.count(f"| {prefix}{number} |"), 1)
         self.assertIn("Overall: NEEDS_SIGNOFF", audit)
         self.assertIn("NOT PASSED", audit)
-        self.assertEqual(readme.count("- [ ]"), 11)
+        checklist = readme.split("## Anonymous-hosting checklist", 1)[1].split(
+            "## Copy, serve, and refresh", 1
+        )[0]
+        self.assertEqual(checklist.count("- [x]"), 10)
+        self.assertEqual(checklist.count("- [ ]"), 1)
+        self.assertIn("9 checks passed, 1 branding gate explicitly waived", checklist)
 
     def test_isolated_copy_report_preserves_portability_and_release_boundaries(self) -> None:
         readme = (self.site / "README.md").read_text(encoding="utf-8")
@@ -193,7 +198,10 @@ class PageTests(unittest.TestCase):
                        "808", "text/csv", "deny-only proxy", "no Python, Node, npm or Git",
                        "T023-T026", "not publication approval", "unchanged"):
             self.assertIn(phrase, report)
-        self.assertEqual(readme.count("- [ ]"), 11)
+        checklist = readme.split("## Anonymous-hosting checklist", 1)[1].split(
+            "## Copy, serve, and refresh", 1
+        )[0]
+        self.assertEqual(checklist.count("- [ ]"), 1)
 
 
 if __name__ == "__main__":

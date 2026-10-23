@@ -85,8 +85,9 @@ validation tooling imports only public definitions and local public files.
 An authorized human explicitly approved the complete sanitized candidate,
 accepted the stated residual linkage/anonymity risks, and permitted status-only
 completion updates. Automated checks cannot prove anonymity; substantive changes
-require renewed review. T024-T026 remain required before publication
-and manuscript citation.
+require renewed review. T024 and T025 are complete; the host was accepted
+with the explicit Netlify branding/icon exceptions recorded in T025. T026
+remains required to record the verified URL and snapshot before paper citation.
 
 ## 4. Smallest useful design
 
@@ -266,17 +267,19 @@ downloads faithfully represent the approved snapshot and the displayed filters.
 
 - [x] T021 [Plan:5.1] Complete the acceptance checklist below and record pass/fail evidence in `microsite/README.md`, using neutral descriptions and no private screenshots or machine paths. Audit complete: 20 local passes, five publication checks not passed; release remains NEEDS_SIGNOFF.
 - [x] T022 [Plan:5.1] Copy only `microsite/` to a separate location and serve it over HTTP at both `/` and a non-root prefix such as `/review/explorer/`; confirm all views/downloads work without the repository, pipeline, or internet asset requests.
-- [x] T023 [Plan:5.1] Review every file to be published, including `microsite/plan.md`, `microsite/README.md`, assets, downloads, metadata, and tools, against the privacy allowlist and double-blind requirements. Verified all 125 files, removed private-input mappings/references while preserving approved scientific/runtime bytes, passed 120 regressions and two-browser root/nested checks, and obtained explicit authorized human whole-directory approval accepting residual risk. See README T023; actual-host approval remains pending.
+- [x] T023 [Plan:5.1] Review every file to be published, including `microsite/plan.md`, `microsite/README.md`, assets, downloads, metadata, and tools, against the privacy allowlist and double-blind requirements. Verified all 125 files, removed private-input mappings/references while preserving approved scientific/runtime bytes, passed 120 regressions and two-browser root/nested checks, and obtained explicit authorized human whole-directory approval accepting residual risk. See README T023; the actual-host check is recorded separately in T025.
 
 **Plan 5.2:** Release the frozen snapshot on a neutral host.
 **Requirements:** REQ-001, REQ-008, REQ-009.
 
-- [x] T024 [Plan:5.2] Document a provider-neutral copy-and-serve procedure in `microsite/README.md`, including MIME types, disabled directory listing, HTTPS, neutral URL requirements, refresh procedure, and the fact that all shipped files are public. Verified documented isolated copy/check/loopback preview commands, all 45 public Python tests and 250 root/nested file-byte checks; no deployment performed. Final updated directory approval and actual-host checks remain prerequisites for T025.
-- [ ] T025 [Plan:5.2] After human release approval, copy `microsite/` to the selected host, inspect its public URL/redirects/headers/error pages for identifying branding, and repeat the core browse/filter/download checks against the deployed snapshot.
+- [x] T024 [Plan:5.2] Document a provider-neutral copy-and-serve procedure in `microsite/README.md`, including MIME types, disabled directory listing, HTTPS, neutral URL requirements, refresh procedure, and the fact that all shipped files are public. Verified documented isolated copy/check/loopback preview commands, all 45 public Python tests and 250 root/nested file-byte checks; no deployment performed.
+- [x] T025 [Plan:5.2] After human release approval, inspect the deployed URL/redirects/headers/error pages and repeat the core browse/filter/download checks against the deployed snapshot. Chrome 155/Firefox 158 passed all 49 datasets (17,046 scalar cells), seven figures and required interactions; all 99 manifest artifacts match. HTTPS/TLS/headers/MIME/404/private-path checks passed. Netlify's edge-injected `index.html` and unlisted `/favicon.ico` are documented exceptions explicitly accepted by the authorized human; this is not a provider-brand-free claim. See README T025 and the private live-audit evidence.
 - [ ] T026 [Plan:5.2] Record the neutral public URL and snapshot identifier in `microsite/README.md`; supply the verified explorer URL for the paper citation through a separate manuscript change.
 
 **Exit:** A frozen, approved directory has been proven portable and the actual
-anonymous deployment works. A local preview alone is not publication verification.
+deployment works with the accepted host-branding/icon exceptions. This does not
+claim provider-free delivery or eliminate anonymity/linkage risk. A local preview
+alone is not publication verification.
 
 ## 6. Acceptance and release checklist
 

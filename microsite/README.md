@@ -107,8 +107,9 @@ column definitions/units, original denominator, selection/sort and missingness**
 are all recorded. The [dataset contracts](dataset-contracts.md) and
 [public catalog](data/catalog.json) are the dataset-specific reference, not a
 license to join different grains. See [download operation and serialization](#dataset-and-displayed-row-downloads-t019)
-for the CSV conventions and failure states. No neutral public URL or final
-whole-directory/actual-host approval has been recorded yet.
+for the CSV conventions and failure states. T025 records actual-host checks and
+the accepted Netlify branding/icon exceptions below. T026 remains responsible
+for recording the verified public URL and snapshot for the paper citation.
 
 ## Page shell (T010)
 
@@ -561,10 +562,9 @@ full application accessibility and actual-host review.
 [plan Section 6](plan.md#6-acceptance-and-release-checklist) are assessed below:
 **20 PASS locally; 5 NOT PASSED because whole-directory/human/actual-host
 release gates remain open.** T021 completes the evidence audit, not the
-anonymous-publication checklist. All 11 hosting/release boxes below remain
-unchecked. These local acceptance results did not themselves complete T022-T026;
-the subsequent T022 portability verification is recorded below. T023-T026
-remain pending.
+anonymous-publication checklist. This is a dated, point-in-time T021 result; later
+T022-T025 evidence and current hosting-gate status appear below. These local
+acceptance results did not themselves complete T022-T026.
 
 ### Scientific fidelity
 
@@ -602,9 +602,11 @@ remain pending.
 
 ### Anonymous publication
 
-`NOT PASSED` is a blocking release result, not an implied approval or an
-unreported test failure. These checks require later whole-directory or
-actual-host evidence that local functional tests cannot supply.
+**Historical T021 status:** each `NOT PASSED` result below records the release
+state on 2026-10-22, before T023 whole-directory approval and T025 live-host
+verification. The local T021 `PASS` for P4 did not evaluate host-injected
+behavior. These entries are retained as audit history; current host findings
+and the explicitly accepted Netlify exceptions are recorded in T025 below.
 
 | ID | Check | Result | Evidence and required action |
 |---|---|---|---|
@@ -723,13 +725,12 @@ logic, data/catalog/release and vendor/license bytes remain unchanged.
 All task browser sessions, test servers, proxy, container and disposable
 copies/downloads were cleaned up after verification.
 
-**Remaining boundaries:** T023-T026 still require every-file privacy review
-and neutralization of prohibited source references, human linkage-risk/release
-approval, provider-neutral deployment documentation, neutral HTTPS-host
-verification and the separate citation update. The T021 audit's five
-publication checks remain NOT PASSED. No real public URL or anonymous-host
-approval is implied. Firefox headless minimum width remains 500 px; the
-360/320 px browser layout checks are Chrome results, not Firefox results.
+**Historical boundary note:** At the T022 audit point, T023-T026 and actual-host
+checks remained open. See the subsequent T023 whole-directory approval and T025
+live-host audit below. The T021 audit's five publication checks remain a
+point-in-time record, not current deployment status. Firefox headless minimum
+width remains 500 px; the 360/320 px browser layout checks are Chrome results,
+not Firefox results.
 
 ## Whole-directory publication review (T023)
 
@@ -781,12 +782,82 @@ extended to revised documentation or another directory. The authorized human
 confirmed review of this complete candidate, accepted the stated residual
 linkage/anonymity risks, and approved only completion/status-record updates.
 T023 is complete; any substantive change requires renewed review. Hosting
-branding, HTTPS, redirects, headers, error pages and actual-host checks remain
-unverified; all 11 hosting checklist gates remain unchecked.
+branding, HTTPS, redirects, headers and error pages were evaluated during T025.
+See the live-host audit and current checklist below; T023 approval alone did
+not approve a host or paper citation.
 
 The T021 and T022 sections above are historical candidate evidence. Their
 previous directory-reference blockers have been remediated locally; neither
 record certifies this changed candidate or a future deployment.
+
+## Live-host verification (T025)
+
+**Actual-host functional and transport checks passed on 2026-10-23.** The
+authorized human approved the deployed candidate and explicitly accepted the
+generic Netlify badge as a host-branding exception. This exception is not an
+author/institution identity finding and does not eliminate residual anonymity
+or linkage risk.
+
+The selected static host serves a randomly named HTTPS subdomain without an
+identifying author, institution, repository or username in the observed page,
+URL, certificate or response headers. HTTP redirects directly to the same HTTPS
+host; the verified TLS certificate covers the hostname and HSTS is enabled.
+The 404 response is the provider's generic “Page not found” page with a generic
+Netlify support link; it revealed no account or author identity. Netlify's
+default server and request-ID headers identify the hosting provider, not the
+author. No `robots.txt` or `noindex` response is configured; this optional
+discovery hint is not access control.
+
+The host injects a `Powered by Netlify` badge/toolbar in an isolated iframe and
+modifies the delivered `index.html` with generic Netlify hosting text, a public
+project identifier, and a same-origin HUD script. The badge offers a link to
+Netlify's public product page that carries that project identifier if clicked.
+The human explicitly approved retaining this provider branding as an exception.
+Netlify's [badge documentation](https://docs.netlify.com/manage/projects/powered-by-netlify-badge/)
+states the badge makes no network requests, sets no cookies, collects no
+analytics, and does not identify the owner or team. Browser network checks found
+no third-party resource requests during site journeys; the injected HUD script
+itself is an additional same-origin request and visible provider branding.
+
+The provider also serves an unlisted `/favicon.ico` containing its own icon.
+The page explicitly links and browsers load the approved neutral local
+[SVG favicon](assets/favicon.svg); no browser journey requested the provider
+icon. The authorized human accepted the unlisted provider icon as a recorded
+caveat. Exact comparison found 124 of the 125 candidate paths byte-identical;
+the only differing candidate path was `index.html`, modified by the edge
+injection. All 99 public data-manifest artifacts, including the catalog, all 49
+JSON datasets and all 49 CSV downloads, remain byte-identical to the approved
+candidate. This host-generated behavior is not in the site's static source.
+This T025 audit was added to the local README after that deployment check; the
+live copy still contains the earlier T024 deployment documentation. T026 must
+publish and recheck the final documentation before recording the paper citation.
+
+The host returned correct HTML, CSS, JavaScript, JSON, CSV and SVG content types.
+Static Markdown and Python/JavaScript authoring files are served as text, not
+executed. Data, asset and tools directories, private archive paths and hidden
+version-control paths did not expose listings or parent content. Missing paths
+returned 404; parent traversal was rejected. No unexpected data or author
+identifiers were found in deployed static files.
+
+Chrome 155 and Firefox 158 each passed the complete live-site journey: all 49
+exact dataset tables and generated CSVs (17,046 scalar cells), all seven figures
+with their source-table alternatives, RQ navigation, definition search, keyboard
+filter/sort/reset, cohort-scoped team comparison, full CSV/JSON downloads and
+filtered CSV plus scope metadata. Deliberately malformed dataset JSON produced
+a visible error with no fabricated rows; restoring the resource and retrying
+recovered the full table. Neither browser reported application console or
+JavaScript errors on happy paths. Chrome verified 320/360 px layouts without
+page overflow; Firefox headless limits its test viewport to 500 px, so no
+narrower Firefox claim is made. All application resources stayed on the site
+origin; Netlify's host-injected script is the exception to byte-pure source
+delivery, explicitly accepted above.
+
+Ten hosting checks below are verified, subject to the documented platform
+branding/icon exceptions and their explicit human acceptance. The eleventh
+check—recording the public URL and snapshot for the separate paper citation—is
+reserved for T026. These results do not claim that a public anonymous host
+removes linkage risk, that `noindex` is enabled, or that the hosting provider
+does not retain its ordinary infrastructure logs.
 
 ## Public-safe naming
 
@@ -875,57 +946,67 @@ recording this policy alone does not complete those checks.
 
 ## Anonymous-hosting checklist
 
-**All checks below remain release gates.** Documentation and field approval are
-not approval of the actual host. T023 records review of the sanitized candidate;
-recheck these gates against the exact deployment copy before public copying,
-then verify the deployed result. They are not automatically checked by T023.
-
-- [ ] Review all directory contents, including HTML/JavaScript source, comments,
+- [x] Review all directory contents, including HTML/JavaScript source, comments,
   JSON/CSV, downloadable headers, filenames, chart metadata, docs, tools, license
-  notices, hidden files, and error messages. Remove excluded material rather
-  than merely hiding it in the UI.
-- [ ] Confirm exported fields and actual values match the approved snapshot and
-  contracts. Assess remaining searchable/category combinations and linkage
-  risks through human review; automated string scans alone are not proof.
-- [ ] Confirm that no excerpt payload, descriptor, request, or feature exists.
-- [ ] Inspect the host/domain/account presentation and URL path for author or
-  institution branding. Use a neutral HTTPS URL with no identifying redirects,
-  public repository links, deployment badges, or provider-injected branding.
-- [ ] Inspect actual redirect destinations, HTTP headers, TLS/browser-visible
+  notices, hidden files, and error messages. T023 reviewed the candidate; T025
+  compared all hosted paths and inspected the only edge-modified HTML. No
+  excluded private content was found.
+- [x] Confirm exported fields and actual values match the approved snapshot and
+  contracts. The authorized review accepted remaining searchable/category
+  combinations and linkage risks; all 99 manifest artifacts match byte-for-byte.
+- [x] Confirm that no excerpt payload, descriptor, request, or feature exists.
+- [x] Inspect the host/domain/account presentation and URL path for author or
+  institution branding. No author, institution, repository or username identity
+  was found. Explicit exception: the authorized human accepted the generic
+  Netlify badge/edge injection and unlisted provider favicon; see T025 above.
+  The host is not provider-brand-free; this is a documented waiver, not a claim
+  that the requirement was met without exception. Count this gate as waived,
+  not passed.
+- [x] Inspect actual redirect destinations, HTTP headers, TLS/browser-visible
   identity, generated error pages (including 404s), and directory responses for
-  identifying account or server details.
-- [ ] Disable directory listing. Ensure only the intended directory is served;
+  identifying account or server details. Only generic provider branding and
+  request IDs were observed; no author/account identifiers were found.
+- [x] Disable directory listing. Ensure only the intended directory is served;
   private records, research inputs, and version-control history must not be
-  reachable through aliases or parent paths.
-- [ ] Confirm appropriate HTML, CSS, JavaScript, JSON, and CSV MIME types. Serve
-  the directory over HTTP(S), not a `file://` URL.
-- [ ] Verify an isolated copy at both domain root and a nested URL path, with
+  reachable through aliases or parent paths. Directory indexes, private paths
+  and parent traversal were tested; `/favicon.ico` is an unlisted provider icon.
+- [x] Confirm appropriate HTML, CSS, JavaScript, JSON, and CSV MIME types. Serve
+  the directory over HTTP(S), not a `file://` URL. Valid HTTPS/TLS and direct
+  HTTP-to-HTTPS redirection were verified.
+- [x] Verify an isolated copy at both domain root and a nested URL path, with
   relative links and no parent-directory or external network requests. No
   backend, database, account, package installation, build step, Python runtime,
-  or research pipeline may be required on the destination host.
-- [ ] On the actual host, repeat browse/filter/reset/compare/download checks,
+  or research pipeline is required on the destination host. Root/nested checks
+  are recorded under T022; actual-host runtime requests remained same-origin.
+- [x] On the actual host, repeat browse/filter/reset/compare/download checks,
   verify snapshot hashes and row counts, and check browser network requests and
-  errors. Check that failed loads show errors rather than fabricated data.
-- [ ] Confirm no telemetry or third-party runtime requests are introduced by the
-  host or bundled code. Optional `noindex` is only a discovery hint, not privacy,
-  anonymity, or access control.
-- [ ] Record the verified neutral public URL and snapshot identifier only after
-  approval and deployment verification; update the paper citation separately.
+  errors. Chrome and Firefox passed all core journeys; malformed-data errors and
+  recovery were verified in Chrome.
+- [x] Confirm no telemetry or third-party runtime requests are introduced by the
+  host or bundled code. Netlify's HUD was accepted as an explicit provider
+  branding exception; its official documentation says it performs no tracking
+  or network calls. Normal site journeys made no third-party resource requests.
+  Optional `noindex` is only a discovery hint, not privacy, anonymity, or access
+  control. No `robots.txt`/`noindex` is configured.
+- [ ] Record the verified public URL and snapshot identifier only after approval
+  and deployment verification; update the paper citation separately (T026).
 
-If a check fails, stop the affected release, identify the exposed content or
-host behavior, correct it, and repeat the check. Changing the host is preferable
-to accepting unavoidable identifying branding. If private material was already
-served, remove it promptly and seek human reassessment; removal cannot guarantee
-that public copies or caches disappear.
+**Status: 9 checks passed, 1 branding gate explicitly waived, and 1 remains
+pending for T026.** The T025 reviewer explicitly accepted the stated generic
+Netlify branding and default-icon exceptions; if that waiver is withdrawn, turn
+off the badge or move the site to a host that meets the no-provider-branding
+requirement and repeat the review.
+If private material is ever served, remove it promptly and seek human
+reassessment; removal cannot guarantee that public copies or caches disappear.
 
 ## Copy, serve, and refresh (T024)
 
-This is a provider-neutral procedure, not a deployment record. T025 must verify
-the selected actual host after human release approval; T026 records the verified
-neutral URL and supplies it for the separate paper citation change. No public
-deployment URL is claimed here. The 11 hosting gates above remain unchecked.
-T023 approved its pinned candidate, not subsequent documentation or tool changes:
-review this procedure and the exact final directory before public copying.
+This is a provider-neutral procedure, not a deployment record. T025 has verified
+the actual host after human release approval; see the live-host findings above.
+T026 records the verified public URL and snapshot identifier and supplies the
+URL for the separate paper citation change. The exact URL is intentionally
+reserved for that task. The authorized T025 exception is limited to this
+generic host branding and icon; no author/account identity was found.
 
 The copy and catalog/release check commands below were verified in a disposable
 copy: all 45 public Python tests passed, all 125 file bytes matched over HTTP at
@@ -1058,6 +1139,13 @@ Retrieve bytes with a local HTTP client or browser; no verifier is installed on
 the destination. A matching remote manifest alone is insufficient: compare it
 to the trusted local one and verify the artifacts it names.
 
+T025 verified the published candidate with one accepted host transformation:
+Netlify modifies `index.html` and serves its own unlisted `/favicon.ico`.
+The authorized human explicitly accepted these exceptions for this deployment;
+they do not satisfy a strict provider-brand-free copy requirement. Any later
+change of host, badge setting, deployment copy, or exception requires a new
+actual-host check before T026 records the URL for citation.
+
 Check the landing page, stylesheet, scripts, favicon, catalog, release manifest,
 a JSON dataset and CSV download for status and MIME type. Inspect HTTPS and HTTP
 redirect chains manually, including non-trailing-slash URLs; inspect headers,
@@ -1077,9 +1165,10 @@ do not corrupt the public approved snapshot to test error handling.
 
 Stop publication on any failed check, correct the copy/configuration or choose
 another host, and repeat verification. Do not cite an unverified deployment.
-Only after T025 passes may T026 record the neutral URL and snapshot identifier.
-This procedure does not change the manifest's pending-release status or claim
-that the host has been inspected.
+T025 has verified this deployment with the explicitly accepted exceptions
+recorded above. T026 may record the URL and snapshot only after the final
+published copy is checked. This procedure does not change the data manifest's
+release status or imply the hosting provider retains no infrastructure logs.
 
 ### 5. Refresh or roll back without changing evidence silently
 
