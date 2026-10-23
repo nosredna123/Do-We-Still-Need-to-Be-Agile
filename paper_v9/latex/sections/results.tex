@@ -1,8 +1,6 @@
 \section{Results}
-This section reports the descriptive and exploratory results produced by the
-validated metric artifacts. Results are organized by research question and
-retain the analytical grain of each metric; no claim combines incompatible
-grains or treats self-reported evidence as behavioral telemetry.
+This section reports descriptive and exploratory results from the validated
+metric artifacts, organized by research question.
 
 \subsection{RQ1: How do student developers utilize Generative AI, and how does this adoption shape their longitudinal perceptions of software engineering roles and project expectations?}
 
@@ -14,8 +12,6 @@ disruption agreement for six software-engineering roles. All six
 cohort-by-semester/checkpoint cells in the M1 family
 have complete item coverage, with 46, 41, and 40 respondents in 2025.2 and
 22, 20, and 18 respondents in 2026.1 at $T_1$, $T_2$, and $T_3$, respectively.
-These are repeated cohort summaries, not an identified individual longitudinal
-panel.
 % PROVENANCE: M1 values and coverage are from
 % paper_v9/data/metrics/m1_rq1_perception_panel_long.csv and
 % paper_v9/data/metrics/m1_rq1_perception_panel.metadata.json. The executed
@@ -49,8 +45,7 @@ use and project-specific use remain common across cohorts, with reported tasks
 concentrated in research/questions, code generation, debugging, and
 documentation. Tool naming is dominated by widely available assistants such as
 ChatGPT and Gemini, while prior AI-project experience increases across
-checkpoints. These are self-reported frequencies and selected activities, not
-instrumented measures of tool use or stable individual learning trajectories.
+checkpoints.
 % PROVENANCE: usage frequency, task, tool, prior-experience, and autonomy
 % values are persisted in paper_v9/data/metrics/m1_rq1_usage_frequency.csv,
 % m1_rq1_usage_tasks.csv, m1_rq1_usage_tools.csv,
@@ -86,14 +81,9 @@ transformation.
 
 \subsection{RQ2: How does the temporal density of repository activity contrast with the qualitative typification of human coordination friction across the project lifecycle?}
 
-RQ2 contrasts three descriptive evidence streams that operate at different
-grains. Repository Activity (M3) measures activity timing, author participation,
-and concentration for 14 team-semesters. Clean-Change Dynamics (M4) measures
-clean source/test change at team-semester and checkpoint grain.
-Coordination-Language Evidence (M5) counts candidate coordination markers
-within a global transcript corpus by checkpoint. The measures are therefore
-reported side by side as complementary descriptions, not as a common-scale
-effect or a statistical correlation.
+RQ2 contrasts repository activity (M3), clean source/test change (M4), and
+global transcript coordination markers (M5) across checkpoints
+(Table~\ref{tab:rq2-summary}).
 % PROVENANCE: RQ2 coverage and grains are declared in
 % paper_v9/data/metrics/m3_author_activity_dynamics.metadata.json,
 % m4_clean_change_dynamics.metadata.json, and
@@ -139,7 +129,7 @@ The same final-stage pattern remains visible when the 91 days before $T_3$ are
 re-expressed as mutually exclusive phases rather than overlapping rolling
 windows. These phase-share summaries are available in the public data
 explorer~\cite{prism_explorer} as descriptive checks against the overlap
-structure of the rolling M3 view, not as independent causal tests.
+structure of the rolling M3 view.
 % PROVENANCE: Non-overlapping phase shares are from
 % paper_v9/figures/rq2_phase_activity_share_summary.csv and
 % rq2_nonoverlapping_phase_activity.metadata.json.
@@ -172,8 +162,7 @@ Operational regularity provides a final repository-visible process check. The
 regularity index is descriptive, with larger values indicating activity more
 distributed across the observed Git timeline; it is not a validated agile
 process scale. Both low and high final concentration appear across the observed
-regularity range, so the late-activity interpretation remains bounded to Git
-evidence rather than treated as a direct measure of team process maturity.
+regularity range.
 % PROVENANCE: Regularity data and the index contract are from
 % paper_v9/figures/rq2_operational_regularity_data.csv and
 % rq2_operational_regularity.metadata.json.
@@ -215,14 +204,6 @@ retaining their distinct units and analytical grains. Figure~\ref{fig:rq2-m4-m5}
 shows the Clean-Change Dynamics (M4) and Coordination-Language Evidence (M5)
 checkpoint trajectories in separate panels.
 
-The coverage-aware M5 triangulation is available in the public data
-explorer~\cite{prism_explorer}. Its coverage is limited to 2025.2 and is not
-zero-filled for 2026.1. The M5 density line is global to the transcript corpus,
-so it is contextual evidence, not a team-level M5 association.
-% PROVENANCE: The coverage-aware panel is from
-% paper_v9/figures/rq2_m5_2025_triangulation_summary.csv and
-% rq2_m5_2025_triangulation.metadata.json.
-
 \begin{table*}[t]
 \caption{RQ2 Temporal Summary with Explicit Units}
 \label{tab:rq2-summary}
@@ -251,30 +232,15 @@ Coordination-Language Evidence (M5) & Markers per 1,000 tokens / global corpus &
 \label{fig:rq2-m4-m5}
 \end{figure*}
 
-Taken together, Repository Activity (M3) and Clean-Change Dynamics (M4) show
-that repository-visible activity and clean
-source/test change become most concentrated near the final checkpoint, while
-Coordination-Language Evidence (M5) shows an increase in candidate
-coordination-language density across the
-observed 2025.2 transcript corpus. The three patterns are compatible with the
-RQ2 descriptive contrast within the observed evidence streams.
+Repository activity and clean source/test change (M3/M4) concentrate near the
+final checkpoint, while candidate coordination-language density (M5) increases
+across the observed 2025.2 transcript corpus.
 
 \subsection{RQ3: How does the observable scope and content evidence of upfront architectural artifacts at baseline \texorpdfstring{$T_1$}{T1} associate with late-stage clean-path rework and independent, blind-scored project outcomes?}
 
-RQ3 is evaluated at team-semester grain across only 14 observations. This
-small sample substantially limits statistical power and the stability of any
-correlation estimate; accordingly, the reported rank-based Spearman
-coefficients are used only to summarize directional monotonic patterns in the
-observed cases, not as confirmatory tests. This narrower analysis complements
-the broader descriptive evidence for RQ1 and RQ2, which is situated in a cohort
-of approximately 70 participating students and draws on repeated surveys,
-repositories from all 14 projects, and the available transcript corpus. These
-evidence streams retain their distinct
-analytical grains and are not treated as 70 independent observations. The RQ3
-analysis separates observable upfront architectural artifacts from their
-semantic interpretation, separates rework magnitude from a
-baseline-conditioned ratio, and treats evaluator outcomes as independent T3
-scorecard summaries.
+RQ3 evaluates team-semester associations ($N=14$) among upfront architectural
+artifacts at $T_1$ (M6a, M6b), late clean-path rework (M8), and independent
+blind-scored outcomes at $T_3$ (M9).
 % PROVENANCE: RQ3 coverage and grains are declared in the M6a, M6b, M7, M8,
 % and M9 metadata files under paper_v9/data/metrics/. The executed verification
 % notebooks are verify_m6.ipynb through verify_m9.ipynb.
@@ -379,36 +345,24 @@ figure is descriptive and does not adjust causally for complexity.}
 % rq3_complexity_confounding_summary.csv, and
 % rq3_complexity_profile.metadata.json.
 
-The primary Artifact--Rework--Outcome Associations (M9) are based on only 14
-team-semesters, which sharply limits statistical power and the stability of
-correlation estimates. We therefore use the coefficients and their p-values
-strictly as exploratory diagnostics of structural variation, not as
-confirmatory tests. Within these constraints, M9 does not support a general
-monotonic relationship between T1 artifact scope and later rework; the primary
-associations are weak and non-monotonic, as summarized in
-Table~\ref{tab:rq3-associations}.
+Table~\ref{tab:rq3-associations} summarizes M9 associations across the 14
+team-semesters. T1 artifact scope has weak, non-monotonic associations with T3
+rework; ratio estimates are limited to baseline-eligible cases, and
+independent T3 outcomes show similarly weak associations. In the separate
+M6b subset ($n=9$), task-decomposition evidence has the largest absolute
+association with clean-rework magnitude ($\rho=-0.408$) and the largest
+positive association with an evaluator outcome, scope applicability
+($\rho=0.479$). Leave-one-out and broader influence-map views expose case
+sensitivity; these coefficients and $p$-values are exploratory diagnostics,
+not confirmatory tests or causal estimates, and leave-one-out ranges are not
+confidence intervals. Further sensitivity results are available in the public
+data explorer~\cite{prism_explorer}.
 % PROVENANCE: M9 magnitude and ratio associations are from
 % paper_v9/data/metrics/m9_planning_vs_rework_m6a_m8a.csv and
 % m9_planning_vs_rework_m6a_m8b_eligible_stratum.csv.
-
-The independent blind-scored T3 outcomes are similarly weakly associated with
-the structural predictors. Table~\ref{tab:rq3-associations} reports the full
-association matrix, including the rework magnitude, rework-ratio, and outcome
-rows.
 % PROVENANCE: Outcome associations are from
 % paper_v9/data/metrics/m9_planning_vs_outcomes_m6a_t3.csv; outcome
 % distributions are computed from data/lake/evaluator_team_cuts.parquet.
-
-The approved Planning Content Evidence (M6b) fields produce a separate, smaller
-exploratory view with
-$n=9$. Its largest absolute association with clean-rework magnitude is
-$\rho=-0.408$ for task-decomposition evidence; its largest positive
-association with an evaluator outcome is $\rho=0.479$ for task-decomposition
-evidence versus scope applicability. Leave-one-out diagnostics expose
-sensitivity to individual team-semesters rather than confidence intervals and
-are available in the published data explorer~\cite{prism_explorer}.
-Table~\ref{tab:rq3-associations} reports the primary
-Artifact--Rework--Outcome Associations (M9) values.
 
 \begin{table*}[t]
 \caption{Primary RQ3 Association Results}
@@ -442,20 +396,7 @@ $T_1$ artifact line scope & Engagement/participation & All team-semesters & 14 &
 % paper_v9/data/metrics/m9_planning_vs_outcomes_m6b_t3_if_approved.csv and
 % m9_leave_one_out_intervals.csv. M7 is explicitly excluded from M9.
 
-The registered RQ2/RQ3 influence map extends this leave-one-out view beyond
-the primary M9 planning-scope rows. It preserves the intended directional
-reading for several relationships while also flagging less stable cases. These
-values remain robustness diagnostics for a 14 team-semester panel, not
-confidence intervals or confirmatory significance tests.
 % PROVENANCE: Influence-map values and relationship definitions are from
 % paper_v9/figures/rq3_influence_map_data.csv,
 % rq3_influence_heatmap_matrix.csv, rq3_influence_relationship_contract.csv,
 % and rq3_influence_map.metadata.json.
-
-Overall, the RQ3 evidence provides a descriptive comparison of observable T1
-artifact scope, late clean-path changes, and independent evaluator outcomes,
-but the 14-team-semester sample cannot support stable confirmatory correlation
-or establish that artifact quality causes less destructive rework or better
-project outcomes. The principal result is therefore a bounded, exploratory
-association profile with explicit missingness and influence diagnostics, not a
-causal planning-effect estimate.
