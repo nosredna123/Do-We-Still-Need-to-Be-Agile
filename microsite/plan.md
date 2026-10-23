@@ -85,9 +85,10 @@ validation tooling imports only public definitions and local public files.
 An authorized human explicitly approved the complete sanitized candidate,
 accepted the stated residual linkage/anonymity risks, and permitted status-only
 completion updates. Automated checks cannot prove anonymity; substantive changes
-require renewed review. T024 and T025 are complete; the host was accepted
-with the explicit Netlify branding/icon exceptions recorded in T025. T026
-remains required to record the verified URL and snapshot before paper citation.
+require renewed review. T024-T026 are complete; the host was accepted with
+the explicit Netlify branding/icon exceptions recorded in T025. T026 records
+the verified public URL and snapshot and supplies the URL for the separate
+paper-citation change.
 
 ## 4. Smallest useful design
 
@@ -274,7 +275,7 @@ downloads faithfully represent the approved snapshot and the displayed filters.
 
 - [x] T024 [Plan:5.2] Document a provider-neutral copy-and-serve procedure in `microsite/README.md`, including MIME types, disabled directory listing, HTTPS, neutral URL requirements, refresh procedure, and the fact that all shipped files are public. Verified documented isolated copy/check/loopback preview commands, all 45 public Python tests and 250 root/nested file-byte checks; no deployment performed.
 - [x] T025 [Plan:5.2] After human release approval, inspect the deployed URL/redirects/headers/error pages and repeat the core browse/filter/download checks against the deployed snapshot. Chrome 155/Firefox 158 passed all 49 datasets (17,046 scalar cells), seven figures and required interactions; all 99 manifest artifacts match. HTTPS/TLS/headers/MIME/404/private-path checks passed. Netlify's edge-injected `index.html` and unlisted `/favicon.ico` are documented exceptions explicitly accepted by the authorized human; this is not a provider-brand-free claim. See README T025 and the private live-audit evidence.
-- [ ] T026 [Plan:5.2] Record the neutral public URL and snapshot identifier in `microsite/README.md`; supply the verified explorer URL for the paper citation through a separate manuscript change.
+- [x] T026 [Plan:5.2] Record the verified public URL and snapshot identifier in `microsite/README.md`; supply the explorer URL for the paper citation through a separate manuscript change. Verified the public HTTPS page and all 99 manifest artifacts against the local `research-data-001` snapshot; a clean browser reload rendered 36/36 rows and the linked figure without errors. The manuscript itself remains unchanged; see the README T026 record. The accepted Netlify badge and favicon caveat remain explicit.
 
 **Exit:** A frozen, approved directory has been proven portable and the actual
 deployment works with the accepted host-branding/icon exceptions. This does not

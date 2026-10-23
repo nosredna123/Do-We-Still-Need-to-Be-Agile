@@ -108,8 +108,8 @@ are all recorded. The [dataset contracts](dataset-contracts.md) and
 [public catalog](data/catalog.json) are the dataset-specific reference, not a
 license to join different grains. See [download operation and serialization](#dataset-and-displayed-row-downloads-t019)
 for the CSV conventions and failure states. T025 records actual-host checks and
-the accepted Netlify branding/icon exceptions below. T026 remains responsible
-for recording the verified public URL and snapshot for the paper citation.
+the accepted Netlify branding/icon exceptions below. T026 records the verified
+public URL and snapshot for the separate paper-citation change.
 
 ## Page shell (T010)
 
@@ -829,8 +829,9 @@ injection. All 99 public data-manifest artifacts, including the catalog, all 49
 JSON datasets and all 49 CSV downloads, remain byte-identical to the approved
 candidate. This host-generated behavior is not in the site's static source.
 This T025 audit was added to the local README after that deployment check; the
-live copy still contains the earlier T024 deployment documentation. T026 must
-publish and recheck the final documentation before recording the paper citation.
+live copy still contains the earlier T024 deployment documentation. T026 has
+recorded the verified public URL and snapshot below; these local audit additions
+are not yet reflected in the hosted README.
 
 The host returned correct HTML, CSS, JavaScript, JSON, CSV and SVG content types.
 Static Markdown and Python/JavaScript authoring files are served as text, not
@@ -853,11 +854,30 @@ origin; Netlify's host-injected script is the exception to byte-pure source
 delivery, explicitly accepted above.
 
 Ten hosting checks below are verified, subject to the documented platform
-branding/icon exceptions and their explicit human acceptance. The eleventh
-check—recording the public URL and snapshot for the separate paper citation—is
-reserved for T026. These results do not claim that a public anonymous host
-removes linkage risk, that `noindex` is enabled, or that the hosting provider
-does not retain its ordinary infrastructure logs.
+branding/icon exceptions and their explicit human acceptance. These results do
+not claim that a public anonymous host removes linkage risk, that `noindex` is
+enabled, or that the hosting provider does not retain its ordinary
+infrastructure logs.
+
+## Public URL and snapshot record (T026)
+
+The verified public explorer is
+[https://moonlit-mochi-1dcef0.netlify.app/#explore](https://moonlit-mochi-1dcef0.netlify.app/#explore).
+The selected snapshot is **`research-data-001`** (49 datasets, 99 manifest
+artifacts). The URL was rechecked on 2026-10-23: HTTPS returned HTTP 200, the
+release manifest reported the expected snapshot ID, and all 99 deployed
+manifest artifacts matched the local approved SHA-256 values and byte counts.
+After a clean browser reload, the Explore page rendered the selected
+36-row dataset and its figure without an application error. The earlier T025
+Chrome/Firefox suites supply the broader journey evidence.
+
+This is the URL to provide for the paper's data-explorer citation in a separate
+manuscript change; the manuscript has not been changed here. The URL identifies
+the Netlify-hosted page, including the explicitly accepted provider badge and
+favicon caveat documented in T025. The README audit additions are local and
+have not yet been uploaded; the live application and all 99 data artifacts
+were verified independently. Re-upload and recheck the directory if the hosted
+README must also show this record before submission.
 
 ## Public-safe naming
 
@@ -988,11 +1008,12 @@ recording this policy alone does not complete those checks.
   or network calls. Normal site journeys made no third-party resource requests.
   Optional `noindex` is only a discovery hint, not privacy, anonymity, or access
   control. No `robots.txt`/`noindex` is configured.
-- [ ] Record the verified public URL and snapshot identifier only after approval
-  and deployment verification; update the paper citation separately (T026).
+- [x] Record the verified public URL and snapshot identifier after approval and
+  deployment verification; provide the URL for the separate paper citation
+  change (T026). The manuscript citation remains a separate change.
 
-**Status: 9 checks passed, 1 branding gate explicitly waived, and 1 remains
-pending for T026.** The T025 reviewer explicitly accepted the stated generic
+**Status: 10 checks passed, 1 branding gate explicitly waived, and none remain
+pending.** The T025 reviewer explicitly accepted the stated generic
 Netlify branding and default-icon exceptions; if that waiver is withdrawn, turn
 off the badge or move the site to a host that meets the no-provider-branding
 requirement and repeat the review.
@@ -1001,12 +1022,12 @@ reassessment; removal cannot guarantee that public copies or caches disappear.
 
 ## Copy, serve, and refresh (T024)
 
-This is a provider-neutral procedure, not a deployment record. T025 has verified
+This is a provider-neutral procedure, not a deployment record. T025 verified
 the actual host after human release approval; see the live-host findings above.
-T026 records the verified public URL and snapshot identifier and supplies the
-URL for the separate paper citation change. The exact URL is intentionally
-reserved for that task. The authorized T025 exception is limited to this
-generic host branding and icon; no author/account identity was found.
+T026 records the verified public URL and snapshot identifier in the section
+above and supplies the URL for the separate paper citation change. The
+authorized T025 exception is limited to the generic host branding and icon; no
+author/account identity was found.
 
 The copy and catalog/release check commands below were verified in a disposable
 copy: all 45 public Python tests passed, all 125 file bytes matched over HTTP at
@@ -1144,7 +1165,7 @@ Netlify modifies `index.html` and serves its own unlisted `/favicon.ico`.
 The authorized human explicitly accepted these exceptions for this deployment;
 they do not satisfy a strict provider-brand-free copy requirement. Any later
 change of host, badge setting, deployment copy, or exception requires a new
-actual-host check before T026 records the URL for citation.
+actual-host check before the URL is reused for citation.
 
 Check the landing page, stylesheet, scripts, favicon, catalog, release manifest,
 a JSON dataset and CSV download for status and MIME type. Inspect HTTPS and HTTP
@@ -1165,10 +1186,11 @@ do not corrupt the public approved snapshot to test error handling.
 
 Stop publication on any failed check, correct the copy/configuration or choose
 another host, and repeat verification. Do not cite an unverified deployment.
-T025 has verified this deployment with the explicitly accepted exceptions
-recorded above. T026 may record the URL and snapshot only after the final
-published copy is checked. This procedure does not change the data manifest's
-release status or imply the hosting provider retains no infrastructure logs.
+T025 verified this deployment with the explicitly accepted exceptions recorded
+above, and T026 records its URL and snapshot after rechecking the live page and
+all manifest artifacts. Any changed published copy requires fresh verification
+before citation. This procedure does not change the data manifest's release
+status or imply the hosting provider retains no infrastructure logs.
 
 ### 5. Refresh or roll back without changing evidence silently
 

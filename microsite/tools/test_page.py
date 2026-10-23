@@ -186,9 +186,12 @@ class PageTests(unittest.TestCase):
         checklist = readme.split("## Anonymous-hosting checklist", 1)[1].split(
             "## Copy, serve, and refresh", 1
         )[0]
-        self.assertEqual(checklist.count("- [x]"), 10)
-        self.assertEqual(checklist.count("- [ ]"), 1)
-        self.assertIn("9 checks passed, 1 branding gate explicitly waived", checklist)
+        self.assertEqual(checklist.count("- [x]"), 11)
+        self.assertEqual(checklist.count("- [ ]"), 0)
+        self.assertIn("10 checks passed, 1 branding gate explicitly waived", checklist)
+        self.assertIn("## Public URL and snapshot record (T026)", readme)
+        self.assertIn("https://moonlit-mochi-1dcef0.netlify.app/#explore", readme)
+        self.assertIn("research-data-001", readme)
 
     def test_isolated_copy_report_preserves_portability_and_release_boundaries(self) -> None:
         readme = (self.site / "README.md").read_text(encoding="utf-8")
@@ -201,7 +204,7 @@ class PageTests(unittest.TestCase):
         checklist = readme.split("## Anonymous-hosting checklist", 1)[1].split(
             "## Copy, serve, and refresh", 1
         )[0]
-        self.assertEqual(checklist.count("- [ ]"), 1)
+        self.assertEqual(checklist.count("- [ ]"), 0)
 
 
 if __name__ == "__main__":
