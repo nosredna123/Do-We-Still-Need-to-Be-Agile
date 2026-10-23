@@ -2,6 +2,12 @@
 
 Date: 2026-09-26
 
+Update: On 2026-10-23, `prism_explorer` was replaced with the verified public
+microsite URL and snapshot identifier, which is now the single cited public
+source for the approved research data. The unused `prism_replication_package`
+placeholder and claims of a separately available package were removed. The
+entry-by-entry findings below record the earlier audit state unless noted.
+
 Scope: entry-by-entry review of `latex/references.bib` after the recent BibTeX cleanup. This report does **not** modify the `.bib` file; it records the audit findings and gives exact replacement snippets for entries that should be corrected while preserving their current BibTeX keys.
 
 Implementation status: the corrective snippets and optional completeness improvements identified here were applied to `latex/references.bib` on 2026-09-26. The post-fix LaTeX/BibTeX compilation completed successfully and kept the paper at 11 pages.
@@ -34,7 +40,7 @@ Recommended fixes before submission:
    - `miller_2023_coordination_ai_teams`
 2. Reclassify `chen_2021_evaluating_code_llms` as an arXiv article/misc entry rather than an inproceedings entry.
 3. Treat `nguyenduc2026systematic` as provisional because the Preprints page exists but could not be independently verified beyond the URL/search result in this audit.
-4. Keep `prism_replication_package` and `prism_explorer` only as deliberate blind-review placeholders; replace them with real archival URLs before camera-ready or artifact evaluation.
+4. `prism_explorer` points to the verified published microsite and `research-data-001` snapshot, the sole cited public source for the approved research data.
 
 ## Entry-by-entry findings
 
@@ -68,8 +74,8 @@ Recommended fixes before submission:
 | 26 | `chen_2021_evaluating_code_llms` | Medium | arXiv `2107.03374` verified | Source is real, but it is not a conference proceeding. Current `booktitle={arXiv preprint...}` and long author list contain likely author-name errors. | Replace with the exact arXiv-style entry below. |
 | 27 | `williams_2024_ai_software_engineering_education` | High | Current DOI returned 404; corrected DOI `10.1109/ACCESS.2024.3380909` verified | The substituted paper is real, but the current title, author spelling, pages, and DOI are wrong. Correct title is **"Students' Experiences of Using ChatGPT in an Undergraduate Programming Course"**, authors Philipp Haindl and Gerald Weinberger, pages 43519--43529. | Replace with the exact corrected entry below. |
 | 28 | `miller_2023_coordination_ai_teams` | High | Current DOI returned 404; search/Crossref found `10.1109/MC.2026.3686931` | Current substitute metadata is wrong: the article is in **Computer**, not IEEE Software; year 2026, vol. 59, no. 7, pp. 96--99; authors Spinellis, Baudry, and Voas. Also, it is not a course/team-coordination study, so semantic fit depends on the claim being cited. | Replace metadata if retaining this source; if the citation supports student-team coordination, replace the citation in the paper with a more directly relevant education/teamwork source instead. |
-| 29 | `prism_replication_package` | OK placeholder | URL intentionally `example.org`, fetch returns 404 | This is a blind-review placeholder, not an external factual reference. | Keep for anonymous submission only. Replace with real archive DOI/URL before camera-ready. |
-| 30 | `prism_explorer` | OK placeholder | URL intentionally `example.org`, fetch returns 404 | This is a blind-review placeholder, not an external factual reference. | Keep for anonymous submission only. Replace with real explorer/archive URL before camera-ready. |
+| 29 | `prism_replication_package` | Removed 2026-10-23 | No separate public package is cited or claimed | The former `example.org` placeholder implied a second source not represented by the published explorer. | Removed; the microsite is the single cited public source for the approved data. |
+| 30 | `prism_explorer` | Updated 2026-10-23 | Live URL and snapshot reverified against the local release manifest | Replaced the former `example.org` placeholder with the published explorer URL and snapshot `research-data-001`; generic Netlify branding and favicon caveats remain documented in the microsite release record. | Keep the verified URL; recheck if the deployment changes. |
 | 31 | `perez_2022_planning_and_rework` | OK | DOI `10.1145/2732155` verified | Substituted source is real and metadata matches Crossref. The key name no longer describes the actual source, but preserving the key avoids LaTeX citation changes. | Keep. |
 
 ## Exact replacement snippets for entries needing correction
@@ -206,7 +212,8 @@ pages  = {85--111}
 - Duplicate keys: none detected.
 - BibTeX syntax: previously confirmed clean after the last cleanup; this audit did not alter the file.
 - Broken external URLs:
-  - `prism_replication_package` and `prism_explorer` intentionally use `example.org` placeholders.
+  - `prism_replication_package` was removed; the explorer is the single cited public data source.
+  - `prism_explorer` points to the verified published URL and snapshot as of 2026-10-23.
   - `nguyenduc2026systematic` returned HTTP 403 on direct fetch, although the URL appears in search results.
 - DOI mismatches requiring correction:
   - `yabaku2024usage`

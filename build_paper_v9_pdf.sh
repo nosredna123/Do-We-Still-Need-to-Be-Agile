@@ -7,6 +7,7 @@ BUILD_DIR="$LATEX_DIR/build"
 
 cd "$LATEX_DIR"
 mkdir -p "$BUILD_DIR"
+export TEXINPUTS="$ROOT_DIR/paper_v9:$LATEX_DIR:${TEXINPUTS:-}"
 rm -f "$BUILD_DIR/main.aux" "$BUILD_DIR/main.bbl" "$BUILD_DIR/main.blg" \
   "$BUILD_DIR/main.log" "$BUILD_DIR/main.out" "$BUILD_DIR/main.pdf"
 

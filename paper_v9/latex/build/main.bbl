@@ -114,13 +114,10 @@ P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
 C.~Spearman, ``The proof and measurement of association between two things,''
   \emph{The American Journal of Psychology}, vol.~15, no.~1, pp. 72--101, 1904.
 
-\bibitem{prism_replication_package}
-``{PRISM} replication package,'' \url{https://example.org/prism-replication},
-  2026, accessed: Sep. 25, 2026.
-
 \bibitem{prism_explorer}
-``{PRISM} interactive data explorer,''
-  \url{https://example.org/prism-explorer}, 2026, accessed: Sep. 25, 2026.
+``Research data explorer,''
+  \url{https://moonlit-mochi-1dcef0.netlify.app/\#explore}, 2026, snapshot:
+  \texttt{research-data-001}. Accessed: Oct. 23, 2026.
 
 \bibitem{nguyenduc2026systematic}
 \BIBentryALTinterwordspacing
