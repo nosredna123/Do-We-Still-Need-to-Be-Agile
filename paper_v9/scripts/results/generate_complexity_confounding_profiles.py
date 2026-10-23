@@ -673,7 +673,7 @@ def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
                     marker={
                         "color": PLANNING_TIER_COLORS[planning_tier],
                         "symbol": SEMESTER_SYMBOLS.get(semester, "circle"),
-                        "size": 15,
+                        "size": 17,
                         "line": {"color": "white", "width": 1.6},
                     },
                     name=f"{compact_planning_labels[planning_tier]} · {semester}",
@@ -711,22 +711,18 @@ def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
         x=complexity_median,
         line_dash="dot",
         line_color="#71717a",
-        annotation_text=f"Median T3 complexity: {complexity_median:.2f}",
-        annotation_position="top left",
     )
     figure.add_hline(
         y=rework_median,
         line_dash="dash",
         line_color="#71717a",
-        annotation_text=f"Median rework: {rework_median:,.0f}",
-        annotation_position="bottom right",
     )
     figure.update_layout(
         template="simple_white",
         width=1100,
         height=500,
-        margin={"l": 90, "r": 30, "t": 60, "b": 70},
-        font={"size": 14, "family": "DejaVu Sans, Arial, sans-serif"},
+        margin={"l": 110, "r": 45, "t": 75, "b": 95},
+        font={"size": 22, "family": "DejaVu Sans, Arial, sans-serif"},
         legend={
             "title": "",
             "orientation": "h",
@@ -734,20 +730,23 @@ def _build_technical_complexity_vs_rework(data: pd.DataFrame) -> go.Figure:
             "y": 1.03,
             "xanchor": "left",
             "x": 0,
-            "font": {"size": 12},
+            "font": {"size": 18},
         },
         xaxis={
             "title": "Evaluator technical complexity at T3",
             "gridcolor": "#e5e7eb",
             "zeroline": False,
+            "title_font": {"size": 24},
+            "tickfont": {"size": 20},
         },
         yaxis={
             "title": "T3 clean rework magnitude (changed lines)",
             "gridcolor": "#e5e7eb",
             "zeroline": True,
             "zerolinecolor": "#cbd5e1",
+            "title_font": {"size": 24},
+            "tickfont": {"size": 20},
         },
-        annotations=[*figure.layout.annotations],
     )
     return figure
 

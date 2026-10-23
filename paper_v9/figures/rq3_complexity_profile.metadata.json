@@ -66,9 +66,9 @@
       "svg": "5ce38efa816a37c0bf32697fa3492b00749e23f696b40603290a67fa9be89ea3"
     },
     "rq3_technical_complexity_vs_rework": {
-      "pdf": "c51aec45442f849517fe259ec7717dd58be0da08074f22a571877f700c97fa14",
-      "png": "1b6d2b8b862ec4e0be89a94a5986fc74e1970f4ca9f342397d44b52d785f9f86",
-      "svg": "6b9f20afaaf09b1010a9d94b56e628d629847fdeb0dba98c91eb286ba0c63904"
+      "pdf": "d72f4edceb4c1cb7580b2c4e3fb35e77144a7e10de2c2a9af5d4b3f453a95423",
+      "png": "2ff2bb8cb282a603d7632c78afb4c315bba69c9a19dcfab60679fb73004db616",
+      "svg": "9df2d7adcb90c7a77eda6fa570d1d12e8bcae9657aa9332d41fa977f7027d2b2"
     }
   },
   "figure_outputs": {
@@ -88,7 +88,7 @@
       "svg": "paper_v9/figures/rq3_technical_complexity_vs_rework.svg"
     }
   },
-  "generated_at_utc": "2026-09-26T07:16:15.681953+00:00",
+  "generated_at_utc": "2026-10-23T19:10:58+00:00",
   "inference": "descriptive_confounding_profile_not_causal",
   "input_sha256": {
     "evaluator": "f6a8cb3db32c43bd1adf77b1f97f11929254de5e32c7a00f1b077babc7e6c872",
