@@ -33,7 +33,7 @@ This checklist is ordered using our agreed **Hybrid Tiered Strategy**:
 
 ### Tier 1: Immediate Mechanical, Table, Typo & Reference Quick Wins
 
-* [ ] **Action 1.1:** Fix corrupted headers, misaligned columns, and swapped `Predictor`/`Outcome` entries in **Table III** (Page 9) | **Addresses:** Reviewer 1, Detailed Comment 4; Meta-Review
+* [x] **Action 1.1:** Fix corrupted headers, misaligned columns, and swapped `Predictor`/`Outcome` entries in **Table III** (Page 9) | **Addresses:** Reviewer 1, Detailed Comment 4; Meta-Review
   * **Context:** In the current PDF (Page 9), Table III's header row renders sample size $n$ as `72` and merges $\rho$ with `Exploratory p` (`pExploratory p`). In addition, the `Predictor` and `Outcome` columns are inverted in rows 3–12 (e.g., `T3 rework ratio` is listed in the Predictor column instead of the Outcome column).
   * **Replacement Markdown Preview:**
 
