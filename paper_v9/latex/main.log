@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  23 OCT 2026 10:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  23 OCT 2026 16:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -416,119 +416,227 @@ LaTeX Warning: Citation `banh2025copiloting' on page 2 undefined on input line 1
 LaTeX Warning: Citation `russo2024navigating' on page 2 undefined on input line 14.
 
 
-LaTeX Warning: Citation `barke2023grounded' on page 2 undefined on input line 16.
+LaTeX Warning: Citation `ieee2025transforming' on page 2 undefined on input line 14.
 
 
-LaTeX Warning: Citation `yabaku2024usage' on page 2 undefined on input line 21.
+LaTeX Warning: Citation `staron2025exploring' on page 2 undefined on input line 14.
 
 
-LaTeX Warning: Citation `cunningham_1992_technical_debt' on page 2 undefined on input line 25.
+LaTeX Warning: Citation `chen_2021_evaluating_code_llms' on page 2 undefined on input line 16.
 
 
-LaTeX Warning: Citation `fowler2009technicaldebt' on page 2 undefined on input line 25.
+LaTeX Warning: Citation `barke2023grounded' on page 2 undefined on input line 18.
 
 
-LaTeX Warning: Citation `kruchten2012technicaldebt' on page 2 undefined on input line 25.
+LaTeX Warning: Citation `miller_2023_coordination_ai_teams' on page 2 undefined on input line 20.
 
 
-LaTeX Warning: Citation `verdecchia2018architectural' on page 2 undefined on input line 25.
+LaTeX Warning: Citation `williams_2024_ai_software_engineering_education' on page 2 undefined on input line 25.
 
 
-LaTeX Warning: Citation `nayebi2019longitudinal' on page 2 undefined on input line 25.
+LaTeX Warning: Citation `yabaku2024usage' on page 2 undefined on input line 25.
 
 
-LaTeX Warning: Citation `github2025spec' on page 2 undefined on input line 31.
+LaTeX Warning: Citation `perez_2022_planning_and_rework' on page 2 undefined on input line 27.
 
 
-LaTeX Warning: Citation `thoughtworks202Xspec' on page 2 undefined on input line 31.
+LaTeX Warning: Citation `cunningham_1992_technical_debt' on page 2 undefined on input line 31.
+
+
+LaTeX Warning: Citation `fowler2009technicaldebt' on page 2 undefined on input line 31.
+
+
+LaTeX Warning: Citation `kruchten2012technicaldebt' on page 2 undefined on input line 31.
+
+
+LaTeX Warning: Citation `verdecchia2018architectural' on page 2 undefined on input line 31.
+
+
+LaTeX Warning: Citation `nayebi2019longitudinal' on page 2 undefined on input line 31.
+
+
+LaTeX Warning: Citation `li_2015_technical_debt_mapping' on page 2 undefined on input line 31.
+
+
+LaTeX Warning: Citation `github2025spec' on page 2 undefined on input line 37.
+
+
+LaTeX Warning: Citation `thoughtworks202Xspec' on page 2 undefined on input line 37.
 
 ) (./sections/methodology.tex
 
-LaTeX Warning: Citation `lewis2020retrieval' on page 2 undefined on input line 13.
+LaTeX Warning: Citation `lewis2020retrieval' on page 2 undefined on input line 14.
 
 
-LaTeX Warning: Citation `spearman1904proof' on page 2 undefined on input line 55.
+LaTeX Warning: Citation `stol2018abc' on page 2 undefined on input line 21.
 
-[2]) (./sections/results.tex [3]
+
+LaTeX Warning: Citation `runeson2009case' on page 2 undefined on input line 21.
+
+[2]
+
+LaTeX Warning: Citation `spearman1904proof' on page 3 undefined on input line 84.
+
+
+LaTeX Warning: Reference `tab:metrics_summary' on page 3 undefined on input line 100.
+
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 126.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 3449) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 plicit grain sep-a-ra-tion. Repos-i-tory Ac-tiv-ity (M3) sum-
+ []
+
+
+Underfull \hbox (badness 1968) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 dows, final-seven-day con-cen-tra-tion, and non-overlapping
+ []
+
+
+Underfull \hbox (badness 1859) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 ics (M4) counts churn only for paths al-lowed by the
+ []
+
+
+Underfull \hbox (badness 1496) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 no ex-cluded di-rec-tory seg-ment (e.g., \OT1/pcr/m/n/10 node_modules/\OT1/ptm/m/n/10 ,
+ []
+
+[3]
+Underfull \hbox (badness 2027) in paragraph at lines 171--172
+[]|\OT1/ptm/m/n/9 Cohort $\OMS/cmsy/m/n/9 ^^B$ \OT1/ptm/m/n/9 check-point
+ []
+
+
+Underfull \hbox (badness 6893) in paragraph at lines 175--175
+[]|\OT1/ptm/m/n/9 Repository Ac-tiv-ity (com-mit
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--177
+[]|\OT1/ptm/m/n/9 Clean-Change Dy-nam-ics
+ []
+
+
+Underfull \hbox (badness 2126) in paragraph at lines 177--177
+\OT1/ptm/m/n/9 (source/test line churn un-der
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 179--179
+[]|\OT1/ptm/m/n/9 Coordination-Language
+ []
+
+
+Underfull \hbox (badness 3396) in paragraph at lines 181--181
+\OT1/ptm/m/n/9 ar-ti-fact scope (M6a, $\OML/cmm/m/it/9 N \OT1/cmr/m/n/9 =
+ []
+
+
+Underfull \hbox (badness 4556) in paragraph at lines 181--181
+\OT1/cmr/m/n/9 14$\OT1/ptm/m/n/9 ) & commit-subject cat-e-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+[]|\OT1/ptm/m/n/9 Repository In-ac-tiv-ity (7-day
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 185--185
+[]|\OT1/ptm/m/n/9 Clean-Path Re-work (late
+ []
+
+
+Underfull \hbox (badness 4792) in paragraph at lines 185--185
+\OT1/ptm/m/n/9 mod-i-fi-ca-tions to prior clean
+ []
+
+) (./sections/results.tex
+
+LaTeX Warning: Reference `fig:rq1-m1' on page 4 undefined on input line 24.
+
 
 LaTeX Warning: Reference `fig:rq1-m1' on page 4 undefined on input line 28.
 
 
-LaTeX Warning: Citation `prism_explorer' on page 4 undefined on input line 31.
+LaTeX Warning: Citation `prism_explorer' on page 4 undefined on input line 30.
 
 
-LaTeX Warning: File `figures/rq1_m1_perception_with_sd.png' not found on input line 35.
+LaTeX Warning: File `figures/rq1_m1_perception_with_sd.png' not found on input line 34.
 
 
-./sections/results.tex:35: Package pdftex.def Error: File `figures/rq1_m1_perception_with_sd.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.35 ...th]{figures/rq1_m1_perception_with_sd.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 35.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-
-LaTeX Warning: Reference `fig:rq2-m3' on page 4 undefined on input line 106.
-
-
-LaTeX Warning: Reference `tab:rq2-summary' on page 4 undefined on input line 107.
-
-
-LaTeX Warning: File `figures/rq2_m3_activity_pooled.png' not found on input line 112.
-
-
-./sections/results.tex:112: Package pdftex.def Error: File `figures/rq2_m3_activity_pooled.png' not found: using draft setting.
+./sections/results.tex:34: Package pdftex.def Error: File `figures/rq1_m1_perception_with_sd.png' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.112 ...idth]{figures/rq2_m3_activity_pooled.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Citation `prism_explorer' on page 4 undefined on input line 141.
-
-
-LaTeX Warning: Reference `fig:rq2-planning-commit' on page 4 undefined on input line 153.
-
-
-LaTeX Warning: Citation `prism_explorer' on page 4 undefined on input line 156.
-
-
-LaTeX Warning: File `figures/rq2_planning_vs_final7_commit_concentration.png' not found on input line 160.
-
-
-./sections/results.tex:160: Package pdftex.def Error: File `figures/rq2_planning_vs_final7_commit_concentration.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.160 ...nning_vs_final7_commit_concentration.png}
+l.34 ...th]{figures/rq1_m1_perception_with_sd.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [4]
 
-LaTeX Warning: Reference `tab:rq2-summary' on page 5 undefined on input line 213.
+LaTeX Warning: Reference `tab:rq2-summary' on page 5 undefined on input line 91.
 
 
-LaTeX Warning: Reference `fig:rq2-m4-m5' on page 5 undefined on input line 214.
+LaTeX Warning: Reference `fig:rq2-m3' on page 5 undefined on input line 101.
 
 
-LaTeX Warning: Citation `prism_explorer' on page 5 undefined on input line 219.
+LaTeX Warning: Reference `tab:rq2-summary' on page 5 undefined on input line 102.
+
+
+LaTeX Warning: File `figures/rq2_m3_activity_pooled.png' not found on input line 107.
+
+
+./sections/results.tex:107: Package pdftex.def Error: File `figures/rq2_m3_activity_pooled.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.107 ...idth]{figures/rq2_m3_activity_pooled.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Citation `prism_explorer' on page 5 undefined on input line 136.
+
+
+LaTeX Warning: Reference `fig:rq2-planning-commit' on page 5 undefined on input line 148.
+
+
+LaTeX Warning: Citation `prism_explorer' on page 5 undefined on input line 151.
+
+
+LaTeX Warning: File `figures/rq2_planning_vs_final7_commit_concentration.png' not found on input line 155.
+
+
+./sections/results.tex:155: Package pdftex.def Error: File `figures/rq2_planning_vs_final7_commit_concentration.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.155 ...nning_vs_final7_commit_concentration.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 1521) in paragraph at lines 175--195
+\OT1/ptm/m/n/10 clean churn rises from $\OT1/cmr/m/n/10 21[]718$ \OT1/ptm/m/n/10 lines across 7 ob-served
+ []
+
+
+LaTeX Warning: Reference `tab:rq2-summary' on page 5 undefined on input line 221.
+
+
+LaTeX Warning: Reference `fig:rq2-m4-m5' on page 5 undefined on input line 222.
 
 
 LaTeX Warning: File `figures/rq2_m4_m5_checkpoint_panels.png' not found on input line 248.
@@ -546,84 +654,108 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Reference `fig:rq3-presence' on page 5 undefined on input line 290.
-
-
-LaTeX Warning: File `figures/rq3_architectural_artifact_presence.png' not found on input line 294.
-
-
-./sections/results.tex:294: Package pdftex.def Error: File `figures/rq3_architectural_artifact_presence.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.294 .../rq3_architectural_artifact_presence.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `fig:rq3-profile' on page 5 undefined on input line 337.
-
-
-LaTeX Warning: File `figures/rq3_architecture_rework_profile.png' not found on input line 342.
-
-
-./sections/results.tex:342: Package pdftex.def Error: File `figures/rq3_architecture_rework_profile.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.342 ...ures/rq3_architecture_rework_profile.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `fig:rq3-complexity-rework' on page 5 undefined on input line 364.
-
-
-LaTeX Warning: File `figures/rq3_technical_complexity_vs_rework.png' not found on input line 369.
-
-
-./sections/results.tex:369: Package pdftex.def Error: File `figures/rq3_technical_complexity_vs_rework.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.369 ...s/rq3_technical_complexity_vs_rework.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `tab:rq3-associations' on page 5 undefined on input line 388.
+Underfull \hbox (badness 3989) in paragraph at lines 254--257
+\OT1/ptm/m/n/10 con-cen-trate near the fi-nal check-point, while can-di-date
+ []
 
 [5]
 
-LaTeX Warning: Reference `tab:rq3-associations' on page 6 undefined on input line 394.
+LaTeX Warning: Reference `fig:rq3-presence' on page 6 undefined on input line 275.
 
 
-LaTeX Warning: Citation `prism_explorer' on page 6 undefined on input line 408.
+LaTeX Warning: File `figures/rq3_architectural_artifact_presence.png' not found on input line 279.
 
 
-LaTeX Warning: Reference `tab:rq3-associations' on page 6 undefined on input line 409.
+./sections/results.tex:279: Package pdftex.def Error: File `figures/rq3_architectural_artifact_presence.png' not found: using draft setting.
 
-) (./sections/discussion.tex
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.279 .../rq3_architectural_artifact_presence.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-LaTeX Warning: Citation `github2025spec' on page 6 undefined on input line 58.
+
+LaTeX Warning: Reference `fig:rq3-profile' on page 6 undefined on input line 323.
 
 
-LaTeX Warning: Citation `thoughtworks202Xspec' on page 6 undefined on input line 58.
+LaTeX Warning: File `figures/rq3_architecture_rework_profile.png' not found on input line 328.
 
-[6]) (./sections/threats_to_validity.tex) (./sections/conclusion.tex [7]
 
-LaTeX Warning: Citation `prism_explorer' on page 8 undefined on input line 43.
+./sections/results.tex:328: Package pdftex.def Error: File `figures/rq3_architecture_rework_profile.png' not found: using draft setting.
 
-) (./main.bbl [8])
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.328 ...ures/rq3_architecture_rework_profile.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `fig:rq3-complexity-rework' on page 6 undefined on input line 350.
+
+
+LaTeX Warning: File `figures/rq3_technical_complexity_vs_rework.png' not found on input line 355.
+
+
+./sections/results.tex:355: Package pdftex.def Error: File `figures/rq3_technical_complexity_vs_rework.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.355 ...s/rq3_technical_complexity_vs_rework.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `tab:rq3-associations' on page 6 undefined on input line 367.
+
+
+LaTeX Warning: Citation `prism_explorer' on page 6 undefined on input line 378.
+
+) (./sections/discussion.tex [6]
+
+LaTeX Warning: Citation `github2025spec' on page 7 undefined on input line 53.
+
+
+LaTeX Warning: Citation `thoughtworks202Xspec' on page 7 undefined on input line 53.
+
+) (./sections/threats_to_validity.tex
+Underfull \hbox (badness 2884) in paragraph at lines 55--1
+\OT1/ptm/m/n/10 checkable interface-contract tests rather than document-
+ []
+
+[7]) (./sections/conclusion.tex
+
+LaTeX Warning: Citation `prism_explorer' on page 8 undefined on input line 44.
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 43--28
+[]\OT1/ptm/m/n/10 Reviewers can ac-cess the ap-proved
+ []
+
+
+Underfull \hbox (badness 5490) in paragraph at lines 43--28
+\OT1/pcr/m/n/10 research-data-001 \OT1/ptm/m/n/10 snap-shot anony-mously via the
+ []
+
+
+Underfull \hbox (badness 2875) in paragraph at lines 43--28
+\OT1/ptm/m/n/10 data ex-plorer [\OT1/ptm/b/n/10 ?\OT1/ptm/m/n/10 ] (JSON/CSV, vi-su-al-iza-tions, leave-one-
+ []
+
+
+Underfull \hbox (badness 6559) in paragraph at lines 43--28
+\OT1/ptm/m/n/10 out maps). The repli-ca-tion pack-age in-cludes M4/M8
+ []
+
+(./main.bbl [8])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -640,7 +772,10 @@ Before submitting the final camera ready copy, remember to:
 ] [10] [11] [12] [13] [14
 
 
-] [15] [16] (./main.aux)
+] [15] [16
+
+
+] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -659,21 +794,21 @@ Package rerunfilecheck Warning: File `main.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `main.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  18A263FE04A076E966532D7B49C42254;5510.
+(rerunfilecheck)             After:  BEA09059C06BA40F347F37EA3853130E;5308.
  ) 
 Here is how much of TeX's memory you used:
- 10602 strings out of 476182
- 176074 string characters out of 5795595
- 1967975 words of memory out of 5000000
- 32377 multiletter control sequences out of 15000+600000
- 599560 words of font info for 109 fonts, out of 8000000 for 9000
+ 10598 strings out of 476182
+ 175934 string characters out of 5795595
+ 1955975 words of memory out of 5000000
+ 32376 multiletter control sequences out of 15000+600000
+ 600075 words of font info for 111 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,498b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (16 pages, 222278 bytes).
+ 75i,11n,79p,575b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (16 pages, 246241 bytes).
 PDF statistics:
- 250 PDF objects out of 1000 (max. 8388607)
- 198 compressed objects within 2 object streams
- 76 named destinations out of 1000 (max. 500000)
+ 249 PDF objects out of 1000 (max. 8388607)
+ 193 compressed objects within 2 object streams
+ 72 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

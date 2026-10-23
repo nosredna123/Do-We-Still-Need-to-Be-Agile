@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  23 OCT 2026 10:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.9.25)  23 OCT 2026 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -463,79 +463,187 @@ e/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/sections/b
 ackground_related_work.tex)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/sections/m
-ethodology.tex [2])
+ethodology.tex [2]
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
+26.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 3449) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 plicit grain sep-a-ra-tion. Repos-i-tory Ac-tiv-ity (M3) sum-
+ []
+
+
+Underfull \hbox (badness 1968) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 dows, final-seven-day con-cen-tra-tion, and non-overlapping
+ []
+
+
+Underfull \hbox (badness 1859) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 ics (M4) counts churn only for paths al-lowed by the
+ []
+
+
+Underfull \hbox (badness 1496) in paragraph at lines 122--144
+\OT1/ptm/m/n/10 no ex-cluded di-rec-tory seg-ment (e.g., \OT1/pcr/m/n/10 node_m
+odules/\OT1/ptm/m/n/10 ,
+ []
+
+[3]
+Underfull \hbox (badness 2027) in paragraph at lines 171--172
+[]|\OT1/ptm/m/n/9 Cohort $\OMS/cmsy/m/n/9 ^^B$ \OT1/ptm/m/n/9 check-point
+ []
+
+
+Underfull \hbox (badness 6893) in paragraph at lines 175--175
+[]|\OT1/ptm/m/n/9 Repository Ac-tiv-ity (com-mit
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--177
+[]|\OT1/ptm/m/n/9 Clean-Change Dy-nam-ics
+ []
+
+
+Underfull \hbox (badness 2126) in paragraph at lines 177--177
+\OT1/ptm/m/n/9 (source/test line churn un-der
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 179--179
+[]|\OT1/ptm/m/n/9 Coordination-Language
+ []
+
+
+Underfull \hbox (badness 3396) in paragraph at lines 181--181
+\OT1/ptm/m/n/9 ar-ti-fact scope (M6a, $\OML/cmm/m/it/9 N \OT1/cmr/m/n/9 =
+ []
+
+
+Underfull \hbox (badness 4556) in paragraph at lines 181--181
+\OT1/cmr/m/n/9 14$\OT1/ptm/m/n/9 ) & commit-subject cat-e-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+[]|\OT1/ptm/m/n/9 Repository In-ac-tiv-ity (7-day
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 185--185
+[]|\OT1/ptm/m/n/9 Clean-Path Re-work (late
+ []
+
+
+Underfull \hbox (badness 4792) in paragraph at lines 185--185
+\OT1/ptm/m/n/9 mod-i-fi-ca-tions to prior clean
+ []
+
+)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/sections/r
-esults.tex [3]
-<figures/rq1_m1_perception_with_sd.png, id=135, 1806.75pt x 883.3pt>
+esults.tex
+<figures/rq1_m1_perception_with_sd.png, id=145, 1806.75pt x 883.3pt>
 File: figures/rq1_m1_perception_with_sd.png Graphic file (type png)
 <use figures/rq1_m1_perception_with_sd.png>
 Package pdftex.def Info: figures/rq1_m1_perception_with_sd.png  used on input l
-ine 35.
+ine 34.
 (pdftex.def)             Requested size: 516.0pt x 252.26875pt.
-<figures/rq2_m3_activity_pooled.png, id=139, 2409.0pt x 843.15pt>
+ [4]
+<figures/rq2_m3_activity_pooled.png, id=158, 2409.0pt x 843.15pt>
 File: figures/rq2_m3_activity_pooled.png Graphic file (type png)
 <use figures/rq2_m3_activity_pooled.png>
 Package pdftex.def Info: figures/rq2_m3_activity_pooled.png  used on input line
- 112.
+ 107.
 (pdftex.def)             Requested size: 516.0pt x 180.59184pt.
-<figures/rq2_planning_vs_final7_commit_concentration.png, id=143, 2208.25pt x 1
+<figures/rq2_planning_vs_final7_commit_concentration.png, id=162, 2208.25pt x 1
 084.05pt>
 File: figures/rq2_planning_vs_final7_commit_concentration.png Graphic file (typ
 e png)
 <use figures/rq2_planning_vs_final7_commit_concentration.png>
 Package pdftex.def Info: figures/rq2_planning_vs_final7_commit_concentration.pn
-g  used on input line 160.
+g  used on input line 155.
 (pdftex.def)             Requested size: 516.0pt x 253.3127pt.
- [4] [5 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/
-rq1_m1_perception_with_sd.png> </home/amg/projects/uece/Do-We-Still-Need-to-Be-
-Agile/paper_v9/figures/rq2_m3_activity_pooled.png>]
-<figures/rq2_m4_m5_checkpoint_panels.png, id=164, 2409.0pt x 803.0pt>
+ [5 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq1_
+m1_perception_with_sd.png>]
+Underfull \hbox (badness 1521) in paragraph at lines 175--195
+\OT1/ptm/m/n/10 clean churn rises from $\OT1/cmr/m/n/10 21[]718$ \OT1/ptm/m/n/1
+0 lines across 7 ob-served
+ []
+
+[6 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_m
+3_activity_pooled.png> </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/pa
+per_v9/figures/rq2_planning_vs_final7_commit_concentration.png>]
+<figures/rq2_m4_m5_checkpoint_panels.png, id=182, 2409.0pt x 803.0pt>
 File: figures/rq2_m4_m5_checkpoint_panels.png Graphic file (type png)
 <use figures/rq2_m4_m5_checkpoint_panels.png>
 Package pdftex.def Info: figures/rq2_m4_m5_checkpoint_panels.png  used on input
  line 248.
 (pdftex.def)             Requested size: 516.0pt x 171.99223pt.
-<figures/rq3_architectural_artifact_presence.png, id=166, 1525.7pt x 1244.65pt>
+
+Underfull \hbox (badness 3989) in paragraph at lines 254--257
+\OT1/ptm/m/n/10 con-cen-trate near the fi-nal check-point, while can-di-date
+ []
+
+<figures/rq3_architectural_artifact_presence.png, id=184, 1525.7pt x 1244.65pt>
 
 File: figures/rq3_architectural_artifact_presence.png Graphic file (type png)
 <use figures/rq3_architectural_artifact_presence.png>
 Package pdftex.def Info: figures/rq3_architectural_artifact_presence.png  used 
-on input line 294.
+on input line 279.
 (pdftex.def)             Requested size: 252.0pt x 205.56729pt.
-<figures/rq3_architecture_rework_profile.png, id=168, 2409.0pt x 1124.2pt>
+<figures/rq3_architecture_rework_profile.png, id=186, 2409.0pt x 1124.2pt>
 File: figures/rq3_architecture_rework_profile.png Graphic file (type png)
 <use figures/rq3_architecture_rework_profile.png>
 Package pdftex.def Info: figures/rq3_architecture_rework_profile.png  used on i
-nput line 342.
+nput line 328.
 (pdftex.def)             Requested size: 516.0pt x 240.78914pt.
- [6 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_
-planning_vs_final7_commit_concentration.png>]
-<figures/rq3_technical_complexity_vs_rework.png, id=176, 2208.25pt x 1003.75pt>
+<figures/rq3_technical_complexity_vs_rework.png, id=188, 2208.25pt x 1003.75pt>
 
 File: figures/rq3_technical_complexity_vs_rework.png Graphic file (type png)
 <use figures/rq3_technical_complexity_vs_rework.png>
 Package pdftex.def Info: figures/rq3_technical_complexity_vs_rework.png  used o
-n input line 369.
-(pdftex.def)             Requested size: 516.0pt x 234.5488pt.
- [7 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures/rq2_
-m4_m5_checkpoint_panels.png> </home/amg/projects/uece/Do-We-Still-Need-to-Be-Ag
-ile/paper_v9/figures/rq3_architectural_artifact_presence.png>])
+n input line 355.
+(pdftex.def)             Requested size: 252.0pt x 114.53284pt.
+)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/sections/d
-iscussion.tex [8 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/figures/rq3_architecture_rework_profile.png>] [9 </home/amg/projects/uece/Do-W
-e-Still-Need-to-Be-Agile/paper_v9/figures/rq3_technical_complexity_vs_rework.pn
-g>])
+iscussion.tex [7] [8 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/pape
+r_v9/figures/rq2_m4_m5_checkpoint_panels.png>])
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/sections/t
-hreats_to_validity.tex)
+hreats_to_validity.tex
+Underfull \hbox (badness 2884) in paragraph at lines 55--1
+\OT1/ptm/m/n/10 checkable interface-contract tests rather than document-
+ []
+
+)
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/sections/c
-onclusion.tex
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 4
-6.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-))
+onclusion.tex [9 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
+/figures/rq3_architectural_artifact_presence.png>])
+Underfull \hbox (badness 10000) in paragraph at lines 43--28
+[]\OT1/ptm/m/n/10 Reviewers can ac-cess the ap-proved
+ []
+
+
+Underfull \hbox (badness 5490) in paragraph at lines 43--28
+\OT1/pcr/m/n/10 research-data-001 \OT1/ptm/m/n/10 snap-shot anony-mously via th
+e
+ []
+
+
+Underfull \hbox (badness 1377) in paragraph at lines 43--28
+\OT1/ptm/m/n/10 data ex-plorer [[]27[]] (JSON/CSV, vi-su-al-iza-tions, leave-on
+e-
+ []
+
+
+Underfull \hbox (badness 6559) in paragraph at lines 43--28
+\OT1/ptm/m/n/10 out maps). The repli-ca-tion pack-age in-cludes M4/M8
+ []
+
+
 (/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/build/main
-.bbl [10])
+.bbl [10 </home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/figures
+/rq3_architecture_rework_profile.png> </home/amg/projects/uece/Do-We-Still-Need
+-to-Be-Agile/paper_v9/figures/rq3_technical_complexity_vs_rework.png>])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -555,16 +663,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 18A263FE04A076E966532D7B49C42254;5510.
+(rerunfilecheck)             Checksum: BEA09059C06BA40F347F37EA3853130E;5308.
  ) 
 Here is how much of TeX's memory you used:
- 10463 strings out of 476182
- 169744 string characters out of 5795595
- 1957975 words of memory out of 5000000
- 32237 multiletter control sequences out of 15000+600000
- 599560 words of font info for 109 fonts, out of 8000000 for 9000
+ 10458 strings out of 476182
+ 169588 string characters out of 5795595
+ 1950975 words of memory out of 5000000
+ 32235 multiletter control sequences out of 15000+600000
+ 600075 words of font info for 111 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,1162b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,1162b,590s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
@@ -573,18 +681,19 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf
 onts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
-tmri8a.pfb>
+ts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
+mr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9
-/latex/build/main.pdf (11 pages, 694917 bytes).
+/latex/build/main.pdf (11 pages, 727295 bytes).
 PDF statistics:
- 336 PDF objects out of 1000 (max. 8388607)
+ 340 PDF objects out of 1000 (max. 8388607)
  274 compressed objects within 3 object streams
- 71 named destinations out of 1000 (max. 500000)
- 188 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 67 named destinations out of 1000 (max. 500000)
+ 180 words of extra memory for PDF output out of 10000 (max. 10000000)
 

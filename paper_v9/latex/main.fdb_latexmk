@@ -1,13 +1,13 @@
 # Fdb version 4
 ["bibtex main"] 0 "main.aux" "main.bbl" "main" 0 -1
-  "./references.bib" 1792760603.61182 16293 2a656a285bc85dcf8336cea904ad7927 ""
+  "./references.bib" 1792767910.66996 15032 67a2a73086e52a8c5d89814f3065b8d6 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "main.aux" 1792760847.69155 9622 e198884e734b78a45ba3221b295740ef "pdflatex"
+  "main.aux" 1792784624.14336 10024 8c473ff18aab33a23734876c8a02da7d "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1792760847.36148 "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" "main.pdf" "main" 1792760847.78553 2
+["pdflatex"] 1792784623.82532 "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" "main.pdf" "main" 1792784624.24251 2
   "/etc/texmf/web2c/texmf.cnf" 1758825120.26148 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/amg/projects/uece/Do-We-Still-Need-to-Be-Agile/paper_v9/latex/main.tex" 1790365678.83092 1009 6346574b0d0aa1f8876a0e6e4eafdc7b ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -43,6 +43,8 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1248133631 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1248133631 32442 c975af247b6702f7ca0c299af3616b80 ""
@@ -119,17 +121,17 @@
   "figures/rq3_architectural_artifact_presence.png" 0 -1 0 ""
   "figures/rq3_architecture_rework_profile.png" 0 -1 0 ""
   "figures/rq3_technical_complexity_vs_rework.png" 0 -1 0 ""
-  "main.aux" 1792760847.69155 9622 e198884e734b78a45ba3221b295740ef "pdflatex"
-  "main.bbl" 1792760833.31862 8179 a1c692d8aa6c1c41838a5c006f0a9822 "bibtex main"
-  "main.out" 1792760847.69255 5510 18a263fe04a076e966532d7b49c42254 "pdflatex"
+  "main.aux" 1792784624.14336 10024 8c473ff18aab33a23734876c8a02da7d "pdflatex"
+  "main.bbl" 1792784623.24037 7243 4c24ae5271d933e2454d960eab3db7aa "bibtex main"
+  "main.out" 1792784624.14336 5308 bea09059c06ba40f347f37ea3853130e "pdflatex"
   "main.tex" 1790365678.83092 1009 6346574b0d0aa1f8876a0e6e4eafdc7b ""
   "sections/abstract.tex" 1790413678.99823 2075 62064d47f93031aee3e5921833f59c42 ""
-  "sections/background_related_work.tex" 1790368382.06026 2764 ec99da54c64195c86fa7fe2ae32193bc ""
-  "sections/conclusion.tex" 1792760603.49683 3344 8f58670bbf0c0f1df8d05f3e541fe367 ""
-  "sections/discussion.tex" 1790414264.72985 4529 66978485273f964f478f85f9c98f5c60 ""
+  "sections/background_related_work.tex" 1792767910.56996 3290 2a70b5a482b4a4c021636ec9acd17678 ""
+  "sections/conclusion.tex" 1792782521.27539 3317 cb7c7b75e2ccc3655810562e33d42b89 ""
+  "sections/discussion.tex" 1792781410.71358 3982 0a9837c6390e5cfdc9f52bd3623ff8fc ""
   "sections/introduction.tex" 1790413445.93765 4590 84f488394c00b2f7bc87ce7b4b6406e3 ""
-  "sections/methodology.tex" 1790413624.50422 8210 1e46a87eef42808ade08bacd7177386b ""
-  "sections/results.tex" 1792760688.69737 26476 7b6b05e679e828f2993ae5ba5445152f ""
+  "sections/methodology.tex" 1792784623.05537 12986 7b8b2545f72654ef061df7546fcb5239 ""
+  "sections/results.tex" 1792782228.80686 24195 16eff90a8b5c20f9c91281440330c8a6 ""
   "sections/threats_to_validity.tex" 1790414306.35339 2301 6cc538c397d8dd222caa4db2d645470d ""
   (generated)
   "main.aux"

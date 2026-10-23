@@ -80,24 +80,9 @@ C.~Spearman, ``The proof and measurement of association between two things,'' \e
 \bibitem{prism_explorer}
 ``Research data explorer,'' \url{https://moonlit-mochi-1dcef0.netlify.app/\#explore}, 2026, snapshot: \texttt{research-data-001}. Accessed: Oct. 23, 2026.
 
-\bibitem{nguyenduc2026systematic}
-\BIBentryALTinterwordspacing
-A.~Nguyen-Duc \emph{et~al.}, ``A systematic literature review on generative ai in software engineering,'' \emph{Preprints}, May 2026. [Online]. Available: \url{https://www.preprints.org/manuscript/202605.1638}
-\BIBentrySTDinterwordspacing
-
 \bibitem{ieee2025transforming}
 \BIBentryALTinterwordspacing
 {IEEE Computer Society}, ``Transforming software engineering processes through generative ai,'' \emph{IEEE Computer}, July 2025. [Online]. Available: \url{https://www.computer.org/csdl/magazine/co/2025/07/11052608/27RKcQkdNg4}
-\BIBentrySTDinterwordspacing
-
-\bibitem{cambridge2026contextual}
-\BIBentryALTinterwordspacing
-{Cambridge Advance Online}, ``The contextual gap in genai for software engineering,'' July 2026. [Online]. Available: \url{https://advanceonline.cam.ac.uk/blog/the-contextual-gap-in-genai-for-software-engineering}
-\BIBentrySTDinterwordspacing
-
-\bibitem{codebridge2026hidden}
-\BIBentryALTinterwordspacing
-{Codebridge}, ``The hidden costs of ai-generated software: Why 'it works' isn't enough,'' February 2026. [Online]. Available: \url{https://www.codebridge.tech/articles/the-hidden-costs-of-ai-generated-software-why-it-works-isnt-enough}
 \BIBentrySTDinterwordspacing
 
 \bibitem{staron2025exploring}
