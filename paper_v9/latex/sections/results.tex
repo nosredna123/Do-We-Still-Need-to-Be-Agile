@@ -178,11 +178,16 @@ Pooled clean churn rises from $21{,}718$ lines across 7 observed team-semesters
 at $T_1$, to $47{,}545$ lines across 10 at $T_2$, and $136{,}325$ lines across
 all 14 at $T_3$. The median clean churn per team-semester rises from $66.5$
 lines at $T_1$ to $3{,}232.5$ at $T_2$ and $6{,}975.5$ at $T_3$. Clean change
-accounts for $42.9\%$, $19.6\%$, and $1.0\%$ of all recorded churn at the
-three checkpoints, respectively, because excluded or non-measurement paths
-dominate the raw line-change total in the final checkpoint. This distinction is
-why Clean-Change Dynamics (M4) is not interchangeable with total repository
-activity.
+accounts for $42.9\%$ ($21{,}718/50{,}614$), $19.6\%$
+($47{,}545/242{,}399$), and $1.0\%$ ($136{,}325/13{,}502{,}131$) of raw line
+churn at $T_1$--$T_3$. At $T_3$, $13{,}365{,}806$ of $13{,}502{,}131$ churn
+lines ($99.0\%$) were in paths excluded by M4. A path audit attributes
+$11{,}596{,}231$ excluded churn lines to Python virtual-environment paths,
+including Google API discovery-cache JSON files under \texttt{venv/}, and
+$1{,}358{,}395$ to \texttt{node\_modules/}; generated/build directories
+contribute $143{,}990$, with the remainder in other excluded paths. These are
+added-plus-deleted changes, not repository sizes. Excluded-path churn, rather
+than falling clean churn, drove the share decline; commit intent is unknown.
 % PROVENANCE: M4 pooled endpoint values are from
 % paper_v9/data/metrics/m4_churn_magnitude_pooled.csv and
 % m4_artifact_composition_pooled.csv. The clean-path definition and its
