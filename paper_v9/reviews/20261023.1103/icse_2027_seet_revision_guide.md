@@ -105,7 +105,7 @@ M9 & Artifact--Rework--Outcome Associations (Spearman $\rho$ + leave-one-out sen
 \end{table}
 ```
 
-* [ ] **Action 1.3:** Fix duplicated team label typo in **Section IV-C** (Page 7, Column 1, Line 42) | **Addresses:** Reviewer 1, Presentation
+* [x] **Action 1.3:** Fix duplicated team label typo in **Section IV-C** (Page 7, Column 1, Line 42) | **Addresses:** Reviewer 1, Presentation
   * **Locate:** `"whereas 2025.2/TEAM 08 and 2026.1/TEAM 26.1/TEAM_03 have a ratio of 1.000"`
   * **Replace with:** `"whereas 2025.2/TEAM_08 and 2026.1/TEAM_03 both exhibit a rework ratio of 1.000"`
 
