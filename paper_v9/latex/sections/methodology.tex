@@ -5,41 +5,53 @@ We studied two offerings of a project-based undergraduate software-engineering
 course at a large public university in South America: 2025.2 ($N=9$
 analyzable teams) and 2026.1 ($N=5$), for $N=14$ team-semesters and
 approximately 70 participating students. Teams of roughly five students had
-autonomy over process model and project management approach, including Scrum,
-Kanban, other Agile variants, or unguided work. Each team built an operational
-software project with an integrated GenAI component, but no AI architecture was
-mandated. Retrieval-Augmented Generation (RAG), in which a model conditions
-its output on retrieved project or domain documents, was presented as one
-domain-dependent example~\cite{lewis2020retrieval}; none of the 14 projects
-implemented a full RAG pipeline. The analyzed systems spanned healthcare,
-finance, education, research, ecotourism, onboarding, and tutoring domains,
-and used project-specific integrations such as summarization, document/profile
-analysis, chatbots, recommendations, and content generation.
+autonomy over process model and project management approach. Course records
+did not formally record teams' process selections or adherence to ceremonies,
+so we cannot report a distribution across Scrum, Kanban, other Agile variants,
+or unguided work. Each team was required to build an operational software
+project with an integrated GenAI component, but no AI architecture was
+mandated. Retrieval-Augmented Generation (RAG) was presented as one possible
+architecture~\cite{lewis2020retrieval}. The analyzed systems spanned
+healthcare, finance, education, research, ecotourism, onboarding, and tutoring
+domains, and used project-specific integrations such as summarization,
+document/profile analysis, chatbots, recommendations, and content generation.
 
 We report this observational, multi-method study with reference to established
 empirical software-engineering research and case-study guidance
 \cite{stol2018abc,runeson2009case}.
 
 \label{sec:data-sources}
-The course used three synchronized checkpoints. $T_1$ was administered on the
-first day of class, before formal instruction on GenAI processes; $T_2$
-followed modules on GenAI mechanics, RAG architectures, and software process;
-and $T_3$ occurred one week before final delivery and presentation. The study
-combines four evidence streams. First, complete Git histories provide commits,
-line changes, file provenance, branch information, and repository-visible
-artifacts. Students were instructed to keep requirements, architecture,
-documentation, and source code in the repository, but Git captures only
-repository-visible evidence--artifacts and changes committed to version
-control--rather than AI-use telemetry such as prompt logs, API calls, or IDE
-acceptance events. Second, independent evaluator scorecards were collected at
-$T_1$--$T_3$ through blind scoring after status presentations, with 4
-evaluators in 2025.2 and 3 in 2026.1. Third,
-multi-checkpoint surveys captured demographics, experience, GenAI adoption,
-perceived role disruption, and project expectations at cohort/checkpoint grain;
-survey responses carry no team identifier. Fourth, a bounded 2025.2 transcript
-corpus covers status presentations and supervisor discussions, segmented into
-100 chunks across $T_1$, $T_2$, and $T_3$. Transcript evidence is a global
-checkpoint corpus and is not imputed for 2026.1.
+The study uses nominal $T_1$--$T_3$ markers, but survey and evaluator dates do
+not coincide. Survey forms place $T_1$ on September 5, 2025, and March 5--6,
+2026. Taking the earliest $T_1$ response date as course day one solely to
+estimate elapsed weeks, the survey waves fall approximately in weeks 1, 9, and
+13 for 2025.2, and weeks 1, 11, and 15 for 2026.1. Evaluator scorecards were
+collected after status presentations on October 17 and 24, November 14 and 21,
+and December 5 and 12 in 2025.2, and on April 24, May 22, and June 19 in
+2026.1. Relative to the same anchor, these dates fall approximately in weeks
+7--8, 11--12, and 14--15 for 2025.2, and weeks 8, 12, and 16 for 2026.1.
+These are date-derived estimates, not official course-week labels. The
+versioned records do not define a shared artifact checklist for each
+checkpoint or document a repository-onboarding change that explains the
+increase in observed $T_1$ architectural artifacts from 4/9 teams in 2025.2 to
+5/5 in 2026.1; we therefore report that difference descriptively without
+attributing a cause.
+
+The study combines four evidence streams. First, complete Git histories
+provide commits, line changes, file provenance, branch information, and
+repository-visible artifacts. Students were instructed to keep requirements,
+architecture, documentation, and source code in the repository, but Git
+captures only repository-visible evidence--artifacts and changes committed to
+version control--rather than AI-use telemetry such as prompt logs, API calls,
+or IDE acceptance events. Second, independent evaluator scorecards were
+collected at $T_1$--$T_3$ through blind scoring after status presentations,
+with 4 evaluators in 2025.2 and 3 in 2026.1. Third, multi-checkpoint surveys
+captured demographics, experience, GenAI adoption, perceived role disruption,
+and project expectations at cohort/checkpoint grain; survey responses carry no
+team identifier. Fourth, a bounded 2025.2 transcript corpus covers status
+presentations and supervisor discussions, segmented into 100 chunks across
+$T_1$, $T_2$, and $T_3$. Transcript evidence is a global checkpoint corpus
+and is not imputed for 2026.1.
 
 All raw streams were anonymized before analysis. Analytical artifacts exclude
 direct personal identifiers; restricted provenance records preserve prompts,
