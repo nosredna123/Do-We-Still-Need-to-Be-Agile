@@ -15,7 +15,9 @@ observation tables, row filters, sorting, and compatible multi-cohort/team-semes
 selection are implemented. All seven selected paper figures now render from
 approved snapshots, with exact source tables and synchronized permitted
 row selection. Full CSV/JSON links and displayed-row CSV with matching scope
-metadata are implemented. Whole-directory/actual-host approval remains pending.
+metadata are implemented. T023 records human whole-directory approval of its
+reviewed candidate; subsequent changes require affected review. Actual-host
+approval remains pending.
 The consolidated researcher guide covers dataset choice, snapshot recording,
 units, download scope, typed import and scientific interpretation limits.
 The [T021 acceptance audit](#acceptance-audit-t021) records local passes and
@@ -916,14 +918,199 @@ to accepting unavoidable identifying branding. If private material was already
 served, remove it promptly and seek human reassessment; removal cannot guarantee
 that public copies or caches disappear.
 
-## Remaining operational documentation
+## Copy, serve, and refresh (T024)
 
-The later deployment task will add the provider-neutral copy-and-serve procedure,
-preview instructions, and release refresh procedure once the application exists.
-No deployment URL is claimed here yet. A refresh must verify input fingerprints,
-obtain renewed review for changed fields/values/vocabularies or identifier policy,
-export only approved rows, and repeat whole-directory and actual-host checks.
-Changed hashes must never silently inherit an earlier approval.
+This is a provider-neutral procedure, not a deployment record. T025 must verify
+the selected actual host after human release approval; T026 records the verified
+neutral URL and supplies it for the separate paper citation change. No public
+deployment URL is claimed here. The 11 hosting gates above remain unchecked.
+T023 approved its pinned candidate, not subsequent documentation or tool changes:
+review this procedure and the exact final directory before public copying.
+
+The copy and catalog/release check commands below were verified in a disposable
+copy: all 45 public Python tests passed, all 125 file bytes matched over HTTP at
+both root and nested prefixes (250 checks), and local documentation links
+resolved. The copied site was not modified by validation; preview processes and
+temporary copies were removed. This verifies the local procedure, not HTTPS,
+production server configuration, human approval of this update, or an actual host.
+
+### 1. Prepare an isolated deployment candidate
+
+On a local authoring/test machine, set `SITE` to the absolute path of this
+directory and `STAGING` to a **new, non-existent directory outside the repository
+and outside every currently served tree**. Its parent must already exist.
+Do not use either variable for a repository root, private archive, or existing
+release. Check the chosen paths before running:
+
+```sh
+mkdir "$STAGING" &&
+cp -R "$SITE/." "$STAGING/"
+```
+
+Stop on any command failure; do not continue with a partial copy. This copies the
+directory's contents, including otherwise hidden/unlinked files: **all shipped
+files are public**. Inspect the complete candidate, not just the landing page.
+Never copy the parent repository, private authoring archive, version-control
+history, approvals, lineage, environment files, logs, backups, or research inputs.
+Do not rely on a host's hidden-file block or disabled directory listing to
+protect material that should not have been uploaded.
+
+Compare the full candidate inventory and bytes with the reviewed site using
+local file-comparison/hash tools; include documentation, tools, assets and vendor
+notices. The data manifest alone does not cover these files. Keep the approved
+whole-directory inventory and review evidence privately, outside the candidate.
+Retain mandatory upstream licenses. Reject symlinks and unexpected files.
+
+From the candidate, check the frozen catalog and data manifest:
+
+```sh
+cd "$STAGING" &&
+python3 -B tools/build_catalog.py --output data/catalog.json --check &&
+python3 -B tools/build_release.py --output data/release.json --check
+```
+
+Use the existing public tests under [Public validation tooling](#public-validation-tooling)
+on this local machine. A failure is a release blocker, not a reason to regenerate
+hashes until the check turns green. Python and Node are test/authoring tools;
+neither is required on the destination server.
+
+### 2. Preview locally over HTTP
+
+For a loopback-only development preview, from the candidate directory run:
+
+```sh
+python3 -B -m http.server 8000 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8000/` and stop the preview with Ctrl+C when finished.
+If the port is occupied, choose an unused local port; do not stop unrelated
+processes. This development server is **not a public hosting configuration**:
+it can list directories, uses HTTP, and has not been approved for public exposure.
+Do not use `file://`, whose fetch behavior is not the supported serving model.
+
+For a nested-prefix preview, place a second copy of the candidate at
+`review/explorer/` inside a new otherwise empty preview root, serve that root
+with the same loopback command, and open
+`http://127.0.0.1:8000/review/explorer/`. Keep private material outside both
+preview roots. All app links remain relative; do not rewrite them with a domain
+name, leading slash, or parent-directory URL. Check browser Network and Console,
+then stop the server and remove only the explicitly created disposable copies.
+
+### 3. Configure an ordinary static host
+
+Use a neutral HTTPS domain/account presentation and neutral URL prefix with no
+author, institution, repository, username, identifying redirect, badge, injected
+branding, tracking script, or external asset requirement. Review browser-visible
+certificate information and provider-generated pages as well as the URL.
+Optional `noindex` is a discovery hint, not anonymity or access control.
+
+Configure the host using its normal static-document-root or subdirectory mapping:
+
+- Serve **only the candidate's contents**, at `/` or a prefix such as
+  `/review/explorer/`, with `index.html` as the directory index.
+- Disable directory listing. Missing files must return an actual 404, not the
+  landing page with a successful 200 response; do not enable SPA fallback.
+- Expose no parent aliases or adjacent directories. A missing directory index
+  should yield a neutral rejection rather than a file inventory.
+- Serve HTML/CSS/JavaScript/JSON/CSV/SVG as the MIME types below. Configure CSV
+  explicitly if the server defaults to binary data. `nosniff` is useful only
+  with correct content types.
+- Require valid HTTPS for the public URL. If HTTP redirects to HTTPS, inspect
+  the exact destination and intervening responses for identifying hostnames.
+  Do not bypass certificate errors or accept mixed-content requests.
+- Disable provider telemetry/injection and identifying custom error pages.
+  Inspect response headers, redirects, TLS presentation and errors; remove
+  identifying account details. Change host if these cannot be neutralized.
+- During submission, prefer revalidation (for example `Cache-Control: no-cache`)
+  for HTML, scripts, catalog and release metadata to avoid mixing revisions.
+  Do not mark mutable paths immutable; if a CDN/cache is present, verify its
+  invalidation behavior before a refresh.
+
+| File extension | Expected Content-Type |
+|---|---|
+| `.html` | `text/html; charset=utf-8` |
+| `.css` | `text/css; charset=utf-8` |
+| `.js` | `text/javascript` or `application/javascript` |
+| `.json` | `application/json` |
+| `.csv` | `text/csv; charset=utf-8` |
+| `.svg` | `image/svg+xml` |
+| `.md`, `.txt` | `text/plain; charset=utf-8` (not executable content) |
+| `.py`, `.cjs` | Static text/download only; never server-side execution |
+
+A download disposition is acceptable for static documentation/tools. Markdown
+rendering, if offered by the provider, must not add account branding or scripts.
+No backend, database, account system, build service, package installation,
+research pipeline, Python or Node runtime is needed on the destination.
+
+### 4. Copy and verify on the actual host (T025)
+
+After human approval of the exact candidate, upload only its contents through
+the host's ordinary file-copy/upload mechanism. Transfer as bytes: disable
+newline conversion, minification, data reformatting, template processing and
+provider script injection. Keep credentials and upload logs outside this
+directory. Prefer a complete replacement/switch of a separately uploaded
+candidate, not a merge that can retain stale or private files.
+
+Before announcing the URL, compare remotely retrieved files against the approved
+local whole-directory inventory, including all public assets and tools, and
+recheck the 99 data-artifact hashes/counts against the local approved manifest.
+Retrieve bytes with a local HTTP client or browser; no verifier is installed on
+the destination. A matching remote manifest alone is insufficient: compare it
+to the trusted local one and verify the artifacts it names.
+
+Check the landing page, stylesheet, scripts, favicon, catalog, release manifest,
+a JSON dataset and CSV download for status and MIME type. Inspect HTTPS and HTTP
+redirect chains manually, including non-trailing-slash URLs; inspect headers,
+neutral 404 responses and directory responses. A directory with an index may
+return that index, but a directory without one must not list its contents.
+Check that parent/adjacent private paths are unreachable without publishing or
+guessing actual private names in this README.
+
+In current Chromium and Firefox, repeat RQ navigation, definitions, exact table
+values, cohort/checkpoint selection, composite team comparison, numeric sorting,
+reset, seven figures/source alternatives, full downloads, and filtered CSV plus
+scope metadata. Confirm no unsupported survey/transcript team filters appear.
+Check keyboard use and narrow layouts. Inspect Network/Console for missing
+assets, out-of-prefix or third-party requests, mixed content and errors.
+Use a disposable private preview for missing/malformed-data recovery tests;
+do not corrupt the public approved snapshot to test error handling.
+
+Stop publication on any failed check, correct the copy/configuration or choose
+another host, and repeat verification. Do not cite an unverified deployment.
+Only after T025 passes may T026 record the neutral URL and snapshot identifier.
+This procedure does not change the manifest's pending-release status or claim
+that the host has been inspected.
+
+### 5. Refresh or roll back without changing evidence silently
+
+Keep the last approved directory and private review/inventory outside the served
+tree. Prepare every refresh in a new candidate, never edit the live snapshot:
+
+1. Reconcile privately pinned inputs and reproduce the approved projection.
+   Renew human review for changed fields, values, vocabulary, identifiers,
+   excerpt policy, documentation/tools or linkage risk. Changed hashes never
+   silently inherit approval. Verbatim excerpts remain omitted.
+2. For changed scientific data, assign a new neutral snapshot identifier and
+   update the authoring contract/tests deliberately; do not reuse
+   `research-data-001` to conceal changed observations. A documentation-only
+   update does not require changing unchanged data or its snapshot identifier.
+3. Preserve exact numeric precision, JSON/CSV parity, null/eligibility states,
+   units, denominators and fixed populations. Generate any changed catalog or
+   release manifest to a new path, review the differences, and run the existing
+   catalog/release `--check` commands and tests on the complete candidate.
+4. Repeat whole-directory human review, isolated root/nested checks and the
+   actual-host procedure above. Review all new/removed files, not only manifest
+   entries. Switch the entire reviewed directory consistently and invalidate or
+   revalidate caches; do not leave old files in a merged deployment.
+5. If verification fails, stop announcing/serving the affected candidate and
+   restore the entire last approved directory only if it remains safe; repeat
+   deployed hash, cache and browser checks. Never restore a candidate known to
+   contain private material. Seek renewed human assessment for an exposure;
+   removal cannot guarantee deletion from caches or third-party copies.
+
+Keep operational evidence private. Update the public release record and paper
+citation only after the replacement is verified, without exposing source paths,
+reviewer identities, credentials or private lineage.
 
 ## Public validation tooling
 

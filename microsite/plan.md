@@ -271,7 +271,7 @@ downloads faithfully represent the approved snapshot and the displayed filters.
 **Plan 5.2:** Release the frozen snapshot on a neutral host.
 **Requirements:** REQ-001, REQ-008, REQ-009.
 
-- [ ] T024 [Plan:5.2] Document a provider-neutral copy-and-serve procedure in `microsite/README.md`, including MIME types, disabled directory listing, HTTPS, neutral URL requirements, refresh procedure, and the fact that all shipped files are public.
+- [x] T024 [Plan:5.2] Document a provider-neutral copy-and-serve procedure in `microsite/README.md`, including MIME types, disabled directory listing, HTTPS, neutral URL requirements, refresh procedure, and the fact that all shipped files are public. Verified documented isolated copy/check/loopback preview commands, all 45 public Python tests and 250 root/nested file-byte checks; no deployment performed. Final updated directory approval and actual-host checks remain prerequisites for T025.
 - [ ] T025 [Plan:5.2] After human release approval, copy `microsite/` to the selected host, inspect its public URL/redirects/headers/error pages for identifying branding, and repeat the core browse/filter/download checks against the deployed snapshot.
 - [ ] T026 [Plan:5.2] Record the neutral public URL and snapshot identifier in `microsite/README.md`; supply the verified explorer URL for the paper citation through a separate manuscript change.
 
