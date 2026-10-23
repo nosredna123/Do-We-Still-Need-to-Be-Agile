@@ -59,17 +59,31 @@ independent observations. Exploratory associations use Spearman's rank
 correlation $\rho$~\cite{spearman1904proof}, which tests whether two variables
 tend to move monotonically together after replacing raw values by ranks. This
 choice avoids assuming linear relationships or normally distributed variables
-in a small, mixed-scale panel; p-values are descriptive diagnostics rather than
-confirmatory tests. Leave-one-out analyses recompute associations after
-removing each eligible team-semester and show sensitivity to influential cases
-rather than confidence intervals.
+in a small, mixed-scale panel. Leave-one-out analyses recompute associations
+after removing each eligible team-semester.
 
-In addition to the primary M1--M9 families, we compute robustness views:
+In addition to the primary M1--M9 families, robustness views include
 non-overlapping phase bins, final-seven-day concentration contrasts by score
 change and planning scope, operational-regularity proxies,
-technical-complexity profiles, and leave-one-out influence diagnostics. These
-views qualify interpretation and validity threats; they do not introduce
-causal estimators.
+technical-complexity profiles, and leave-one-out sensitivity ranges.
+\textit{Epistemological boundaries and grain separation:} Because this study
+observes $N=14$ team-semesters and approximately 70 students without a non-AI
+control group or IDE-level telemetry, three principles govern interpretation
+of the Section IV results. First, \textit{strict grain preservation}: student-
+level survey waves (M1/M2), global checkpoint transcripts (M5), and
+team-semester repository/scorecard metrics (M3, M4, M6--M9) retain distinct
+denominators (Table~\ref{tab:metrics_summary}) and are never pooled or
+cross-correlated across incompatible grains. Second, \textit{exploratory
+inference}: Spearman correlations ($\rho$), $p$-values, phase bins,
+final-seven-day contrasts, operational-regularity proxies,
+technical-complexity stratifications, and leave-one-out ranges (which show
+sensitivity to influential cases rather than confidence intervals) are
+descriptive or robustness diagnostics, not confirmatory tests or causal
+estimators. Third,
+\textit{proxy transparency}: missing repository or transcript observations
+remain explicit observation states rather than being zero-filled or imputed as
+low quality. These boundaries are stated here and in Section~VI rather than
+repeated for every metric.
 
 \subsection{Metric Families}
 
@@ -147,6 +161,4 @@ language-model score. M6b uses structured extraction from $T_1$ commit subjects
 to identify goals, architecture/design, task decomposition, risk/dependency,
 and literal evidence quotes. Outputs were reviewed by the research team and
 retained as separate exploratory categories, never as a composite
-planning-quality or architectural-quality score. Missing evidence remains
-distinct from zero or low quality, incompatible grains are not combined, and no
-causal claim is made without a supporting design.
+planning-quality or architectural-quality score.
